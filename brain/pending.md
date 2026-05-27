@@ -16,7 +16,8 @@
 - [x] BigQuery conectado — `br_me_cnpj` confirmado, 79k empresas SP ativas CNAE 24/25/28
 - [x] Ingerir dataset: 2.000 empresas + 4.929 sócios via `scripts/ingest-empresas.mjs`
 - [x] Schema Postgres: `empresa`, `socio`, `score_run` (migration 0001 aplicada)
-- [ ] Pipeline v0: input texto → filtro CNAE → lista bruta (ainda sem scoring)
+- [x] Pipeline v0: input NL → filtro → lista bruta — `/api/search` + UI (`page.tsx`)
+      LLM via Agent SDK (assinatura, local). ⚠️ no deploy trocar por Anthropic API direta.
 
 ## 🟢 Semana 2 — Inteligência (até reunião 3, 09/06)
 

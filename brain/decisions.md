@@ -50,4 +50,25 @@ código de framework, porque a 16 tem breaking changes vs. conhecimento de trein
 
 ---
 
+## [2026-05-27] Interpretação NL via Claude Agent SDK (assinatura), não API key
+
+**Contexto:** o Pipeline v0 precisa interpretar a query em linguagem natural. Duas opções —
+(A) Anthropic API com `ANTHROPIC_API_KEY` (cobrada por token), (B) Claude Agent SDK usando o
+login do Claude Code (assinatura do Guilherme, sem custo por token).
+
+**Decisão:** **Plan B (Agent SDK)** por enquanto. Roda local na máquina do Guilherme, onde o
+Claude Code está logado. Custo zero de API durante o desenvolvimento.
+
+**Trade-off / caveat crítico:** o Agent SDK só autentica por assinatura **onde o Claude Code
+está logado** — ou seja, **não funciona no Vercel**. Quando for fazer deploy pra submissão,
+trocar `parseQueryLLM` por uma chamada direta à Anthropic API (mesma interface, basta a key).
+Latência ~8s por chamada (overhead de subida do engine) — aceitável com loading state pro v0.
+
+**Mitigação:** `src/lib/llm.ts` (Agent SDK) e `src/lib/query-parser.ts` (heurístico) têm a
+mesma assinatura. A rota tenta o LLM e cai no heurístico se falhar — a demo nunca quebra.
+
+**Status:** ✅ Tomada (revisar no deploy).
+
+---
+
 *(append novas decisões abaixo)*

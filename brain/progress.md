@@ -75,4 +75,31 @@ Script: `scripts/ingest-empresas.mjs`
 - `faixa_etaria` máxima dos sócios foi usada como critério de prioridade de ordenação
 - `municipio` armazenado como código IBGE por enquanto — nome da cidade fica pra Semana 2
 
+## [2026-05-27] Guilherme | Pipeline v0 — input NL → filtro → lista (primeira UI)
+
+Quarta sessão. A primeira coisa demoável: digita em linguagem natural, recebe empresas reais.
+
+- `@anthropic-ai/claude-agent-sdk` instalado. Smoke test (`scripts/check-agent-sdk.mjs`)
+  confirmou: o SDK chama o Claude pela **assinatura** do Claude Code, sem API key.
+- `src/lib/llm.ts` — `parseQueryLLM(texto)`: Claude lê a frase → JSON de filtros
+  (cnaePrefixes, minFaixaEtaria, maxAnoFundacao, limit).
+- `src/lib/query-parser.ts` — fallback heurístico (mesma interface), demo nunca quebra.
+- `src/app/api/search/route.ts` — POST: parse → query Supabase (CNAE OR, idade sócio via
+  inner join, ano de fundação) → lista.
+- `src/app/page.tsx` — UI: input + chips de exemplo + cards de empresa com sócios e faixa etária.
+
+**Resultado (validado rodando):**
+- "metalmecânica no interior de SP com sócios acima de 60 anos" → filtros
+  `{cnae:[24,25,28], minFaixaEtaria:7}`, 50 empresas, todos sócios 71–80/80+. ✓
+- "máquinas e equipamentos fundados antes de 1985" → o LLM **estreitou** pra `cnae:[28]`,
+  `maxAnoFundacao:1985`, 50 empresas todas 28xx fundadas pré-85. ✓
+- Type-check limpo, página renderiza.
+
+**Aprendizado:**
+- Agent SDK = assinatura sem custo de token, MAS só local (não no Vercel). Caveat no deploy
+  registrado em `decisions.md`.
+- Latência ~8s por chamada (overhead de subir o engine do Claude Code). Tolerável com loading
+  state; otimizar (ou trocar pra API direta) quando precisar de velocidade.
+- No `.or()` do Supabase o wildcard do LIKE é `*`, não `%`.
+
 *(append novas entradas abaixo desta linha)*
