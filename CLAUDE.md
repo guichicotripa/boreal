@@ -115,6 +115,21 @@ primeira pull de CNPJs a seguir. Ainda sem pipeline. Ver `brain/progress.md` pro
 | `brain/progress.md` | o que foi feito, sessão por sessão (append-only) |
 | `brain/decisions.md` | decisões + porquê |
 | `brain/pending.md` | próximos passos / em aberto |
+| `skills/_index.md` | catálogo das skills + onboarding do Maguto |
 
 > Contexto operacional completo (deadlines, equipe, relação com Relay/BRHSIC) vive no segundo
 > cérebro do Guilherme em `memory/projects/clube-programacao.md` — fora deste repo.
+
+---
+
+## 9. Fluxo de sessão (Claude Code)
+
+Dois comandos automatizam o trabalho colaborativo — funcionam direto no repo (vêm com o clone):
+
+| Comando | Quando | O que faz |
+|---------|--------|-----------|
+| `/boreal` | início da sessão | carrega CLAUDE.md + brain/ + estado do git, faz briefing de onde paramos |
+| `/salve` | fim da sessão | atualiza progress/pending/decisions, commita, push (com confirmação) |
+
+Loop: `/boreal` → trabalha → `/salve`. Quem clonar o repo já tem os dois (`.claude/commands/`).
+Detalhe e onboarding em `skills/_index.md`.
