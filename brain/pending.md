@@ -6,9 +6,10 @@
 
 ## 🔴 Agora (fechar o setup)
 
-- [ ] Configurar Supabase: criar projeto no painel → `.env.local` com `NEXT_PUBLIC_SUPABASE_URL`
-      + `NEXT_PUBLIC_SUPABASE_ANON_KEY` + service role → client helper em `src/lib/supabase.ts`
-- [ ] Criar repo GitHub privado `boreal` → primeiro commit → push → adicionar Maguto como collaborator
+- [x] Client helper Supabase em `src/lib/supabase.ts` + `.env.example`/`.env.local`
+- [x] Repo GitHub privado `boreal` criado + push (branch `main`)
+- [ ] Colar chaves reais no `.env.local` (Supabase URL/anon/service role + Anthropic) — **Guilherme**
+- [ ] Adicionar Maguto como collaborator (falta GitHub username dele)
 
 ## 🟡 Semana 1 — Foundation (até reunião 2, 02/06)
 

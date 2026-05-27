@@ -19,8 +19,15 @@ Primeira sessão pós-reunião 1 do Clube. Montado o esqueleto do repo:
 gerou um `AGENTS.md` avisando pra consultar `node_modules/next/dist/docs/` antes de codar
 framework. Mantido esse aviso.
 
-**Pendente desta sessão:** Supabase (.env + client), primeira pull de CNPJs via BrasilAPI,
-criar repo GitHub privado + push + adicionar Maguto.
+Também nesta sessão:
+- Supabase client (`src/lib/supabase.ts`, browser + admin) + `.env.example` + `.env.local`
+  (gitignored). `build` e `tsc --noEmit` passam limpos.
+- Repo GitHub privado criado e no ar: https://github.com/guichicotripa/boreal (branch `main`).
+
+**Ainda pendente (ações fora do código):**
+- Guilherme: colar chaves reais no `.env.local` (Supabase + Anthropic).
+- Adicionar Maguto como collaborator (falta o GitHub username dele).
+- Primeira pull de CNPJs via BrasilAPI (Semana 1).
 
 ---
 
