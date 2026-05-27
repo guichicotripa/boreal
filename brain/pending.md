@@ -6,10 +6,10 @@
 
 ## 🔴 Agora (fechar o setup)
 
-- [x] Client helper Supabase em `src/lib/supabase.ts` + `.env.example`/`.env.local`
+- [x] Client helper Supabase + envs + smoke test (`scripts/check-supabase.mjs`) — **conexão confirmada**
 - [x] Repo GitHub privado `boreal` criado + push (branch `main`)
-- [ ] Colar chaves reais no `.env.local` (Supabase URL/anon/service role + Anthropic) — **Guilherme**
-- [ ] Adicionar Maguto como collaborator (falta GitHub username dele)
+- [x] Maguto (`magutolou`) convidado como collaborator — aguardando ele aceitar o convite
+- [ ] Colar `ANTHROPIC_API_KEY` no `.env.local` (Supabase já ok) — necessária na Semana 2 (LLM)
 
 ## 🟡 Semana 1 — Foundation (até reunião 2, 02/06)
 
