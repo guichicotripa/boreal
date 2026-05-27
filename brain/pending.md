@@ -14,9 +14,7 @@
 ## 🟡 Semana 1 — Foundation (até reunião 2, 02/06)
 
 - [x] BigQuery conectado — `br_me_cnpj` confirmado, 79k empresas SP ativas CNAE 24/25/28
-- [ ] Ingerir dataset: ~2.000 CNPJs via BigQuery (query abaixo) → tabelas Supabase
-      Query base: `estabelecimentos JOIN empresas` + `situacao_cadastral='2'` + `sigla_uf='SP'`
-      + filtro interior (excluir RMSP por `id_municipio`) + `LIMIT 2000`
+- [x] Ingerir dataset: 2.000 empresas + 4.929 sócios via `scripts/ingest-empresas.mjs`
 - [x] Schema Postgres: `empresa`, `socio`, `score_run` (migration 0001 aplicada)
 - [ ] Pipeline v0: input texto → filtro CNAE → lista bruta (ainda sem scoring)
 

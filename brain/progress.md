@@ -53,4 +53,26 @@ Segunda sessão. Foco: conectar a fonte de dados principal (Base dos Dados via B
 não `uf`. `id_municipio` é código IBGE — para nome da cidade vai precisar join
 com `br_bd_diretorios_brasil` ou tabela própria.
 
+## [2026-05-27] Guilherme | Ingest pipeline BQ → Supabase
+
+Terceira sessão. Ingest completo do dataset metalmecânica SP.
+
+Script: `scripts/ingest-empresas.mjs`
+
+- Query BQ: `estabelecimentos JOIN empresas LEFT JOIN socios`, filtro CNAE 24/25/28 + SP
+  + ATIVA (`situacao_cadastral='2'`) + sede (`identificador_matriz_filial='1'`)
+  + excluindo São Paulo capital (`id_municipio != '3550308'`)
+- Ordenado por `max_faixa_etaria DESC` — empresas com sócios mais velhos primeiro (risco)
+- Sócios buscados numa segunda query com `IN` (2 chamadas BQ, não 2000)
+- Upsert em lote de 100 no Supabase (service role, RLS bypass)
+
+**Resultado:**
+- ✅ 2.000 empresas inseridas na tabela `empresa`
+- ✅ 4.929 sócios inseridos na tabela `socio`
+
+**Aprendizado:**
+- `identificador_matriz_filial = '1'` garante uma linha por empresa (sem filiais duplicando)
+- `faixa_etaria` máxima dos sócios foi usada como critério de prioridade de ordenação
+- `municipio` armazenado como código IBGE por enquanto — nome da cidade fica pra Semana 2
+
 *(append novas entradas abaixo desta linha)*
