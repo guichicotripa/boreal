@@ -13,8 +13,11 @@
 
 ## 🟡 Semana 1 — Foundation (até reunião 2, 02/06)
 
-- [ ] Coletar dataset: ~2.000 CNPJs de CNAEs 24/25/28 no interior de SP via BrasilAPI
-- [ ] Schema Postgres: `empresa`, `socio`, `score_run`
+- [x] BigQuery conectado — `br_me_cnpj` confirmado, 79k empresas SP ativas CNAE 24/25/28
+- [ ] Ingerir dataset: ~2.000 CNPJs via BigQuery (query abaixo) → tabelas Supabase
+      Query base: `estabelecimentos JOIN empresas` + `situacao_cadastral='2'` + `sigla_uf='SP'`
+      + filtro interior (excluir RMSP por `id_municipio`) + `LIMIT 2000`
+- [x] Schema Postgres: `empresa`, `socio`, `score_run` (migration 0001 aplicada)
 - [ ] Pipeline v0: input texto → filtro CNAE → lista bruta (ainda sem scoring)
 
 ## 🟢 Semana 2 — Inteligência (até reunião 3, 09/06)
