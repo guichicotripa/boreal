@@ -103,3 +103,54 @@ Quarta sessão. A primeira coisa demoável: digita em linguagem natural, recebe 
 - No `.or()` do Supabase o wildcard do LIKE é `*`, não `%`.
 
 *(append novas entradas abaixo desta linha)*
+
+## [2026-05-28] Guilherme | Semana 2 — Score + Reasoner LLM batched
+
+Quinta sessão (continuação pós-compactação do contexto). Foco da noite: tirar o produto de
+"lista filtrada" e levar pra "research agent" — número + raciocínio por empresa.
+
+**Construído:**
+- `src/lib/scoring.ts` — função pura, score 0–100 em 4 dimensões:
+  - Idade dos sócios (max 40): faixa 9→40, 8→35, 7→25, 6→12, ≤5→0
+  - Antiguidade da empresa (max 30): ≥40 anos→30, 25–39→22, 15–24→12, <15→0
+  - Estabilidade societária (max 20): última entrada de sócio há >10a→20, 5–10a→12, neutro 10
+  - Porte / relevância (max 10): DEMAIS→10, EPP→6, ME→2
+  Retorna `{score, breakdown, sinais}` — sinais human-readable, ordenados por força.
+- `src/lib/reasoner.ts` — chamada Claude **batched** (Agent SDK, single call) pro top 15:
+  retorna `{empresa_id, one_liner, flags}`. Compacta dados antes de mandar (só o que importa
+  pro raciocínio) pra economizar tokens. Parsing robusto: extrai array JSON, descarta entradas
+  malformadas em vez de quebrar.
+- `src/app/api/search/route.ts` — score local após query DB + reasoner com `try/catch`
+  (se LLM falhar, devolve sem insights, busca continua viva).
+- `src/app/page.tsx` — badge grande à esquerda do card (cor por tier: vermelho ≥70, laranja
+  50–70, cinza <50), one-liner em itálico, flags como chips uppercase, sinais do score abaixo.
+  Indicador `top X analisadas por IA` no header.
+
+**Qualidade dos one-liners (amostra real):**
+- *"Ubirajara Rodrigues (80+) comanda desde 1973 empresa com R$52,5M de capital; único co-sócio entrou apenas em 2015."*
+- *"Joint venture germano-brasileira de 1975 com Hugo Klaus Grieser (80+) no quadro desde 1984 e composição inalterada há 42 anos."*
+- *"Quatro Flecks no quadro desde 2000, com matriarca Mariana (80+) e três filhos entre 51 e 70 anos."*
+
+Específicos. Citam nome, ano, capital. Zero genérico. Era exatamente o objetivo.
+
+**Problema crítico — latência:** Agent SDK gasta ~5–8s só pra spawnar Claude Code a cada call.
+Resultado:
+- parseQueryLLM: ~8s
+- reasonAboutEmpresas (top 15): ~80–100s
+- **Total ~90–110s por busca**
+
+Inaceitável pro demo de 60s. Decisão (`decisions.md`): trocar Agent SDK por Anthropic API direta
+(`@anthropic-ai/sdk`) assim que a key chegar. Latência projetada ~15–20s, já fica pronto pro Vercel.
+
+**Strategic frame confirmado nesta sessão:** Boreal **é o motor do Relay**. Arquitetura
+BQ → Supabase → score → reasoner é exatamente o que o Relay precisa. Tratar Semana 2+ como
+"prototipando o produto real, não só demo de competição".
+
+**Aprendizado:**
+- Score 100 nos top 8 não é bug — a query "fabricantes de máquinas no interior de SP" puxou
+  empresas já pré-ordenadas por idade dos sócios no ingest. O discriminador aparece quando
+  você scrolla pra baixo.
+- Batched LLM é a forma certa: 1 chamada com N empresas > N chamadas. Mas Agent SDK paga
+  startup overhead a cada call, anulando boa parte do ganho. API direta resolve.
+- "Top 15 analisadas por IA" no header é importante UX — usuário sabe que o resto é só
+  score determinístico.

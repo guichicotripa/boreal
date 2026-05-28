@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import type { SearchResponse, Empresa } from "@/lib/types";
+import { scoreTier } from "@/lib/scoring";
 
 const EXEMPLOS = [
   "metalmecânica no interior de SP com sócios acima de 60 anos",
   "fabricantes de máquinas e equipamentos fundados antes de 1990",
-  "empresas de esquadrias e estruturas metálicas com donos idosos",
+  "fabricantes de máquinas no interior de SP",
 ];
 
 const FAIXA_LABEL: Record<string, string> = {
@@ -103,7 +104,7 @@ export default function Home() {
         {/* Loading */}
         {loading && (
           <div className="mt-10 animate-pulse text-sm text-zinc-500">
-            Interpretando a consulta e filtrando empresas…
+            Interpretando consulta, filtrando empresas e analisando o top 15…
           </div>
         )}
 
@@ -120,6 +121,11 @@ export default function Home() {
             <div className="mb-4 flex items-center justify-between text-sm text-zinc-500">
               <span>
                 {res.count} empresa{res.count === 1 ? "" : "s"}
+                {res.reasoned && res.reasonedCount && (
+                  <span className="ml-2 text-emerald-500">
+                    · top {res.reasonedCount} analisadas por IA
+                  </span>
+                )}
               </span>
               <span className="flex gap-2">
                 {res.filters.cnaePrefixes.map((c) => (
@@ -161,33 +167,92 @@ export default function Home() {
   );
 }
 
+const TIER_STYLES = {
+  alto:  { box: "border-red-900/60 bg-red-950/20",     text: "text-red-300",    label: "Alto risco sucessório" },
+  medio: { box: "border-amber-900/60 bg-amber-950/20", text: "text-amber-300",  label: "Risco moderado" },
+  baixo: { box: "border-zinc-800 bg-zinc-900/30",      text: "text-zinc-400",   label: "Risco baixo" },
+} as const;
+
 function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
   const socios = e.socio ?? [];
+  const score = e.score?.score ?? 0;
+  const tier = scoreTier(score);
+  const tierStyle = TIER_STYLES[tier];
+  const sinais = e.score?.sinais ?? [];
+
   return (
     <li className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+      {/* Header com score em destaque */}
       <div className="flex items-start justify-between gap-4">
-        <div>
-          <h3 className="font-medium text-zinc-100">{e.razao_social}</h3>
-          {e.nome_fantasia && (
-            <p className="text-sm text-zinc-500">{e.nome_fantasia}</p>
-          )}
+        <div className="flex items-start gap-4">
+          {/* Score badge */}
+          <div className={`shrink-0 rounded-lg border ${tierStyle.box} px-3 py-2 text-center`}>
+            <div className={`text-2xl font-semibold tabular-nums ${tierStyle.text}`}>
+              {score}
+            </div>
+            <div className="mt-0.5 text-[10px] uppercase tracking-wider text-zinc-500">
+              score
+            </div>
+          </div>
+          {/* Nome + tier */}
+          <div>
+            <h3 className="font-medium text-zinc-100">{e.razao_social}</h3>
+            {e.nome_fantasia && (
+              <p className="text-sm text-zinc-500">{e.nome_fantasia}</p>
+            )}
+            <p className={`mt-1 text-xs ${tierStyle.text}`}>{tierStyle.label}</p>
+          </div>
         </div>
         <span className="shrink-0 font-mono text-xs text-zinc-600">
           {formatCnpj(e.cnpj)}
         </span>
       </div>
 
+      {/* One-liner do reasoner LLM (se rodou) */}
+      {e.insight?.one_liner && (
+        <p className="mt-3 text-sm italic leading-relaxed text-zinc-300">
+          &ldquo;{e.insight.one_liner}&rdquo;
+        </p>
+      )}
+
+      {/* Flags do reasoner */}
+      {e.insight?.flags && e.insight.flags.length > 0 && (
+        <div className="mt-2 flex flex-wrap gap-1.5">
+          {e.insight.flags.map((f, i) => (
+            <span
+              key={i}
+              className="rounded-full bg-zinc-800 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-zinc-300"
+            >
+              {f}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* Sinais do score determinístico (bullets curtos) */}
+      {sinais.length > 0 && (
+        <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs text-zinc-500">
+          {sinais.map((s, i) => (
+            <li key={i} className="flex items-center gap-1.5">
+              <span className="h-1 w-1 rounded-full bg-zinc-600" />
+              {s}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {/* Metadados da empresa */}
       <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-500">
         <span>CNAE {e.cnae_principal}</span>
         <span>Mun. {e.municipio} / {e.uf}</span>
         <span>Fundada em {anoFundacao(e.data_inicio_atividade)}</span>
         {e.capital_social != null && (
-          <span>
-            Capital R$ {Number(e.capital_social).toLocaleString("pt-BR")}
-          </span>
+          <span>Capital R$ {Number(e.capital_social).toLocaleString("pt-BR")}</span>
         )}
+        {e.porte && <span>Porte {e.porte}</span>}
       </div>
 
+      {/* Sócios */}
       {socios.length > 0 && (
         <div className="mt-3 border-t border-zinc-800 pt-3">
           <p className="mb-1 text-xs uppercase tracking-wide text-zinc-600">

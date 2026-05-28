@@ -72,3 +72,54 @@ mesma assinatura. A rota tenta o LLM e cai no heurístico se falhar — a demo n
 ---
 
 *(append novas decisões abaixo)*
+
+---
+
+## [2026-05-28] Score determinístico + Reasoner LLM batched
+
+**Contexto:** Semana 2. O v0 filtrava empresas mas não diferenciava qualidade. Pro Loom de 60s
+mostrar "research agent" em vez de "search box", precisava de número + raciocínio por empresa.
+
+**Decisão:** Score determinístico (4 dimensões somáveis, max 100) na lista inteira + reasoner
+LLM **batched** (1 chamada Claude pro top 15) com one-liner narrativo + flags. Dossier vira
+camada 3 (clique → expande), não centerpiece.
+
+**Por quê:**
+- Score local resolve "rank visual" sem custo de LLM
+- Batched: 1 call → N análises >> N calls (latência e custo)
+- One-liner cita nome, ano, capital → prova que a IA leu AQUELA empresa específica
+- Mantém compatibilidade com Relay (mesma arquitetura: score local + LLM enrichment)
+
+**Status:** ✅ Implementada. Qualidade dos outputs validada com dados reais.
+
+---
+
+## [2026-05-28] Trocar Agent SDK → Anthropic API direta (quando a key chegar)
+
+**Contexto:** Reasoner funciona, mas latência ficou em 90–110s por busca. Causa: Agent SDK
+spawna subprocesso Claude Code a cada call (~5–8s overhead/call).
+
+**Decisão:** Manter Agent SDK até a `ANTHROPIC_API_KEY` chegar; depois refatorar `llm.ts` e
+`reasoner.ts` pra `@anthropic-ai/sdk` direto (Sonnet 4.6). Interface pública das funções
+fica idêntica — só troca a implementação interna.
+
+**Trade-off:**
+- Ganho: latência projetada ~15–20s total (5x mais rápido). Demo viável.
+- Custo: ~$0.02 por busca em vez de zero. Não material no escopo da competição.
+- Bônus: já fica pronto pro deploy Vercel (Agent SDK não funciona lá).
+
+**Status:** 🟡 Pendente da key.
+
+---
+
+## [2026-05-28] Boreal = motor do Relay (não só competição)
+
+**Contexto:** Após o reasoner funcionar, ficou claro que a arquitetura BQ → Supabase → score
+→ reasoner não é específica da competição — é o que o Relay precisa pra deal sourcing em escala.
+
+**Decisão:** Tratar Semana 2+ do Boreal já com o Relay em mente:
+- Heurística de score = v0 do `score_run` do Relay (mesma tabela, mesma lógica)
+- Reasoner = pattern "agent lê cada item e decide" — base do enrichment do Relay
+- Polish puramente cosmético pra demo vai pra Semana 3, mas só se não comprometer reuso.
+
+**Status:** ✅ Decisão estratégica registrada.

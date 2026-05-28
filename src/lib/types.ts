@@ -28,6 +28,12 @@ export type Empresa = {
   capital_social: number | null;
   porte: string | null;
   socio?: Socio[];
+  // Adicionados em runtime pelo /api/search (não vêm do banco):
+  score?: import("./scoring").ScoreResult;
+  insight?: {
+    one_liner: string;
+    flags: string[];
+  };
 };
 
 export type SearchResponse = {
@@ -35,4 +41,6 @@ export type SearchResponse = {
   parsedBy: "llm" | "heuristic";
   count: number;
   empresas: Empresa[];
+  reasoned: boolean;          // se o reasoner LLM rodou e enriqueceu o top N
+  reasonedCount?: number;     // quantas empresas receberam insight
 };

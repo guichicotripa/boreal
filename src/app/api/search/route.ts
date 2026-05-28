@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase";
 import { parseQueryLLM } from "@/lib/llm";
 import { parseQueryHeuristic } from "@/lib/query-parser";
+import { calcScore } from "@/lib/scoring";
+import { reasonAboutEmpresas } from "@/lib/reasoner";
+import type { Empresa } from "@/lib/types";
 
 // Agent SDK spawna um subprocesso (Claude Code) → precisa do runtime Node, não Edge.
 export const runtime = "nodejs";
@@ -68,10 +71,37 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
+  // ── 3. Score determinístico por empresa, ordenar desc ────────────────────────
+  const empresas = (data ?? []) as Empresa[];
+  const scored = empresas
+    .map((e) => ({ ...e, score: calcScore(e) }))
+    .sort((a, b) => (b.score?.score ?? 0) - (a.score?.score ?? 0));
+
+  // ── 4. Reasoner LLM batched: one-liner + flags pro top 15 ────────────────────
+  // Roda em paralelo com a resposta — se falhar, devolve sem insights (não quebra busca).
+  let reasoned = false;
+  let reasonedCount = 0;
+  try {
+    const insights = await reasonAboutEmpresas(scored, 15);
+    const byId = new Map(insights.map((i) => [i.empresa_id, i]));
+    for (const e of scored) {
+      const ins = byId.get(e.id);
+      if (ins) {
+        e.insight = { one_liner: ins.one_liner, flags: ins.flags };
+        reasonedCount++;
+      }
+    }
+    reasoned = reasonedCount > 0;
+  } catch (err) {
+    console.error("Reasoner falhou (seguindo sem insights):", (err as Error).message);
+  }
+
   return NextResponse.json({
     filters,
     parsedBy,
-    count: data?.length ?? 0,
-    empresas: data ?? [],
+    count: scored.length,
+    empresas: scored,
+    reasoned,
+    reasonedCount,
   });
 }
