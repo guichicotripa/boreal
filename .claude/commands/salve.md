@@ -65,7 +65,17 @@ git status --short
 
 Se um secret aparecer no staging, **pare e remova** antes de commitar.
 
-## Passo 4 — Commit
+## Passo 4 — Commit (sempre na branch pessoal, nunca na main)
+
+Antes de commitar, confirme a branch:
+```
+git branch --show-current
+```
+
+- Se está numa branch pessoal (`gui/...` ou `maguto/...`) → segue normal.
+- **Se está na `main`** (alguém pulou o `/boreal`): crie a branch agora antes de commitar.
+  Descubra a identidade (`git config user.name`) → prefixo `gui` ou `maguto` →
+  `git checkout -b <prefixo>/<slug>` e avise: `🌿 Você estava na main; movi pra <branch>.`
 
 Stage os arquivos relevantes (preferir nomear, evitar `git add .` cego) e commite.
 Mensagem em inglês, dizendo **o quê + porquê** (vira o changelog da jornada pro Loom):
@@ -79,22 +89,40 @@ Convenções de tipo: `feat:`, `fix:`, `chore:`, `docs:`, `data:` (ingest/pipeli
 
 Um commit por mudança lógica quando fizer sentido — não um megacommit.
 
-## Passo 5 — Push (com confirmação)
+## Passo 5 — Integrar com a main e publicar (automático mas avisando)
 
-Pergunte antes de pushar: **"Push pra origin/main agora?"**
+Modo: **executa os passos de git sozinho, avisando cada um em 1 linha**. A única confirmação
+pedida é antes de publicar pro remoto (push). O Maguto aprende vendo o que acontece.
 
-Se sim:
-```
-git push origin main
-```
+1. **Rebase com a main remota** (traz o que o outro pushou, evita o conflito clássico):
+   ```
+   git fetch origin
+   git pull --rebase origin main
+   ```
+   Avise: `🔄 Rebase com a main: sem conflitos.` ou, se houver conflito:
+   `⚠️ Conflito em <arquivos> — pare e resolva. Nunca use --force.`
+   Se conflitar, **não prossiga** pro push até estar resolvido.
 
-Se falhar com "rejected" (Maguto pushou algo):
-```
-git pull --rebase origin main
-git push origin main
-```
+2. **Pergunte antes de publicar:** **"Push da branch `<nome>` + abrir PR pra main?"**
 
-Nunca `--force`.
+3. Se sim:
+   ```
+   git push origin <branch>
+   ```
+   Avise: `⬆️ Branch publicada.`
+   Então ofereça abrir o PR (precisa do `gh` CLI):
+   ```
+   gh pr create --fill --base main --head <branch>
+   ```
+   - Se `gh` existe e autenticado → cria e mostra a URL do PR.
+   - Se `gh` não existe → mostre o link manual:
+     `https://github.com/guichicotripa/boreal/compare/main...<branch>?expand=1`
+
+4. **Nunca** `git push origin main` direto, **nunca** `--force`. A main só recebe via PR mergeado.
+
+> Por que PR e não push direto na main? Assim o outro vê o que mudou antes de entrar, a main
+> nunca quebra, e fica um histórico do que cada um fez (útil pro Loom). Merge do PR pode ser
+> feito pelo GitHub (botão) ou no fim, quando os dois revisarem juntos.
 
 ## Passo 6 — Confirmar
 
@@ -109,8 +137,9 @@ Atualizado:
   [brain/decisions.md  (se houve)]
   [CLAUDE.md          (se mudou estado)]
 
+Branch: <branch> (você = gui|maguto)
 Commit: <hash> <mensagem>
-[Pushed para origin/main. | Não pushei — commit local só.]
+[PR aberto: <url> | Branch publicada, PR pendente | Não publiquei — commit local só.]
 
 Próximo passo: <o foco da próxima sessão, do pending.md>
 ```
@@ -121,7 +150,8 @@ Próximo passo: <o foco da próxima sessão, do pending.md>
 
 - **`progress.md` é append-only** — nunca sobrescrever entrada anterior
 - **Nunca commitar secret** — checar staging no Passo 3
+- **Nunca commitar/pushar na `main`** — sempre branch pessoal + PR
 - **Push só com confirmação** — respeita a regra de não publicar sem autorização
-- **Conflito de push** → `pull --rebase`, nunca `--force`
+- **Conflito de rebase** → parar e resolver, nunca `--force`
 - **Commits específicos em inglês** — "feat: ingest 2000 empresas via BigQuery" > "update"
 - Tom direto, sem explicação desnecessária no output

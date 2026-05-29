@@ -34,7 +34,10 @@ git status --short
 
 Se `.env.local` ou `.gcp/*.json` aparecerem no staging → **parar e remover**.
 
-## Passo 4 — Commit
+## Passo 4 — Commit (na branch pessoal, nunca na main)
+
+Confirmar `git branch --show-current`. Se estiver na `main`, criar branch pessoal antes
+(`git config user.name` → `gui`/`maguto` → `git checkout -b <prefixo>/<slug>`).
 
 ```
 git add <arquivos> brain/
@@ -43,16 +46,21 @@ git commit -m "<tipo>: <resumo específico em inglês>"
 
 Tipos: `feat:` `fix:` `chore:` `docs:` `data:`. Um commit por mudança lógica.
 
-## Passo 5 — Push (com confirmação)
+## Passo 5 — Integrar e publicar (automático, avisando)
 
-Perguntar "Push pra origin/main agora?". Se sim, `git push origin main`.
-Conflito → `git pull --rebase origin main` → push. Nunca `--force`.
+1. `git fetch origin` + `git pull --rebase origin main` → avisa "rebase ok" ou para se conflitar.
+2. Perguntar: "Push da branch `<nome>` + abrir PR pra main?"
+3. Se sim: `git push origin <branch>` → `gh pr create --fill --base main --head <branch>`
+   (sem `gh`: mostrar link `compare/main...<branch>`).
+4. **Nunca** `push origin main` direto, **nunca** `--force`. Main só via PR.
+
+(Detalhe completo em `.claude/commands/salve.md`.)
 
 ## Passo 6 — Confirmar
 
-Resumo do que foi atualizado + hash do commit + status do push + próximo passo.
+Resumo do que foi atualizado + branch + hash do commit + status do PR + próximo passo.
 
 ## Regras
 
-- `progress.md` append-only · nunca commitar secret · push só com confirmação ·
-  conflito → rebase · commits específicos em inglês · tom direto.
+- `progress.md` append-only · nunca commitar secret · **nunca commitar/pushar na main** ·
+  push só com confirmação · conflito → resolver (nunca `--force`) · commits em inglês · tom direto.

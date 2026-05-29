@@ -1,23 +1,23 @@
-// Reasoner — gera um one-liner narrativo + flags por empresa via Claude (batched).
+// Reasoner — gera um one-liner narrativo + flags por empresa via Anthropic API direta.
 //
 // Roda DEPOIS do score determinístico. Pega top N empresas, monta UMA chamada
 // pro Claude com todos os dados estruturados, e devolve uma análise curta de
 // cada uma. É o que diferencia "lista filtrada" de "research agent": prova que
 // o modelo leu e raciocinou sobre AQUELA empresa, não só matched filtros.
-//
-// Mesma estratégia de auth do llm.ts (Agent SDK, assinatura local, não Vercel).
 
-import { query } from "@anthropic-ai/claude-agent-sdk";
+import Anthropic from "@anthropic-ai/sdk";
 import type { Empresa } from "./types";
 
-if (!process.env.ANTHROPIC_API_KEY) {
-  delete process.env.ANTHROPIC_API_KEY;
+let _client: Anthropic | null = null;
+function getClient() {
+  if (!_client) _client = new Anthropic();
+  return _client;
 }
 
 export type EmpresaInsight = {
   empresa_id: string;
-  one_liner: string;    // 1 frase, ~20–25 palavras, PT-BR, específica à empresa
-  flags: string[];      // 2–3 tags curtas, ex: ["sócios 80+", "quadro travado"]
+  one_liner: string;  // 1 frase, ~20–25 palavras, PT-BR, específica à empresa
+  flags: string[];    // 2–3 tags curtas, ex: ["sócios 80+", "quadro travado"]
 };
 
 const SYSTEM =
@@ -74,26 +74,31 @@ Responda APENAS com este JSON (array, mesma ordem):
 Dados:
 ${JSON.stringify(sample, null, 2)}`;
 
-  let raw: string | null = null;
-  for await (const message of query({
-    prompt,
-    options: { maxTurns: 1, allowedTools: [], systemPrompt: SYSTEM },
-  })) {
-    if (message.type === "result" && message.subtype === "success") {
-      raw = message.result;
-    }
-  }
+  const message = await getClient().messages.create({
+    model: "claude-sonnet-4-6",
+    max_tokens: 4096,
+    system: SYSTEM,
+    messages: [{ role: "user", content: prompt }],
+  });
 
-  if (!raw) throw new Error("Reasoner: Agent SDK não retornou resultado");
+  // Log de uso pra monitorar custo real
+  const usage = message.usage;
+  console.log(
+    `[reasoner] tokens: ${usage.input_tokens} in / ${usage.output_tokens} out` +
+    ` — custo estimado: $${((usage.input_tokens * 3 + usage.output_tokens * 15) / 1_000_000).toFixed(4)}`
+  );
 
-  // Extrai o array JSON do output (LLM pode envolver em texto ou markdown).
+  const raw =
+    message.content[0].type === "text" ? message.content[0].text : "";
+
+  // Extrai o array JSON do output
   const match = raw.match(/\[[\s\S]*\]/);
   if (!match) throw new Error("Reasoner: resposta sem array JSON: " + raw.slice(0, 200));
 
   const parsed = JSON.parse(match[0]);
   if (!Array.isArray(parsed)) throw new Error("Reasoner: resposta não é array");
 
-  // Normaliza — descarta entradas malformadas em vez de quebrar.
+  // Normaliza — descarta entradas malformadas em vez de quebrar
   return parsed
     .filter((x): x is Record<string, unknown> => x !== null && typeof x === "object")
     .map((x) => ({

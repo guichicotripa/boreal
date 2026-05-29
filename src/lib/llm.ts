@@ -1,15 +1,16 @@
-// Parser por LLM via Claude Agent SDK.
-// Usa a autenticação do Claude Code (assinatura) — funciona LOCALMENTE, onde o
-// Claude Code está logado. NÃO funciona em deploy (Vercel) sem ANTHROPIC_API_KEY.
-// Quando for pro Vercel, trocar por chamada direta à Anthropic API (mesma interface).
-import { query } from "@anthropic-ai/claude-agent-sdk";
+// Parser NL → filtros via Anthropic API direta.
+// Usa ANTHROPIC_API_KEY do .env.local — funciona local e em deploy (Vercel).
+// Substitui o Agent SDK (que dependia do Claude Code logado e tinha ~8s de overhead).
+
+import Anthropic from "@anthropic-ai/sdk";
 import type { SearchFilters } from "./types";
 
-// O .env.local tem ANTHROPIC_API_KEY vazia ("") por enquanto. Uma key vazia pode
-// confundir o SDK (tentar autenticar com ela em vez de cair na assinatura do
-// Claude Code). Se estiver vazia, removemos do ambiente → força auth por assinatura.
-if (!process.env.ANTHROPIC_API_KEY) {
-  delete process.env.ANTHROPIC_API_KEY;
+// Lazy: cria o cliente na primeira chamada, não no load do módulo.
+// Garante que ANTHROPIC_API_KEY já está no process.env quando o cliente é criado.
+let _client: Anthropic | null = null;
+function getClient() {
+  if (!_client) _client = new Anthropic();
+  return _client;
 }
 
 const SYSTEM =
@@ -31,23 +32,21 @@ Regras:
 - maxAnoFundacao: ano máximo de fundação (empresa fundada ATÉ esse ano = empresa antiga), ou null. "fundada antes de 1995"→1995, "mais de 30 anos de empresa"→${anoAtual - 30}, "empresa antiga/tradicional"→${anoAtual - 25}.
 - limit: número de resultados desejado. Padrão 50, máximo 100.`;
 
-  let raw: string | null = null;
-  for await (const message of query({
-    prompt,
-    options: { maxTurns: 1, allowedTools: [], systemPrompt: SYSTEM },
-  })) {
-    if (message.type === "result" && message.subtype === "success") {
-      raw = message.result;
-    }
-  }
+  const message = await getClient().messages.create({
+    model: "claude-haiku-4-5", // tarefa trivial (JSON de filtros) → Haiku: 3-4x mais rápido, 6x mais barato
+    max_tokens: 256,
+    system: SYSTEM,
+    messages: [{ role: "user", content: prompt }],
+  });
 
-  if (!raw) throw new Error("Agent SDK não retornou resultado");
+  const raw =
+    message.content[0].type === "text" ? message.content[0].text : "";
 
   const match = raw.match(/\{[\s\S]*\}/);
   if (!match) throw new Error("Resposta sem JSON: " + raw.slice(0, 200));
   const parsed = JSON.parse(match[0]);
 
-  // Normaliza / valida — nunca confiar cegamente no output do LLM
+  // Normaliza — nunca confiar cegamente no output do LLM
   return {
     cnaePrefixes:
       Array.isArray(parsed.cnaePrefixes) && parsed.cnaePrefixes.length > 0
@@ -58,6 +57,8 @@ Regras:
     maxAnoFundacao:
       typeof parsed.maxAnoFundacao === "number" ? parsed.maxAnoFundacao : null,
     limit:
-      typeof parsed.limit === "number" ? Math.min(Math.max(parsed.limit, 1), 100) : 50,
+      typeof parsed.limit === "number"
+        ? Math.min(Math.max(parsed.limit, 1), 100)
+        : 50,
   };
 }
