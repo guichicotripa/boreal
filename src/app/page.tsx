@@ -61,12 +61,20 @@ export default function Home() {
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
       <main className="mx-auto max-w-4xl px-6 py-16">
         {/* Header */}
-        <header className="mb-10">
-          <h1 className="text-4xl font-semibold tracking-tight">Boreal</h1>
-          <p className="mt-2 text-zinc-400">
-            Deal sourcing para PE/M&amp;A — metalmecânica com risco sucessório.
-            Descreva o que procura em linguagem natural.
-          </p>
+        <header className="mb-10 flex items-start justify-between gap-4">
+          <div>
+            <h1 className="text-4xl font-semibold tracking-tight">Boreal</h1>
+            <p className="mt-2 text-zinc-400">
+              Deal sourcing para PE/M&amp;A — metalmecânica com risco sucessório.
+              Descreva o que procura em linguagem natural.
+            </p>
+          </div>
+          <a
+            href="/pipeline"
+            className="mt-1 shrink-0 rounded-lg border border-zinc-700 px-3 py-2 text-sm text-zinc-300 transition-colors hover:border-zinc-500 hover:text-white"
+          >
+            Pipeline →
+          </a>
         </header>
 
         {/* Search box */}
@@ -259,9 +267,10 @@ function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
             <p className={`mt-1 text-xs ${tierStyle.text}`}>{tierStyle.label}</p>
           </div>
         </div>
-        <span className="shrink-0 font-mono text-xs text-zinc-600">
-          {formatCnpj(e.cnpj)}
-        </span>
+        <div className="flex shrink-0 flex-col items-end gap-1">
+          <span className="font-mono text-xs text-zinc-600">{formatCnpj(e.cnpj)}</span>
+          <SalvarButton empresaId={e.id} />
+        </div>
       </div>
 
       {/* One-liner do reasoner LLM (se rodou) */}
@@ -350,6 +359,40 @@ function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
       {/* Dossiê — memo instantâneo sob demanda */}
       <DossierPanel empresa={e} />
     </li>
+  );
+}
+
+function SalvarButton({ empresaId }: { empresaId: string }) {
+  const [estado, setEstado] = useState<"idle" | "salvando" | "salvo">("idle");
+
+  async function salvar() {
+    if (estado === "salvo") return;
+    setEstado("salvando");
+    try {
+      const r = await fetch("/api/oportunidade", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ empresaId }),
+      });
+      if (!r.ok) throw new Error();
+      setEstado("salvo");
+    } catch {
+      setEstado("idle");
+    }
+  }
+
+  return (
+    <button
+      onClick={salvar}
+      disabled={estado !== "idle"}
+      className={`rounded-md px-2 py-1 text-[11px] font-medium transition-colors ${
+        estado === "salvo"
+          ? "text-emerald-400"
+          : "border border-zinc-700 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200"
+      }`}
+    >
+      {estado === "salvo" ? "✓ no pipeline" : estado === "salvando" ? "salvando…" : "+ salvar"}
+    </button>
   );
 }
 

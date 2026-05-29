@@ -74,6 +74,20 @@ export type DossierResponse = {
   analise: DossierAnalise;
 };
 
+export type EstagioOportunidade = "a_analisar" | "qualificada" | "apresentada" | "descartada";
+
+export type Oportunidade = {
+  id: string;
+  estagio: EstagioOportunidade;
+  notas: string | null;
+  created_at: string;
+  empresa: Pick<
+    Empresa,
+    "id" | "cnpj" | "razao_social" | "nome_fantasia" | "cnae_principal_desc"
+    | "municipio" | "uf" | "capital_social" | "porte" | "telefone" | "email"
+  >;
+};
+
 export type SearchResponse = {
   filters: SearchFilters;
   parsedBy: "llm" | "heuristic";

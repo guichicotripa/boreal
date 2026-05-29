@@ -51,6 +51,22 @@ export async function POST(req: NextRequest) {
 
   try {
     const research = await investigarEmpresa(empresa);
+
+    // Grava o resultado no score_run — histórico versionado do scoring (gravar-tudo, base do moat).
+    // Não bloqueia a resposta se falhar.
+    supabase
+      .from("score_run")
+      .insert({
+        empresa_id: empresaId,
+        score: research.score_v1,
+        breakdown: empresa.score?.breakdown ?? null,
+        sinais: research.sinais,
+        model: "research-agent/v1 (claude via assinatura)",
+      })
+      .then(({ error: e }) => {
+        if (e) console.error("score_run insert falhou:", e.message);
+      });
+
     return NextResponse.json({ research });
   } catch (err) {
     console.error("Research falhou:", (err as Error).message);
