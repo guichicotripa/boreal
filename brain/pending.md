@@ -37,13 +37,28 @@
 - [x] **Fluxo de colaboração automático** nos skills `/boreal` e `/salve` (branch por pessoa,
       rebase, PR via `gh`, "automático mas avisa").
 
-## ⚪ Semana 3 — Polish + Loom (até 14/06)
+## 🟢 Semana 2.5 — Research-agent (score v1) ✅ CONCLUÍDA
 
-- [x] **Cache de demos** — `demo-cache.json` + `build-demo-cache.mjs`. 3 queries canônicas
-      instantâneas (0.04s) vs busca ao vivo (38s). Loading com steps progressivos. Funciona no Vercel.
-- [ ] Deploy no Vercel (ver bloco 🔴)
-- [ ] UI lapidada + micro-animations no fluxo input → loading → output
-- [ ] 1 demo ao vivo na home além dos 3 canned
+- [x] **Research-agent** — `src/lib/research.ts` + `/api/research`. Eleva score v0→v1 com sinais
+      qualitativos da web (Playbook §11). Via **Agent SDK + WebSearch nativo na ASSINATURA**
+      (truque: `env` do query() sem ANTHROPIC_API_KEY → Claude Code cai no login). **Custo zero.**
+      Híbrido: LLM identifica sinais da lista fechada + cita fonte; código aplica pesos. Bidirecional.
+- [x] **UI**: botão "🔍 Investigar com IA", badge muda v0→v1 ao vivo com delta (↑/↓), sinais com
+      peso colorido + link de fonte, resumo. Validado por Guilherme.
+- [x] **Cache de research** — `research-cache.json` + `build-research-cache.mjs`. Top 3 dos demos
+      pré-investigado → clique instantâneo (0.5s vs ~68s ao vivo). PR #6 mergeado.
+
+## ⚪ Semana 3 — Polish + Loom (até 14/06) ← FOCO ATUAL
+
+- [x] **Cache de demos** — `demo-cache.json` + `build-demo-cache.mjs`. Queries instantâneas.
+- [ ] **Polish da hierarquia visual do card** — acumulou muito (score, one-liner, flags, sinais v0,
+      setor, metadados, contato, sócios, research, dossiê). Precisa hierarquia pro vídeo.
+- [ ] **Narrativa da home** — header amarrando a tese Silver Tsunami / sucessão.
+- [ ] **Demo dos dois lados** — cachear 1 empresa do meio (score 75-89) que o research faça SUBIR
+      (achar banco de investimento / menção a venda), pra mostrar IA achando alvo escondido além do
+      caso de rebaixamento (PRENSA 100→75).
+- [ ] Deploy no Vercel — ⚠️ research-agent usa Agent SDK (assinatura), NÃO funciona no Vercel.
+      No deploy: ou research só via cache, ou trocar por Anthropic API (web search tool, ~$0.22/empresa).
 - [ ] Roteiro do Loom escrito, gravado, editado
 - [ ] **Submeter até sábado 14/06**
 
