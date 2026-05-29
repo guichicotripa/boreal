@@ -108,7 +108,10 @@ fica idêntica — só troca a implementação interna.
 - Custo: ~$0.02 por busca em vez de zero. Não material no escopo da competição.
 - Bônus: já fica pronto pro deploy Vercel (Agent SDK não funciona lá).
 
-**Status:** 🟡 Pendente da key.
+**Status:** ✅ Implementada (29/05). Latência real ~31–38s (não 15–20 — o reasoner do top 15 é o
+gargalo, não o overhead de subida). Custo real ~$0.04/busca. Parser foi pra Haiku (trivial),
+reasoner ficou em Sonnet (qualidade). Gotcha: `ANTHROPIC_API_KEY` vazia como var de sistema
+mascarava o `.env.local` — resolvido com dotenv `override:true` no `next.config.ts`.
 
 ---
 
@@ -123,3 +126,42 @@ fica idêntica — só troca a implementação interna.
 - Polish puramente cosmético pra demo vai pra Semana 3, mas só se não comprometer reuso.
 
 **Status:** ✅ Decisão estratégica registrada.
+
+---
+
+## [2026-05-29] Fluxo de colaboração automático nos skills — "automático mas avisa"
+
+**Contexto:** Gui e Maguto trabalham em paralelo; já houve um conflito de rebase. Precisava de um
+fluxo de git à prova de erro pra dupla iniciante, sem virar overhead manual.
+
+**Decisão:** Embutir o git colaborativo nos skills `/boreal` (boot) e `/salve` (flush): detecção de
+identidade via `git config`, branch pessoal automática, rebase no boot, push + PR via `gh` no fim.
+Main só recebe via PR. Modo escolhido: **"automático mas avisa"** (executa sozinho, mostra cada
+passo em 1 linha) — entre "totalmente automático" e "guiado com confirmação". Push sempre pede OK.
+
+**Por quê:** remove a chance de erro (commit direto na main) sem esconder o que acontece — o Maguto
+aprende o fluxo profissional vendo. Divisão de domínio (Gui motor / Maguto interface, `types.ts`
+como contrato) minimiza conflito de merge.
+
+**Status:** ✅ Implementada e validada (PRs #1–4 passaram pelo fluxo).
+
+---
+
+## [2026-05-29] Enrichment em regimes + moat do banco = loop de outcomes
+
+**Contexto:** Ao planejar o enrichment, surgiu a pergunta (do Gui) de como isso escala pro Relay e
+como o banco vira diferencial competitivo.
+
+**Decisão:**
+- **Enrichment tem 3 regimes:** N0 (resolver códigos) é determinístico/barato → no **ingest** (JOIN),
+  automático. N1 (site/web) é falível/lento → **job assíncrono** idempotente futuro, não bloqueia
+  (ausência de site é, ela mesma, sinal). N2 (estimar EBITDA por proxy) **não fazer** — dado
+  inventado num pitch pra quem entende de PE.
+- **Moat ≠ dados públicos.** Receita é commodity (qualquer um puxa do BigQuery). O defensável é o
+  **loop de outcomes**: registro acumulado de quem foi contatado, respondeu, vendeu, a que múltiplo
+  — training data que um entrante não compra. Implica tabela de interações/outcomes no futuro (Relay),
+  além do `score_run` já versionado.
+- **Dossiê híbrido:** dados determinísticos em código + análise narrativa no LLM. Mais barato,
+  rápido e os dados não alucinam.
+
+**Status:** ✅ Registrada. Aplicação no Relay documentada em `segundo-cerebro/memory/projects/relay.md`.
