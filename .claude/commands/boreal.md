@@ -37,6 +37,40 @@ Se quiser confirmar o estado do banco e for rápido, cheque quantas linhas exist
 (`scripts/check-supabase.mjs` confirma conexão; uma contagem em `empresa`/`socio` confirma dados).
 **Nunca imprima valores de `.env.local`** — só diga quais variáveis estão setadas, se relevante.
 
+## Fase 1.6 — Garantir branch de trabalho segura (colaboração Gui + Maguto)
+
+O Boreal é trabalhado por duas pessoas em paralelo. Regra de ouro: **ninguém commita direto na `main`** —
+cada um trabalha na própria branch e integra via rebase. Este passo automatiza isso. Modo: **executa
+sozinho, mas avisa cada ação em 1 linha** (o Maguto aprende vendo).
+
+1. **Descobrir quem é** (define o prefixo da branch):
+   ```
+   git config user.name
+   ```
+   - Nome contém "Maguto"/"maguto" (ou email do Maguto) → prefixo `maguto`
+   - Caso contrário → prefixo `gui`
+
+2. **Sincronizar a `main` com o remoto** (pra começar atualizado):
+   ```
+   git fetch origin
+   ```
+
+3. **Garantir que você está numa branch pessoal, não na `main`:**
+   - Se a branch atual é `main`:
+     - Atualize a main local: `git pull --rebase origin main`
+     - Crie/troque pra branch pessoal do dia: `git checkout -b <prefixo>/<slug-do-foco>`
+       (ex: `gui/dossier`, `maguto/ui-cards` — use o foco do `pending.md` como slug; se não souber ainda, use `<prefixo>/wip`)
+     - Avise: `🌿 Criei a branch <nome> a partir da main atualizada.`
+   - Se já está numa branch pessoal (`gui/...` ou `maguto/...`):
+     - Traga o que entrou na main sem perder seu trabalho: `git pull --rebase origin main`
+     - Avise: `🌿 Você está em <branch>; rebaseei com a main (sem conflitos | ⚠️ resolva os conflitos antes de seguir).`
+   - Se há mudanças não commitadas que atrapalham o checkout/rebase:
+     - **NÃO** descarte nada. Avise: `⚠️ Há mudanças não salvas — rode /salve antes de trocar de branch, ou me peça pra dar stash.`
+
+4. **Se der conflito no rebase:** pare, liste os arquivos em conflito, e ofereça ajuda. Nunca use `--force` nem `--abort` sem o ok do usuário.
+
+Resumo de 1 linha do estado colaborativo entra no briefing (campo `BRANCH` abaixo).
+
 ## Fase 2 — Briefing compacto
 
 Output exato neste formato (preencha com o que carregou):
@@ -45,6 +79,8 @@ Output exato neste formato (preencha com o que carregou):
 === BOREAL — DD/MM/YYYY ===
 
 PROJETO: AI research agent · deal sourcing PE/M&A · metalmecânica interior SP (CNAE 24/25/28)
+
+BRANCH: <branch atual> (você = gui|maguto) · [sincronizada com main | ⚠️ conflito a resolver]
 
 ESTADO ATUAL:
   ✅ [o que já está pronto — 2-4 linhas]

@@ -33,6 +33,17 @@ git branch --show-current
 
 Nunca imprimir valores de `.env.local`.
 
+## Fase 1.6 — Branch de trabalho segura (Gui + Maguto)
+
+Ninguém commita na `main`. Automático, mas avisa cada passo em 1 linha:
+1. `git config user.name` → prefixo `gui` ou `maguto`
+2. `git fetch origin`
+3. Se está na `main` → criar branch pessoal (`<prefixo>/<foco>`) a partir da main atualizada.
+   Se já está em branch pessoal → `git pull --rebase origin main`.
+4. Conflito → parar e avisar, nunca `--force`.
+
+(Detalhe completo em `.claude/commands/boreal.md`.)
+
 ## Fase 2 — Briefing compacto
 
 ```

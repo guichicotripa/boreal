@@ -52,11 +52,22 @@ Pro fluxo do Boreal, o caminho 1 basta — clonou, funciona.
 
 ## Onboarding do Maguto (resumo)
 
-1. `git clone https://github.com/<owner>/boreal`
+1. `git clone https://github.com/guichicotripa/boreal`
 2. `cd boreal && npm install`
-3. Copiar `.env.example` → `.env.local` e preencher as chaves (pedir ao Guilherme)
-4. Abrir Claude Code na pasta → digitar `/boreal`
-5. Trabalhar → `/salve` no fim
+3. **Identificar-se no git** (uma vez só — define o nome das suas branches):
+   ```
+   git config user.name "Maguto"
+   git config user.email "<seu-email>"
+   ```
+4. Copiar `.env.example` → `.env.local` e preencher as chaves (pedir ao Guilherme — **nunca** colar chave em chat/commit)
+5. Abrir Claude Code na pasta → digitar `/boreal` (ele te coloca numa branch própria automaticamente)
+6. Trabalhar → `/salve` no fim (ele faz rebase + push da sua branch + abre PR)
+
+> **Como vocês trabalham em paralelo:** cada um na sua branch (`gui/...`, `maguto/...`), a `main`
+> só recebe via PR. Os skills cuidam do git sozinhos — você não precisa decorar comando.
+> Divisão sugerida: **Gui no motor** (`scoring.ts`, `reasoner.ts`, `llm.ts`, `api/`) ·
+> **Maguto na interface** (`page.tsx`, componentes, estilo, demos). O contrato entre os dois é
+> `src/lib/types.ts` — quem for mudar um tipo, avisa o outro antes.
 
 ## Anatomia de uma skill
 
