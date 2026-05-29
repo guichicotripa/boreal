@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { SearchResponse, Empresa, DossierAnalise } from "@/lib/types";
+import type { SearchResponse, Empresa, DossierAnalise, ResearchResult } from "@/lib/types";
 import { scoreTier } from "@/lib/scoring";
 
 const EXEMPLOS = [
@@ -219,7 +219,9 @@ const TIER_STYLES = {
 
 function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
   const socios = e.socio ?? [];
-  const score = e.score?.score ?? 0;
+  const [research, setResearch] = useState<ResearchResult | null>(null);
+  const scoreV0 = e.score?.score ?? 0;
+  const score = research?.score_v1 ?? scoreV0; // badge mostra v1 após investigação
   const tier = scoreTier(score);
   const tierStyle = TIER_STYLES[tier];
   const sinais = e.score?.sinais ?? [];
@@ -229,14 +231,24 @@ function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
       {/* Header com score em destaque */}
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-start gap-4">
-          {/* Score badge */}
-          <div className={`shrink-0 rounded-lg border ${tierStyle.box} px-3 py-2 text-center`}>
+          {/* Score badge — mostra v1 e o delta após investigação */}
+          <div className={`shrink-0 rounded-lg border ${tierStyle.box} px-3 py-2 text-center transition-colors`}>
             <div className={`text-2xl font-semibold tabular-nums ${tierStyle.text}`}>
               {score}
             </div>
             <div className="mt-0.5 text-[10px] uppercase tracking-wider text-zinc-500">
-              score
+              {research ? "score v1" : "score"}
             </div>
+            {research && research.delta !== 0 && (
+              <div
+                className={`mt-0.5 text-[10px] tabular-nums ${
+                  research.delta > 0 ? "text-red-400" : "text-emerald-400"
+                }`}
+                title="ajuste após investigação da IA"
+              >
+                {scoreV0} {research.delta > 0 ? "↑" : "↓"} {score}
+              </div>
+            )}
           </div>
           {/* Nome + tier */}
           <div>
@@ -332,9 +344,118 @@ function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
         </div>
       )}
 
+      {/* Research-agent — investigação na web sob demanda (assinatura) */}
+      <ResearchPanel empresa={e} research={research} onResult={setResearch} />
+
       {/* Dossiê — memo instantâneo sob demanda */}
       <DossierPanel empresa={e} />
     </li>
+  );
+}
+
+const PRESENCA_LABEL: Record<string, string> = {
+  alta: "presença digital alta", media: "presença digital média",
+  baixa: "presença digital baixa", nenhuma: "sem presença digital",
+};
+
+function ResearchPanel({
+  empresa, research, onResult,
+}: {
+  empresa: Empresa;
+  research: ResearchResult | null;
+  onResult: (r: ResearchResult) => void;
+}) {
+  const [loading, setLoading] = useState(false);
+  const [erro, setErro] = useState<string | null>(null);
+
+  async function investigar() {
+    setLoading(true);
+    setErro(null);
+    try {
+      const r = await fetch("/api/research", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ empresaId: empresa.id }),
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error ?? "erro na investigação");
+      onResult(data.research);
+    } catch (e) {
+      setErro((e as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="mt-4 border-t border-zinc-800 pt-3">
+      {!research && (
+        <button
+          onClick={investigar}
+          disabled={loading}
+          className="text-xs font-medium text-sky-400 transition-colors hover:text-sky-300 disabled:opacity-50"
+        >
+          {loading ? "🔍 Investigando na web… (~2 min)" : "🔍 Investigar com IA"}
+        </button>
+      )}
+      {loading && (
+        <p className="mt-2 animate-pulse text-xs text-zinc-500">
+          A IA está pesquisando sócios, herdeiros, imprensa e quadro societário em fontes públicas…
+        </p>
+      )}
+      {erro && <p className="mt-2 text-xs text-red-400">{erro}</p>}
+
+      {research && (
+        <div className="space-y-3 rounded-lg bg-sky-950/20 p-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium uppercase tracking-wider text-sky-400">
+              Investigação da IA
+            </span>
+            <span className="text-[10px] text-zinc-500">{PRESENCA_LABEL[research.presenca_digital]}</span>
+          </div>
+
+          {research.resumo && (
+            <p className="text-sm leading-relaxed text-zinc-300">{research.resumo}</p>
+          )}
+
+          {research.sinais.length > 0 ? (
+            <ul className="flex flex-col gap-2">
+              {research.sinais.map((s, i) => (
+                <li key={i} className="text-xs">
+                  <div className="flex items-start gap-2">
+                    <span
+                      className={`mt-0.5 shrink-0 rounded px-1.5 py-0.5 text-[10px] font-medium tabular-nums ${
+                        s.peso > 0
+                          ? "bg-red-950/50 text-red-300"
+                          : "bg-emerald-950/50 text-emerald-300"
+                      }`}
+                    >
+                      {s.peso > 0 ? `+${s.peso}` : s.peso}
+                    </span>
+                    <div>
+                      <span className="font-medium text-zinc-300">{s.rotulo}</span>
+                      <span className="text-zinc-500"> — {s.descricao}</span>
+                      {s.fonte_url && (
+                        <a
+                          href={s.fonte_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="ml-1 text-sky-500 hover:text-sky-400"
+                        >
+                          ↗ fonte
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-xs text-zinc-500">Nenhum sinal qualitativo conclusivo encontrado.</p>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 
