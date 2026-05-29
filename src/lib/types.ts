@@ -75,10 +75,13 @@ export type DossierResponse = {
 };
 
 export type EstagioOportunidade = "a_analisar" | "qualificada" | "apresentada" | "descartada";
+export type ResultadoOportunidade =
+  | "pendente" | "receptivo" | "nao_receptivo" | "deal_fechado" | "perdido";
 
 export type Oportunidade = {
   id: string;
   estagio: EstagioOportunidade;
+  resultado: ResultadoOportunidade;
   notas: string | null;
   created_at: string;
   empresa: Pick<
