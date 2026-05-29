@@ -19,6 +19,13 @@ function formatCnpj(cnpj: string) {
   return cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");
 }
 
+function formatTelefone(tel: string) {
+  const d = tel.replace(/\D/g, "");
+  if (d.length === 10) return d.replace(/^(\d{2})(\d{4})(\d{4})$/, "($1) $2-$3");
+  if (d.length === 11) return d.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
+  return tel;
+}
+
 function anoFundacao(data: string | null) {
   return data ? data.slice(0, 4) : "—";
 }
@@ -241,16 +248,31 @@ function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
         </ul>
       )}
 
+      {/* Setor (descrição legível do CNAE) */}
+      {e.cnae_principal_desc && (
+        <p className="mt-3 text-xs text-zinc-400">{e.cnae_principal_desc}</p>
+      )}
+
       {/* Metadados da empresa */}
-      <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-500">
-        <span>CNAE {e.cnae_principal}</span>
-        <span>Mun. {e.municipio} / {e.uf}</span>
+      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-500">
+        <span>{e.municipio} / {e.uf}</span>
         <span>Fundada em {anoFundacao(e.data_inicio_atividade)}</span>
         {e.capital_social != null && (
           <span>Capital R$ {Number(e.capital_social).toLocaleString("pt-BR")}</span>
         )}
-        {e.porte && <span>Porte {e.porte}</span>}
+        {e.porte && <span>{e.porte}</span>}
+        {e.natureza_juridica && <span>{e.natureza_juridica}</span>}
       </div>
+
+      {/* Contato — output mais valioso pra deal sourcing */}
+      {(e.telefone || e.email) && (
+        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs">
+          {e.telefone && (
+            <span className="text-emerald-400">☎ {formatTelefone(e.telefone)}</span>
+          )}
+          {e.email && <span className="text-emerald-400">✉ {e.email}</span>}
+        </div>
+      )}
 
       {/* Sócios */}
       {socios.length > 0 && (

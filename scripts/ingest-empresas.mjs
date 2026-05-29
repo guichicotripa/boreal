@@ -59,15 +59,15 @@ function mapPorte(code) {
   return map[key] ?? code;
 }
 
-/** Parseia cnae_fiscal_secundaria (string CSV) em array [{codigo}]. */
-function parseCnaesSecundarios(raw) {
+/** Parseia cnae_fiscal_secundaria (string CSV) em array [{codigo, descricao}]. */
+function parseCnaesSecundarios(raw, cnaeMap = {}) {
   if (!raw) return null;
   const codes = String(raw)
     .split(",")
     .map((c) => c.trim())
     .filter(Boolean);
   if (codes.length === 0) return null;
-  return codes.map((codigo) => ({ codigo }));
+  return codes.map((codigo) => ({ codigo, descricao: cnaeMap[codigo] ?? null }));
 }
 
 /** Divide um array em chunks de tamanho n. */
@@ -80,6 +80,8 @@ function chunks(arr, n) {
 // ── 1. Query BigQuery: empresas ───────────────────────────────────────────────
 console.log("1/4  Buscando empresas no BigQuery…");
 
+// Enrichment Nível 0 feito no próprio ingest (JOIN com diretórios): dados novos
+// já nascem com nome de cidade, descrição de CNAE e natureza jurídica resolvidos.
 const empresasSql = `
   SELECT
     e.cnpj,
@@ -87,13 +89,16 @@ const empresasSql = `
     emp.razao_social,
     e.nome_fantasia,
     e.cnae_fiscal_principal,
+    cnae.descricao_subclasse           AS cnae_principal_desc,
     e.cnae_fiscal_secundaria,
     e.data_inicio_atividade,
     e.sigla_uf,
     e.id_municipio,
+    mun.nome                           AS municipio_nome,
     e.email,
     CONCAT(COALESCE(e.ddd_1, ''), COALESCE(e.telefone_1, '')) AS telefone,
     emp.natureza_juridica,
+    nat.descricao                      AS natureza_juridica_desc,
     emp.capital_social,
     emp.porte,
     MAX(SAFE_CAST(s.faixa_etaria AS INT64)) AS max_faixa_etaria
@@ -104,6 +109,12 @@ const empresasSql = `
   LEFT JOIN \`basedosdados.br_me_cnpj.socios\` s
     ON s.cnpj_basico = e.cnpj_basico
    AND s.data = '${SNAPSHOT}'
+  LEFT JOIN \`basedosdados.br_bd_diretorios_brasil.municipio\` mun
+    ON mun.id_municipio = e.id_municipio
+  LEFT JOIN \`basedosdados.br_bd_diretorios_brasil.cnae_2\` cnae
+    ON cnae.subclasse = e.cnae_fiscal_principal
+  LEFT JOIN \`basedosdados.br_bd_diretorios_brasil.natureza_juridica\` nat
+    ON nat.id_natureza_juridica = emp.natureza_juridica
   WHERE
     e.data = '${SNAPSHOT}'
     AND (
@@ -117,15 +128,22 @@ const empresasSql = `
     AND e.id_municipio != '3550308'    -- exclui São Paulo capital
   GROUP BY
     e.cnpj, e.cnpj_basico, emp.razao_social, e.nome_fantasia,
-    e.cnae_fiscal_principal, e.cnae_fiscal_secundaria, e.data_inicio_atividade,
-    e.sigla_uf, e.id_municipio, e.email, telefone,
-    emp.natureza_juridica, emp.capital_social, emp.porte
+    e.cnae_fiscal_principal, cnae.descricao_subclasse, e.cnae_fiscal_secundaria,
+    e.data_inicio_atividade, e.sigla_uf, e.id_municipio, mun.nome, e.email, telefone,
+    emp.natureza_juridica, nat.descricao, emp.capital_social, emp.porte
   ORDER BY max_faixa_etaria DESC NULLS LAST
   LIMIT 2000
 `;
 
 const [bqEmpresas] = await bq.query({ query: empresasSql, location: "US" });
 console.log(`   → ${bqEmpresas.length} empresas retornadas`);
+
+// Mapa CNAE pra resolver descrição dos secundários (CSV, não dá pra JOIN direto).
+const [cnaeRows] = await bq.query({
+  query: `SELECT subclasse, descricao_subclasse FROM \`basedosdados.br_bd_diretorios_brasil.cnae_2\``,
+  location: "US",
+});
+const cnaeMap = Object.fromEntries(cnaeRows.map((r) => [r.subclasse, r.descricao_subclasse]));
 
 // ── 2. Query BigQuery: sócios ─────────────────────────────────────────────────
 console.log("2/4  Buscando sócios no BigQuery…");
@@ -169,14 +187,14 @@ const empresaPayloads = bqEmpresas.map((r) => ({
   razao_social:          r.razao_social,
   nome_fantasia:         r.nome_fantasia || null,
   cnae_principal:        r.cnae_fiscal_principal || null,
-  cnae_principal_desc:   null,                                  // enriquece na Semana 2
-  cnaes_secundarios:     parseCnaesSecundarios(r.cnae_fiscal_secundaria),
-  natureza_juridica:     r.natureza_juridica || null,
+  cnae_principal_desc:   r.cnae_principal_desc || null,          // resolvido via JOIN no ingest
+  cnaes_secundarios:     parseCnaesSecundarios(r.cnae_fiscal_secundaria, cnaeMap),
+  natureza_juridica:     r.natureza_juridica_desc || r.natureza_juridica || null, // descrição legível
   capital_social:        r.capital_social ?? null,
   porte:                 mapPorte(r.porte),
   situacao_cadastral:    "ATIVA",
   data_inicio_atividade: bqDate(r.data_inicio_atividade),
-  municipio:             r.id_municipio || null,                 // código IBGE — resolve na Semana 2
+  municipio:             r.municipio_nome || r.id_municipio || null, // nome resolvido via JOIN
   uf:                    r.sigla_uf || null,
   telefone:              r.telefone || null,
   email:                 r.email || null,
