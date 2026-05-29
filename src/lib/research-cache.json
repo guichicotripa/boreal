@@ -1,0 +1,65 @@
+{
+  "6849dfd9-a629-4b41-b0c5-447dea74f9ec": {
+    "sinais": [
+      {
+        "tipo": "sucessor_familiar_ativo",
+        "rotulo": "Sucessor familiar já atuando",
+        "descricao": "Lucas Cremonese Rodrigues figura como Presidente da Prensa Jundiaí S/A nos registros públicos de CNPJ, enquanto o sócio fundador Ubirajara Rodrigues consta como Diretor. O sobrenome Rodrigues compartilhado é consistente com relação familiar (pai/filho). A estrutura Presidente jovem + fundador como Diretor indica transição geracional já formalizada na sociedade.",
+        "fonte_url": "https://www.econodata.com.br/consulta-empresa/50925890000110-prensa-jundiai-sa",
+        "peso": -25
+      }
+    ],
+    "presenca_digital": "media",
+    "resumo": "A investigação identificou um sinal claro que REDUZ o risco sucessório: Lucas Cremonese Rodrigues (sobrenome Rodrigues em comum com o fundador Ubirajara Rodrigues) já ocupa a presidência da empresa nos registros públicos de CNPJ, enquanto Ubirajara permanece como Diretor — padrão típico de transição geracional familiar em andamento. Nenhuma evidência de processo de venda, M&A, assessor financeiro ou auditoria Big 4 foi encontrada. A empresa possui presença digital razoável (LinkedIn, Facebook, diretórios de negócios).",
+    "score_v0": 100,
+    "score_v1": 75,
+    "delta": -25
+  },
+  "2be6459d-b98a-4f34-a5d7-1888c79b3f56": {
+    "sinais": [],
+    "presenca_digital": "media",
+    "resumo": "BRASIMPAR é uma empresa familiar fundada em 1985 com José Felício Brunetto como único administrador desde a fundação, atualmente em recuperação judicial desde 2016 (aprovada em 09/08/2016). A empresa possui site ativo, LinkedIn e Facebook, mas nenhuma fonte pública encontrada confirma os sete sinais de risco sucessório investigados — nenhuma menção a sucessão/venda, assessor financeiro, herdeiros fora do negócio, executivos externos, auditoria Big 4 ou sucessor familiar na gestão.",
+    "score_v0": 100,
+    "score_v1": 100,
+    "delta": 0
+  },
+  "46202083-c0cf-486d-a446-dae94523be0c": {
+    "sinais": [
+      {
+        "tipo": "sem_presenca_digital",
+        "rotulo": "Sem pegada digital (perfil old-school)",
+        "descricao": "Isshiki Industria de Maquinas LTDA não possui website próprio identificado. Aparece exclusivamente em bases de dados públicas de CNPJ (cnpj.biz, econodata). Nenhuma rede social ou presença digital ativa encontrada para a empresa.",
+        "fonte_url": "https://cnpj.biz/57507667000100",
+        "peso": 3
+      },
+      {
+        "tipo": "herdeiro_fora_carreira",
+        "rotulo": "Herdeiro(s) em outra carreira",
+        "descricao": "Pessoa denominada 'Andre Makoto Isshiki' — mesmo sobrenome e nome do sócio Makoto Isshiki como nome do meio (padrão nomeação nikkei) — possui CNPJ próprio independente (14.589.559/0001-03) em Santo André/SP e perfil público no LinkedIn, sem constar como sócio ou administrador na Isshiki Industria de Maquinas. Indício de herdeiro com trajetória empresarial autônoma fora da empresa familiar.",
+        "fonte_url": "https://guiapj.com.br/consulta-cnpj/14589559000103/",
+        "peso": 8
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "Empresa fundada em 1966, administrada unicamente por Makoto Isshiki sem outros sócios registrados. Não possui website próprio identificado — só aparece em bases de dados de CNPJ públicas. Pessoa denominada 'Andre Makoto Isshiki' (mesmo sobrenome + nome do sócio como nome do meio, padrão nikkei) possui CNPJ próprio independente e perfil no LinkedIn, sem vínculo societário na empresa familiar — sinal de herdeiro fora do negócio.",
+    "score_v0": 100,
+    "score_v1": 100,
+    "delta": 0
+  },
+  "a1b5ba2c-98cf-457c-8c7c-1a75016345f1": {
+    "sinais": [
+      {
+        "tipo": "sem_presenca_digital",
+        "rotulo": "Sem pegada digital (perfil old-school)",
+        "descricao": "Empresa fundada em 1977 com 5 sócios sem qualquer footprint digital próprio: nenhum site, nenhuma página de redes sociais, nenhuma cobertura de imprensa encontrada. Única aparição pública está em base de dados de registros societários (ConsultaSocio confirma Jose Luiz Papa como sócio-administrador com entrada em 27/10/2009), sem qualquer conteúdo gerado pela própria empresa.",
+        "fonte_url": "https://www.consultasocio.com/q/sa/jose-luiz-papa",
+        "peso": 3
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "CRIFERP não possui site corporativo, redes sociais ou cobertura de imprensa identificáveis após 4 buscas direcionadas. A única presença pública encontrada são registros em agregadores de CNPJ/sócios (ConsultaSocio, Econodata). Nenhum dos 5 sócios tem perfil LinkedIn vinculado à empresa, e nenhum sinal de M&A, auditoria Big 4, assessor financeiro ou herdeiros ativos foi localizado em fontes públicas.",
+    "score_v0": 100,
+    "score_v1": 100,
+    "delta": 0
+  }
+}

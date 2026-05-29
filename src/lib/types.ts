@@ -43,6 +43,24 @@ export type Empresa = {
   };
 };
 
+// Research-agent — sinais qualitativos da web que elevam score v0 → v1.
+export type SinalQualitativo = {
+  tipo: string;
+  rotulo: string;
+  descricao: string;
+  fonte_url: string | null;
+  peso: number;
+};
+
+export type ResearchResult = {
+  sinais: SinalQualitativo[];
+  presenca_digital: "alta" | "media" | "baixa" | "nenhuma";
+  resumo: string;
+  score_v0: number;
+  score_v1: number;
+  delta: number;
+};
+
 // Análise do dossiê gerada por LLM (parte narrativa do memo).
 export type DossierAnalise = {
   overview: string;
