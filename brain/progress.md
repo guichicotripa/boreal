@@ -154,3 +154,56 @@ BQ → Supabase → score → reasoner é exatamente o que o Relay precisa. Trat
   startup overhead a cada call, anulando boa parte do ganho. API direta resolve.
 - "Top 15 analisadas por IA" no header é importante UX — usuário sabe que o resto é só
   score determinístico.
+
+## [2026-05-29] Guilherme | Colab automático + API direta + enrichment + dossiê + cache
+
+Sessão longa (28→29 madrugada). Fechou a Semana 2 inteira e começou a Semana 3.
+
+**1. Fluxo de colaboração automático (skills `/boreal` e `/salve`):**
+- `/boreal` detecta identidade via `git config user.name`, cria branch pessoal (`gui/...` ou
+  `maguto/...`) automaticamente se estiver na main, rebase com origin/main no boot.
+- `/salve` faz rebase antes de publicar, push da branch + abre PR via `gh`. Nunca toca a main.
+- Modo "automático mas avisa": executa o git sozinho mas mostra cada passo (Maguto aprende vendo).
+- Onboarding do Maguto documentado em `skills/_index.md` (git config + divisão de domínio:
+  Gui no motor, Maguto na interface, `types.ts` como contrato).
+
+**2. Migração Agent SDK → Anthropic API direta:**
+- `llm.ts` usa `@anthropic-ai/sdk` (Haiku no parser — tarefa trivial), `reasoner.ts` (Sonnet).
+- Cliente lazy (singleton na 1ª call) + `next.config.ts` com dotenv `override:true` — necessário
+  porque `ANTHROPIC_API_KEY` existia vazia como var de sistema e o Next não sobrescrevia.
+- **Latência 90–110s → ~31–38s.** Custo real medido: ~$0.04/busca. Funciona no Vercel agora.
+
+**3. Enrichment Nível 0** (`scripts/enrich-empresas.mjs` + `check-lookups.mjs`):
+- Resolveu via JOIN nos diretórios do BigQuery: `id_municipio`→nome (3504107→Atibaia),
+  `cnae`→descrição, `natureza_juridica`→descrição. 100% das 2.000 empresas.
+- Lê do payload `raw` (idempotente) e sobrescreve os campos visíveis — código preservado em `raw`,
+  sem migration. Paginação no read do Supabase (limite de 1000/página — peguei só metade no 1º run).
+- **Telefone/email já estavam no banco e eram ignorados** — agora exibidos (output mais valioso
+  pra deal sourcing). `cnaes_secundarios` com descrição.
+- Ingest atualizado com os mesmos JOINs → dados novos nascem enriquecidos (pensando no Relay).
+
+**4. Dossiê estruturado** (`lib/dossier.ts` + `/api/dossier` + UI):
+- Híbrido: dados estruturais montados em código (precisos), análise narrativa via LLM (1 call ~20s).
+- Memo: overview, análise de risco sucessório, perguntas de abordagem ao fundador, tese.
+- Timeline societária visual (CSS puro): fundação → entrada de cada sócio. Agrupa eventos do mesmo
+  ano e alinha labels conforme posição (fix de sobreposição/corte nas bordas).
+- Fix: `FAIXA_LABEL` cobre 1–9 (antes só 5–9; sócios jovens chegavam como código cru, LLM adivinhava).
+
+**5. Cache de demos** (`demo-cache.json` + `build-demo-cache.mjs`):
+- 3 queries canônicas pré-computadas → servidas instantâneas (0.04s) vs busca ao vivo (38s).
+- Rota normaliza a query (lowercase/sem acento) e serve do cache; `?fresh=1` pula. Busca ao vivo
+  segue real. Cache commitado → funciona no Vercel. Loading com steps progressivos pras buscas novas.
+
+**PRs:** #1 (colab) · #2 (enrichment) · #3 (dossiê) · #4 (demo-cache) — todos mergeados na main.
+
+**Decisões estratégicas (registradas em `decisions.md`):**
+- Enrichment em 2 regimes: N0 determinístico no ingest, N1 (web) job assíncrono futuro, N2 (EBITDA
+  proxy) não fazer.
+- **Moat do banco = loop de outcomes, não dados públicos.** Receita é commodity; o defensável é o
+  histórico de quem foi contatado/respondeu/vendeu. Implica tabela de interações no futuro (Relay).
+- LLM híbrido (dados em código + análise no LLM) como padrão do research-agent.
+
+**Aprendizado:**
+- `next.config.ts` com dotenv override resolve var de sistema vazia mascarando o `.env.local`.
+- Supabase SELECT tem teto de 1000 linhas — paginar com `.range()`.
+- Cache pré-computado é o jeito certo de ter demo instantâneo + busca real ao vivo coexistindo.
