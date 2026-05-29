@@ -1,13 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { Oportunidade, EstagioOportunidade } from "@/lib/types";
+import type { Oportunidade, EstagioOportunidade, ResultadoOportunidade } from "@/lib/types";
 
 const ESTAGIOS: { id: EstagioOportunidade; label: string; cor: string }[] = [
   { id: "a_analisar", label: "A analisar", cor: "text-zinc-300" },
   { id: "qualificada", label: "Qualificada", cor: "text-amber-300" },
   { id: "apresentada", label: "Apresentada à boutique", cor: "text-sky-300" },
   { id: "descartada", label: "Descartada", cor: "text-zinc-500" },
+];
+
+const RESULTADOS: { id: ResultadoOportunidade; label: string }[] = [
+  { id: "pendente", label: "Aguardando retorno" },
+  { id: "receptivo", label: "Fundador receptivo" },
+  { id: "nao_receptivo", label: "Não receptivo" },
+  { id: "deal_fechado", label: "Deal fechado 🎉" },
+  { id: "perdido", label: "Perdido" },
 ];
 
 function formatCnpj(cnpj: string) {
@@ -36,6 +44,15 @@ export default function Pipeline() {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, estagio }),
+    });
+  }
+
+  async function atualizar(id: string, patch: Partial<Pick<Oportunidade, "resultado" | "notas">>) {
+    setOps((prev) => prev.map((o) => (o.id === id ? { ...o, ...patch } : o))); // otimista
+    await fetch("/api/oportunidade", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, ...patch }),
     });
   }
 
@@ -109,6 +126,38 @@ export default function Pipeline() {
                           ✕
                         </button>
                       </div>
+
+                      {/* Resultado (ground truth) — só faz sentido após apresentar */}
+                      {o.estagio === "apresentada" && (
+                        <select
+                          value={o.resultado}
+                          onChange={(e) => atualizar(o.id, { resultado: e.target.value as ResultadoOportunidade })}
+                          className={`mt-2 w-full rounded border px-1.5 py-1 text-[11px] outline-none ${
+                            o.resultado === "deal_fechado"
+                              ? "border-emerald-700 bg-emerald-950/30 text-emerald-300"
+                              : o.resultado === "receptivo"
+                                ? "border-emerald-800 bg-zinc-900 text-emerald-400"
+                                : o.resultado === "nao_receptivo" || o.resultado === "perdido"
+                                  ? "border-red-900 bg-zinc-900 text-red-400"
+                                  : "border-zinc-700 bg-zinc-900 text-zinc-400"
+                          }`}
+                        >
+                          {RESULTADOS.map((r) => (
+                            <option key={r.id} value={r.id}>{r.label}</option>
+                          ))}
+                        </select>
+                      )}
+
+                      {/* Notas — registro do julgamento do analista */}
+                      <textarea
+                        defaultValue={o.notas ?? ""}
+                        onBlur={(e) => {
+                          if (e.target.value !== (o.notas ?? "")) atualizar(o.id, { notas: e.target.value });
+                        }}
+                        placeholder="anotações…"
+                        rows={2}
+                        className="mt-2 w-full resize-none rounded border border-zinc-800 bg-zinc-900/60 px-1.5 py-1 text-[11px] text-zinc-300 outline-none placeholder:text-zinc-600 focus:border-zinc-600"
+                      />
                     </div>
                   ))}
                 </div>

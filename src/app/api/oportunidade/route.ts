@@ -5,6 +5,8 @@ export const runtime = "nodejs";
 
 const ESTAGIOS = ["a_analisar", "qualificada", "apresentada", "descartada"] as const;
 type Estagio = (typeof ESTAGIOS)[number];
+const RESULTADOS = ["pendente", "receptivo", "nao_receptivo", "deal_fechado", "perdido"] as const;
+type Resultado = (typeof RESULTADOS)[number];
 
 // GET — lista a watchlist com os dados da empresa (pra montar o pipeline na UI).
 export async function GET() {
@@ -12,7 +14,7 @@ export async function GET() {
   const { data, error } = await supabase
     .from("oportunidade")
     .select(
-      `id, estagio, notas, created_at,
+      `id, estagio, resultado, notas, created_at,
        empresa:empresa_id (
          id, cnpj, razao_social, nome_fantasia, cnae_principal_desc,
          municipio, uf, capital_social, porte, telefone, email
@@ -54,7 +56,7 @@ export async function PATCH(req: NextRequest) {
   } catch {
     return NextResponse.json({ error: "JSON inválido" }, { status: 400 });
   }
-  const b = body as { id?: string; estagio?: string; notas?: string };
+  const b = body as { id?: string; estagio?: string; resultado?: string; notas?: string };
   const id = String(b?.id ?? "").trim();
   if (!id) return NextResponse.json({ error: "id vazio" }, { status: 400 });
 
@@ -65,6 +67,12 @@ export async function PATCH(req: NextRequest) {
     }
     patch.estagio = b.estagio;
   }
+  if (b.resultado !== undefined) {
+    if (!RESULTADOS.includes(b.resultado as Resultado)) {
+      return NextResponse.json({ error: "resultado inválido" }, { status: 400 });
+    }
+    patch.resultado = b.resultado;
+  }
   if (b.notas !== undefined) patch.notas = String(b.notas);
 
   const supabase = createAdminClient();
@@ -72,7 +80,7 @@ export async function PATCH(req: NextRequest) {
     .from("oportunidade")
     .update(patch)
     .eq("id", id)
-    .select("id, estagio, notas")
+    .select("id, estagio, resultado, notas")
     .single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
