@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { SearchResponse, Empresa } from "@/lib/types";
+import type { SearchResponse, Empresa, DossierAnalise } from "@/lib/types";
 import { scoreTier } from "@/lib/scoring";
 
 const EXEMPLOS = [
@@ -294,6 +294,164 @@ function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
           </ul>
         </div>
       )}
+
+      {/* Dossiê — memo instantâneo sob demanda */}
+      <DossierPanel empresa={e} />
     </li>
+  );
+}
+
+function DossierPanel({ empresa }: { empresa: Empresa }) {
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [analise, setAnalise] = useState<DossierAnalise | null>(null);
+  const [erro, setErro] = useState<string | null>(null);
+
+  async function gerar() {
+    if (analise) {
+      setOpen((v) => !v);
+      return;
+    }
+    setLoading(true);
+    setErro(null);
+    setOpen(true);
+    try {
+      const r = await fetch("/api/dossier", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ empresaId: empresa.id }),
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error ?? "erro ao gerar memo");
+      setAnalise(data.analise);
+    } catch (e) {
+      setErro((e as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="mt-4 border-t border-zinc-800 pt-3">
+      <button
+        onClick={gerar}
+        disabled={loading}
+        className="text-xs font-medium text-zinc-300 transition-colors hover:text-white disabled:opacity-50"
+      >
+        {loading
+          ? "Gerando memo…"
+          : analise
+            ? open ? "▾ Ocultar memo" : "▸ Ver memo"
+            : "▸ Gerar memo de investimento"}
+      </button>
+
+      {erro && <p className="mt-2 text-xs text-red-400">{erro}</p>}
+
+      {open && analise && (
+        <div className="mt-3 space-y-4 rounded-lg bg-zinc-950/60 p-4 text-sm">
+          {/* Overview */}
+          <p className="leading-relaxed text-zinc-300">{analise.overview}</p>
+
+          {/* Timeline societária (visual, determinística) */}
+          <Timeline empresa={empresa} />
+
+          {/* Análise sucessória */}
+          <div>
+            <h4 className="mb-1 text-xs uppercase tracking-wider text-zinc-500">
+              Análise de risco sucessório
+            </h4>
+            <p className="leading-relaxed text-zinc-300">{analise.analise_sucessoria}</p>
+          </div>
+
+          {/* Perguntas de abordagem */}
+          {analise.perguntas_abordagem.length > 0 && (
+            <div>
+              <h4 className="mb-1 text-xs uppercase tracking-wider text-zinc-500">
+                Perguntas para o primeiro contato
+              </h4>
+              <ul className="list-decimal space-y-1 pl-5 text-zinc-300">
+                {analise.perguntas_abordagem.map((p, i) => (
+                  <li key={i} className="leading-relaxed">{p}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Tese de aproximação */}
+          <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-3">
+            <h4 className="mb-1 text-xs uppercase tracking-wider text-zinc-500">
+              Tese de aproximação
+            </h4>
+            <p className="leading-relaxed text-zinc-200">{analise.tese_aproximacao}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Timeline horizontal: fundação → entrada de cada sócio. Mostra "quadro travado"
+// visualmente. CSS puro, sem lib de chart. Agrupa eventos do mesmo ano e alinha
+// os labels conforme a posição (evita corte nas bordas).
+function Timeline({ empresa }: { empresa: Empresa }) {
+  const anoFund = empresa.data_inicio_atividade
+    ? Number(empresa.data_inicio_atividade.slice(0, 4))
+    : null;
+  if (!anoFund) return null;
+
+  const anoAtual = new Date().getFullYear();
+  const span = anoAtual - anoFund || 1;
+
+  // Agrupa labels por ano (fundação + sócio que entrou no mesmo ano não colidem).
+  const porAno = new Map<number, string[]>();
+  porAno.set(anoFund, ["Fundação"]);
+  for (const s of empresa.socio ?? []) {
+    const ano = s.data_entrada_sociedade ? Number(s.data_entrada_sociedade.slice(0, 4)) : null;
+    if (ano === null || !Number.isFinite(ano)) continue;
+    const nome = s.nome.split(" ")[0];
+    const arr = porAno.get(ano);
+    if (arr) arr.push(nome);
+    else porAno.set(ano, [nome]);
+  }
+
+  const eventos = [...porAno.entries()]
+    .map(([ano, labels]) => ({ ano, label: labels.join(" · ") }))
+    .sort((a, b) => a.ano - b.ano);
+
+  return (
+    <div>
+      <h4 className="mb-2 text-xs uppercase tracking-wider text-zinc-500">
+        Linha do tempo societária
+      </h4>
+      <div
+        className="relative h-px bg-zinc-700"
+        style={{ marginTop: "2.4rem", marginBottom: "1.4rem" }}
+      >
+        {eventos.map((ev, i) => {
+          const pct = ((ev.ano - anoFund) / span) * 100;
+          // Alinhamento do label: borda esquerda alinha à esquerda, direita à direita.
+          const align =
+            pct <= 8 ? "left-0 items-start text-left"
+            : pct >= 92 ? "right-0 items-end text-right"
+            : "items-center text-center -translate-x-1/2";
+          const isEdgeRight = pct >= 92;
+          return (
+            <div
+              key={i}
+              className={`absolute flex flex-col ${align}`}
+              style={isEdgeRight ? { right: `${Math.max(100 - pct, 0)}%` } : { left: `${Math.min(pct, 100)}%` }}
+            >
+              <span className="absolute -top-7 max-w-[8rem] truncate whitespace-nowrap text-[10px] text-zinc-400">
+                {ev.label}
+              </span>
+              <span className="h-2 w-2 rounded-full bg-amber-500" />
+              <span className="absolute top-3 text-[10px] tabular-nums text-zinc-600">
+                {ev.ano}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }

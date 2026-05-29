@@ -43,6 +43,19 @@ export type Empresa = {
   };
 };
 
+// Análise do dossiê gerada por LLM (parte narrativa do memo).
+export type DossierAnalise = {
+  overview: string;
+  analise_sucessoria: string;
+  perguntas_abordagem: string[];
+  tese_aproximacao: string;
+};
+
+export type DossierResponse = {
+  empresa: Empresa;
+  analise: DossierAnalise;
+};
+
 export type SearchResponse = {
   filters: SearchFilters;
   parsedBy: "llm" | "heuristic";

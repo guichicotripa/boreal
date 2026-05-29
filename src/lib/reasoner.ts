@@ -27,7 +27,8 @@ const SYSTEM =
   "válido (array), sem texto antes/depois, sem markdown.";
 
 const FAIXA_LABEL: Record<string, string> = {
-  "5": "41-50", "6": "51-60", "7": "61-70", "8": "71-80", "9": "80+",
+  "1": "0-12", "2": "13-20", "3": "21-30", "4": "31-40", "5": "41-50",
+  "6": "51-60", "7": "61-70", "8": "71-80", "9": "80+",
 };
 
 // Reduz cada empresa a só o que importa pro raciocínio (economiza tokens).
