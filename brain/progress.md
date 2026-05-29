@@ -155,6 +155,60 @@ BQ → Supabase → score → reasoner é exatamente o que o Relay precisa. Trat
 - "Top 15 analisadas por IA" no header é importante UX — usuário sabe que o resto é só
   score determinístico.
 
+## [2026-05-29] Guilherme | Research-agent (score v1) via assinatura + estratégia Relay
+
+Continuação (mesma data). Foco: alinhar a expansão do escopo com o Relay e construir o
+research-agent. Sessão muito estratégica (leitura do raw) + a Etapa 1 do plano.
+
+**Estratégia (a partir do `raw/` do segundo-cérebro):**
+- Lido o **Playbook Relay** (§14 = funil de origination em 10 estágios) e o **Excelia workflow**
+  (processo real de uma boutique de M&A — o cliente do Relay). Insight: o Boreal cobre os estágios
+  1–6 do funil; o Excelia mostra que o Relay pluga substituindo a "montagem de target list" manual.
+- Guilherme corrigiu um desvio meu: eu comecei a desenhar o "memo + CRM estilo Excelia", que é
+  **ferramenta da boutique** (fora do escopo — Playbook §1: Relay não é boutique/SaaS/consultoria).
+  Reancorado: Relay = originador (acha → score → valida sinal → entrega oportunidade).
+- **A linha definida** (brilho de demo + fidelidade Relay): (1) research-agent [feito], (2) validação
+  retroativa [roadmap], (3) polish + Loom. Validação retroativa é frágil em metalmecânica (deals
+  opacos, não passam no CADE) — vertical pra isso é saúde, no Relay real. Vira credencial dita no pitch.
+- **Anti-escopo:** sem memo com script de reunião, sem CRM de execução, sem EBITDA proxy, sem
+  outreach automatizado (Playbook §15 proíbe contato não-humano).
+
+**Construído — Research-agent (Etapa 1, score v0→v1):**
+- `src/lib/research.ts` — investiga a empresa na web e acha sinais qualitativos (Playbook §11:
+  herdeiro fora, C-suite externo, menção a venda, banco contratado, Big4, sucessor ativo, sem pegada).
+- **Roda via ASSINATURA, custo zero** — Agent SDK + WebSearch nativo. Truque: `options.env` do
+  `query()` substitui o ambiente do subprocesso; passando sem `ANTHROPIC_API_KEY`, o Claude Code
+  cai no login (assinatura). `maxTurns:18` + limite de 4 buscas pra não estourar turns.
+- Híbrido honesto: LLM identifica os sinais (lista fechada) + cita FONTE; o código aplica os pesos
+  (LLM não inventa score). Ajuste **bidirecional**: achou sucessor → rebaixa; achou venda → sobe.
+- `/api/research` + `research-cache.json` (top 3 dos demos pré-investigado → clique instantâneo 0.5s).
+- `page.tsx`: botão "🔍 Investigar com IA", badge muda v0→v1 ao vivo com delta, sinais com peso
+  colorido + link de fonte, resumo. Validado visualmente por Guilherme.
+- **PR #6 mergeado.**
+
+**Resultado validado (dado real):**
+- PRENSA JUNDIAI: v0 **100 → v1 75**. A IA descobriu que Lucas Cremonese Rodrigues (mesma família)
+  já é Presidente ativo → sucessor encaminhado, risco menor. Com fonte. A IA *corrigiu* a heurística.
+- ISSHIKI: achou "Andre Makoto Isshiki" com CNPJ próprio independente → herdeiro fora do negócio.
+
+**Decisões:**
+- Research = score v1 do Playbook. Roda no **topo** (não em todas as 2k — §10 "enrichment é caro").
+  Clique manual = simplificação do protótipo; produção = worker assíncrono no top N (roadmap).
+- Usar assinatura (não API) pro research a pedido do Guilherme (economizar créditos). Trade-off:
+  ~68s/empresa (vs 48s API), só local (não Vercel). Mitigado por cache + sob demanda.
+
+**Evidência que corrigiu uma suposição:** rodei `check-score-dist.mjs` — o score v0 **não satura**
+(só 5.6% em 100; 50% em 70-89; boa resolução). O "tudo 100" que eu via era viés de amostra (topo da
+busca ordenada). Modelo está bem calibrado, não precisa recalibrar.
+
+**Aprendizado:**
+- Agent SDK `options.env` REPLACES o ambiente do subprocesso → caminho limpo pra forçar assinatura
+  mesmo com a API key no `process.env` do app (que o reasoner/parser usam).
+- Web search consome ~1 turn por busca; sem folga de maxTurns, estoura antes de sintetizar o JSON.
+- O caso de demo mais forte é o **rebaixamento** (IA evita falso positivo), não a subida.
+
+---
+
 ## [2026-05-29] Guilherme | Colab automático + API direta + enrichment + dossiê + cache
 
 Sessão longa (28→29 madrugada). Fechou a Semana 2 inteira e começou a Semana 3.

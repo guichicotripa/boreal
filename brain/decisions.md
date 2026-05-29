@@ -165,3 +165,42 @@ como o banco vira diferencial competitivo.
   rápido e os dados não alucinam.
 
 **Status:** ✅ Registrada. Aplicação no Relay documentada em `segundo-cerebro/memory/projects/relay.md`.
+
+---
+
+## [2026-05-29] Linha de expansão Boreal: research-agent → validação → polish (fiel ao Relay)
+
+**Contexto:** Guilherme quis aumentar o escopo "convergindo com o Relay" e ganhar a competição.
+Lido o Playbook (§14 funil) e o Excelia workflow (boutique real). Eu derivei pro "memo+CRM estilo
+boutique" e Guilherme corrigiu: isso é ferramenta da boutique, fora do escopo do Relay (originador).
+
+**Decisão:** linha linear que casa brilho de demo + fidelidade ao Relay:
+1. **Research-agent (score v1)** — o brilho + o coração do Relay (§11). Sem dependência de dados
+   externos. **Feito.**
+2. **Validação retroativa (hit rate)** — north-star do Relay (§12). Mas frágil em metalmecânica
+   (deals opacos, abaixo do threshold CADE). Vira **credencial dita no pitch**, não build agora;
+   vertical pra validar de verdade é saúde regional (Relay real).
+3. **Polish + Loom.**
+
+**Anti-escopo (explícito):** sem memo com script de reunião, sem CRM de execução de deal, sem
+proposta/contrato (isso é da boutique); sem EBITDA proxy (dado inventado); sem outreach automatizado
+(Playbook §15 exige contato humano).
+
+**Status:** ✅ Linha acordada. Etapa 1 concluída.
+
+---
+
+## [2026-05-29] Research-agent roda na ASSINATURA (Agent SDK), não na API
+
+**Contexto:** Research-agent precisa de web search. Guilherme não quer gastar créditos da API
+testando. A API tem web search (~$0.22/empresa por causa dos ~62k tokens de input).
+
+**Decisão:** rodar via **Agent SDK + WebSearch nativo do Claude Code, autenticado pela assinatura**.
+Truque técnico: `options.env` do `query()` substitui o ambiente do subprocesso — passando sem
+`ANTHROPIC_API_KEY`, o Claude Code cai no login (assinatura). Custo zero.
+
+**Trade-off:** mais lento (~68s vs ~48s da API) e **só funciona local** (não no Vercel, que não tem
+Claude Code logado). Mitigado por: cache do top dos demos (clique instantâneo) + sob demanda.
+No deploy, se precisar de research ao vivo, trocar por Anthropic API (web search tool).
+
+**Status:** ✅ Implementada. Parser e reasoner seguem na API (rápidos); só o research usa assinatura.
