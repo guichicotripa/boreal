@@ -16,17 +16,24 @@ export type Socio = {
   data_entrada_sociedade: string | null;
 };
 
+export type CnaeSecundario = { codigo: string; descricao: string | null };
+
 export type Empresa = {
   id: string;
   cnpj: string;
   razao_social: string;
   nome_fantasia: string | null;
   cnae_principal: string | null;
-  municipio: string | null;
+  cnae_principal_desc: string | null;     // descrição legível do CNAE (enrichment N0)
+  cnaes_secundarios: CnaeSecundario[] | null;
+  natureza_juridica: string | null;       // descrição (ex: "Sociedade Empresária Limitada")
+  municipio: string | null;               // nome da cidade (resolvido do código IBGE)
   uf: string | null;
   data_inicio_atividade: string | null;
   capital_social: number | null;
   porte: string | null;
+  telefone: string | null;                // contato — output mais valioso pra deal sourcing
+  email: string | null;
   socio?: Socio[];
   // Adicionados em runtime pelo /api/search (não vêm do banco):
   score?: import("./scoring").ScoreResult;

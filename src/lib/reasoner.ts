@@ -40,8 +40,9 @@ function compact(e: Empresa) {
   return {
     id: e.id,
     nome: e.razao_social,
-    cnae: e.cnae_principal,
-    municipio: e.municipio,
+    setor: e.cnae_principal_desc ?? e.cnae_principal, // descrição legível em vez de código
+    cidade: e.municipio,                              // nome resolvido da cidade
+    natureza: e.natureza_juridica,
     fundada_em: e.data_inicio_atividade?.slice(0, 4) ?? null,
     capital_social: e.capital_social,
     porte: e.porte,

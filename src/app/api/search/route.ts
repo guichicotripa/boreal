@@ -43,8 +43,9 @@ export async function POST(req: NextRequest) {
   let q = supabase
     .from("empresa")
     .select(
-      `id, cnpj, razao_social, nome_fantasia, cnae_principal, municipio, uf,
-       data_inicio_atividade, capital_social, porte,
+      `id, cnpj, razao_social, nome_fantasia, cnae_principal, cnae_principal_desc,
+       cnaes_secundarios, natureza_juridica, municipio, uf,
+       data_inicio_atividade, capital_social, porte, telefone, email,
        ${socioEmbed}(id, nome, qualificacao, faixa_etaria, data_entrada_sociedade)`
     );
 
