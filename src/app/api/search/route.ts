@@ -4,11 +4,23 @@ import { parseQueryLLM } from "@/lib/llm";
 import { parseQueryHeuristic } from "@/lib/query-parser";
 import { calcScore } from "@/lib/scoring";
 import { reasonAboutEmpresas } from "@/lib/reasoner";
-import type { Empresa } from "@/lib/types";
+import type { Empresa, SearchResponse } from "@/lib/types";
+import demoCache from "@/lib/demo-cache.json";
 
-// Agent SDK spawna um subprocesso (Claude Code) → precisa do runtime Node, não Edge.
 export const runtime = "nodejs";
 export const maxDuration = 60;
+
+// Normaliza a query pra casar com o cache: lowercase, sem acento, espaços colapsados.
+function normalizeQuery(q: string): string {
+  return q
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+const CACHE = demoCache as Record<string, SearchResponse>;
 
 export async function POST(req: NextRequest) {
   let body: unknown;
@@ -21,6 +33,16 @@ export async function POST(req: NextRequest) {
   const queryText = String((body as { query?: string })?.query ?? "").trim();
   if (!queryText) {
     return NextResponse.json({ error: "query vazia" }, { status: 400 });
+  }
+
+  // ── 0. Cache dos demos canônicos — resposta instantânea e determinística ──────
+  // Permite pular o cache com ?fresh=1 (útil pra rebuildar o cache).
+  const skipCache = req.nextUrl.searchParams.get("fresh") === "1";
+  if (!skipCache) {
+    const hit = CACHE[normalizeQuery(queryText)];
+    if (hit) {
+      return NextResponse.json({ ...hit, cached: true });
+    }
   }
 
   // ── 1. NL → filtros (LLM via Agent SDK; cai no heurístico se falhar) ─────────

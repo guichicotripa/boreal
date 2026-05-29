@@ -63,4 +63,5 @@ export type SearchResponse = {
   empresas: Empresa[];
   reasoned: boolean;          // se o reasoner LLM rodou e enriqueceu o top N
   reasonedCount?: number;     // quantas empresas receberam insight
+  cached?: boolean;           // true quando servido do cache de demos (instantâneo)
 };
