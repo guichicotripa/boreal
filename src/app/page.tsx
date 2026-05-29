@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { SearchResponse, Empresa, DossierAnalise } from "@/lib/types";
 import { scoreTier } from "@/lib/scoring";
 
@@ -109,11 +109,7 @@ export default function Home() {
         </div>
 
         {/* Loading */}
-        {loading && (
-          <div className="mt-10 animate-pulse text-sm text-zinc-500">
-            Interpretando consulta, filtrando empresas e analisando o top 15…
-          </div>
-        )}
+        {loading && <LoadingSteps />}
 
         {/* Erro */}
         {erro && (
@@ -170,6 +166,47 @@ export default function Home() {
           </section>
         )}
       </main>
+    </div>
+  );
+}
+
+// Loading com steps progressivos — dá sensação de trabalho durante a busca ao vivo.
+// (Demos cacheados retornam instantâneos, então isso só aparece em buscas novas.)
+const LOADING_STEPS = [
+  "Interpretando a consulta…",
+  "Traduzindo para filtros estruturados…",
+  "Filtrando empresas na base da Receita…",
+  "Calculando score de risco sucessório…",
+  "Analisando o top 15 com IA…",
+  "Montando os resultados…",
+];
+
+function LoadingSteps() {
+  const [step, setStep] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => {
+      setStep((s) => Math.min(s + 1, LOADING_STEPS.length - 1));
+    }, 5500);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div className="mt-10 flex flex-col gap-2">
+      {LOADING_STEPS.slice(0, step + 1).map((s, i) => (
+        <div
+          key={i}
+          className={`flex items-center gap-2 text-sm ${
+            i === step ? "text-zinc-300" : "text-zinc-600"
+          }`}
+        >
+          {i === step ? (
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
+          ) : (
+            <span className="text-emerald-600">✓</span>
+          )}
+          {s}
+        </div>
+      ))}
     </div>
   );
 }
