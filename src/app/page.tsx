@@ -161,8 +161,8 @@ export default function Home() {
                 </div>
 
                 <ul className="flex flex-col gap-3">
-                  {res.empresas.map((e) => (
-                    <EmpresaCard key={e.id} empresa={e} />
+                  {res.empresas.map((e, i) => (
+                    <EmpresaCard key={e.id} empresa={e} rank={i + 1} />
                   ))}
                 </ul>
 
@@ -249,142 +249,220 @@ function LoadingSteps() {
 }
 
 const TIER_STYLES = {
-  alto:  { box: "border-risk-high/40 bg-risk-high/5", text: "text-risk-high", label: "Alto risco sucessório" },
-  medio: { box: "border-risk-mid/40 bg-risk-mid/5",   text: "text-risk-mid",  label: "Risco moderado" },
-  baixo: { box: "border-hairline bg-surface",         text: "text-bone",      label: "Risco baixo" },
+  alto:  { borderL: "border-l-risk-high",  badge: "border-risk-high/40 bg-risk-high/5", text: "text-risk-high" },
+  medio: { borderL: "border-l-risk-mid",   badge: "border-risk-mid/40 bg-risk-mid/5",   text: "text-risk-mid"  },
+  baixo: { borderL: "border-l-hairline",   badge: "border-hairline bg-surface",         text: "text-bone"      },
 } as const;
 
-function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
-  const socios = e.socio ?? [];
+const FAIXA_COLOR: Record<string, string> = {
+  "9": "bg-risk-high/15 text-risk-high", // 80+
+  "8": "bg-risk-high/15 text-risk-high", // 71-80
+  "7": "bg-risk-mid/15 text-risk-mid",   // 61-70
+  "6": "bg-surface text-bone",           // 51-60
+};
+
+function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
+  // Research — lógica levantada do ResearchPanel
   const [research, setResearch] = useState<ResearchResult | null>(null);
+  const [researchLoading, setResearchLoading] = useState(false);
+  const [researchErro, setResearchErro] = useState<string | null>(null);
+
+  // Memo — lógica levantada do DossierPanel
+  const [memoAnalise, setMemoAnalise] = useState<DossierAnalise | null>(null);
+  const [memoLoading, setMemoLoading] = useState(false);
+  const [memoAberto, setMemoAberto] = useState(false);
+  const [memoErro, setMemoErro] = useState<string | null>(null);
+
+  // Sócios
+  const [sociosAberto, setSociosAberto] = useState(false);
+
   const scoreV0 = e.score?.score ?? 0;
-  const score = research?.score_v1 ?? scoreV0; // badge mostra v1 após investigação
+  const score = research?.score_v1 ?? scoreV0;
   const tier = scoreTier(score);
-  const tierStyle = TIER_STYLES[tier];
-  const sinais = e.score?.sinais ?? [];
+  const t = TIER_STYLES[tier];
+  const socios = e.socio ?? [];
+
+  const badges: string[] = e.insight?.flags?.length
+    ? e.insight.flags
+    : (e.score?.sinais ?? []).slice(0, 4);
+
+  async function investigar() {
+    if (research || researchLoading) return;
+    setResearchLoading(true);
+    setResearchErro(null);
+    try {
+      const r = await fetch("/api/research", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ empresaId: e.id }),
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error ?? "erro na investigação");
+      setResearch(data.research);
+    } catch (err) {
+      setResearchErro((err as Error).message);
+    } finally {
+      setResearchLoading(false);
+    }
+  }
+
+  async function gerarMemo() {
+    if (memoAnalise) { setMemoAberto((v) => !v); return; }
+    if (memoLoading) return;
+    setMemoLoading(true);
+    setMemoErro(null);
+    setMemoAberto(true);
+    try {
+      const r = await fetch("/api/dossier", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ empresaId: e.id }),
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error ?? "erro ao gerar memo");
+      setMemoAnalise(data.analise);
+    } catch (err) {
+      setMemoErro((err as Error).message);
+    } finally {
+      setMemoLoading(false);
+    }
+  }
 
   return (
-    <li className="rounded-lg border border-hairline bg-surface p-4">
-      {/* Header com score em destaque */}
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex items-start gap-4">
-          {/* Score badge — mostra v1 e o delta após investigação */}
-          <div className={`shrink-0 rounded-lg border ${tierStyle.box} px-3 py-2 text-center transition-colors`}>
-            <div className={`font-data text-2xl tabular-nums ${tierStyle.text}`}>
-              {score}
-            </div>
-            <div className="mt-0.5 font-data text-[10px] uppercase tracking-wider text-olive">
-              {research ? "score v1" : "score"}
-            </div>
-            {research && research.delta !== 0 && (
-              <div
-                className={`mt-0.5 font-data text-[10px] tabular-nums ${
-                  research.delta > 0 ? "text-risk-high" : "text-bone"
-                }`}
-                title="ajuste após investigação da IA"
-              >
-                {scoreV0} {research.delta > 0 ? "↑" : "↓"} {score}
-              </div>
+    <li className={`rounded-lg border border-hairline border-l-2 ${t.borderL} bg-surface overflow-hidden p-4`}>
+      {/* Header: score badge + nome + salvar */}
+      <div className="flex items-start gap-3">
+        <div className={`shrink-0 rounded border ${t.badge} px-2 py-1 text-center`}>
+          <div className={`font-data text-lg tabular-nums leading-none ${t.text}`}>{score}</div>
+          <div className="font-data text-[9px] uppercase tracking-wide text-olive">
+            {String(rank).padStart(2, "0")}
+            {research?.delta && research.delta !== 0 && (
+              <span className={research.delta > 0 ? " text-risk-high" : ""}>
+                {" "}{research.delta > 0 ? "↑" : "↓"}
+              </span>
             )}
           </div>
-          {/* Nome + tier */}
-          <div>
-            <h3 className="font-display text-lg text-floral">{e.razao_social}</h3>
-            {e.nome_fantasia && (
-              <p className="text-sm text-bone">{e.nome_fantasia}</p>
-            )}
-            <p className={`mt-1 text-xs ${tierStyle.text}`}>{tierStyle.label}</p>
-          </div>
         </div>
-        <div className="flex shrink-0 flex-col items-end gap-1">
-          <span className="font-data text-xs text-olive">{formatCnpj(e.cnpj)}</span>
-          <SalvarButton empresaId={e.id} />
+        <div className="min-w-0 flex-1">
+          <h3 className="font-display text-lg leading-tight text-floral">{e.razao_social}</h3>
+          <p className="font-data text-[11px] text-olive">
+            {e.municipio}/{e.uf} · {formatCnpj(e.cnpj)}
+          </p>
         </div>
+        <SalvarButton empresaId={e.id} />
       </div>
 
-      {/* One-liner do reasoner LLM (se rodou) */}
+      {/* One-liner */}
       {e.insight?.one_liner && (
-        <p className="mt-3 font-display text-sm italic leading-relaxed text-floral">
-          &ldquo;{e.insight.one_liner}&rdquo;
+        <p className="mt-3 font-display text-sm leading-relaxed text-floral">
+          {e.insight.one_liner}
         </p>
       )}
 
-      {/* Flags do reasoner */}
-      {e.insight?.flags && e.insight.flags.length > 0 && (
+      {/* Badges de evidência */}
+      {badges.length > 0 && (
         <div className="mt-2 flex flex-wrap gap-1.5">
-          {e.insight.flags.map((f, i) => (
-            <span
-              key={i}
-              className="rounded-full border border-hairline px-2 py-0.5 font-data text-[10px] uppercase tracking-wider text-bone"
-            >
+          {badges.map((f, i) => (
+            <span key={i} className="rounded border border-hairline px-2 py-0.5 font-data text-[10px] uppercase tracking-wide text-bone">
               {f}
             </span>
           ))}
         </div>
       )}
 
-      {/* Sinais do score determinístico (bullets curtos) */}
-      {sinais.length > 0 && (
-        <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs text-bone">
-          {sinais.map((s, i) => (
-            <li key={i} className="flex items-center gap-1.5">
-              <span className="h-1 w-1 rounded-full bg-olive" />
-              {s}
-            </li>
-          ))}
-        </ul>
-      )}
+      {/* Metadata row */}
+      <p className="mt-2 font-data text-[11px] uppercase tracking-wide text-olive">
+        {[
+          e.data_inicio_atividade ? anoFundacao(e.data_inicio_atividade) : null,
+          e.capital_social != null ? `R$ ${Number(e.capital_social).toLocaleString("pt-BR")}` : null,
+          e.natureza_juridica ?? null,
+          e.cnae_principal_desc ?? null,
+        ].filter(Boolean).join(" · ")}
+      </p>
 
-      {/* Setor (descrição legível do CNAE) */}
-      {e.cnae_principal_desc && (
-        <p className="mt-3 text-xs text-bone">{e.cnae_principal_desc}</p>
-      )}
-
-      {/* Metadados da empresa */}
-      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-bone">
-        <span>{e.municipio} / {e.uf}</span>
-        <span>Fundada em {anoFundacao(e.data_inicio_atividade)}</span>
-        {e.capital_social != null && (
-          <span>Capital R$ {Number(e.capital_social).toLocaleString("pt-BR")}</span>
+      {/* Ações */}
+      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-hairline pt-2">
+        <button
+          onClick={investigar}
+          disabled={researchLoading}
+          className={`font-data text-xs transition-colors disabled:opacity-50 ${
+            research ? "text-floral" : "text-bone hover:text-floral"
+          }`}
+        >
+          {researchLoading ? "Investigando…" : research ? "✓ Investigado" : "Investigar com IA"}
+        </button>
+        <span className="text-olive">·</span>
+        <button
+          onClick={gerarMemo}
+          disabled={memoLoading}
+          className="font-data text-xs text-bone transition-colors hover:text-floral hover:underline disabled:opacity-50"
+        >
+          {memoLoading
+            ? "Gerando memo…"
+            : memoAnalise
+              ? memoAberto ? "Ocultar memo" : "Ver memo"
+              : "Gerar memo de investimento"}
+        </button>
+        {socios.length > 0 && (
+          <>
+            <span className="text-olive">·</span>
+            <button
+              onClick={() => setSociosAberto((v) => !v)}
+              className="font-data text-xs text-bone transition-colors hover:text-floral hover:underline"
+            >
+              {sociosAberto ? "Ocultar detalhes" : "Ver detalhes"}
+            </button>
+          </>
         )}
-        {e.porte && <span>{e.porte}</span>}
-        {e.natureza_juridica && <span>{e.natureza_juridica}</span>}
       </div>
 
-      {/* Contato — output mais valioso pra deal sourcing */}
-      {(e.telefone || e.email) && (
-        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-bone">
-          {e.telefone && <span>☎ {formatTelefone(e.telefone)}</span>}
-          {e.email && <span>✉ {e.email}</span>}
+      {/* Erros */}
+      {researchErro && <p className="mt-2 text-xs text-risk-high">{researchErro}</p>}
+      {memoErro && <p className="mt-2 text-xs text-risk-high">{memoErro}</p>}
+
+      {/* Painel: investigação */}
+      {researchLoading && (
+        <p className="mt-3 animate-pulse text-xs text-bone">
+          A IA está pesquisando sócios, herdeiros, imprensa e quadro societário em fontes públicas…
+        </p>
+      )}
+      {research && <ResearchDisplay research={research} />}
+
+      {/* Painel: memo */}
+      {memoAberto && memoLoading && (
+        <p className="mt-3 animate-pulse font-data text-xs text-bone">Gerando memo de investimento…</p>
+      )}
+      {memoAberto && memoAnalise && <MemoDisplay empresa={e} analise={memoAnalise} />}
+
+      {/* Painel: sócios */}
+      {sociosAberto && (
+        <div className="mt-3 rounded-lg border border-hairline bg-surface p-3 space-y-3">
+          <div>
+            <p className="mb-1.5 font-data text-[10px] uppercase tracking-wider text-olive">Sócios</p>
+            <ul className="flex flex-col gap-1.5">
+              {socios.map((s) => (
+                <li key={s.id} className="flex items-center gap-2">
+                  <span className="text-sm text-floral">{s.nome}</span>
+                  {s.faixa_etaria && FAIXA_LABEL[s.faixa_etaria] && (
+                    <span className={`rounded px-1.5 py-0.5 font-data text-xs ${FAIXA_COLOR[s.faixa_etaria] ?? "bg-surface text-bone"}`}>
+                      {FAIXA_LABEL[s.faixa_etaria]} anos
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+          {(e.telefone || e.email) && (
+            <div>
+              <p className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">Contato da empresa</p>
+              <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-bone">
+                {e.telefone && <span>{formatTelefone(e.telefone)}</span>}
+                {e.email && <span>{e.email}</span>}
+              </div>
+            </div>
+          )}
         </div>
       )}
-
-      {/* Sócios */}
-      {socios.length > 0 && (
-        <div className="mt-3 border-t border-hairline pt-3">
-          <p className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
-            Sócios
-          </p>
-          <ul className="flex flex-col gap-1">
-            {socios.map((s) => (
-              <li key={s.id} className="flex items-center gap-2 text-sm">
-                <span className="text-floral">{s.nome}</span>
-                {s.faixa_etaria && FAIXA_LABEL[s.faixa_etaria] && (
-                  <span className="rounded bg-risk-mid/15 px-1.5 py-0.5 font-data text-xs text-risk-mid">
-                    {FAIXA_LABEL[s.faixa_etaria]} anos
-                  </span>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {/* Research-agent — investigação na web sob demanda (assinatura) */}
-      <ResearchPanel empresa={e} research={research} onResult={setResearch} />
-
-      {/* Dossiê — memo instantâneo sob demanda */}
-      <DossierPanel empresa={e} />
     </li>
   );
 }
@@ -428,192 +506,74 @@ const PRESENCA_LABEL: Record<string, string> = {
   baixa: "presença digital baixa", nenhuma: "sem presença digital",
 };
 
-function ResearchPanel({
-  empresa, research, onResult,
-}: {
-  empresa: Empresa;
-  research: ResearchResult | null;
-  onResult: (r: ResearchResult) => void;
-}) {
-  const [loading, setLoading] = useState(false);
-  const [erro, setErro] = useState<string | null>(null);
-
-  async function investigar() {
-    setLoading(true);
-    setErro(null);
-    try {
-      const r = await fetch("/api/research", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ empresaId: empresa.id }),
-      });
-      const data = await r.json();
-      if (!r.ok) throw new Error(data.error ?? "erro na investigação");
-      onResult(data.research);
-    } catch (e) {
-      setErro((e as Error).message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
+function ResearchDisplay({ research }: { research: ResearchResult }) {
   return (
-    <div className="mt-4 border-t border-hairline pt-3">
-      {!research && (
-        <button
-          onClick={investigar}
-          disabled={loading}
-          className="text-xs font-medium text-bone transition-colors hover:text-floral disabled:opacity-50"
-        >
-          {loading ? "🔍 Investigando na web… (~2 min)" : "🔍 Investigar com IA"}
-        </button>
+    <div className="mt-3 space-y-3 rounded-lg border border-hairline bg-surface p-3">
+      <div className="flex items-center justify-between">
+        <span className="font-data text-[10px] uppercase tracking-wider text-bone">Investigação da IA</span>
+        <span className="font-data text-[10px] text-olive">{PRESENCA_LABEL[research.presenca_digital]}</span>
+      </div>
+      {research.resumo && (
+        <p className="text-sm leading-relaxed text-floral">{research.resumo}</p>
       )}
-      {loading && (
-        <p className="mt-2 animate-pulse text-xs text-bone">
-          A IA está pesquisando sócios, herdeiros, imprensa e quadro societário em fontes públicas…
-        </p>
-      )}
-      {erro && <p className="mt-2 text-xs text-risk-high">{erro}</p>}
-
-      {research && (
-        <div className="space-y-3 rounded-lg border border-hairline bg-surface p-3">
-          <div className="flex items-center justify-between">
-            <span className="font-data text-[10px] font-medium uppercase tracking-wider text-bone">
-              Investigação da IA
-            </span>
-            <span className="font-data text-[10px] text-olive">{PRESENCA_LABEL[research.presenca_digital]}</span>
-          </div>
-
-          {research.resumo && (
-            <p className="text-sm leading-relaxed text-floral">{research.resumo}</p>
-          )}
-
-          {research.sinais.length > 0 ? (
-            <ul className="flex flex-col gap-2">
-              {research.sinais.map((s, i) => (
-                <li key={i} className="text-xs">
-                  <div className="flex items-start gap-2">
-                    <span
-                      className={`mt-0.5 shrink-0 rounded px-1.5 py-0.5 font-data text-[10px] font-medium tabular-nums ${
-                        s.peso > 0
-                          ? "bg-risk-high/15 text-risk-high"
-                          : "bg-surface text-bone"
-                      }`}
-                    >
-                      {s.peso > 0 ? `+${s.peso}` : s.peso}
-                    </span>
-                    <div>
-                      <span className="font-medium text-floral">{s.rotulo}</span>
-                      <span className="text-bone"> — {s.descricao}</span>
-                      {s.fonte_url && (
-                        <a
-                          href={s.fonte_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="ml-1 text-olive transition-colors hover:text-bone"
-                        >
-                          ↗ fonte
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-xs text-bone">Nenhum sinal qualitativo conclusivo encontrado.</p>
-          )}
-        </div>
+      {research.sinais.length > 0 ? (
+        <ul className="flex flex-col gap-2">
+          {research.sinais.map((s, i) => (
+            <li key={i} className="flex items-start gap-2 text-xs">
+              <span className={`mt-0.5 shrink-0 rounded px-1.5 py-0.5 font-data text-[10px] tabular-nums ${
+                s.peso > 0 ? "bg-risk-high/15 text-risk-high" : "bg-surface text-bone"
+              }`}>
+                {s.peso > 0 ? `+${s.peso}` : s.peso}
+              </span>
+              <div>
+                <span className="font-medium text-floral">{s.rotulo}</span>
+                <span className="text-bone"> — {s.descricao}</span>
+                {s.fonte_url && (
+                  <a href={s.fonte_url} target="_blank" rel="noopener noreferrer"
+                    className="ml-1 text-olive transition-colors hover:text-bone">
+                    ↗ fonte
+                  </a>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-xs text-bone">Nenhum sinal qualitativo conclusivo encontrado.</p>
       )}
     </div>
   );
 }
 
-function DossierPanel({ empresa }: { empresa: Empresa }) {
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [analise, setAnalise] = useState<DossierAnalise | null>(null);
-  const [erro, setErro] = useState<string | null>(null);
-
-  async function gerar() {
-    if (analise) {
-      setOpen((v) => !v);
-      return;
-    }
-    setLoading(true);
-    setErro(null);
-    setOpen(true);
-    try {
-      const r = await fetch("/api/dossier", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ empresaId: empresa.id }),
-      });
-      const data = await r.json();
-      if (!r.ok) throw new Error(data.error ?? "erro ao gerar memo");
-      setAnalise(data.analise);
-    } catch (e) {
-      setErro((e as Error).message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
+function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierAnalise }) {
   return (
-    <div className="mt-4 border-t border-hairline pt-3">
-      <button
-        onClick={gerar}
-        disabled={loading}
-        className="text-xs font-medium text-bone transition-colors hover:text-floral disabled:opacity-50"
-      >
-        {loading
-          ? "Gerando memo…"
-          : analise
-            ? open ? "▾ Ocultar memo" : "▸ Ver memo"
-            : "▸ Gerar memo de investimento"}
-      </button>
-
-      {erro && <p className="mt-2 text-xs text-risk-high">{erro}</p>}
-
-      {open && analise && (
-        <div className="mt-3 space-y-4 rounded-lg border border-hairline bg-surface p-4 text-sm">
-          {/* Overview */}
-          <p className="leading-relaxed text-floral">{analise.overview}</p>
-
-          {/* Timeline societária (visual, determinística) */}
-          <Timeline empresa={empresa} />
-
-          {/* Análise sucessória */}
-          <div>
-            <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
-              Análise de risco sucessório
-            </h4>
-            <p className="leading-relaxed text-floral">{analise.analise_sucessoria}</p>
-          </div>
-
-          {/* Perguntas de abordagem */}
-          {analise.perguntas_abordagem.length > 0 && (
-            <div>
-              <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
-                Perguntas para o primeiro contato
-              </h4>
-              <ul className="list-decimal space-y-1 pl-5 text-floral">
-                {analise.perguntas_abordagem.map((p, i) => (
-                  <li key={i} className="leading-relaxed">{p}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Tese de aproximação */}
-          <div className="rounded-lg border border-hairline bg-surface p-3">
-            <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
-              Tese de aproximação
-            </h4>
-            <p className="leading-relaxed text-floral">{analise.tese_aproximacao}</p>
-          </div>
+    <div className="mt-3 space-y-4 rounded-lg border border-hairline bg-surface p-4 text-sm">
+      <p className="leading-relaxed text-floral">{analise.overview}</p>
+      <Timeline empresa={empresa} />
+      <div>
+        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
+          Análise de risco sucessório
+        </h4>
+        <p className="leading-relaxed text-floral">{analise.analise_sucessoria}</p>
+      </div>
+      {analise.perguntas_abordagem.length > 0 && (
+        <div>
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
+            Perguntas para o primeiro contato
+          </h4>
+          <ul className="list-decimal space-y-1 pl-5 text-floral">
+            {analise.perguntas_abordagem.map((p, i) => (
+              <li key={i} className="leading-relaxed">{p}</li>
+            ))}
+          </ul>
         </div>
       )}
+      <div className="rounded-lg border border-hairline bg-surface p-3">
+        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
+          Tese de aproximação
+        </h4>
+        <p className="leading-relaxed text-floral">{analise.tese_aproximacao}</p>
+      </div>
     </div>
   );
 }
