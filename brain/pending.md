@@ -4,15 +4,21 @@
 
 ---
 
+## 🟢 Data moat + validação (30/05) ✅ MARCO
+
+- [x] **Mineração de transições do CNPJ** — ground truth de M&A de graça (340 deals saúde+metalmec SP).
+      `scripts/detectar-transicoes.mjs`. Ver `segundo-cerebro/wiki/synthesis/relay-data-moat.md`.
+- [x] **Validação retroativa em escala** + reconstrução temporal — `validacao-escala.mjs` (N=340).
+- [x] **Score v0.1 recalibrado por lift** e **portado pro produto** — top decil 17%→28%. PR #13.
+- [x] **Fix**: busca filtrada usa quadro societário completo (não subconjunto).
+
 ## 🔴 Agora (Semana 3 — deploy + Loom)
 
-- [x] Client helper Supabase + envs + smoke test (`scripts/check-supabase.mjs`) — **conexão confirmada**
-- [x] Repo GitHub privado `boreal` criado + push (branch `main`)
-- [x] Maguto (`magutolou`) — collaborator ativo, já fez commits no repo
-- [x] `ANTHROPIC_API_KEY` no `.env.local` + créditos — **feito**
-- [x] Refatorado `llm.ts` + `reasoner.ts` pra Anthropic API direta — latência ~31–38s, ~$0.04/busca
-- [ ] **Deploy no Vercel** — configurar env vars lá (Supabase + Anthropic + GCP). Agent SDK não
-      era usável no Vercel; com a API direta agora dá.
+- [x] API direta (~31–38s, ~$0.04/busca)
+- [ ] **Deploy no Vercel** — env vars (Supabase + Anthropic + GCP). ⚠️ research-agent usa assinatura
+      (não roda no Vercel) → no deploy, research só via cache OU trocar por Anthropic API (web search tool).
+- [ ] **Calls de validação** — DMs enviadas (Daniella/Volaris, Nathália, Brenda, Illa). Na call: pedir
+      deal list (ground truth premium). Roteiro em `brain/roteiro-validacao.md`.
 
 ## 🟡 Semana 1 — Foundation (até reunião 2, 02/06)
 
