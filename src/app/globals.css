@@ -22,7 +22,7 @@
   --color-risk-mid: #c99b3d; /* ocre — risco moderado */
   --color-risk-low: #d8cfbc; /* bone — risco baixo, neutro */
 
-  --font-sans: var(--font-space-grotesk); /* interface: body, botões, inputs */
+  --font-sans: var(--font-plex-sans); /* interface: body, botões, inputs */
   --font-display: var(--font-newsreader); /* editorial: headlines, nomes, statements */
   --font-data: var(--font-plex-mono);     /* dados: scores, CNPJ, labels mono */
   /* --font-archivo: exclusivo ao lockup do logo, não usar como utility */

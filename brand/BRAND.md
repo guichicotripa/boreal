@@ -71,7 +71,7 @@ Derivadas de Floral White em alpha — mantêm o calor sem adicionar cor.
 | Família | Variável CSS | Uso |
 |---------|-------------|-----|
 | **Newsreader** (serif editorial) | `--font-newsreader` / `font-display` | Headlines, statements, nomes de empresa nos cards, títulos de dossier. Carrega a voz editorial. |
-| **Space Grotesk** (geometric sans) | `--font-space-grotesk` / `font-sans` | Interface — body, botões, labels de UI, inputs, subtítulos. A superfície de trabalho do produto. |
+| **IBM Plex Sans** (humanist sans) | `--font-plex-sans` / `font-sans` | Interface — body, botões, labels de UI, inputs, subtítulos. Mesma família do Plex Mono; tom institucional, não "tech startup". |
 | **IBM Plex Mono** | `--font-plex-mono` / `font-data` | Dados técnicos — score, CNPJ, faixas etárias, labels mono uppercase. O subtom de terminal. |
 
 **Wordmark:** Archivo Medium, `uppercase`, `letter-spacing: 0.10em` (papel exclusivo — não usar Archivo fora do lockup do logo).

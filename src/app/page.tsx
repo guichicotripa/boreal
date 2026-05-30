@@ -59,120 +59,150 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-smoky text-floral">
-      <main className="mx-auto max-w-4xl px-6 py-16">
-        {/* Header */}
-        <header className="mb-10 flex items-start justify-between gap-4">
-          <div>
-            <h1 className="font-display text-4xl tracking-tight">Boreal</h1>
-            <p className="mt-2 text-bone">
-              Deal sourcing para PE/M&amp;A — metalmecânica com risco sucessório.
-              Descreva o que procura em linguagem natural.
+      <main className="mx-auto max-w-5xl px-6 py-20">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-[2fr_1fr]">
+          {/* Coluna principal — hero + search + resultados */}
+          <div className="min-w-0">
+            {/* Overline */}
+            <p className="font-data text-[11px] uppercase tracking-[0.2em] text-bone">
+              <span className="text-floral">BOREAL</span>{" "}
+              <span className="text-olive">·</span> Deal sourcing
             </p>
-          </div>
-          <a
-            href="/pipeline"
-            className="mt-1 shrink-0 rounded-lg border border-hairline px-3 py-2 text-sm text-bone transition-colors hover:border-hairline-hover hover:text-floral"
-          >
-            Pipeline →
-          </a>
-        </header>
 
-        {/* Search box */}
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            buscar(texto);
-          }}
-          className="flex flex-col gap-3 sm:flex-row"
-        >
-          <input
-            value={texto}
-            onChange={(e) => setTexto(e.target.value)}
-            placeholder="ex: metalmecânica no interior de SP com sócios acima de 60 anos"
-            className="flex-1 rounded-lg border border-hairline bg-surface px-4 py-3 text-sm text-floral outline-none placeholder:text-olive focus:border-hairline-hover"
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            className="rounded-lg bg-floral px-6 py-3 text-sm font-medium text-smoky transition-opacity hover:opacity-90 disabled:opacity-50"
-          >
-            {loading ? "Buscando…" : "Buscar"}
-          </button>
-        </form>
+            {/* Headline */}
+            <h1 className="mt-6 font-display text-[44px] leading-[1.1] tracking-tight text-floral">
+              A inteligência privada que encontra empresas familiares antes do mercado.
+            </h1>
 
-        {/* Exemplos */}
-        <div className="mt-3 flex flex-wrap gap-2">
-          {EXEMPLOS.map((ex) => (
-            <button
-              key={ex}
-              onClick={() => {
-                setTexto(ex);
-                buscar(ex);
+            {/* Search — underline + prompt */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                buscar(texto);
               }}
-              className="rounded-full border border-hairline px-3 py-1 text-xs text-bone transition-colors hover:border-hairline-hover hover:text-floral"
+              className="mt-8"
             >
-              {ex}
-            </button>
-          ))}
-        </div>
+              <div className="flex items-center gap-2 border-b border-hairline-hover pb-3 transition-colors focus-within:border-floral/30">
+                <span className="font-data text-sm text-olive">›</span>
+                <input
+                  value={texto}
+                  onChange={(e) => setTexto(e.target.value)}
+                  placeholder="metalmecânica no interior de SP com sócios 70+ e fundada antes de 1990"
+                  className="flex-1 bg-transparent text-sm text-floral outline-none placeholder:text-olive"
+                />
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-80 disabled:opacity-50"
+                >
+                  {loading ? "Buscando…" : "Buscar tese →"}
+                </button>
+              </div>
+            </form>
 
-        {/* Loading */}
-        {loading && <LoadingSteps />}
-
-        {/* Erro */}
-        {erro && (
-          <div className="mt-10 rounded-lg border border-risk-high/30 bg-risk-high/5 px-4 py-3 text-sm text-risk-high">
-            {erro}
-          </div>
-        )}
-
-        {/* Resultados */}
-        {res && !loading && (
-          <section className="mt-10">
-            <div className="mb-4 flex items-center justify-between text-sm text-bone">
-              <span>
-                {res.count} empresa{res.count === 1 ? "" : "s"}
-                {res.reasoned && res.reasonedCount && (
-                  <span className="ml-2 text-bone">
-                    · top {res.reasonedCount} analisadas por IA
-                  </span>
-                )}
-              </span>
-              <span className="flex gap-2">
-                {res.filters.cnaePrefixes.map((c) => (
-                  <span key={c} className="rounded bg-surface px-2 py-0.5 font-data text-xs text-bone">
-                    CNAE {c}
-                  </span>
-                ))}
-                {res.filters.minFaixaEtaria != null && (
-                  <span className="rounded bg-surface px-2 py-0.5 font-data text-xs text-bone">
-                    sócios {FAIXA_LABEL[String(res.filters.minFaixaEtaria)]}+
-                  </span>
-                )}
-                {res.filters.maxAnoFundacao != null && (
-                  <span className="rounded bg-surface px-2 py-0.5 font-data text-xs text-bone">
-                    até {res.filters.maxAnoFundacao}
-                  </span>
-                )}
-                <span className="rounded bg-surface px-2 py-0.5 text-xs text-olive">
-                  {res.parsedBy === "llm" ? "interpretado por IA" : "heurístico"}
-                </span>
-              </span>
+            {/* Exemplos — teses sugeridas */}
+            <div className="mt-6 flex flex-wrap gap-1.5">
+              {EXEMPLOS.map((ex) => (
+                <button
+                  key={ex}
+                  type="button"
+                  onClick={() => {
+                    setTexto(ex);
+                    buscar(ex);
+                  }}
+                  className="rounded border border-hairline px-2 py-1 text-xs text-bone transition-colors hover:border-hairline-hover hover:text-floral"
+                >
+                  {ex}
+                </button>
+              ))}
             </div>
 
-            <ul className="flex flex-col gap-3">
-              {res.empresas.map((e) => (
-                <EmpresaCard key={e.id} empresa={e} />
-              ))}
-            </ul>
+            {/* Loading */}
+            {loading && <LoadingSteps />}
 
-            {res.count === 0 && (
-              <p className="text-sm text-bone">
-                Nenhuma empresa bateu com os filtros. Tente afrouxar a consulta.
-              </p>
+            {/* Erro */}
+            {erro && (
+              <div className="mt-10 rounded-lg border border-risk-high/30 bg-risk-high/5 px-4 py-3 text-sm text-risk-high">
+                {erro}
+              </div>
             )}
-          </section>
-        )}
+
+            {/* Resultados */}
+            {res && !loading && (
+              <section className="mt-10">
+                <div className="mb-4 flex items-center justify-between text-sm text-bone">
+                  <span>
+                    {res.count} empresa{res.count === 1 ? "" : "s"}
+                    {res.reasoned && res.reasonedCount && (
+                      <span className="ml-2 text-bone">
+                        · top {res.reasonedCount} analisadas por IA
+                      </span>
+                    )}
+                  </span>
+                  <span className="flex gap-2">
+                    {res.filters.cnaePrefixes.map((c) => (
+                      <span key={c} className="rounded bg-surface px-2 py-0.5 font-data text-xs text-bone">
+                        CNAE {c}
+                      </span>
+                    ))}
+                    {res.filters.minFaixaEtaria != null && (
+                      <span className="rounded bg-surface px-2 py-0.5 font-data text-xs text-bone">
+                        sócios {FAIXA_LABEL[String(res.filters.minFaixaEtaria)]}+
+                      </span>
+                    )}
+                    {res.filters.maxAnoFundacao != null && (
+                      <span className="rounded bg-surface px-2 py-0.5 font-data text-xs text-bone">
+                        até {res.filters.maxAnoFundacao}
+                      </span>
+                    )}
+                    <span className="rounded bg-surface px-2 py-0.5 text-xs text-olive">
+                      {res.parsedBy === "llm" ? "interpretado por IA" : "heurístico"}
+                    </span>
+                  </span>
+                </div>
+
+                <ul className="flex flex-col gap-3">
+                  {res.empresas.map((e) => (
+                    <EmpresaCard key={e.id} empresa={e} />
+                  ))}
+                </ul>
+
+                {res.count === 0 && (
+                  <p className="text-sm text-bone">
+                    Nenhuma empresa bateu com os filtros. Tente afrouxar a consulta.
+                  </p>
+                )}
+              </section>
+            )}
+          </div>
+
+          {/* Sidebar — cobertura do universo de busca */}
+          <aside className="md:border-l md:border-hairline md:pl-6">
+            <p className="font-data text-[10px] uppercase tracking-wider text-olive">
+              Cobertura
+            </p>
+            <ul className="mt-3 space-y-1.5 font-data text-xs text-bone">
+              <li>
+                <span className="text-floral">CNAE 24</span> · Metalurgia
+              </li>
+              <li>
+                <span className="text-floral">CNAE 25</span> · Produtos de metal
+              </li>
+              <li>
+                <span className="text-floral">CNAE 28</span> · Máquinas e equipamentos
+              </li>
+              <li className="text-olive">—</li>
+              <li>Interior de SP</li>
+              <li>Score sucessório</li>
+            </ul>
+            <p className="mt-6 font-data text-[10px] uppercase tracking-wider text-olive">
+              Base
+            </p>
+            <p className="mt-1 font-data text-xs tabular-nums text-bone">
+              2.000 empresas indexadas
+            </p>
+          </aside>
+        </div>
       </main>
     </div>
   );

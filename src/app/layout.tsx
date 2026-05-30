@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Newsreader, Space_Grotesk, Archivo, IBM_Plex_Mono } from "next/font/google";
+import { Newsreader, Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { Logo } from "@/components/brand/Logo";
 import "./globals.css";
 
@@ -10,10 +10,13 @@ const newsreader = Newsreader({
   style: ["normal", "italic"],
 });
 
-// Geometric sans — interface: body, botões, labels, inputs
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+// Humanist sans institucional — interface: body, botões, labels, inputs.
+// Pareia com Plex Mono (mesma família IBM). Escolhida sobre Space Grotesk por
+// não carregar o DNA visual "tech startup" da era Linear/Vercel/Notion.
+const plexSans = IBM_Plex_Sans({
+  variable: "--font-plex-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500"],
 });
 
 // Wordmark — exclusivo para o lockup do logo
@@ -43,7 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${newsreader.variable} ${spaceGrotesk.variable} ${archivo.variable} ${plexMono.variable} h-full antialiased`}
+      className={`${newsreader.variable} ${plexSans.variable} ${archivo.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-smoky">
         <nav className="border-b border-hairline bg-smoky px-6 py-4">
