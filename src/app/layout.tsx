@@ -50,8 +50,14 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-smoky">
         <nav className="border-b border-hairline bg-smoky px-6 py-4">
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto flex max-w-5xl items-center justify-between">
             <Logo />
+            <a
+              href="/pipeline"
+              className="font-data text-[11px] uppercase tracking-wider text-olive transition-colors hover:text-bone"
+            >
+              Pipeline
+            </a>
           </div>
         </nav>
         {children}
