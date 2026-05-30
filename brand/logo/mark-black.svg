@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="Boreal">
+  <g transform="translate(0 -15)">
+    <path fill="none" stroke="#000000" stroke-width="7" d="M8 60 C 30 42 46 42 60 60 C 74 78 90 78 112 60"></path>
+  </g>
+  <g transform="translate(7 16)">
+    <path fill="none" stroke="#000000" stroke-width="13" d="M8 60 C 30 42 46 42 60 60 C 74 78 90 78 112 60"></path>
+  </g>
+</svg>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Boreal — Marca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --smoky:#11120D; --floral:#FFFBF4; --bone:#D8CFBC;
+    --hair:rgba(216,207,188,0.16); --hair-strong:rgba(216,207,188,0.30);
+    --mute:rgba(255,251,244,0.50); --mute-dim:rgba(255,251,244,0.34);
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--smoky); color:var(--floral); font-family:'Archivo',sans-serif; -webkit-font-smoothing:antialiased; line-height:1.5; }
+  .mono { font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:0.18em; font-size:11px; color:var(--mute); }
+  .wrap { max-width:1100px; margin:0 auto; padding:0 56px; }
+
+  /* HERO — the mark, large */
+  header.hero { border-bottom:1px solid var(--hair); padding:90px 0 0; }
+  .hero .lead { display:flex; justify-content:space-between; align-items:baseline; }
+  .hero h1 { font-weight:600; font-size:40px; letter-spacing:0.01em; margin-top:20px; }
+  .hero .sub { color:var(--mute); font-size:15px; margin-top:8px; }
+  .hero-stage { display:flex; align-items:center; justify-content:center; padding:80px 0 96px; }
+
+  section { padding:74px 0; border-bottom:1px solid var(--hair); }
+  .sec-head { margin-bottom:36px; }
+  .sec-head h2 { font-weight:600; font-size:22px; margin-top:10px; }
+  .sec-head p { color:var(--mute); font-size:14.5px; margin-top:8px; max-width:580px; text-wrap:pretty; }
+
+  /* official lockup — primary, horizontal */
+  .lockup-primary { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--hair); border:1px solid var(--hair); }
+  .lockup-primary > div { display:flex; align-items:center; gap:20px; padding:56px; min-height:170px; position:relative; }
+  .lockup-primary .cap { position:absolute; bottom:14px; left:56px; font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:0.12em; text-transform:uppercase; }
+  .wm { font-weight:500; letter-spacing:0.10em; }
+  .on-dark{background:var(--smoky)} .on-dark .wm{color:var(--floral)}
+  .on-light{background:var(--floral)} .on-light .wm{color:var(--smoky)}
+  .cap-d{color:var(--mute-dim)} .cap-l{color:rgba(17,18,13,0.4)}
+
+  /* lockup configurations: horizontal / stacked / mark-only */
+  .config-row { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--hair); border:1px solid var(--hair); }
+  .config { background:var(--smoky); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:48px 24px 40px; gap:18px; position:relative; min-height:230px; }
+  .config .stacked { display:flex; flex-direction:column; align-items:center; gap:12px; }
+  .config .horiz { display:flex; align-items:center; gap:16px; }
+  .config .cap { position:absolute; bottom:14px; font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--mute-dim); }
+
+  /* color tests */
+  .color-row { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--hair); border:1px solid var(--hair); }
+  .ctile { aspect-ratio:1/1; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; }
+  .ctile .cap { position:absolute; bottom:12px; left:0; right:0; text-align:center; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; }
+  .bg-smoky{background:var(--smoky)} .bg-floral{background:var(--floral)} .bg-bone{background:var(--bone)} .bg-black{background:#000} .bg-white{background:#fff}
+
+  /* small sizes */
+  .small-row { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--hair); border:1px solid var(--hair); }
+  .scell { display:flex; align-items:center; gap:18px; padding:26px 28px; }
+  .scell .stack { display:flex; align-items:flex-end; gap:16px; }
+  .scell .lbl { font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:0.1em; text-transform:uppercase; }
+
+  /* favicon / app application */
+  .fav-row { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--hair); border:1px solid var(--hair); margin-top:1px; }
+  .fav { background:var(--smoky); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:34px 18px 30px; position:relative; }
+  .fav .chip { background:#1b1c16; border:1px solid var(--hair); border-radius:6px; display:flex; align-items:center; justify-content:center; }
+  .fav .cap { font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--mute-dim); }
+
+  /* navbar */
+  .navbar { background:var(--smoky); display:flex; align-items:center; justify-content:space-between; padding:0 30px; height:66px; border:1px solid var(--hair); }
+  .navbar .brand { display:flex; align-items:center; gap:13px; }
+  .navbar .brand .wm { font-size:17px; color:var(--floral); }
+  .navbar nav { display:flex; align-items:center; gap:30px; }
+  .navbar nav a { font-size:13.5px; color:var(--mute); text-decoration:none; }
+  .navbar nav a.cta { color:var(--smoky); background:var(--bone); padding:8px 16px; border-radius:2px; font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.1em; }
+
+  /* clear space + specs */
+  .spec-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .spec { border:1px solid var(--hair); padding:32px 34px; }
+  .spec h3 { font-size:15px; font-weight:600; margin-bottom:14px; }
+  .spec ul { list-style:none; }
+  .spec li { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--hair); font-size:14px; }
+  .spec li:last-child { border-bottom:none; }
+  .spec li .v { font-family:'IBM Plex Mono',monospace; color:var(--bone); font-size:13px; }
+  .clearbox { display:flex; align-items:center; justify-content:center; padding:30px; }
+
+  .foot { padding:46px 0 90px; color:var(--mute-dim); }
+  .foot .mono { font-size:11px; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="lead">
+      <div>
+        <div class="mono">Boreal · Marca · Documento Final · Maio 2026</div>
+        <h1>BOREAL</h1>
+        <p class="sub">Onda dupla horizontal — faixas sólidas, pesos distintos. Direção 3a, forma intacta.</p>
+      </div>
+      <div class="mono" style="text-align:right;line-height:1.9">
+        Mark · Onda dupla 3a<br/>Wordmark · Archivo, tracking 0.10em<br/>Uma cor · zero efeito
+      </div>
+    </div>
+  </div>
+  <div class="hero-stage" id="hero-stage"></div>
+</header>
+
+<main class="wrap">
+
+  <!-- PRIMARY LOCKUP -->
+  <section>
+    <div class="sec-head">
+      <div class="mono">01 · Lockup principal</div>
+      <h2>Horizontal — mark + wordmark</h2>
+      <p>A aplicação primária. Wordmark em Archivo Medium, tracking 0.10em. O mark precede o texto com respiro fixo.</p>
+    </div>
+    <div class="lockup-primary">
+      <div class="on-dark"><span id="lp-d"></span><span class="wm" style="font-size:38px">BOREAL</span><span class="cap cap-d">Positiva · Floral sobre Smoky</span></div>
+      <div class="on-light"><span id="lp-l"></span><span class="wm" style="font-size:38px">BOREAL</span><span class="cap cap-l">Negativa · Smoky sobre Floral</span></div>
+    </div>
+  </section>
+
+  <!-- CONFIGURATIONS -->
+  <section>
+    <div class="sec-head">
+      <div class="mono">02 · Configurações</div>
+      <h2>Horizontal · Empilhada · Símbolo</h2>
+      <p>Três travamentos oficiais para contextos distintos. Nunca recompor fora destes arranjos.</p>
+    </div>
+    <div class="config-row">
+      <div class="config">
+        <div class="horiz" id="cfg-h"></div>
+        <span class="cap">Horizontal</span>
+      </div>
+      <div class="config">
+        <div class="stacked" id="cfg-s"></div>
+        <span class="cap">Empilhada</span>
+      </div>
+      <div class="config">
+        <div id="cfg-m"></div>
+        <span class="cap">Símbolo isolado</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLOR -->
+  <section>
+    <div class="sec-head">
+      <div class="mono">03 · Cor</div>
+      <h2>Versatilidade — paleta e P&amp;B absoluto</h2>
+      <p>Smoky #11120D · Floral #FFFBF4 · Bone #D8CFBC. Sempre uma única cor por aplicação. Validada em preto e branco puros.</p>
+    </div>
+    <div class="color-row">
+      <div class="ctile bg-smoky" id="c1"><span class="cap cap-d">Floral / Smoky</span></div>
+      <div class="ctile bg-floral" id="c2"><span class="cap cap-l">Smoky / Floral</span></div>
+      <div class="ctile bg-smoky" id="c3"><span class="cap cap-d">Bone / Smoky</span></div>
+      <div class="ctile bg-bone" id="c4"><span class="cap cap-l">Smoky / Bone</span></div>
+    </div>
+    <div class="color-row" style="margin-top:1px;grid-template-columns:repeat(2,1fr)">
+      <div class="ctile bg-black" id="c5"><span class="cap cap-d">P&amp;B · #FFF / #000</span></div>
+      <div class="ctile bg-white" id="c6"><span class="cap cap-l">P&amp;B · #000 / #FFF</span></div>
+    </div>
+  </section>
+
+  <!-- SMALL SIZES + FAVICON -->
+  <section>
+    <div class="sec-head">
+      <div class="mono">04 · Redução &amp; favicon</div>
+      <h2>Comportamento em tamanho pequeno</h2>
+      <p>O símbolo mantém-se legível a 24px e 16px. Nota: a essa escala a forma aproxima-se do glifo “≈” —
+        comportamento aceito e documentado; em favicon, usa-se o símbolo isolado.</p>
+    </div>
+    <div class="small-row">
+      <div class="scell bg-smoky"><div class="stack" id="s-d"></div><span class="lbl cap-d">32 / 24 / 16 px · escuro</span></div>
+      <div class="scell bg-floral"><div class="stack" id="s-l"></div><span class="lbl cap-l">32 / 24 / 16 px · claro</span></div>
+      <div class="scell bg-black"><div class="stack" id="s-bw"></div><span class="lbl cap-d">32 / 24 / 16 px · P&amp;B</span></div>
+    </div>
+    <div class="fav-row">
+      <div class="fav"><div class="chip" id="f1" style="width:64px;height:64px"></div><span class="cap">App · 64px</span></div>
+      <div class="fav"><div class="chip" id="f2" style="width:48px;height:48px"></div><span class="cap">Avatar · 48px</span></div>
+      <div class="fav"><div class="chip" id="f3" style="width:32px;height:32px"></div><span class="cap">Favicon · 32px</span></div>
+      <div class="fav"><div class="chip" id="f4" style="width:16px;height:16px"></div><span class="cap">Tab · 16px</span></div>
+    </div>
+  </section>
+
+  <!-- NAVBAR -->
+  <section>
+    <div class="sec-head">
+      <div class="mono">05 · Aplicação</div>
+      <h2>Header de interface escura</h2>
+      <p>Contexto real de produto — fundo #11120D, marca à esquerda em sua forma horizontal compacta.</p>
+    </div>
+    <div class="navbar">
+      <div class="brand" id="nav-brand"></div>
+      <nav>
+        <a href="#">Pipeline</a>
+        <a href="#">Teses</a>
+        <a href="#">Sinais</a>
+        <a href="#" class="cta">Acesso</a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- CLEAR SPACE + SPECS -->
+  <section style="border-bottom:none">
+    <div class="sec-head">
+      <div class="mono">06 · Construção</div>
+      <h2>Área de proteção &amp; tamanhos mínimos</h2>
+      <p>Respiro mínimo igual à altura da faixa grossa do mark (1×) em todos os lados.</p>
+    </div>
+    <div class="spec-grid">
+      <div class="spec">
+        <div class="clearbox" id="clear-stage"></div>
+      </div>
+      <div class="spec">
+        <h3>Especificações</h3>
+        <ul>
+          <li><span>Wordmark</span><span class="v">Archivo Medium · 0.10em</span></li>
+          <li><span>Rótulos técnicos</span><span class="v">IBM Plex Mono</span></li>
+          <li><span>Tamanho mínimo · símbolo</span><span class="v">16 px</span></li>
+          <li><span>Tamanho mínimo · lockup</span><span class="v">96 px largura</span></li>
+          <li><span>Área de proteção</span><span class="v">1× faixa grossa</span></li>
+          <li><span>Cores</span><span class="v">11120D · FFFBF4 · D8CFBC</span></li>
+          <li><span>Efeitos</span><span class="v">nenhum</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <div class="mono">Boreal · Marca · Documento final — pronto para o brandkit. Símbolo, wordmark e lockups em forma pura, uma cor.</div>
+  </div>
+</main>
+
+<script src="marks2.js"></script>
+<script>
+  const F='#FFFBF4', S='#11120D', WH='#fff', BK='#000', BONE='#D8CFBC';
+  const K='v0'; // baseline 3a wave, intact
+
+  // wordmark helper inline so tracking is locked at 0.10em
+  function lockHoriz(markSize, wmSize, color) {
+    return `${wmark(K,{size:markSize,color})}<span class="wm" style="font-size:${wmSize}px;color:${color}">BOREAL</span>`;
+  }
+
+  document.getElementById('hero-stage').innerHTML = wmark(K,{size:200,color:F});
+
+  document.getElementById('lp-d').innerHTML = wmark(K,{size:60,color:F});
+  document.getElementById('lp-l').innerHTML = wmark(K,{size:60,color:S});
+
+  // configurations
+  document.getElementById('cfg-h').innerHTML = lockHoriz(40, 26, F);
+  document.getElementById('cfg-s').innerHTML = `${wmark(K,{size:64,color:F})}<span class="wm" style="font-size:22px;color:${F}">BOREAL</span>`;
+  document.getElementById('cfg-m').innerHTML = wmark(K,{size:90,color:F});
+
+  // color tiles
+  document.getElementById('c1').insertAdjacentHTML('afterbegin', wmark(K,{size:96,color:F}));
+  document.getElementById('c2').insertAdjacentHTML('afterbegin', wmark(K,{size:96,color:S}));
+  document.getElementById('c3').insertAdjacentHTML('afterbegin', wmark(K,{size:96,color:BONE}));
+  document.getElementById('c4').insertAdjacentHTML('afterbegin', wmark(K,{size:96,color:S}));
+  document.getElementById('c5').insertAdjacentHTML('afterbegin', wmark(K,{size:96,color:WH}));
+  document.getElementById('c6').insertAdjacentHTML('afterbegin', wmark(K,{size:96,color:BK}));
+
+  // small sizes
+  const trio = (color) => wmark(K,{size:32,color})+wmark(K,{size:24,color})+wmark(K,{size:16,color});
+  document.getElementById('s-d').innerHTML = trio(F);
+  document.getElementById('s-l').innerHTML = trio(S);
+  document.getElementById('s-bw').innerHTML = trio(WH);
+
+  // favicon chips
+  document.getElementById('f1').innerHTML = wmark(K,{size:40,color:F});
+  document.getElementById('f2').innerHTML = wmark(K,{size:30,color:F});
+  document.getElementById('f3').innerHTML = wmark(K,{size:22,color:F});
+  document.getElementById('f4').innerHTML = wmark(K,{size:14,color:F});
+
+  // navbar
+  document.getElementById('nav-brand').innerHTML = lockHoriz(26, 17, F);
+
+  // clear space diagram
+  document.getElementById('clear-stage').innerHTML = `
+    <svg width="260" height="150" viewBox="0 0 260 150" style="display:block">
+      <rect x="1" y="1" width="258" height="148" fill="none" stroke="${BONE}" stroke-opacity="0.35" stroke-dasharray="4 4"/>
+      <g transform="translate(70 35)">
+        <rect x="-30" y="-30" width="180" height="110" fill="none" stroke="${BONE}" stroke-opacity="0.25"/>
+        ${wmark(K,{size:80,color:F})}
+      </g>
+      <text x="130" y="142" fill="${BONE}" fill-opacity="0.5" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="1.5" text-anchor="middle">CLEAR SPACE = 1× FAIXA GROSSA</text>
+    </svg>`;
+</script>
+</body>
+</html>
