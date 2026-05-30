@@ -76,6 +76,21 @@ Derivadas de Floral White em alpha — mantêm o calor sem adicionar cor.
 
 **Wordmark:** Archivo Medium, `uppercase`, `letter-spacing: 0.10em` (papel exclusivo — não usar Archivo fora do lockup do logo).
 
+> ⚠️ **Divergência do guidelines de referência (brand/guidelines/)**
+>
+> O brandkit visual exportado do Canva (`Boreal Brand Guidelines.pdf` e `.html`) especifica
+> **Space Grotesk** como fonte sans de interface. O código **não usa Space Grotesk**.
+>
+> **Decisão registrada em 2026-05-30 (sessão restyle-brandkit):** Space Grotesk foi descartada
+> por carregar o DNA visual da era "tech startup" (Linear, Vercel, Notion, Framer) — inadequado
+> para um produto que precisa soar como ferramenta institucional de PE/M&A. Substituída por
+> **IBM Plex Sans**, que (a) pertence à mesma família do Plex Mono já em uso, formando um
+> sistema tipográfico unificado, e (b) foi desenhada pelo IBM para contextos enterprise/institucional.
+>
+> O guidelines PDF/HTML **não foi atualizado** — é um artefato de Canva, imutável sem reabrir
+> o projeto original. Esta nota é o registro canônico da decisão. Em caso de conflito, o código
+> e este BRAND.md vencem o PDF.
+
 ---
 
 ## Logo
