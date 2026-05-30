@@ -134,29 +134,29 @@ export default function Home() {
                   <span>
                     {res.count} empresa{res.count === 1 ? "" : "s"}
                     {res.reasoned && res.reasonedCount && (
-                      <span className="ml-2 text-bone">
-                        · top {res.reasonedCount} analisadas por IA
+                      <span className="ml-2 font-data text-xs uppercase tracking-wide text-olive">
+                        · top {res.reasonedCount} por IA
                       </span>
                     )}
                   </span>
                   <span className="flex gap-2">
                     {res.filters.cnaePrefixes.map((c) => (
-                      <span key={c} className="rounded bg-surface px-2 py-0.5 font-data text-xs text-bone">
+                      <span key={c} className="rounded bg-surface px-2 py-0.5 font-data text-xs uppercase tracking-wide text-bone">
                         CNAE {c}
                       </span>
                     ))}
                     {res.filters.minFaixaEtaria != null && (
-                      <span className="rounded bg-surface px-2 py-0.5 font-data text-xs text-bone">
+                      <span className="rounded bg-surface px-2 py-0.5 font-data text-xs uppercase tracking-wide text-bone">
                         sócios {FAIXA_LABEL[String(res.filters.minFaixaEtaria)]}+
                       </span>
                     )}
                     {res.filters.maxAnoFundacao != null && (
-                      <span className="rounded bg-surface px-2 py-0.5 font-data text-xs text-bone">
+                      <span className="rounded bg-surface px-2 py-0.5 font-data text-xs uppercase tracking-wide text-bone">
                         até {res.filters.maxAnoFundacao}
                       </span>
                     )}
-                    <span className="rounded bg-surface px-2 py-0.5 text-xs text-olive">
-                      {res.parsedBy === "llm" ? "interpretado por IA" : "heurístico"}
+                    <span className="rounded bg-surface px-2 py-0.5 font-data text-xs uppercase tracking-wide text-olive">
+                      {res.parsedBy === "llm" ? "interpretado" : "heurístico"}
                     </span>
                   </span>
                 </div>
