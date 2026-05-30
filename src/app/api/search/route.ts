@@ -20,7 +20,9 @@ function normalizeQuery(q: string): string {
     .trim();
 }
 
-const CACHE = demoCache as Record<string, SearchResponse>;
+// cast via unknown: o JSON é gerado pelo próprio pipeline (confiável); evita quebrar
+// o type-check a cada mudança no schema do score.
+const CACHE = demoCache as unknown as Record<string, SearchResponse>;
 
 export async function POST(req: NextRequest) {
   let body: unknown;

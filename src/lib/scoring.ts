@@ -1,19 +1,20 @@
 // Boreal — succession risk scoring (heurística determinística, sem LLM).
 //
-// Score 0–100. Quatro dimensões somáveis. Nenhum dado é inventado —
-// só faz aritmética sobre os campos que vêm da Receita Federal.
-//
-// Pesos foram escolhidos com base na tese: idade do sócio é o sinal mais forte,
-// seguido por antiguidade da empresa (lock-in geracional), estabilidade societária
-// (ausência de transição) e porte (sweet spot pro middle market M&A).
+// PESOS v0.1 — CALIBRADOS POR VALIDAÇÃO RETROATIVA contra 340 aquisições reais (mineração de
+// transições do CNPJ; ver segundo-cerebro/wiki/synthesis/relay-data-moat.md). A análise de lift
+// mostrou que:
+//   - porte e antiguidade são tão preditivos de aquisição quanto idade (lift ~2,4-2,6x);
+//   - "estabilidade/estagnação" tinha lift NEGATIVO (0,81x) — REMOVIDA (o v0 premiava errado);
+//   - empresa de sócio único quase nunca é adquirida → quadro plural ganha bônus.
+// Resultado: top decil de aquisições reais subiu de 17% (v0) para 28% (v0.1).
 
 import type { Empresa, Socio } from "./types";
 
 export type ScoreBreakdown = {
-  idade_socios: number;        // 0–40
+  idade_socios: number;        // 0–30
   antiguidade_empresa: number; // 0–30
-  estabilidade_quadro: number; // 0–20
-  porte_relevancia: number;    // 0–10
+  porte_relevancia: number;    // 0–30
+  quadro_plural: number;       // 0–10
 };
 
 export type ScoreResult = {
@@ -22,103 +23,80 @@ export type ScoreResult = {
   sinais: string[];         // bullets human-readable, ordenados por força
 };
 
-// ── 1. Idade do sócio mais velho (max 40) ────────────────────────────────────
-// Receita publica faixas, não idade exata. Faixa 9 = 80+ é o pico do risco
-// sucessório (fundador no fim da vida produtiva, decisão de venda mais provável).
-function scoreIdadeSocios(socios: Socio[]): { pts: number; sinal: string | null } {
-  const faixas = socios
+// Sócios pessoa física têm faixa etária 1–9; PJ / não-aplicável têm 0 ou null.
+function faixasPF(socios: Socio[]): number[] {
+  return socios
     .map((s) => Number(s.faixa_etaria))
     .filter((n) => Number.isFinite(n) && n >= 1 && n <= 9);
+}
 
+// ── 1. Idade do sócio mais velho (max 30) — lift 2,2–2,4x ────────────────────
+function scoreIdadeSocios(socios: Socio[]): { pts: number; sinal: string | null } {
+  const faixas = faixasPF(socios);
   if (faixas.length === 0) return { pts: 0, sinal: null };
-
   const max = Math.max(...faixas);
-  const table: Record<number, number> = { 9: 40, 8: 35, 7: 25, 6: 12, 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+  const table: Record<number, number> = { 9: 30, 8: 26, 7: 20, 6: 10, 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
   const pts = table[max] ?? 0;
-
-  const labels: Record<number, string> = {
-    9: "80+", 8: "71–80", 7: "61–70", 6: "51–60", 5: "41–50",
-  };
   if (pts === 0) return { pts: 0, sinal: null };
-
-  const qtdNaFaixa = faixas.filter((f) => f === max).length;
-  const sinal =
-    qtdNaFaixa > 1
-      ? `${qtdNaFaixa} sócios na faixa ${labels[max]} anos`
-      : `Sócio mais velho na faixa ${labels[max]} anos`;
+  const labels: Record<number, string> = { 9: "80+", 8: "71–80", 7: "61–70", 6: "51–60" };
+  const qtd = faixas.filter((f) => f === max).length;
+  const sinal = qtd > 1
+    ? `${qtd} sócios na faixa ${labels[max]} anos`
+    : `Sócio mais velho na faixa ${labels[max]} anos`;
   return { pts, sinal };
 }
 
-// ── 2. Antiguidade da empresa (max 30) ───────────────────────────────────────
-// Empresa antiga = mais provável de ter chegado ao limite geracional sem sucessor.
-// Usa data_inicio_atividade. Referência: hoje (2026).
+// ── 2. Antiguidade da empresa (max 30) — lift 2,56x (o mais forte) ───────────
 function scoreAntiguidade(dataInicio: string | null): { pts: number; sinal: string | null } {
   if (!dataInicio) return { pts: 0, sinal: null };
   const ano = Number(dataInicio.slice(0, 4));
   if (!Number.isFinite(ano)) return { pts: 0, sinal: null };
-
   const anos = 2026 - ano;
   if (anos >= 40) return { pts: 30, sinal: `Fundada em ${ano} (${anos} anos de operação)` };
   if (anos >= 25) return { pts: 22, sinal: `Fundada em ${ano} (${anos} anos de operação)` };
-  if (anos >= 15) return { pts: 12, sinal: `Fundada em ${ano}` };
+  if (anos >= 15) return { pts: 10, sinal: `Fundada em ${ano}` };
   return { pts: 0, sinal: null };
 }
 
-// ── 3. Estabilidade do quadro societário (max 20) ────────────────────────────
-// Olha a entrada mais RECENTE de qualquer sócio. Se foi há muito tempo, o quadro
-// está congelado — sinal forte de que não há plano de sucessão em andamento.
-function scoreEstabilidade(socios: Socio[]): { pts: number; sinal: string | null } {
-  const datas = socios
-    .map((s) => s.data_entrada_sociedade)
-    .filter((d): d is string => Boolean(d))
-    .map((d) => new Date(d).getTime())
-    .filter((t) => Number.isFinite(t));
-
-  if (datas.length === 0) return { pts: 10, sinal: null }; // neutro
-
-  const maisRecente = Math.max(...datas);
-  const anosDesde = (Date.now() - maisRecente) / (1000 * 60 * 60 * 24 * 365.25);
-  const ano = new Date(maisRecente).getFullYear();
-
-  if (anosDesde > 10) return { pts: 20, sinal: `Quadro societário inalterado desde ${ano}` };
-  if (anosDesde >= 5)  return { pts: 12, sinal: `Última mudança societária em ${ano}` };
-  if (anosDesde >= 2)  return { pts: 5,  sinal: null };
-  return { pts: 0, sinal: `Mudança societária recente em ${ano}` };
-}
-
-// ── 4. Porte / relevância pro middle market (max 10) ─────────────────────────
-// DEMAIS = não-ME-nem-EPP = empresa maior, sweet spot do M&A.
+// ── 3. Porte / relevância (max 30) — lift 2,38x; era subaproveitado no v0 ─────
 function scorePorte(porte: string | null): { pts: number; sinal: string | null } {
   if (!porte) return { pts: 0, sinal: null };
   const p = porte.toUpperCase();
-  if (p === "DEMAIS" || p.includes("DEMAIS")) return { pts: 10, sinal: "Porte relevante (não-ME/EPP)" };
-  if (p === "EPP")                            return { pts: 6,  sinal: null };
-  if (p === "ME")                             return { pts: 2,  sinal: null };
+  if (p === "DEMAIS" || p.includes("DEMAIS")) return { pts: 30, sinal: "Porte relevante (não-ME/EPP)" };
+  if (p === "EPP") return { pts: 15, sinal: "Porte EPP" };
+  if (p === "ME") return { pts: 5, sinal: null };
+  return { pts: 0, sinal: null };
+}
+
+// ── 4. Quadro plural (max 10) — sócio único tem lift ~0 (quase nunca adquirido) ─
+function scoreQuadroPlural(socios: Socio[]): { pts: number; sinal: string | null } {
+  const nPF = faixasPF(socios).length;
+  if (nPF >= 2) return { pts: 10, sinal: `Quadro com ${nPF} sócios` };
+  if (nPF === 1) return { pts: 0, sinal: "Sócio único (perfil menos transacionável)" };
   return { pts: 0, sinal: null };
 }
 
 // ── Agregador ─────────────────────────────────────────────────────────────────
 export function calcScore(empresa: Empresa, socios: Socio[] = empresa.socio ?? []): ScoreResult {
-  const idade        = scoreIdadeSocios(socios);
-  const antiguidade  = scoreAntiguidade(empresa.data_inicio_atividade);
-  const estabilidade = scoreEstabilidade(socios);
-  const porte        = scorePorte(empresa.porte);
+  const idade       = scoreIdadeSocios(socios);
+  const antiguidade = scoreAntiguidade(empresa.data_inicio_atividade);
+  const porte       = scorePorte(empresa.porte);
+  const plural      = scoreQuadroPlural(socios);
 
   const breakdown: ScoreBreakdown = {
     idade_socios:        idade.pts,
     antiguidade_empresa: antiguidade.pts,
-    estabilidade_quadro: estabilidade.pts,
     porte_relevancia:    porte.pts,
+    quadro_plural:       plural.pts,
   };
 
-  const score = idade.pts + antiguidade.pts + estabilidade.pts + porte.pts;
+  const score = idade.pts + antiguidade.pts + porte.pts + plural.pts;
 
-  // Sinais ordenados pela força do componente (maior peso → primeiro).
   const sinais = [
-    { pts: idade.pts,        sinal: idade.sinal },
-    { pts: antiguidade.pts,  sinal: antiguidade.sinal },
-    { pts: estabilidade.pts, sinal: estabilidade.sinal },
-    { pts: porte.pts,        sinal: porte.sinal },
+    { pts: idade.pts,       sinal: idade.sinal },
+    { pts: antiguidade.pts, sinal: antiguidade.sinal },
+    { pts: porte.pts,       sinal: porte.sinal },
+    { pts: plural.pts,      sinal: plural.sinal },
   ]
     .filter((x) => x.sinal !== null)
     .sort((a, b) => b.pts - a.pts)
@@ -127,7 +105,7 @@ export function calcScore(empresa: Empresa, socios: Socio[] = empresa.socio ?? [
   return { score, breakdown, sinais };
 }
 
-// ── Helper de classificação (pra cor/label na UI) ────────────────────────────
+// ── Helper de classificação (cor/label na UI) ────────────────────────────────
 export function scoreTier(score: number): "alto" | "medio" | "baixo" {
   if (score >= 70) return "alto";
   if (score >= 50) return "medio";
