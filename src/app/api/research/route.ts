@@ -10,7 +10,7 @@ export const runtime = "nodejs";
 export const maxDuration = 180;
 
 // Cache de research das empresas-top dos demos → clique instantâneo no Loom.
-const CACHE = researchCache as Record<string, ResearchResult>;
+const CACHE = researchCache as unknown as Record<string, ResearchResult>;
 
 export async function POST(req: NextRequest) {
   let body: unknown;
