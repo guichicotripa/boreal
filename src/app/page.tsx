@@ -58,20 +58,20 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
+    <div className="min-h-screen bg-smoky text-floral">
       <main className="mx-auto max-w-4xl px-6 py-16">
         {/* Header */}
         <header className="mb-10 flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-4xl font-semibold tracking-tight">Boreal</h1>
-            <p className="mt-2 text-zinc-400">
+            <h1 className="font-display text-4xl tracking-tight">Boreal</h1>
+            <p className="mt-2 text-bone">
               Deal sourcing para PE/M&amp;A — metalmecânica com risco sucessório.
               Descreva o que procura em linguagem natural.
             </p>
           </div>
           <a
             href="/pipeline"
-            className="mt-1 shrink-0 rounded-lg border border-zinc-700 px-3 py-2 text-sm text-zinc-300 transition-colors hover:border-zinc-500 hover:text-white"
+            className="mt-1 shrink-0 rounded-lg border border-hairline px-3 py-2 text-sm text-bone transition-colors hover:border-hairline-hover hover:text-floral"
           >
             Pipeline →
           </a>
@@ -89,12 +89,12 @@ export default function Home() {
             value={texto}
             onChange={(e) => setTexto(e.target.value)}
             placeholder="ex: metalmecânica no interior de SP com sócios acima de 60 anos"
-            className="flex-1 rounded-lg border border-zinc-800 bg-zinc-900 px-4 py-3 text-sm outline-none placeholder:text-zinc-600 focus:border-zinc-500"
+            className="flex-1 rounded-lg border border-hairline bg-surface px-4 py-3 text-sm text-floral outline-none placeholder:text-olive focus:border-hairline-hover"
           />
           <button
             type="submit"
             disabled={loading}
-            className="rounded-lg bg-zinc-100 px-6 py-3 text-sm font-medium text-zinc-900 transition-colors hover:bg-white disabled:opacity-50"
+            className="rounded-lg bg-floral px-6 py-3 text-sm font-medium text-smoky transition-opacity hover:opacity-90 disabled:opacity-50"
           >
             {loading ? "Buscando…" : "Buscar"}
           </button>
@@ -109,7 +109,7 @@ export default function Home() {
                 setTexto(ex);
                 buscar(ex);
               }}
-              className="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400 transition-colors hover:border-zinc-600 hover:text-zinc-200"
+              className="rounded-full border border-hairline px-3 py-1 text-xs text-bone transition-colors hover:border-hairline-hover hover:text-floral"
             >
               {ex}
             </button>
@@ -121,7 +121,7 @@ export default function Home() {
 
         {/* Erro */}
         {erro && (
-          <div className="mt-10 rounded-lg border border-red-900 bg-red-950/40 px-4 py-3 text-sm text-red-300">
+          <div className="mt-10 rounded-lg border border-risk-high/30 bg-risk-high/5 px-4 py-3 text-sm text-risk-high">
             {erro}
           </div>
         )}
@@ -129,32 +129,32 @@ export default function Home() {
         {/* Resultados */}
         {res && !loading && (
           <section className="mt-10">
-            <div className="mb-4 flex items-center justify-between text-sm text-zinc-500">
+            <div className="mb-4 flex items-center justify-between text-sm text-bone">
               <span>
                 {res.count} empresa{res.count === 1 ? "" : "s"}
                 {res.reasoned && res.reasonedCount && (
-                  <span className="ml-2 text-emerald-500">
+                  <span className="ml-2 text-bone">
                     · top {res.reasonedCount} analisadas por IA
                   </span>
                 )}
               </span>
               <span className="flex gap-2">
                 {res.filters.cnaePrefixes.map((c) => (
-                  <span key={c} className="rounded bg-zinc-900 px-2 py-0.5">
+                  <span key={c} className="rounded bg-surface px-2 py-0.5 font-data text-xs text-bone">
                     CNAE {c}
                   </span>
                 ))}
                 {res.filters.minFaixaEtaria != null && (
-                  <span className="rounded bg-zinc-900 px-2 py-0.5">
+                  <span className="rounded bg-surface px-2 py-0.5 font-data text-xs text-bone">
                     sócios {FAIXA_LABEL[String(res.filters.minFaixaEtaria)]}+
                   </span>
                 )}
                 {res.filters.maxAnoFundacao != null && (
-                  <span className="rounded bg-zinc-900 px-2 py-0.5">
+                  <span className="rounded bg-surface px-2 py-0.5 font-data text-xs text-bone">
                     até {res.filters.maxAnoFundacao}
                   </span>
                 )}
-                <span className="rounded bg-zinc-800 px-2 py-0.5 text-zinc-400">
+                <span className="rounded bg-surface px-2 py-0.5 text-xs text-olive">
                   {res.parsedBy === "llm" ? "interpretado por IA" : "heurístico"}
                 </span>
               </span>
@@ -167,7 +167,7 @@ export default function Home() {
             </ul>
 
             {res.count === 0 && (
-              <p className="text-sm text-zinc-500">
+              <p className="text-sm text-bone">
                 Nenhuma empresa bateu com os filtros. Tente afrouxar a consulta.
               </p>
             )}
@@ -204,13 +204,13 @@ function LoadingSteps() {
         <div
           key={i}
           className={`flex items-center gap-2 text-sm ${
-            i === step ? "text-zinc-300" : "text-zinc-600"
+            i === step ? "text-floral" : "text-olive"
           }`}
         >
           {i === step ? (
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-risk-mid" />
           ) : (
-            <span className="text-emerald-600">✓</span>
+            <span className="text-olive">✓</span>
           )}
           {s}
         </div>
@@ -220,9 +220,9 @@ function LoadingSteps() {
 }
 
 const TIER_STYLES = {
-  alto:  { box: "border-red-900/60 bg-red-950/20",     text: "text-red-300",    label: "Alto risco sucessório" },
-  medio: { box: "border-amber-900/60 bg-amber-950/20", text: "text-amber-300",  label: "Risco moderado" },
-  baixo: { box: "border-zinc-800 bg-zinc-900/30",      text: "text-zinc-400",   label: "Risco baixo" },
+  alto:  { box: "border-risk-high/40 bg-risk-high/5", text: "text-risk-high", label: "Alto risco sucessório" },
+  medio: { box: "border-risk-mid/40 bg-risk-mid/5",   text: "text-risk-mid",  label: "Risco moderado" },
+  baixo: { box: "border-hairline bg-surface",         text: "text-bone",      label: "Risco baixo" },
 } as const;
 
 function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
@@ -235,22 +235,22 @@ function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
   const sinais = e.score?.sinais ?? [];
 
   return (
-    <li className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+    <li className="rounded-lg border border-hairline bg-surface p-4">
       {/* Header com score em destaque */}
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-start gap-4">
           {/* Score badge — mostra v1 e o delta após investigação */}
           <div className={`shrink-0 rounded-lg border ${tierStyle.box} px-3 py-2 text-center transition-colors`}>
-            <div className={`text-2xl font-semibold tabular-nums ${tierStyle.text}`}>
+            <div className={`font-data text-2xl tabular-nums ${tierStyle.text}`}>
               {score}
             </div>
-            <div className="mt-0.5 text-[10px] uppercase tracking-wider text-zinc-500">
+            <div className="mt-0.5 font-data text-[10px] uppercase tracking-wider text-olive">
               {research ? "score v1" : "score"}
             </div>
             {research && research.delta !== 0 && (
               <div
-                className={`mt-0.5 text-[10px] tabular-nums ${
-                  research.delta > 0 ? "text-red-400" : "text-emerald-400"
+                className={`mt-0.5 font-data text-[10px] tabular-nums ${
+                  research.delta > 0 ? "text-risk-high" : "text-bone"
                 }`}
                 title="ajuste após investigação da IA"
               >
@@ -260,22 +260,22 @@ function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
           </div>
           {/* Nome + tier */}
           <div>
-            <h3 className="font-medium text-zinc-100">{e.razao_social}</h3>
+            <h3 className="font-display text-lg text-floral">{e.razao_social}</h3>
             {e.nome_fantasia && (
-              <p className="text-sm text-zinc-500">{e.nome_fantasia}</p>
+              <p className="text-sm text-bone">{e.nome_fantasia}</p>
             )}
             <p className={`mt-1 text-xs ${tierStyle.text}`}>{tierStyle.label}</p>
           </div>
         </div>
         <div className="flex shrink-0 flex-col items-end gap-1">
-          <span className="font-mono text-xs text-zinc-600">{formatCnpj(e.cnpj)}</span>
+          <span className="font-data text-xs text-olive">{formatCnpj(e.cnpj)}</span>
           <SalvarButton empresaId={e.id} />
         </div>
       </div>
 
       {/* One-liner do reasoner LLM (se rodou) */}
       {e.insight?.one_liner && (
-        <p className="mt-3 text-sm italic leading-relaxed text-zinc-300">
+        <p className="mt-3 font-display text-sm italic leading-relaxed text-floral">
           &ldquo;{e.insight.one_liner}&rdquo;
         </p>
       )}
@@ -286,7 +286,7 @@ function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
           {e.insight.flags.map((f, i) => (
             <span
               key={i}
-              className="rounded-full bg-zinc-800 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-zinc-300"
+              className="rounded-full border border-hairline px-2 py-0.5 font-data text-[10px] uppercase tracking-wider text-bone"
             >
               {f}
             </span>
@@ -296,10 +296,10 @@ function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
 
       {/* Sinais do score determinístico (bullets curtos) */}
       {sinais.length > 0 && (
-        <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs text-zinc-500">
+        <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs text-bone">
           {sinais.map((s, i) => (
             <li key={i} className="flex items-center gap-1.5">
-              <span className="h-1 w-1 rounded-full bg-zinc-600" />
+              <span className="h-1 w-1 rounded-full bg-olive" />
               {s}
             </li>
           ))}
@@ -308,11 +308,11 @@ function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
 
       {/* Setor (descrição legível do CNAE) */}
       {e.cnae_principal_desc && (
-        <p className="mt-3 text-xs text-zinc-400">{e.cnae_principal_desc}</p>
+        <p className="mt-3 text-xs text-bone">{e.cnae_principal_desc}</p>
       )}
 
       {/* Metadados da empresa */}
-      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-500">
+      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-bone">
         <span>{e.municipio} / {e.uf}</span>
         <span>Fundada em {anoFundacao(e.data_inicio_atividade)}</span>
         {e.capital_social != null && (
@@ -324,26 +324,24 @@ function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
 
       {/* Contato — output mais valioso pra deal sourcing */}
       {(e.telefone || e.email) && (
-        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs">
-          {e.telefone && (
-            <span className="text-emerald-400">☎ {formatTelefone(e.telefone)}</span>
-          )}
-          {e.email && <span className="text-emerald-400">✉ {e.email}</span>}
+        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-bone">
+          {e.telefone && <span>☎ {formatTelefone(e.telefone)}</span>}
+          {e.email && <span>✉ {e.email}</span>}
         </div>
       )}
 
       {/* Sócios */}
       {socios.length > 0 && (
-        <div className="mt-3 border-t border-zinc-800 pt-3">
-          <p className="mb-1 text-xs uppercase tracking-wide text-zinc-600">
+        <div className="mt-3 border-t border-hairline pt-3">
+          <p className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
             Sócios
           </p>
           <ul className="flex flex-col gap-1">
             {socios.map((s) => (
               <li key={s.id} className="flex items-center gap-2 text-sm">
-                <span className="text-zinc-300">{s.nome}</span>
+                <span className="text-floral">{s.nome}</span>
                 {s.faixa_etaria && FAIXA_LABEL[s.faixa_etaria] && (
-                  <span className="rounded bg-amber-950/50 px-1.5 py-0.5 text-xs text-amber-400">
+                  <span className="rounded bg-risk-mid/15 px-1.5 py-0.5 font-data text-xs text-risk-mid">
                     {FAIXA_LABEL[s.faixa_etaria]} anos
                   </span>
                 )}
@@ -387,8 +385,8 @@ function SalvarButton({ empresaId }: { empresaId: string }) {
       disabled={estado !== "idle"}
       className={`rounded-md px-2 py-1 text-[11px] font-medium transition-colors ${
         estado === "salvo"
-          ? "text-emerald-400"
-          : "border border-zinc-700 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200"
+          ? "text-floral"
+          : "border border-hairline text-bone hover:border-hairline-hover hover:text-floral"
       }`}
     >
       {estado === "salvo" ? "✓ no pipeline" : estado === "salvando" ? "salvando…" : "+ salvar"}
@@ -431,34 +429,34 @@ function ResearchPanel({
   }
 
   return (
-    <div className="mt-4 border-t border-zinc-800 pt-3">
+    <div className="mt-4 border-t border-hairline pt-3">
       {!research && (
         <button
           onClick={investigar}
           disabled={loading}
-          className="text-xs font-medium text-sky-400 transition-colors hover:text-sky-300 disabled:opacity-50"
+          className="text-xs font-medium text-bone transition-colors hover:text-floral disabled:opacity-50"
         >
           {loading ? "🔍 Investigando na web… (~2 min)" : "🔍 Investigar com IA"}
         </button>
       )}
       {loading && (
-        <p className="mt-2 animate-pulse text-xs text-zinc-500">
+        <p className="mt-2 animate-pulse text-xs text-bone">
           A IA está pesquisando sócios, herdeiros, imprensa e quadro societário em fontes públicas…
         </p>
       )}
-      {erro && <p className="mt-2 text-xs text-red-400">{erro}</p>}
+      {erro && <p className="mt-2 text-xs text-risk-high">{erro}</p>}
 
       {research && (
-        <div className="space-y-3 rounded-lg bg-sky-950/20 p-3">
+        <div className="space-y-3 rounded-lg border border-hairline bg-surface p-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium uppercase tracking-wider text-sky-400">
+            <span className="font-data text-[10px] font-medium uppercase tracking-wider text-bone">
               Investigação da IA
             </span>
-            <span className="text-[10px] text-zinc-500">{PRESENCA_LABEL[research.presenca_digital]}</span>
+            <span className="font-data text-[10px] text-olive">{PRESENCA_LABEL[research.presenca_digital]}</span>
           </div>
 
           {research.resumo && (
-            <p className="text-sm leading-relaxed text-zinc-300">{research.resumo}</p>
+            <p className="text-sm leading-relaxed text-floral">{research.resumo}</p>
           )}
 
           {research.sinais.length > 0 ? (
@@ -467,23 +465,23 @@ function ResearchPanel({
                 <li key={i} className="text-xs">
                   <div className="flex items-start gap-2">
                     <span
-                      className={`mt-0.5 shrink-0 rounded px-1.5 py-0.5 text-[10px] font-medium tabular-nums ${
+                      className={`mt-0.5 shrink-0 rounded px-1.5 py-0.5 font-data text-[10px] font-medium tabular-nums ${
                         s.peso > 0
-                          ? "bg-red-950/50 text-red-300"
-                          : "bg-emerald-950/50 text-emerald-300"
+                          ? "bg-risk-high/15 text-risk-high"
+                          : "bg-surface text-bone"
                       }`}
                     >
                       {s.peso > 0 ? `+${s.peso}` : s.peso}
                     </span>
                     <div>
-                      <span className="font-medium text-zinc-300">{s.rotulo}</span>
-                      <span className="text-zinc-500"> — {s.descricao}</span>
+                      <span className="font-medium text-floral">{s.rotulo}</span>
+                      <span className="text-bone"> — {s.descricao}</span>
                       {s.fonte_url && (
                         <a
                           href={s.fonte_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="ml-1 text-sky-500 hover:text-sky-400"
+                          className="ml-1 text-olive transition-colors hover:text-bone"
                         >
                           ↗ fonte
                         </a>
@@ -494,7 +492,7 @@ function ResearchPanel({
               ))}
             </ul>
           ) : (
-            <p className="text-xs text-zinc-500">Nenhum sinal qualitativo conclusivo encontrado.</p>
+            <p className="text-xs text-bone">Nenhum sinal qualitativo conclusivo encontrado.</p>
           )}
         </div>
       )}
@@ -533,11 +531,11 @@ function DossierPanel({ empresa }: { empresa: Empresa }) {
   }
 
   return (
-    <div className="mt-4 border-t border-zinc-800 pt-3">
+    <div className="mt-4 border-t border-hairline pt-3">
       <button
         onClick={gerar}
         disabled={loading}
-        className="text-xs font-medium text-zinc-300 transition-colors hover:text-white disabled:opacity-50"
+        className="text-xs font-medium text-bone transition-colors hover:text-floral disabled:opacity-50"
       >
         {loading
           ? "Gerando memo…"
@@ -546,31 +544,31 @@ function DossierPanel({ empresa }: { empresa: Empresa }) {
             : "▸ Gerar memo de investimento"}
       </button>
 
-      {erro && <p className="mt-2 text-xs text-red-400">{erro}</p>}
+      {erro && <p className="mt-2 text-xs text-risk-high">{erro}</p>}
 
       {open && analise && (
-        <div className="mt-3 space-y-4 rounded-lg bg-zinc-950/60 p-4 text-sm">
+        <div className="mt-3 space-y-4 rounded-lg border border-hairline bg-surface p-4 text-sm">
           {/* Overview */}
-          <p className="leading-relaxed text-zinc-300">{analise.overview}</p>
+          <p className="leading-relaxed text-floral">{analise.overview}</p>
 
           {/* Timeline societária (visual, determinística) */}
           <Timeline empresa={empresa} />
 
           {/* Análise sucessória */}
           <div>
-            <h4 className="mb-1 text-xs uppercase tracking-wider text-zinc-500">
+            <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
               Análise de risco sucessório
             </h4>
-            <p className="leading-relaxed text-zinc-300">{analise.analise_sucessoria}</p>
+            <p className="leading-relaxed text-floral">{analise.analise_sucessoria}</p>
           </div>
 
           {/* Perguntas de abordagem */}
           {analise.perguntas_abordagem.length > 0 && (
             <div>
-              <h4 className="mb-1 text-xs uppercase tracking-wider text-zinc-500">
+              <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
                 Perguntas para o primeiro contato
               </h4>
-              <ul className="list-decimal space-y-1 pl-5 text-zinc-300">
+              <ul className="list-decimal space-y-1 pl-5 text-floral">
                 {analise.perguntas_abordagem.map((p, i) => (
                   <li key={i} className="leading-relaxed">{p}</li>
                 ))}
@@ -579,11 +577,11 @@ function DossierPanel({ empresa }: { empresa: Empresa }) {
           )}
 
           {/* Tese de aproximação */}
-          <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-3">
-            <h4 className="mb-1 text-xs uppercase tracking-wider text-zinc-500">
+          <div className="rounded-lg border border-hairline bg-surface p-3">
+            <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
               Tese de aproximação
             </h4>
-            <p className="leading-relaxed text-zinc-200">{analise.tese_aproximacao}</p>
+            <p className="leading-relaxed text-floral">{analise.tese_aproximacao}</p>
           </div>
         </div>
       )}
@@ -621,11 +619,11 @@ function Timeline({ empresa }: { empresa: Empresa }) {
 
   return (
     <div>
-      <h4 className="mb-2 text-xs uppercase tracking-wider text-zinc-500">
+      <h4 className="mb-2 font-data text-[10px] uppercase tracking-wider text-olive">
         Linha do tempo societária
       </h4>
       <div
-        className="relative h-px bg-zinc-700"
+        className="relative h-px bg-hairline"
         style={{ marginTop: "2.4rem", marginBottom: "1.4rem" }}
       >
         {eventos.map((ev, i) => {
@@ -642,11 +640,11 @@ function Timeline({ empresa }: { empresa: Empresa }) {
               className={`absolute flex flex-col ${align}`}
               style={isEdgeRight ? { right: `${Math.max(100 - pct, 0)}%` } : { left: `${Math.min(pct, 100)}%` }}
             >
-              <span className="absolute -top-7 max-w-[8rem] truncate whitespace-nowrap text-[10px] text-zinc-400">
+              <span className="absolute -top-7 max-w-[8rem] truncate whitespace-nowrap text-[10px] text-bone">
                 {ev.label}
               </span>
-              <span className="h-2 w-2 rounded-full bg-amber-500" />
-              <span className="absolute top-3 text-[10px] tabular-nums text-zinc-600">
+              <span className="h-2 w-2 rounded-full bg-risk-mid" />
+              <span className="absolute top-3 font-data text-[10px] tabular-nums text-olive">
                 {ev.ano}
               </span>
             </div>
