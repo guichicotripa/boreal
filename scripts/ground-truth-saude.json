@@ -1,0 +1,76 @@
+{
+  "deals": [
+    {
+      "adquirida": "Hospital Novo Atibaia",
+      "adquirente": "Rede D'Or São Luiz",
+      "ano": 2021,
+      "cidade": "Atibaia",
+      "uf": "SP",
+      "familiar_indicios": "Fundado em 26/06/1971 por cinco médicos residentes do HC-FMUSP: Dr. Wilson Rodrigues de Freitas e Dr. Shuhatiro Wada (sócios originais), depois joined por Dr. Olavo Malheiros Jr., Dr. Kenji Kawakami, Dr. Márcio Borges da Fonseca e Dr. Antonio Hernandes Sobrinho. Modelo clássico de hospital de médico-fundador. Rede D'Or adquiriu 90,3% por R$ 296,3 milhões.",
+      "fonte_url": "https://www.infomoney.com.br/mercados/rede-dor-anuncia-a-compra-de-pelo-menos-903-do-hospital-novo-atibaia/"
+    },
+    {
+      "adquirida": "IACS – Instituto de Análises Clínicas de Santos",
+      "adquirente": "Instituto Hermes Pardini",
+      "ano": 2021,
+      "cidade": "Santos",
+      "uf": "SP",
+      "familiar_indicios": "Fundado em 1929 — maior e mais tradicional laboratório da Baixada Santista, com 92 anos de história ao momento da venda e 13 unidades de atendimento. Sócios permaneceram na operação após a venda (Pardini adquiriu 60% por R$ 100,98 mi com opção de compra do restante). Longevidade e permanência dos sócios sugerem controle familiar/fundador.",
+      "fonte_url": "https://istoedinheiro.com.br/hermes-pardini-compra-60-do-laboratorio-iacs-por-r-10098-milhoes"
+    },
+    {
+      "adquirida": "APC – Laboratório de Anatomia Patológica e Citologia",
+      "adquirente": "Instituto Hermes Pardini",
+      "ano": 2021,
+      "cidade": "São Paulo",
+      "uf": "SP",
+      "familiar_indicios": "Fundado ~1988 por médicos da Faculdade de Medicina da USP. Liderado desde 1987 pelo Dr. Roberto Falzoni, Diretor de Serviço da Divisão de Anatomia Patológica do HC-FMUSP. Dr. Falzoni permaneceu como Diretor Médico-Científico após a venda. Empresa de médico-fundador com mais de 30 anos sob mesma liderança. Adquirida por R$ 19,5 milhões.",
+      "fonte_url": "https://medicinasa.com.br/pardini-apc/"
+    },
+    {
+      "adquirida": "Grupo HB Saúde",
+      "adquirente": "Hapvida NotreDame Intermédica",
+      "ano": 2021,
+      "cidade": "São José do Rio Preto",
+      "uf": "SP",
+      "familiar_indicios": "Operadora de saúde regional com 128 mil beneficiários + Hospital HBS Mirassol + 8 clínicas ambulatoriais + centro de oncologia. Receita de R$ 310 mi em 2020. Presença restrita à região de Rio Preto/Mirassol. Não confirmado controle familiar — pode ser operadora cooperativa ou societária. Hapvida adquiriu 59% por ~R$ 383,5 mi (100% avaliado em R$ 650 mi, objeto de disputa com SulAmérica).",
+      "fonte_url": "https://www.bloomberglinea.com.br/2021/09/24/hapvida-compra-hb-saude-e-amplia-presenca-em-sp/"
+    },
+    {
+      "adquirida": "Laboratório CML (Centro Médico Laboratorial)",
+      "adquirente": "Grupo Sabin Medicina Diagnóstica",
+      "ano": 2022,
+      "cidade": "Vinhedo",
+      "uf": "SP",
+      "familiar_indicios": "30+ anos de atuação no interior de SP (estimativa de fundação ~anos 1980/início 1990). Sede em Vinhedo com 5 unidades em Vinhedo, Valinhos e Louveira. Processava ~600 mil exames/ano. Empresa regional de pequeno porte — perfil de laboratório de médico ou família fundadora, mas controle familiar não confirmado explicitamente nas fontes.",
+      "fonte_url": "https://setorsaude.com.br/grupo-sabin-avanca-no-interior-de-sao-paulo-com-a-aquisicao-do-laboratorio-cml/"
+    },
+    {
+      "adquirida": "UOCP – Unidade de Oncologia Clínica e Pediátrica",
+      "adquirente": "Oncoclínicas (via Centro Paulista de Oncologia S.A.)",
+      "ano": 2023,
+      "cidade": "São Paulo",
+      "uf": "SP",
+      "familiar_indicios": "Fundada em 1987 pelo Dr. Sidnei Epelman, oncologista pediátrico com 40+ anos de experiência, ex-MD Anderson, Mayo Clinic e St. Jude's. Modelo claro de clínica de médico-fundador. Dr. Epelman e todo o corpo médico migraram para a Oncoclínicas após a venda. Adquirida por R$ 6,5 milhões (clínica ambulatorial de nicho).",
+      "fonte_url": "https://br.advfn.com/jornal/2023/02/oncoclinicas-conclui-aquisicao-da-unidade-de-oncologia-clinica-e-pediatrica"
+    },
+    {
+      "adquirida": "Clínica CT",
+      "adquirente": "Dasa (Diagnósticos da América)",
+      "ano": 2021,
+      "cidade": "São Paulo",
+      "uf": "SP",
+      "familiar_indicios": "Centro de diagnóstico por imagem localizado no bairro Jardim Paulista, São Paulo capital. A Dasa informou que a aquisição 'não representa investimento relevante' (ou seja, ativo de pequeno porte). Controle familiar não confirmado nas fontes públicas encontradas.",
+      "fonte_url": "https://br.investing.com/news/stock-market-news/dasa-anuncia-aquisicao-de-clinica-ct-em-sao-paulo-890336"
+    },
+    {
+      "adquirida": "HEMAT – Instituto de Hematologia de São José do Rio Preto",
+      "adquirente": "Dasa (Diagnósticos da América)",
+      "ano": 2021,
+      "cidade": "São José do Rio Preto",
+      "uf": "SP",
+      "familiar_indicios": "30+ anos de operação em São José do Rio Preto. Realizava 120 mil exames/mês. Liderado pelo Dr. Walter Benfatti (médico e diretor executivo), que afirmou publicamente apoiar a integração à Dasa. Cinco sócios na estrutura societária. Anúncio foi em dezembro de 2020 (fechamento estimado no 1º semestre de 2021). Forte perfil de empresa fundada e operada por médicos.",
+      "fonte_url": "https://fusoesaquisicoes.com/acontece-no-setor/dasa-anuncia-compra-do-hemat-terceira/"
+    }
+  ]
+}
