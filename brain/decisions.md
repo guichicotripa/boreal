@@ -204,3 +204,36 @@ Claude Code logado). Mitigado por: cache do top dos demos (clique instantâneo) 
 No deploy, se precisar de research ao vivo, trocar por Anthropic API (web search tool).
 
 **Status:** ✅ Implementada. Parser e reasoner seguem na API (rápidos); só o research usa assinatura.
+
+---
+
+## [2026-05-30] Score v0.1 — recalibrado por validação retroativa (data-driven)
+
+**Contexto:** o score v0 era heurística pura (pesos chutados). A mineração de transições do CNPJ
+gerou ground truth (340 aquisições reais) → deu pra medir o que cada feature realmente prediz.
+
+**Decisão:** recalibrar os pesos do `scoring.ts` pelo lift observado nas aquisições:
+- idade 0–40 → 0–30; antiguidade mantém 0–30 (lift 2,56x, o mais forte);
+- **porte 0–10 → 0–30** (lift 2,38x — estava subaproveitado);
+- **"estabilidade/estagnação" REMOVIDA** (lift 0,81x — era NEGATIVO, o v0 premiava o errado);
+- **quadro plural +10** (sócio único tem lift ~0 — quase nunca é adquirido).
+
+**Evidência:** top decil de aquisições reais subiu de 17% (v0) → 28% (v0.1) contra o benchmark.
+Validado com pesos normalizados (0-100) em `scripts/validacao-v01-norm.mjs`. Portado pro produto.
+
+**Status:** ✅ No produto (PR #13). Ground truth e benchmark em `scripts/{detectar-transicoes,
+validacao-escala,validacao-lift,validacao-v01-norm}.mjs`. Síntese: segundo-cerebro `wiki/synthesis/relay-data-moat.md`.
+
+---
+
+## [2026-05-30] Score sempre usa o quadro societário COMPLETO
+
+**Contexto:** ao portar o v0.1, o `quadro_plural` revelou um bug: a busca filtrada por idade usava
+`socio!inner` + `.gte(faixa)`, que projetava SÓ os sócios que batiam o filtro. O `calcScore` via
+um subconjunto → score errado (PRENSA dava 90 na busca, 100 no research).
+
+**Decisão:** o filtro de idade serve só pra SELECIONAR empresas; o score usa TODOS os sócios.
+Implementado com 2ª query (`/api/search`) que traz o quadro completo das empresas selecionadas
+antes de pontuar. Separar seleção de projeção.
+
+**Status:** ✅ Corrigido (PR #13). Demo e research consistentes.
