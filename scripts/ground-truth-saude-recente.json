@@ -1,0 +1,130 @@
+{
+  "deals": [
+    {
+      "adquirida": "Femme Laboratório da Mulher (GIP Medicina Diagnóstica)",
+      "adquirente": "Grupo Fleury",
+      "ano": 2024,
+      "cidade": "São Paulo (capital) + Osasco",
+      "uf": "SP",
+      "familiar_indicios": "Fundado em 1994 pelo Dr. Rogério Ciarcia Ramires (ginecologista) ao lado do pai Dr. Dirceu Ramires (ginecologista) e do Dr. Décio Roveda Jr. (radiologista) — trio médico. Operou 30 anos de forma independente. Em 2018 recebeu aporte do fundo L Catterton, mas gestão permaneceu médica. 12 unidades focadas em saúde feminina. Receita R$287M/ano.",
+      "fonte_url": "https://investnews.com.br/negocios/fleury-anuncia-aquisicao-do-femme-laboratorio-da-mulher-em-negocio-avaliado-em-r-2075-milhoes/"
+    },
+    {
+      "adquirida": "Confiance Medicina Diagnóstica + Labclin + Inda-Lab",
+      "adquirente": "Grupo Fleury",
+      "ano": 2024,
+      "cidade": "Campinas (+ Hortolândia, Indaiatuba, Jaguariúna, Paulínia, Sumaré, Valinhos, Vinhedo)",
+      "uf": "SP",
+      "familiar_indicios": "Rede regional fundada em 2001/2004 com 25 laboratórios na Grande Campinas. Sócios-administradores: Edgar Gil Rizzatti e Patricia Yumi Maeda Bertoncello. Primeiro laboratório de Campinas certificado pelo PALC. Aprovado pelo CA Fleury em nov/2024, concluído em jun/2025. Perfil de rede regional independente — não confirmado como familiar explicitamente.",
+      "fonte_url": "https://investnews.com.br/negocios/fleury-paga-r-130-milhoes-e-conclui-aquisicao-de-tres-laboratorios/"
+    },
+    {
+      "adquirida": "CURA — Centro de Ultrassonografia e Radiologia S.A.",
+      "adquirente": "Alliança Saúde (Alliar)",
+      "ano": 2025,
+      "cidade": "São Paulo (capital) — Jardim Paulista",
+      "uf": "SP",
+      "familiar_indicios": "Fundado em julho de 1978 (47 anos de operação independente). Razão social original indica grupo de médicos especialistas (ultrassonografia + radiologia). Comunicado da Alliar destaca 'mais de 40 anos de história'. Equipe médica in-house. Detida pela Refuá Participações na data da venda.",
+      "fonte_url": "https://investnews.com.br/negocios/allianca-saude-compra-cura-por-r-30-milhoes-em-sao-paulo/"
+    },
+    {
+      "adquirida": "Clínica Prisma",
+      "adquirente": "ViV Saúde Mental e Emocional (fundo Teman Capital + Vinci)",
+      "ano": 2025,
+      "cidade": "São Paulo (capital) — Perdizes, Tatuapé e Santo Amaro",
+      "uf": "SP",
+      "familiar_indicios": "Fundada em 2001 pela Mestra em Psicologia Dorit W. Verea; Dr. José Eduardo Pereira Nora (psiquiatra) entrou como sócio em 2009. Clínica psiquiátrica ambulatorial com Hospital-Dia, operada pelos fundadores por 24 anos antes da venda.",
+      "fonte_url": "https://fusoesaquisicoes.com/acontece-no-setor/viv-saude-mental-e-emocional-adquire-clinica-prisma-e-marca-sua-chegada-em-sao-paulo/"
+    },
+    {
+      "adquirida": "LSL — Laboratório São Lucas (Grupo LSL)",
+      "adquirente": "Grupo Fleury",
+      "ano": 2025,
+      "cidade": "Rio Claro (+ Santa Gertrudes)",
+      "uf": "SP",
+      "familiar_indicios": "Rede de 3 unidades no interior paulista. Receita ~R$24M/ano (12 meses até mai/2025). Perfil de laboratório regional do interior — não confirmado explicitamente como familiar.",
+      "fonte_url": "https://investnews.com.br/negocios/fleury-compra-grupo-de-analise-clinica-do-interior-de-sao-paulo-por-r-34-milhoes/"
+    },
+    {
+      "adquirida": "Retina Clinic — Unidades São Paulo",
+      "adquirente": "Grupo Fleury",
+      "ano": 2022,
+      "cidade": "São Paulo (capital)",
+      "uf": "SP",
+      "familiar_indicios": "Centro especializado em retina, operava em parceria com a Clínica de Olhos Moacir Cunha (nome de médico). Receita bruta ~R$23.4M em 2021. Não confirmado como empresa familiar — indício apenas pelo nome do médico-parceiro.",
+      "fonte_url": "http://br.advfn.com/jornal/2022/09/fleury-adquire-100-das-quotas-de-emissao-das-unidades-da-retina-clinic-por-r-21-milhoes"
+    },
+    {
+      "adquirida": "CML — Laboratório CML",
+      "adquirente": "Grupo Sabin Medicina Diagnóstica",
+      "ano": 2022,
+      "cidade": "Vinhedo (+ Valinhos, Louveira)",
+      "uf": "SP",
+      "familiar_indicios": "35 anos de atuação quando vendido (fundado ~1987). Rede de 5 unidades na região metropolitana de Campinas, processava 600 mil exames/ano. Perfil de laboratório regional independente de longa data — não confirmado explicitamente como familiar.",
+      "fonte_url": "https://setorsaude.com.br/grupo-sabin-avanca-no-interior-de-sao-paulo-com-a-aquisicao-do-laboratorio-cml/"
+    },
+    {
+      "adquirida": "Moscogliato — Serviço de Ultra-Som / Clínica Dra. Odivânia Moscogliato",
+      "adquirente": "Hermes Pardini (hoje integrante do Grupo Fleury)",
+      "ano": 2021,
+      "cidade": "São José dos Campos",
+      "uf": "SP",
+      "familiar_indicios": "Fundada e liderada pela própria Dra. Odivânia Moscogliato (médica). Pós-venda, a fundadora permaneceu como diretora médica e assessora do Pardini — padrão clássico de médico-fundador que vende o ativo mas mantém vínculo operacional.",
+      "fonte_url": "https://fusoesaquisicoes.com/acontece-no-setor/hermes-pardini-compra-moscogliato-servico-de-ultra-som-por-r-125-milhoes/"
+    },
+    {
+      "adquirida": "IACS — Instituto de Análises Clínicas de Santos",
+      "adquirente": "Hermes Pardini (hoje integrante do Grupo Fleury)",
+      "ano": 2021,
+      "cidade": "Santos (+ Cubatão, São Vicente, Praia Grande, Guarujá, Itanhaém)",
+      "uf": "SP",
+      "familiar_indicios": "Fundado em 1929 — maior laboratório da Baixada Santista. Sócios incluem Mário Flávio Leme de Paes e Alcântara + Flávio Ferraz Paes e Alcântara (sobrenomes idênticos = família) e Alberto Augusto Guimarães Gonçalves + Marcelo Guimarães Gonçalves Cunha (outra família). 92 anos quando vendida fatia de 60%.",
+      "fonte_url": "https://setorsaude.com.br/grupo-pardini-investe-r-100-milhoes-e-adquire-60-do-iacs-medicina-diagnostica/"
+    },
+    {
+      "adquirida": "APC — Laboratório de Anatomia Patológica",
+      "adquirente": "Hermes Pardini (hoje integrante do Grupo Fleury)",
+      "ano": 2021,
+      "cidade": "São Paulo (capital)",
+      "uf": "SP",
+      "familiar_indicios": "Fundado há mais de 30 anos por médicos da Faculdade de Medicina da USP (FMUSP). Liderado desde 1987 pelo Dr. Roberto Falzoni (Patologista do Hospital das Clínicas FMUSP). Receita ~R$9M em 2020. Médico-fundador identificado nominalmente, mantinha liderança há 34 anos.",
+      "fonte_url": "https://medicinasa.com.br/pardini-apc/"
+    },
+    {
+      "adquirida": "Hospital de Clínicas Antônio Afonso",
+      "adquirente": "Rede D'Or São Luiz",
+      "ano": 2020,
+      "cidade": "Jacareí",
+      "uf": "SP",
+      "familiar_indicios": "Hospital regional com 60 leitos, cirurgias multiespecialidades + pronto-atendimento. Nome homenageia fundador ('Antônio Afonso') — padrão de hospital nomeado pelo fundador. Não confirmado como familiar ou médico-fundador.",
+      "fonte_url": "https://diariodejacarei.com.br/cidade/rede-d-or-sao-luiz-anuncia-a-compra-do-hospital-antonio-afonso-em-jacarei"
+    },
+    {
+      "adquirida": "Medical — Medicina Laboratorial e Diagnóstica",
+      "adquirente": "Grupo Sabin Medicina Diagnóstica",
+      "ano": 2018,
+      "cidade": "São Caetano do Sul (+ São Bernardo do Campo)",
+      "uf": "SP",
+      "familiar_indicios": "Fundado em 20/09/1974 pelos médicos Dr. Luiz Szpiczkowski e Dr. Naum Kagan. Mais de 44 anos de operação independente quando vendido. Maior laboratório de São Caetano do Sul (1,2M exames/ano). Médicos-fundadores identificados nominalmente.",
+      "fonte_url": "https://www.saudebusiness.com/artigos/grupo-sabin-consolida-processo-de-migracao-da-marca-em-sao-caetano-do-sul/"
+    },
+    {
+      "adquirida": "Hormolab Medicina Laboratorial",
+      "adquirente": "Grupo Sabin Medicina Diagnóstica",
+      "ano": 2017,
+      "cidade": "Franca",
+      "uf": "SP",
+      "familiar_indicios": "Fundado em 1988 pelo médico endocrinologista e patologista clínico Dr. Wilson Cunha Júnior ao lado de Silvia Bittar Cunha (mesmos sobrenomes = casal). Ambos permaneceram como sócios e gestores pós-venda. 6 unidades em Franca — padrão clássico de empresa familiar médica.",
+      "fonte_url": "https://www.jornaldafranca.com.br/grupo-sabin-assume-o-hormolab-e-realiza-mais-investimentos-para-a-populacao-francana/"
+    },
+    {
+      "adquirida": "InORP — Instituto Oncológico de Ribeirão Preto",
+      "adquirente": "Grupo Oncoclínicas",
+      "ano": 2016,
+      "cidade": "Ribeirão Preto",
+      "uf": "SP",
+      "familiar_indicios": "Fundado em 1985 (31 anos independente quando integrado). Clínica oncológica regional do interior paulista, referência local. Não confirmado como familiar — perfil de clínica médica independente de longa data.",
+      "fonte_url": "https://grupooncoclinicas.com/unidades/oc-oncoclinicas-ribeirao-preto"
+    }
+  ]
+}
