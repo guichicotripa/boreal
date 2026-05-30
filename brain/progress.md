@@ -261,3 +261,29 @@ Sessão longa (28→29 madrugada). Fechou a Semana 2 inteira e começou a Semana
 - `next.config.ts` com dotenv override resolve var de sistema vazia mascarando o `.env.local`.
 - Supabase SELECT tem teto de 1000 linhas — paginar com `.range()`.
 - Cache pré-computado é o jeito certo de ter demo instantâneo + busca real ao vivo coexistindo.
+
+## [2026-05-30] Guilherme | Pipeline de curadoria + validação retroativa AI-driven (a mina de dados)
+
+Sessão longa e estratégica. Fechou o pipeline de curadoria E provou o loop de auto-aprimoramento.
+
+**Pipeline de curadoria (PRs #8, #9 — estágios 6-7 do funil Relay §14):**
+- Migration 0002 (tabela `oportunidade`: estagio) + 0003 (resultado). API CRUD `/api/oportunidade`.
+- UI: botão "+ salvar" nos cards + página `/pipeline` (kanban 4 colunas) + notas + resultado (outcome).
+- Transforma o Boreal de consulta efêmera em ferramenta de trabalho persistente. Score_run gravado a cada research.
+
+**Roteiro de validação com turma M&A (PR #10):** Daniella (Volaris/150 deals), Nathália, Brenda, Illa (PwC). Mom Test em `brain/roteiro-validacao.md`. DMs enviadas.
+
+**Validação retroativa — a jornada (PRs #11, #12):**
+1. Metalmecânica não tem deals públicos rastreáveis (confirmado). Saúde sim (Playbook escolheu saúde por isso).
+2. Garimpo de deals via Agent SDK (assinatura) achou 14 aquisições de clínicas/labs familiares SP.
+3. **Reconstrução temporal** (sacada do Guilherme "por que 2024?"): reconstrói o QSA na data de corte filtrando sócios por `data_entrada <= corte`. Não precisa de snapshot histórico (destrava qualquer ano) e remove o comprador (anti-leakage). Validação manual N=5: inconclusiva.
+4. **A MINA (a sacada do Guilherme "interpretar dado comum diferente"):** comparar snapshots do CNPJ detecta M&A/sucessão de graça. `detectar-transicoes.mjs`: **340 aquisições clássicas** (PJ entrou + PF saiu) + 17k eventos de sucessão em saúde+metalmec SP, só 2.4 anos. Ground truth proprietário, sem boutique.
+5. **Validação em escala** (`validacao-escala.mjs`, N=340): score v0 = 17% top decil (1.7x acaso). Sinal modesto.
+6. **Lift analysis** (`validacao-lift.mjs`): revelou que o score v0 estava ERRADO — "estabilidade/estagnação" tem lift 0.81 (negativo, mas v0 premiava +20!); porte DEMAIS lift 2.38 (subaproveitado); sócio único lift 0.
+7. **Recalibração v0.1** (`validacao-v01.mjs`): porte ↑, antiguidade ↑, estabilidade removida, penalidade sócio único. **Resultado: top decil 17%→26%, top30 45%→65%, decil médio 4.39→2.94.** +53% em uma iteração, só com dado.
+
+**O loop fechou:** minerar transições (ground truth grátis) → medir → lift revela erro → recalibrar → +53%. É o moat de auto-aprimoramento do Playbook, com dado real.
+
+**Resultado de escala (saúde):** universo de saúde SP = 229k empresas; metalmec tem MAIS idosos (33%) que saúde (18%) — minha hipótese de "baseline" foi refutada pelo dado.
+
+**Pendente:** portar o score v0.1 validado pro `scoring.ts` do produto (hoje o app roda v0, com a estabilidade que premia errado).
