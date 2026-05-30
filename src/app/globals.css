@@ -4,6 +4,30 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ── Boreal — sistema de marca (fonte de verdade: /brand) ──────────────
+   Paleta quente. Sem azul/navy. Olive só decoração; texto legível em
+   Bone/Floral. Cores de risco quentes (terracota/ocre).               */
+@theme {
+  --color-smoky: #11120d; /* fundo primário — preto quente */
+  --color-olive: #565449; /* decoração, divisores, texto terciário */
+  --color-bone: #d8cfbc; /* texto secundário legível */
+  --color-floral: #fffbf4; /* headlines, texto primário, wordmark */
+
+  --color-surface: rgba(255, 251, 244, 0.03); /* cards */
+  --color-surface-hover: rgba(255, 251, 244, 0.05);
+  --color-hairline: rgba(255, 251, 244, 0.07); /* bordas */
+  --color-hairline-hover: rgba(255, 251, 244, 0.12);
+
+  --color-risk-high: #c8623e; /* terracota — alto risco sucessório */
+  --color-risk-mid: #c99b3d; /* ocre — risco moderado */
+  --color-risk-low: #d8cfbc; /* bone — risco baixo, neutro */
+
+  --font-sans: var(--font-space-grotesk); /* interface: body, botões, inputs */
+  --font-display: var(--font-newsreader); /* editorial: headlines, nomes, statements */
+  --font-data: var(--font-plex-mono);     /* dados: scores, CNPJ, labels mono */
+  /* --font-archivo: exclusivo ao lockup do logo, não usar como utility */
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
