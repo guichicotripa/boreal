@@ -54,7 +54,7 @@ export default function RootLayout({
             <Logo />
             <a
               href="/pipeline"
-              className="font-data text-[11px] uppercase tracking-wider text-olive transition-colors hover:text-bone"
+              className="font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:text-floral"
             >
               Pipeline
             </a>
