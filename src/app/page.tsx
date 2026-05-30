@@ -130,16 +130,18 @@ export default function Home() {
             {/* Resultados */}
             {res && !loading && (
               <section className="mt-10">
-                <div className="mb-4 flex items-center justify-between text-sm text-bone">
-                  <span>
-                    {res.count} empresa{res.count === 1 ? "" : "s"}
+                <div className="mb-4 flex flex-wrap items-center justify-between gap-y-2 text-sm text-bone">
+                  <span className="flex flex-wrap items-center gap-x-1">
+                    <span className="whitespace-nowrap">
+                      {res.count} empresa{res.count === 1 ? "" : "s"}
+                    </span>
                     {res.reasoned && res.reasonedCount && (
-                      <span className="ml-2 font-data text-xs uppercase tracking-wide text-olive">
-                        · top {res.reasonedCount} por IA
+                      <span className="whitespace-nowrap font-data text-xs uppercase tracking-wide text-olive">
+                        · {res.reasonedCount} comentadas por IA
                       </span>
                     )}
                   </span>
-                  <span className="flex gap-2">
+                  <span className="flex flex-wrap gap-2">
                     {res.filters.cnaePrefixes.map((c) => (
                       <span key={c} className="rounded bg-surface px-2 py-0.5 font-data text-xs uppercase tracking-wide text-bone">
                         CNAE {c}
@@ -155,9 +157,6 @@ export default function Home() {
                         até {res.filters.maxAnoFundacao}
                       </span>
                     )}
-                    <span className="rounded bg-surface px-2 py-0.5 font-data text-xs uppercase tracking-wide text-olive">
-                      {res.parsedBy === "llm" ? "interpretado" : "heurístico"}
-                    </span>
                   </span>
                 </div>
 
