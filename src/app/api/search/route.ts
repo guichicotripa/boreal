@@ -4,7 +4,7 @@ import { parseQueryLLM } from "@/lib/llm";
 import { parseQueryHeuristic } from "@/lib/query-parser";
 import { calcScore } from "@/lib/scoring";
 import { reasonAboutEmpresas } from "@/lib/reasoner";
-import type { Empresa, SearchResponse } from "@/lib/types";
+import type { Empresa, Socio, SearchResponse } from "@/lib/types";
 import demoCache from "@/lib/demo-cache.json";
 
 export const runtime = "nodejs";
@@ -96,8 +96,29 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  // ── 3. Score determinístico por empresa, ordenar desc ────────────────────────
   const empresas = (data ?? []) as Empresa[];
+
+  // ── 2b. Quadro societário completo ───────────────────────────────────────────
+  // O inner join do filtro de idade projeta SÓ os sócios que batem o filtro. Mas o score
+  // (e o quadro_plural) precisa de TODOS os sócios da empresa. Busca o quadro completo.
+  if (filters.minFaixaEtaria != null && empresas.length > 0) {
+    const ids = empresas.map((e) => e.id);
+    const { data: todos } = await supabase
+      .from("socio")
+      .select("id, empresa_id, nome, qualificacao, faixa_etaria, data_entrada_sociedade")
+      .in("empresa_id", ids);
+    if (todos) {
+      const porEmpresa = new Map<string, Socio[]>();
+      for (const s of todos as (Socio & { empresa_id: string })[]) {
+        const arr = porEmpresa.get(s.empresa_id) ?? [];
+        arr.push({ id: s.id, nome: s.nome, qualificacao: s.qualificacao, faixa_etaria: s.faixa_etaria, data_entrada_sociedade: s.data_entrada_sociedade });
+        porEmpresa.set(s.empresa_id, arr);
+      }
+      for (const e of empresas) e.socio = porEmpresa.get(e.id) ?? e.socio;
+    }
+  }
+
+  // ── 3. Score determinístico por empresa, ordenar desc ────────────────────────
   const scored = empresas
     .map((e) => ({ ...e, score: calcScore(e) }))
     .sort((a, b) => (b.score?.score ?? 0) - (a.score?.score ?? 0));

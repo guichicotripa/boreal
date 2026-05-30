@@ -14,6 +14,75 @@
     "count": 50,
     "empresas": [
       {
+        "id": "6849dfd9-a629-4b41-b0c5-447dea74f9ec",
+        "cnpj": "50925890000110",
+        "razao_social": "PRENSA JUNDIAI S/A",
+        "nome_fantasia": "PRENSAJUNDIAI",
+        "cnae_principal": "2840200",
+        "cnae_principal_desc": "Fabricação de máquinas-ferramenta, peças e acessórios",
+        "cnaes_secundarios": [
+          {
+            "codigo": "3314710",
+            "descricao": "Manutenção e reparação de máquinas e equipamentos para uso geral não especificados anteriormente"
+          },
+          {
+            "codigo": "3321000",
+            "descricao": "Instalação de máquinas e equipamentos industriais"
+          },
+          {
+            "codigo": "4614100",
+            "descricao": "Representantes comerciais e agentes do comércio de máquinas, equipamentos, embarcações e aeronaves"
+          }
+        ],
+        "natureza_juridica": "Sociedade Anônima Fechada",
+        "municipio": "Campo Limpo Paulista",
+        "uf": "SP",
+        "data_inicio_atividade": "1973-07-13",
+        "capital_social": 52500000,
+        "porte": "DEMAIS",
+        "telefone": "1140398240",
+        "email": "cesar.santos@prensajundiai.com",
+        "socio": [
+          {
+            "id": "9a8da0d7-836a-4926-809b-b25751f954f0",
+            "nome": "UBIRAJARA RODRIGUES",
+            "qualificacao": "10",
+            "faixa_etaria": "9",
+            "data_entrada_sociedade": "1973-07-13"
+          },
+          {
+            "id": "14c2eb9e-a549-447a-8c11-633e89ba5d2d",
+            "nome": "LUCAS CREMONESE RODRIGUES",
+            "qualificacao": "16",
+            "faixa_etaria": "4",
+            "data_entrada_sociedade": "2015-05-06"
+          }
+        ],
+        "score": {
+          "score": 100,
+          "breakdown": {
+            "idade_socios": 30,
+            "antiguidade_empresa": 30,
+            "porte_relevancia": 30,
+            "quadro_plural": 10
+          },
+          "sinais": [
+            "Sócio mais velho na faixa 80+ anos",
+            "Fundada em 1973 (53 anos de operação)",
+            "Porte relevante (não-ME/EPP)",
+            "Quadro com 2 sócios"
+          ]
+        },
+        "insight": {
+          "one_liner": "Ubirajara (80+), fundador de 1973, divide quadro com Lucas (31-40) que entrou apenas em 2015 após 42 anos de operação solo.",
+          "flags": [
+            "sócio 80+ fundador",
+            "geração 2 recente",
+            "porte relevante"
+          ]
+        }
+      },
+      {
         "id": "d20b27e5-ebb9-4c4c-a111-f4495de4b3a3",
         "cnpj": "55265490000140",
         "razao_social": "ALPINA EQUIPAMENTOS INDUSTRIAIS.SERVICOS E MONTAGENS LTDA.",
@@ -60,18 +129,32 @@
         "email": "financeiro@alpina.com.br",
         "socio": [
           {
+            "id": "7a911207-f463-42f4-b810-a064632fc3c0",
+            "nome": "ROBERTO LANDAU REMY",
+            "qualificacao": "49",
+            "faixa_etaria": "6",
+            "data_entrada_sociedade": "2022-02-17"
+          },
+          {
             "id": "27b3354c-bc15-446a-b65e-32647656579d",
             "nome": "CHRISTIANE MEIER",
-            "faixa_etaria": "7",
             "qualificacao": "22",
+            "faixa_etaria": "7",
             "data_entrada_sociedade": "2017-02-09"
           },
           {
             "id": "9e1be02b-8bd9-44c8-baf3-13de8478e835",
             "nome": "HELMUT LANDAU REMY",
-            "faixa_etaria": "9",
             "qualificacao": "5",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1985-10-20"
+          },
+          {
+            "id": "5ffd6bba-c05d-4692-a673-1645684c8822",
+            "nome": "ANDRE HENRIQUE GUILHERME LANDAU REMY",
+            "qualificacao": "49",
+            "faixa_etaria": "6",
+            "data_entrada_sociedade": "2022-02-17"
           }
         ],
         "score": {
@@ -86,15 +169,71 @@
             "Sócio mais velho na faixa 80+ anos",
             "Fundada em 1985 (41 anos de operação)",
             "Porte relevante (não-ME/EPP)",
+            "Quadro com 4 sócios"
+          ]
+        },
+        "insight": {
+          "one_liner": "Helmut Landau Remy (80+), fundador de 1985 em São Bernardo, com dois filhos que ingressaram apenas em 2022 após 37 anos.",
+          "flags": [
+            "sócio 80+ fundador",
+            "herdeiros tardios",
+            "família Landau Remy"
+          ]
+        }
+      },
+      {
+        "id": "348e7971-40a9-4d14-99fe-fb3dbdbc8b99",
+        "cnpj": "61153391000179",
+        "razao_social": "MACLEM METAL LTDA",
+        "nome_fantasia": null,
+        "cnae_principal": "2452100",
+        "cnae_principal_desc": "Fundição de metais não ferrosos e suas ligas",
+        "cnaes_secundarios": null,
+        "natureza_juridica": "Sociedade Empresária Limitada",
+        "municipio": "Jandira",
+        "uf": "SP",
+        "data_inicio_atividade": "1966-07-07",
+        "capital_social": 656000,
+        "porte": "DEMAIS",
+        "telefone": "1141954545",
+        "email": "contato@pmecontabil.com.br",
+        "socio": [
+          {
+            "id": "96b4835d-3f81-4b3b-8e55-d82cb0b73aa2",
+            "nome": "MARCUS EDUARDO CLEMENTE MUSSA",
+            "qualificacao": "49",
+            "faixa_etaria": "6",
+            "data_entrada_sociedade": "2008-09-17"
+          },
+          {
+            "id": "318f0174-0e24-4269-af80-3322ed8d9aae",
+            "nome": "YARA CLEMENTE ZURLINI",
+            "qualificacao": "49",
+            "faixa_etaria": "9",
+            "data_entrada_sociedade": "2023-12-18"
+          }
+        ],
+        "score": {
+          "score": 100,
+          "breakdown": {
+            "idade_socios": 30,
+            "antiguidade_empresa": 30,
+            "porte_relevancia": 30,
+            "quadro_plural": 10
+          },
+          "sinais": [
+            "Sócio mais velho na faixa 80+ anos",
+            "Fundada em 1966 (60 anos de operação)",
+            "Porte relevante (não-ME/EPP)",
             "Quadro com 2 sócios"
           ]
         },
         "insight": {
-          "one_liner": "Helmut Landau Remy, 80+, é sócio fundador desde 1985 em equipamentos industriais em São Bernardo do Campo.",
+          "one_liner": "Fundada em 1966 em Jandira, Yara Zurlini (80+) entrou no quadro apenas em 2023, sinalizando reorganização societária tardia.",
           "flags": [
-            "sócio 80+ fundador",
-            "quadro 41 anos",
-            "dupla geracional"
+            "sócio 80+ recente",
+            "60 anos operação",
+            "entrada societária tardia"
           ]
         }
       },
@@ -123,15 +262,15 @@
           {
             "id": "b22da713-3807-4f1d-989c-2f87ffdf2988",
             "nome": "THEREZINHA CALDERAN QUINTINO",
-            "faixa_etaria": "9",
             "qualificacao": "10",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "2009-07-27"
           },
           {
             "id": "f970f12a-c900-4f4f-8a67-2e837fea7296",
             "nome": "ANNARIO ROCHA QUINTINO",
-            "faixa_etaria": "9",
             "qualificacao": "16",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "2009-07-27"
           }
         ],
@@ -151,11 +290,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Casal Quintino, ambos 80+, controla esta S/A de caldeiraria em Cotia fundada há 45 anos.",
+          "one_liner": "Casal Quintino, ambos 80+, únicos sócios desde 2009 nesta S/A de caldeiraria fundada em 1981 — sem geração seguinte visível.",
           "flags": [
             "dois sócios 80+",
-            "casal controlador",
-            "S/A fechada"
+            "casal fundador",
+            "sem herdeiros"
           ]
         }
       },
@@ -184,15 +323,22 @@
           {
             "id": "e77a58a4-da81-4949-9df0-7404d51d4eda",
             "nome": "JOSE OSWALDO MARQUES",
-            "faixa_etaria": "9",
             "qualificacao": "22",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1972-11-16"
+          },
+          {
+            "id": "688ae242-e9ee-4cf8-81b6-334dca050492",
+            "nome": "ADEZIO JOSE MARQUES",
+            "qualificacao": "5",
+            "faixa_etaria": "6",
+            "data_entrada_sociedade": "2004-03-05"
           },
           {
             "id": "96dd788d-73aa-4440-b7b9-425a994c4d52",
             "nome": "MARIA GONZALES MARQUES",
-            "faixa_etaria": "9",
             "qualificacao": "22",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1978-10-17"
           }
         ],
@@ -208,15 +354,216 @@
             "2 sócios na faixa 80+ anos",
             "Fundada em 1972 (54 anos de operação)",
             "Porte relevante (não-ME/EPP)",
+            "Quadro com 3 sócios"
+          ]
+        },
+        "insight": {
+          "one_liner": "José Oswaldo (80+) fundou em 1972 e segue sócio junto à esposa (80+); empresa está em recuperação judicial após 54 anos.",
+          "flags": [
+            "dois sócios 80+",
+            "recuperação judicial",
+            "54 anos operação"
+          ]
+        }
+      },
+      {
+        "id": "3cb74ff6-9ea4-4ffd-b62a-df4b980bf9b1",
+        "cnpj": "44496438000188",
+        "razao_social": "NASCHOLD ELEMENTOS DE FIXACAO INDUSTRIA E COMERCIO LTDA",
+        "nome_fantasia": "NEF",
+        "cnae_principal": "2592601",
+        "cnae_principal_desc": "Fabricação de produtos de trefilados de metal padronizados",
+        "cnaes_secundarios": null,
+        "natureza_juridica": "Sociedade Empresária Limitada",
+        "municipio": "Capela do Alto",
+        "uf": "SP",
+        "data_inicio_atividade": "1980-08-29",
+        "capital_social": 1350000,
+        "porte": "DEMAIS",
+        "telefone": "1532672042",
+        "email": "financeiro@naschold.com.br",
+        "socio": [
+          {
+            "id": "4ea50a37-24d9-4cda-a1a8-c71ccd18ee06",
+            "nome": "ROLANDO NASCHOLD",
+            "qualificacao": "49",
+            "faixa_etaria": "6",
+            "data_entrada_sociedade": "1980-08-29"
+          },
+          {
+            "id": "db5f1d60-97b5-46ba-b999-a16823f895c1",
+            "nome": "RICARDO NASCHOLD NETO",
+            "qualificacao": "49",
+            "faixa_etaria": "9",
+            "data_entrada_sociedade": "1980-08-29"
+          }
+        ],
+        "score": {
+          "score": 100,
+          "breakdown": {
+            "idade_socios": 30,
+            "antiguidade_empresa": 30,
+            "porte_relevancia": 30,
+            "quadro_plural": 10
+          },
+          "sinais": [
+            "Sócio mais velho na faixa 80+ anos",
+            "Fundada em 1980 (46 anos de operação)",
+            "Porte relevante (não-ME/EPP)",
             "Quadro com 2 sócios"
           ]
         },
         "insight": {
-          "one_liner": "José Oswaldo e Maria Marques, ambos 80+, fundaram a CAMAC em 1972 — hoje em recuperação judicial após 54 anos.",
+          "one_liner": "Ricardo Naschold Neto (80+) é sócio desde a fundação em 1980; Rolando (51-60) carrega o mesmo sobrenome mas está na faixa de transição.",
           "flags": [
-            "dois sócios 80+",
-            "recuperação judicial",
-            "quadro 54 anos"
+            "sócio 80+ fundador",
+            "dupla Naschold",
+            "46 anos operação"
+          ]
+        }
+      },
+      {
+        "id": "abd53ffc-b84d-43fc-b1f5-f2bf43f559e5",
+        "cnpj": "67370510000121",
+        "razao_social": "TECMAES TECNOLOGIA DE MAQUINAS ESPECIAIS LIMITADA",
+        "nome_fantasia": null,
+        "cnae_principal": "2829199",
+        "cnae_principal_desc": "Fabricação de outras máquinas e equipamentos de uso geral não especificados anteriormente, peças e acessórios",
+        "cnaes_secundarios": [
+          {
+            "codigo": "2229399",
+            "descricao": "Fabricação de artefatos de material plástico para outros usos não especificados anteriormente"
+          },
+          {
+            "codigo": "2825900",
+            "descricao": "Fabricação de máquinas e equipamentos para saneamento básico e ambiental, peças e acessórios"
+          },
+          {
+            "codigo": "3321000",
+            "descricao": "Instalação de máquinas e equipamentos industriais"
+          }
+        ],
+        "natureza_juridica": "Sociedade Empresária Limitada",
+        "municipio": "Ourinhos",
+        "uf": "SP",
+        "data_inicio_atividade": "1991-12-18",
+        "capital_social": 30000,
+        "porte": "DEMAIS",
+        "telefone": "1433022222",
+        "email": "contabilidade@tecmaes.com.br",
+        "socio": [
+          {
+            "id": "7d998f4b-cd64-467e-bceb-3e001b56ce1a",
+            "nome": "SABRINA PEREZ",
+            "qualificacao": "49",
+            "faixa_etaria": "5",
+            "data_entrada_sociedade": "2014-11-27"
+          },
+          {
+            "id": "9dddac1c-f65c-45dd-ad47-7c85d64e5e03",
+            "nome": "ADALBERTO APARECIDO PEREZ",
+            "qualificacao": "49",
+            "faixa_etaria": "9",
+            "data_entrada_sociedade": "1994-11-08"
+          },
+          {
+            "id": "dde38cb6-ad69-434b-afa3-66d1a851282c",
+            "nome": "SIMONE PEREZ DOS SANTOS",
+            "qualificacao": "49",
+            "faixa_etaria": "5",
+            "data_entrada_sociedade": "2014-11-27"
+          }
+        ],
+        "score": {
+          "score": 92,
+          "breakdown": {
+            "idade_socios": 30,
+            "antiguidade_empresa": 22,
+            "porte_relevancia": 30,
+            "quadro_plural": 10
+          },
+          "sinais": [
+            "Sócio mais velho na faixa 80+ anos",
+            "Porte relevante (não-ME/EPP)",
+            "Fundada em 1991 (35 anos de operação)",
+            "Quadro com 3 sócios"
+          ]
+        },
+        "insight": {
+          "one_liner": "Adalberto Perez (80+) fundou a Tecmaes em 1991; filhas Sabrina e Simone (41-50) entraram juntas em 2014 como sucessão em bloco.",
+          "flags": [
+            "fundador 80+",
+            "duas herdeiras",
+            "successão em bloco"
+          ]
+        }
+      },
+      {
+        "id": "1d12d49d-8aab-44cd-a026-ecd2f33c6d72",
+        "cnpj": "67435255000158",
+        "razao_social": "MAQUENGE MAQUINAS OPERATRIZES LTDA",
+        "nome_fantasia": "MAQUENGE",
+        "cnae_principal": "2840200",
+        "cnae_principal_desc": "Fabricação de máquinas-ferramenta, peças e acessórios",
+        "cnaes_secundarios": [
+          {
+            "codigo": "2790299",
+            "descricao": "Fabricação de outros equipamentos e aparelhos elétricos não especificados anteriormente"
+          },
+          {
+            "codigo": "3321000",
+            "descricao": "Instalação de máquinas e equipamentos industriais"
+          },
+          {
+            "codigo": "6810202",
+            "descricao": "Aluguel de imóveis próprios"
+          }
+        ],
+        "natureza_juridica": "Sociedade Empresária Limitada",
+        "municipio": "Piracicaba",
+        "uf": "SP",
+        "data_inicio_atividade": "1992-01-10",
+        "capital_social": 240000,
+        "porte": "DEMAIS",
+        "telefone": "1998831788",
+        "email": "sergio.cruz@boneli.com.br",
+        "socio": [
+          {
+            "id": "cc8e2638-5904-4ffe-938f-de7e1b94406b",
+            "nome": "HELIO RAMOS DA CRUZ",
+            "qualificacao": "49",
+            "faixa_etaria": "9",
+            "data_entrada_sociedade": "1992-01-10"
+          },
+          {
+            "id": "ff30dc89-5f68-4a8d-925f-1c14afaf3528",
+            "nome": "SERGIO RAMOS DA CRUZ",
+            "qualificacao": "49",
+            "faixa_etaria": "6",
+            "data_entrada_sociedade": "1992-01-10"
+          }
+        ],
+        "score": {
+          "score": 92,
+          "breakdown": {
+            "idade_socios": 30,
+            "antiguidade_empresa": 22,
+            "porte_relevancia": 30,
+            "quadro_plural": 10
+          },
+          "sinais": [
+            "Sócio mais velho na faixa 80+ anos",
+            "Porte relevante (não-ME/EPP)",
+            "Fundada em 1992 (34 anos de operação)",
+            "Quadro com 2 sócios"
+          ]
+        },
+        "insight": {
+          "one_liner": "Hélio Ramos da Cruz (80+) e Sergio (51-60) são sócios desde a fundação em 1992, mantendo quadro familiar fechado por 34 anos.",
+          "flags": [
+            "sócio 80+ fundador",
+            "quadro fechado",
+            "dupla familiar"
           ]
         }
       },
@@ -245,15 +592,15 @@
           {
             "id": "9158d625-08b9-4ace-b5c6-dac82a658a52",
             "nome": "CLAUDIO INOCENTE GALLINA",
-            "faixa_etaria": "7",
             "qualificacao": "49",
+            "faixa_etaria": "7",
             "data_entrada_sociedade": "2006-03-06"
           },
           {
             "id": "beaf7fa0-a778-472d-bc7f-be4207efb156",
             "nome": "EREMI ODILON MEISTER",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1997-09-04"
           }
         ],
@@ -271,67 +618,13 @@
             "Fundada em 1997 (29 anos de operação)",
             "Quadro com 2 sócios"
           ]
-        }
-      },
-      {
-        "id": "6849dfd9-a629-4b41-b0c5-447dea74f9ec",
-        "cnpj": "50925890000110",
-        "razao_social": "PRENSA JUNDIAI S/A",
-        "nome_fantasia": "PRENSAJUNDIAI",
-        "cnae_principal": "2840200",
-        "cnae_principal_desc": "Fabricação de máquinas-ferramenta, peças e acessórios",
-        "cnaes_secundarios": [
-          {
-            "codigo": "3314710",
-            "descricao": "Manutenção e reparação de máquinas e equipamentos para uso geral não especificados anteriormente"
-          },
-          {
-            "codigo": "3321000",
-            "descricao": "Instalação de máquinas e equipamentos industriais"
-          },
-          {
-            "codigo": "4614100",
-            "descricao": "Representantes comerciais e agentes do comércio de máquinas, equipamentos, embarcações e aeronaves"
-          }
-        ],
-        "natureza_juridica": "Sociedade Anônima Fechada",
-        "municipio": "Campo Limpo Paulista",
-        "uf": "SP",
-        "data_inicio_atividade": "1973-07-13",
-        "capital_social": 52500000,
-        "porte": "DEMAIS",
-        "telefone": "1140398240",
-        "email": "cesar.santos@prensajundiai.com",
-        "socio": [
-          {
-            "id": "9a8da0d7-836a-4926-809b-b25751f954f0",
-            "nome": "UBIRAJARA RODRIGUES",
-            "faixa_etaria": "9",
-            "qualificacao": "10",
-            "data_entrada_sociedade": "1973-07-13"
-          }
-        ],
-        "score": {
-          "score": 90,
-          "breakdown": {
-            "idade_socios": 30,
-            "antiguidade_empresa": 30,
-            "porte_relevancia": 30,
-            "quadro_plural": 0
-          },
-          "sinais": [
-            "Sócio mais velho na faixa 80+ anos",
-            "Fundada em 1973 (53 anos de operação)",
-            "Porte relevante (não-ME/EPP)",
-            "Sócio único (perfil menos transacionável)"
-          ]
         },
         "insight": {
-          "one_liner": "Ubirajara Rodrigues, 80+, é único acionista da Prensa Jundiaí desde 1973, com capital social de R$ 52,5 milhões.",
+          "one_liner": "Eremi Meister (80+), fundador de 1997 em São Bernardo, divide quadro com sócio Gallina (61-70) sem geração jovem identificada.",
           "flags": [
-            "fundador único 80+",
-            "capital expressivo",
-            "quadro 53 anos"
+            "sócio 80+ fundador",
+            "sócios envelhecidos",
+            "sem geração jovem"
           ]
         }
       },
@@ -355,8 +648,8 @@
           {
             "id": "1e11ba31-5239-443f-aaac-d7a8b461df00",
             "nome": "JOSE FELICIO BRUNETTO",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1985-01-28"
           }
         ],
@@ -376,11 +669,11 @@
           ]
         },
         "insight": {
-          "one_liner": "José Felicio Brunetto, 80+, é o único sócio da Brasimpar desde 1985, hoje em recuperação judicial em Guarulhos.",
+          "one_liner": "José Felicio Brunetto (80+), único sócio desde 1985 em Guarulhos, acumula risco total — fundador solo e empresa em recuperação judicial.",
           "flags": [
             "fundador único 80+",
             "recuperação judicial",
-            "quadro 41 anos"
+            "risco concentrado"
           ]
         }
       },
@@ -409,8 +702,8 @@
           {
             "id": "4470d63d-f835-404a-b235-548fd43004c1",
             "nome": "MAKOTO ISSHIKI",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1986-06-03"
           }
         ],
@@ -430,109 +723,72 @@
           ]
         },
         "insight": {
-          "one_liner": "Makoto Isshiki, 80+, comanda sozinho empresa de máquinas para calçados em Santo André fundada em 1966.",
+          "one_liner": "Makoto Isshiki (80+), único sócio desde 1986, comanda empresa fundada em 1966 em Santo André — 60 anos sem divisão societária.",
           "flags": [
             "fundador único 80+",
-            "quadro 60 anos",
-            "nicho específico"
-          ]
-        }
-      },
-      {
-        "id": "348e7971-40a9-4d14-99fe-fb3dbdbc8b99",
-        "cnpj": "61153391000179",
-        "razao_social": "MACLEM METAL LTDA",
-        "nome_fantasia": null,
-        "cnae_principal": "2452100",
-        "cnae_principal_desc": "Fundição de metais não ferrosos e suas ligas",
-        "cnaes_secundarios": null,
-        "natureza_juridica": "Sociedade Empresária Limitada",
-        "municipio": "Jandira",
-        "uf": "SP",
-        "data_inicio_atividade": "1966-07-07",
-        "capital_social": 656000,
-        "porte": "DEMAIS",
-        "telefone": "1141954545",
-        "email": "contato@pmecontabil.com.br",
-        "socio": [
-          {
-            "id": "318f0174-0e24-4269-af80-3322ed8d9aae",
-            "nome": "YARA CLEMENTE ZURLINI",
-            "faixa_etaria": "9",
-            "qualificacao": "49",
-            "data_entrada_sociedade": "2023-12-18"
-          }
-        ],
-        "score": {
-          "score": 90,
-          "breakdown": {
-            "idade_socios": 30,
-            "antiguidade_empresa": 30,
-            "porte_relevancia": 30,
-            "quadro_plural": 0
-          },
-          "sinais": [
-            "Sócio mais velho na faixa 80+ anos",
-            "Fundada em 1966 (60 anos de operação)",
-            "Porte relevante (não-ME/EPP)",
-            "Sócio único (perfil menos transacionável)"
-          ]
-        },
-        "insight": {
-          "one_liner": "Yara Clemente Zurlini, 80+, aparece como única sócia da Maclem Metal de 1966, tendo ingressado apenas em 2023.",
-          "flags": [
-            "sócia 80+ recente",
-            "empresa 60 anos",
+            "60 anos operação",
             "sócio único"
           ]
         }
       },
       {
-        "id": "3cb74ff6-9ea4-4ffd-b62a-df4b980bf9b1",
-        "cnpj": "44496438000188",
-        "razao_social": "NASCHOLD ELEMENTOS DE FIXACAO INDUSTRIA E COMERCIO LTDA",
-        "nome_fantasia": "NEF",
-        "cnae_principal": "2592601",
-        "cnae_principal_desc": "Fabricação de produtos de trefilados de metal padronizados",
-        "cnaes_secundarios": null,
+        "id": "156d2053-3780-4ae2-ba47-4e7028454b6f",
+        "cnpj": "46345914000195",
+        "razao_social": "PERFILADOS ATIBAIA LTDA",
+        "nome_fantasia": null,
+        "cnae_principal": "2424502",
+        "cnae_principal_desc": "Produção de relaminados, trefilados e perfilados de aço, exceto arames",
+        "cnaes_secundarios": [
+          {
+            "codigo": "4744001",
+            "descricao": "Comércio varejista de ferragens e ferramentas"
+          }
+        ],
         "natureza_juridica": "Sociedade Empresária Limitada",
-        "municipio": "Capela do Alto",
+        "municipio": "Atibaia",
         "uf": "SP",
-        "data_inicio_atividade": "1980-08-29",
-        "capital_social": 1350000,
-        "porte": "DEMAIS",
-        "telefone": "1532672042",
-        "email": "financeiro@naschold.com.br",
+        "data_inicio_atividade": "1973-10-25",
+        "capital_social": 0,
+        "porte": "EPP",
+        "telefone": null,
+        "email": null,
         "socio": [
           {
-            "id": "db5f1d60-97b5-46ba-b999-a16823f895c1",
-            "nome": "RICARDO NASCHOLD NETO",
-            "faixa_etaria": "9",
+            "id": "51229377-7e31-4288-ba89-289312bb37ab",
+            "nome": "CAMILA CRISTIANE MADEIRA",
             "qualificacao": "49",
-            "data_entrada_sociedade": "1980-08-29"
+            "faixa_etaria": "4",
+            "data_entrada_sociedade": "2004-07-29"
+          },
+          {
+            "id": "e95e2b30-048f-4272-aa75-ddef65f03a9e",
+            "nome": "LUIZ CLAUDIO MADEIRA",
+            "qualificacao": "49",
+            "faixa_etaria": "9",
+            "data_entrada_sociedade": "1973-10-05"
           }
         ],
         "score": {
-          "score": 90,
+          "score": 85,
           "breakdown": {
             "idade_socios": 30,
             "antiguidade_empresa": 30,
-            "porte_relevancia": 30,
-            "quadro_plural": 0
+            "porte_relevancia": 15,
+            "quadro_plural": 10
           },
           "sinais": [
             "Sócio mais velho na faixa 80+ anos",
-            "Fundada em 1980 (46 anos de operação)",
-            "Porte relevante (não-ME/EPP)",
-            "Sócio único (perfil menos transacionável)"
+            "Fundada em 1973 (53 anos de operação)",
+            "Porte EPP",
+            "Quadro com 2 sócios"
           ]
         },
         "insight": {
-          "one_liner": "Ricardo Naschold Neto, 80+, é único sócio e fundador desde 1980 de fabricante de fixadores em Capela do Alto.",
+          "one_liner": "Luiz Claudio Madeira (80+) fundou em 1973 e tem Camila (31-40) no quadro desde 2004, possível filha com 31 anos de convivência societária.",
           "flags": [
-            "fundador único 80+",
-            "quadro 46 anos",
-            "porte relevante"
+            "fundador 80+",
+            "herdeira jovem",
+            "53 anos operação"
           ]
         }
       },
@@ -556,15 +812,15 @@
           {
             "id": "0ad6a740-93db-4de3-94b9-43e0ab11394e",
             "nome": "ANA RITA MOURA",
-            "faixa_etaria": "7",
             "qualificacao": "49",
+            "faixa_etaria": "7",
             "data_entrada_sociedade": "2004-01-26"
           },
           {
             "id": "b0ebba4c-9696-41c7-a72b-fc9f44bf28af",
             "nome": "RUBENS MOURA",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1980-08-07"
           }
         ],
@@ -584,11 +840,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Rubens Moura, 80+, fundou a INCOACO em 1980 e divide o quadro com Ana Rita, na faixa 61-70, desde 2004.",
+          "one_liner": "Rubens Moura (80+) fundou a Incoaco em 1980; Ana Rita (61-70) entrou apenas em 2004, sugerindo reorganização familiar tardia em Guarulhos.",
           "flags": [
-            "sócio 80+ fundador",
-            "dupla geracional",
-            "quadro 46 anos"
+            "fundador 80+",
+            "sócia tardia",
+            "46 anos operação"
           ]
         }
       },
@@ -612,15 +868,15 @@
           {
             "id": "6399577a-917f-4f50-8b4f-52ecddda41a3",
             "nome": "JAQUEZ DA SILVA GUIDIO",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1982-03-29"
           },
           {
             "id": "2a5909a4-f9b9-44e4-ae92-135718cefdfa",
             "nome": "PAULO SAVIOLI",
-            "faixa_etaria": "8",
             "qualificacao": "49",
+            "faixa_etaria": "8",
             "data_entrada_sociedade": "1982-03-29"
           }
         ],
@@ -640,11 +896,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Jaquez Guidio, 80+, e Paulo Savioli, 71-80, ambos no quadro desde 1982, controlam a Metaltec em Indaiatuba.",
+          "one_liner": "Jaquez Guidio (80+) e Paulo Savioli (71-80) sócios desde 1982 em Indaiatuba — quadro inteiramente envelhecido sem geração sucessória visível.",
           "flags": [
-            "dois sócios sêniores",
-            "quadro travado 43 anos",
-            "sem sucessor visível"
+            "dois sócios sênior",
+            "quadro envelhecido",
+            "sem herdeiros visíveis"
           ]
         }
       },
@@ -685,15 +941,22 @@
           {
             "id": "676c916b-6424-4315-9685-20c7d270a88c",
             "nome": "HELIO ROMEIRO JUNIOR",
-            "faixa_etaria": "7",
             "qualificacao": "49",
+            "faixa_etaria": "7",
             "data_entrada_sociedade": "1983-04-20"
+          },
+          {
+            "id": "8e16b0d7-141a-4c0e-b4d3-7ff2ee5b2bd3",
+            "nome": "MARIA JOSE ANTONIA FRANCISCA ZAFFARANI FERREIRA",
+            "qualificacao": "22",
+            "faixa_etaria": "5",
+            "data_entrada_sociedade": "2021-09-15"
           },
           {
             "id": "594f448c-c2fa-4561-b17c-59c7d6a36db0",
             "nome": "REGIS JOSE ZAFFARANI",
-            "faixa_etaria": "9",
             "qualificacao": "22",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1983-04-20"
           }
         ],
@@ -709,139 +972,15 @@
             "Sócio mais velho na faixa 80+ anos",
             "Fundada em 1983 (43 anos de operação)",
             "Porte EPP",
-            "Quadro com 2 sócios"
+            "Quadro com 3 sócios"
           ]
         },
         "insight": {
-          "one_liner": "Regis Zaffarani, 80+, e Helio Romeiro Jr., 61-70, são sócios fundadores da fabricante de molas em Guarulhos desde 1983.",
+          "one_liner": "Régis Zaffarani (80+) e Hélio Romeiro (61-70) fundaram em 1983; Maria José (41-50) entrou em 2021, sinalizando planejamento sucessório incipiente.",
           "flags": [
-            "sócio 80+ fundador",
-            "dupla geracional",
-            "quadro 43 anos"
-          ]
-        }
-      },
-      {
-        "id": "abd53ffc-b84d-43fc-b1f5-f2bf43f559e5",
-        "cnpj": "67370510000121",
-        "razao_social": "TECMAES TECNOLOGIA DE MAQUINAS ESPECIAIS LIMITADA",
-        "nome_fantasia": null,
-        "cnae_principal": "2829199",
-        "cnae_principal_desc": "Fabricação de outras máquinas e equipamentos de uso geral não especificados anteriormente, peças e acessórios",
-        "cnaes_secundarios": [
-          {
-            "codigo": "2229399",
-            "descricao": "Fabricação de artefatos de material plástico para outros usos não especificados anteriormente"
-          },
-          {
-            "codigo": "2825900",
-            "descricao": "Fabricação de máquinas e equipamentos para saneamento básico e ambiental, peças e acessórios"
-          },
-          {
-            "codigo": "3321000",
-            "descricao": "Instalação de máquinas e equipamentos industriais"
-          }
-        ],
-        "natureza_juridica": "Sociedade Empresária Limitada",
-        "municipio": "Ourinhos",
-        "uf": "SP",
-        "data_inicio_atividade": "1991-12-18",
-        "capital_social": 30000,
-        "porte": "DEMAIS",
-        "telefone": "1433022222",
-        "email": "contabilidade@tecmaes.com.br",
-        "socio": [
-          {
-            "id": "9dddac1c-f65c-45dd-ad47-7c85d64e5e03",
-            "nome": "ADALBERTO APARECIDO PEREZ",
-            "faixa_etaria": "9",
-            "qualificacao": "49",
-            "data_entrada_sociedade": "1994-11-08"
-          }
-        ],
-        "score": {
-          "score": 82,
-          "breakdown": {
-            "idade_socios": 30,
-            "antiguidade_empresa": 22,
-            "porte_relevancia": 30,
-            "quadro_plural": 0
-          },
-          "sinais": [
-            "Sócio mais velho na faixa 80+ anos",
-            "Porte relevante (não-ME/EPP)",
-            "Fundada em 1991 (35 anos de operação)",
-            "Sócio único (perfil menos transacionável)"
-          ]
-        },
-        "insight": {
-          "one_liner": "Adalberto Perez, 80+, único sócio desde 1994 em máquinas especiais em Ourinhos, empresa fundada em 1991.",
-          "flags": [
-            "sócio único 80+",
-            "porte relevante",
-            "35 anos operação"
-          ]
-        }
-      },
-      {
-        "id": "1d12d49d-8aab-44cd-a026-ecd2f33c6d72",
-        "cnpj": "67435255000158",
-        "razao_social": "MAQUENGE MAQUINAS OPERATRIZES LTDA",
-        "nome_fantasia": "MAQUENGE",
-        "cnae_principal": "2840200",
-        "cnae_principal_desc": "Fabricação de máquinas-ferramenta, peças e acessórios",
-        "cnaes_secundarios": [
-          {
-            "codigo": "2790299",
-            "descricao": "Fabricação de outros equipamentos e aparelhos elétricos não especificados anteriormente"
-          },
-          {
-            "codigo": "3321000",
-            "descricao": "Instalação de máquinas e equipamentos industriais"
-          },
-          {
-            "codigo": "6810202",
-            "descricao": "Aluguel de imóveis próprios"
-          }
-        ],
-        "natureza_juridica": "Sociedade Empresária Limitada",
-        "municipio": "Piracicaba",
-        "uf": "SP",
-        "data_inicio_atividade": "1992-01-10",
-        "capital_social": 240000,
-        "porte": "DEMAIS",
-        "telefone": "1998831788",
-        "email": "sergio.cruz@boneli.com.br",
-        "socio": [
-          {
-            "id": "cc8e2638-5904-4ffe-938f-de7e1b94406b",
-            "nome": "HELIO RAMOS DA CRUZ",
-            "faixa_etaria": "9",
-            "qualificacao": "49",
-            "data_entrada_sociedade": "1992-01-10"
-          }
-        ],
-        "score": {
-          "score": 82,
-          "breakdown": {
-            "idade_socios": 30,
-            "antiguidade_empresa": 22,
-            "porte_relevancia": 30,
-            "quadro_plural": 0
-          },
-          "sinais": [
-            "Sócio mais velho na faixa 80+ anos",
-            "Porte relevante (não-ME/EPP)",
-            "Fundada em 1992 (34 anos de operação)",
-            "Sócio único (perfil menos transacionável)"
-          ]
-        },
-        "insight": {
-          "one_liner": "Helio Ramos da Cruz, 80+, é único sócio e fundador da Maquenge em Piracicaba desde 1992, sem co-sócios.",
-          "flags": [
-            "fundador único 80+",
-            "sócio isolado",
-            "porte relevante"
+            "fundador 80+",
+            "successão iniciada 2021",
+            "43 anos operação"
           ]
         }
       },
@@ -865,15 +1004,15 @@
           {
             "id": "ed3dcbac-40a1-4113-9288-430cd8639bf5",
             "nome": "NILZA LUIZA CHAVES",
-            "faixa_etaria": "8",
             "qualificacao": "49",
+            "faixa_etaria": "8",
             "data_entrada_sociedade": "1995-06-06"
           },
           {
             "id": "f987ec1b-caba-4cc8-9c2a-0699777fa412",
             "nome": "JOAO CHAVES NETO",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1995-06-06"
           }
         ],
@@ -890,14 +1029,6 @@
             "Fundada em 1995 (31 anos de operação)",
             "Porte EPP",
             "Quadro com 2 sócios"
-          ]
-        },
-        "insight": {
-          "one_liner": "João Chaves Neto, 80+, e Nilza Chaves, 71-80, fundaram juntos em 1995 prestadora de solda em São Bernardo.",
-          "flags": [
-            "casal fundador sênior",
-            "dois sócios aging",
-            "31 anos operação"
           ]
         }
       },
@@ -921,15 +1052,15 @@
           {
             "id": "7bfea38d-a57d-4ad2-8a17-dcf136b6f96e",
             "nome": "VALMIR EDSON VANNUCCI",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1990-05-10"
           },
           {
             "id": "c8adf49c-3e44-431b-af71-1ab1bc289688",
             "nome": "CARMEM SILVIA NOGUEIRA VANNUCCI",
-            "faixa_etaria": "8",
             "qualificacao": "22",
+            "faixa_etaria": "8",
             "data_entrada_sociedade": "1990-05-10"
           }
         ],
@@ -946,6 +1077,125 @@
             "Fundada em 1990 (36 anos de operação)",
             "Porte EPP",
             "Quadro com 2 sócios"
+          ]
+        }
+      },
+      {
+        "id": "a814cfb9-a55e-4abc-a5ac-de5ad04a944f",
+        "cnpj": "67684043000104",
+        "razao_social": "ESPANHOL INDUSTRIA MECANICA E BALANCEAMENTOS TECNICOS LTDA",
+        "nome_fantasia": null,
+        "cnae_principal": "2823200",
+        "cnae_principal_desc": "Fabricação de máquinas e aparelhos de refrigeração e ventilação para uso industrial e comercial, peças e acessórios",
+        "cnaes_secundarios": [
+          {
+            "codigo": "3314707",
+            "descricao": "Manutenção e reparação de máquinas e aparelhos de refrigeração e ventilação para uso industrial e comercial"
+          },
+          {
+            "codigo": "4663000",
+            "descricao": "Comércio atacadista de máquinas e equipamentos para uso industrial; partes e peças"
+          }
+        ],
+        "natureza_juridica": "Sociedade Empresária Limitada",
+        "municipio": "Ourinhos",
+        "uf": "SP",
+        "data_inicio_atividade": "1992-03-18",
+        "capital_social": 0,
+        "porte": "EPP",
+        "telefone": null,
+        "email": null,
+        "socio": [
+          {
+            "id": "856eae26-f658-49f1-ab2f-49961f5abd21",
+            "nome": "CLODOALDO ANDRE ESPANHOL",
+            "qualificacao": "49",
+            "faixa_etaria": "6",
+            "data_entrada_sociedade": "1992-03-12"
+          },
+          {
+            "id": "5adf5d43-7736-415e-90d4-3d000ce66877",
+            "nome": "ROQUE ESPANHOL",
+            "qualificacao": "49",
+            "faixa_etaria": "9",
+            "data_entrada_sociedade": "2001-06-16"
+          },
+          {
+            "id": "1b375774-b9a8-4e1d-94ef-d0d8a64251ff",
+            "nome": "FABIO HENRIQUE ESPANHOL",
+            "qualificacao": "49",
+            "faixa_etaria": "6",
+            "data_entrada_sociedade": "1992-03-12"
+          }
+        ],
+        "score": {
+          "score": 77,
+          "breakdown": {
+            "idade_socios": 30,
+            "antiguidade_empresa": 22,
+            "porte_relevancia": 15,
+            "quadro_plural": 10
+          },
+          "sinais": [
+            "Sócio mais velho na faixa 80+ anos",
+            "Fundada em 1992 (34 anos de operação)",
+            "Porte EPP",
+            "Quadro com 3 sócios"
+          ]
+        }
+      },
+      {
+        "id": "83811931-1c35-4edc-8535-b5ab256e148c",
+        "cnpj": "66806399000100",
+        "razao_social": "DURAMETAL INDUSTRIA E COMERCIO LTDA",
+        "nome_fantasia": "DURAMETAL",
+        "cnae_principal": "2532201",
+        "cnae_principal_desc": "Produção de artefatos estampados de metal",
+        "cnaes_secundarios": null,
+        "natureza_juridica": "Sociedade Empresária Limitada",
+        "municipio": "Bauru",
+        "uf": "SP",
+        "data_inicio_atividade": "1991-09-02",
+        "capital_social": 10000,
+        "porte": "EPP",
+        "telefone": null,
+        "email": null,
+        "socio": [
+          {
+            "id": "194df7df-6ea9-47f0-ae22-9946e2e23b4f",
+            "nome": "MARCELLO DE SOUZA MESQUITA",
+            "qualificacao": "49",
+            "faixa_etaria": "6",
+            "data_entrada_sociedade": "1991-09-02"
+          },
+          {
+            "id": "3a02fd32-ffdd-4b88-9d8a-47b44698fcd6",
+            "nome": "PATRICIA DE SOUZA MESQUITA",
+            "qualificacao": "49",
+            "faixa_etaria": "6",
+            "data_entrada_sociedade": "2012-03-26"
+          },
+          {
+            "id": "52cb0196-b9db-4342-aa66-f9d34bdd384c",
+            "nome": "MARIZA RIBEIRO DE SOUZA",
+            "qualificacao": "22",
+            "faixa_etaria": "9",
+            "data_entrada_sociedade": "2012-03-26"
+          }
+        ],
+        "score": {
+          "score": 77,
+          "breakdown": {
+            "idade_socios": 30,
+            "antiguidade_empresa": 22,
+            "porte_relevancia": 15,
+            "quadro_plural": 10
+          },
+          "sinais": [
+            "Sócio mais velho na faixa 80+ anos",
+            "Fundada em 1991 (35 anos de operação)",
+            "Porte EPP",
+            "Quadro com 3 sócios"
           ]
         }
       },
@@ -978,15 +1228,15 @@
           {
             "id": "9d98f9d5-cb6f-49e3-bb93-c6165a284e44",
             "nome": "NARCISO ROTILIANO",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1987-01-12"
           },
           {
             "id": "858b4748-a818-4d54-bf0c-01e1a64486b1",
             "nome": "EDUARDO ROTILIANO",
-            "faixa_etaria": "7",
             "qualificacao": "49",
+            "faixa_etaria": "7",
             "data_entrada_sociedade": "1988-07-05"
           }
         ],
@@ -1003,52 +1253,6 @@
             "Fundada em 1987 (39 anos de operação)",
             "Porte EPP",
             "Quadro com 2 sócios"
-          ]
-        }
-      },
-      {
-        "id": "156d2053-3780-4ae2-ba47-4e7028454b6f",
-        "cnpj": "46345914000195",
-        "razao_social": "PERFILADOS ATIBAIA LTDA",
-        "nome_fantasia": null,
-        "cnae_principal": "2424502",
-        "cnae_principal_desc": "Produção de relaminados, trefilados e perfilados de aço, exceto arames",
-        "cnaes_secundarios": [
-          {
-            "codigo": "4744001",
-            "descricao": "Comércio varejista de ferragens e ferramentas"
-          }
-        ],
-        "natureza_juridica": "Sociedade Empresária Limitada",
-        "municipio": "Atibaia",
-        "uf": "SP",
-        "data_inicio_atividade": "1973-10-25",
-        "capital_social": 0,
-        "porte": "EPP",
-        "telefone": null,
-        "email": null,
-        "socio": [
-          {
-            "id": "e95e2b30-048f-4272-aa75-ddef65f03a9e",
-            "nome": "LUIZ CLAUDIO MADEIRA",
-            "faixa_etaria": "9",
-            "qualificacao": "49",
-            "data_entrada_sociedade": "1973-10-05"
-          }
-        ],
-        "score": {
-          "score": 75,
-          "breakdown": {
-            "idade_socios": 30,
-            "antiguidade_empresa": 30,
-            "porte_relevancia": 15,
-            "quadro_plural": 0
-          },
-          "sinais": [
-            "Sócio mais velho na faixa 80+ anos",
-            "Fundada em 1973 (53 anos de operação)",
-            "Porte EPP",
-            "Sócio único (perfil menos transacionável)"
           ]
         }
       },
@@ -1077,15 +1281,15 @@
           {
             "id": "a01cc730-d95d-415e-b05d-a57c3a936783",
             "nome": "SANTIAGO MARCOS PUGA",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1998-04-23"
           },
           {
             "id": "c3ef89a0-1d93-477c-8998-a0d29a7ffe3f",
             "nome": "DOLORES BEATRIZ MARCOS CASTRO SANCHEZ",
-            "faixa_etaria": "7",
             "qualificacao": "22",
+            "faixa_etaria": "7",
             "data_entrada_sociedade": "2010-04-20"
           }
         ],
@@ -1129,15 +1333,15 @@
           {
             "id": "ea3ae09f-eb21-4728-b7bf-7bf9bbb05ac2",
             "nome": "EDGAR JOSE BANNWART",
-            "faixa_etaria": "9",
             "qualificacao": "22",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1981-08-25"
           },
           {
             "id": "ee4c6ac0-53a9-454e-83b0-47ba325df110",
             "nome": "JORGE CALIXTO DOS SANTOS",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1991-06-19"
           }
         ],
@@ -1185,15 +1389,15 @@
           {
             "id": "bbcb968c-0f0b-416a-ad93-f21e41ab1b8c",
             "nome": "GENESIA BERNARDI GAZZOLA",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1973-09-27"
           },
           {
             "id": "cdfc4858-e1ba-4221-8334-a852a3a556db",
             "nome": "PAULO EDAIR GAZZOLA",
-            "faixa_etaria": "9",
             "qualificacao": "22",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1973-09-27"
           }
         ],
@@ -1232,15 +1436,29 @@
           {
             "id": "4865fd04-efb6-4985-a4f7-3d587655fef2",
             "nome": "LUIZ CARLOS ANTONELLI",
-            "faixa_etaria": "7",
             "qualificacao": "49",
+            "faixa_etaria": "7",
             "data_entrada_sociedade": "2004-03-09"
+          },
+          {
+            "id": "69d218fc-dfab-4b42-9338-0bbc631454ce",
+            "nome": "SAMANTA HAYAKAWA",
+            "qualificacao": "49",
+            "faixa_etaria": "5",
+            "data_entrada_sociedade": "1993-12-14"
+          },
+          {
+            "id": "e86c1f8f-9cc5-4403-b3f3-cbbc4a252f07",
+            "nome": "ALEXANDRE HAYAKAWA",
+            "qualificacao": "49",
+            "faixa_etaria": "6",
+            "data_entrada_sociedade": "1993-12-14"
           },
           {
             "id": "6a68fe48-7b1a-4391-b9aa-c0e60ac0dd0b",
             "nome": "SANDRA HAYAKAWA",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1986-05-06"
           }
         ],
@@ -1255,7 +1473,7 @@
           "sinais": [
             "Sócio mais velho na faixa 80+ anos",
             "Fundada em 1974 (52 anos de operação)",
-            "Quadro com 2 sócios"
+            "Quadro com 4 sócios"
           ]
         }
       },
@@ -1279,8 +1497,8 @@
           {
             "id": "94b956ce-74ea-4002-aefa-f4d1beb9b195",
             "nome": "ROMANO MAZZONI",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1982-08-20"
           }
         ],
@@ -1320,8 +1538,8 @@
           {
             "id": "560f6ac5-3cd0-4cb8-9acd-e159896cac03",
             "nome": "CESAR ROBERTO COUTINHO DE MESQUITA",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1984-08-14"
           }
         ],
@@ -1338,6 +1556,72 @@
             "Fundada em 1984 (42 anos de operação)",
             "Porte EPP",
             "Sócio único (perfil menos transacionável)"
+          ]
+        }
+      },
+      {
+        "id": "68e3725e-5a91-413c-951a-9b6e07f20fd7",
+        "cnpj": "15734280000139",
+        "razao_social": "EBF REVESTIMENTOS METALICOS LTDA - EM RECUPERACAO JUDICIAL",
+        "nome_fantasia": null,
+        "cnae_principal": "2532201",
+        "cnae_principal_desc": "Produção de artefatos estampados de metal",
+        "cnaes_secundarios": [
+          {
+            "codigo": "8211300",
+            "descricao": "Serviços combinados de escritório e apoio administrativo"
+          }
+        ],
+        "natureza_juridica": "Sociedade Empresária Limitada",
+        "municipio": "Louveira",
+        "uf": "SP",
+        "data_inicio_atividade": "2012-06-13",
+        "capital_social": 32500000,
+        "porte": "DEMAIS",
+        "telefone": "1121363900",
+        "email": "wrodella@ebf.com.br",
+        "socio": [
+          {
+            "id": "82e8ece3-d3ab-426d-9a04-27960c017263",
+            "nome": "WEBVAZ PARTICIPACOES LTDA  (EM RECUPERACAO JUDICIAL)",
+            "qualificacao": "22",
+            "faixa_etaria": "0",
+            "data_entrada_sociedade": "2012-06-13"
+          },
+          {
+            "id": "d7d5bd79-4c5d-43f2-ad6a-de683e0bf02a",
+            "nome": "GIANFRANCO MENNA ZEZZE",
+            "qualificacao": "5",
+            "faixa_etaria": "6",
+            "data_entrada_sociedade": "2012-06-13"
+          },
+          {
+            "id": "325ef388-9cd6-4afa-9567-82630645a898",
+            "nome": "WEBECO PARTICIPACOES LTDA (EM RECUPERACAO JUDICIAL)",
+            "qualificacao": "22",
+            "faixa_etaria": "0",
+            "data_entrada_sociedade": "2012-06-13"
+          },
+          {
+            "id": "c8aaefad-ab20-4387-915f-614f4d550c4c",
+            "nome": "VINCENZO ANTONIO AMERICO ZEZZE",
+            "qualificacao": "5",
+            "faixa_etaria": "9",
+            "data_entrada_sociedade": "2023-12-19"
+          }
+        ],
+        "score": {
+          "score": 70,
+          "breakdown": {
+            "idade_socios": 30,
+            "antiguidade_empresa": 0,
+            "porte_relevancia": 30,
+            "quadro_plural": 10
+          },
+          "sinais": [
+            "Sócio mais velho na faixa 80+ anos",
+            "Porte relevante (não-ME/EPP)",
+            "Quadro com 2 sócios"
           ]
         }
       },
@@ -1374,15 +1658,15 @@
           {
             "id": "a03b9ab9-4e0e-4f9c-a3cb-1b84db7125bb",
             "nome": "ERNESTO ADOLFO HARTSCHUH SCHAUB",
-            "faixa_etaria": "7",
             "qualificacao": "49",
+            "faixa_etaria": "7",
             "data_entrada_sociedade": "1988-08-01"
           },
           {
             "id": "ae6873cd-d522-4f92-a4f2-894222afd6e0",
             "nome": "FRANCISCO ALONSO JUNIOR",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1988-08-01"
           }
         ],
@@ -1421,15 +1705,15 @@
           {
             "id": "f3eded98-ce25-4001-8fd4-a107e038d12b",
             "nome": "APARECIDA MATTAS CEREDA",
-            "faixa_etaria": "9",
             "qualificacao": "22",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1990-02-01"
           },
           {
             "id": "e88350ff-0d6c-4a1d-a593-c7376bbfbe14",
             "nome": "WALTER LUIZ CEREDA",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1990-02-01"
           }
         ],
@@ -1473,15 +1757,15 @@
           {
             "id": "335635e7-f751-4fa1-a907-0124d015a013",
             "nome": "MAURA DE JESUS MASSUCATTO",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1998-10-26"
           },
           {
             "id": "5f10ce77-300c-498f-89c1-970f0e54e6ba",
             "nome": "OSCAR OLIVEIRA DE JESUS",
-            "faixa_etaria": "7",
             "qualificacao": "22",
+            "faixa_etaria": "7",
             "data_entrada_sociedade": "2004-04-14"
           }
         ],
@@ -1501,37 +1785,35 @@
         }
       },
       {
-        "id": "a814cfb9-a55e-4abc-a5ac-de5ad04a944f",
-        "cnpj": "67684043000104",
-        "razao_social": "ESPANHOL INDUSTRIA MECANICA E BALANCEAMENTOS TECNICOS LTDA",
+        "id": "3fe83da2-78cb-46ca-bef8-55c50c4c81af",
+        "cnpj": "67411959000190",
+        "razao_social": "MENDES GARCIA & BONATTO LTDA",
         "nome_fantasia": null,
-        "cnae_principal": "2823200",
-        "cnae_principal_desc": "Fabricação de máquinas e aparelhos de refrigeração e ventilação para uso industrial e comercial, peças e acessórios",
-        "cnaes_secundarios": [
-          {
-            "codigo": "3314707",
-            "descricao": "Manutenção e reparação de máquinas e aparelhos de refrigeração e ventilação para uso industrial e comercial"
-          },
-          {
-            "codigo": "4663000",
-            "descricao": "Comércio atacadista de máquinas e equipamentos para uso industrial; partes e peças"
-          }
-        ],
+        "cnae_principal": "2542000",
+        "cnae_principal_desc": "Fabricação de artigos de serralheria, exceto esquadrias",
+        "cnaes_secundarios": null,
         "natureza_juridica": "Sociedade Empresária Limitada",
         "municipio": "Ourinhos",
         "uf": "SP",
-        "data_inicio_atividade": "1992-03-18",
+        "data_inicio_atividade": "1992-01-20",
         "capital_social": 0,
-        "porte": "EPP",
-        "telefone": null,
+        "porte": "ME",
+        "telefone": "0143224215",
         "email": null,
         "socio": [
           {
-            "id": "5adf5d43-7736-415e-90d4-3d000ce66877",
-            "nome": "ROQUE ESPANHOL",
-            "faixa_etaria": "9",
+            "id": "3b96d3ef-f1ec-41f0-9e67-496bcaf5b1a1",
+            "nome": "ADEMIR MENDES GARCIA",
             "qualificacao": "49",
-            "data_entrada_sociedade": "2001-06-16"
+            "faixa_etaria": "6",
+            "data_entrada_sociedade": "1999-07-19"
+          },
+          {
+            "id": "2004492f-b349-4a31-ac4f-cb147faed21e",
+            "nome": "ANTONIO BONATTO",
+            "qualificacao": "22",
+            "faixa_etaria": "9",
+            "data_entrada_sociedade": "1999-07-19"
           }
         ],
         "score": {
@@ -1539,14 +1821,13 @@
           "breakdown": {
             "idade_socios": 30,
             "antiguidade_empresa": 22,
-            "porte_relevancia": 15,
-            "quadro_plural": 0
+            "porte_relevancia": 5,
+            "quadro_plural": 10
           },
           "sinais": [
             "Sócio mais velho na faixa 80+ anos",
             "Fundada em 1992 (34 anos de operação)",
-            "Porte EPP",
-            "Sócio único (perfil menos transacionável)"
+            "Quadro com 2 sócios"
           ]
         }
       },
@@ -1587,15 +1868,15 @@
           {
             "id": "34681e39-12a4-4a9a-97bd-8ebc3807cdac",
             "nome": "LUIZ FERNANDO BORDINHAO",
-            "faixa_etaria": "7",
             "qualificacao": "49",
+            "faixa_etaria": "7",
             "data_entrada_sociedade": "1996-01-10"
           },
           {
             "id": "5516988b-9179-4b23-9f2a-2b1a7d38925b",
             "nome": "LUIZ BORDINHAO",
-            "faixa_etaria": "9",
             "qualificacao": "22",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1996-01-10"
           }
         ],
@@ -1639,15 +1920,15 @@
           {
             "id": "3d147c58-8aeb-4d9e-9be5-9c4791916d76",
             "nome": "VILMA GARCIA ALLEGRETTI",
-            "faixa_etaria": "8",
             "qualificacao": "22",
+            "faixa_etaria": "8",
             "data_entrada_sociedade": "1989-01-02"
           },
           {
             "id": "570b04b2-fe15-4bd9-8d78-33ceb930bf6f",
             "nome": "JACKSON ALLEGRETTI",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1989-01-02"
           }
         ],
@@ -1663,47 +1944,6 @@
             "Sócio mais velho na faixa 80+ anos",
             "Fundada em 1989 (37 anos de operação)",
             "Quadro com 2 sócios"
-          ]
-        }
-      },
-      {
-        "id": "83811931-1c35-4edc-8535-b5ab256e148c",
-        "cnpj": "66806399000100",
-        "razao_social": "DURAMETAL INDUSTRIA E COMERCIO LTDA",
-        "nome_fantasia": "DURAMETAL",
-        "cnae_principal": "2532201",
-        "cnae_principal_desc": "Produção de artefatos estampados de metal",
-        "cnaes_secundarios": null,
-        "natureza_juridica": "Sociedade Empresária Limitada",
-        "municipio": "Bauru",
-        "uf": "SP",
-        "data_inicio_atividade": "1991-09-02",
-        "capital_social": 10000,
-        "porte": "EPP",
-        "telefone": null,
-        "email": null,
-        "socio": [
-          {
-            "id": "52cb0196-b9db-4342-aa66-f9d34bdd384c",
-            "nome": "MARIZA RIBEIRO DE SOUZA",
-            "faixa_etaria": "9",
-            "qualificacao": "22",
-            "data_entrada_sociedade": "2012-03-26"
-          }
-        ],
-        "score": {
-          "score": 67,
-          "breakdown": {
-            "idade_socios": 30,
-            "antiguidade_empresa": 22,
-            "porte_relevancia": 15,
-            "quadro_plural": 0
-          },
-          "sinais": [
-            "Sócio mais velho na faixa 80+ anos",
-            "Fundada em 1991 (35 anos de operação)",
-            "Porte EPP",
-            "Sócio único (perfil menos transacionável)"
           ]
         }
       },
@@ -1727,15 +1967,29 @@
           {
             "id": "2a37abc7-e1c1-48c6-b53e-913b010e8ddf",
             "nome": "EURYDES PEGORARO",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1991-07-12"
+          },
+          {
+            "id": "e45abab5-b073-4340-aa34-2f9668e9e07d",
+            "nome": "ADRIANO JOSE PEGORARO",
+            "qualificacao": "49",
+            "faixa_etaria": "6",
+            "data_entrada_sociedade": "1995-03-20"
+          },
+          {
+            "id": "c38413ae-be35-41f6-b8c7-425e500032d5",
+            "nome": "RODRIGO PEGORARO",
+            "qualificacao": "49",
+            "faixa_etaria": "6",
+            "data_entrada_sociedade": "1993-05-04"
           },
           {
             "id": "fce7f652-2227-4f09-9e94-42c769427e9f",
             "nome": "LAERCIO PEGORARO",
-            "faixa_etaria": "8",
             "qualificacao": "49",
+            "faixa_etaria": "8",
             "data_entrada_sociedade": "1991-07-12"
           }
         ],
@@ -1750,386 +2004,7 @@
           "sinais": [
             "Sócio mais velho na faixa 80+ anos",
             "Fundada em 1991 (35 anos de operação)",
-            "Quadro com 2 sócios"
-          ]
-        }
-      },
-      {
-        "id": "b09fca95-391c-4508-8e7b-840102af3829",
-        "cnpj": "01940863000101",
-        "razao_social": "FREMITEC USINAGEM TECNICA DE PRECISAO LTDA",
-        "nome_fantasia": null,
-        "cnae_principal": "2539001",
-        "cnae_principal_desc": "Serviços de usinagem, torneiria e solda",
-        "cnaes_secundarios": null,
-        "natureza_juridica": "Sociedade Empresária Limitada",
-        "municipio": "Piracicaba",
-        "uf": "SP",
-        "data_inicio_atividade": "1997-07-01",
-        "capital_social": 150000,
-        "porte": "EPP",
-        "telefone": "1921054800",
-        "email": "societario@ejetec.com.br",
-        "socio": [
-          {
-            "id": "1c24e6c5-d3cd-4d31-b346-898c668f0a30",
-            "nome": "MARIA BISCALCHIN COSTA",
-            "faixa_etaria": "9",
-            "qualificacao": "49",
-            "data_entrada_sociedade": "2015-02-26"
-          }
-        ],
-        "score": {
-          "score": 67,
-          "breakdown": {
-            "idade_socios": 30,
-            "antiguidade_empresa": 22,
-            "porte_relevancia": 15,
-            "quadro_plural": 0
-          },
-          "sinais": [
-            "Sócio mais velho na faixa 80+ anos",
-            "Fundada em 1997 (29 anos de operação)",
-            "Porte EPP",
-            "Sócio único (perfil menos transacionável)"
-          ]
-        }
-      },
-      {
-        "id": "8151ad58-04dd-4948-b4f0-eb1c4b19ec29",
-        "cnpj": "68148311000136",
-        "razao_social": "TORTUGAN INDUSTRIA E COMERCIO DE MAQUINAS INOXIDAVEIS LTDA",
-        "nome_fantasia": "TORTUGAN INOX",
-        "cnae_principal": "2833000",
-        "cnae_principal_desc": "Fabricação de máquinas e equipamentos para a agricultura e pecuária, peças e acessórios, exceto para irrigação",
-        "cnaes_secundarios": [
-          {
-            "codigo": "2832100",
-            "descricao": "Fabricação de equipamentos para irrigação agrícola, peças e acessórios"
-          },
-          {
-            "codigo": "3321000",
-            "descricao": "Instalação de máquinas e equipamentos industriais"
-          },
-          {
-            "codigo": "2521700",
-            "descricao": "Fabricação de tanques, reservatórios metálicos e caldeiras para aquecimento central"
-          }
-        ],
-        "natureza_juridica": "Sociedade Empresária Limitada",
-        "municipio": "Atibaia",
-        "uf": "SP",
-        "data_inicio_atividade": "1992-06-12",
-        "capital_social": 100000,
-        "porte": "EPP",
-        "telefone": null,
-        "email": "p.empresarial@uol.com.br",
-        "socio": [
-          {
-            "id": "73ba3efe-e0aa-4577-867c-9017d81eded5",
-            "nome": "MILTON NUNES DE PAULA",
-            "faixa_etaria": "9",
-            "qualificacao": "49",
-            "data_entrada_sociedade": "1992-04-05"
-          }
-        ],
-        "score": {
-          "score": 67,
-          "breakdown": {
-            "idade_socios": 30,
-            "antiguidade_empresa": 22,
-            "porte_relevancia": 15,
-            "quadro_plural": 0
-          },
-          "sinais": [
-            "Sócio mais velho na faixa 80+ anos",
-            "Fundada em 1992 (34 anos de operação)",
-            "Porte EPP",
-            "Sócio único (perfil menos transacionável)"
-          ]
-        }
-      },
-      {
-        "id": "03f710e6-1b13-4a6e-9693-afe9e599b3d1",
-        "cnpj": "07020056000157",
-        "razao_social": "DIMAS FERRAMENTAS DIAMANTADAS LTDA",
-        "nome_fantasia": null,
-        "cnae_principal": "2543800",
-        "cnae_principal_desc": "Fabricação de ferramentas",
-        "cnaes_secundarios": null,
-        "natureza_juridica": "Sociedade Empresária Limitada",
-        "municipio": "São Bernardo do Campo",
-        "uf": "SP",
-        "data_inicio_atividade": "2004-09-21",
-        "capital_social": 15000,
-        "porte": "EPP",
-        "telefone": "1129467069",
-        "email": null,
-        "socio": [
-          {
-            "id": "dcb85506-888f-41db-81ac-b8f113c3813f",
-            "nome": "ZENITE MARIA DA SILVA DIAS",
-            "faixa_etaria": "9",
-            "qualificacao": "22",
-            "data_entrada_sociedade": "2004-09-21"
-          },
-          {
-            "id": "136c8b86-5910-408a-bb4f-1ea0997a7892",
-            "nome": "DIMAS DIAS DUARTE",
-            "faixa_etaria": "9",
-            "qualificacao": "22",
-            "data_entrada_sociedade": "2009-04-02"
-          },
-          {
-            "id": "0b633ed5-dc2f-442c-a344-3d268a24bf30",
-            "nome": "MARLENE APARECIDA DIAS CARVALHO",
-            "faixa_etaria": "7",
-            "qualificacao": "49",
-            "data_entrada_sociedade": "2009-04-02"
-          }
-        ],
-        "score": {
-          "score": 65,
-          "breakdown": {
-            "idade_socios": 30,
-            "antiguidade_empresa": 10,
-            "porte_relevancia": 15,
-            "quadro_plural": 10
-          },
-          "sinais": [
-            "2 sócios na faixa 80+ anos",
-            "Porte EPP",
-            "Fundada em 2004",
-            "Quadro com 3 sócios"
-          ]
-        }
-      },
-      {
-        "id": "d9636716-d91e-4bdf-9398-25a7755b429a",
-        "cnpj": "58731811000142",
-        "razao_social": "BAGARINE & MARTINHO LTDA",
-        "nome_fantasia": null,
-        "cnae_principal": "2512800",
-        "cnae_principal_desc": "Fabricação de esquadrias de metal",
-        "cnaes_secundarios": null,
-        "natureza_juridica": "Sociedade Empresária Limitada",
-        "municipio": "Jaú",
-        "uf": "SP",
-        "data_inicio_atividade": "1988-04-08",
-        "capital_social": 10,
-        "porte": "ME",
-        "telefone": null,
-        "email": null,
-        "socio": [
-          {
-            "id": "4d0699ed-8ed9-4021-a87b-0fcf57c7a057",
-            "nome": "SUELI APARECIDA BAGARINI MARTINHO",
-            "faixa_etaria": "7",
-            "qualificacao": "22",
-            "data_entrada_sociedade": "1991-07-12"
-          },
-          {
-            "id": "61540d11-1c8d-46c0-8008-d8c7dfb4e2c4",
-            "nome": "JOSE OSCAR MARTINHO",
-            "faixa_etaria": "8",
-            "qualificacao": "49",
-            "data_entrada_sociedade": "1988-04-08"
-          }
-        ],
-        "score": {
-          "score": 63,
-          "breakdown": {
-            "idade_socios": 26,
-            "antiguidade_empresa": 22,
-            "porte_relevancia": 5,
-            "quadro_plural": 10
-          },
-          "sinais": [
-            "Sócio mais velho na faixa 71–80 anos",
-            "Fundada em 1988 (38 anos de operação)",
-            "Quadro com 2 sócios"
-          ]
-        }
-      },
-      {
-        "id": "e6a9bb5f-914b-433f-ba41-64ae7519109e",
-        "cnpj": "06980103000141",
-        "razao_social": "PLATA INDUSTRIA METALURGICA LTDA",
-        "nome_fantasia": null,
-        "cnae_principal": "2451200",
-        "cnae_principal_desc": "Fundição de ferro e aço",
-        "cnaes_secundarios": [
-          {
-            "codigo": "2452100",
-            "descricao": "Fundição de metais não ferrosos e suas ligas"
-          },
-          {
-            "codigo": "2543800",
-            "descricao": "Fabricação de ferramentas"
-          }
-        ],
-        "natureza_juridica": "Sociedade Empresária Limitada",
-        "municipio": "Itaquaquecetuba",
-        "uf": "SP",
-        "data_inicio_atividade": "2004-08-25",
-        "capital_social": 10000,
-        "porte": "EPP",
-        "telefone": null,
-        "email": null,
-        "socio": [
-          {
-            "id": "aac4f024-c466-491f-8584-ed4408ba202e",
-            "nome": "NELSON GARCIA",
-            "faixa_etaria": "8",
-            "qualificacao": "49",
-            "data_entrada_sociedade": "2011-08-30"
-          },
-          {
-            "id": "ee866f43-7d6d-442b-a8cf-9b1648120ade",
-            "nome": "RAMON GARCIA NETO",
-            "faixa_etaria": "8",
-            "qualificacao": "49",
-            "data_entrada_sociedade": "2011-08-30"
-          }
-        ],
-        "score": {
-          "score": 61,
-          "breakdown": {
-            "idade_socios": 26,
-            "antiguidade_empresa": 10,
-            "porte_relevancia": 15,
-            "quadro_plural": 10
-          },
-          "sinais": [
-            "2 sócios na faixa 71–80 anos",
-            "Porte EPP",
-            "Fundada em 2004",
-            "Quadro com 2 sócios"
-          ]
-        }
-      },
-      {
-        "id": "68e3725e-5a91-413c-951a-9b6e07f20fd7",
-        "cnpj": "15734280000139",
-        "razao_social": "EBF REVESTIMENTOS METALICOS LTDA - EM RECUPERACAO JUDICIAL",
-        "nome_fantasia": null,
-        "cnae_principal": "2532201",
-        "cnae_principal_desc": "Produção de artefatos estampados de metal",
-        "cnaes_secundarios": [
-          {
-            "codigo": "8211300",
-            "descricao": "Serviços combinados de escritório e apoio administrativo"
-          }
-        ],
-        "natureza_juridica": "Sociedade Empresária Limitada",
-        "municipio": "Louveira",
-        "uf": "SP",
-        "data_inicio_atividade": "2012-06-13",
-        "capital_social": 32500000,
-        "porte": "DEMAIS",
-        "telefone": "1121363900",
-        "email": "wrodella@ebf.com.br",
-        "socio": [
-          {
-            "id": "c8aaefad-ab20-4387-915f-614f4d550c4c",
-            "nome": "VINCENZO ANTONIO AMERICO ZEZZE",
-            "faixa_etaria": "9",
-            "qualificacao": "5",
-            "data_entrada_sociedade": "2023-12-19"
-          }
-        ],
-        "score": {
-          "score": 60,
-          "breakdown": {
-            "idade_socios": 30,
-            "antiguidade_empresa": 0,
-            "porte_relevancia": 30,
-            "quadro_plural": 0
-          },
-          "sinais": [
-            "Sócio mais velho na faixa 80+ anos",
-            "Porte relevante (não-ME/EPP)",
-            "Sócio único (perfil menos transacionável)"
-          ]
-        }
-      },
-      {
-        "id": "3fe83da2-78cb-46ca-bef8-55c50c4c81af",
-        "cnpj": "67411959000190",
-        "razao_social": "MENDES GARCIA & BONATTO LTDA",
-        "nome_fantasia": null,
-        "cnae_principal": "2542000",
-        "cnae_principal_desc": "Fabricação de artigos de serralheria, exceto esquadrias",
-        "cnaes_secundarios": null,
-        "natureza_juridica": "Sociedade Empresária Limitada",
-        "municipio": "Ourinhos",
-        "uf": "SP",
-        "data_inicio_atividade": "1992-01-20",
-        "capital_social": 0,
-        "porte": "ME",
-        "telefone": "0143224215",
-        "email": null,
-        "socio": [
-          {
-            "id": "2004492f-b349-4a31-ac4f-cb147faed21e",
-            "nome": "ANTONIO BONATTO",
-            "faixa_etaria": "9",
-            "qualificacao": "22",
-            "data_entrada_sociedade": "1999-07-19"
-          }
-        ],
-        "score": {
-          "score": 57,
-          "breakdown": {
-            "idade_socios": 30,
-            "antiguidade_empresa": 22,
-            "porte_relevancia": 5,
-            "quadro_plural": 0
-          },
-          "sinais": [
-            "Sócio mais velho na faixa 80+ anos",
-            "Fundada em 1992 (34 anos de operação)",
-            "Sócio único (perfil menos transacionável)"
-          ]
-        }
-      },
-      {
-        "id": "7c5c24ba-0ec1-4d10-8a6c-8591ac2b07fd",
-        "cnpj": "01519051000197",
-        "razao_social": "SOROCABA COMERCIAL LTDA",
-        "nome_fantasia": null,
-        "cnae_principal": "2599399",
-        "cnae_principal_desc": "Fabricação de outros produtos de metal não especificados anteriormente",
-        "cnaes_secundarios": null,
-        "natureza_juridica": "Sociedade Empresária Limitada",
-        "municipio": "Osasco",
-        "uf": "SP",
-        "data_inicio_atividade": "1996-10-28",
-        "capital_social": 99800,
-        "porte": "ME",
-        "telefone": "1147756318",
-        "email": "sorocaba.usinagem@hotmail.com",
-        "socio": [
-          {
-            "id": "7f3fe0ae-db85-4ed8-ba49-4eb7e09fd13b",
-            "nome": "AIRTON FIDENCIO",
-            "faixa_etaria": "9",
-            "qualificacao": "49",
-            "data_entrada_sociedade": "1996-12-09"
-          }
-        ],
-        "score": {
-          "score": 57,
-          "breakdown": {
-            "idade_socios": 30,
-            "antiguidade_empresa": 22,
-            "porte_relevancia": 5,
-            "quadro_plural": 0
-          },
-          "sinais": [
-            "Sócio mais velho na faixa 80+ anos",
-            "Fundada em 1996 (30 anos de operação)",
-            "Sócio único (perfil menos transacionável)"
+            "Quadro com 4 sócios"
           ]
         }
       },
@@ -2206,23 +2081,30 @@
           {
             "id": "27cbe3be-9880-4079-a00f-dcbf486da935",
             "nome": "LOURDES GOLUBEV",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "2004-06-29"
+          },
+          {
+            "id": "209ea4a0-9ece-417c-bf13-47dd22423fdc",
+            "nome": "ROGERIO GOLUBEV",
+            "qualificacao": "49",
+            "faixa_etaria": "6",
+            "data_entrada_sociedade": "1990-12-06"
           }
         ],
         "score": {
-          "score": 57,
+          "score": 67,
           "breakdown": {
             "idade_socios": 30,
             "antiguidade_empresa": 22,
             "porte_relevancia": 5,
-            "quadro_plural": 0
+            "quadro_plural": 10
           },
           "sinais": [
             "Sócio mais velho na faixa 80+ anos",
             "Fundada em 1990 (36 anos de operação)",
-            "Sócio único (perfil menos transacionável)"
+            "Quadro com 2 sócios"
           ]
         }
       },
@@ -2246,22 +2128,70 @@
           {
             "id": "1e1e003e-a863-4c47-864c-834dd2877762",
             "nome": "ELSA MARIA MANTUANELI BELAZ",
-            "faixa_etaria": "9",
             "qualificacao": "22",
+            "faixa_etaria": "9",
+            "data_entrada_sociedade": "2012-01-20"
+          },
+          {
+            "id": "9a0dfd60-4de1-486e-adf4-2efb7fc1643b",
+            "nome": "ARNALDO ALEXANDRE BELAZ",
+            "qualificacao": "49",
+            "faixa_etaria": "6",
             "data_entrada_sociedade": "2012-01-20"
           }
         ],
         "score": {
-          "score": 57,
+          "score": 67,
           "breakdown": {
             "idade_socios": 30,
             "antiguidade_empresa": 22,
             "porte_relevancia": 5,
-            "quadro_plural": 0
+            "quadro_plural": 10
           },
           "sinais": [
             "Sócio mais velho na faixa 80+ anos",
             "Fundada em 1993 (33 anos de operação)",
+            "Quadro com 2 sócios"
+          ]
+        }
+      },
+      {
+        "id": "b09fca95-391c-4508-8e7b-840102af3829",
+        "cnpj": "01940863000101",
+        "razao_social": "FREMITEC USINAGEM TECNICA DE PRECISAO LTDA",
+        "nome_fantasia": null,
+        "cnae_principal": "2539001",
+        "cnae_principal_desc": "Serviços de usinagem, torneiria e solda",
+        "cnaes_secundarios": null,
+        "natureza_juridica": "Sociedade Empresária Limitada",
+        "municipio": "Piracicaba",
+        "uf": "SP",
+        "data_inicio_atividade": "1997-07-01",
+        "capital_social": 150000,
+        "porte": "EPP",
+        "telefone": "1921054800",
+        "email": "societario@ejetec.com.br",
+        "socio": [
+          {
+            "id": "1c24e6c5-d3cd-4d31-b346-898c668f0a30",
+            "nome": "MARIA BISCALCHIN COSTA",
+            "qualificacao": "49",
+            "faixa_etaria": "9",
+            "data_entrada_sociedade": "2015-02-26"
+          }
+        ],
+        "score": {
+          "score": 67,
+          "breakdown": {
+            "idade_socios": 30,
+            "antiguidade_empresa": 22,
+            "porte_relevancia": 15,
+            "quadro_plural": 0
+          },
+          "sinais": [
+            "Sócio mais velho na faixa 80+ anos",
+            "Fundada em 1997 (29 anos de operação)",
+            "Porte EPP",
             "Sócio único (perfil menos transacionável)"
           ]
         }
@@ -2299,9 +2229,333 @@
           {
             "id": "10e86739-a7aa-4b1c-8dfc-4ff3181bacca",
             "nome": "MAURO RODRIGUES DOS SANTOS",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "1997-05-22"
+          },
+          {
+            "id": "23ff0f88-abe4-49af-970d-3270fdd866e8",
+            "nome": "ALESSANDRO CESAR BUENO",
+            "qualificacao": "49",
+            "faixa_etaria": "5",
+            "data_entrada_sociedade": "1997-05-22"
+          }
+        ],
+        "score": {
+          "score": 67,
+          "breakdown": {
+            "idade_socios": 30,
+            "antiguidade_empresa": 22,
+            "porte_relevancia": 5,
+            "quadro_plural": 10
+          },
+          "sinais": [
+            "Sócio mais velho na faixa 80+ anos",
+            "Fundada em 1997 (29 anos de operação)",
+            "Quadro com 2 sócios"
+          ]
+        }
+      },
+      {
+        "id": "8151ad58-04dd-4948-b4f0-eb1c4b19ec29",
+        "cnpj": "68148311000136",
+        "razao_social": "TORTUGAN INDUSTRIA E COMERCIO DE MAQUINAS INOXIDAVEIS LTDA",
+        "nome_fantasia": "TORTUGAN INOX",
+        "cnae_principal": "2833000",
+        "cnae_principal_desc": "Fabricação de máquinas e equipamentos para a agricultura e pecuária, peças e acessórios, exceto para irrigação",
+        "cnaes_secundarios": [
+          {
+            "codigo": "2832100",
+            "descricao": "Fabricação de equipamentos para irrigação agrícola, peças e acessórios"
+          },
+          {
+            "codigo": "3321000",
+            "descricao": "Instalação de máquinas e equipamentos industriais"
+          },
+          {
+            "codigo": "2521700",
+            "descricao": "Fabricação de tanques, reservatórios metálicos e caldeiras para aquecimento central"
+          }
+        ],
+        "natureza_juridica": "Sociedade Empresária Limitada",
+        "municipio": "Atibaia",
+        "uf": "SP",
+        "data_inicio_atividade": "1992-06-12",
+        "capital_social": 100000,
+        "porte": "EPP",
+        "telefone": null,
+        "email": "p.empresarial@uol.com.br",
+        "socio": [
+          {
+            "id": "73ba3efe-e0aa-4577-867c-9017d81eded5",
+            "nome": "MILTON NUNES DE PAULA",
+            "qualificacao": "49",
+            "faixa_etaria": "9",
+            "data_entrada_sociedade": "1992-04-05"
+          }
+        ],
+        "score": {
+          "score": 67,
+          "breakdown": {
+            "idade_socios": 30,
+            "antiguidade_empresa": 22,
+            "porte_relevancia": 15,
+            "quadro_plural": 0
+          },
+          "sinais": [
+            "Sócio mais velho na faixa 80+ anos",
+            "Fundada em 1992 (34 anos de operação)",
+            "Porte EPP",
+            "Sócio único (perfil menos transacionável)"
+          ]
+        }
+      },
+      {
+        "id": "03f710e6-1b13-4a6e-9693-afe9e599b3d1",
+        "cnpj": "07020056000157",
+        "razao_social": "DIMAS FERRAMENTAS DIAMANTADAS LTDA",
+        "nome_fantasia": null,
+        "cnae_principal": "2543800",
+        "cnae_principal_desc": "Fabricação de ferramentas",
+        "cnaes_secundarios": null,
+        "natureza_juridica": "Sociedade Empresária Limitada",
+        "municipio": "São Bernardo do Campo",
+        "uf": "SP",
+        "data_inicio_atividade": "2004-09-21",
+        "capital_social": 15000,
+        "porte": "EPP",
+        "telefone": "1129467069",
+        "email": null,
+        "socio": [
+          {
+            "id": "dcb85506-888f-41db-81ac-b8f113c3813f",
+            "nome": "ZENITE MARIA DA SILVA DIAS",
+            "qualificacao": "22",
+            "faixa_etaria": "9",
+            "data_entrada_sociedade": "2004-09-21"
+          },
+          {
+            "id": "136c8b86-5910-408a-bb4f-1ea0997a7892",
+            "nome": "DIMAS DIAS DUARTE",
+            "qualificacao": "22",
+            "faixa_etaria": "9",
+            "data_entrada_sociedade": "2009-04-02"
+          },
+          {
+            "id": "0b633ed5-dc2f-442c-a344-3d268a24bf30",
+            "nome": "MARLENE APARECIDA DIAS CARVALHO",
+            "qualificacao": "49",
+            "faixa_etaria": "7",
+            "data_entrada_sociedade": "2009-04-02"
+          }
+        ],
+        "score": {
+          "score": 65,
+          "breakdown": {
+            "idade_socios": 30,
+            "antiguidade_empresa": 10,
+            "porte_relevancia": 15,
+            "quadro_plural": 10
+          },
+          "sinais": [
+            "2 sócios na faixa 80+ anos",
+            "Porte EPP",
+            "Fundada em 2004",
+            "Quadro com 3 sócios"
+          ]
+        }
+      },
+      {
+        "id": "d9636716-d91e-4bdf-9398-25a7755b429a",
+        "cnpj": "58731811000142",
+        "razao_social": "BAGARINE & MARTINHO LTDA",
+        "nome_fantasia": null,
+        "cnae_principal": "2512800",
+        "cnae_principal_desc": "Fabricação de esquadrias de metal",
+        "cnaes_secundarios": null,
+        "natureza_juridica": "Sociedade Empresária Limitada",
+        "municipio": "Jaú",
+        "uf": "SP",
+        "data_inicio_atividade": "1988-04-08",
+        "capital_social": 10,
+        "porte": "ME",
+        "telefone": null,
+        "email": null,
+        "socio": [
+          {
+            "id": "4d0699ed-8ed9-4021-a87b-0fcf57c7a057",
+            "nome": "SUELI APARECIDA BAGARINI MARTINHO",
+            "qualificacao": "22",
+            "faixa_etaria": "7",
+            "data_entrada_sociedade": "1991-07-12"
+          },
+          {
+            "id": "61540d11-1c8d-46c0-8008-d8c7dfb4e2c4",
+            "nome": "JOSE OSCAR MARTINHO",
+            "qualificacao": "49",
+            "faixa_etaria": "8",
+            "data_entrada_sociedade": "1988-04-08"
+          }
+        ],
+        "score": {
+          "score": 63,
+          "breakdown": {
+            "idade_socios": 26,
+            "antiguidade_empresa": 22,
+            "porte_relevancia": 5,
+            "quadro_plural": 10
+          },
+          "sinais": [
+            "Sócio mais velho na faixa 71–80 anos",
+            "Fundada em 1988 (38 anos de operação)",
+            "Quadro com 2 sócios"
+          ]
+        }
+      },
+      {
+        "id": "de17bf5b-a107-4b25-b6b9-1f96b85f77f8",
+        "cnpj": "07108259000108",
+        "razao_social": "ATS3 INDUSTRIA E COMERCIO DE PRODUTOS SIDERURGICOS LTDA",
+        "nome_fantasia": null,
+        "cnae_principal": "2599302",
+        "cnae_principal_desc": "Serviço de corte e dobra de metais",
+        "cnaes_secundarios": [
+          {
+            "codigo": "2599399",
+            "descricao": "Fabricação de outros produtos de metal não especificados anteriormente"
+          },
+          {
+            "codigo": "4789099",
+            "descricao": "Comércio varejista de outros produtos não especificados anteriormente"
+          }
+        ],
+        "natureza_juridica": "Sociedade Empresária Limitada",
+        "municipio": "Sertãozinho",
+        "uf": "SP",
+        "data_inicio_atividade": "2004-11-29",
+        "capital_social": 300000,
+        "porte": "EPP",
+        "telefone": "1639423335",
+        "email": null,
+        "socio": [
+          {
+            "id": "cef2e4c9-2933-47bb-9bab-931e344a1cbb",
+            "nome": "KLEBER THOMAZ DE SOUZA",
+            "qualificacao": "49",
+            "faixa_etaria": "6",
+            "data_entrada_sociedade": "2004-11-29"
+          },
+          {
+            "id": "e52a2541-b750-4206-b109-6b7ba5f4769a",
+            "nome": "JOSE CARLOS TORQUETTO",
+            "qualificacao": "49",
+            "faixa_etaria": "8",
+            "data_entrada_sociedade": "2004-11-29"
+          }
+        ],
+        "score": {
+          "score": 61,
+          "breakdown": {
+            "idade_socios": 26,
+            "antiguidade_empresa": 10,
+            "porte_relevancia": 15,
+            "quadro_plural": 10
+          },
+          "sinais": [
+            "Sócio mais velho na faixa 71–80 anos",
+            "Porte EPP",
+            "Fundada em 2004",
+            "Quadro com 2 sócios"
+          ]
+        }
+      },
+      {
+        "id": "e6a9bb5f-914b-433f-ba41-64ae7519109e",
+        "cnpj": "06980103000141",
+        "razao_social": "PLATA INDUSTRIA METALURGICA LTDA",
+        "nome_fantasia": null,
+        "cnae_principal": "2451200",
+        "cnae_principal_desc": "Fundição de ferro e aço",
+        "cnaes_secundarios": [
+          {
+            "codigo": "2452100",
+            "descricao": "Fundição de metais não ferrosos e suas ligas"
+          },
+          {
+            "codigo": "2543800",
+            "descricao": "Fabricação de ferramentas"
+          }
+        ],
+        "natureza_juridica": "Sociedade Empresária Limitada",
+        "municipio": "Itaquaquecetuba",
+        "uf": "SP",
+        "data_inicio_atividade": "2004-08-25",
+        "capital_social": 10000,
+        "porte": "EPP",
+        "telefone": null,
+        "email": null,
+        "socio": [
+          {
+            "id": "81a57585-f567-4ebf-91b9-572a73daea69",
+            "nome": "ERIC HENRIQUE GARCIA",
+            "qualificacao": "22",
+            "faixa_etaria": "5",
+            "data_entrada_sociedade": "2004-08-25"
+          },
+          {
+            "id": "aac4f024-c466-491f-8584-ed4408ba202e",
+            "nome": "NELSON GARCIA",
+            "qualificacao": "49",
+            "faixa_etaria": "8",
+            "data_entrada_sociedade": "2011-08-30"
+          },
+          {
+            "id": "ee866f43-7d6d-442b-a8cf-9b1648120ade",
+            "nome": "RAMON GARCIA NETO",
+            "qualificacao": "49",
+            "faixa_etaria": "8",
+            "data_entrada_sociedade": "2011-08-30"
+          }
+        ],
+        "score": {
+          "score": 61,
+          "breakdown": {
+            "idade_socios": 26,
+            "antiguidade_empresa": 10,
+            "porte_relevancia": 15,
+            "quadro_plural": 10
+          },
+          "sinais": [
+            "2 sócios na faixa 71–80 anos",
+            "Porte EPP",
+            "Fundada em 2004",
+            "Quadro com 3 sócios"
+          ]
+        }
+      },
+      {
+        "id": "7c5c24ba-0ec1-4d10-8a6c-8591ac2b07fd",
+        "cnpj": "01519051000197",
+        "razao_social": "SOROCABA COMERCIAL LTDA",
+        "nome_fantasia": null,
+        "cnae_principal": "2599399",
+        "cnae_principal_desc": "Fabricação de outros produtos de metal não especificados anteriormente",
+        "cnaes_secundarios": null,
+        "natureza_juridica": "Sociedade Empresária Limitada",
+        "municipio": "Osasco",
+        "uf": "SP",
+        "data_inicio_atividade": "1996-10-28",
+        "capital_social": 99800,
+        "porte": "ME",
+        "telefone": "1147756318",
+        "email": "sorocaba.usinagem@hotmail.com",
+        "socio": [
+          {
+            "id": "7f3fe0ae-db85-4ed8-ba49-4eb7e09fd13b",
+            "nome": "AIRTON FIDENCIO",
+            "qualificacao": "49",
+            "faixa_etaria": "9",
+            "data_entrada_sociedade": "1996-12-09"
           }
         ],
         "score": {
@@ -2314,8 +2568,116 @@
           },
           "sinais": [
             "Sócio mais velho na faixa 80+ anos",
-            "Fundada em 1997 (29 anos de operação)",
+            "Fundada em 1996 (30 anos de operação)",
             "Sócio único (perfil menos transacionável)"
+          ]
+        }
+      },
+      {
+        "id": "9320412f-36ac-43ed-8afd-ef61a7e8c85d",
+        "cnpj": "33344071000160",
+        "razao_social": "B & P INDUSTRIA DE PRODUTOS DE METAL LTDA",
+        "nome_fantasia": null,
+        "cnae_principal": "2599302",
+        "cnae_principal_desc": "Serviço de corte e dobra de metais",
+        "cnaes_secundarios": [
+          {
+            "codigo": "4685100",
+            "descricao": "Comércio atacadista de produtos siderúrgicos e metalúrgicos, exceto para construção"
+          },
+          {
+            "codigo": "4759899",
+            "descricao": "Comércio varejista de outros artigos de uso doméstico não especificados anteriormente"
+          }
+        ],
+        "natureza_juridica": "Sociedade Empresária Limitada",
+        "municipio": "Itatiba",
+        "uf": "SP",
+        "data_inicio_atividade": "2019-04-12",
+        "capital_social": 20000,
+        "porte": "EPP",
+        "telefone": "1157693020",
+        "email": "emerson.bissoni@bol.com.br",
+        "socio": [
+          {
+            "id": "81b04bfa-02df-40fb-b592-9a6f52dd3065",
+            "nome": "EMERSON BISSONI",
+            "qualificacao": "49",
+            "faixa_etaria": "6",
+            "data_entrada_sociedade": "2019-04-12"
+          },
+          {
+            "id": "8dc99ecc-7c7a-4b30-a9f3-e86d1b324591",
+            "nome": "MARIA DE LOURDES POLESSI BISSONI",
+            "qualificacao": "22",
+            "faixa_etaria": "9",
+            "data_entrada_sociedade": "2019-04-12"
+          }
+        ],
+        "score": {
+          "score": 55,
+          "breakdown": {
+            "idade_socios": 30,
+            "antiguidade_empresa": 0,
+            "porte_relevancia": 15,
+            "quadro_plural": 10
+          },
+          "sinais": [
+            "Sócio mais velho na faixa 80+ anos",
+            "Porte EPP",
+            "Quadro com 2 sócios"
+          ]
+        }
+      },
+      {
+        "id": "f7a189bb-b4c8-48b0-952f-bd225a93876f",
+        "cnpj": "08940268000115",
+        "razao_social": "A S LIMA USINAGEM LTDA",
+        "nome_fantasia": null,
+        "cnae_principal": "2599399",
+        "cnae_principal_desc": "Fabricação de outros produtos de metal não especificados anteriormente",
+        "cnaes_secundarios": [
+          {
+            "codigo": "4757100",
+            "descricao": "Comércio varejista especializado de peças e acessórios para aparelhos eletroeletrônicos para uso doméstico, exceto informática e comunicação"
+          }
+        ],
+        "natureza_juridica": "Sociedade Empresária Limitada",
+        "municipio": "Rio Claro",
+        "uf": "SP",
+        "data_inicio_atividade": "2007-06-19",
+        "capital_social": 10000,
+        "porte": "ME",
+        "telefone": "1935362914",
+        "email": "ghgiannotti@vivax.com.br",
+        "socio": [
+          {
+            "id": "f7a84a1d-5a47-4a92-8fe3-cb8ed993eb9d",
+            "nome": "NAIR CORREA BUENO FOSSALUZA",
+            "qualificacao": "22",
+            "faixa_etaria": "9",
+            "data_entrada_sociedade": "2011-05-27"
+          },
+          {
+            "id": "449a9f28-0887-415e-8f7e-c4ac9da2a09b",
+            "nome": "ALESSANDRO DOS SANTOS DE LIMA",
+            "qualificacao": "49",
+            "faixa_etaria": "5",
+            "data_entrada_sociedade": "2007-06-19"
+          }
+        ],
+        "score": {
+          "score": 55,
+          "breakdown": {
+            "idade_socios": 30,
+            "antiguidade_empresa": 10,
+            "porte_relevancia": 5,
+            "quadro_plural": 10
+          },
+          "sinais": [
+            "Sócio mais velho na faixa 80+ anos",
+            "Fundada em 2007",
+            "Quadro com 2 sócios"
           ]
         }
       },
@@ -2344,15 +2706,15 @@
           {
             "id": "6cd900f5-b71a-42be-b999-fd55da9b07ca",
             "nome": "NILSON TAKEO YAMACHITA",
-            "faixa_etaria": "7",
             "qualificacao": "49",
+            "faixa_etaria": "7",
             "data_entrada_sociedade": "2010-01-07"
           },
           {
             "id": "41846f53-425e-4d34-9394-2af065cb6c2d",
             "nome": "SATIKO KOBASHI KUMAYAMA",
-            "faixa_etaria": "9",
             "qualificacao": "22",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "2016-11-08"
           }
         ],
@@ -2396,15 +2758,15 @@
           {
             "id": "e1580d27-5780-457f-b11d-806acf97a4b4",
             "nome": "CLEONICE ALVES COSTA",
-            "faixa_etaria": "9",
             "qualificacao": "22",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "2016-08-30"
           },
           {
             "id": "32d5af88-709a-4c05-8a2b-b65c17d2b320",
             "nome": "HELOISA ALVES COSTA",
-            "faixa_etaria": "7",
             "qualificacao": "49",
+            "faixa_etaria": "7",
             "data_entrada_sociedade": "2014-07-16"
           }
         ],
@@ -2443,15 +2805,15 @@
           {
             "id": "703cefe1-3732-4787-b371-48b919bd1af5",
             "nome": "MAURA LIMA DE ASSIS CORREA",
-            "faixa_etaria": "8",
             "qualificacao": "49",
+            "faixa_etaria": "8",
             "data_entrada_sociedade": "2004-02-05"
           },
           {
             "id": "7d3e39bd-53f1-4069-af54-35c4c7187ebd",
             "nome": "ANTONIO JOSE CORREA",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "2004-02-05"
           }
         ],
@@ -2467,150 +2829,6 @@
             "Sócio mais velho na faixa 80+ anos",
             "Fundada em 2004",
             "Quadro com 2 sócios"
-          ]
-        }
-      },
-      {
-        "id": "de17bf5b-a107-4b25-b6b9-1f96b85f77f8",
-        "cnpj": "07108259000108",
-        "razao_social": "ATS3 INDUSTRIA E COMERCIO DE PRODUTOS SIDERURGICOS LTDA",
-        "nome_fantasia": null,
-        "cnae_principal": "2599302",
-        "cnae_principal_desc": "Serviço de corte e dobra de metais",
-        "cnaes_secundarios": [
-          {
-            "codigo": "2599399",
-            "descricao": "Fabricação de outros produtos de metal não especificados anteriormente"
-          },
-          {
-            "codigo": "4789099",
-            "descricao": "Comércio varejista de outros produtos não especificados anteriormente"
-          }
-        ],
-        "natureza_juridica": "Sociedade Empresária Limitada",
-        "municipio": "Sertãozinho",
-        "uf": "SP",
-        "data_inicio_atividade": "2004-11-29",
-        "capital_social": 300000,
-        "porte": "EPP",
-        "telefone": "1639423335",
-        "email": null,
-        "socio": [
-          {
-            "id": "e52a2541-b750-4206-b109-6b7ba5f4769a",
-            "nome": "JOSE CARLOS TORQUETTO",
-            "faixa_etaria": "8",
-            "qualificacao": "49",
-            "data_entrada_sociedade": "2004-11-29"
-          }
-        ],
-        "score": {
-          "score": 51,
-          "breakdown": {
-            "idade_socios": 26,
-            "antiguidade_empresa": 10,
-            "porte_relevancia": 15,
-            "quadro_plural": 0
-          },
-          "sinais": [
-            "Sócio mais velho na faixa 71–80 anos",
-            "Porte EPP",
-            "Fundada em 2004",
-            "Sócio único (perfil menos transacionável)"
-          ]
-        }
-      },
-      {
-        "id": "9320412f-36ac-43ed-8afd-ef61a7e8c85d",
-        "cnpj": "33344071000160",
-        "razao_social": "B & P INDUSTRIA DE PRODUTOS DE METAL LTDA",
-        "nome_fantasia": null,
-        "cnae_principal": "2599302",
-        "cnae_principal_desc": "Serviço de corte e dobra de metais",
-        "cnaes_secundarios": [
-          {
-            "codigo": "4685100",
-            "descricao": "Comércio atacadista de produtos siderúrgicos e metalúrgicos, exceto para construção"
-          },
-          {
-            "codigo": "4759899",
-            "descricao": "Comércio varejista de outros artigos de uso doméstico não especificados anteriormente"
-          }
-        ],
-        "natureza_juridica": "Sociedade Empresária Limitada",
-        "municipio": "Itatiba",
-        "uf": "SP",
-        "data_inicio_atividade": "2019-04-12",
-        "capital_social": 20000,
-        "porte": "EPP",
-        "telefone": "1157693020",
-        "email": "emerson.bissoni@bol.com.br",
-        "socio": [
-          {
-            "id": "8dc99ecc-7c7a-4b30-a9f3-e86d1b324591",
-            "nome": "MARIA DE LOURDES POLESSI BISSONI",
-            "faixa_etaria": "9",
-            "qualificacao": "22",
-            "data_entrada_sociedade": "2019-04-12"
-          }
-        ],
-        "score": {
-          "score": 45,
-          "breakdown": {
-            "idade_socios": 30,
-            "antiguidade_empresa": 0,
-            "porte_relevancia": 15,
-            "quadro_plural": 0
-          },
-          "sinais": [
-            "Sócio mais velho na faixa 80+ anos",
-            "Porte EPP",
-            "Sócio único (perfil menos transacionável)"
-          ]
-        }
-      },
-      {
-        "id": "f7a189bb-b4c8-48b0-952f-bd225a93876f",
-        "cnpj": "08940268000115",
-        "razao_social": "A S LIMA USINAGEM LTDA",
-        "nome_fantasia": null,
-        "cnae_principal": "2599399",
-        "cnae_principal_desc": "Fabricação de outros produtos de metal não especificados anteriormente",
-        "cnaes_secundarios": [
-          {
-            "codigo": "4757100",
-            "descricao": "Comércio varejista especializado de peças e acessórios para aparelhos eletroeletrônicos para uso doméstico, exceto informática e comunicação"
-          }
-        ],
-        "natureza_juridica": "Sociedade Empresária Limitada",
-        "municipio": "Rio Claro",
-        "uf": "SP",
-        "data_inicio_atividade": "2007-06-19",
-        "capital_social": 10000,
-        "porte": "ME",
-        "telefone": "1935362914",
-        "email": "ghgiannotti@vivax.com.br",
-        "socio": [
-          {
-            "id": "f7a84a1d-5a47-4a92-8fe3-cb8ed993eb9d",
-            "nome": "NAIR CORREA BUENO FOSSALUZA",
-            "faixa_etaria": "9",
-            "qualificacao": "22",
-            "data_entrada_sociedade": "2011-05-27"
-          }
-        ],
-        "score": {
-          "score": 45,
-          "breakdown": {
-            "idade_socios": 30,
-            "antiguidade_empresa": 10,
-            "porte_relevancia": 5,
-            "quadro_plural": 0
-          },
-          "sinais": [
-            "Sócio mais velho na faixa 80+ anos",
-            "Fundada em 2007",
-            "Sócio único (perfil menos transacionável)"
           ]
         }
       },
@@ -2643,29 +2861,36 @@
           {
             "id": "6ec35a00-6264-4de9-96b8-a3d0daa29116",
             "nome": "MARIA JOSE DA PIEDADE SILVA",
-            "faixa_etaria": "9",
             "qualificacao": "49",
+            "faixa_etaria": "9",
             "data_entrada_sociedade": "2005-12-29"
+          },
+          {
+            "id": "b062ffb1-9eac-451e-9fb8-ba690733f9d4",
+            "nome": "ICARO DE SOUZA GOMES DA SILVA",
+            "qualificacao": "49",
+            "faixa_etaria": "4",
+            "data_entrada_sociedade": "2006-01-05"
           }
         ],
         "score": {
-          "score": 45,
+          "score": 55,
           "breakdown": {
             "idade_socios": 30,
             "antiguidade_empresa": 10,
             "porte_relevancia": 5,
-            "quadro_plural": 0
+            "quadro_plural": 10
           },
           "sinais": [
             "Sócio mais velho na faixa 80+ anos",
             "Fundada em 2002",
-            "Sócio único (perfil menos transacionável)"
+            "Quadro com 2 sócios"
           ]
         }
       }
     ],
     "reasoned": true,
-    "reasonedCount": 14
+    "reasonedCount": 15
   },
   "fabricantes de maquinas e equipamentos fundados antes de 1990": {
     "filters": {
@@ -2740,11 +2965,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Ubirajara, 80+, fundou a Prensa Jundiaí em 1973 e só recebeu sócio sucessor em 2015, após 42 anos solo.",
+          "one_liner": "Fundada em 1973, Ubirajara Rodrigues (80+) controla a Prensa Jundiaí há 53 anos com apenas um sócio jovem incorporado em 2015.",
           "flags": [
-            "fundador 80+",
-            "sucessor tardio",
-            "quadro travado 50 anos"
+            "sócio 80+ fundador",
+            "quadro 53 anos",
+            "capital R$52M"
           ]
         }
       },
@@ -2839,11 +3064,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Helmut Landau Remy, 80+, fundou a Alpina em 1985; os dois filhos só entraram no quadro em 2022, 37 anos depois.",
+          "one_liner": "Helmut Landau Remy (80+) fundou a Alpina em 1985 em São Bernardo; filhos entraram apenas em 2022, após 37 anos de gestão paterna.",
           "flags": [
             "fundador 80+",
-            "filhos chegaram tarde",
-            "quadro 40 anos"
+            "sucessores tardios",
+            "família Landau Remy"
           ]
         }
       },
@@ -2925,11 +3150,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Criferp opera desde 1977 com José Luiz Maria, 80+, em quadro de cinco sócios sem geração clara de sucessão identificada.",
+          "one_liner": "Criferp opera desde 1977 em Pontal com José Luiz Maria (80+) entre cinco sócios, nenhum com vínculo desde a fundação original.",
           "flags": [
             "sócio 80+",
-            "quadro pulverizado",
-            "operação 49 anos"
+            "quadro fragmentado",
+            "49 anos operação"
           ]
         }
       },
@@ -3022,11 +3247,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Polimold, fundada em 1974, tem quatro sócios na faixa 80+ e capital social de R$ 34 mi sem sucessores jovens no quadro.",
+          "one_liner": "Polimold, fundada em 1974, concentra quatro sócios na faixa 80+ e capital social de R$34M sem geração sucessora identificada no quadro.",
           "flags": [
             "4 sócios 80+",
-            "sem geração nova",
-            "capital expressivo"
+            "capital R$34M",
+            "sem sucessores"
           ]
         }
       },
@@ -3094,11 +3319,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Edmundo Fey, 80+, cofundou a empresa em 1977 e hoje ela está em recuperação judicial com apenas três sócios da família.",
+          "one_liner": "Edmundo Fey (80+) fundou a empresa em 1977 e está em recuperação judicial, com apenas dois herdeiros no quadro societário.",
           "flags": [
             "fundador 80+",
             "recuperação judicial",
-            "família fragilizada"
+            "risco agravado"
           ]
         }
       },
@@ -3216,11 +3441,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Fundada em 1972, a Pinheiro reúne três sócios Bazani na faixa 80+ e dois na 71-80, todos no quadro desde 1996.",
+          "one_liner": "Fundada em 1972 em Itapira, a Pinheiro reúne cinco irmãos Bazani — três deles na faixa 80+ — todos sócios desde 1996.",
           "flags": [
             "3 sócios 80+",
-            "quadro envelhecido",
-            "operação 54 anos"
+            "quadro familiar",
+            "54 anos operação"
           ]
         }
       },
@@ -3310,11 +3535,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Wilson Molina Ribas e Nilza Torres Molina, ambos 80+, fundaram a Lavrita em 1974 e ainda figuram como sócios originais.",
+          "one_liner": "Wilson Molina Ribas e Nilza Torres Molina (ambos 80+) fundaram a Lavrita em 1974; filhos e holding completam quadro de cinco sócios.",
           "flags": [
             "casal fundador 80+",
-            "holding intermediária",
-            "quadro 52 anos"
+            "holding familiar",
+            "52 anos operação"
           ]
         }
       },
@@ -3382,11 +3607,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Máquinas Ferdinand Vaderss, fundada em 1969, tem Ingrid Helge Dauch na faixa 80+ e capital social zerado registrado.",
+          "one_liner": "Máquinas Ferdinand Vaderss, fundada em 1969 em Cotia, tem Ingrid Helge Dauch (80+) como única sócia sênior, com capital social zerado.",
           "flags": [
-            "sócio 80+",
+            "57 anos operação",
             "capital zerado",
-            "operação 57 anos"
+            "sócia 80+"
           ]
         }
       },
@@ -3447,9 +3672,9 @@
           ]
         },
         "insight": {
-          "one_liner": "José Barana, 80+, e filha Josiane, 51-60, são os únicos dois sócios da Barana desde 1994, com capital zerado.",
+          "one_liner": "José Barana (80+) e filha Josiane (51-60) são os únicos dois sócios desta fabricante de máquinas agrícolas fundada em 1980 em Limeira.",
           "flags": [
-            "fundador 80+",
+            "fundador único 80+",
             "dupla pai-filha",
             "capital zerado"
           ]
@@ -3515,11 +3740,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Darka, fundada em 1971 em Diadema, está em recuperação judicial com Nelson Garey, 80+, como sócio desde 2010.",
+          "one_liner": "Darka, fundada em 1971 em Diadema, está em recuperação judicial com Nelson Garey (80+) entre sócios e capital social zerado.",
           "flags": [
-            "sócio 80+",
             "recuperação judicial",
-            "operação 55 anos"
+            "sócio 80+",
+            "capital zerado"
           ]
         }
       },
@@ -3661,11 +3886,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Turbimaq foi fundada em 1976 por Augusto Corrente Filho, 80+, hoje diluído em quadro de 13 sócios entre Stockmanns e Correntes.",
+          "one_liner": "Turbimaq opera desde 1976 em Piracicaba com Augusto Corrente Filho (80+) fundador e 12 outros sócios — duas famílias, Stockmann e Corrente.",
           "flags": [
-            "fundador 80+",
-            "quadro 13 sócios",
-            "família pulverizada"
+            "13 sócios",
+            "duas famílias",
+            "fundador 80+"
           ]
         }
       },
@@ -3730,11 +3955,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Gutmann, com 60 anos de operação desde 1966, tem apenas dois sócios — Arthur Gutmann e Max Baumert Filho — ambos na faixa 80+.",
+          "one_liner": "Gutmann, fundada em 1966 em Itapecerica da Serra, tem dois sócios ambos na faixa 80+ e nenhum sucessor jovem no quadro societário.",
           "flags": [
             "2 sócios 80+",
             "sem sucessores",
-            "operação 60 anos"
+            "60 anos operação"
           ]
         }
       },
@@ -3844,11 +4069,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Mantovani Agrícola, fundada em 1969, tem Isabel Ribeiro Fonseca, 80+, no quadro desde 1976, com nove sócios e capital zerado.",
+          "one_liner": "Mantovani, fundada em 1969 em Ituverava, tem Isabel Ribeiro Fonseca (80+) desde 1976 em quadro de nove sócios de duas famílias.",
           "flags": [
-            "sócio 80+ original",
-            "capital zerado",
-            "quadro 9 sócios"
+            "57 anos operação",
+            "quadro 9 sócios",
+            "duas famílias"
           ]
         }
       },
@@ -3909,11 +4134,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Nelson Hyppolito, 80+, está no quadro desde 1969 e, junto à esposa Wilma, também 80+, formam o único par de sócios da empresa.",
+          "one_liner": "Nelson Hyppolito (80+, sócio desde 1969) e Wilma (80+, desde 1976) são os únicos dois sócios desta fabricante de 60 anos em Ferraz de Vasconcelos.",
           "flags": [
-            "casal 80+",
+            "2 sócios 80+",
             "sem sucessores",
-            "operação 60 anos"
+            "capital zerado"
           ]
         }
       },
@@ -3974,11 +4199,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Maria Dolores, 80+, sócia da Mevi desde 1976, divide a empresa com Simone, 51-60, que só entrou em 2009 — 33 anos depois.",
+          "one_liner": "Maria Dolores Castillo Rodriguez (80+, sócia desde 1976) divide a Mevi Engrenagens com Simone (51-60), incorporada apenas em 2009.",
           "flags": [
-            "sócia 80+",
+            "fundadora 80+",
             "sucessora tardia",
-            "dupla mãe-filha"
+            "54 anos operação"
           ]
         }
       },
@@ -5996,11 +6221,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Fundada em 1973, Ubirajara Rodrigues (80+) divide a Prensa Jundiaí com o filho Lucas, que entrou apenas em 2015.",
+          "one_liner": "Fundada em 1973, Ubirajara (80+) fundador desde o início; filho Lucas só entrou em 2015 com capital de R$52,5M em jogo.",
           "flags": [
-            "sócio fundador 80+",
+            "fundador 80+",
             "entrada tardia herdeiro",
-            "capital R$52M"
+            "capital relevante"
           ]
         }
       },
@@ -6095,11 +6320,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Helmut Landau Remy, 80+, fundou a Alpina em 1985 em SBC; filhos Roberto e André só entraram no quadro em 2022.",
+          "one_liner": "Helmut Landau Remy (80+) fundou a Alpina em 1985; filhos Roberto e André só formalizaram entrada em 2022, 37 anos depois.",
           "flags": [
-            "sócio fundador 80+",
-            "herdeiros chegaram tarde",
-            "40 anos operação"
+            "fundador 80+",
+            "entrada herdeiros tardia",
+            "quadro familiar"
           ]
         }
       },
@@ -6181,11 +6406,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Criferp, fundada em 1977 em Pontal, tem José Luiz Maria (80+) entre cinco sócios sem nenhum herdeiro aparente no quadro.",
+          "one_liner": "Criferp opera há 49 anos desde 1977; José Luiz Maria (80+) e quadro de 5 sócios sem geração seguinte identificada no cap.",
           "flags": [
             "sócio 80+",
-            "sem herdeiro visível",
-            "quadro 5 sócios"
+            "quadro envelhecido",
+            "sem herdeiros visíveis"
           ]
         }
       },
@@ -6278,11 +6503,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Polimold, fundada em 1974 com capital de R$34M, reúne quatro sócios na faixa 80+ e nenhum sucessor jovem identificado.",
+          "one_liner": "Polimold (1974) tem quatro sócios 80+ concentrados, incluindo Dora Selma que entrou em 2023, sinalizando reorganização patrimonial recente.",
           "flags": [
             "4 sócios 80+",
-            "sem geração seguinte",
-            "capital R$34M"
+            "reorganização recente",
+            "52 anos operação"
           ]
         }
       },
@@ -6350,11 +6575,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Edmundo Fey, fundador 80+ desde 1977, hoje enfrenta recuperação judicial enquanto divide a FEY com filho Renato (51-60).",
+          "one_liner": "Edmundo Fey (80+) fundou em 1977 e a empresa está em recuperação judicial, combinando risco sucessório com estresse financeiro crítico.",
           "flags": [
             "recuperação judicial",
             "fundador 80+",
-            "49 anos operação"
+            "risco duplo"
           ]
         }
       },
@@ -6472,10 +6697,10 @@
           ]
         },
         "insight": {
-          "one_liner": "Fundada em 1972 em Itapira, a Agro Mecânica Pinheiro tem três sócios Bazani acima de 80 anos e dois entre 71-80, todos entraram em 1996.",
+          "one_liner": "Fundada em 1972, a Pinheiro Agro tem três sócios 80+ e dois 71-80, todos Bazani, sem geração mais jovem no quadro.",
           "flags": [
             "3 sócios 80+",
-            "família sem jovens",
+            "família envelhecida",
             "54 anos operação"
           ]
         }
@@ -6566,11 +6791,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Wilson Molina Ribas e Nilza Torres Molina, ambos 80+, fundam a Lavrita desde 1974; filhos Wilson Jr. e Cláudia estão no quadro desde 1993.",
+          "one_liner": "Wilson Molina Ribas e Nilza Molina (ambos 80+) fundaram a Lavrita em 1974; filho Wilson Jr. e filha Claudia já estão no quadro desde 1993.",
           "flags": [
-            "casal fundador 80+",
-            "2ª geração ativa",
-            "holding familiar criada"
+            "fundadores 80+",
+            "2ª geração presente",
+            "holding estruturada"
           ]
         }
       },
@@ -6638,10 +6863,10 @@
           ]
         },
         "insight": {
-          "one_liner": "Máquinas Ferdinand Vaderss, fundada em 1969 em Cotia, tem Ingrid Helge Dauch (80+) como sócia e capital social zerado nos registros.",
+          "one_liner": "Fundada em 1969, a Ferdinand Vaders opera há 57 anos com capital social zerado; Ingrid Dauch (80+) entrou apenas em 2015.",
           "flags": [
+            "capital zero",
             "57 anos operação",
-            "capital zerado",
             "sócio 80+"
           ]
         }
@@ -6703,11 +6928,11 @@
           ]
         },
         "insight": {
-          "one_liner": "José Barana, 80+, fundou a Barana em Limeira em 1980; divide a empresa apenas com Josiane (51-60) desde 1994.",
+          "one_liner": "José Barana (80+) e filha Josiane são os únicos sócios desde 1994 na Barana Limeira; capital social zerado agrava fragilidade estrutural.",
           "flags": [
-            "fundador 80+",
-            "par pai-filha",
-            "capital zerado"
+            "fundador único 80+",
+            "capital zero",
+            "dupla pai-filha"
           ]
         }
       },
@@ -6779,11 +7004,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Adalberto Perez, 80+, fundou a Tecmaes em Ourinhos em 1991; Sabrina e Simone Perez entraram juntas em 2014 como possíveis herdeiras.",
+          "one_liner": "Adalberto Perez (80+) fundou a Tecmaes em 1991; filhas Sabrina e Simone entraram apenas em 2014, com capital social de apenas R$30k.",
           "flags": [
             "fundador 80+",
-            "herdeiras entrada 2014",
-            "capital mínimo R$30k"
+            "capital irrisório",
+            "herdeiras 2014"
           ]
         }
       },
@@ -6848,11 +7073,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Hélio Ramos da Cruz, 80+, é sócio fundador da Maquenge desde 1992 em Piracicaba, ao lado do irmão Sérgio (51-60).",
+          "one_liner": "Hélio Ramos da Cruz (80+) está na Maquenge desde a fundação em 1992; irmão Sergio (51-60) é o único par no quadro mínimo.",
           "flags": [
-            "sócio fundador 80+",
-            "dupla irmãos",
-            "quadro travado 34 anos"
+            "fundador 80+",
+            "quadro mínimo",
+            "dois irmãos apenas"
           ]
         }
       },
@@ -6916,11 +7141,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Vagner Stefanoni, 80+, cofundou a Planusi em Sertãozinho em 1994; João Marcos Galvão (71-80) completa o quadro de sócios fundadores envelhecidos.",
+          "one_liner": "Vagner Stefanoni (80+) cofundou a Planusi em 1994; sócio João Marcos (71-80) também sênior, com holding PJ como terceiro cotista.",
           "flags": [
-            "dois sócios seniores",
-            "sem sucessor jovem",
-            "32 anos operação"
+            "sócios 80+ e 71-80",
+            "cofundadores envelhecidos",
+            "estrutura PJ"
           ]
         }
       },
@@ -6977,11 +7202,11 @@
           ]
         },
         "insight": {
-          "one_liner": "José Angelo Breda, 80+, entrou na ITAP de Itapira apenas em 2019, enquanto Mônica Breda (51-60) está na empresa desde a fundação em 1997.",
+          "one_liner": "José Angelo Breda (80+) entrou na ITAP apenas em 2019, enquanto Monica opera desde a fundação em 1997, sugerindo transferência patrimonial recente.",
           "flags": [
-            "sócio 80+ tardio",
-            "entrada 2019",
-            "possível arranjo familiar"
+            "entrada tardia 80+",
+            "possível transferência",
+            "dupla cônjuge"
           ]
         }
       },
@@ -7053,11 +7278,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Rogério Rega, 80+, fundou a Intercontinental em SBC em 1999; sócia Ercília Soares (71-80) entrou em 2004 e capital está zerado.",
+          "one_liner": "Rogerio Rega (80+) fundou a Intercontinental em 1999; Ercilia (71-80) e uma holding PJ compõem o quadro sem geração jovem identificada.",
           "flags": [
             "fundador 80+",
-            "capital zerado",
-            "holding no quadro"
+            "quadro sem herdeiros",
+            "capital zero"
           ]
         }
       },
@@ -7107,11 +7332,11 @@
           ]
         },
         "insight": {
-          "one_liner": "Makoto Isshiki, 80+, é o único sócio da Isshiki Indústria em Santo André, fundada em 1966, com 60 anos de operação sem sucessor no quadro.",
+          "one_liner": "Makoto Isshiki (80+) é sócio único da empresa fundada em 1966 — 60 anos de operação sem nenhum sucessor formalizado no quadro.",
           "flags": [
-            "fundador único 80+",
+            "sócio único 80+",
             "60 anos operação",
-            "sem herdeiro registrado"
+            "zero sucessão"
           ]
         }
       },
