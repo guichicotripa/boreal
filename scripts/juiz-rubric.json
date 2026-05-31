@@ -1,0 +1,101 @@
+{
+  "dimensoes": [
+    {
+      "nome": "Especificidade e ancoragem da tese de aquisição",
+      "o_que_avalia": "Se o output articula 'por que esta empresa, por que agora, por que nós' com dados concretos do target — não com platitudes estratégicas copiáveis para qualquer empresa do setor",
+      "nivel_elite": "Tese formulada em 2-4 frases com ≥2 métricas específicas do target (ex: 'fundada em 1991, CNAE 2511-0/fabricação de estruturas metálicas, faturamento estimado R$18–25M pelo porte declarado na Receita, fundador João Lima, 69 anos, nenhum sócio registrado abaixo de 50 anos, sem alteração societária nos últimos 12 anos — confluência de pressão sucessória e porte adequado ao deal mínimo de R$5M de EBITDA'); articulação explícita do valor diferencial do adquirente para ESTE target específico. Bain: 'a credible investment thesis describes a concrete benefit, not a vaguely stated strategic value'",
+      "nivel_amador": "'Empresa sólida em mercado em crescimento com gestão experiente' — tese genérica copiável para qualquer empresa do CNAE; ausência de dados específicos do target; sem argumento de por que o adquirente é o melhor dono para esta empresa. Fato: 40% dos deals M&A nos EUA não tinham tese escrita (estudo Harvard/JAF)",
+      "peso": 5
+    },
+    {
+      "nome": "Detecção e graduação do risco sucessório",
+      "o_que_avalia": "Qualidade e verificabilidade dos sinais de que o fundador está em situação de pressão sucessória real, com evidência documental — não inferência",
+      "nivel_elite": "Identifica ≥3 vetores convergentes verificáveis com fonte: (1) idade estimada do fundador ≥60 via Receita Federal/CNPJ/LinkedIn; (2) ausência de herdeiros ou sócios jovens no quadro societário atual; (3) empresa com 15+ anos sem mudança de controle registrada; (4) sem diretores não-família na razão social ou em LinkedIn; (5) sem holding patrimonial constituída (sinal de não-planejamento sucessório). Teamshares: 'nearly two-thirds of family businesses don't have a documented succession plan'; cada sinal com fonte explícita",
+      "nivel_amador": "'Empresa familiar' como único sinal de risco sucessório sem verificação; nenhum cruzamento de idade do fundador com tempo de fundação; sinal baseado apenas em nome do sócio ou intuição; não distingue empresa familiar com sucessor ativo de empresa familiar sem plano",
+      "peso": 5
+    },
+    {
+      "nome": "Qualidade e defensabilidade do perfil do negócio",
+      "o_que_avalia": "Se o target tem características que tornam o deal realista para um comprador sofisticado: posição de mercado, barreiras de entrada, recorrência de receita, não-comoditização",
+      "nivel_elite": "Identifica posição de mercado estimada no nicho geográfico específico (não no setor nacional); barreira concreta nomeada (ex: certificação de fornecedor automotivo Tier 2, custo de requalificação de ferramenta para trocar de fornecedor, relacionamento de 10+ anos com montadora/sistemista); receita recorrente ou base de clientes recorrente; empresa não compete com multinacionais escalonáveis. Constellation Software: targets devem ter 'unimposing competitors', 'mission-critical product' e 'low % of customer's total cost' — transposível para metalmecânica nicho",
+      "nivel_amador": "Descreve o setor em vez da posição relativa da empresa; usa 'mercado em crescimento' sem dados de share; não avalia switching costs; ignora concentração de clientes; não distingue fabricante de commodity de fabricante de especialidade",
+      "peso": 4
+    },
+    {
+      "nome": "Rastreabilidade e credibilidade das estimativas financeiras",
+      "o_que_avalia": "Se as métricas financeiras têm metodologia explícita e flag de incerteza declarado — não são números soltos otimistas sem origem auditável",
+      "nivel_elite": "Faturamento estimado com fonte declarada (ex: porte societário MEI/ME/EPP na Receita, cruzamento com RAIS/CAGED, benchmarks setoriais IBGE PIA, dados BrasilAPI); EBITDA estimado como faixa com margem referenciada em comparáveis do setor (metalmecânica: 8–14% típico); flag explícito 'estimativa não auditada — sujeita a confirmação em due diligence'; FCF ≠ EBITDA sem justificativa de CapEx e capital de giro. Mergers & Inquisitions: 'a quality gap between a strong CIM and a mediocre one translates to one or two full EBITDA turns in enterprise value'",
+      "nivel_amador": "Faturamento como número único sem fonte; EBITDA calculado multiplicando receita por margem genérica do setor sem disclosure; projeções de crescimento >1.5× a média histórica sem justificativa; EBITDA 'ajustado' sem lista de add-backs; ausência de qualquer flag de incerteza",
+      "peso": 4
+    },
+    {
+      "nome": "Qualidade da estratégia de abordagem ao fundador",
+      "o_que_avalia": "Se o output propõe roteiro de contato que o fundador-típico da empresa familiar brasileira ouvirá — ao invés de ignorar por parecer mais um 'fundo querendo comprar minha empresa'",
+      "nivel_elite": "Mensagem de primeiro contato personalizada com referência específica ao negócio (produto nomeado, cliente conhecido, prêmio ou certificação); posicionamento como 'parceiro de continuidade dos 30 anos que o senhor construiu', não como 'comprador'; timing alinhado ao sinal de pressão identificado (ex: 'sabemos que V.Sa. fundou em 1993 e tem 28 anos de expertise em corte laser para a cadeia automotiva do ABC'); canal preferencial mapeado (telefone direto do sócio, indicação de pessoa em comum via LinkedIn, via contador ou advogado da empresa); primeiro contato NÃO menciona preço, múltiplo nem número de portfólios. Sourcescrub: 'outreach should focus on what you know about their business — not your fund's AUM'",
+      "nivel_amador": "Template genérico de PE ('nossa tese é consolidar o setor X, gerimos R$Y bilhões, analisamos centenas de empresas por ano'); nenhuma referência específica ao negócio do target; abordagem só por e-mail frio sem estratégia de aquecimento; primeiro contato propõe valuation ou LOI",
+      "peso": 4
+    },
+    {
+      "nome": "Estrutura e completude do memo de oportunidade",
+      "o_que_avalia": "Se o memo permite a um sócio sênior decidir em 90 segundos se vale seguir adiante — clareza, densidade informacional, honestidade sobre incertezas e acionabilidade imediata",
+      "nivel_elite": "Contém em ≤1 página: (1) tese 2–3 frases com métricas; (2) perfil do target: CNPJ, CNAE, porte, anos de operação, sócios e idades estimadas; (3) sinais de sucessão com fonte por sinal; (4) estimativa financeira com metodologia declarada; (5) red flags classificados como 'investigar' ou 'potencial dealbreaker'; (6) próximo passo concreto (quem aborda, canal, data). Stanford/Addepar: 'the clearest, most honest memos get fast-tracked; the most polished but evasive memos get rejected at stage 2'. Avaliação em 4 estágios: 60–90 segundos no exec summary → comitê interno → benchmarking cross-deal → kick-off de due diligence",
+      "nivel_amador": "Memo de múltiplas páginas com seções repetitivas e linguagem de marketing ('empresa líder no segmento'); afirmações sem evidência; ausência de classificação de riscos; sem próximo passo; extensão desproporcional (>3 páginas para deal brief de sourcing)",
+      "peso": 3
+    },
+    {
+      "nome": "Identificação proativa de red flags e dealbreakers",
+      "o_que_avalia": "Se o output antecipa os riscos que um comprador descobriria em due diligence e que afetam preço, estrutura ou viabilidade do deal — e classifica cada um por severidade",
+      "nivel_elite": "Levanta e classifica explicitamente: concentração de clientes (Viking Mergers: >20% = yellow flag, >30% = dealbreaker para PE/SBA lenders; compressão de valuation de 10–20%); dependência de owner/'hub & spoke' — fundador é único ponto de contato comercial, decisor e solucionador de problemas (The Precision Firm: 'the single biggest red flag'); passivos endêmicos do CNAE metalmecânica (NR-12 segurança do trabalho, passivo ambiental de tratamento de superfície, dissídio de categoria STIEP/SINDIMETAL); ausência de demonstrações auditadas; litígios no CNPJ (PGFN, TJSP/TJRS, CARF); CapEx anormalmente alto vs. EBITDA (sinal de limitação de capacidade de dívida). Cada flag: 'investigar' ou 'potencial dealbreaker'",
+      "nivel_amador": "Não menciona riscos; ou menciona apenas 'mercado competitivo' como risco genérico; ignora passivos endêmicos do setor industrial; não verifica litígios públicos; não avalia dependência do owner; trata todos os riscos como equivalentes",
+      "peso": 5
+    },
+    {
+      "nome": "Priorização e lógica de ranking da lista de targets",
+      "o_que_avalia": "Se a lista priorizada tem lógica defensável e reproduzível — não é ranking por ordem alfabética, por CNPJ ou por volume de dados disponíveis",
+      "nivel_elite": "Score explícito por dimensão com pesos declarados: risco sucessório (pressão e verificabilidade), tamanho estimado (EBITDA mínimo viável para o deal), abordabilidade (canal de entrada identificado), fit estratégico com adquirente, ausência de red flags graves; top-3 claramente superiores ao bottom-10 nos critérios que importam; critério de corte explícito ('removidas empresas abaixo de R$3M EBITDA estimado e acima de 30% de concentração em único cliente'); metodologia reproduzível por outra pessoa. Evalueserve/McKinsey: screening por geografia, canal de venda, tipo de produto, porte, crescimento, ownership — critérios declarados antes de rodar a lista",
+      "nivel_amador": "Lista sem score ou com score opaco (número único sem pesos); ordenação aleatória ou por faturamento bruto; nenhuma justificativa de por que este target antes de outro; ausência de critério de corte; mistura empresas de CNAEs incomparáveis sem normalização de estrutura de capital",
+      "peso": 4
+    }
+  ],
+  "red_flags": [
+    "Tese de aquisição genérica e copiável para qualquer empresa do setor — não contém nenhum dado específico do target identificado",
+    "EBITDA estimado sem metodologia explícita — número isolado sem fonte, faixa ou flag de incerteza; equivale a invenção disfarçada de análise",
+    "Risco sucessório declarado apenas por 'empresa familiar' sem verificação de quadro societário no CNPJ, idade estimada de sócios ou histórico de alterações societárias",
+    "Concentração de clientes não avaliada nem sequer como 'a verificar' — é o segundo maior dealbreaker em PMEs industriais brasileiras, atrás só de passivo fiscal oculto",
+    "Passivos endêmicos do CNAE metalmecânica (NR-12, passivo ambiental de galvanoplastia/tratamento de superfície, contingências trabalhistas de dissídio de categoria) não mencionados — qualquer profissional de M&A industrial os checa na triagem inicial",
+    "Abordagem ao fundador é template PE genérico (menciona AUM, número de portfólios, 'nossa tese de consolidação') sem nenhuma personalização ao histórico ou negócio do target — afasta donos de empresa familiar brasileira que tratam o negócio como extensão de identidade",
+    "Memo de oportunidade sem próximo passo concreto — lista de targets sem ação definida é pipeline virtual, não origination real",
+    "Projeções de crescimento do target >2× a média histórica do setor sem justificativa específica — sinal de wishful thinking, não análise; destrói credibilidade do memo inteiro",
+    "Score de priorização sem pesos explícitos ou critérios declarados — ranking não reproduzível por outra pessoa é subjetividade disfarçada de análise quantitativa",
+    "Ausência de verificação de litígios públicos (PGFN ativa, TJSP/TJRS, CARF) — passivo fiscal oculto é o dealbreaker mais frequente em PMEs industriais brasileiras e o mais barato de checar publicamente",
+    "Mistura CNAEs incomparáveis sem normalização: metalurgia básica CNAE 24 (capital intensivo, margens 5–9%) vs. fabricação de produtos de metal CNAE 25 (margens 10–16%) vs. máquinas CNAE 28 (margens 12–18%) — análise que trata os três como equivalentes é analiticamente falha",
+    "Dependência de owner ('hub & spoke') não avaliada — é o principal destruidor de valor pós-aquisição em empresa familiar e deve constar como flag mesmo sem confirmação, baseado em ausência de diretores não-família",
+    "Memo ≥3 páginas para um deal brief de sourcing inicial — sinal de que o output não conseguiu priorizar o que importa; um sócio sênior abandona na página 2"
+  ],
+  "fontes": [
+    "https://www.csisoftware.com/about-us/being-acquired",
+    "https://mergersandinquisitions.com/confidential-information-memorandum/",
+    "https://www.axial.net/forum/private-equity-deal-sourcing-playbook/",
+    "https://www.vikingmergers.com/blog/deal-killer-series-1-client-concentrations/",
+    "https://www.theprecisionfirm.com/blog/manufacturing-valuation-red-flags",
+    "https://acquisitionstars.com/due-diligence-red-flags",
+    "https://www.duedilio.com/direct-outreach-for-deal-sourcing-a-business-buyers-guide/",
+    "https://www.sourcescrub.com/post/outreach-tips-for-dealmakers",
+    "https://www.bain.com/insights/writing-credible-investment-thesis/",
+    "https://prvadv.com/PDFs/M&A%20Framework.pdf",
+    "https://andvariassociates.com/a-quick-study-of-serial-acquirers",
+    "https://www.teamshares.com/resources/succession-planning-statistics/",
+    "https://quartr.com/insights/company-research/constellation-software-acquiring-and-empowering",
+    "https://www.colinkeeley.com/blog/mark-leonard-constellation-software-operating-manual",
+    "https://www.piworld.com/article/approach-acquisition-target/",
+    "https://www.evalueserve.com/wp-content/uploads/2023/06/Screening_for_Success_Identifying_the_Ideal_MA_Targets.pdf",
+    "https://www.sourcecodeals.com/blog/private-equity-deal-sourcing-guide",
+    "https://sunacquisitions.com/sell-a-business/navigating-family-business-succession-planning-for-ma-success/",
+    "https://www.danaher.com/how-we-work/acquisitions",
+    "https://latinlawyer.com/guide/the-guide-mergers-acquisitions/first-edition/article/mergers-and-acquisitions-involving-family-owned-targets",
+    "https://longterminvesting.stanford.edu/sites/g/files/sbiybj23856/files/media/file/addepar-investment-memos-and-decision-making.pdf",
+    "https://carpenterwellington.com/post/critical-steps-in-ma-target-screening/",
+    "https://www.sourcecodeals.com/blog/proprietary-deal-flow",
+    "https://www.affinity.co/guides/guide-m-a-deal-sourcing-origination-best-practices"
+  ]
+}

@@ -1,110 +1,392 @@
 {
   "6849dfd9-a629-4b41-b0c5-447dea74f9ec": {
-    "overview": "Prensa Jundiaí S/A é uma fabricante de máquinas-ferramenta, peças e acessórios com 53 anos de operação, sediada em Campo Limpo Paulista (SP). Constituída como SA Fechada com capital social de R$ 52,5 milhões, atua também em manutenção, instalação de equipamentos industriais e representação comercial — perfil típico de fornecedora integrada para o setor metalmecânico do interior paulista.",
-    "analise_sucessoria": "O risco sucessório é máximo e a estrutura societária conta a história com clareza: Ubirajara Rodrigues, fundador, está na empresa desde 1973 e hoje está na faixa de 80+ anos — mais de cinco décadas no comando. Em 2015, Lucas Cremonese Rodrigues (31–40 anos) entrou no quadro, compartilhando o sobrenome Rodrigues, o que indica fortemente tratar-se de um herdeiro direto (filho ou neto). O cenário é de transição em andamento, mas provavelmente não formalizada: o fundador ainda consta como sócio ativo aos 80+, e Lucas tem entre 11 e 15 anos de empresa, tempo suficiente para ter sido introduzido ao negócio mas possivelmente insuficiente para uma sucessão operacional plena. A SA Fechada com apenas dois sócios e capital expressivo cria uma janela clara: Ubirajara precisa de liquidez ou de um plano de saída estruturado, e Lucas pode não ter capital nem experiência para absorver sozinho a gestão e a estrutura acionária.",
-    "perguntas_abordagem": [
-      "O sr. Ubirajara fundou a empresa em 1973 — em algum momento ele e a família conversaram sobre como seria a transição de liderança nos próximos anos, considerando o tamanho que o negócio atingiu?",
-      "Lucas entrou na sociedade em 2015. Ele já assumiu a gestão operacional do dia a dia, ou o sr. Ubirajara ainda está ativo nas decisões estratégicas e comerciais?",
-      "Uma empresa com 53 anos e R$ 52 milhões de capital tem um ativo significativo. O sr. Ubirajara tem clareza de quanto vale a Prensa Jundiaí hoje e como esse valor seria capturado numa eventual saída ou reorganização societária?",
-      "Com atuação em fabricação, manutenção e representação comercial, a empresa depende de relacionamentos comerciais construídos pelo sr. Ubirajara ao longo de décadas — vocês já mapearam como esses vínculos seriam preservados numa transição de liderança?",
-      "Há outros membros da família envolvidos no negócio além do Lucas, seja na operação ou nas decisões, que teriam interesse numa eventual reorganização societária?"
+    "overview": "PRENSA JUNDIAI S/A é fabricante de máquinas-ferramenta, peças e acessórios (CNAE 2840200), com sede em Campo Limpo Paulista (SP) e 53 anos de operação contínua desde 1973. Porte declarado 'DEMAIS' (não-ME/EPP), Sociedade Anônima Fechada com atividades secundárias em manutenção, instalação e representação comercial de equipamentos industriais — perfil integrado verticalizado típico de industrial familiar de médio porte.",
+    "analise_sucessoria": "O quadro societário tem dois membros com o sobrenome Rodrigues, o que indica fortemente relação familiar (provavelmente pai/filho ou avô/neto): UBIRAJARA RODRIGUES (80+, Diretor, sócio desde a fundação em 1973) e LUCAS CREMONESE RODRIGUES (31-40 anos, Presidente, entrada em 2015). A leitura estrutural é de sucessão parcialmente iniciada — Lucas assumiu a Presidência há ~11 anos, mas Ubirajara permanece ativo como Diretor aos 80+, o que sinaliza que o fundador provavelmente ainda detém relações comerciais-chave, know-how técnico proprietário e possivelmente o poder de fato. O quadro societário está congelado desde 2015 (sem entrada de novos sócios, holding familiar ou reorganização visível), o que é sinal claro de que o planejamento sucessório formal — tributário, jurídico e de governança — ainda não foi endereçado. Janela de oportunidade aberta: Lucas tem legitimidade operacional para tomar decisões, mas o deal ainda é mais simples de originar enquanto o fundador está vivo e a dependência não foi totalmente transferida.",
+    "red_flags": [
+      {
+        "risco": "Passivo fiscal acumulado",
+        "severidade": "alta",
+        "como_verificar": "Consulta gratuita na PGFN (Dívida Ativa da União) pelo CNPJ; CARF para processos administrativos federais; TJSP para execuções fiscais estaduais (ICMS). Empresa industrial com 53 anos tem probabilidade elevada de autuações antigas, parcelamentos ou discussões em aberto."
+      },
+      {
+        "risco": "Passivo de segurança do trabalho (NR-12)",
+        "severidade": "media",
+        "como_verificar": "Verificar notificações e autos de infração do Ministério do Trabalho (SIPAT/e-Gestor MTE pelo CNPJ). Fabricante de máquinas-ferramenta está sujeito às exigências da NR-12 tanto na produção interna quanto nos equipamentos fornecidos — risco de responsabilidade retroativa em acidentes de clientes."
+      },
+      {
+        "risco": "Passivo ambiental de processo industrial",
+        "severidade": "media",
+        "como_verificar": "Consulta CETESB (licenças e autos de infração ambientais em SP) e IBAMA pelo CNPJ. Processo metalomecânico de 53 anos em unidade fabril própria: risco de contaminação de solo, descarte irregular de resíduos classe I e licenças vencidas ou nunca renovadas."
+      },
+      {
+        "risco": "Dependência operacional do fundador (hub-and-spoke)",
+        "severidade": "media",
+        "como_verificar": "Avaliar em due diligence qualitativa: mapear quais clientes e fornecedores estratégicos têm relação pessoal com Ubirajara, se há contratos assinados por ele, e qual o % de decisões comerciais que ainda passam por ele. Sinal externo: verificar se Ubirajara aparece como representante em certidões de licitações ou contratos públicos recentes."
+      },
+      {
+        "risco": "Concentração de clientes em nicho industrial especializado",
+        "severidade": "media",
+        "como_verificar": "Não verificável externamente sem DRE. Levantar em conversa inicial: quantos clientes respondem por 80% do faturamento e qual o prazo médio de contratos. Fabricantes de máquinas-ferramenta especializadas tendem a ter base pequena de clientes âncora — risco de churn pós-transição."
+      }
     ],
-    "tese_aproximacao": "Prensa Jundiaí combina três elementos raros em um só alvo: fundador octogenário ainda ativo, herdeiro jovem já inserido mas sem saída estruturada formalizada, e capital social de R$ 52,5M num nicho industrial defensável (máquinas-ferramenta para o interior paulista). O ângulo de entrada é o do parceiro de liquidez e governança — não comprador hostil — posicionando a boutique como quem resolve o problema que a família ainda não conseguiu nomear: como o sr. Ubirajara sai com valor justo sem deixar Lucas exposto."
+    "perguntas_abordagem": [
+      "O senhor Ubirajara ainda está envolvido no dia a dia comercial e técnico, ou a operação já está majoritariamente nas mãos do Lucas — como está dividida essa gestão hoje?",
+      "Em 53 anos, a Prensa Jundiaí provavelmente passou por ciclos duros no setor industrial. Como vocês posicionam a empresa agora em termos de crescimento — há projetos de expansão de capacidade ou de linha de produtos em andamento?",
+      "Além da fabricação, as atividades de manutenção e representação comercial cresceram como proporção do negócio nos últimos anos? Pergunto porque esse modelo recorrente tem um perfil de valor diferente no mercado.",
+      "Existe alguma estrutura de holding ou planejamento patrimonial familiar já montado, ou a participação societária ainda está diretamente no CNPJ operacional?",
+      "Como os sócios pensam o próximo capítulo da empresa — o horizonte é crescimento orgânico, entrada de um sócio estratégico que traga capital ou acesso a mercado, ou algum evento de liquidez para o fundador no médio prazo?"
+    ],
+    "tese_aproximacao": "PRENSA JUNDIAI é um ativo industrial de nicho com 53 anos de operação, fundador 80+ ainda ativo e sucessor de segunda geração já na Presidência — o perfil clássico de janela sucessória aberta antes que a urgência se torne crise. O timing é preciso: Lucas tem legitimidade para decidir, mas a dependência do fundador ainda existe, o que torna o processo de venda ou parceria estratégica mais limpo agora do que após uma saída abrupta de Ubirajara. O ângulo de entrada não é 'comprar a empresa', mas sim 'como garantir que o trabalho de 53 anos se perpetue com capital e estrutura adequados para o próximo ciclo' — conversa que ressoa com fundadores que não querem ver a empresa morrer junto com eles.",
+    "proximo_passo": "Ligar para (11) 4039-8240 e pedir para falar com Lucas Cremonese Rodrigues (Presidente) — o email disponível no dossiê (cesar.santos@prensajundiai.com) é de um terceiro, usar apenas como canal secundário para agendar reunião caso o telefone não converta."
   },
   "d20b27e5-ebb9-4c4c-a111-f4495de4b3a3": {
-    "overview": "A Alpina Equipamentos Industriais é uma fabricante de máquinas e equipamentos industriais com sede em São Bernardo do Campo (ABC Paulista), fundada em 1985 — 41 anos de operação. Atua também em manutenção, montagem, instalação e comércio atacadista de equipamentos, configurando um modelo integrado de fabricação e serviços. Capital social de R$ 602 mil registrado, porte 'DEMAIS' (acima de ME/EPP), o que indica empresa com estrutura operacional relevante.",
-    "analise_sucessoria": "O risco sucessório é máximo. Helmut Landau Remy (80+ anos) fundou a empresa em 1985 e permanece formalmente como Administrador (qualificação 5) até hoje. Em 2022 — portanto há apenas 3 anos — dois sócios com o mesmo sobrenome (Roberto, 51–60, e Andre Henrique Guilherme, 51–60) entraram simultaneamente como Sócios-Administradores (qualificação 49), o que sinaliza uma reestruturação societária intencional, provavelmente o início de um planejamento sucessório. Christiane Meier (61–70, qualificação 22 = sócia sem poderes de administração) está no quadro desde 2017 — sobrenome distinto, possivelmente filha casada ou sócia estratégica. O padrão é típico de empresa familiar de primeira geração onde o fundador octogenário ainda detém formalmente o controle operacional enquanto transfere participação para a segunda geração, que já está na faixa dos 50 anos. A reestruturação de 2022 indica que a família reconhece o tema, mas não concluiu a transição — janela ideal para abordagem.",
-    "perguntas_abordagem": [
-      "O senhor Helmut ainda está envolvido nas decisões operacionais do dia a dia, ou Roberto e Andre já assumiram a gestão na prática? Quero entender como está dividida a liderança hoje.",
-      "Em 2022, Roberto e Andre entraram formalmente no quadro como sócios-administradores — o que motivou essa reestruturação naquele momento? Foi parte de um planejamento maior?",
-      "A Christiane Meier tem um papel operacional na empresa ou é participação societária de outra natureza? Pergunto porque o sobrenome diferente me chamou atenção.",
-      "Com 41 anos de operação no ABC Paulista, a Alpina deve ter uma base de clientes e fornecedores consolidada. Vocês já receberam aproximações de fundos ou grupos industriais interessados no negócio?",
-      "Qual é a visão da família para os próximos 5 anos — crescer organicamente, buscar um sócio estratégico ou criar liquidez para os fundadores?"
+    "overview": "Alpina Equipamentos Industriais, Serviços e Montagens Ltda. é uma fabricante de máquinas e equipamentos industriais de nicho, localizada em São Bernardo do Campo (ABC Paulista), com 41 anos de operação contínua desde 1985. Atua também em manutenção, instalação, comércio atacadista e testes técnicos — portfólio de CNAEs que sugere modelo de receita mista (produto + serviço + intermediação). Classificada como 'DEMAIS' pela Receita Federal (não-ME/EPP), o que indica operação fora do porte micro/pequeno, mas porte real não estimável sem dados adicionais de receita.",
+    "analise_sucessoria": "O quadro societário revela uma transição geracional já iniciada mas provavelmente incompleta. Helmut Landau Remy (80+, fundador desde 1985) figura hoje com qualificação de Administrador (código 5) — e não como Sócio-Administrador — o que sugere que pode ter transferido suas quotas mas mantém vínculo formal de gestão, padrão clássico de saída gradual em empresas familiares brasileiras. Em 2022, Roberto e André Henrique Guilherme Landau Remy (ambos na faixa 51-60, sobrenome idêntico ao fundador — presumivelmente filhos) entraram como Sócios-Administradores, assumindo aparentemente o controle operacional. Christiane Meier (61-70, ingresso em 2017, qualificação Sócio sem administração) é a variável opaca: pode ser cônjuge, herdeira lateral ou sócia de capital, e sua posição pode influenciar decisões de M&A. O risco sucessório aqui não é de empresa sem herdeiro — é de transição ainda em curso: Helmut 80+ ainda presente, segunda geração recém-formalizada, sem evidência de holding familiar ou acordo de acionistas estruturado.",
+    "red_flags": [
+      {
+        "risco": "Passivo fiscal acumulado",
+        "severidade": "alta",
+        "como_verificar": "Consulta gratuita à PGFN (Dívida Ativa da União) pelo CNPJ + CARF (acórdãos públicos) + TJSP (execuções fiscais estaduais). Empresa de 41 anos no setor industrial tem alta probabilidade de autuações por ICMS, PIS/COFINS ou contribuições previdenciárias."
+      },
+      {
+        "risco": "Não conformidade com NR-12 (segurança de máquinas)",
+        "severidade": "alta",
+        "como_verificar": "Solicitar na due diligence laudo de conformidade NR-12 emitido por profissional habilitado (Art. 12.141 da norma exige para fabricantes e instaladores). A Alpina fabrica E instala equipamentos — dupla exposição regulatória. Histórico de autos de infração no MTE pode ser consultado publicamente."
+      },
+      {
+        "risco": "Passivo ambiental (operação industrial no ABC Paulista)",
+        "severidade": "media",
+        "como_verificar": "Consultar CETESB (licença de operação vigente, autos de infração) e SIESP. Fabricação de equipamentos com uso de metais e plásticos industriais em São Bernardo pode envolver gestão de resíduos Classe I. Verificar se há CAR/CADRI para resíduos."
+      },
+      {
+        "risco": "Dependência operacional do fundador (hub-and-spoke)",
+        "severidade": "media",
+        "como_verificar": "Perguntar diretamente no primeiro contato qual o papel ativo de Helmut hoje (relacionamento com clientes-chave, aprovação de contratos, acesso a crédito em nome próprio). Empresas com fundador 80+ frequentemente têm conhecimento tácito e rede de relacionamento não documentados."
+      },
+      {
+        "risco": "Concentração de clientes em nicho industrial",
+        "severidade": "media",
+        "como_verificar": "Pedir composição de faturamento por cliente (top 5) na fase de IOI/NDA. Fabricantes de equipamentos industriais específicos costumam ter 2-3 clientes respondendo por 50%+ da receita, o que eleva risco de churn pós-troca de controle."
+      },
+      {
+        "risco": "Ausência de holding familiar ou acordo de quotistas formalizado",
+        "severidade": "media",
+        "como_verificar": "Verificar se existe holding acima da Alpina (busca por CPF dos sócios no CNPJ.ws ou Receita Federal) e solicitar contrato social atualizado + acordo de quotistas. A entrada simultânea de Roberto e André em 2022 sem instrumento formal pode gerar conflito em cenário de venda."
+      }
     ],
-    "tese_aproximacao": "A Alpina é um ativo industrial com 4 décadas de história no coração do polo metalmecânico brasileiro, com fundador octogenário ainda na administração formal e segunda geração já nos 50 anos — perfil clássico de empresa que chegou ao momento de decisão sobre liquidez ou parceria. O ângulo de abordagem é a reestruturação de 2022: a família claramente já está pensando no assunto, então o analista não precisa 'convencer' de que o tema existe — precisa se posicionar como o interlocutor certo para a próxima etapa."
+    "perguntas_abordagem": [
+      "Desde que Roberto e André assumiram como Sócios-Administradores em 2022, qual é o envolvimento do Helmut no dia a dia — ele ainda gerencia relações com clientes ou fornecedores estratégicos?",
+      "A Alpina tem CNAEs de fabricação, manutenção, instalação e intermediação — qual dessas frentes representa a maior parte da receita hoje, e houve mudança de mix nos últimos 5 anos?",
+      "Com 41 anos de operação em São Bernardo, vocês têm uma base de clientes estabelecida — ela está concentrada em um ou dois setores industriais específicos, ou é diversificada?",
+      "Existe algum planejamento sucessório formal — holding familiar, acordo de quotistas, ou valuation recente da empresa — que já esteja em andamento?",
+      "O crescimento da Alpina nos próximos 5 anos passa por expansão geográfica, entrada em novos segmentos ou aprofundamento no nicho atual — e há capital ou estrutura para executar isso organicamente?"
+    ],
+    "tese_aproximacao": "A Alpina é um ativo de nicho com 41 anos de operação em um dos maiores polos industriais do Brasil — o ABC Paulista — com modelo de receita mista (fabricação + serviço + instalação) que reduz ciclicalidade pura de produto. O timing é cirúrgico: a entrada de Roberto e André em 2022 sinaliza que a família reconhece a necessidade de transição, mas o processo não está fechado (Helmut 80+ ainda ativo, sem evidência de instrumento formal). O ângulo de abordagem é o de parceiro para estruturar a saída — não comprador oportunista — posicionando a boutique como quem conhece os compradores certos para ativos industriais de nicho no Sudeste e entende as dinâmicas de empresas familiares de segunda geração no setor metalmecânico.",
+    "proximo_passo": "Ligar para (11) 4397-9133 solicitando falar com Roberto Landau Remy (sócio-administrador mais jovem, interlocutor mais provável para conversa de M&A) — evitar o e-mail financeiro@alpina.com.br como primeiro contato, pois vai para a equipe financeira operacional e não ao tomador de decisão."
   },
   "348e7971-40a9-4d14-99fe-fb3dbdbc8b99": {
-    "overview": "A MACLEM METAL LTDA é uma fundição de metais não ferrosos localizada em Jandira (SP), operando há 60 anos desde sua fundação em 1966. Capital social de R$ 656 mil, porte classificado como DEMAIS (acima de ME/EPP), com quadro societário concentrado em dois sócios de sobrenome Clemente — sugestivo de empresa familiar de primeira/segunda geração.",
-    "analise_sucessoria": "O risco sucessório é máximo (score 100). Yara Clemente Zurlini, 80+ anos, detém 49% da empresa e entrou formalmente no quadro apenas em 2023 — o que provavelmente representa uma reorganização societária recente, possivelmente para formalizar herança ou transferência de controle da geração fundadora. Marcus Eduardo Clemente Mussa, 51-60 anos com 49% desde 2008, parece ser o sucessor operacional designado (mesma família pelo sobrenome Clemente). O gap de 2% não atribuído pode indicar terceiro sócio não listado ou erro de dados — vale verificar. A questão crítica não é se haverá transição, mas quando: com Yara na faixa 80+, o prazo é curto e a reorganização de 2023 sinaliza que o tema já está na mesa da família. Marcus, na casa dos 50, pode preferir uma saída capitalizada a herdar uma operação industrial de 60 anos.",
-    "perguntas_abordagem": [
-      "Em 2023 houve uma mudança no quadro societário — Yara entrou formalmente com 49%. Essa reorganização foi parte de um planejamento sucessório maior ou teve outra motivação?",
-      "O senhor (Marcus) está à frente da operação do dia a dia há quanto tempo? Existe uma equipe de gestão que funcionaria independente da presença da família?",
-      "Uma fundição com 60 anos de operação acumula relacionamentos, processos e know-how difíceis de replicar — como o senhor enxerga o valor desse ativo hoje, considerando o mercado de metais não ferrosos?",
-      "Há outros membros da família — filhos ou parentes — que estão ou têm interesse em continuar a operação após uma eventual saída?",
-      "O senhor já considerou ou recebeu aproximações de grupos industriais ou fundos interessados em ativos de fundição no interior de SP? Como foi recebido?"
+    "overview": "MACLEM METAL LTDA é uma fundição de metais não ferrosos com 60 anos de operação contínua (fundada em 1966), sediada em Jandira-SP, no polo industrial do Oeste da Grande São Paulo. Classificada como 'DEMAIS' (acima de ME/EPP), indicando porte relevante — receita e EBITDA não são estimáveis sem dados adicionais. A razão social 'MACLEM' é provavelmente derivada do sobrenome Clemente, reforçando a origem e identidade familiar da empresa.",
+    "analise_sucessoria": "O quadro societário apresenta dois sócios com o sobrenome Clemente: Yara Clemente Zurlini (80+ anos) e Marcus Eduardo Clemente Mussa (51-60 anos), o que sugere relação familiar direta — possivelmente mãe/tia e filho/sobrinho. O sinal mais crítico é a entrada de Yara em 2023: uma sócia de 80+ anos não entra numa empresa de 57 anos sem motivação relevante. O cenário mais provável é reorganização societária recente — saída de sócio original, ajuste patrimonial ou tentativa de planejamento sucessório. Esse movimento indica que a transição está em andamento, mas provavelmente incompleta: Yara não é sucessora operacional funcional dada a faixa etária, e Marcus (51-60), embora mais jovem, está na janela em que sócios de segunda geração começam a considerar liquidez ou saída programada. Não há sinal de geração mais jovem no QSA. Score de risco sucessório máximo (100) é justificado.",
+    "red_flags": [
+      {
+        "risco": "Passivo ambiental",
+        "severidade": "alta",
+        "como_verificar": "Fundição de metais não ferrosos gera efluentes com metais pesados (alumínio, cobre, chumbo, zinco) e emissões atmosféricas — setor com histórico expressivo de autuações pela CETESB em SP. Consultar cadastro de áreas contaminadas e autos de infração no sistema InfoSima/CETESB (gratuito); verificar se há licença ambiental de operação vigente no SIAMWEB-CETESB."
+      },
+      {
+        "risco": "Passivo fiscal acumulado",
+        "severidade": "alta",
+        "como_verificar": "Empresa de 60 anos em setor industrial intensivo tem probabilidade elevada de parcelamentos (REFIS/PERT) ou débitos em aberto. Consultar Certidão de Dívida Ativa da União via PGFN (gratuito pelo CNPJ), painel CARF para autuações federais em julgamento, e Sefaz-SP para débitos de ICMS estadual."
+      },
+      {
+        "risco": "Passivo trabalhista e previdenciário",
+        "severidade": "alta",
+        "como_verificar": "Fundição é atividade insalubre e perigosa (NR-15, NR-16) com alto índice histórico de ações por doenças ocupacionais — silicose, perda auditiva induzida por ruído, queimaduras. Consultar TRT-2 e TRT-15 pelo CNPJ (Jandira cai na jurisdição do TRT-15, Campinas); verificar regularidade previdenciária via Certidão Negativa de Débitos da RFB."
+      },
+      {
+        "risco": "Não-conformidade NR-12 (segurança de máquinas e equipamentos)",
+        "severidade": "media",
+        "como_verificar": "Empresa com 60 anos de operação provavelmente opera máquinas sem adequação plena à NR-12 (obrigatória desde 2010). Autuações do MTE/SRTE são públicas. Em due diligence, solicitar laudo de conformidade NR-12 e registros de CAT (Comunicação de Acidente de Trabalho) dos últimos 5 anos via eSocial/INSS."
+      },
+      {
+        "risco": "Dependência operacional do sócio principal (modelo hub-and-spoke)",
+        "severidade": "media",
+        "como_verificar": "Empresas familiares de fundição com 60 anos tipicamente concentram processos, relacionamento com clientes e know-how técnico no fundador ou sócio-gestor. Não verificável externamente — avaliar diretamente com Marcus sobre estrutura de gestão, existência de equipe técnica sênior e se há clientes/fornecedores com contrato formalizado ou dependentes de relação pessoal."
+      },
+      {
+        "risco": "Motivação desconhecida para a reorganização societária de 2023",
+        "severidade": "media",
+        "como_verificar": "A entrada de Yara (80+) em 2023 pode refletir saída de sócio original, dissolução parcial de holding, partilha de inventário em vida ou conflito societário não resolvido. Consultar histórico completo de alterações contratuais na JUCESP (Junta Comercial do Estado de SP) pelo CNPJ — gratuito e público."
+      }
     ],
-    "tese_aproximacao": "Empresa familiar de 60 anos em setor industrial defensável (fundição de metais não ferrosos), com sócio fundador na faixa 80+ e reorganização societária recente que sinaliza processo sucessório em curso — combinação que raramente aparece com tanto aviso prévio. O ângulo de abordagem é pragmático: oferecer ao Marcus (geração operacional, 51-60 anos) uma alternativa de liquidez que preserve o legado da empresa sem a pressão de uma venda forçada por evento de saúde ou inventário."
+    "perguntas_abordagem": [
+      "A Maclem passou por uma alteração societária em 2023 — o que motivou essa mudança e como está estruturada a gestão da empresa hoje?",
+      "Com 60 anos de operação e uma posição consolidada em fundição de não ferrosos no Oeste de SP, quais são os seus planos para os próximos 5 anos — expansão, entrada de um parceiro estratégico ou algo diferente?",
+      "O relacionamento com os principais clientes e fornecedores passa pelo senhor diretamente, ou a empresa tem uma estrutura comercial e técnica que opera de forma independente?",
+      "Há movimentos no setor — consolidação de concorrentes, pressão de clientes por escala ou certificação, mudanças regulatórias ambientais — que estejam criando urgência para alguma decisão sobre o futuro da empresa?",
+      "Existe alguma conversa em andamento sobre o planejamento de longo prazo da empresa — seja com família, com assessores ou com potenciais parceiros?"
+    ],
+    "tese_aproximacao": "A Maclem é um alvo de alta convicção: seis décadas de operação em fundição de não ferrosos em Jandira-SP, porte acima de ME/EPP, e evidência direta de transição societária em curso (reorganização de 2023 com sócia 80+ sem sucessor operacional visível no QSA). O timing é crítico — a janela entre 'reorganização iniciada' e 'decisão forçada por evento de saúde ou morte' é exatamente onde uma boutique especializada em família maximiza relevância e urgência percebida. O ângulo de entrada é posicionamento como parceiro de transição que preserva legado e emprego — não comprador oportunista — com acesso a acquirers industriais que valorizam ativos de fundição com carteira estabelecida no metal-mecânico paulista, diferencial que um escritório generalista ou um banco de middle market não tem.",
+    "proximo_passo": "Ligar para (11) 4195-4545 — número direto da empresa — e solicitar Marcus Eduardo Clemente Mussa, apresentando-se como representante de boutique de M&A com foco em indústria familiar paulista; o e-mail disponível (contato@pmecontabil.com.br) pertence ao escritório contábil PME Contábil, não à empresa — usar como canal secundário pedindo ao contador uma apresentação ao sócio caso não haja acesso direto pelo telefone."
   },
   "a4379107-47b5-48ec-a641-960e7fdd861c": {
-    "overview": "A Sathel Usinas Termo e Hidro Elétricas S/A é uma empresa industrial de Cotia (SP) com 45 anos de operação, atuando em fabricação de obras de caldeiraria pesada e instalação de máquinas e equipamentos industriais — segmento técnico, de barreira de entrada elevada e clientela tipicamente industrial/energética. Constituída como Sociedade Anônima Fechada, seu porte 'DEMAIS' indica que ultrapassa os limites de ME/EPP, sinalizando empresa de porte relevante no contexto do middle market.",
-    "analise_sucessoria": "O risco sucessório é máximo e imediato: os dois únicos sócios, Therezinha Calderan Quintino e Annario Rocha Quintino, compartilham sobrenome — indicativo fortíssimo de casal fundador — e ambos estão na faixa 80+. O quadro societário está congelado desde 2009 (17 anos sem alteração), sem qualquer entrada de herdeiros, executivos-chave ou sócios mais jovens. Não há sinal de planejamento sucessório em andamento: nenhum terceiro foi incorporado à sociedade, nenhuma qualificação aponta para um sucessor designado. Com dois octogenários controlando 100% de uma SA fechada de 45 anos em setor técnico-especializado, a janela de decisão é curta — qualquer incapacidade ou óbito de um dos sócios cria evento sucessório abrupto sem estrutura para absorvê-lo.",
-    "perguntas_abordagem": [
-      "O senhor e a dona Therezinha têm discutido internamente o que acontece com a Sathel nos próximos 5 anos — seja continuidade familiar, entrada de um sócio operacional ou algum evento de liquidez?",
-      "A empresa tem contratos de longo prazo ou carteira recorrente com clientes do setor elétrico/energético que seriam transferíveis em uma eventual transação?",
-      "Desde 2009 o quadro societário não mudou — houve alguma tentativa de trazer gestores ou herdeiros para o capital que não avançou?",
-      "A caldeiraria pesada tem gargalo de mão de obra técnica especializada — como está a equipe técnica hoje e ela depende diretamente da gestão dos sócios para operar?",
-      "O capital social registrado na Junta está desatualizado em relação ao patrimônio real da empresa — vocês já fizeram alguma avaliação patrimonial recentemente?"
+    "overview": "SATHEL USINAS TERMO E HIDRO ELÉTRICAS S/A é uma fabricante de obras de caldeiraria pesada (CNAE 2513-6) com instalação de máquinas e equipamentos industriais como atividade secundária, sediada em Cotia (SP). Fundada em 1981, opera há 45 anos no segmento de manufatura de equipamentos para plantas termelétricas e hidrelétricas. Classificada como 'DEMAIS' pela Receita Federal, portanto fora do universo ME/EPP — porte consistente com indústria de caldeiraria pesada voltada ao setor de energia.",
+    "analise_sucessoria": "O quadro societário é composto por dois únicos sócios — Annario Rocha Quintino (Presidente, qualificação 16) e Therezinha Calderan Quintino (Diretora, qualificação 10) —, ambos na faixa etária 80+, e o sobrenome compartilhado indica quase certamente um casal fundador. O QSA está congelado desde 2009 (16 anos sem alteração), sem qualquer incorporação de herdeiros ou executivos profissionais ao capital. Nenhum Quintino de geração mais jovem aparece na composição acionária, o que é o principal sinal de vácuo sucessório. O único indício de next-gen é operacional, não societário: o e-mail de contato 'daysi.quintino@sathel.com.br' aponta para uma Daysi Quintino ativa na empresa — possivelmente filha ou sobrinha —, mas sem participação formal registrada. Score 100 justificado: dois octogenários controlando 100% de uma SA industrial de 45 anos, sem linha de sucessão visível no cap table.",
+    "red_flags": [
+      {
+        "risco": "Passivo fiscal oculto",
+        "severidade": "alta",
+        "como_verificar": "Consulta PGFN (Dívida Ativa da União) pelo CNPJ — gratuita em divida.pgfn.gov.br. Complementar com busca no CARF e no TJSP (ações de execução fiscal). Setor industrial de 45 anos com capital social zerado no registro é sinal de atenção."
+      },
+      {
+        "risco": "Capital social zerado no registro da Receita Federal",
+        "severidade": "media",
+        "como_verificar": "Solicitar contrato/estatuto social atualizado na Junta Comercial de SP (JUCESP) para verificar se houve atualização do capital ou se reflete subcapitalização formal. Não indica necessariamente problema operacional, mas exige explicação na due diligence."
+      },
+      {
+        "risco": "Passivo ambiental e de segurança (NR-12)",
+        "severidade": "media",
+        "como_verificar": "Caldeiraria pesada com operação desde 1981 tem alta probabilidade de maquinário antigo sem adequação à NR-12 (segurança em máquinas — obrigatória desde 2012). Verificar autuações do MTE pelo CNPJ e histórico de licenças ambientais junto à CETESB-SP."
+      },
+      {
+        "risco": "Dependência total dos fundadores (hub-and-spoke)",
+        "severidade": "alta",
+        "como_verificar": "Com dois sócios octogenários controlando 100% e sem sucessão formal, relações comerciais, contratos-chave e know-how técnico provavelmente estão concentrados nas pessoas — não na instituição. Mapear via conversa inicial: há diretoria técnica? Contratos longos com clientes? Aprovações exigem os fundadores?"
+      },
+      {
+        "risco": "Concentração de clientes no setor de energia",
+        "severidade": "media",
+        "como_verificar": "Caldeiraria pesada para termelétricas e hidrelétricas tende a ter carteira restrita de grandes clientes (Eletrobras, Engie, CPFL, EPCs de infraestrutura). Perguntar diretamente no primeiro contato quantos clientes respondem por >50% da receita."
+      }
     ],
-    "tese_aproximacao": "A Sathel reúne os sinais mais robustos de risco sucessório do pipeline: casal octogenário, quadro parado há 17 anos, setor técnico com barreira de entrada real e 45 anos de reputação acumulada — ativos que se deterioram rapidamente sem continuidade de gestão. O ângulo de abordagem é proteção de legado: apresentar a boutique não como compradora, mas como parceira que estrutura a transição de forma planejada antes que um evento involuntário force uma saída desordenada."
+    "perguntas_abordagem": [
+      "O quadro societário está estável desde 2009 — antes disso havia outros sócios? Houve alguma reestruturação societária que o senhor possa comentar?",
+      "A Daysi Quintino está envolvida na gestão operacional da empresa? Ela ou outro membro da família tem interesse em dar continuidade ao negócio?",
+      "Para uma empresa com 45 anos de operação em caldeiraria pesada para o setor de energia, imagino que vocês têm contratos recorrentes com grandes geradoras — como está o pipeline de projetos para os próximos 2-3 anos?",
+      "O senhor já conversou com algum assessor jurídico ou financeiro sobre planejamento sucessório ou alternativas para a continuidade da SATHEL?",
+      "Há executivos ou engenheiros seniores na empresa que já têm autonomia de gestão, ou o senhor e a Therezinha ainda conduzem as principais decisões operacionais e comerciais?"
+    ],
+    "tese_aproximacao": "A SATHEL é um ativo raro: 45 anos de operação em caldeiraria pesada para o setor de energia — segmento técnico, com altas barreiras de entrada e demanda estrutural crescente dada a expansão da matriz elétrica brasileira. O vácuo sucessório é agudo (dois controladores 80+, zero next-gen no cap table) e o timing é agora — não em 2 anos. O ângulo de abordagem não é 'venda a empresa', mas 'continuidade do legado': o adquirente certo garante que 45 anos de expertise técnica não se perdem com a saída dos fundadores. Nossa boutique é o interlocutor correto porque conhecemos compradores industriais e fundos de PE com tese em infraestrutura/energia que entendem o valor de ativos de nicho técnico no interior de SP — e conseguimos estruturar uma transação que protege o legado dos Quintino, algo que um banco generalista não oferece.",
+    "proximo_passo": "Ligar para (11) 4612-2613 e pedir para falar com Daysi Quintino — ela é o ponto de entrada mais natural (ativa na empresa, mesma família, provavelmente mais acessível que os fundadores octogenários) — apresentar a boutique brevemente e solicitar uma reunião de 20 minutos com Annario para uma conversa sobre o setor de caldeiraria e tendências de M&A em energia."
   },
   "93e85e19-cb56-4def-9341-a44a28b8532a": {
-    "overview": "CAMAQ é uma fabricante de obras de caldeiraria pesada e instaladora de máquinas industriais sediada em Sertãozinho-SP, polo sucroalcooleiro do interior paulista, com 54 anos de operação desde 1972. Classifica-se como porte DEMAIS (acima de ME/EPP), o que indica estrutura operacional relevante. A empresa está formalmente em Recuperação Judicial, fato que define o contexto de qualquer abordagem.",
-    "analise_sucessoria": "O quadro societário revela dois fundadores na faixa 80+ — José Oswaldo Marques (sócio desde 1972) e Maria Gonzales Marques (desde 1978), ambos com qualificação 22, distinta da qualificação 5 de Adezio Jose Marques (faixa 51-60, entrou em 2004). A diferença de qualificação entre os octogenários e Adezio sugere papéis societários distintos, possivelmente com os fundadores ainda na posição de administradores. Adezio, provavelmente filho dado o sobrenome, tem presença societária há 22 anos mas não figura com a mesma qualificação dos pais — sinal de que a transição de gestão não foi formalizada. Não há sócios jovens visíveis no quadro. O cenário combina risco sucessório máximo (score 100) com estresse financeiro ativo (Recuperação Judicial), o que torna o gatilho de saída potencialmente imediato e não apenas latente.",
-    "perguntas_abordagem": [
-      "Sr. José Oswaldo, o processo de Recuperação Judicial está em que fase hoje — vocês já têm um plano aprovado pelos credores ou ainda estão em negociação?",
-      "O Adezio está tocando a operação no dia a dia, ou o senhor ainda está presente na gestão direta da empresa?",
-      "Com mais de 50 anos neste mercado, o senhor já conversou internamente sobre o que acontece com a CAMAQ nos próximos 5 anos — continuidade familiar, entrada de um sócio estratégico, ou outra saída?",
-      "A carteira de clientes da empresa ainda está ativa durante a recuperação, ou houve perda relevante de contratos com as usinas da região?",
-      "Quando o senhor pensa no legado da empresa que fundou em 1972, o que seria um desfecho ideal para você e para a Maria?"
+    "overview": "CAMAC é uma fabricante de caldeiraria pesada e instaladora de máquinas industriais sediada em Sertãozinho (SP), polo sucroalcooleiro e industrial do interior paulista. Opera há 54 anos (fundada em 1972), com porte classificado como 'DEMAIS' (acima de ME/EPP) — dimensão real de receita não estimável sem dados financeiros adicionais. Ponto crítico: a razão social indica que a empresa está EM RECUPERAÇÃO JUDICIAL, o que altera completamente o contexto de qualquer abordagem.",
+    "analise_sucessoria": "O quadro societário aponta para uma empresa 100% familiar com sobrenome Marques em todas as posições. José Oswaldo Marques (80+, qualificação 22 = sócio-administrador, na empresa desde a fundação em 1972) e Maria Gonzales Marques (80+, qualificação 22, desde 1978) são a geração fundadora e detêm controle formal. Adezio José Marques (51-60 anos, qualificação 05 = administrador, entrou em 2004) é provável membro da geração seguinte — mas atenção: sua qualificação indica cargo de administrador, não necessariamente quotista; se confirmado, a titularidade das quotas permanece inteiramente com os fundadores octogenários, o que torna o risco sucessório ainda mais agudo. O quadro está estático há 22 anos (última alteração em 2004). A recuperação judicial, porém, sobrepõe o tema financeiro ao sucessório — o fundador pode estar mais pressionado por sobrevivência da empresa do que por planejamento de saída.",
+    "red_flags": [
+      {
+        "risco": "Recuperação judicial ativa",
+        "severidade": "alta",
+        "como_verificar": "Consultar TJSP (tjsp.jus.br → busca por CNPJ/razão social) para localizar o processo, verificar se o plano de recuperação foi aprovado pelos credores e qual o estágio atual — impacta diretamente a estrutura de qualquer deal (alienação de ativos exige autorização judicial em RJ)"
+      },
+      {
+        "risco": "Capital social registrado como zero — possível erosão patrimonial ou desatualização cadastral grave",
+        "severidade": "alta",
+        "como_verificar": "Solicitar contrato social consolidado e última alteração na Junta Comercial de SP (JUCESP) para verificar histórico de reduções de capital; cruzar com balanços disponíveis"
+      },
+      {
+        "risco": "Passivo fiscal acumulado (empresa industrial de 54 anos em RJ)",
+        "severidade": "alta",
+        "como_verificar": "Consulta gratuita na PGFN (Dívida Ativa da União) pelo CNPJ em regularize.pgfn.gov.br; verificar ações no CARF e execuções fiscais no TJSP"
+      },
+      {
+        "risco": "Passivo trabalhista (mão de obra industrial, décadas de operação)",
+        "severidade": "media",
+        "como_verificar": "Consultar TST e TRT-15 (região de Campinas/interior SP) pelo nome da empresa; empresas em RJ frequentemente acumulam reclamações trabalhistas de ex-funcionários"
+      },
+      {
+        "risco": "Não-conformidade com NR-12 (segurança de máquinas)",
+        "severidade": "media",
+        "como_verificar": "Avaliar in loco durante due diligence operacional; empresa que fabrica e instala maquinário industrial com décadas de operação tem alta probabilidade de maquinário legado fora dos padrões atuais da norma"
+      },
+      {
+        "risco": "Dependência operacional do fundador (hub-and-spoke)",
+        "severidade": "media",
+        "como_verificar": "Perguntar diretamente ao Adezio quais decisões ainda passam por José Oswaldo; validar se há equipe técnica sênior ou se o conhecimento está concentrado no fundador"
+      },
+      {
+        "risco": "Concentração de clientes no setor sucroalcooleiro (risco setorial, dado localização em Sertãozinho)",
+        "severidade": "media",
+        "como_verificar": "Perguntar na abordagem quais os três maiores clientes e qual percentual da receita representam; Sertãozinho é dominado por usinas — ciclicidade do setor pode explicar a crise que gerou a RJ"
+      }
     ],
-    "tese_aproximacao": "A CAMAQ reúne dois gatilhos simultâneos — founders octogenários sem sucessão formalizada e Recuperação Judicial em curso — o que comprime o horizonte de decisão e aumenta receptividade a uma saída estruturada. O ângulo de abordagem é o de parceiro que resolve o problema real: traz capital e gestão para honrar o plano de RJ e preservar o nome de 54 anos, retirando o peso operacional dos fundadores com dignidade."
+    "perguntas_abordagem": [
+      "A recuperação judicial está em qual estágio — o plano já foi aprovado pelos credores e homologado pelo juiz, ou ainda está em negociação? Qual o prazo estimado para encerramento do processo?",
+      "O Adezio está à frente da operação do dia a dia? O José Oswaldo ainda tem envolvimento ativo na gestão ou nas relações com clientes-chave?",
+      "A carteira de clientes é concentrada em usinas da região de Sertãozinho/Ribeirão Preto, ou a CAMAC atende outros setores industriais também?",
+      "Antes da recuperação judicial, qual era o principal vetor de crescimento da empresa — novos equipamentos, manutenção de contratos de longo prazo ou projetos pontuais de expansão industrial?",
+      "A família já teve alguma conversa sobre o futuro da CAMAC pós-RJ — retomada independente, parceria estratégica ou abertura para uma transação societária?"
+    ],
+    "tese_aproximacao": "A CAMAC tem 54 anos de know-how em caldeiraria pesada no principal polo industrial do interior paulista — esse ativo intangível (relações com usinas, equipe técnica especializada, reputação regional) não desaparece com a crise financeira. A recuperação judicial cria uma janela rara: a família Marques, com os fundadores em seus 80 anos e a empresa sob pressão judicial, está no momento de maior receptividade a conversas sobre futuro societário. O ângulo de abordagem não é 'queremos comprar sua empresa em dificuldade' — é 'conhecemos o setor e podemos trazer um parceiro que capitaliza a empresa e preserva o legado de 54 anos'. O diferencial da originação aqui é o timing e o acesso direto à família antes que o processo de RJ atraia compradores oportunistas ou fundos de distressed asset.",
+    "proximo_passo": "Ligar para (16) 3945-5711 e pedir por Adezio José Marques — identificar-se como assessor de M&A focado em indústria, mencionar conhecimento do setor de caldeiraria e perguntar se ele é a pessoa certa para uma conversa de 15 minutos sobre alternativas estratégicas para a empresa no contexto pós-RJ."
   },
   "a1b5ba2c-98cf-457c-8c7c-1a75016345f1": {
-    "overview": "CRIFERP é uma indústria de máquinas e equipamentos de uso geral sediada em Pontal, SP, com 49 anos de operação desde 1977. Atua também em equipamentos para saneamento e ambiental e instalação de máquinas industriais — perfil tipicamente B2B, fornecedora de outras indústrias. Capital social de R$135k registrado é muito baixo para uma empresa com quase cinco décadas, sinal de que não foi atualizado e não reflete o porte real da operação.",
-    "analise_sucessoria": "O quadro societário acende alerta máximo: José Luiz Maria tem 80+ anos e compõe o corpo de sócios desde 2006, sem que nenhuma movimentação societária tenha ocorrido desde 2009 — ou seja, o quadro está congelado há 17 anos. Dos outros quatro sócios, dois estão na faixa 61-70 (Papa e Siqueira) e dois na faixa 51-60 (Ferraz e Costa). Não há nenhum sócio abaixo dos 50 anos no registro, o que indica ausência de herdeiros ou sucessores formalizados na estrutura. A combinação de um sócio octogenário ativo, quadro sem renovação por quase duas décadas e empresa industrial com quase meio século de existência configura risco sucessório máximo — daí o score 100. A pergunta central é quem, de fato, opera o negócio hoje e se há um plano de saída em discussão.",
-    "perguntas_abordagem": [
-      "José Luiz Maria consta como sócio desde 2006 e está na faixa dos 80 anos — ele ainda está ativo na gestão do dia a dia, ou já se afastou das operações?",
-      "O quadro societário não muda desde 2009. Houve alguma conversa entre os sócios sobre o futuro da empresa — sucessão familiar, entrada de um gestor profissional ou eventual venda?",
-      "A empresa opera há 49 anos em Pontal. Existe uma segunda geração da família envolvida na operação, mesmo que ainda não esteja formalizada como sócia?",
-      "Vocês fabricam equipamentos para saneamento e ambiental além das máquinas de uso geral — essa vertical cresceu nos últimos anos, dado o aumento de investimento público em infraestrutura?",
-      "Com cinco décadas de relacionamento com clientes industriais na região, como vocês enxergam o próximo ciclo da empresa — expansão orgânica, parceria estratégica ou algo diferente?"
+    "overview": "CRIFERP é fabricante de máquinas e equipamentos de uso geral, com atividades secundárias em máquinas para saneamento/ambiental e instalação industrial, sediada em Pontal (SP), interior paulista. Opera há 49 anos — fundada em 1977 — e é classificada como 'DEMAIS' pela Receita Federal, indicando porte acima de ME/EPP. Estrutura jurídica de Ltda com cinco sócios.",
+    "analise_sucessoria": "O quadro apresenta risco sucessório crítico e imediato. JOSE LUIZ MARIA (80+) é o sócio mais velho e provavelmente o fundador ou figura central original — único octogenário num quadro que não se renova desde 2006-2009 (17 anos sem nenhuma entrada ou saída). Não há qualquer sócio abaixo de 51 anos visível na estrutura, o que indica ausência de segunda geração integrada ou herdeiro em preparação. Os dois sócios na faixa 51-60 (EMILIO CARLOS RODRIGUES FERRAZ e RANULFO COSTA) adiam o problema, mas não o resolvem. Com cinco sócios de qualificação aparentemente igual e a iminência da saída de JOSE LUIZ MARIA, o risco de conflito societário na precificação e transferência de quotas é elevado — e nenhuma preparação para esse evento é detectável no registro público.",
+    "red_flags": [
+      {
+        "risco": "Passivo fiscal acumulado",
+        "severidade": "alta",
+        "como_verificar": "Consulta PGFN Dívida Ativa (regularize.pgfn.gov.br) pelo CNPJ — gratuito e imediato. Complementar com busca CARF e pesquisa de execuções fiscais no TJSP pelo nome/CNPJ. Empresa industrial de 49 anos em SP tem alta probabilidade de pendências."
+      },
+      {
+        "risco": "Não-conformidade NR-12 (segurança de máquinas)",
+        "severidade": "alta",
+        "como_verificar": "Fabricante de máquinas é duplamente exposto: precisa de conformidade NR-12 na própria linha de produção e nos equipamentos entregues a clientes. Verificar histórico de autos de infração no portal do Ministério do Trabalho e Emprego (sit.trabalho.gov.br) pelo CNPJ."
+      },
+      {
+        "risco": "Passivo ambiental",
+        "severidade": "media",
+        "como_verificar": "Atividade industrial gera resíduos de óleos, fluidos de corte e metais. Verificar licenças ambientais ativas e histórico de autuações na CETESB (portal.cetesb.sp.gov.br — Consulta de Licenças e Infrações pelo CNPJ/endereço)."
+      },
+      {
+        "risco": "Dependência operacional de JOSE LUIZ MARIA",
+        "severidade": "alta",
+        "como_verificar": "Sócio de 80+ em empresa de 49 anos tende a concentrar relacionamentos com clientes-chave, know-how técnico e crédito junto a fornecedores. Avaliar diretamente na abordagem se ele ainda está ativo na operação e o que acontece se sair abruptamente."
+      },
+      {
+        "risco": "Concentração de clientes",
+        "severidade": "media",
+        "como_verificar": "Fabricantes industriais de nicho em cidades pequenas do interior tipicamente operam com carteira restrita de clientes. Não verificável externamente — levantar em due diligence ou indiretamente na conversa de abordagem."
+      }
     ],
-    "tese_aproximacao": "Empresa industrial com quase 50 anos, quadro parado há 17 anos e sócio octogenário sem sucessor visível — combinação clássica de ativo valioso sem dono para o amanhã, que torna a janela de abordagem imediata. O ângulo é patrimonial, não operacional: posicionar a conversa como planejamento de legado para o fundador, e não como venda — isso reduz resistência inicial e abre o diagnóstico."
+    "perguntas_abordagem": [
+      "O sr. Jose Luiz Maria ainda está ativo na gestão do dia a dia, ou já se afastou da operação — e quem concentra as decisões comerciais e técnicas hoje?",
+      "Em quase 50 anos de empresa, como vocês pensam a continuidade do negócio para os próximos 10 anos — há uma segunda geração ou sócio em formação para assumir?",
+      "A linha de máquinas para saneamento e ambiental é uma aposta estratégica crescente ou nasceu de demandas pontuais de clientes?",
+      "Existe algum investimento ou expansão de capacidade que vocês identificam como necessário mas que não avançaram por restrição de capital ou foco da gestão?",
+      "Com cinco sócios de longa data, como funciona o alinhamento societário quando surge uma decisão grande — há um sócio-gestor formal ou é decidido em conjunto?"
+    ],
+    "tese_aproximacao": "Empresa industrial técnica com quase 50 anos, nicho defensável (maquinário geral + saneamento/ambiental em Pontal-SP) e o quadro sucessório mais crítico possível: sócio octogenário sem substituto visível e estrutura congelada há 17 anos. O ângulo é temporalidade — a janela para uma transição ordenada está se fechando antes de um evento forçado (incapacidade ou falecimento de JOSE LUIZ MARIA), e entrar agora posiciona o interlocutor como parceiro de planejamento sucessório, não como comprador oportunista pós-crise. O 'por que nós' é tese setorial ativa em industriais do interior de SP e familiaridade com o perfil de empresa familiar de primeira geração — a conversa começa em continuidade e legado, não em múltiplos.",
+    "proximo_passo": "Sem telefone ou e-mail no CNPJ, mapear contato direto da CRIFERP em Pontal-SP via Google Maps (estabelecimento físico + possível site/redes) e, em paralelo, buscar EMILIO CARLOS RODRIGUES FERRAZ no LinkedIn (sócio mais jovem, 51-60, nome provavelmente ligado à sigla da empresa) para abertura de conversa por mensagem direta com enquadramento de planejamento sucessório — executar dentro de 48h."
   },
   "09a74c58-0a65-4258-8295-0eed87e23635": {
-    "overview": "POLIMOLD é uma fabricante de máquinas e equipamentos industriais com foco em ferramental e maquinário para a indústria do plástico, fundada em 1974 e sediada em São Bernardo do Campo (ABC Paulista). Opera há 52 anos com capital social declarado de R$ 33,96 milhões e porte classificado como 'DEMAIS' (acima de ME/EPP), indicando operação de escala relevante. O setor de atuação — máquinas para plástico e ferramental industrial — tem demanda estrutural no parque industrial do interior e ABC paulista.",
-    "analise_sucessoria": "O quadro societário é um sinal de alerta máximo: quatro dos seis sócios têm 80+ anos (Alexandre, Silvia, Ruy e Dora), e o mais jovem identificado é Celia Ruth Fix Korbivcher, na faixa 71-80. O sobrenome Fix domina (Alexandre, Celia, Silvia e Dora), caracterizando controle familiar fechado de primeira geração. Alexandre Roberto Ribenboim Fix figura como sócio-administrador desde 1995 — 31 anos de permanência ininterrupta —, reforçando o perfil de fundador ainda no comando. Nenhum sócio com faixa etária abaixo de 71 anos aparece no quadro, ou seja, não há herdeiro de segunda geração formalizado. Dois movimentos recentes chamam atenção: a entrada de Dora Selma Fix Ventura em 2023 (80+, possivelmente formalização de participação já existente ou planejamento patrimonial tardio) e a entrada da própria POLIMOLD INDUSTRIAL LTDA. como sócia de si mesma em 2025 (qualificação 63), que pode sinalizar uma tentativa de reorganização societária ou estruturação de holding — mas sem rejuvenescimento do quadro de controle. O score 100 é justificado: empresa de 52 anos, sem sucessor visível, com todo o núcleo decisório acima dos 71 anos.",
-    "perguntas_abordagem": [
-      "Em 2025 a POLIMOLD apareceu como sócia de si mesma no quadro — o senhor pode me contar o que motivou essa reorganização societária recente?",
-      "O senhor está à frente da administração desde pelo menos 1995 — tem algum membro da família ou executivo interno que já vem assumindo responsabilidades de gestão no dia a dia?",
-      "A entrada da Dora Selma em 2023 foi uma decisão de planejamento patrimonial ou refletiu uma mudança operacional na empresa?",
-      "Com uma operação de 52 anos e o porte que a Polimold tem, como o senhor está pensando a continuidade do negócio nos próximos 5 a 10 anos — venda, entrada de sócio estratégico, ou gestão profissionalizada?",
-      "A empresa atende clientes da indústria do plástico no ABC e interior de SP — vocês têm contratos de longo prazo ou a receita é mais transacional? Pergunto porque isso impacta diretamente como estruturamos uma conversa sobre valor."
+    "overview": "Polimold Industrial Ltda. é uma fabricante especializada de máquinas e equipamentos industriais (CNAE 2869100), com atividade secundária relevante em ferramentas e máquinas para a indústria do plástico, sediada em São Bernardo do Campo — polo metalmecânico mais denso do Brasil. Com 52 anos de operação contínua (fundada em 1974) e porte classificado como 'DEMAIS' (acima de ME/EPP), trata-se de um ativo industrial consolidado; faturamento e EBITDA não são estimáveis com os dados disponíveis.",
+    "analise_sucessoria": "O quadro societário apresenta risco sucessório máximo e sem ambiguidade: quatro dos cinco sócios pessoas físicas estão na faixa 80+, incluindo os dois sócios-administradores — Alexandre Roberto Ribenboim Fix (no QSA desde 1995, 30 anos de gestão) e Ruy Korbivcher (desde 2008). A única sócia na faixa 71-80 é Célia Ruth Fix Korbivcher, e não há nenhum sócio pessoa física abaixo dessa faixa. A ausência de uma geração mais jovem no capital é total. A entrada de Dora Selma Fix Ventura (80+) em 2023 não representa rejuvenescimento — é redistribuição interna da família Fix/Korbivcher. A entrada de POLIMOLD INDUSTRIAL LTDA. como sócio pessoa jurídica em 2025 é o único sinal de movimento estrutural e sugere tentativa de planejamento patrimonial via holding; contudo, não resolve o vácuo de sucessão operacional nem indica quem assumirá a gestão. Com o principal administrador provavelmente na casa dos 80+ anos e sem herdeiro visível no controle, a empresa acumula pressão sucessória iminente.",
+    "red_flags": [
+      {
+        "risco": "Passivo fiscal oculto (federal e estadual)",
+        "severidade": "alta",
+        "como_verificar": "Consulta gratuita na PGFN (Dívida Ativa da União) e no portal CARF pelo CNPJ; pesquisa de execuções fiscais de ICMS no TJSP por razão social. Empresa industrial de 52 anos no ABC tem alta probabilidade histórica de contingências tributárias não provisionadas."
+      },
+      {
+        "risco": "Passivo trabalhista acumulado",
+        "severidade": "alta",
+        "como_verificar": "Pesquisa processual no portal PJe/TRT2 (2ª Região — São Bernardo do Campo) pelo CNPJ e razão social — gratuito. Fabricante com parque fabril antigo e operação longeva tende a acumular reclamatórias ativas e acordos em aberto."
+      },
+      {
+        "risco": "Não-conformidade NR-12 (segurança em máquinas e equipamentos)",
+        "severidade": "alta",
+        "como_verificar": "NR-12 (revisada em 2012) exige adequação de toda máquina fabricada e do próprio parque fabril. Verificar histórico de autuações do MTE no eSocial e perguntar diretamente se há laudos de conformidade emitidos por profissional habilitado. Empresa de 52 anos com linha de produção própria raramente está 100% adequada."
+      },
+      {
+        "risco": "Passivo ambiental (resíduos de processo, fluidos de corte, tratamento de superfície)",
+        "severidade": "media",
+        "como_verificar": "Consulta à CETESB (licenças e autos de infração pelo CNPJ) e ao portal SISNAMA. Fabricação metalmecânica em área urbana do ABC tem histórico regulatório sensível; verificar se a licença de operação está vigente e se há passivo de disposição de resíduos Classe I."
+      },
+      {
+        "risco": "Dependência operacional do fundador (hub-and-spoke)",
+        "severidade": "alta",
+        "como_verificar": "Alexandre Fix como administrador desde 1995 = 30 anos de centralização de relacionamentos, contratos-chave e know-how técnico. Checar se há diretores funcionais registrados, ERP estruturado, e se os principais contratos estão em nome da empresa ou são relações pessoais do fundador — pergunta direta na abordagem é a melhor sonda."
+      },
+      {
+        "risco": "Reestruturação societária em andamento (holding PJ constituída em 2025)",
+        "severidade": "media",
+        "como_verificar": "A entrada de POLIMOLD INDUSTRIAL LTDA. como sócio PJ em 2025 indica movimento de planejamento patrimonial ativo. Verificar o CNPJ da PJ sócia na Receita Federal para entender se é holding recém-constituída e se há advogado especializado já envolvido — presença de assessor jurídico ativo pode acelerar ou bloquear uma transação dependendo do mandato dele."
+      }
     ],
-    "tese_aproximacao": "POLIMOLD é um ativo industrial de 52 anos, capital social de R$ 34M, inserido no ecossistema produtivo mais denso do país (ABC Paulista), com todo o núcleo de controle acima dos 71 anos e sem sucessor formalizado — combinação que raramente resolve sozinha. O ângulo de abordagem é a reorganização de 2025: ela abre a porta para uma conversa sobre continuidade patrimonial sem soar como oferta de compra imediata, posicionando o assessor como parceiro para estruturar o próximo capítulo da empresa."
+    "perguntas_abordagem": [
+      "A Polimold completa 52 anos este ano — o senhor já tem uma visão clara de como quer ver a empresa estruturada daqui a 5 anos, considerando o perfil atual do quadro societário?",
+      "Vi que houve movimentações no quadro em 2023 e 2025 — vocês já trabalham com algum assessor em planejamento de continuidade ou sucessão, ou ainda é uma discussão interna?",
+      "Os principais contratos e relacionamentos comerciais da Polimold estão formalizados institucionalmente, ou parte relevante do negócio depende da relação pessoal do senhor com os clientes?",
+      "Há gestores de segunda linha — diretores operacional, comercial — que já conduzem partes da operação de forma autônoma, ou as decisões relevantes ainda passam pelo senhor?",
+      "Existe abertura para conversar sobre formatos que garantam a continuidade da marca Polimold e protejam colaboradores e clientes — seja via parceiro estratégico, venda parcial ou outra estrutura que o senhor considere adequada?"
+    ],
+    "tese_aproximacao": "Polimold é um ativo industrial raro: 52 anos de operação em nicho especializado (máquinas para plástico e ferramentaria industrial) no epicentro metalmecânico do Brasil, com score sucessório máximo e quatro controladores acima de 80 anos sem geração jovem visível no capital. A janela é imediata — as movimentações societárias de 2023 e 2025 indicam que os sócios já estão pensando em reorganização, mas provavelmente sem assessor M&A envolvido ainda, o que significa que nenhum comprador estruturado está na mesa. O ângulo de entrada não é 'venda', é proteção de legado: uma boutique especializada em empresas familiares industriais do middle market brasileiro, com histórico no setor metalmecânico do ABC, é o interlocutor natural para uma família que quer garantir que 52 anos de reputação técnica não se percam numa transição mal gerida por um fundo sem contexto setorial.",
+    "proximo_passo": "Ligar para (11) 4358-7343 solicitando falar diretamente com Alexandre Fix ou Ruy Korbivcher — não com o departamento de contabilidade — apresentando-se como boutique de M&A especializada em empresas familiares industriais e pedindo 20 minutos para uma conversa sobre planejamento de continuidade; se não houver retorno em 48h, buscar Alexandre Roberto Ribenboim Fix no LinkedIn ou identificar o contador/advogado da família via registros do QSA e CRC/OAB para acesso indireto."
   },
   "e8c6e669-a2b1-47ce-a805-e37298521d7e": {
-    "overview": "FEY é uma indústria de fabricação e manutenção de máquinas para extração mineral, fundada em 1977 em Arujá (SP), com 49 anos de operação e capital social de R$ 4,6 milhões. A empresa está atualmente em Recuperação Judicial, o que é o sinal de estresse operacional mais relevante do dossiê. Porte classificado como 'DEMAIS' (acima de ME/EPP), com atividades secundárias em usinagem, torneiria e manutenção.",
-    "analise_sucessoria": "O quadro societário aponta risco sucessório máximo (score 100), mas com uma camada de complexidade crítica: o fundador Edmundo Fey tem 80+ anos e está na empresa desde 1977, junto com Renati Fey (71-80 anos, também sócia desde a fundação — provavelmente cônjuge ou irmã). O terceiro sócio, Renato Fey (51-60 anos), entrou apenas em 2010 — padrão clássico de segunda geração incorporada ao quadro décadas depois. O problema: Renato entrou numa empresa que hoje está em Recuperação Judicial, o que sugere que a transição já está em curso de forma desordenada. O fundador octagenário dificilmente tem capacidade operacional de tocar a crise; Renato provavelmente está na linha de frente, mas sem os recursos ou o mandato claro para fechar uma solução. Há risco real de a empresa ser liquidada antes de qualquer transação estruturada.",
-    "perguntas_abordagem": [
-      "Renato, você está gerenciando o processo de Recuperação Judicial no dia a dia? Qual é o estágio atual — já há plano de recuperação aprovado pelos credores?",
-      "Edmundo ainda participa das decisões estratégicas da FEY, ou a gestão operacional está concentrada em você e na Renati hoje?",
-      "A Recuperação Judicial foi motivada principalmente por perda de contratos, problemas de caixa recorrentes ou um evento pontual? Entender a raiz ajuda a avaliar o potencial de virada.",
-      "Existe alguma conversa em andamento com credores sobre conversão de dívida em participação societária, ou a família ainda tem controle total do capital?",
-      "Considerando a longevidade da FEY no setor e o know-how de 49 anos em maquinário de extração mineral, qual você enxerga como o ativo mais defensável do negócio caso houvesse uma reestruturação ou entrada de um sócio estratégico?"
+    "overview": "FEY é uma fabricante de máquinas e equipamentos para extração mineral, com atividades complementares de usinagem, torneiria, solda e manutenção, sediada em Arujá (SP). Fundada em 1977, acumula 49 anos de operação num nicho técnico com barreira de entrada relevante — equipamentos para mineração. O fato mais crítico do dossiê, que subordina qualquer outra análise, é que a empresa está em Recuperação Judicial ativa, conforme a razão social registrada.",
+    "analise_sucessoria": "O quadro é uma empresa familiar clássica de fundadores envelhecidos: Edmundo Fey (80+, sócio-administrador desde 1977) e Renati Fey (71-80, sócio-administrador desde 1977) estão há 48 anos sem alteração de posição. Renato Fey (51-60) entrou em 2010, provavelmente como movimento de transição para a segunda geração — mas todos os três permanecem como sócios-administradores, o que indica que a gestão operacional não foi formalmente transferida. Renato é o único sócio em faixa etária com horizonte de carreira relevante. O risco sucessório é máximo, mas está amplificado pela RJ: os fundadores têm 80+ e 71-80 anos e estão sob pressão financeira estruturada simultaneamente, o que reduz drasticamente o tempo disponível para uma transição planejada.",
+    "red_flags": [
+      {
+        "risco": "Recuperação Judicial ativa — risco jurídico, de governança e de complexidade transacional",
+        "severidade": "alta",
+        "como_verificar": "Consultar TJSP (tjsp.jus.br → Consulta Processual, pelo CNPJ ou razão social): verificar fase do plano (apresentado, aprovado, em cumprimento, descumprido), valor do passivo concursal por classe de credor, nome do administrador judicial e data-base. O plano aprovado é público e de leitura obrigatória antes de qualquer avanço."
+      },
+      {
+        "risco": "Passivo fiscal acumulado — comum em industriais de médio porte que chegam à RJ",
+        "severidade": "alta",
+        "como_verificar": "Consulta gratuita: PGFN Dívida Ativa (regularize.pgfn.gov.br pelo CNPJ), processos no CARF e Sintegra SP para débitos estaduais. Cruzar com o passivo declarado no plano de RJ — débitos extraconcursais (posteriores ao ajuizamento) são especialmente críticos."
+      },
+      {
+        "risco": "Passivo trabalhista — empresa com 49 anos de chão de fábrica tende a acumular reclamações",
+        "severidade": "alta",
+        "como_verificar": "Consulta pública de processos no TRT-2 (SP) pelo CNPJ via PJe. O plano de RJ deve mapear os créditos trabalhistas em classe própria — verificar valor e se há créditos ainda não habilitados."
+      },
+      {
+        "risco": "Dependência do fundador (hub-and-spoke) — Edmundo (80+) ainda consta como sócio-administrador, sugerindo que relações comerciais-chave e know-how técnico podem estar centralizados nele",
+        "severidade": "alta",
+        "como_verificar": "No primeiro contato com Renato: perguntar quem conduz negociações com clientes e fornecedores atualmente. Na due diligence: mapear contratos de fornecimento e ordens de compra assinados em nome de qual pessoa física."
+      },
+      {
+        "risco": "NR-12 (segurança em máquinas e equipamentos) — empresa que fabrica e opera máquinas industriais pesadas por quase cinco décadas tem exposição elevada",
+        "severidade": "media",
+        "como_verificar": "Solicitar na due diligence laudo de adequação NR-12 e histórico de fiscalizações do MTE. Verificar autuações na base pública de autos de infração do Ministério do Trabalho (sit.trabalho.gov.br)."
+      },
+      {
+        "risco": "Concentração de clientes — nicho de equipamentos para mineração tende a ter carteira estreita (poucas mineradoras ou prestadores de grande porte)",
+        "severidade": "media",
+        "como_verificar": "No primeiro contato, perguntar sobre número de clientes ativos e mix de receita entre projetos pontuais e contratos recorrentes. Confirmar em due diligence via NF-e e contratos vigentes."
+      }
     ],
-    "tese_aproximacao": "A combinação de fundador 80+ em Recuperação Judicial cria uma janela de negociação incomum: há pressão financeira real, urgência decisória e um herdeiro (Renato, 51-60) que provavelmente quer resolver — mas não tem o capital para fazê-lo sozinho. O ângulo de entrada não é 'comprar a empresa', mas sim apresentar a boutique como facilitadora de uma saída estruturada que preserve o legado da FEY e proteja Renato de carregar o passivo da geração anterior."
+    "perguntas_abordagem": [
+      "O processo de Recuperação Judicial está em que fase hoje — o plano já foi aprovado pelos credores e está sendo cumprido, ou ainda há pontos abertos?",
+      "Renato, qual é o seu papel operacional no dia a dia — as negociações comerciais e a gestão de produção já passaram pra você, ou o Edmundo ainda está envolvido ativamente?",
+      "A carteira de clientes é baseada em contratos recorrentes com mineradoras ou o fluxo de receita vem principalmente de projetos pontuais?",
+      "Qual foi o gatilho para a entrada na RJ — foi uma contração de demanda do setor de mineração, perda de contrato relevante, ou descasamento de fluxo de caixa?",
+      "Vocês já avaliaram formalmente alternativas estruturadas — entrada de sócio financeiro, aporte com novação de dívida, ou desinvestimento parcial — como caminho para sair da RJ de forma sustentável?"
+    ],
+    "tese_aproximacao": "FEY é um ativo técnico raro: quase cinco décadas fabricando equipamentos para extração mineral, nicho com barreira de entrada alta (know-how acumulado, relacionamento com mineradoras, capacidade de usinagem pesada). A RJ cria uma janela de liquidez forçada — os fundadores (80+ e 71-80) não têm horizonte de tempo para uma recuperação orgânica longa, e Renato (51-60) provavelmente não tem capital próprio para absorver o passivo sozinho. O ângulo correto é o de interlocutor que conhece estruturas de transação em ambiente de RJ (compra de UPI, aporte com novação de dívida, carve-out de ativos operacionais) e pode resolver o problema financeiro e sucessório simultaneamente — diferenciando de compradores estratégicos que fogem de passivo judicial e de fundos generalistas sem tese setorial em mineração.",
+    "proximo_passo": "Ligar para (11) 4652-7979 ou enviar e-mail para fey2000@uol.com.br dirigido nominalmente a Renato Fey, apresentando-se como especialista em transações para empresas industriais em reestruturação — o pitch inicial deve ser breve e centrado em 'alternativas que preservam o legado operacional e viabilizam a saída da RJ', sem usar as palavras 'compra' ou 'venda' no primeiro contato."
   },
   "a33e1843-b467-43c6-8544-637a827cca5c": {
-    "overview": "Mecanotecnica é uma indústria familiar de máquinas e equipamentos para uso industrial específico, com foco em ferramentas e equipamentos para o setor de plásticos, sediada em Limeira (SP) — polo industrial consolidado no interior paulista. Opera há 42 anos, classificada como EPP com capital social de R$ 25 mil registrado, configuração típica de empresa familiar que nunca atualizou o registro contábil. Três sócios, todos com sobrenome Gortan, controlam 100% da empresa desde 1999.",
-    "analise_sucessoria": "O risco sucessório é crítico. Roberto Gortan (80+, sócio-administrador, 49% de participação) é quase certamente o fundador operacional — entrou formalmente em 1999, mas a empresa existe desde 1984, sugerindo uma formalização tardia do quadro. Irma Fabbro Gortan (80+, 22%) é provavelmente a esposa, com participação passiva. Miguel Gortan (61-70, 49%) é o único com perfil de 'segunda geração ativa', mas já está na faixa de pré-aposentadoria. O quadro societário está congelado há 27 anos sem nenhuma entrada de herdeiro mais jovem visível — não há terceira geração no cap table. Com dois sócios octogenários e o terceiro na casa dos 65, a janela de transição é imediata: qualquer evento de saúde em Roberto compromete a continuidade operacional.",
-    "perguntas_abordagem": [
-      "Roberto, o sr. está há mais de 40 anos à frente da Mecanotecnica — em algum momento o sr. e o Miguel já conversaram formalmente sobre o que acontece com a empresa nos próximos 5 anos?",
-      "Hoje o Miguel está envolvido na gestão do dia a dia, ou ainda é o sr. quem toca a operação principal? Como está dividida essa responsabilidade entre vocês?",
-      "A empresa tem algum colaborador de confiança — um gerente técnico, um engenheiro sênior — que conhece a fundo os processos e os clientes, ou esse conhecimento ainda está concentrado no sr.?",
-      "Vocês já receberam alguma abordagem de compradores ou concorrentes interessados na Mecanotecnica nos últimos anos? Como o sr. reagiu a isso na época?",
-      "Considerando que Limeira é um polo industrial relevante, como o sr. enxerga o valor do negócio hoje — como ativo industrial, como carteira de clientes, ou como marca no setor?"
+    "overview": "Mecanotecnica Indústria e Comércio Ltda é uma fabricante de máquinas e equipamentos industriais (CNAE 2869-1) sediada em Limeira/SP, com 42 anos de operação desde 1984. Atua também em ferramentas, equipamentos para plástico e instalação industrial — portfólio típico de job shop metalmecânico do interior paulista. Registrada como EPP; porte operacional real não estimável sem dados adicionais.",
+    "analise_sucessoria": "O quadro societário é inteiramente familiar (sobrenome Gortan) e permanece inalterado desde 1999 — 26 anos sem qualquer movimentação. Roberto e Irma Gortan (ambos 80+) detêm juntos 100% da participação qualificada relevante (sócios com qualificação 49 e 22, respectivamente sócio-administrador e cônjuge/sócia), enquanto Miguel Gortan (61-70 anos) divide a administração com o pai. Não há nenhum sócio abaixo de 60 anos no quadro — nenhum herdeiro de geração mais jovem foi formalizado até hoje. Com os fundadores em idade avançada e Miguel já entrando na faixa de pré-aposentadoria, a empresa está em janela crítica de sucessão: se Roberto incapacitar ou falecer, não há estrutura societária preparada para absorver a transição. Score 85 é consistente com o perfil.",
+    "red_flags": [
+      {
+        "risco": "Passivo fiscal oculto — empresa de 42 anos no setor industrial, típica de regimes mistos (Simples, Presumido) com histórico de obrigações trabalhistas e previdenciárias",
+        "severidade": "alta",
+        "como_verificar": "Consulta gratuita: PGFN Dívida Ativa (https://www.pgfn.gov.br) pelo CNPJ + CND Federal na Receita Federal + CARF (consulta pública de processos) + TJSP (busca de execuções fiscais pelo CNPJ)"
+      },
+      {
+        "risco": "Passivo trabalhista não provisionado — indústria com operação de 4 décadas tende a acumular reclamações de ex-funcionários, especialmente em ambiente de máquinas",
+        "severidade": "media",
+        "como_verificar": "Consulta TST (https://consultaprocessual.tst.jus.br) e TRT-15 (Campinas, abrange Limeira) pelo CNPJ e nome dos sócios"
+      },
+      {
+        "risco": "Não-conformidade NR-12 (segurança em máquinas) — fabricante e instalador de máquinas industriais com 42 anos de operação tem alta probabilidade de parque fabril desatualizado quanto às normas de segurança vigentes desde 2010",
+        "severidade": "alta",
+        "como_verificar": "Due diligence in loco; solicitar laudos de conformidade NR-12 existentes; consultar autuações MTE pelo CNPJ via e-SIC"
+      },
+      {
+        "risco": "Dependência do fundador (hub-and-spoke) — Roberto Gortan está no sócio-administrador desde 1999; relações comerciais, técnicas e bancárias provavelmente centradas nele",
+        "severidade": "alta",
+        "como_verificar": "Perguntar diretamente no primeiro contato sobre quem assina contratos, quem atende os principais clientes e quem tem relacionamento com o banco financiador"
+      },
+      {
+        "risco": "Concentração de clientes — porte EPP em nicho industrial específico favorece base estreita de compradores recorrentes",
+        "severidade": "media",
+        "como_verificar": "Solicitar faturamento por cliente nos últimos 3 anos em fase de data room; antes disso, checar se site/materiais citam clientes-âncora"
+      }
     ],
-    "tese_aproximacao": "Mecanotecnica é um alvo de alta prioridade: dois controladores octogenários, nenhuma geração jovem visível no cap table e 27 anos sem movimentação societária indicam que a sucessão nunca foi endereçada — a empresa está madura para uma conversa de liquidez ou transição estruturada. O ângulo correto não é 'compra', mas continuidade: abordar Roberto como quem quer garantir que o legado de 42 anos não se dissolva por falta de planejamento, posicionando o processo como proteção patrimonial para a família Gortan."
+    "perguntas_abordagem": [
+      "O Sr. Roberto ainda está à frente das decisões do dia a dia, ou o Miguel já assumiu a gestão operacional? Estou perguntando para entender o momento da empresa.",
+      "A Mecanotecnica tem clientes recorrentes de longa data — como está sendo feita a passagem desses relacionamentos para a próxima geração da família?",
+      "Nos últimos anos, vocês receberam propostas de parceria ou aquisição? O que levou a não avançar?",
+      "Com 42 anos de operação em Limeira, a empresa deve ter ativos e know-how significativos — existe algum plano formalizado de sucessão ou governança para os próximos 5 anos?",
+      "O portfólio cobre desde fabricação até instalação — existe alguma linha de produto ou segmento que cresceu mais recentemente, ou a receita ainda é bastante pulverizada entre os diferentes serviços?"
+    ],
+    "tese_aproximacao": "Mecanotecnica é um alvo clássico de sucessão em janela crítica: fundadores 80+, filho já na faixa 60+, quadro societário congelado há 26 anos e nenhum herdeiro jovem formalizado — o risco de saída desordenada é real e próximo. O ângulo de abordagem é proteção de legado, não venda: a conversa começa em 'como garantir que o que você construiu em 42 anos não se dissolva numa transição mal feita', não em valuation. Somos o interlocutor certo porque atuamos especificamente com empresas familiares industriais do interior paulista nesse estágio pré-decisão — não chegamos com LOI, chegamos com diagnóstico.",
+    "proximo_passo": "Ligar para (19) 4124-0510 solicitando falar com Miguel Gortan (sócio mais jovem e provável interlocutor operacional), apresentando-se como assessor especializado em estruturação de empresas familiares industriais — sem mencionar M&A no primeiro contato."
   }
 }

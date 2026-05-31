@@ -562,6 +562,35 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
         </h4>
         <p className="leading-relaxed text-floral">{analise.analise_sucessoria}</p>
       </div>
+
+      {/* Red flags a investigar — conteúdo do #17 (Guilherme), reestilizado no brandkit */}
+      {analise.red_flags?.length ? (
+        <div>
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
+            Red flags a investigar
+          </h4>
+          <ul className="space-y-1.5">
+            {analise.red_flags.map((rf, i) => {
+              const cor =
+                rf.severidade === "alta"
+                  ? "border-risk-high/50 text-risk-high"
+                  : rf.severidade === "media"
+                    ? "border-risk-mid/50 text-risk-mid"
+                    : "border-hairline text-bone";
+              return (
+                <li key={i} className="leading-relaxed text-floral">
+                  <span className={`mr-2 rounded border px-1.5 py-0.5 font-data text-[10px] uppercase tracking-wider ${cor}`}>
+                    {rf.severidade}
+                  </span>
+                  <span className="text-floral">{rf.risco}</span>
+                  {rf.como_verificar && <span className="text-bone"> — {rf.como_verificar}</span>}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ) : null}
+
       {analise.perguntas_abordagem.length > 0 && (
         <div>
           <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
@@ -580,6 +609,16 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
         </h4>
         <p className="leading-relaxed text-floral">{analise.tese_aproximacao}</p>
       </div>
+
+      {/* Próximo passo — conteúdo do #17 (Guilherme), reestilizado no brandkit */}
+      {analise.proximo_passo && (
+        <div>
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
+            Próximo passo
+          </h4>
+          <p className="leading-relaxed text-floral">→ {analise.proximo_passo}</p>
+        </div>
+      )}
     </div>
   );
 }
