@@ -12,13 +12,21 @@
 - [x] **Score v0.1 recalibrado por lift** e **portado pro produto** — top decil 17%→28%. PR #13.
 - [x] **Fix**: busca filtrada usa quadro societário completo (não subconjunto).
 
-## 🔴 Agora (Semana 3 — deploy + Loom)
+## 🔴 Agora (destravado pela assinatura bloqueada)
+
+- [ ] **MIGRAR research-agent pra Anthropic API** (web search tool) — a assinatura via Agent SDK foi
+      bloqueada ("org disabled subscription access", issue claude-code#8327). Afeta `lib/research.ts`
+      + scripts de pesquisa. Demos cacheados seguem ok. Era o caminho de produção de qualquer forma.
+- [ ] **Juiz de M&A (eval sintético)** — rodar `build-juiz-rubric.mjs` via API (~$0,30) → construir
+      rubric → rodar `juiz-avaliar.mjs` num dossiê real e ver se a crítica tem sinal. Scripts prontos.
+- [ ] (opcional) Investigar reabilitar assinatura no terminal local — só se conta individual.
+
+## ⚪ Semana 3 — deploy + Loom
 
 - [x] API direta (~31–38s, ~$0.04/busca)
-- [ ] **Deploy no Vercel** — env vars (Supabase + Anthropic + GCP). ⚠️ research-agent usa assinatura
-      (não roda no Vercel) → no deploy, research só via cache OU trocar por Anthropic API (web search tool).
+- [ ] **Deploy no Vercel** — env vars (Supabase + Anthropic + GCP). Com research na API, destrava.
 - [ ] **Calls de validação** — DMs enviadas (Daniella/Volaris, Nathália, Brenda, Illa). Na call: pedir
-      deal list (ground truth premium). Roteiro em `brain/roteiro-validacao.md`.
+      deal list (ground truth premium) + transcrição alimenta o juiz. Roteiro em `brain/roteiro-validacao.md`.
 
 ## 🟡 Semana 1 — Foundation (até reunião 2, 02/06)
 
