@@ -332,3 +332,25 @@ medição confiável. Loop sensor→correção→medição fechado, custo zero (
 do output, senão penaliza melhorias invisíveis. (2) A estimativa financeira (deixada de fora) trava a nota
 em 5-6 e é o gargalo: o juiz argumenta que é o **primeiro corte de qualificação por tamanho**, não enfeite —
 o que reabre a decisão de produto sobre proxy de EBITDA com metodologia.
+
+---
+
+## [2026-05-30] Guilherme | Convergência Relay: recall por vertical + data moat consolidado
+
+Sessão de análise (motor do Boreal aplicado à pergunta do Relay: decision gate Phase 0).
+
+- **Recall@top10% por vertical** (`validacao-vertical.mjs`, decil dentro do vertical): metalmec **66%**
+  (passa o gate ≥40%), saúde **17%**. O agregado ~28% escondia a diferença.
+- **Decomposição de saúde** (`validacao-saude-decomp.mjs`): 62% do M&A de saúde é consolidação
+  (recall 1%), só 8% sucessão clássica (recall 100%) → o label estava sujo, não o score.
+- **Filtrar universo não resolve** (`validacao-saude-filtrado.mjs`): decil médio piora pra 4,95.
+  Achado de arquitetura: **o score v0 é bom de elegibilidade (corte), fraco de ranking fino** (idade
+  satura entre velhos). O v0 elege, o v1 (research-agent) ordena.
+- **Data moat consolidado**: trazidos os 5 scripts de mineração (`detectar-transicoes`, `validacao-escala`,
+  `validacao-lift`, `validacao-refino`, `check-socios-schema`) da branch órfã `gui/transicoes-cnpj` pra cá.
+  Não dava pra mergear a branch inteira (atrasada — reverteria research→API e deletaria o juiz).
+
+**Resultado:** validação retroativa pura no platô; insights estratégicos do Relay documentados no segundo
+cérebro (`wiki/synthesis/relay-data-moat`). Saúde descartada como vertical (sem acordo com a Setter).
+**Aprendizado:** validação retroativa mede elegibilidade, não ranking fino — pra ordenar a fila de
+abordagem precisa do v1 (sinais que variam entre empresas igualmente velhas), que não é testável retroativo.
