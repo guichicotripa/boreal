@@ -2,10 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase";
 import { calcScore } from "@/lib/scoring";
 import { gerarDossierAnalise } from "@/lib/dossier";
-import type { Empresa } from "@/lib/types";
+import type { Empresa, DossierAnalise } from "@/lib/types";
+import dossierCache from "@/lib/dossier-cache.json";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
+
+// Cache de memos das empresas-chave dos demos → expandir é instantâneo no pitch (custo zero).
+const CACHE = dossierCache as unknown as Record<string, DossierAnalise>;
 
 export async function POST(req: NextRequest) {
   let body: unknown;
@@ -18,6 +22,12 @@ export async function POST(req: NextRequest) {
   const empresaId = String((body as { empresaId?: string })?.empresaId ?? "").trim();
   if (!empresaId) {
     return NextResponse.json({ error: "empresaId vazio" }, { status: 400 });
+  }
+
+  // Cache hit → memo instantâneo (a UI só usa `analise`; a empresa ela já tem da busca).
+  const skipCache = req.nextUrl.searchParams.get("fresh") === "1";
+  if (!skipCache && CACHE[empresaId]) {
+    return NextResponse.json({ analise: CACHE[empresaId], cached: true });
   }
 
   // Busca a empresa completa (com sócios) — fonte da verdade, não confia no client.

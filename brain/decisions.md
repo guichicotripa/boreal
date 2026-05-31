@@ -276,3 +276,26 @@ demanda + cache), $0,30 (rubric único). Demos cacheados seguem funcionando (já
 
 **Status:** 🟡 pendente migração. Opcional: investigar reabilitar assinatura no terminal local
 (`unset ANTHROPIC_API_KEY` + `claude`) — só se conta individual.
+**Atualização (30/05, continuação):** ✅ migração feita E assinatura destravada — ver entrada abaixo.
+A causa registrada acima (#8327, API key sobrescreve) estava **errada**.
+
+---
+
+## [2026-05-30] Resolução: a assinatura era conta errada + arquitetura API-no-produto / cache-na-assinatura
+
+**Contexto:** continuação. O "org disabled" NÃO era a API key — confirmado: sem `ANTHROPIC_API_KEY`
+em nenhum escopo de ambiente (User/Machine/Process) e o erro persistia. O Claude Code estava logado
+numa **conta errada** (vinculada a uma org que desabilitou Claude Code). Re-login com a conta pessoal
+Pro (guichicotrip4@gmail.com) destravou; `check-agent-sdk.mjs` voltou a responder.
+
+**Decisões:**
+1. **Migração `research.ts` → Anthropic API + web search tool concluída** (interface intacta,
+   validada — PRENSA 24s). Mantida mesmo com a assinatura de volta: é o caminho deploy-ready.
+2. **Arquitetura: produto na API, cache gerado via assinatura.** `research.ts`/`dossier.ts` usam a API
+   (rodam em qualquer lugar); os caches (research + dossiê) são pré-computados via Agent SDK na
+   assinatura (custo zero). O pitch serve 100% do cache → ~$0 de API ao vivo.
+3. **Não fazer deploy agora.** Pitch/Demo Day via tela compartilhada (localhost). Deploy fica
+   disponível (research já na API) se um dia fizer sentido.
+
+**Status:** ✅ Tomada e implementada. Fábricas de cache via assinatura: `cache-research-sub.mjs`,
+`cache-dossier-sub.mjs`. Custo da sessão ≈ $0,21 (1 teste na migração); resto via assinatura.

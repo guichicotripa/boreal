@@ -6,19 +6,22 @@
 //   - O CÓDIGO aplica os pesos (o LLM não inventa números de score).
 //   - Ajuste é BIDIRECIONAL: pode confirmar/subir o risco OU rebaixá-lo (ex: achou sucessor).
 //
-// Usa o Claude Agent SDK + WebSearch nativo do Claude Code, autenticado pela ASSINATURA
-// (não pela API) — custo zero. Truque: o `env` passado ao query() substitui o ambiente do
-// subprocesso; ao remover ANTHROPIC_API_KEY, o Claude Code cai na assinatura logada.
-// ⚠️ Só funciona local (onde o Claude Code está logado), não no Vercel.
+// Usa a Anthropic API direta (ANTHROPIC_API_KEY do .env.local) + a web search tool
+// server-side (`web_search_20250305`): o modelo busca na web sozinho e devolve o texto final.
+// Funciona local E no Vercel. Custo ~$0.04-0.22/empresa (até 4 buscas + tokens).
+// Substituiu o Agent SDK + WebSearch na assinatura (que só rodava com o Claude Code logado
+// e foi bloqueado por "org disabled subscription access", issue claude-code#8327).
 
-import { query } from "@anthropic-ai/claude-agent-sdk";
+import Anthropic from "@anthropic-ai/sdk";
 import type { Empresa, SinalQualitativo, ResearchResult } from "./types";
 
 export type { SinalQualitativo, ResearchResult };
 
-// Ambiente do subprocesso SEM a API key → força autenticação por assinatura.
-function envSemApiKey() {
-  return { ...process.env, ANTHROPIC_API_KEY: undefined };
+// Lazy: cria o cliente na primeira chamada (garante ANTHROPIC_API_KEY já no process.env).
+let _client: Anthropic | null = null;
+function getClient() {
+  if (!_client) _client = new Anthropic();
+  return _client;
 }
 
 // Tipos de sinal e seus pesos (ajuste sobre o score v0). Determinístico no código.
@@ -80,23 +83,24 @@ Valores válidos de "tipo": ${TIPOS}. Se não achar nada conclusivo, retorne "si
 
 EFICIÊNCIA: faça no máximo 4 buscas na web, depois conclua com o JSON. Não exaustivo — foque nos sinais mais prováveis.`;
 
-  // Agent SDK com WebSearch — a IA pesquisa de verdade, usando a assinatura (custo zero).
-  let raw: string | null = null;
-  for await (const message of query({
-    prompt,
-    options: {
-      systemPrompt: SYSTEM,
-      allowedTools: ["WebSearch", "WebFetch"],
-      maxTurns: 18, // web search consome ~1 turn por busca; precisa de folga pra sintetizar o JSON
-      env: envSemApiKey(),
-    },
-  })) {
-    if (message.type === "result" && message.subtype === "success") {
-      raw = message.result;
-    }
-  }
+  // API direta + web search tool server-side: o modelo faz as buscas sozinho (até max_uses)
+  // e devolve a resposta final. max_uses=4 espelha o "máximo 4 buscas" do prompt.
+  const message = await getClient().messages.create({
+    model: "claude-sonnet-4-6",
+    max_tokens: 4096, // folga pra raciocínio das buscas + o JSON final
+    system: SYSTEM,
+    messages: [{ role: "user", content: prompt }],
+    tools: [{ type: "web_search_20250305", name: "web_search", max_uses: 4 }],
+  });
 
-  if (!raw) throw new Error("Research: Agent SDK não retornou resultado");
+  // A resposta vem como blocks intercalados (text + server_tool_use + web_search_tool_result).
+  // O JSON final está nos text blocks — concatena todos e extrai.
+  const raw = message.content
+    .filter((b): b is Anthropic.TextBlock => b.type === "text")
+    .map((b) => b.text)
+    .join("\n");
+
+  if (!raw) throw new Error("Research: API não retornou texto");
 
   const match = raw.match(/\{[\s\S]*\}/);
   if (!match) throw new Error("Research: resposta sem JSON: " + raw.slice(0, 200));
@@ -123,7 +127,7 @@ EFICIÊNCIA: faça no máximo 4 buscas na web, depois conclua com o JSON. Não e
 
   console.log(
     `[research] ${empresa.razao_social.slice(0, 30)} — v0:${scoreV0}→v1:${scoreV1} ` +
-    `(${sinais.length} sinais, via assinatura)`
+    `(${sinais.length} sinais, via API + web search)`
   );
 
   return {

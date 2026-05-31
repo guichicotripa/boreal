@@ -261,3 +261,34 @@ Sessão longa (28→29 madrugada). Fechou a Semana 2 inteira e começou a Semana
 - `next.config.ts` com dotenv override resolve var de sistema vazia mascarando o `.env.local`.
 - Supabase SELECT tem teto de 1000 linhas — paginar com `.range()`.
 - Cache pré-computado é o jeito certo de ter demo instantâneo + busca real ao vivo coexistindo.
+
+---
+
+## [2026-05-30] Guilherme | Research → API + assinatura destravada + demo-dois-lados + cache de memos
+
+Continuação (após score v0.1 e juiz). Foco: tirar o research-agent da assinatura bloqueada e
+preparar o pitch pra rodar com custo de API ~zero.
+
+- **Migração `research.ts`:** Agent SDK (assinatura) → Anthropic API + **web search tool**
+  server-side (`web_search_20250305`). Interface `investigarEmpresa()→ResearchResult` intacta —
+  rota e UI não mudaram. Validado (PRENSA 24s, 3 buscas, comportamento bidirecional preservado).
+- **Assinatura destravada:** o "org disabled subscription access" era **conta errada logada** no
+  Claude Code (não bug da API key — confirmado: sem key no ambiente). Re-login com a conta pessoal
+  Pro resolveu → Agent SDK voltou a custo zero. `check-agent-sdk.mjs` confirma.
+- **Arquitetura definida:** produto (`research.ts`/`dossier.ts`) na **API** (deploy-ready); **cache
+  gerado via assinatura** (custo zero). Pitch serve do cache → ~$0 de API ao vivo.
+- **Demo-dois-lados resolvido:** investigou candidatas "do meio" via assinatura
+  (`cache-research-sub.mjs`). **MECANOTECNICA 85→96** ↑ — IA achou herdeiro na pecuária (sem
+  sucessor no negócio → eleva), com fonte real. Complementa o rebaixamento **PRENSA 100→75** ↓.
+- **Research-cache curado:** removidas 4 subidas triviais (+3 só `sem_presenca_digital`); ficaram 6.
+- **Cache de memos:** rota `/api/dossier` agora lê de `dossier-cache.json` (cache hit instantâneo);
+  **9 memos** gerados via assinatura (`cache-dossier-sub.mjs`, top-5 dos demos + research-cache).
+
+**Resultado:** typecheck + `next build` de produção limpos. Custo de API da sessão ≈ $0,21 (1 teste
+na migração); todo o resto (16 researches + 9 dossiês) via assinatura = custo zero.
+**Aprendizado:**
+- "org disabled" pode ser só conta errada logada no Claude Code — re-login resolve, não é bug.
+- PowerShell `Set-Content -Encoding UTF8` grava **BOM** → quebra `JSON.parse` do Node. Usar
+  `[IO.File]::WriteAllText` (UTF-8 sem BOM).
+- Subida de score é **estruturalmente rara** no dataset: leads frios não têm M&A público. O research
+  corrige sobretudo **pra baixo** (depura falsos positivos) — narrativa honesta e forte pro Loom.

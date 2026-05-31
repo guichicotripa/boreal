@@ -5,7 +5,7 @@ import { investigarEmpresa } from "@/lib/research";
 import type { Empresa, ResearchResult } from "@/lib/types";
 import researchCache from "@/lib/research-cache.json";
 
-// Agent SDK spawna o Claude Code (assinatura) → runtime Node. Investigação é lenta (~1-2min).
+// API direta + web search tool server-side. Investigação leva ~30-60s (até 4 buscas).
 export const runtime = "nodejs";
 export const maxDuration = 180;
 
@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
         score: research.score_v1,
         breakdown: empresa.score?.breakdown ?? null,
         sinais: research.sinais,
-        model: "research-agent/v1 (claude via assinatura)",
+        model: "research-agent/v1 (claude via API + web search)",
       })
       .then(({ error: e }) => {
         if (e) console.error("score_run insert falhou:", e.message);
