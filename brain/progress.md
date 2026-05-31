@@ -354,3 +354,114 @@ Sessão de análise (motor do Boreal aplicado à pergunta do Relay: decision gat
 cérebro (`wiki/synthesis/relay-data-moat`). Saúde descartada como vertical (sem acordo com a Setter).
 **Aprendizado:** validação retroativa mede elegibilidade, não ranking fino — pra ordenar a fila de
 abordagem precisa do v1 (sinais que variam entre empresas igualmente velhas), que não é testável retroativo.
+
+---
+
+## [2026-05-27] Maguto | Onboarding no repo + validação do pipeline v0
+
+Entradas retroativas: o lado do Maguto não tinha sido logado aqui (só nas sessões do segundo cérebro). Consolidado pra fechar a jornada antes do Loom.
+
+Setup local pra entrar no projeto e validar end-to-end o que o Guilherme tinha empurrado de manhã.
+
+**Construído:**
+- Collaborator do `guichicotripa/boreal` aceito — `gh api` confirma permissão `write` (push, triage, pull).
+- `.env.local` do Guilherme renomeado/movido pra `D:\documents\boreal\.env.local` (gitignored ok). Chaves Supabase + GCP + Anthropic em ambiente.
+- GitHub CLI instalado + auth como `magutolou` (token com gist, read:org, repo, workflow).
+- Aspa órfã no SYSTEM PATH do Windows removida — npm/node herdavam PATH corrompido (causa de `npm run dev` falhar silencioso antes).
+- `npm install --ignore-scripts` → 678 pacotes; postinstall do msw pulado por causa do sandbox, sem efeito em dev/prod.
+- `npm run dev` em `localhost:3000` → pipeline v0 validado end-to-end via API e browser. Screenshot confirmando 50 cards renderizados + badges de filtro + tag "interpretado por IA".
+
+**Resultado:** ambiente do Maguto operacional. Pipeline v0 reproduzido fora da máquina do Guilherme — primeira evidência de que o setup é portável.
+
+**Aprendizado:**
+- Caso de teste útil pro scoring v1: **EXTRUSORAS OLGA** (2 sócios 80+, fundada 1975) vs **PRENSA JUNDIAI** (um sócio 80+ + um 31–40, fundada 1973). Filtro burro por idade do mais velho dá "alto risco" pras duas, mas a presença do sócio mais novo na Prensa muda o sinal sucessório. Discriminação que o scoring determinístico da Semana 2 precisaria capturar (e capturou).
+- Aspa órfã em SYSTEM PATH do Windows não dá erro óbvio — só faz npm/node herdarem PATH parcial. Vale checar PATH no shell antes de debugar instalação.
+
+---
+
+## [2026-05-28] Maguto | Preparação do brand sprint — workflow de identidade visual com IA
+
+Dia de research, sem código no repo do produto. Objetivo: chegar no dia 29 com plano antes de abrir o Claude Code pra identidade visual.
+
+**Construído (no segundo cérebro, fora deste repo):**
+- Ingest de vídeos sobre criação de identidade visual com IA → `wiki/sources/identidade-visual-ai-brandbook.md` no segundo cérebro.
+- Workflow de 8 passos consolidado em `wiki/concepts/identidade-visual-ia.md`: território da marca → conceito de ícone (Claude) → referências Pinterest → tipografia no Canva → ícone no Recraft → paleta/fontes → estilo de ilustração → brandbook → CSS theme.
+- Narrativa do Loom persistida em `memory/projects/boreal.md` (segundo cérebro).
+- Conceito de deal sourcing PE estruturado em `wiki/concepts/deal-sourcing-pe.md` — Silver Tsunami, processo manual, vocabulário técnico.
+
+**Resultado:** plano de execução pra Semana 1.5 (identidade visual) pronto antes de abrir o editor. Estimativa: ~2h30 de prep — caro em horário mas pagou no dia 29 (zero retrabalho).
+
+**Aprendizado:**
+- Naming "Boreal" (norte, bússola) carrega coerência semântica explorável no ícone — base do conceito de onda dupla referenciando aurora boreal que apareceu no dia 29.
+- Separar "preparação de research" de "execução de design" é não-óbvio até falhar. O instinto inicial era abrir o Claude Design e iterar; research antes elimina rodadas perdidas.
+
+---
+
+## [2026-05-29] Maguto | Identidade visual Boreal — paleta + logo + brandkit v1
+
+Sessão longa de identidade visual com o plano do dia 28 em mãos. Brandkit v1 fechado e commitado no repo (assets em `brand/`).
+
+**Construído:**
+- **Pesquisa de referências PE/M&A** — Grata, Harmonic, Cyndx, SourceScrub, DealCloud. Conclusão: praticamente todos em azul/navy corporativo. Diferenciação real = ir pro lado oposto (warm minimalism).
+- **Paleta fechada** com Guilherme:
+  - Smoky Black `#11120D` — fundo
+  - Olive Drab `#565449` — decoração
+  - Bone `#D8CFBC` — info legível
+  - Floral White `#FFFBF4` — no lugar de branco puro (mantém coesão quente)
+- **Cores de risco:** terracota `#C8623E` (alto) / ocre `#C99B3D` (médio) / Bone (baixo).
+- **Tipografia:** Newsreader (display editorial) + Space Grotesk (interface, depois trocada por IBM Plex Sans no restyle) + IBM Plex Mono (dados).
+- **Logo:** múltiplas rodadas no Claude Design até a **onda dupla 3a**, Archivo Medium tracking 0.10em. Referência dupla — ondas da aurora boreal + tese do Silver Tsunami.
+- **Assets organizados e commitados:** `brand/logo/` (SVGs + docs), `brand/guidelines/` (PDF + HTML). Pushed → Guilherme tem acesso.
+
+**Tentado e adiado:**
+- Refinamentos pontuais na `page.tsx` em 3 blocos. Revertido — implementar pedaços antes das fontes e tokens estarem no código gera inconsistência. Restyle completo virou tarefa do dia 30.
+
+**Resultado:** brandkit v1 íntegro no repo. Direção visual cravada (warm minimalism, sem azul) — diferencia do nicho em 2 segundos.
+
+**Aprendizado:**
+- Num nicho saturado de azul corporativo (PE/M&A), paleta quente é diferenciação que se lê antes de qualquer copy.
+- Claude Design itera logo bem em rodadas curtas (variação → escolher direção → refinar tracking → atualizar brandkit), mas geração de imagem consome muito token. Iterar com prompt enxuto.
+
+---
+
+## [2026-05-30] Maguto | Restyle brandkit — Shell + Etapas 1–6
+
+Sessão de tarde/início da noite (12:26 → 18:43). Branch: `maguto/restyle-brandkit`. Primeira metade do restyle: do shell do brandkit até o card D.2 fechado. Etapas 7–10 + navbar entraram em sessão separada depois (ver entrada de 30/05 mais abaixo).
+
+**Construído:**
+
+- **Shell do brandkit** (`4f3d1ad`): tokens de cor no `globals.css` (Smoky Black, Olive Drab, Bone, Floral White + cores de risco), fontes carregadas via `layout.tsx`, componentes `Logo.tsx` / `Mark.tsx` em `src/components/brand/`.
+- **Etapa 1** (`af651a6`): aplica tokens Boreal em `page.tsx` + `pipeline/page.tsx` — substitui shadcn defaults por `bg-smoky-black`, `text-bone`, `border-floral-white/10`.
+- **Etapa 2** (`b179cb8`): hero terminal two-column (eyebrow `font-data` mono + headline Newsreader à esquerda, input + chips de exemplo à direita). IBM Plex Sans entra como `font-sans`.
+- **Divergência tipográfica** (`1fa5309`): Space Grotesk (planejado no brandkit V1) trocada por IBM Plex Sans. Registrada em `brand/BRAND.md` pra futura referência (Space Grotesk não casou bem com a Newsreader; Plex Sans deu hierarquia mais limpa).
+- **Fix circular reference** (`e2d4cac`): `@theme inline` do shadcn auto-gera `--font-sans: var(--font-sans)`, criando referência circular que quebra o build. Resolvido declarando explicitamente `--font-sans: var(--font-plex-sans)` no bloco `@theme inline`.
+- **Etapa 3 — navbar** (`f6d57d9` + `dc1c6b8`): navbar com `max-w-5xl`, logo à esquerda, link "Pipeline" discreto à direita. Primeira tentativa com link em Olive Drab não lia como clicável → trocado pra `text-bone`.
+- **Etapa 4 — results header** (`3cdc697` + `4844f43`): tipografia mono consistente no header de resultados, fix de wrap quando a query era longa, reposicionamento da metadata "top X analisadas por IA" + honestização da copy (não prometer mais do que entrega).
+- **Etapas 5+6 — card D.2** (`7e4dd1f`): estrutura two-column badge à esquerda + conteúdo à direita, border-left por tier (vermelho ≥70, laranja 50–70, neutro <50), ações funcionais (Ver detalhes, Investigar com IA, Memo) com hover states.
+
+**Resultado:** 9 commits empurrados pra `maguto/restyle-brandkit`. `npm run dev` valida visualmente cada etapa em localhost:3000. Build limpo após o fix do `@theme inline`. Card D.2 com hierarquia visual clara (score → empresa → sócios → ações).
+
+**Aprendizado:**
+- `@theme inline` do shadcn cria circular reference quando você redeclara `--font-sans` sem apontar pra uma fonte concreta. Resolver com `--font-sans: var(--font-plex-sans)` explícito.
+- Espacar UI por etapa (não num megacommit) ajuda a reverter sem perder o resto se uma etapa der ruim. Inversão: força a commitar mesmo estados intermediários "feios", mas vale o trade-off.
+- Cor de link discreto em paleta dark precisa ser testada no contexto, não no isolated. Olive Drab `#565449` parece tom acentuado fora da tela mas some quando colado em `bg-smoky-black` — Bone foi a leitura certa de "clicável mas não chamativo".
+
+---
+
+## [2026-05-31] Maguto | PR #18 do restyle — rebase + resolução de conflito + abertura
+
+Sessão curta e operacional pra fechar o trabalho do dia 30 num PR limpo antes dos ajustes UI/UX.
+
+**Construído:**
+- `/boreal` rodado pra ver o estado. `origin/main` andou 4 commits do Guilherme durante o dia: research na API, score v0.1, juiz de M&A, demo-dois-lados.
+- Rebase de `maguto/restyle-brandkit` (16 commits) em cima de `origin/main`.
+- **Conflito em `brain/pending.md`** — ambos editaram a seção da Semana 3. Resolução manual preservando os dois lados: demo-dois-lados + cache de memos (Guilherme) marcados [x], restyle marcado [x] (Maguto), ajustes UI/UX e `router.back()` em aberto.
+- Force-push com `--force-with-lease` (seguro em branch pessoal).
+- PR aberto via `gh`: https://github.com/guichicotripa/boreal/pull/18 — descrição cobre as 10 etapas + fixes técnicos + test plan + anti-escopo (ajustes A/B/C ficam pra PR separado).
+
+**Resultado:** PR #18 aberto sem merge conflicts no GitHub. Restyle pronto pra review do Guilherme.
+
+**Aprendizado:**
+- Fluxo do `/salve` validado em conflito real: rebase + resolução manual + `--force-with-lease` + `gh pr create` em sequência roda limpo.
+- `--force-with-lease` em vez de `--force` puro evita sobrescrever commit que outra pessoa tenha empurrado na mesma branch — padrão certo pra force-push em branch pessoal.
+- Ajustes UI/UX (Etapas A/B/C do doc `boreal_ajustes_finais_ui_ux_3105.md`) em PR separado em cima do #18 mergeado: mantém restyle puro, review do Guilherme fica mais focado.
