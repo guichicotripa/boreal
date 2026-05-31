@@ -104,6 +104,35 @@ Quarta sessão. A primeira coisa demoável: digita em linguagem natural, recebe 
 
 *(append novas entradas abaixo desta linha)*
 
+## [2026-05-30] Maguto | Restyle brandkit — Etapas 7–10 + polimento navbar
+
+Sessão longa (continuação de contexto compactado). Branch: `maguto/restyle-brandkit`.
+
+**Construído:**
+- **Etapa 7** — neutralizou o último azul restante: `--sidebar-primary` do shadcn dark mode tinha hue 264 (azul). Trocado para `oklch(0.488 0 0)` (neutro). Boreal agora é 100% sem azul/navy.
+- **Etapa 8** — dossiê + timeline:
+  - `MemoDisplay`: overview, análise sucessória, perguntas de abordagem, tese com borda risk-mid.
+  - `Timeline` horizontal CSS puro: fundação → entrada de sócios, dot centrado na linha, labels acima/abaixo, "Hoje" com dot vazio. Fixes: margin collapse (`h-8 mb-4`), linha insetada (`inset-x-[18px]`), containers de 28px fixos nas bordas.
+- **Etapa 9** — três estados revisados: loading copy final ("Comentando as primeiras empresas com IA…"), erro com label `font-data` + mensagem risk-high + sugestão bone, vazio com headline Newsreader + parágrafo de sugestão.
+- **Etapa 10** — polimento: hover nos cards (`hover:bg-surface-hover transition-colors`), responsivo mobile (headline `text-3xl md:text-[44px]`, padding `py-10 md:py-20`), sandbox deletado, `.obsidian/` no gitignore.
+- **Navbar sticky** — `sticky top-0 z-50` no `layout.tsx`.
+- **NavLogo route-aware** — novo `src/components/brand/NavLogo.tsx` (client component): scroll suave no `/`, `router.push("/")` nas demais rotas.
+
+**Tentado e revertido:**
+- `router.back()` no "← Voltar à busca" da pipeline — não funcionou como esperado. Revertido para `href="/"`. Ficou como pendência para resolver depois.
+
+**Alinhamento UI/UX (doc ChatGPT `boreal_ajustes_finais_ui_ux_3105.md`):**
+- 8 de 11 pontos aprovados para implementar amanhã.
+- 2 com ressalva: coluna direita (manter cobertura vs placeholder de metodologia) e contador no header (arquitetura a definir).
+- 1 trivial (barra do notebook — ignorar).
+
+**Resultado:** branch `maguto/restyle-brandkit` com 6 commits de restyle + 1 feat (navbar). Produto visualmente alinhado à direção Boreal — dark, editorial, quente, sem azul.
+
+**Aprendizado:**
+- `@theme inline` do shadcn auto-gera `--font-sans: var(--font-sans)` → circular reference. Fix: declarar explicitamente `--font-sans: var(--font-plex-sans)` no bloco `@theme inline`.
+- Timeline CSS com conteúdo absoluto dentro de container: o container precisa de altura explícita (`h-8`) senão o margin-bottom colapsa através dele.
+- `layout.tsx` é Server Component — qualquer `onClick` na navbar precisa de um client component wrapper separado (`NavLogo.tsx`).
+
 ## [2026-05-28] Guilherme | Semana 2 — Score + Reasoner LLM batched
 
 Quinta sessão (continuação pós-compactação do contexto). Foco da noite: tirar o produto de

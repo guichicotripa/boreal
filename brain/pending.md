@@ -75,8 +75,15 @@
       Cacheado via assinatura. (Subida forte é rara no dataset — leads frios não têm M&A público.)
 - [x] **Cache de memos (dossiês)** — `/api/dossier` lê de `dossier-cache.json`; 9 memos pré-gerados
       via assinatura (top-5 dos demos + research-cache). Expandir memo no pitch = instantâneo, custo 0.
-- [ ] **Polish da hierarquia visual do card** — acumulou muito (score, one-liner, flags, sinais v0,
-      setor, metadados, contato, sócios, research, dossiê). Precisa hierarquia pro vídeo.
+- [x] **Polish da hierarquia visual do card** — restyle completo na branch `maguto/restyle-brandkit`.
+      Card D.2 com two-column badge+content, border-left por tier, ações funcionais, dossiê + timeline.
+- [ ] **Ajustes UI/UX pós-restyle** (doc `boreal_ajustes_finais_ui_ux_3105.md`) — implementar amanhã:
+      - **Etapa A (Home):** label "DESCREVA UMA TESE EM LINGUAGEM LIVRE" + "Score de risco sucessório"
+      - **Etapa B (Cards):** "top 15 analisadas por IA" · badge RISCO SUCESSÓRIO ALTO/MÉDIO/BAIXO ·
+        limitar badges a 3 · reordenar ações (Ver detalhes → Investigar → Memo) · "Salvar no pipeline"
+      - **Etapa C (Pipeline):** lanes visuais sutis · empty states nas colunas
+      - **Decidir antes:** coluna direita (cobertura vs placeholder metodologia) · contador "PIPELINE · N"
+- [ ] **"Voltar à busca" com router.back()** — tentado, não funcionou, revertido. Investigar causa.
 - [ ] **Narrativa da home** — header amarrando a tese Silver Tsunami / sucessão.
 - [ ] ~~Deploy no Vercel~~ — **decisão (30/05): não fazer agora.** Pitch/Demo Day via tela
       compartilhada (localhost). Research já está na API se um dia o deploy fizer sentido.
