@@ -32,11 +32,16 @@ const d = await r.json();
 if (!r.ok || d.error) { console.log("Erro ao obter dossiê:", d.error ?? r.status); process.exit(1); }
 const analise = d.analise;
 
-const dossie = `EMPRESA: ${empresa.razao_social} · ${empresa.municipio}/${empresa.uf} · ${empresa.cnae_principal_desc ?? empresa.cnae_principal}
+const redFlagsTxt = (analise.red_flags ?? []).length
+  ? analise.red_flags.map((rf) => `[${rf.severidade}] ${rf.risco} (verificar: ${rf.como_verificar})`).join(" · ")
+  : "(nenhum listado)";
+const dossie = `EMPRESA: ${empresa.razao_social} · CNPJ ${empresa.cnpj ?? "?"} · ${empresa.municipio}/${empresa.uf} · ${empresa.cnae_principal_desc ?? empresa.cnae_principal}
 OVERVIEW: ${analise.overview}
 ANÁLISE DE RISCO SUCESSÓRIO: ${analise.analise_sucessoria}
+RED FLAGS A INVESTIGAR: ${redFlagsTxt}
 PERGUNTAS DE ABORDAGEM: ${analise.perguntas_abordagem.map((p, i) => `(${i + 1}) ${p}`).join(" ")}
-TESE DE APROXIMAÇÃO: ${analise.tese_aproximacao}`;
+TESE DE APROXIMAÇÃO: ${analise.tese_aproximacao}
+PRÓXIMO PASSO: ${analise.proximo_passo || "(não informado)"}`;
 
 // O juiz critica contra o rubric (assinatura, sem web search).
 console.log("Juiz avaliando (assinatura)…\n");
