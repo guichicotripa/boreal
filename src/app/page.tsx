@@ -568,7 +568,7 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
           </ul>
         </div>
       )}
-      <div className="rounded-lg border border-hairline bg-surface p-3">
+      <div className="border-l-2 border-risk-mid pl-3">
         <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
           Tese de aproximação
         </h4>
@@ -611,23 +611,49 @@ function Timeline({ empresa }: { empresa: Empresa }) {
       <h4 className="mb-2 font-data text-[10px] uppercase tracking-wider text-olive">
         Linha do tempo societária
       </h4>
-      <div
-        className="relative h-px bg-hairline"
-        style={{ marginTop: "2.4rem", marginBottom: "1.4rem" }}
-      >
+      {/* Altura explícita evita margin collapse (conteúdo é absoluto) */}
+      <div className="relative mt-10 h-8 mb-4">
+        {/* Linha separada, insetada pelo raio do dot em cada lado */}
+        <div className="absolute inset-x-[18px] top-0 border-b border-hairline" />
+
         {eventos.map((ev, i) => {
           const pct = ((ev.ano - anoFund) / span) * 100;
-          // Alinhamento do label: borda esquerda alinha à esquerda, direita à direita.
-          const align =
-            pct <= 8 ? "left-0 items-start text-left"
-            : pct >= 92 ? "right-0 items-end text-right"
-            : "items-center text-center -translate-x-1/2";
-          const isEdgeRight = pct >= 92;
+          const isLeft  = pct === 0;
+          const isRight = pct >= 92;
+
+          if (isLeft) {
+            return (
+              <div key={i} className="absolute left-0 -translate-y-1/2" style={{ width: 28 }}>
+                <span className="absolute -top-7 left-0 max-w-[8rem] truncate whitespace-nowrap text-[10px] text-bone">
+                  {ev.label}
+                </span>
+                <span className="mx-auto block h-2 w-2 rounded-full bg-risk-mid" />
+                <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-olive">
+                  {ev.ano}
+                </span>
+              </div>
+            );
+          }
+
+          if (isRight) {
+            return (
+              <div key={i} className="absolute -translate-y-1/2 -translate-x-1/2" style={{ left: `${pct}%`, width: 28 }}>
+                <span className="absolute -top-7 w-full truncate whitespace-nowrap text-center text-[10px] text-bone">
+                  {ev.label}
+                </span>
+                <span className="mx-auto block h-2 w-2 rounded-full bg-risk-mid" />
+                <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-olive">
+                  {ev.ano}
+                </span>
+              </div>
+            );
+          }
+
           return (
             <div
               key={i}
-              className={`absolute flex flex-col ${align}`}
-              style={isEdgeRight ? { right: `${Math.max(100 - pct, 0)}%` } : { left: `${Math.min(pct, 100)}%` }}
+              className="absolute flex flex-col -translate-y-1/2 -translate-x-1/2 items-center text-center"
+              style={{ left: `${pct}%` }}
             >
               <span className="absolute -top-7 max-w-[8rem] truncate whitespace-nowrap text-[10px] text-bone">
                 {ev.label}
@@ -639,6 +665,17 @@ function Timeline({ empresa }: { empresa: Empresa }) {
             </div>
           );
         })}
+
+        {/* Marcador "Hoje" — container fixo 28px, tudo centrado */}
+        <div className="absolute right-0 -translate-y-1/2" style={{ width: 28 }}>
+          <span className="absolute -top-7 w-full text-center font-data text-[10px] uppercase tracking-wide text-olive">
+            Hoje
+          </span>
+          <span className="mx-auto block h-2 w-2 rounded-full border border-hairline-hover bg-transparent" />
+          <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-olive">
+            {anoAtual}
+          </span>
+        </div>
       </div>
     </div>
   );
