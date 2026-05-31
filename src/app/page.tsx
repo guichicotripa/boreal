@@ -122,8 +122,10 @@ export default function Home() {
 
             {/* Erro */}
             {erro && (
-              <div className="mt-10 rounded-lg border border-risk-high/30 bg-risk-high/5 px-4 py-3 text-sm text-risk-high">
-                {erro}
+              <div className="mt-10 rounded-lg border border-risk-high/30 bg-risk-high/5 px-4 py-3">
+                <p className="font-data text-[10px] uppercase tracking-wider text-olive">Erro na busca</p>
+                <p className="mt-1 text-sm text-risk-high">{erro}</p>
+                <p className="mt-2 text-xs text-bone">Tente reformular a consulta ou aguarde alguns instantes.</p>
               </div>
             )}
 
@@ -167,9 +169,13 @@ export default function Home() {
                 </ul>
 
                 {res.count === 0 && (
-                  <p className="text-sm text-bone">
-                    Nenhuma empresa bateu com os filtros. Tente afrouxar a consulta.
-                  </p>
+                  <div className="py-10 text-center">
+                    <p className="font-display text-lg text-floral">Nenhuma empresa encontrada.</p>
+                    <p className="mt-2 text-sm text-bone">
+                      A tese pode estar restrita demais. Tente ampliar a faixa etária,
+                      remover um CNAE ou flexibilizar o ano de fundação.
+                    </p>
+                  </div>
                 )}
               </section>
             )}
@@ -214,7 +220,7 @@ const LOADING_STEPS = [
   "Traduzindo para filtros estruturados…",
   "Filtrando empresas na base da Receita…",
   "Calculando score de risco sucessório…",
-  "Analisando o top 15 com IA…",
+  "Comentando as primeiras empresas com IA…",
   "Montando os resultados…",
 ];
 
