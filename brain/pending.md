@@ -12,14 +12,19 @@
 - [x] **Score v0.1 recalibrado por lift** e **portado pro produto** — top decil 17%→28%. PR #13.
 - [x] **Fix**: busca filtrada usa quadro societário completo (não subconjunto).
 
-## 🔴 Agora (destravado pela assinatura bloqueada)
+## 🟢 Research na API + assinatura destravada (30/05) ✅
 
-- [ ] **MIGRAR research-agent pra Anthropic API** (web search tool) — a assinatura via Agent SDK foi
-      bloqueada ("org disabled subscription access", issue claude-code#8327). Afeta `lib/research.ts`
-      + scripts de pesquisa. Demos cacheados seguem ok. Era o caminho de produção de qualquer forma.
-- [ ] **Juiz de M&A (eval sintético)** — rodar `build-juiz-rubric.mjs` via API (~$0,30) → construir
-      rubric → rodar `juiz-avaliar.mjs` num dossiê real e ver se a crítica tem sinal. Scripts prontos.
-- [ ] (opcional) Investigar reabilitar assinatura no terminal local — só se conta individual.
+- [x] **Research-agent migrado pra Anthropic API** + web search tool server-side (`web_search_20250305`).
+      `lib/research.ts` + `route.ts` + `check-research.mjs`. Interface intacta; validado (PRENSA 24s).
+- [x] **Assinatura destravada** — era conta errada logada no Claude Code (não bug da key). Re-login
+      com a conta pessoal Pro resolveu. Agent SDK voltou a custo zero (`check-agent-sdk.mjs` confirma).
+- [x] **Arquitetura:** produto na API (deploy-ready) · cache gerado via assinatura (custo zero).
+- [x] **Cache via assinatura:** `cache-research-sub.mjs` + `cache-dossier-sub.mjs` (fábricas custo-zero).
+
+## 🟡 Agora
+
+- [ ] **Juiz de M&A (eval sintético)** — rodar `build-juiz-rubric.mjs` (via assinatura agora, custo
+      zero) → construir rubric → `juiz-avaliar.mjs` num dossiê real e ver se a crítica tem sinal.
 
 ## ⚪ Semana 3 — deploy + Loom
 
@@ -65,15 +70,17 @@
 ## ⚪ Semana 3 — Polish + Loom (até 14/06) ← FOCO ATUAL
 
 - [x] **Cache de demos** — `demo-cache.json` + `build-demo-cache.mjs`. Queries instantâneas.
+- [x] **Demo dos dois lados** — **MECANOTECNICA 85→96** ↑ (IA achou herdeiro na pecuária → sem
+      sucessor no negócio → eleva, com fonte real). Complementa o rebaixamento PRENSA 100→75 ↓.
+      Cacheado via assinatura. (Subida forte é rara no dataset — leads frios não têm M&A público.)
+- [x] **Cache de memos (dossiês)** — `/api/dossier` lê de `dossier-cache.json`; 9 memos pré-gerados
+      via assinatura (top-5 dos demos + research-cache). Expandir memo no pitch = instantâneo, custo 0.
 - [ ] **Polish da hierarquia visual do card** — acumulou muito (score, one-liner, flags, sinais v0,
       setor, metadados, contato, sócios, research, dossiê). Precisa hierarquia pro vídeo.
 - [ ] **Narrativa da home** — header amarrando a tese Silver Tsunami / sucessão.
-- [ ] **Demo dos dois lados** — cachear 1 empresa do meio (score 75-89) que o research faça SUBIR
-      (achar banco de investimento / menção a venda), pra mostrar IA achando alvo escondido além do
-      caso de rebaixamento (PRENSA 100→75).
-- [ ] Deploy no Vercel — ⚠️ research-agent usa Agent SDK (assinatura), NÃO funciona no Vercel.
-      No deploy: ou research só via cache, ou trocar por Anthropic API (web search tool, ~$0.22/empresa).
-- [ ] Roteiro do Loom escrito, gravado, editado
+- [ ] ~~Deploy no Vercel~~ — **decisão (30/05): não fazer agora.** Pitch/Demo Day via tela
+      compartilhada (localhost). Research já está na API se um dia o deploy fizer sentido.
+- [ ] Roteiro do Loom escrito, gravado, editado (sem pressa — 15 dias até o submit)
 - [ ] **Submeter até sábado 14/06**
 
 ## 🔵 Semana 4 — Demo Day (15–16/06)
