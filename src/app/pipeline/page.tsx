@@ -71,7 +71,7 @@ export default function Pipeline() {
               Oportunidades curadas · {ops.length} no total
             </p>
           </div>
-          <a href="/" className="text-sm text-bone transition-colors hover:text-floral">
+          <a href="/" className="font-data text-sm text-bone transition-colors hover:text-floral">
             ← Voltar à busca
           </a>
         </header>

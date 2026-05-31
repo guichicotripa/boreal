@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Newsreader, Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
-import { Logo } from "@/components/brand/Logo";
+import { NavLogo } from "@/components/brand/NavLogo";
 import "./globals.css";
 
 // Serif editorial — headlines, nomes de empresa, statements
@@ -49,9 +49,9 @@ export default function RootLayout({
       className={`${newsreader.variable} ${plexSans.variable} ${archivo.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-smoky">
-        <nav className="border-b border-hairline bg-smoky px-6 py-4">
+        <nav className="sticky top-0 z-50 border-b border-hairline bg-smoky px-6 py-4">
           <div className="mx-auto flex max-w-5xl items-center justify-between">
-            <Logo />
+            <NavLogo />
             <a
               href="/pipeline"
               className="font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:text-floral"
