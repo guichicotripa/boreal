@@ -61,12 +61,22 @@ export type ResearchResult = {
   delta: number;
 };
 
+// Red flag a investigar antes de avançar o deal (classificado por severidade).
+// Não afirma que o passivo existe — lista o risco provável dado o perfil + onde checar.
+export type RedFlag = {
+  risco: string;
+  severidade: "alta" | "media" | "baixa";
+  como_verificar: string;
+};
+
 // Análise do dossiê gerada por LLM (parte narrativa do memo).
 export type DossierAnalise = {
   overview: string;
   analise_sucessoria: string;
+  red_flags: RedFlag[];
   perguntas_abordagem: string[];
   tese_aproximacao: string;
+  proximo_passo: string;
 };
 
 export type DossierResponse = {
