@@ -59,7 +59,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-smoky text-floral">
-      <main className="mx-auto max-w-5xl px-6 py-20">
+      <main className="mx-auto max-w-5xl px-6 py-10 md:py-20">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-[2fr_1fr]">
           {/* Coluna principal — hero + search + resultados */}
           <div className="min-w-0">
@@ -70,7 +70,7 @@ export default function Home() {
             </p>
 
             {/* Headline */}
-            <h1 className="mt-6 font-display text-[44px] leading-[1.1] tracking-tight text-floral">
+            <h1 className="mt-6 font-display text-3xl leading-[1.1] tracking-tight text-floral md:text-[44px]">
               A inteligência privada que encontra empresas familiares antes do mercado.
             </h1>
 
@@ -335,7 +335,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
   }
 
   return (
-    <li className={`rounded-lg border border-hairline border-l-2 ${t.borderL} bg-surface overflow-hidden p-4`}>
+    <li className={`rounded-lg border border-hairline border-l-2 ${t.borderL} bg-surface overflow-hidden p-4 transition-colors hover:bg-surface-hover`}>
       {/* Header: score badge + nome + salvar */}
       <div className="flex items-start gap-3">
         <div className={`shrink-0 rounded border ${t.badge} px-2 py-1 text-center`}>
