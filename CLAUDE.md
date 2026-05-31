@@ -42,6 +42,19 @@ importa tanto quanto o código.
 
 Ambos usam **Claude Code**. Dividem o prêmio se ganhar.
 
+### Regra de domínio (não cruzar a fronteira)
+
+Conflito real já aconteceu (PRs colidiram em `page.tsx`) porque o motor editou a interface. Pra não repetir:
+
+| Domínio | Dono | Arquivos | Regra |
+|---------|------|----------|-------|
+| **Motor** | Guilherme | `src/lib/*`, `scripts/`, `src/app/api/*` | Define o contrato em `types.ts`. **NÃO edita o render.** |
+| **Interface** | Maguto | `src/app/page.tsx`, `globals.css`, `layout.tsx`, `src/components/*` | Renderiza o que o contrato expõe. **NÃO edita a lógica do motor.** |
+
+- **`types.ts` é a fronteira.** Motor adiciona campo no tipo (ex: `red_flags`, `proximo_passo`) → avisa →
+  **quem renderiza é sempre o Maguto.** Motor nunca mexe em JSX/CSS.
+- **`brain/progress.md` é append-only** — cada um adiciona sua entrada no fim (conflito de append resolve fácil).
+
 ---
 
 ## 3. O produto — demo de 60 segundos
