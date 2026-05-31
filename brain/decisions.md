@@ -237,3 +237,42 @@ Implementado com 2ª query (`/api/search`) que traz o quadro completo das empres
 antes de pontuar. Separar seleção de projeção.
 
 **Status:** ✅ Corrigido (PR #13). Demo e research consistentes.
+
+---
+
+## [2026-05-30] Juiz de M&A — eval sintético (validar qualidade sem depender de calls)
+
+**Contexto:** calls de validação demoram a responder. Guilherme propôs um "ICP artificial" pra
+acelerar o feedback sem esperar humanos.
+
+**Decisão:** construir um JUIZ (eval), não um cliente. A distinção é crítica:
+- **Qualidade do output** (dossiê, perguntas de abordagem, score) → o juiz sintético faz bem,
+  porque é dedutível do conhecimento de M&A.
+- **Desejabilidade** ("alguém quer isso?") → SÓ calls reais. O juiz NÃO substitui (seria espelho
+  do próprio modelo). Risco de auto-engano se confundir os papéis.
+Juiz fundamentado em PESQUISA WEB (não só Excelia/Playbook) + EVOLUTIVO: refinado com transcrições
+das calls reais (juiz v1 → call → destila → juiz v2). Múltiplas personas adversariais; ground truth
+manda quando existe. Scripts: `build-juiz-rubric.mjs` (pesquisa → rubric), `juiz-avaliar.mjs` (avalia dossiê).
+
+**Status:** 🟡 scripts prontos; rubric pendente de rodar (assinatura bloqueada — ver abaixo; rodar via API ~$0,30).
+
+---
+
+## [2026-05-30] Assinatura Agent SDK bloqueada → research migra pra Anthropic API
+
+**Contexto:** o truque de custo-zero (Agent SDK autenticado pela assinatura) parou de funcionar:
+erro consistente "Your organization has disabled Claude subscription access for Claude Code".
+
+**Causa provável** (issue anthropics/claude-code#8327): a `ANTHROPIC_API_KEY` no ambiente
+**sobrescreve** a assinatura; a key (de conta/org sem subscription access habilitado) "ganha".
+Antes funcionava porque a key de sistema era vazia; depois que a key real foi colada, ela passou a
+vencer. Tentar remover a key do env pra forçar assinatura foi bloqueado (pode ser contornar política
+de org — ambíguo: depende se a conta é individual ou sob organização).
+
+**Decisão:** migrar `research.ts` (e os scripts de pesquisa: rubric, ground-truth, transições) pra
+**Anthropic API** (web search tool). Era o caminho de produção de qualquer forma — no Vercel a
+assinatura nunca rodaria (precisa do Claude Code logado local). Custo: ~$0,20/empresa (research, sob
+demanda + cache), $0,30 (rubric único). Demos cacheados seguem funcionando (já gravados).
+
+**Status:** 🟡 pendente migração. Opcional: investigar reabilitar assinatura no terminal local
+(`unset ANTHROPIC_API_KEY` + `claude`) — só se conta individual.
