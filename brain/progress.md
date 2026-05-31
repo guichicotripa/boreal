@@ -312,3 +312,23 @@ perfil do negócio raso). Tudo via assinatura = custo zero. Backlog de correçõ
 **Aprendizado:** o teto do memo é ~4-5/10 sem dados financeiros + red flags, por melhor que seja a
 análise sucessória — reflete a realidade de M&A (ler quadro societário é necessário, não suficiente).
 A tensão estimativa-financeira (juiz quer × decisão de não inventar proxy) é decisão de produto em aberto.
+
+---
+
+## [2026-05-30] Guilherme | Loop de qualidade fechado: corrigir dossiê → juiz mede o ganho
+
+Continuação na `gui/juiz-mea`. Apliquei as 4 correções baratas que o juiz apontou e re-rodei pra medir.
+
+- **`dossier.ts` + `types.ts` + UI**: campo `red_flags` (severidade + como verificar), `proximo_passo`
+  (canal usando telefone/email do banco), prompt instrui capital-social-não-é-porte, "por que nós" na tese.
+- **Cache de memos regenerado** via assinatura (9 memos, custo zero) com os campos novos.
+- **Bug pego pelo próprio juiz**: 1ª re-rodada não melhorou (PRENSA até caiu 4→3) porque o `juiz-avaliar.mjs`
+  montava o memo SEM os campos novos → juiz avaliava cego. Corrigido o template; aí mediu de verdade.
+
+**Resultado:** PRENSA **4→5**, MECANOTECNICA **4→6**. Red flags **1→7/8** (maior salto). Ganho **localizado**
+nas dimensões corrigidas (perfil/priorização, que não toquei, ficaram iguais) → o juiz é instrumento de
+medição confiável. Loop sensor→correção→medição fechado, custo zero (assinatura).
+**Aprendizado:** (1) um eval só mede o que recebe — o template do avaliador tem que espelhar TODOS os campos
+do output, senão penaliza melhorias invisíveis. (2) A estimativa financeira (deixada de fora) trava a nota
+em 5-6 e é o gargalo: o juiz argumenta que é o **primeiro corte de qualificação por tamanho**, não enfeite —
+o que reabre a decisão de produto sobre proxy de EBITDA com metodologia.

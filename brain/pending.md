@@ -29,17 +29,26 @@
       e MECANOTECNICA **4/10**, notas quase idênticas por dimensão. **O eval generaliza** — detecta
       fraquezas sistemáticas do `dossier.ts`, não ruído. Tem sinal real (pegou o capital-social-como-porte).
 
-## 🟡 Melhorias do dossiê apontadas pelo juiz (backlog — corrigir o gerador melhora todos os memos)
+## 🟢 Correções do dossiê aplicadas + ganho medido pelo juiz (30/05) ✅
 
-- [ ] **Red flags** (juiz: 1/10): adicionar seção classificada por severidade — checagem PGFN/CARF/TJSP/TRT
-      (grátis), NR-12, concentração de clientes, dependência de owner. *Maior buraco.*
-- [ ] **Capital social mal-usado**: `dossier.ts` passa `capital_social`, o LLM trata como porte (erro
-      técnico). Remover ou rotular como "registro contábil histórico, não indica porte/receita".
-- [ ] **Tese sem "por que nós"**: o memo serve pra qualquer comprador. Falta o ângulo do adquirente.
-- [ ] **Canal de contato + próximo passo**: o dossiê não diz quem aborda, por qual canal, em que data.
-- [ ] **Estimativa financeira** (juiz: 1/10) — ⚠️ TENSÃO com a decisão de não fazer proxy de EBITDA.
-      Meio-termo do juiz: estimar via CAGED/RAIS × produtividade ABIMAQ/PIA-IBGE + flag "não auditado,
-      pré-DD". Não é inventar; é estimar com metodologia. **Decisão de produto pendente do Guilherme.**
+- [x] **Red flags** (era 1/10 → **7-8/10**): seção classificada por severidade + como verificar
+      (PGFN/CARF/TJSP, NR-12, ambiental, dependência de owner, concentração). *Maior salto.*
+- [x] **Capital social**: prompt instrui explicitamente a NÃO usar como porte/receita.
+- [x] **Tese com "por que nós"**: ângulo do adquirente/originador (MECANOTECNICA tese 5→7).
+- [x] **Canal + próximo passo**: usa telefone/email do banco (ex: PRENSA "ligar (11) 4039-8240, falar
+      com Lucas; email é de terceiro → secundário"). Campo `proximo_passo` no dossiê.
+- [x] **Loop fechado e medido**: PRENSA **4→5**, MECANOTECNICA **4→6**. Ganho localizado nas dimensões
+      corrigidas (juiz mede de forma confiável). Cache de memos regenerado via assinatura (9 memos).
+- [x] **Bug do avaliador corrigido**: `juiz-avaliar.mjs` não passava os campos novos → juiz avaliava cego.
+
+## 🟡 Gargalo restante (decisão de produto pendente)
+
+- [ ] **Estimativa financeira** (juiz: 0-1/10, trava a nota geral) — ⚠️ TENSÃO com a decisão de não fazer
+      proxy de EBITDA. **Argumento novo do juiz**: a estimativa é o **primeiro corte de qualificação por
+      tamanho** (MECANOTECNICA: EPP → EBITDA ~R$580-860K, provável < ticket mínimo institucional → corta
+      o target *antes* de gastar tempo). Não é "número bonito", é filtro. Meio-termo: CAGED/PIA-IBGE +
+      flag "não auditado, pré-DD". **Decisão do Guilherme: incorporar com metodologia ou manter abstenção?**
+- [ ] Perfil competitivo do negócio (juiz: 3/10) + metodologia do score no memo (2/10) — não estavam nas 4 baratas.
 
 ## ⚪ Semana 3 — deploy + Loom
 
