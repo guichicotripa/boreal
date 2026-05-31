@@ -21,10 +21,25 @@
 - [x] **Arquitetura:** produto na API (deploy-ready) · cache gerado via assinatura (custo zero).
 - [x] **Cache via assinatura:** `cache-research-sub.mjs` + `cache-dossier-sub.mjs` (fábricas custo-zero).
 
-## 🟡 Agora
+## 🟢 Juiz de M&A validado (30/05) ✅
 
-- [ ] **Juiz de M&A (eval sintético)** — rodar `build-juiz-rubric.mjs` (via assinatura agora, custo
-      zero) → construir rubric → `juiz-avaliar.mjs` num dossiê real e ver se a crítica tem sinal.
+- [x] **Rubric construído via assinatura** (`build-juiz-rubric.mjs`, 284s, custo zero): 8 dimensões
+      (pesos 3-5), 13 red flags, 24 fontes reais. Salvo em `scripts/juiz-rubric.json`.
+- [x] **Juiz rodado em 2 dossiês reais** (`juiz-avaliar.mjs`, migrado pra assinatura): PRENSA **4/10**
+      e MECANOTECNICA **4/10**, notas quase idênticas por dimensão. **O eval generaliza** — detecta
+      fraquezas sistemáticas do `dossier.ts`, não ruído. Tem sinal real (pegou o capital-social-como-porte).
+
+## 🟡 Melhorias do dossiê apontadas pelo juiz (backlog — corrigir o gerador melhora todos os memos)
+
+- [ ] **Red flags** (juiz: 1/10): adicionar seção classificada por severidade — checagem PGFN/CARF/TJSP/TRT
+      (grátis), NR-12, concentração de clientes, dependência de owner. *Maior buraco.*
+- [ ] **Capital social mal-usado**: `dossier.ts` passa `capital_social`, o LLM trata como porte (erro
+      técnico). Remover ou rotular como "registro contábil histórico, não indica porte/receita".
+- [ ] **Tese sem "por que nós"**: o memo serve pra qualquer comprador. Falta o ângulo do adquirente.
+- [ ] **Canal de contato + próximo passo**: o dossiê não diz quem aborda, por qual canal, em que data.
+- [ ] **Estimativa financeira** (juiz: 1/10) — ⚠️ TENSÃO com a decisão de não fazer proxy de EBITDA.
+      Meio-termo do juiz: estimar via CAGED/RAIS × produtividade ABIMAQ/PIA-IBGE + flag "não auditado,
+      pré-DD". Não é inventar; é estimar com metodologia. **Decisão de produto pendente do Guilherme.**
 
 ## ⚪ Semana 3 — deploy + Loom
 

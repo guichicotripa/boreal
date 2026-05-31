@@ -292,3 +292,23 @@ na migração); todo o resto (16 researches + 9 dossiês) via assinatura = custo
   `[IO.File]::WriteAllText` (UTF-8 sem BOM).
 - Subida de score é **estruturalmente rara** no dataset: leads frios não têm M&A público. O research
   corrige sobretudo **pra baixo** (depura falsos positivos) — narrativa honesta e forte pro Loom.
+
+---
+
+## [2026-05-30] Guilherme | Juiz de M&A validado (eval sintético com sinal real)
+
+Branch `gui/juiz-mea` (após mergear #16 na main). Foco: provar se o juiz tem sinal.
+
+- **Rubric via assinatura** (`build-juiz-rubric.mjs`, custo zero, 284s de pesquisa web): 8 dimensões
+  (pesos 3-5), 13 red flags, 24 fontes reais. Salvo em `scripts/juiz-rubric.json`.
+- **`juiz-avaliar.mjs` migrado pra assinatura** + lê dados da empresa do demo-cache (o cache hit do
+  dossiê só devolve `analise`) + URL configurável (`BOREAL_URL`).
+- **Rodado em 2 dossiês reais:** PRENSA **4/10** e MECANOTECNICA **4/10** — notas quase idênticas por
+  dimensão. O eval **generaliza**: detecta fraquezas sistemáticas do `dossier.ts`, não ruído.
+
+**Resultado:** juiz tem **sinal real** — pegou um erro técnico nosso (capital social usado como proxy de
+porte) e mapeou 5 gaps sistemáticos (red flags, "por que nós", canal/próximo passo, estimativa financeira,
+perfil do negócio raso). Tudo via assinatura = custo zero. Backlog de correções no `pending.md`.
+**Aprendizado:** o teto do memo é ~4-5/10 sem dados financeiros + red flags, por melhor que seja a
+análise sucessória — reflete a realidade de M&A (ler quadro societário é necessário, não suficiente).
+A tensão estimativa-financeira (juiz quer × decisão de não inventar proxy) é decisão de produto em aberto.
