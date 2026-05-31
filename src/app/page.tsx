@@ -564,6 +564,34 @@ function DossierPanel({ empresa }: { empresa: Empresa }) {
             <p className="leading-relaxed text-zinc-300">{analise.analise_sucessoria}</p>
           </div>
 
+          {/* Red flags a investigar */}
+          {analise.red_flags?.length ? (
+            <div>
+              <h4 className="mb-1 text-xs uppercase tracking-wider text-zinc-500">
+                Red flags a investigar
+              </h4>
+              <ul className="space-y-1.5">
+                {analise.red_flags.map((rf, i) => {
+                  const cor =
+                    rf.severidade === "alta"
+                      ? "text-red-400 border-red-900/60"
+                      : rf.severidade === "media"
+                        ? "text-amber-400 border-amber-900/60"
+                        : "text-zinc-400 border-zinc-700";
+                  return (
+                    <li key={i} className="leading-relaxed text-zinc-300">
+                      <span className={`mr-2 rounded border px-1.5 py-0.5 text-[10px] uppercase ${cor}`}>
+                        {rf.severidade}
+                      </span>
+                      <span className="text-zinc-200">{rf.risco}</span>
+                      {rf.como_verificar && <span className="text-zinc-500"> — {rf.como_verificar}</span>}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ) : null}
+
           {/* Perguntas de abordagem */}
           {analise.perguntas_abordagem.length > 0 && (
             <div>
@@ -585,6 +613,16 @@ function DossierPanel({ empresa }: { empresa: Empresa }) {
             </h4>
             <p className="leading-relaxed text-zinc-200">{analise.tese_aproximacao}</p>
           </div>
+
+          {/* Próximo passo */}
+          {analise.proximo_passo && (
+            <div>
+              <h4 className="mb-1 text-xs uppercase tracking-wider text-zinc-500">
+                Próximo passo
+              </h4>
+              <p className="leading-relaxed text-zinc-300">→ {analise.proximo_passo}</p>
+            </div>
+          )}
         </div>
       )}
     </div>

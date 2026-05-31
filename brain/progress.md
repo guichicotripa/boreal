@@ -292,3 +292,65 @@ na migração); todo o resto (16 researches + 9 dossiês) via assinatura = custo
   `[IO.File]::WriteAllText` (UTF-8 sem BOM).
 - Subida de score é **estruturalmente rara** no dataset: leads frios não têm M&A público. O research
   corrige sobretudo **pra baixo** (depura falsos positivos) — narrativa honesta e forte pro Loom.
+
+---
+
+## [2026-05-30] Guilherme | Juiz de M&A validado (eval sintético com sinal real)
+
+Branch `gui/juiz-mea` (após mergear #16 na main). Foco: provar se o juiz tem sinal.
+
+- **Rubric via assinatura** (`build-juiz-rubric.mjs`, custo zero, 284s de pesquisa web): 8 dimensões
+  (pesos 3-5), 13 red flags, 24 fontes reais. Salvo em `scripts/juiz-rubric.json`.
+- **`juiz-avaliar.mjs` migrado pra assinatura** + lê dados da empresa do demo-cache (o cache hit do
+  dossiê só devolve `analise`) + URL configurável (`BOREAL_URL`).
+- **Rodado em 2 dossiês reais:** PRENSA **4/10** e MECANOTECNICA **4/10** — notas quase idênticas por
+  dimensão. O eval **generaliza**: detecta fraquezas sistemáticas do `dossier.ts`, não ruído.
+
+**Resultado:** juiz tem **sinal real** — pegou um erro técnico nosso (capital social usado como proxy de
+porte) e mapeou 5 gaps sistemáticos (red flags, "por que nós", canal/próximo passo, estimativa financeira,
+perfil do negócio raso). Tudo via assinatura = custo zero. Backlog de correções no `pending.md`.
+**Aprendizado:** o teto do memo é ~4-5/10 sem dados financeiros + red flags, por melhor que seja a
+análise sucessória — reflete a realidade de M&A (ler quadro societário é necessário, não suficiente).
+A tensão estimativa-financeira (juiz quer × decisão de não inventar proxy) é decisão de produto em aberto.
+
+---
+
+## [2026-05-30] Guilherme | Loop de qualidade fechado: corrigir dossiê → juiz mede o ganho
+
+Continuação na `gui/juiz-mea`. Apliquei as 4 correções baratas que o juiz apontou e re-rodei pra medir.
+
+- **`dossier.ts` + `types.ts` + UI**: campo `red_flags` (severidade + como verificar), `proximo_passo`
+  (canal usando telefone/email do banco), prompt instrui capital-social-não-é-porte, "por que nós" na tese.
+- **Cache de memos regenerado** via assinatura (9 memos, custo zero) com os campos novos.
+- **Bug pego pelo próprio juiz**: 1ª re-rodada não melhorou (PRENSA até caiu 4→3) porque o `juiz-avaliar.mjs`
+  montava o memo SEM os campos novos → juiz avaliava cego. Corrigido o template; aí mediu de verdade.
+
+**Resultado:** PRENSA **4→5**, MECANOTECNICA **4→6**. Red flags **1→7/8** (maior salto). Ganho **localizado**
+nas dimensões corrigidas (perfil/priorização, que não toquei, ficaram iguais) → o juiz é instrumento de
+medição confiável. Loop sensor→correção→medição fechado, custo zero (assinatura).
+**Aprendizado:** (1) um eval só mede o que recebe — o template do avaliador tem que espelhar TODOS os campos
+do output, senão penaliza melhorias invisíveis. (2) A estimativa financeira (deixada de fora) trava a nota
+em 5-6 e é o gargalo: o juiz argumenta que é o **primeiro corte de qualificação por tamanho**, não enfeite —
+o que reabre a decisão de produto sobre proxy de EBITDA com metodologia.
+
+---
+
+## [2026-05-30] Guilherme | Convergência Relay: recall por vertical + data moat consolidado
+
+Sessão de análise (motor do Boreal aplicado à pergunta do Relay: decision gate Phase 0).
+
+- **Recall@top10% por vertical** (`validacao-vertical.mjs`, decil dentro do vertical): metalmec **66%**
+  (passa o gate ≥40%), saúde **17%**. O agregado ~28% escondia a diferença.
+- **Decomposição de saúde** (`validacao-saude-decomp.mjs`): 62% do M&A de saúde é consolidação
+  (recall 1%), só 8% sucessão clássica (recall 100%) → o label estava sujo, não o score.
+- **Filtrar universo não resolve** (`validacao-saude-filtrado.mjs`): decil médio piora pra 4,95.
+  Achado de arquitetura: **o score v0 é bom de elegibilidade (corte), fraco de ranking fino** (idade
+  satura entre velhos). O v0 elege, o v1 (research-agent) ordena.
+- **Data moat consolidado**: trazidos os 5 scripts de mineração (`detectar-transicoes`, `validacao-escala`,
+  `validacao-lift`, `validacao-refino`, `check-socios-schema`) da branch órfã `gui/transicoes-cnpj` pra cá.
+  Não dava pra mergear a branch inteira (atrasada — reverteria research→API e deletaria o juiz).
+
+**Resultado:** validação retroativa pura no platô; insights estratégicos do Relay documentados no segundo
+cérebro (`wiki/synthesis/relay-data-moat`). Saúde descartada como vertical (sem acordo com a Setter).
+**Aprendizado:** validação retroativa mede elegibilidade, não ranking fino — pra ordenar a fila de
+abordagem precisa do v1 (sinais que variam entre empresas igualmente velhas), que não é testável retroativo.

@@ -31,11 +31,12 @@ function dadosParaPrompt(e) {
     entrou_em: s.data_entrada_sociedade?.slice(0, 4) ?? null,
   }));
   return {
-    razao_social: e.razao_social, nome_fantasia: e.nome_fantasia,
-    setor: e.cnae_principal_desc ?? e.cnae_principal,
+    razao_social: e.razao_social, nome_fantasia: e.nome_fantasia, cnpj: e.cnpj,
+    setor: e.cnae_principal_desc ?? e.cnae_principal, cnae_codigo: e.cnae_principal,
     atividades_secundarias: (e.cnaes_secundarios ?? []).map((c) => c.descricao).filter(Boolean),
     cidade: e.municipio, uf: e.uf, fundada_em: e.data_inicio_atividade?.slice(0, 4) ?? null,
     natureza_juridica: e.natureza_juridica, capital_social: e.capital_social, porte: e.porte,
+    contato: { telefone: e.telefone ?? null, email: e.email ?? null },
     score_risco_sucessorio: e.score?.score ?? null, sinais: e.score?.sinais ?? [],
     quadro_societario: socios,
   };
@@ -45,12 +46,24 @@ async function gerarAnalise(empresa) {
   const prompt = `Gere a análise do dossiê desta empresa. Use SÓ os dados fornecidos —
 não invente faturamento, número de funcionários ou fatos que não estão aqui.
 
+REGRAS CRÍTICAS:
+- NUNCA use capital_social como proxy de porte/tamanho/faturamento — é registro contábil histórico,
+  pode estar defasado décadas. Se mencionar, deixe claro que não indica receita nem valor.
+- Não invente número financeiro. Se não há base para estimar faturamento/EBITDA, diga "não estimável
+  sem dados adicionais" — não chute.
+- red_flags: liste os riscos PROVÁVEIS dado o perfil (setor, idade da empresa, estrutura) — não afirme
+  que o passivo existe; classifique a severidade e diga COMO verificar. Para indústria antiga, considere:
+  passivo fiscal (checar PGFN/CARF/TJSP — grátis), NR-12 (segurança de máquinas), passivo ambiental,
+  dependência do fundador (hub-and-spoke), concentração de clientes. Só inclua os que fazem sentido aqui.
+
 Responda APENAS com este JSON:
 {
-  "overview": "2-3 frases sobre o que a empresa é (setor, idade, porte, localização)",
-  "analise_sucessoria": "1 parágrafo: leia o quadro societário e explique por que há (ou não) risco sucessório — idade dos sócios, há quanto tempo o quadro está parado, presença ou ausência de herdeiros mais jovens, sinais de transição",
-  "perguntas_abordagem": ["4 a 5 perguntas específicas para o primeiro contato com o fundador, ancoradas nos dados desta empresa — não genéricas"],
-  "tese_aproximacao": "2 frases: por que essa empresa é um alvo interessante e qual o ângulo de abordagem"
+  "overview": "2-3 frases sobre o que a empresa é (setor, idade, porte declarado, localização) — sem usar capital social como tamanho",
+  "analise_sucessoria": "1 parágrafo: leia o quadro societário e explique por que há (ou não) risco sucessório — idade dos sócios, há quanto tempo o quadro está parado, presença/ausência de herdeiros mais jovens, sinais de transição",
+  "red_flags": [{"risco": "ex: passivo fiscal oculto", "severidade": "alta|media|baixa", "como_verificar": "ex: consulta PGFN Dívida Ativa + CARF pelo CNPJ (grátis)"}],
+  "perguntas_abordagem": ["4 a 5 perguntas específicas para o primeiro contato, ancoradas nos dados desta empresa — não genéricas"],
+  "tese_aproximacao": "2-3 frases: por que essa empresa é um alvo interessante, qual o ângulo de abordagem, E por que o adquirente/originador é o interlocutor certo (o 'por que nós' — acesso, timing, relação, conhecimento do setor)",
+  "proximo_passo": "1 frase concreta: qual o próximo passo de origination — canal sugerido (usar telefone/email se houver no dado de contato; senão LinkedIn do sócio mais jovem, contador via QSA, ou associação setorial) + ação"
 }
 
 Dados da empresa:
@@ -67,12 +80,20 @@ ${JSON.stringify(dadosParaPrompt(empresa), null, 2)}`;
   const match = raw.match(/\{[\s\S]*\}/);
   if (!match) throw new Error("sem JSON: " + raw.slice(0, 120));
   const parsed = JSON.parse(match[0]);
+  const SEV = ["alta", "media", "baixa"];
   return {
     overview: String(parsed.overview ?? "").trim(),
     analise_sucessoria: String(parsed.analise_sucessoria ?? "").trim(),
+    red_flags: Array.isArray(parsed.red_flags)
+      ? parsed.red_flags.map((r) => ({
+          risco: String(r?.risco ?? "").trim(),
+          severidade: SEV.includes(String(r?.severidade)) ? String(r?.severidade) : "media",
+          como_verificar: String(r?.como_verificar ?? "").trim(),
+        })).filter((r) => r.risco) : [],
     perguntas_abordagem: Array.isArray(parsed.perguntas_abordagem)
       ? parsed.perguntas_abordagem.map((p) => String(p).trim()).filter(Boolean) : [],
     tese_aproximacao: String(parsed.tese_aproximacao ?? "").trim(),
+    proximo_passo: String(parsed.proximo_passo ?? "").trim(),
   };
 }
 

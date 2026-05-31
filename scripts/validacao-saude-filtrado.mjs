@@ -1,0 +1,53 @@
+// Testa a estratégia do Relay pra saúde: FILTRAR o universo por perfil sucessório (sócio 61+)
+// ANTES de rankear, e medir recall@top10% dentro desse universo elegível. Pergunta não-trivial:
+// o score (que usa idade) ainda discrimina dentro de um universo já filtrado por idade, ou vira
+// aleatório? Compara 3 universos: (A) saúde toda, (B) saúde com sócio 61+, (C) saúde sócio 61+ e 25+ anos.
+// node --env-file=.env.local scripts/validacao-saude-filtrado.mjs
+import { BigQuery } from "@google-cloud/bigquery";
+import path from "path";
+const bq = new BigQuery({ projectId: process.env.GCP_PROJECT_ID, keyFilename: path.resolve(process.env.GCP_KEY_PATH) });
+const CORTE = "2023-06-10", NOVO = "2025-11-09";
+
+// Roda a validação pra um filtro de elegibilidade dado (cláusula SQL sobre mf/idade_emp).
+async function valida(nome, filtro) {
+  const sql = `
+WITH sc AS (
+  SELECT cnpj_basico, MAX(SAFE_CAST(faixa_etaria AS INT64)) AS mf, COUNTIF(tipo='2') AS n_pf
+  FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${CORTE}' GROUP BY 1
+),
+base AS (
+  SELECT e.cnpj_basico, sc.mf AS mf, (2023-EXTRACT(YEAR FROM e.data_inicio_atividade)) AS idade_emp,
+    (CASE sc.mf WHEN 9 THEN 30 WHEN 8 THEN 26 WHEN 7 THEN 20 WHEN 6 THEN 10 ELSE 0 END)
+    + (CASE WHEN 2023-EXTRACT(YEAR FROM e.data_inicio_atividade) >= 40 THEN 30
+            WHEN 2023-EXTRACT(YEAR FROM e.data_inicio_atividade) >= 25 THEN 22
+            WHEN 2023-EXTRACT(YEAR FROM e.data_inicio_atividade) >= 15 THEN 10 ELSE 0 END)
+    + (CASE WHEN REGEXP_REPLACE(emp.porte,'^0','')='5' THEN 30
+            WHEN REGEXP_REPLACE(emp.porte,'^0','')='3' THEN 15
+            WHEN REGEXP_REPLACE(emp.porte,'^0','')='1' THEN 5 ELSE 0 END)
+    + (CASE WHEN sc.n_pf >= 2 THEN 10 ELSE 0 END) AS score
+  FROM \`basedosdados.br_me_cnpj.estabelecimentos\` e
+  JOIN \`basedosdados.br_me_cnpj.empresas\` emp ON emp.cnpj_basico=e.cnpj_basico AND emp.data='${CORTE}'
+  LEFT JOIN sc ON sc.cnpj_basico=e.cnpj_basico
+  WHERE e.data='${CORTE}' AND e.sigla_uf='SP' AND e.identificador_matriz_filial='1'
+    AND e.cnae_fiscal_principal LIKE '86%'
+),
+universo AS (SELECT * FROM base WHERE ${filtro}),
+ranked AS (SELECT cnpj_basico, NTILE(10) OVER (ORDER BY score DESC) AS decil FROM universo),
+a AS (SELECT cnpj_basico, COUNTIF(tipo='1') pj, COUNTIF(tipo='2') pf FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${CORTE}' GROUP BY 1),
+b AS (SELECT cnpj_basico, COUNTIF(tipo='1') pj, COUNTIF(tipo='2') pf FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${NOVO}' GROUP BY 1),
+adq AS (SELECT a.cnpj_basico FROM a JOIN b USING(cnpj_basico) WHERE b.pj>a.pj AND b.pf<a.pf)
+SELECT (SELECT COUNT(*) FROM universo) AS universo, COUNT(*) AS n_adq,
+  ROUND(COUNTIF(r.decil=1)/COUNT(*)*100,0) AS top10,
+  ROUND(COUNTIF(r.decil<=3)/COUNT(*)*100,0) AS top30,
+  ROUND(AVG(r.decil),2) AS decil_medio
+FROM adq JOIN ranked r USING(cnpj_basico)`;
+  const [[r]] = await bq.query({ query: sql, location: "US" });
+  const gate = r.top10 >= 40 ? "✅ PASSA" : r.top10 >= 25 ? "🟡 ITERA" : "🔴 PARA";
+  console.log(`[${nome}]`);
+  console.log(`   universo ${r.universo} · ${r.n_adq} aquisições · recall@top10% ${r.top10}% ${gate} · top30% ${r.top30}% · decil médio ${r.decil_medio}\n`);
+}
+
+console.log(`Saúde SP — efeito de filtrar o universo por perfil sucessório antes de rankear (v0.1)\n`);
+await valida("A. Saúde toda (sem filtro)", "TRUE");
+await valida("B. Sócio 61+ (mf>=7)", "mf >= 7");
+await valida("C. Sócio 61+ E empresa 25+ anos", "mf >= 7 AND idade_emp >= 25");
