@@ -567,30 +567,42 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
         <p className="leading-relaxed text-floral">{analise.analise_sucessoria}</p>
       </div>
 
-      {/* Red flags a investigar — conteúdo do #17 (Guilherme), reestilizado no brandkit */}
+      {/* Red flags a investigar — D.2: ordenado por severidade, max 5 · D.3: como_verificar em linha própria */}
       {analise.red_flags?.length ? (
         <div>
           <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
             Red flags a investigar
           </h4>
-          <ul className="space-y-1.5">
-            {analise.red_flags.map((rf, i) => {
-              const cor =
-                rf.severidade === "alta"
-                  ? "border-risk-high/50 text-risk-high"
-                  : rf.severidade === "media"
-                    ? "border-risk-mid/50 text-risk-mid"
-                    : "border-hairline text-bone";
-              return (
-                <li key={i} className="leading-relaxed text-floral">
-                  <span className={`mr-2 rounded border px-1.5 py-0.5 font-data text-[10px] uppercase tracking-wider ${cor}`}>
-                    {rf.severidade}
-                  </span>
-                  <span className="text-floral">{rf.risco}</span>
-                  {rf.como_verificar && <span className="text-bone"> — {rf.como_verificar}</span>}
-                </li>
-              );
-            })}
+          <ul className="space-y-2.5">
+            {[...analise.red_flags]
+              .sort((a, b) => {
+                const ord = { alta: 0, media: 1, baixa: 2 } as Record<string, number>;
+                return (ord[a.severidade] ?? 3) - (ord[b.severidade] ?? 3);
+              })
+              .slice(0, 5)
+              .map((rf, i) => {
+                const cor =
+                  rf.severidade === "alta"
+                    ? "border-risk-high/50 text-risk-high"
+                    : rf.severidade === "media"
+                      ? "border-risk-mid/50 text-risk-mid"
+                      : "border-hairline text-bone";
+                return (
+                  <li key={i}>
+                    <div>
+                      <span className={`mr-2 rounded border px-1.5 py-0.5 font-data text-[10px] uppercase tracking-wider ${cor}`}>
+                        {rf.severidade}
+                      </span>
+                      <span className="text-floral">{rf.risco}</span>
+                    </div>
+                    {rf.como_verificar && (
+                      <p className="mt-1 pl-0.5 text-[11px] leading-relaxed text-bone">
+                        {rf.como_verificar}
+                      </p>
+                    )}
+                  </li>
+                );
+              })}
           </ul>
         </div>
       ) : null}
@@ -607,16 +619,17 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
           </ul>
         </div>
       )}
-      <div className="border-l-2 border-risk-mid pl-3">
+      {/* D.4: tese hairline (recuada, contexto) */}
+      <div className="border-l-2 border-bone/30 pl-3">
         <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
           Tese de aproximação
         </h4>
         <p className="leading-relaxed text-floral">{analise.tese_aproximacao}</p>
       </div>
 
-      {/* Próximo passo — conteúdo do #17 (Guilherme), reestilizado no brandkit */}
+      {/* D.4: próximo passo surface-hover (mais destaque, CTA) */}
       {analise.proximo_passo && (
-        <div>
+        <div className="rounded-md bg-surface-hover p-3">
           <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
             Próximo passo
           </h4>
