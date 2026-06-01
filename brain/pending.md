@@ -99,8 +99,31 @@
       Cacheado via assinatura. (Subida forte é rara no dataset — leads frios não têm M&A público.)
 - [x] **Cache de memos (dossiês)** — `/api/dossier` lê de `dossier-cache.json`; 9 memos pré-gerados
       via assinatura (top-5 dos demos + research-cache). Expandir memo no pitch = instantâneo, custo 0.
-- [ ] **Polish da hierarquia visual do card** — acumulou muito (score, one-liner, flags, sinais v0,
-      setor, metadados, contato, sócios, research, dossiê). Precisa hierarquia pro vídeo.
+- [x] **Polish da hierarquia visual do card** — restyle completo na branch `maguto/restyle-brandkit`.
+      Card D.2 com two-column badge+content, border-left por tier, ações funcionais, dossiê + timeline.
+- [ ] **Ajustes UI/UX pós-restyle** (doc `boreal_ajustes_finais_ui_ux_3105.md`) — implementar amanhã:
+      - **Etapa A (Home):** label "DESCREVA UMA TESE EM LINGUAGEM LIVRE" + "Score de risco sucessório"
+      - **Etapa B (Cards):** "top 15 analisadas por IA" · badge RISCO SUCESSÓRIO ALTO/MÉDIO/BAIXO ·
+        limitar badges a 3 · reordenar ações (Ver detalhes → Investigar → Memo) · "Salvar no pipeline"
+      - **Etapa C (Pipeline):** lanes visuais sutis · empty states nas colunas
+      - **Decidir antes:** coluna direita (cobertura vs placeholder metodologia) · contador "PIPELINE · N"
+      - **Etapa D (memo — blocos `red_flags` + `proximo_passo` do #17, integrados no merge 31/05):**
+        Integrei o conteúdo do Guilherme reestilizado no brandkit (build/typecheck limpos), mas
+        a estilização foi 1ª tentativa "no automático" — revisar junto:
+        - **D.1 — cor por severidade dos red flags:** usei borda+texto `risk-high` (terracota/alta),
+          `risk-mid` (ocre/média), `hairline`+`bone` (baixa). Conferir leitura e se não compete com
+          o badge de score do card.
+        - **D.2 — densidade da lista de red flags:** o rubric tem até 13 flags possíveis; a lista pode
+          ficar longa. Avaliar limitar a N, ordenar por severidade (alta primeiro), ou agrupar.
+        - **D.3 — `como_verificar`:** hoje vem após " — " em `text-bone` na mesma linha. Em lista longa
+          fica pesado. Avaliar quebra de linha, tamanho menor, ou esconder atrás de hover/expandir.
+        - **D.4 — destaque do `proximo_passo`:** hoje é só "→ texto" em `text-floral`. É um call-to-action;
+          talvez mereça mais peso (bloco com borda/fundo sutil, como a tese).
+        - **D.5 — poluição de badges:** card já tem badge de score + chips de flags; red flags adiciona
+          badges de severidade. Cruzar com o ponto B ("limitar badges a 3") pra não virar ruído visual.
+        - **D.6 — ordem dos blocos no memo:** red flags entre análise sucessória e perguntas; próximo
+          passo no fim (após a tese). Confirmar se é a melhor hierarquia de leitura.
+- [ ] **"Voltar à busca" com router.back()** — tentado, não funcionou, revertido. Investigar causa.
 - [ ] **Narrativa da home** — header amarrando a tese Silver Tsunami / sucessão.
 - [ ] ~~Deploy no Vercel~~ — **decisão (30/05): não fazer agora.** Pitch/Demo Day via tela
       compartilhada (localhost). Research já está na API se um dia o deploy fizer sentido.

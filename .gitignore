@@ -47,3 +47,6 @@ next-env.d.ts
 
 # claude code — overrides pessoais (sandbox windows, env locais)
 .claude/settings.local.json
+
+# obsidian — vault local, não vai pro repo
+.obsidian/

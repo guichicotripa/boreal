@@ -104,6 +104,35 @@ Quarta sessão. A primeira coisa demoável: digita em linguagem natural, recebe 
 
 *(append novas entradas abaixo desta linha)*
 
+## [2026-05-30] Maguto | Restyle brandkit — Etapas 7–10 + polimento navbar
+
+Sessão longa (continuação de contexto compactado). Branch: `maguto/restyle-brandkit`.
+
+**Construído:**
+- **Etapa 7** — neutralizou o último azul restante: `--sidebar-primary` do shadcn dark mode tinha hue 264 (azul). Trocado para `oklch(0.488 0 0)` (neutro). Boreal agora é 100% sem azul/navy.
+- **Etapa 8** — dossiê + timeline:
+  - `MemoDisplay`: overview, análise sucessória, perguntas de abordagem, tese com borda risk-mid.
+  - `Timeline` horizontal CSS puro: fundação → entrada de sócios, dot centrado na linha, labels acima/abaixo, "Hoje" com dot vazio. Fixes: margin collapse (`h-8 mb-4`), linha insetada (`inset-x-[18px]`), containers de 28px fixos nas bordas.
+- **Etapa 9** — três estados revisados: loading copy final ("Comentando as primeiras empresas com IA…"), erro com label `font-data` + mensagem risk-high + sugestão bone, vazio com headline Newsreader + parágrafo de sugestão.
+- **Etapa 10** — polimento: hover nos cards (`hover:bg-surface-hover transition-colors`), responsivo mobile (headline `text-3xl md:text-[44px]`, padding `py-10 md:py-20`), sandbox deletado, `.obsidian/` no gitignore.
+- **Navbar sticky** — `sticky top-0 z-50` no `layout.tsx`.
+- **NavLogo route-aware** — novo `src/components/brand/NavLogo.tsx` (client component): scroll suave no `/`, `router.push("/")` nas demais rotas.
+
+**Tentado e revertido:**
+- `router.back()` no "← Voltar à busca" da pipeline — não funcionou como esperado. Revertido para `href="/"`. Ficou como pendência para resolver depois.
+
+**Alinhamento UI/UX (doc ChatGPT `boreal_ajustes_finais_ui_ux_3105.md`):**
+- 8 de 11 pontos aprovados para implementar amanhã.
+- 2 com ressalva: coluna direita (manter cobertura vs placeholder de metodologia) e contador no header (arquitetura a definir).
+- 1 trivial (barra do notebook — ignorar).
+
+**Resultado:** branch `maguto/restyle-brandkit` com 6 commits de restyle + 1 feat (navbar). Produto visualmente alinhado à direção Boreal — dark, editorial, quente, sem azul.
+
+**Aprendizado:**
+- `@theme inline` do shadcn auto-gera `--font-sans: var(--font-sans)` → circular reference. Fix: declarar explicitamente `--font-sans: var(--font-plex-sans)` no bloco `@theme inline`.
+- Timeline CSS com conteúdo absoluto dentro de container: o container precisa de altura explícita (`h-8`) senão o margin-bottom colapsa através dele.
+- `layout.tsx` é Server Component — qualquer `onClick` na navbar precisa de um client component wrapper separado (`NavLogo.tsx`).
+
 ## [2026-05-28] Guilherme | Semana 2 — Score + Reasoner LLM batched
 
 Quinta sessão (continuação pós-compactação do contexto). Foco da noite: tirar o produto de
@@ -465,3 +494,23 @@ Sessão curta e operacional pra fechar o trabalho do dia 30 num PR limpo antes d
 - Fluxo do `/salve` validado em conflito real: rebase + resolução manual + `--force-with-lease` + `gh pr create` em sequência roda limpo.
 - `--force-with-lease` em vez de `--force` puro evita sobrescrever commit que outra pessoa tenha empurrado na mesma branch — padrão certo pra force-push em branch pessoal.
 - Ajustes UI/UX (Etapas A/B/C do doc `boreal_ajustes_finais_ui_ux_3105.md`) em PR separado em cima do #18 mergeado: mantém restyle puro, review do Guilherme fica mais focado.
+
+---
+
+## [2026-05-31] Maguto | Merge da main no restyle + integração dos blocos red_flags/proximo_passo
+
+Guilherme sinalizou (comentário no PR #18) que a branch precisava integrar a main atualizada: #17 (juiz + dossiê com `red_flags`/`proximo_passo`), #19 (histórico retroativo, já mergeado) e #20 (regra de domínio: motor define contrato em `types.ts`, interface renderiza). No #17 ele adicionou o render desses 2 campos no `page.tsx` (domínio meu) em classes shadcn cruas — pediu que eu integrasse no brandkit.
+
+**Construído:**
+- **Merge `origin/main` → `maguto/restyle-brandkit`** (escolhi merge, não rebase). Motivo: o restyle refatorou `DossierPanel` (estado+render juntos, da main) em `MemoDisplay` (render puro) + componente pai. Rebase commit-a-commit colidiria várias vezes na mesma região (a etapa 8 toca o mesmo bloco); merge gera 1 conflito único representando o estado final dos dois lados, mais seguro de resolver certo.
+- **Conflito único em `src/app/page.tsx`** (função `MemoDisplay`). Resolvido mantendo a estrutura restyle + integrando os 2 blocos do Guilherme reestilizados:
+  - `red_flags`: badge de severidade com cores de risco do brandkit (`risk-high` terracota / `risk-mid` ocre / `hairline`+`bone` baixa), header `font-data text-olive`. Descartado o `text-zinc-*`/`text-red-400`/`text-amber-400` cru.
+  - `proximo_passo`: bloco com header `font-data text-olive` + `→ texto` em `text-floral`.
+  - Posições preservadas do #17: red flags entre análise sucessória e perguntas; próximo passo após a tese.
+- Resto do motor do #17 (`dossier.ts`, `types.ts`, `dossier-cache.json`, scripts de validação/juiz) veio limpo pelo merge, sem conflito.
+
+**Resultado:** `tsc --noEmit` limpo, `npm run build` limpo (9 páginas geradas). Branch atualizada com a main, PR #18 deixa de ficar atrás. Estilização dos blocos foi 1ª tentativa "no automático" — pontos de revisão registrados como **Etapa D** no `pending.md` pra ver com o Matheus na próxima sessão.
+
+**Aprendizado:**
+- Quando o outro lado refatora a estrutura de um componente que você também mexeu, **merge > rebase**: o rebase reaplica cada commit e força resolver o mesmo conflito N vezes; o merge consolida num ponto só. History fica menos linear, mas o Guilherme pode squash no merge do PR.
+- Regra de domínio (#20) na prática: o conteúdo (campos `red_flags`/`proximo_passo` vindos de `types.ts`) é do motor; a renderização é da interface. A integração respeitou isso — peguei os campos do contrato e dei o estilo do brandkit.

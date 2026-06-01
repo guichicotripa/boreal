@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import type { Oportunidade, EstagioOportunidade, ResultadoOportunidade } from "@/lib/types";
 
 const ESTAGIOS: { id: EstagioOportunidade; label: string; cor: string }[] = [
-  { id: "a_analisar", label: "A analisar", cor: "text-zinc-300" },
-  { id: "qualificada", label: "Qualificada", cor: "text-amber-300" },
-  { id: "apresentada", label: "Apresentada à boutique", cor: "text-sky-300" },
-  { id: "descartada", label: "Descartada", cor: "text-zinc-500" },
+  { id: "a_analisar", label: "A analisar", cor: "text-floral" },
+  { id: "qualificada", label: "Qualificada", cor: "text-risk-mid" },
+  { id: "apresentada", label: "Apresentada à boutique", cor: "text-floral" },
+  { id: "descartada", label: "Descartada", cor: "text-olive" },
 ];
 
 const RESULTADOS: { id: ResultadoOportunidade; label: string }[] = [
@@ -62,24 +62,24 @@ export default function Pipeline() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
+    <div className="min-h-screen bg-smoky text-floral">
       <main className="mx-auto max-w-6xl px-6 py-12">
         <header className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight">Pipeline de originação</h1>
-            <p className="mt-1 text-sm text-zinc-400">
+            <h1 className="font-display text-2xl tracking-tight">Pipeline de originação</h1>
+            <p className="mt-1 text-sm text-bone">
               Oportunidades curadas · {ops.length} no total
             </p>
           </div>
-          <a href="/" className="text-sm text-zinc-400 transition-colors hover:text-white">
+          <a href="/" className="font-data text-sm text-bone transition-colors hover:text-floral">
             ← Voltar à busca
           </a>
         </header>
 
         {loading ? (
-          <p className="text-sm text-zinc-500">Carregando…</p>
+          <p className="text-sm text-bone">Carregando…</p>
         ) : ops.length === 0 ? (
-          <p className="text-sm text-zinc-500">
+          <p className="text-sm text-bone">
             Nenhuma oportunidade salva ainda. Volte à busca e clique em &ldquo;+ salvar&rdquo; numa empresa.
           </p>
         ) : (
@@ -88,23 +88,23 @@ export default function Pipeline() {
               const lista = ops.filter((o) => o.estagio === col.id);
               return (
                 <div key={col.id} className="flex flex-col gap-3">
-                  <div className={`flex items-center justify-between text-xs font-medium uppercase tracking-wider ${col.cor}`}>
+                  <div className={`flex items-center justify-between font-data text-[10px] font-medium uppercase tracking-wider ${col.cor}`}>
                     <span>{col.label}</span>
-                    <span className="text-zinc-600">{lista.length}</span>
+                    <span className="tabular-nums text-olive">{lista.length}</span>
                   </div>
                   {lista.map((o) => (
-                    <div key={o.id} className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-3">
-                      <h3 className="text-sm font-medium text-zinc-100">{o.empresa.razao_social}</h3>
-                      <p className="mt-0.5 text-xs text-zinc-500">
+                    <div key={o.id} className="rounded-lg border border-hairline bg-surface p-3">
+                      <h3 className="text-sm font-medium text-floral">{o.empresa.razao_social}</h3>
+                      <p className="mt-0.5 text-xs text-bone">
                         {o.empresa.municipio} / {o.empresa.uf}
                       </p>
                       {o.empresa.cnae_principal_desc && (
-                        <p className="mt-1 text-[11px] leading-snug text-zinc-500">
+                        <p className="mt-1 text-[11px] leading-snug text-bone">
                           {o.empresa.cnae_principal_desc}
                         </p>
                       )}
                       {(o.empresa.telefone || o.empresa.email) && (
-                        <p className="mt-1 text-[11px] text-emerald-500">
+                        <p className="mt-1 text-[11px] text-bone">
                           {o.empresa.telefone ?? o.empresa.email}
                         </p>
                       )}
@@ -112,7 +112,7 @@ export default function Pipeline() {
                         <select
                           value={o.estagio}
                           onChange={(e) => mover(o.id, e.target.value as EstagioOportunidade)}
-                          className="flex-1 rounded border border-zinc-700 bg-zinc-900 px-1.5 py-1 text-[11px] text-zinc-300 outline-none"
+                          className="flex-1 rounded border border-hairline bg-surface px-1.5 py-1 text-[11px] text-floral outline-none focus:border-hairline-hover"
                         >
                           {ESTAGIOS.map((s) => (
                             <option key={s.id} value={s.id}>{s.label}</option>
@@ -120,7 +120,7 @@ export default function Pipeline() {
                         </select>
                         <button
                           onClick={() => remover(o.id)}
-                          className="text-[11px] text-zinc-600 transition-colors hover:text-red-400"
+                          className="text-[11px] text-olive transition-colors hover:text-risk-high"
                           title="remover do pipeline"
                         >
                           ✕
@@ -134,12 +134,12 @@ export default function Pipeline() {
                           onChange={(e) => atualizar(o.id, { resultado: e.target.value as ResultadoOportunidade })}
                           className={`mt-2 w-full rounded border px-1.5 py-1 text-[11px] outline-none ${
                             o.resultado === "deal_fechado"
-                              ? "border-emerald-700 bg-emerald-950/30 text-emerald-300"
+                              ? "border-floral/30 bg-surface text-floral"
                               : o.resultado === "receptivo"
-                                ? "border-emerald-800 bg-zinc-900 text-emerald-400"
+                                ? "border-hairline bg-surface text-floral"
                                 : o.resultado === "nao_receptivo" || o.resultado === "perdido"
-                                  ? "border-red-900 bg-zinc-900 text-red-400"
-                                  : "border-zinc-700 bg-zinc-900 text-zinc-400"
+                                  ? "border-risk-high/30 bg-surface text-risk-high"
+                                  : "border-hairline bg-surface text-bone"
                           }`}
                         >
                           {RESULTADOS.map((r) => (
@@ -156,7 +156,7 @@ export default function Pipeline() {
                         }}
                         placeholder="anotações…"
                         rows={2}
-                        className="mt-2 w-full resize-none rounded border border-zinc-800 bg-zinc-900/60 px-1.5 py-1 text-[11px] text-zinc-300 outline-none placeholder:text-zinc-600 focus:border-zinc-600"
+                        className="mt-2 w-full resize-none rounded border border-hairline bg-surface px-1.5 py-1 text-[11px] text-floral outline-none placeholder:text-olive focus:border-hairline-hover"
                       />
                     </div>
                   ))}

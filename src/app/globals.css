@@ -4,11 +4,35 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ── Boreal — sistema de marca (fonte de verdade: /brand) ──────────────
+   Paleta quente. Sem azul/navy. Olive só decoração; texto legível em
+   Bone/Floral. Cores de risco quentes (terracota/ocre).               */
+@theme {
+  --color-smoky: #11120d; /* fundo primário — preto quente */
+  --color-olive: #565449; /* decoração, divisores, texto terciário */
+  --color-bone: #d8cfbc; /* texto secundário legível */
+  --color-floral: #fffbf4; /* headlines, texto primário, wordmark */
+
+  --color-surface: rgba(255, 251, 244, 0.03); /* cards */
+  --color-surface-hover: rgba(255, 251, 244, 0.05);
+  --color-hairline: rgba(255, 251, 244, 0.07); /* bordas */
+  --color-hairline-hover: rgba(255, 251, 244, 0.12);
+
+  --color-risk-high: #c8623e; /* terracota — alto risco sucessório */
+  --color-risk-mid: #c99b3d; /* ocre — risco moderado */
+  --color-risk-low: #d8cfbc; /* bone — risco baixo, neutro */
+
+  --font-sans: var(--font-plex-sans); /* interface: body, botões, inputs */
+  --font-display: var(--font-newsreader); /* editorial: headlines, nomes, statements */
+  --font-data: var(--font-plex-mono);     /* dados: scores, CNPJ, labels mono */
+  /* --font-archivo: exclusivo ao lockup do logo, não usar como utility */
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-plex-sans);   /* Next.js font var — corrige circular ref do shadcn */
+  --font-mono: var(--font-plex-mono);
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -109,7 +133,7 @@
   --chart-5: oklch(0.269 0 0);
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary: oklch(0.488 0 0); /* neutralizado — Boreal não usa blue/navy */
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.269 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
