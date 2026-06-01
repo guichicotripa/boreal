@@ -1,112 +1,112 @@
 {
-    "d20b27e5-ebb9-4c4c-a111-f4495de4b3a3":  {
-                                                 "sinais":  [
-                                                                {
-                                                                    "tipo":  "sucessor_familiar_ativo",
-                                                                    "rotulo":  "Sucessor familiar jÃ¡ atuando",
-                                                                    "descricao":  "AndrÃ© Henrique Guilherme Landau Remy (sobrenome idÃªntico ao de Roberto Landau Remy, sÃ³cio fundador) consta como SÃ³cio-Administrador no QSA da empresa, indicando membro da famÃ­lia jÃ¡ integrado Ã  gestÃ£o societÃ¡ria formal.",
-                                                                    "fonte_url":  "https://www.consultasocio.com/q/sa/andre-henrique-guilherme-landau-remy",
-                                                                    "peso":  -25
-                                                                }
-                                                            ],
-                                                 "presenca_digital":  "baixa",
-                                                 "resumo":  "Empresa familiar de origem germÃ¢nica (sobrenomes Landau Remy / Meier), fundada em 1985, com presenÃ§a digital estabelecida (site prÃ³prio + LinkedIn). O principal sinal encontrado Ã© positivo para continuidade: AndrÃ© Henrique Guilherme Landau Remy jÃ¡ figura como SÃ³cio-Administrador na junta, sugerindo transiÃ§Ã£o geracional jÃ¡ formalizada. Nenhuma evidÃªncia pÃºblica de assessor M\u0026A, auditoria Big 4 ou herdeiro fora do negÃ³cio foi localizada.",
-                                                 "score_v0":  100,
-                                                 "score_v1":  75,
-                                                 "delta":  -25
-                                             },
-    "a4379107-47b5-48ec-a641-960e7fdd861c":  {
-                                                 "sinais":  [
-                                                                {
-                                                                    "tipo":  "sucessor_familiar_ativo",
-                                                                    "rotulo":  "Sucessor familiar jÃ¡ atuando",
-                                                                    "descricao":  "Sathel Energia S/A (Cotia/SP, CNPJ 60.218.443/0001-85), entidade do mesmo grupo, tem como Presidente JoÃ£o Henrique Calderan Quintino e Diretora Daysi Calderan Quintino Marcondes â€” ambos com sobrenome Calderan Quintino idÃªntico ao da sÃ³cia fundadora Therezinha Calderan Quintino, indicando que herdeiros familiares jÃ¡ assumiram a gestÃ£o da operaÃ§Ã£o paulista. Reduz o risco sucessÃ³rio imediato.",
-                                                                    "fonte_url":  "https://www.econodata.com.br/consulta-empresa/60218443000185-sathel-energia-sa-equipamentos-e-servicos",
-                                                                    "peso":  -25
-                                                                }
-                                                            ],
-                                                 "presenca_digital":  "media",
-                                                 "resumo":  "A Sathel opera como grupo familiar com ao menos duas entidades jurÃ­dicas. A unidade de Cotia/SP (Sathel Energia S/A, CNPJ 60.218.443/0001-85) jÃ¡ tem membros da famÃ­lia Calderan Quintino â€” JoÃ£o Henrique como Presidente e Daysi como Diretora â€” na gestÃ£o, sinalizando transiÃ§Ã£o geracional jÃ¡ em curso. Nenhuma evidÃªncia pÃºblica de processo de venda, assessor financeiro, auditoria Big 4 ou herdeiro fora do negÃ³cio foi encontrada.",
-                                                 "score_v0":  100,
-                                                 "score_v1":  75,
-                                                 "delta":  -25
-                                             },
-    "93e85e19-cb56-4def-9341-a44a28b8532a":  {
-                                                 "sinais":  [
-                                                                {
-                                                                    "tipo":  "sem_presenca_digital",
-                                                                    "rotulo":  "Sem pegada digital (perfil old-school)",
-                                                                    "descricao":  "Nenhum site oficial encontrado. PresenÃ§a restrita a diretÃ³rios de terceiros (Opendi, Apontador, ListaMais) e processos judiciais. Econodata registra CNPJ 45.373.065/0001-10 como \u0027FALIDO\u0027, sem pÃ¡gina de empresa ativa ou comunicaÃ§Ã£o institucional pÃºblica.",
-                                                                    "fonte_url":  "https://www.econodata.com.br/consulta-empresa/45373065000110-CAMAQ-CALDEIRARIA-E-MAQUINAS-INDUSTRIAIS-LTDA-FALIDO",
-                                                                    "peso":  3
-                                                                }
-                                                            ],
-                                                 "presenca_digital":  "baixa",
-                                                 "resumo":  "CAMAQ tem presenÃ§a digital mÃ­nima â€” sem site prÃ³prio identificado, sem perfis ativos em redes sociais, apenas registros em diretÃ³rios e 1.635 processos judiciais cadastrados. O Econodata classifica a empresa como \u0027FALIDO\u0027 (nÃ£o apenas em recuperaÃ§Ã£o judicial), sinalizando agravamento do quadro. Os trÃªs sÃ³cios Marques dominam a sociedade sem evidÃªncia pÃºblica de executivos externos, assessoria M\u0026A ou Big 4. O nome \u0027JosÃ© Oswaldo Marques Junior\u0027 aparece vinculado a processos da empresa, mas sem comprovaÃ§Ã£o de papel ativo na gestÃ£o ou de carreira fora do negÃ³cio.",
-                                                 "score_v0":  100,
-                                                 "score_v1":  100,
-                                                 "delta":  0
-                                             },
-    "6849dfd9-a629-4b41-b0c5-447dea74f9ec":  {
-                                                 "sinais":  [
-                                                                {
-                                                                    "tipo":  "sucessor_familiar_ativo",
-                                                                    "rotulo":  "Sucessor familiar jÃ¡ atuando",
-                                                                    "descricao":  "Lucas Cremonese Rodrigues (presumivelmente filho ou parente direto de Ubirajara Rodrigues, dado o sobrenome compartilhado) jÃ¡ ocupa o cargo de Presidente da empresa, enquanto Ubirajara Rodrigues figura como Diretor â€” configuraÃ§Ã£o consistente com transiÃ§Ã£o geracional jÃ¡ em execuÃ§Ã£o dentro da famÃ­lia fundadora. Perfil ativo no LinkedIn confirma envolvimento operacional.",
-                                                                    "fonte_url":  "https://br.linkedin.com/in/lucas-c-rodrigues",
-                                                                    "peso":  -25
-                                                                },
-                                                                {
-                                                                    "tipo":  "csuite_externo",
-                                                                    "rotulo":  "C-suite profissional externo Ã  famÃ­lia",
-                                                                    "descricao":  "Ludovico Pasztor consta como Diretor nos registros CNPJ da empresa com sobrenome distinto da famÃ­lia Rodrigues, indicando presenÃ§a de executivo externo em cargo de diretoria formal.",
-                                                                    "fonte_url":  "https://cnpj.biz/50925890000200",
-                                                                    "peso":  6
-                                                                }
-                                                            ],
-                                                 "presenca_digital":  "alta",
-                                                 "resumo":  "Prensa Jundiai S/A tem presenÃ§a digital robusta (site bilÃ­ngue PT/EN, LinkedIn com ~7 mil seguidores, Facebook, Instagram) e operaÃ§Ã£o ativa com filial no MÃ©xico. O sinal mais relevante Ã© a transiÃ§Ã£o geracional jÃ¡ em curso: Lucas Cremonese Rodrigues (sobrenome Rodrigues compartilhado com Ubirajara) ocupa a PresidÃªncia enquanto Ubirajara figura como Diretor â€” padrÃ£o clÃ¡ssico de passagem de bastÃ£o que REDUZ risco sucessÃ³rio. Nenhuma evidÃªncia de venda, M\u0026A, Big 4 ou banco de investimento foi encontrada.",
-                                                 "score_v0":  100,
-                                                 "score_v1":  81,
-                                                 "delta":  -19
-                                             },
-    "a1b5ba2c-98cf-457c-8c7c-1a75016345f1":  {
-                                                 "sinais":  [
-                                                                {
-                                                                    "tipo":  "sem_presenca_digital",
-                                                                    "rotulo":  "Sem pegada digital (perfil old-school)",
-                                                                    "descricao":  "A empresa nÃ£o possui site prÃ³prio indexÃ¡vel, nem perfis ativos no LinkedIn, nem cobertura em imprensa especializada de M\u0026A ou industrial. Buscas por nome completo, sÃ³cios (Emilio Carlos Rodrigues Ferraz, Ranulfo Costa) e cidade (Pontal/SP) retornaram apenas listagens genÃ©ricas de diretÃ³rios de empresas (Econodata, Solutudo) sem dados substantivos sobre a empresa.",
-                                                                    "fonte_url":  "https://www.econodata.com.br/maiores-empresas/sp-pontal/busca-industria",
-                                                                    "peso":  3
-                                                                }
-                                                            ],
-                                                 "presenca_digital":  "baixa",
-                                                 "resumo":  "ApÃ³s 4 buscas direcionadas, a CRIFERP nÃ£o apresenta presenÃ§a digital prÃ³pria rastreÃ¡vel â€” nenhum site oficial, nenhum perfil LinkedIn de sÃ³cios ou executivos, nenhuma cobertura de imprensa. Empresa de 1977 com cinco sÃ³cios, sem qualquer registro pÃºblico de movimentaÃ§Ã£o societÃ¡ria, assessoria financeira, auditoria ou discussÃ£o sucessÃ³ria.",
-                                                 "score_v0":  100,
-                                                 "score_v1":  100,
-                                                 "delta":  0
-                                             },
-    "a33e1843-b467-43c6-8544-637a827cca5c":  {
-                                                 "sinais":  [
-                                                                {
-                                                                    "tipo":  "herdeiro_fora_carreira",
-                                                                    "rotulo":  "Herdeiro(s) em outra carreira",
-                                                                    "descricao":  "Daniel Roberto Gortan â€” sobrenome Gortan e cidade Limeira/SP coincidem com o sÃ³cio Roberto Gortan â€” opera empresa individual de criaÃ§Ã£o de bovinos/reproduÃ§Ã£o animal (CNAE A-0151-2/01) na ChÃ¡cara Santa Helena, Limeira, desde 2006. Nenhum vÃ­nculo societÃ¡rio ou de gestÃ£o com a Mecanotecnica foi encontrado, sugerindo que o provÃ¡vel herdeiro escolheu carreira na agropecuÃ¡ria, fora do negÃ³cio industrial da famÃ­lia.",
-                                                                    "fonte_url":  "https://www.econodata.com.br/consulta-empresa/08230942000178-daniel-roberto-gortan",
-                                                                    "peso":  8
-                                                                },
-                                                                {
-                                                                    "tipo":  "sem_presenca_digital",
-                                                                    "rotulo":  "Sem pegada digital (perfil old-school)",
-                                                                    "descricao":  "Nenhum site prÃ³prio, pÃ¡gina de redes sociais ou cobertura de imprensa localizado para a empresa. PresenÃ§a online restrita a cadastros de CNPJ em bases de dados e registros de processos trabalhistas no Jusbrasil (TRT-15), indicando empresa com baixÃ­ssima exposiÃ§Ã£o pÃºblica.",
-                                                                    "fonte_url":  "https://www.jusbrasil.com.br/processos/nome/40224448/mecanotecnica-industria-e-comercio-ltda-epp",
-                                                                    "peso":  3
-                                                                }
-                                                            ],
-                                                 "presenca_digital":  "baixa",
-                                                 "resumo":  "Empresa familiar fundada em 1984 em Limeira/SP, controlada pelos Gortan hÃ¡ mais de 40 anos, sem site prÃ³prio ou presenÃ§a digital ativa identificada. IndÃ­cio de herdeiro atuando em setor completamente distinto do negÃ³cio industrial da famÃ­lia, elevando o risco sucessÃ³rio.",
-                                                 "score_v0":  85,
-                                                 "score_v1":  96,
-                                                 "delta":  11
-                                             }
+  "d20b27e5-ebb9-4c4c-a111-f4495de4b3a3": {
+    "sinais": [
+      {
+        "tipo": "sucessor_familiar_ativo",
+        "rotulo": "Sucessor familiar já atuando",
+        "descricao": "André Henrique Guilherme Landau Remy (sobrenome idêntico ao de Roberto Landau Remy, sócio fundador) consta como Sócio-Administrador no QSA da empresa, indicando membro da família já integrado à gestão societária formal.",
+        "fonte_url": "https://www.consultasocio.com/q/sa/andre-henrique-guilherme-landau-remy",
+        "peso": -25
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "Empresa familiar de origem germânica (sobrenomes Landau Remy / Meier), fundada em 1985, com presença digital estabelecida (site próprio + LinkedIn). O principal sinal encontrado é positivo para continuidade: André Henrique Guilherme Landau Remy já figura como Sócio-Administrador na junta, sugerindo transição geracional já formalizada. Nenhuma evidência pública de assessor M&A, auditoria Big 4 ou herdeiro fora do negócio foi localizada.",
+    "score_v0": 100,
+    "score_v1": 75,
+    "delta": -25
+  },
+  "a4379107-47b5-48ec-a641-960e7fdd861c": {
+    "sinais": [
+      {
+        "tipo": "sucessor_familiar_ativo",
+        "rotulo": "Sucessor familiar já atuando",
+        "descricao": "Sathel Energia S/A (Cotia/SP, CNPJ 60.218.443/0001-85), entidade do mesmo grupo, tem como Presidente João Henrique Calderan Quintino e Diretora Daysi Calderan Quintino Marcondes — ambos com sobrenome Calderan Quintino idêntico ao da sócia fundadora Therezinha Calderan Quintino, indicando que herdeiros familiares já assumiram a gestão da operação paulista. Reduz o risco sucessório imediato.",
+        "fonte_url": "https://www.econodata.com.br/consulta-empresa/60218443000185-sathel-energia-sa-equipamentos-e-servicos",
+        "peso": -25
+      }
+    ],
+    "presenca_digital": "media",
+    "resumo": "A Sathel opera como grupo familiar com ao menos duas entidades jurídicas. A unidade de Cotia/SP (Sathel Energia S/A, CNPJ 60.218.443/0001-85) já tem membros da família Calderan Quintino — João Henrique como Presidente e Daysi como Diretora — na gestão, sinalizando transição geracional já em curso. Nenhuma evidência pública de processo de venda, assessor financeiro, auditoria Big 4 ou herdeiro fora do negócio foi encontrada.",
+    "score_v0": 100,
+    "score_v1": 75,
+    "delta": -25
+  },
+  "93e85e19-cb56-4def-9341-a44a28b8532a": {
+    "sinais": [
+      {
+        "tipo": "sem_presenca_digital",
+        "rotulo": "Sem pegada digital (perfil old-school)",
+        "descricao": "Nenhum site oficial encontrado. Presença restrita a diretórios de terceiros (Opendi, Apontador, ListaMais) e processos judiciais. Econodata registra CNPJ 45.373.065/0001-10 como 'FALIDO', sem página de empresa ativa ou comunicação institucional pública.",
+        "fonte_url": "https://www.econodata.com.br/consulta-empresa/45373065000110-CAMAQ-CALDEIRARIA-E-MAQUINAS-INDUSTRIAIS-LTDA-FALIDO",
+        "peso": 3
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "CAMAQ tem presença digital mínima — sem site próprio identificado, sem perfis ativos em redes sociais, apenas registros em diretórios e 1.635 processos judiciais cadastrados. O Econodata classifica a empresa como 'FALIDO' (não apenas em recuperação judicial), sinalizando agravamento do quadro. Os três sócios Marques dominam a sociedade sem evidência pública de executivos externos, assessoria M&A ou Big 4. O nome 'José Oswaldo Marques Junior' aparece vinculado a processos da empresa, mas sem comprovação de papel ativo na gestão ou de carreira fora do negócio.",
+    "score_v0": 100,
+    "score_v1": 100,
+    "delta": 0
+  },
+  "6849dfd9-a629-4b41-b0c5-447dea74f9ec": {
+    "sinais": [
+      {
+        "tipo": "sucessor_familiar_ativo",
+        "rotulo": "Sucessor familiar já atuando",
+        "descricao": "Lucas Cremonese Rodrigues (presumivelmente filho ou parente direto de Ubirajara Rodrigues, dado o sobrenome compartilhado) já ocupa o cargo de Presidente da empresa, enquanto Ubirajara Rodrigues figura como Diretor — configuração consistente com transição geracional já em execução dentro da família fundadora. Perfil ativo no LinkedIn confirma envolvimento operacional.",
+        "fonte_url": "https://br.linkedin.com/in/lucas-c-rodrigues",
+        "peso": -25
+      },
+      {
+        "tipo": "csuite_externo",
+        "rotulo": "C-suite profissional externo à família",
+        "descricao": "Ludovico Pasztor consta como Diretor nos registros CNPJ da empresa com sobrenome distinto da família Rodrigues, indicando presença de executivo externo em cargo de diretoria formal.",
+        "fonte_url": "https://cnpj.biz/50925890000200",
+        "peso": 6
+      }
+    ],
+    "presenca_digital": "alta",
+    "resumo": "Prensa Jundiai S/A tem presença digital robusta (site bilíngue PT/EN, LinkedIn com ~7 mil seguidores, Facebook, Instagram) e operação ativa com filial no México. O sinal mais relevante é a transição geracional já em curso: Lucas Cremonese Rodrigues (sobrenome Rodrigues compartilhado com Ubirajara) ocupa a Presidência enquanto Ubirajara figura como Diretor — padrão clássico de passagem de bastão que REDUZ risco sucessório. Nenhuma evidência de venda, M&A, Big 4 ou banco de investimento foi encontrada.",
+    "score_v0": 100,
+    "score_v1": 81,
+    "delta": -19
+  },
+  "a1b5ba2c-98cf-457c-8c7c-1a75016345f1": {
+    "sinais": [
+      {
+        "tipo": "sem_presenca_digital",
+        "rotulo": "Sem pegada digital (perfil old-school)",
+        "descricao": "A empresa não possui site próprio indexável, nem perfis ativos no LinkedIn, nem cobertura em imprensa especializada de M&A ou industrial. Buscas por nome completo, sócios (Emilio Carlos Rodrigues Ferraz, Ranulfo Costa) e cidade (Pontal/SP) retornaram apenas listagens genéricas de diretórios de empresas (Econodata, Solutudo) sem dados substantivos sobre a empresa.",
+        "fonte_url": "https://www.econodata.com.br/maiores-empresas/sp-pontal/busca-industria",
+        "peso": 3
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "Após 4 buscas direcionadas, a CRIFERP não apresenta presença digital própria rastreável — nenhum site oficial, nenhum perfil LinkedIn de sócios ou executivos, nenhuma cobertura de imprensa. Empresa de 1977 com cinco sócios, sem qualquer registro público de movimentação societária, assessoria financeira, auditoria ou discussão sucessória.",
+    "score_v0": 100,
+    "score_v1": 100,
+    "delta": 0
+  },
+  "a33e1843-b467-43c6-8544-637a827cca5c": {
+    "sinais": [
+      {
+        "tipo": "herdeiro_fora_carreira",
+        "rotulo": "Herdeiro(s) em outra carreira",
+        "descricao": "Daniel Roberto Gortan — sobrenome Gortan e cidade Limeira/SP coincidem com o sócio Roberto Gortan — opera empresa individual de criação de bovinos/reprodução animal (CNAE A-0151-2/01) na Chácara Santa Helena, Limeira, desde 2006. Nenhum vínculo societário ou de gestão com a Mecanotecnica foi encontrado, sugerindo que o provável herdeiro escolheu carreira na agropecuária, fora do negócio industrial da família.",
+        "fonte_url": "https://www.econodata.com.br/consulta-empresa/08230942000178-daniel-roberto-gortan",
+        "peso": 8
+      },
+      {
+        "tipo": "sem_presenca_digital",
+        "rotulo": "Sem pegada digital (perfil old-school)",
+        "descricao": "Nenhum site próprio, página de redes sociais ou cobertura de imprensa localizado para a empresa. Presença online restrita a cadastros de CNPJ em bases de dados e registros de processos trabalhistas no Jusbrasil (TRT-15), indicando empresa com baixíssima exposição pública.",
+        "fonte_url": "https://www.jusbrasil.com.br/processos/nome/40224448/mecanotecnica-industria-e-comercio-ltda-epp",
+        "peso": 3
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "Empresa familiar fundada em 1984 em Limeira/SP, controlada pelos Gortan há mais de 40 anos, sem site próprio ou presença digital ativa identificada. Indício de herdeiro atuando em setor completamente distinto do negócio industrial da família, elevando o risco sucessório.",
+    "score_v0": 85,
+    "score_v1": 96,
+    "delta": 11
+  }
 }

@@ -150,5 +150,6 @@
   }
   html {
     @apply font-sans;
+    color-scheme: dark; /* faz o browser pintar form controls nativos (option, scrollbar) no tema escuro */
   }
 }
