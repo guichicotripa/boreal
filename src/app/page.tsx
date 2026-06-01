@@ -258,9 +258,9 @@ function LoadingSteps() {
 }
 
 const TIER_STYLES = {
-  alto:  { borderL: "border-l-risk-high",  badge: "border-risk-high/40 bg-risk-high/5", text: "text-risk-high" },
-  medio: { borderL: "border-l-risk-mid",   badge: "border-risk-mid/40 bg-risk-mid/5",   text: "text-risk-mid"  },
-  baixo: { borderL: "border-l-hairline",   badge: "border-hairline bg-surface",         text: "text-bone"      },
+  alto:  { borderL: "border-l-risk-high",  badge: "border-risk-high/40 bg-risk-high/5", text: "text-risk-high", label: "ALTO"  },
+  medio: { borderL: "border-l-risk-mid",   badge: "border-risk-mid/40 bg-risk-mid/5",   text: "text-risk-mid",  label: "MÉD"   },
+  baixo: { borderL: "border-l-hairline",   badge: "border-hairline bg-surface",         text: "text-bone",      label: "BAIXO" },
 } as const;
 
 const FAIXA_COLOR: Record<string, string> = {
@@ -343,10 +343,10 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
       <div className="flex items-start gap-3">
         <div className={`shrink-0 rounded border ${t.badge} px-2 py-1 text-center`}>
           <div className={`font-data text-lg tabular-nums leading-none ${t.text}`}>{score}</div>
-          <div className="font-data text-[9px] uppercase tracking-wide text-olive">
-            {String(rank).padStart(2, "0")}
+          <div className={`font-data text-[9px] uppercase tracking-wide ${t.text} opacity-70`}>
+            {t.label}
             {research?.delta && research.delta !== 0 && (
-              <span className={research.delta > 0 ? " text-risk-high" : ""}>
+              <span className={`opacity-100 ${research.delta > 0 ? "text-risk-high" : "text-bone"}`}>
                 {" "}{research.delta > 0 ? "↑" : "↓"}
               </span>
             )}
