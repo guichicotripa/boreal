@@ -82,6 +82,9 @@ export default function Home() {
               }}
               className="mt-8"
             >
+              <p className="mb-3 font-data text-[10px] uppercase tracking-[0.18em] text-olive">
+                Descreva uma tese em linguagem livre
+              </p>
               <div className="flex items-center gap-2 border-b border-hairline-hover pb-3 transition-colors focus-within:border-floral/30">
                 <span className="font-data text-sm text-olive">›</span>
                 <input
@@ -139,7 +142,7 @@ export default function Home() {
                     </span>
                     {res.reasoned && res.reasonedCount && (
                       <span className="whitespace-nowrap font-data text-xs uppercase tracking-wide text-olive">
-                        · {res.reasonedCount} comentadas por IA
+                        · {res.reasonedCount} analisadas por IA
                       </span>
                     )}
                   </span>
