@@ -1,6 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { Oportunidade, EstagioOportunidade, ResultadoOportunidade } from "@/lib/types";
 
 const ESTAGIOS: { id: EstagioOportunidade; label: string; cor: string }[] = [
@@ -39,7 +46,7 @@ export default function Pipeline() {
   }, []);
 
   async function mover(id: string, estagio: EstagioOportunidade) {
-    setOps((prev) => prev.map((o) => (o.id === id ? { ...o, estagio } : o))); // otimista
+    setOps((prev) => prev.map((o) => (o.id === id ? { ...o, estagio } : o)));
     await fetch("/api/oportunidade", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -48,7 +55,7 @@ export default function Pipeline() {
   }
 
   async function atualizar(id: string, patch: Partial<Pick<Oportunidade, "resultado" | "notas">>) {
-    setOps((prev) => prev.map((o) => (o.id === id ? { ...o, ...patch } : o))); // otimista
+    setOps((prev) => prev.map((o) => (o.id === id ? { ...o, ...patch } : o)));
     await fetch("/api/oportunidade", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -109,15 +116,27 @@ export default function Pipeline() {
                         </p>
                       )}
                       <div className="mt-2 flex items-center gap-2">
-                        <select
+                        <Select
                           value={o.estagio}
-                          onChange={(e) => mover(o.id, e.target.value as EstagioOportunidade)}
-                          className="flex-1 rounded border border-hairline bg-surface px-1.5 py-1 text-[11px] text-floral outline-none focus:border-hairline-hover"
+                          onValueChange={(v) => mover(o.id, v as EstagioOportunidade)}
                         >
-                          {ESTAGIOS.map((s) => (
-                            <option key={s.id} value={s.id}>{s.label}</option>
-                          ))}
-                        </select>
+                          <SelectTrigger className="h-auto flex-1 border-hairline px-1.5 py-1 text-[11px] text-floral focus:ring-0 focus:border-hairline-hover">
+                            <SelectValue>
+                              {ESTAGIOS.find((s) => s.id === o.estagio)?.label ?? o.estagio}
+                            </SelectValue>
+                          </SelectTrigger>
+                          <SelectContent sideOffset={0} className="border-hairline bg-[#1c1d17] text-floral">
+                            {ESTAGIOS.map((s) => (
+                              <SelectItem
+                                key={s.id}
+                                value={s.id}
+                                className="text-[11px] text-floral focus:bg-surface-hover focus:text-floral"
+                              >
+                                {s.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                         <button
                           onClick={() => remover(o.id)}
                           className="text-[11px] text-olive transition-colors hover:text-risk-high"
@@ -127,28 +146,38 @@ export default function Pipeline() {
                         </button>
                       </div>
 
-                      {/* Resultado (ground truth) — só faz sentido após apresentar */}
                       {o.estagio === "apresentada" && (
-                        <select
+                        <Select
                           value={o.resultado}
-                          onChange={(e) => atualizar(o.id, { resultado: e.target.value as ResultadoOportunidade })}
-                          className={`mt-2 w-full rounded border px-1.5 py-1 text-[11px] outline-none ${
-                            o.resultado === "deal_fechado"
-                              ? "border-floral/30 bg-surface text-floral"
-                              : o.resultado === "receptivo"
-                                ? "border-hairline bg-surface text-floral"
-                                : o.resultado === "nao_receptivo" || o.resultado === "perdido"
-                                  ? "border-risk-high/30 bg-surface text-risk-high"
-                                  : "border-hairline bg-surface text-bone"
-                          }`}
+                          onValueChange={(v) => atualizar(o.id, { resultado: v as ResultadoOportunidade })}
                         >
-                          {RESULTADOS.map((r) => (
-                            <option key={r.id} value={r.id}>{r.label}</option>
-                          ))}
-                        </select>
+                          <SelectTrigger className={`mt-2 h-auto w-full px-1.5 py-1 text-[11px] focus:ring-0 ${
+                            o.resultado === "deal_fechado"
+                              ? "border-floral/30 bg-smoky text-floral"
+                              : o.resultado === "receptivo"
+                                ? "border-hairline bg-smoky text-floral"
+                                : o.resultado === "nao_receptivo" || o.resultado === "perdido"
+                                  ? "border-risk-high/30 bg-smoky text-risk-high"
+                                  : "border-hairline bg-smoky text-bone"
+                          }`}>
+                            <SelectValue>
+                              {RESULTADOS.find((r) => r.id === o.resultado)?.label ?? o.resultado}
+                            </SelectValue>
+                          </SelectTrigger>
+                          <SelectContent sideOffset={0} className="border-hairline bg-[#1c1d17] text-floral">
+                            {RESULTADOS.map((r) => (
+                              <SelectItem
+                                key={r.id}
+                                value={r.id}
+                                className="text-[11px] text-floral focus:bg-surface-hover focus:text-floral"
+                              >
+                                {r.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       )}
 
-                      {/* Notas — registro do julgamento do analista */}
                       <textarea
                         defaultValue={o.notas ?? ""}
                         onBlur={(e) => {
