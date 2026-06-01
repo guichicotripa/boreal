@@ -142,7 +142,7 @@ export default function Home() {
                     </span>
                     {res.reasoned && res.reasonedCount && (
                       <span className="whitespace-nowrap font-data text-xs uppercase tracking-wide text-olive">
-                        · {res.reasonedCount} analisadas por IA
+                        · top {res.reasonedCount} analisadas por IA
                       </span>
                     )}
                   </span>
@@ -291,9 +291,9 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
   const t = TIER_STYLES[tier];
   const socios = e.socio ?? [];
 
-  const badges: string[] = e.insight?.flags?.length
+  const badges: string[] = (e.insight?.flags?.length
     ? e.insight.flags
-    : (e.score?.sinais ?? []).slice(0, 4);
+    : (e.score?.sinais ?? [])).slice(0, 3);
 
   async function investigar() {
     if (research || researchLoading) return;
@@ -391,6 +391,17 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
 
       {/* Ações */}
       <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-hairline pt-2">
+        {socios.length > 0 && (
+          <>
+            <button
+              onClick={() => setSociosAberto((v) => !v)}
+              className="font-data text-xs text-bone transition-colors hover:text-floral hover:underline"
+            >
+              {sociosAberto ? "Ocultar detalhes" : "Ver detalhes"}
+            </button>
+            <span className="text-olive">·</span>
+          </>
+        )}
         <button
           onClick={investigar}
           disabled={researchLoading}
@@ -412,36 +423,11 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
               ? memoAberto ? "Ocultar memo" : "Ver memo"
               : "Gerar memo de investimento"}
         </button>
-        {socios.length > 0 && (
-          <>
-            <span className="text-olive">·</span>
-            <button
-              onClick={() => setSociosAberto((v) => !v)}
-              className="font-data text-xs text-bone transition-colors hover:text-floral hover:underline"
-            >
-              {sociosAberto ? "Ocultar detalhes" : "Ver detalhes"}
-            </button>
-          </>
-        )}
       </div>
 
       {/* Erros */}
       {researchErro && <p className="mt-2 text-xs text-risk-high">{researchErro}</p>}
       {memoErro && <p className="mt-2 text-xs text-risk-high">{memoErro}</p>}
-
-      {/* Painel: investigação */}
-      {researchLoading && (
-        <p className="mt-3 animate-pulse text-xs text-bone">
-          A IA está pesquisando sócios, herdeiros, imprensa e quadro societário em fontes públicas…
-        </p>
-      )}
-      {research && <ResearchDisplay research={research} />}
-
-      {/* Painel: memo */}
-      {memoAberto && memoLoading && (
-        <p className="mt-3 animate-pulse font-data text-xs text-bone">Gerando memo de investimento…</p>
-      )}
-      {memoAberto && memoAnalise && <MemoDisplay empresa={e} analise={memoAnalise} />}
 
       {/* Painel: sócios */}
       {sociosAberto && (
@@ -472,6 +458,20 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
           )}
         </div>
       )}
+
+      {/* Painel: investigação */}
+      {researchLoading && (
+        <p className="mt-3 animate-pulse text-xs text-bone">
+          A IA está pesquisando sócios, herdeiros, imprensa e quadro societário em fontes públicas…
+        </p>
+      )}
+      {research && <ResearchDisplay research={research} />}
+
+      {/* Painel: memo */}
+      {memoAberto && memoLoading && (
+        <p className="mt-3 animate-pulse font-data text-xs text-bone">Gerando memo de investimento…</p>
+      )}
+      {memoAberto && memoAnalise && <MemoDisplay empresa={e} analise={memoAnalise} />}
     </li>
   );
 }
@@ -505,7 +505,7 @@ function SalvarButton({ empresaId }: { empresaId: string }) {
           : "border border-hairline text-bone hover:border-hairline-hover hover:text-floral"
       }`}
     >
-      {estado === "salvo" ? "✓ no pipeline" : estado === "salvando" ? "salvando…" : "+ salvar"}
+      {estado === "salvo" ? "✓ no pipeline" : estado === "salvando" ? "Salvando…" : "Salvar no pipeline"}
     </button>
   );
 }
@@ -557,6 +557,7 @@ function ResearchDisplay({ research }: { research: ResearchResult }) {
 function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierAnalise }) {
   return (
     <div className="mt-3 space-y-4 rounded-lg border border-hairline bg-surface p-4 text-sm">
+      <span className="font-data text-[10px] uppercase tracking-wider text-bone">Memo de investimento</span>
       <p className="leading-relaxed text-floral">{analise.overview}</p>
       <Timeline empresa={empresa} />
       <div>
