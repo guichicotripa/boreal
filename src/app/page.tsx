@@ -96,9 +96,14 @@ export default function Home() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-80 disabled:opacity-50"
+                  className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity disabled:opacity-50"
                 >
-                  {loading ? "Buscando…" : "Buscar tese →"}
+                  {loading ? "Buscando…" : (
+                    <>
+                      <span>Buscar tese</span>
+                      <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>
@@ -395,7 +400,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
           <>
             <button
               onClick={() => setSociosAberto((v) => !v)}
-              className="font-data text-xs text-bone transition-colors hover:text-floral hover:underline"
+              className="font-data text-xs text-bone transition-colors hover:text-floral"
             >
               {sociosAberto ? "Ocultar detalhes" : "Ver detalhes"}
             </button>
@@ -415,7 +420,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
         <button
           onClick={gerarMemo}
           disabled={memoLoading}
-          className="font-data text-xs text-bone transition-colors hover:text-floral hover:underline disabled:opacity-50"
+          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50"
         >
           {memoLoading
             ? "Gerando memo…"
@@ -561,7 +566,7 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
       <p className="leading-relaxed text-floral">{analise.overview}</p>
       <Timeline empresa={empresa} />
       <div>
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
+        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
           Análise de risco sucessório
         </h4>
         <p className="leading-relaxed text-floral">{analise.analise_sucessoria}</p>
@@ -570,7 +575,7 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
       {/* Red flags a investigar — D.2: ordenado por severidade, max 5 · D.3: como_verificar em linha própria */}
       {analise.red_flags?.length ? (
         <div>
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
             Red flags a investigar
           </h4>
           <ul className="space-y-2.5">
@@ -609,7 +614,7 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
 
       {analise.perguntas_abordagem.length > 0 && (
         <div>
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
             Perguntas para o primeiro contato
           </h4>
           <ul className="list-decimal space-y-1 pl-5 text-floral">
@@ -621,7 +626,7 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
       )}
       {/* D.4: tese hairline (recuada, contexto) */}
       <div className="border-l-2 border-bone/30 pl-3">
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
+        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
           Tese de aproximação
         </h4>
         <p className="leading-relaxed text-floral">{analise.tese_aproximacao}</p>
@@ -630,7 +635,7 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
       {/* D.4: próximo passo surface-hover (mais destaque, CTA) */}
       {analise.proximo_passo && (
         <div className="rounded-md bg-surface-hover p-3">
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
             Próximo passo
           </h4>
           <p className="leading-relaxed text-floral">→ {analise.proximo_passo}</p>
@@ -670,7 +675,7 @@ function Timeline({ empresa }: { empresa: Empresa }) {
 
   return (
     <div>
-      <h4 className="mb-2 font-data text-[10px] uppercase tracking-wider text-olive">
+      <h4 className="mb-2 font-data text-[10px] uppercase tracking-wider text-bone/55">
         Linha do tempo societária
       </h4>
       {/* Altura explícita evita margin collapse (conteúdo é absoluto) */}
