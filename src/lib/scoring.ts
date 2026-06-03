@@ -6,7 +6,13 @@
 //   - porte e antiguidade são tão preditivos de aquisição quanto idade (lift ~2,4-2,6x);
 //   - "estabilidade/estagnação" tinha lift NEGATIVO (0,81x) — REMOVIDA (o v0 premiava errado);
 //   - empresa de sócio único quase nunca é adquirida → quadro plural ganha bônus.
-// Resultado: top decil de aquisições reais subiu de 17% (v0) para 28% (v0.1).
+//
+// RESULTADO MEDIDO (02/06/2026, sem leakage — score em 2023-06 vs aquisições até 2025-11), com o
+// decil calculado DENTRO de cada vertical (ver scripts/validacao-snapshot.mjs → src/lib/validacao.json):
+//   - METALMECÂNICA: 67% das 76 aquisições reais no top 10% (6,7x vs. acaso, decil médio 1,66).
+//   - SAÚDE: só 18% — porque ~metade do M&A de saúde é CONSOLIDAÇÃO (roll-up), que um score de
+//     sucessão não deve prever. Esse jogo é capturado pela outra lente (scripts/proximo-alvo.mjs).
+// (A nota antiga "17%→28%" não se reproduz na medição em escala; o número honesto é por vertical.)
 
 import type { Empresa, Socio } from "./types";
 

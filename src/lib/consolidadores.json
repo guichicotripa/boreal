@@ -1,0 +1,219 @@
+{
+  "gerado_em": "2026-06-02",
+  "janela": {
+    "antigo": "2023-06-10",
+    "novo": "2025-11-09"
+  },
+  "nota": "Consolidadores reais de saúde em SP, minerados das entradas de sócio PJ no CNPJ. O 'buy-box' é o perfil das empresas que cada um já comprou (CNAE + praça). Os próximos alvos são empresas ainda independentes (só sócios PF) que se encaixam no padrão e têm perfil sucessório (sócio 61+).",
+  "consolidadores": [
+    {
+      "consolidador": "SKINLASER DERMATOLOGIA MEDICA LIMITADA",
+      "n_adquiridas": 23,
+      "cnaes": [
+        "8630501"
+      ],
+      "n_municipios": 1,
+      "proximos_alvos": [
+        {
+          "nome": "REUMACLIN - MEDICOS ASSOCIADOS S/S",
+          "cnae": "8630501",
+          "socio_faixa": "80+",
+          "desde": 1984,
+          "encaixe": 70
+        },
+        {
+          "nome": "CONSULTORIO PEDIATRICO MAX EJZENBAUM LTDA",
+          "cnae": "8630501",
+          "socio_faixa": "80+",
+          "desde": 1989,
+          "encaixe": 70
+        },
+        {
+          "nome": "CLINICA DE URGENCIA MARCELO FERRAZ SAMPAIO LTDA",
+          "cnae": "8630501",
+          "socio_faixa": "80+",
+          "desde": 1994,
+          "encaixe": 70
+        },
+        {
+          "nome": "INSTITUTO DO APARELHO DIGESTIVO E ASSISTENCIA MEDICA LTDA",
+          "cnae": "8630501",
+          "socio_faixa": "80+",
+          "desde": 1990,
+          "encaixe": 70
+        },
+        {
+          "nome": "CMA - SERVICOS MEDICOS HOSPITALARES LTDA",
+          "cnae": "8630501",
+          "socio_faixa": "80+",
+          "desde": 1984,
+          "encaixe": 70
+        },
+        {
+          "nome": "CLINICA UROLOGICA DR. CARLOS RIBEIRO LTDA",
+          "cnae": "8630501",
+          "socio_faixa": "80+",
+          "desde": 2000,
+          "encaixe": 70
+        }
+      ]
+    },
+    {
+      "consolidador": "GRUPO MOGIANO DE ANESTESIOLOGIA E DOR LTDA",
+      "n_adquiridas": 17,
+      "cnaes": [
+        "8610101",
+        "8630503"
+      ],
+      "n_municipios": 1,
+      "proximos_alvos": [
+        {
+          "nome": "HOSPITAL ANCHIETA LTDA",
+          "cnae": "8610101",
+          "socio_faixa": "80+",
+          "desde": 1952,
+          "encaixe": 70
+        },
+        {
+          "nome": "CLINICA DE CIRURGIA PLASTICA DRA ZULEIKA ALVO S/S LTDA",
+          "cnae": "8630503",
+          "socio_faixa": "80+",
+          "desde": 1982,
+          "encaixe": 70
+        },
+        {
+          "nome": "CLINICA DE CIRURGIA PLASTICA JORGE ISHIDA LTDA.",
+          "cnae": "8610101",
+          "socio_faixa": "80+",
+          "desde": 1981,
+          "encaixe": 70
+        },
+        {
+          "nome": "CSOKA ROQUE SERVICOS MEDICOS S/S",
+          "cnae": "8630503",
+          "socio_faixa": "80+",
+          "desde": 1999,
+          "encaixe": 70
+        },
+        {
+          "nome": "CLINICA DERMATOLOGICA DR. MARCOS GONDIM LTDA",
+          "cnae": "8630503",
+          "socio_faixa": "80+",
+          "desde": 1988,
+          "encaixe": 70
+        },
+        {
+          "nome": "L.S. ASSISTENCIA MEDICA LTDA",
+          "cnae": "8630503",
+          "socio_faixa": "80+",
+          "desde": 1997,
+          "encaixe": 70
+        }
+      ]
+    },
+    {
+      "consolidador": "CLINICA REGENERATI SERVICOS MEDICOS LTDA",
+      "n_adquiridas": 30,
+      "cnaes": [
+        "8630503"
+      ],
+      "n_municipios": 1,
+      "proximos_alvos": [
+        {
+          "nome": "ERGO MED S.S LTDA",
+          "cnae": "8630503",
+          "socio_faixa": "80+",
+          "desde": 1988,
+          "encaixe": 70
+        },
+        {
+          "nome": "CONSULTORIO CARDIOLOGICO DR. FERNANDO A. DOMINGUES LTDA",
+          "cnae": "8630503",
+          "socio_faixa": "80+",
+          "desde": 2000,
+          "encaixe": 70
+        },
+        {
+          "nome": "CLINICA ALEXANDRE GALENO S/C LTDA",
+          "cnae": "8630503",
+          "socio_faixa": "80+",
+          "desde": 1999,
+          "encaixe": 70
+        },
+        {
+          "nome": "CLINICA MEDICA DR.PETER POZSONYI S/C LTDA.",
+          "cnae": "8630503",
+          "socio_faixa": "80+",
+          "desde": 1999,
+          "encaixe": 70
+        },
+        {
+          "nome": "CLINICA DR ANTONIO CARLOS DE M. CUNHA LTDA",
+          "cnae": "8630503",
+          "socio_faixa": "80+",
+          "desde": 1997,
+          "encaixe": 70
+        },
+        {
+          "nome": "CLINICA DE MASTOLOGIA DR.GEORGES ARIE LTDA",
+          "cnae": "8630503",
+          "socio_faixa": "80+",
+          "desde": 1992,
+          "encaixe": 70
+        }
+      ]
+    },
+    {
+      "consolidador": "SANTORIUS MEDICINA CIRURGICA E DIAGNOSTICA LTDA",
+      "n_adquiridas": 28,
+      "cnaes": [
+        "8610101"
+      ],
+      "n_municipios": 1,
+      "proximos_alvos": [
+        {
+          "nome": "ASSOCIACAO MOGIANA DE ANESTESIOLOGIA S/C LTDA",
+          "cnae": "8610101",
+          "socio_faixa": "80+",
+          "desde": 1989,
+          "encaixe": 70
+        },
+        {
+          "nome": "SANTA CASA DE MISERICORDIA DE MOGI DAS CRUZES",
+          "cnae": "8610101",
+          "socio_faixa": "71-80",
+          "desde": 1966,
+          "encaixe": 66
+        },
+        {
+          "nome": "HOSPITAL E MATERNIDADE SAO MARCOS LTDA",
+          "cnae": "8610101",
+          "socio_faixa": "71-80",
+          "desde": 1968,
+          "encaixe": 66
+        },
+        {
+          "nome": "BACCI E MIURA SERVICOS MEDICOS S/C LTDA",
+          "cnae": "8610101",
+          "socio_faixa": "71-80",
+          "desde": 2000,
+          "encaixe": 66
+        },
+        {
+          "nome": "HOSPITAL E MATERNIDADE IPIRANGA DE MOGI DAS CRUZES S A",
+          "cnae": "8610101",
+          "socio_faixa": "71-80",
+          "desde": 1968,
+          "encaixe": 66
+        },
+        {
+          "nome": "CUIDADOS INTENSIVOS NEONATAL S/S LTDA",
+          "cnae": "8610101",
+          "socio_faixa": "61-70",
+          "desde": 1998,
+          "encaixe": 60
+        }
+      ]
+    }
+  ]
+}

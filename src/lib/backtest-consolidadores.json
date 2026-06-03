@@ -1,0 +1,14 @@
+{
+  "gerado_em": "2026-06-03",
+  "janela": {
+    "previsao": "2024-06-09",
+    "outcome": "2025-11-09"
+  },
+  "n_previstos": 21168,
+  "previstos_adquiridos": 48,
+  "taxa_previstos": 0.2,
+  "n_base": 192177,
+  "base_adquiridos": 306,
+  "taxa_base": 0.2,
+  "lift": 1.4
+}

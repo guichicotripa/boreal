@@ -66,13 +66,23 @@ export default function Home() {
             {/* Overline */}
             <p className="font-data text-[11px] uppercase tracking-[0.2em] text-bone">
               <span className="text-floral">BOREAL</span>{" "}
-              <span className="text-olive">·</span> Deal sourcing
+              <span className="text-olive">·</span> Modelo preditivo de M&amp;A
             </p>
 
             {/* Headline */}
             <h1 className="mt-6 font-display text-3xl leading-[1.1] tracking-tight text-floral md:text-[44px]">
-              A inteligência privada que encontra empresas familiares antes do mercado.
+              O modelo que prevê quem vai vender — antes do mercado.
             </h1>
+
+            {/* Subheadline — a credencial */}
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-bone">
+              Não é um buscador. É um modelo validado contra aquisições reais, sem leakage:{" "}
+              <strong className="text-floral">67% das vendas já estavam no nosso top 10%</strong>, 12
+              meses antes.{" "}
+              <a href="/validacao" className="text-risk-mid underline-offset-2 hover:underline">
+                ver a prova →
+              </a>
+            </p>
 
             {/* Search — underline + prompt */}
             <form
@@ -530,6 +540,23 @@ function ResearchDisplay({ research }: { research: ResearchResult }) {
       {research.resumo && (
         <p className="text-sm leading-relaxed text-floral">{research.resumo}</p>
       )}
+      {research.gatilho ? (
+        <div className="rounded-md border border-risk-high/30 bg-risk-high/10 p-2.5">
+          <p className="font-data text-[10px] uppercase tracking-wider text-risk-high">Por que agora</p>
+          <p className="mt-1 text-sm leading-snug text-floral">{research.gatilho}</p>
+        </div>
+      ) : (
+        <div className="rounded-md border border-hairline bg-smoky p-2.5">
+          <p className="font-data text-[10px] uppercase tracking-wider text-olive">
+            Sem gatilho de timing · não é o momento
+          </p>
+          <p className="mt-1 text-sm leading-snug text-bone">
+            {research.sinais.some((s) => s.peso < 0)
+              ? "A investigação encontrou sinal de sucessão já encaminhada (herdeiro ativo). Abordar agora tende a ser improdutivo — monitorar."
+              : "O perfil não indica uma janela de abordagem no momento. Manter no radar, sem priorizar contato."}
+          </p>
+        </div>
+      )}
       {research.sinais.length > 0 ? (
         <ul className="flex flex-col gap-2">
           {research.sinais.map((s, i) => (
@@ -554,6 +581,16 @@ function ResearchDisplay({ research }: { research: ResearchResult }) {
         </ul>
       ) : (
         <p className="text-xs text-bone">Nenhum sinal qualitativo conclusivo encontrado.</p>
+      )}
+      {research.mensagem_abordagem && (
+        <div className="rounded-md border border-hairline bg-smoky p-2.5">
+          <p className="font-data text-[10px] uppercase tracking-wider text-olive">
+            Rascunho de abordagem · edite antes de enviar
+          </p>
+          <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-bone">
+            {research.mensagem_abordagem}
+          </p>
+        </div>
       )}
     </div>
   );

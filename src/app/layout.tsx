@@ -52,12 +52,26 @@ export default function RootLayout({
         <nav className="sticky top-0 z-50 border-b border-hairline bg-smoky px-6 py-4">
           <div className="mx-auto flex max-w-5xl items-center justify-between">
             <NavLogo />
-            <a
-              href="/pipeline"
-              className="font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:text-floral"
-            >
-              Pipeline
-            </a>
+            <div className="flex items-center gap-5">
+              <a
+                href="/validacao"
+                className="font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:text-floral"
+              >
+                Validação
+              </a>
+              <a
+                href="/consolidadores"
+                className="font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:text-floral"
+              >
+                Consolidadores
+              </a>
+              <a
+                href="/pipeline"
+                className="font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:text-floral"
+              >
+                Pipeline
+              </a>
+            </div>
           </div>
         </nav>
         {children}

@@ -1,0 +1,31 @@
+{
+  "gerado_em": "2026-06-02",
+  "janela": {
+    "corte": "2023-06-10",
+    "novo": "2025-11-09",
+    "anos": 2.4
+  },
+  "metodologia": "Ground truth minerado das transições do próprio CNPJ (sócio PJ entra + sócio PF sai = assinatura de aquisição) entre dois snapshots da Receita Federal. O score é calculado com os dados de 2023-06, ANTES das aquisições — zero lookahead bias. Mede-se quantas das aquisições reais o ranking colocou no top 10% do seu vertical. Aleatório = 10%.",
+  "verticais": [
+    {
+      "vertical": "metalmec",
+      "universo": 140726,
+      "n_aquisicoes": 76,
+      "recall_top10": 67,
+      "recall_top20": 74,
+      "recall_top30": 95,
+      "decil_medio": 1.66,
+      "lift_top10": 6.7
+    },
+    {
+      "vertical": "saude",
+      "universo": 210159,
+      "n_aquisicoes": 264,
+      "recall_top10": 18,
+      "recall_top20": 32,
+      "recall_top30": 55,
+      "decil_medio": 3.41,
+      "lift_top10": 1.8
+    }
+  ]
+}
