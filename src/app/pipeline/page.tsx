@@ -8,7 +8,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { Oportunidade, EstagioOportunidade, ResultadoOportunidade } from "@/lib/types";
+import type {
+  Oportunidade, EstagioOportunidade, ResultadoOportunidade, Interacao, TipoInteracao,
+} from "@/lib/types";
+
+const TIPOS_INTERACAO: { id: TipoInteracao; label: string }[] = [
+  { id: "ligacao", label: "Ligação" },
+  { id: "email", label: "Email" },
+  { id: "reuniao", label: "Reunião" },
+  { id: "whatsapp", label: "WhatsApp" },
+  { id: "nota", label: "Nota" },
+];
 
 const ESTAGIOS: { id: EstagioOportunidade; label: string; cor: string; emptyMsg: string }[] = [
   { id: "identificado", label: "Identificado", cor: "text-bone",     emptyMsg: "Salve empresas da busca para começar." },
@@ -226,6 +236,113 @@ function Card({
         rows={2}
         className="mt-2 w-full resize-none rounded border border-hairline bg-surface px-1.5 py-1 text-[11px] text-floral outline-none placeholder:text-olive focus:border-hairline-hover"
       />
+
+      {/* Log de atividade (toques) */}
+      <LogAtividade oportunidadeId={o.id} />
+    </div>
+  );
+}
+
+function dataCurta(iso: string) {
+  return new Date(iso).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
+}
+
+function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
+  const [aberto, setAberto] = useState(false);
+  const [itens, setItens] = useState<Interacao[] | null>(null);
+  const [tipo, setTipo] = useState<TipoInteracao>("ligacao");
+  const [texto, setTexto] = useState("");
+
+  async function carregar() {
+    const r = await fetch(`/api/interacao?oportunidade_id=${oportunidadeId}`);
+    const d = await r.json();
+    setItens(d.interacoes ?? []);
+  }
+
+  function toggle() {
+    const novo = !aberto;
+    setAberto(novo);
+    if (novo && itens === null) carregar();
+  }
+
+  async function adicionar() {
+    const descricao = texto.trim();
+    if (!descricao) return;
+    const r = await fetch("/api/interacao", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ oportunidade_id: oportunidadeId, tipo, descricao }),
+    });
+    const d = await r.json();
+    if (d.interacao) {
+      setItens((p) => [d.interacao, ...(p ?? [])]);
+      setTexto("");
+    }
+  }
+
+  const total = itens?.length ?? 0;
+
+  return (
+    <div className="mt-2 border-t border-hairline pt-2">
+      <button
+        onClick={toggle}
+        className="flex w-full items-center justify-between font-data text-[10px] uppercase tracking-wider text-olive transition-colors hover:text-bone"
+      >
+        <span>Atividade{total > 0 ? ` · ${total}` : ""}</span>
+        <span>{aberto ? "−" : "+"}</span>
+      </button>
+
+      {aberto && (
+        <div className="mt-2 space-y-2">
+          <div className="flex gap-1">
+            <Select value={tipo} onValueChange={(v) => setTipo(v as TipoInteracao)}>
+              <SelectTrigger className="h-auto w-24 shrink-0 border-hairline px-1.5 py-1 text-[11px] text-floral focus:ring-0 focus:border-hairline-hover">
+                <SelectValue>{TIPOS_INTERACAO.find((t) => t.id === tipo)?.label}</SelectValue>
+              </SelectTrigger>
+              <SelectContent sideOffset={0} className="border-hairline bg-[#1c1d17] text-floral">
+                {TIPOS_INTERACAO.map((t) => (
+                  <SelectItem key={t.id} value={t.id} className="text-[11px] text-floral focus:bg-surface-hover focus:text-floral">
+                    {t.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <input
+              value={texto}
+              onChange={(e) => setTexto(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") adicionar();
+              }}
+              placeholder="registrar toque…"
+              className="min-w-0 flex-1 rounded border border-hairline bg-surface px-1.5 py-1 text-[11px] text-floral outline-none placeholder:text-olive focus:border-hairline-hover"
+            />
+            <button
+              onClick={adicionar}
+              className="shrink-0 rounded border border-hairline px-2 font-data text-[11px] text-floral transition-colors hover:border-hairline-hover"
+            >
+              +
+            </button>
+          </div>
+
+          {itens && itens.length > 0 ? (
+            <ul className="space-y-1.5">
+              {itens.map((it) => (
+                <li key={it.id} className="text-[11px] leading-snug">
+                  <span className="font-data text-olive">{dataCurta(it.criado_em)}</span>{" "}
+                  <span className="font-data uppercase tracking-wide text-bone/55">
+                    {TIPOS_INTERACAO.find((t) => t.id === it.tipo)?.label ?? it.tipo}
+                  </span>
+                  <span className="text-bone"> — {it.descricao}</span>
+                </li>
+              ))}
+            </ul>
+          ) : itens ? (
+            <p className="text-[11px] text-olive">Nenhum toque registrado.</p>
+          ) : (
+            <p className="text-[11px] text-olive">Carregando…</p>
+          )}
+        </div>
+      )}
     </div>
   );
 }
