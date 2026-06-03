@@ -299,3 +299,70 @@ Pro (guichicotrip4@gmail.com) destravou; `check-agent-sdk.mjs` voltou a responde
 
 **Status:** ✅ Tomada e implementada. Fábricas de cache via assinatura: `cache-research-sub.mjs`,
 `cache-dossier-sub.mjs`. Custo da sessão ≈ $0,21 (1 teste na migração); resto via assinatura.
+
+---
+
+## [2026-06-02/03] RACIONAL DAS MELHORIAS — o "porquê" pra usar no pitch
+
+> Cada item: **o que** construímos, **por quê**, e **o que rejeitamos** (a parte que mais convence um
+> juiz de PE/VC). Use isto pra responder "por que vocês fizeram X?" sem improvisar.
+
+### 1. Reframe: tornar o deep-tech VISÍVEL, não ADICIONAR deep-tech
+**Por quê:** "adicionar" um modelo difícil (GNN, fine-tune) não demoa em 60s e viola o anti-drift.
+O que impressiona um juiz afiado não é tecnologia, é **insight não-óbvio que muda o processo**.
+**Rejeitamos:** gold-plating técnico. O Boreal já era deep-tech; faltava mostrar.
+
+### 2. Hindcast nominal como herói da prova (não "antes/depois de 2 semanas")
+**Por quê:** "2 semanas → 30s" parece wrapper de GPT. Mostrar **empresas reais com nome** (Fischer,
+Polimold) que venderam e o rank que demos ANTES do deal responde "como você sabe que funciona?" —
+visceral pra VC (defensibilidade) e founder técnico (rigor). 76 deals, 50 no top decil.
+**Rejeitamos:** narrativa de produtividade genérica.
+
+### 3. Validação leakage-free (retroactive hit rate)
+**Por quê:** ausência de lookahead bias é conceito que VC e founder de IA reconhecem na hora. É o
+que separa "lista bonita" de "modelo que comprovadamente acerta". Ground truth minerado do CNPJ (de graça).
+
+### 4. /consolidadores reenquadrado de PREDITIVO → DESCRITIVO
+**Por quê:** rodamos backtest out-of-sample da previsão de próximo alvo → **lift 1,4× (≈ aleatório)**.
+Vender como preditivo seria auto-gol se um juiz perguntasse "validou?". Mostrar o backtest honesto
+VIRA força: "validamos, não se sustenta, por isso não vendemos como previsão". A força preditiva
+mora na sucessão (66%).
+**Rejeitamos:** overclaim. Honestidade como arma.
+
+### 5. Tese das duas lentes (metalmec=sucessão, saúde=consolidação)
+**Por quê:** revelada PELO DADO (densidade de roll-up é toda em saúde, zero em metalmec). Transforma
+a fraqueza aparente (score fraco em saúde, 18%) em sofisticação: são dois jogos, temos o modelo dos dois.
+
+### 6. /mercado: TAM honesto, SEM inventar R$ por empresa
+**Por quê:** estimar EBITDA por proxy do CNPJ cheira a dado fabricado pra quem entende de PE. Levamos
+o universo quente real (30.732) + giro real (0,46%); monetização só como **sensibilidade ilustrativa**
+com premissas à mostra.
+**Rejeitamos:** valuation fabricado.
+
+### 7. Refino da tese: "congelado por falta de originação" overclaimava
+**Por quê:** testamos com a coorte do CNPJ — **80% das quentes seguem paradas-viáveis** (não morrendo,
+7% fecham, 0,5% vendem) → mata o "estão morrendo". MAS **Selic 13–15% (máx 20 anos)** confunde: venda
+baixa é em parte cíclica. Tese refinada: **estoque viável sub-coberto + represamento cíclico + virada
+de ciclo = originação contracíclica.** Pendência: discovery (ligar pra 10 donos) separa "não abordado"
+de "não quer vender".
+
+### 8. Memo: blocos quantitativos honestos, NÃO um DCF
+**Por quê:** DCF com EBITDA fabricado de empresa que não se falou = auto-gol com juiz de PE; o Boreal
+só tem CNPJ. Em vez disso: **precedentes** (M&A real do setor, da nossa mina) + **cenário de referência**
+(faixas de mercado, não valuation) + **"pedir ao dono"** (o que falta pra ir de sourcing a IC).
+**Rejeitamos:** projeção financeira fabricada. O princípio que blinda: *saber o que um memo de sourcing
+deve e NÃO deve afirmar.*
+
+### 9. Pipeline v2: o loop de outcome (o moat §17 do Playbook saiu do papel)
+**Por quê:** o pipeline é onde o "retroactive hit rate" vira **hit rate realizado** — registra o desfecho
+(contatado/respondeu/vendeu) e compara com o score previsto. É training data que um concorrente não compra
+(defensibilidade) e o sistema que se auto-aprimora (rigor). Lente AI-native: sensor→outcome→aprende (face a)
++ company brain com DRI que coordena pessoas (face b). Prática de mercado: Affinity/DealCloud/4Degrees.
+**Rejeitamos (YAGNI):** retreino ao vivo do score, captura automática de email, deal-execution/VDR/compliance.
+
+### 10. Recalibração pros jurados reais
+**Por quê:** painel = **Monica Saggioro (Maya, VC)** + **Henrique Vaz (Enter/IA jurídica, Sequoia)** +
+Laura. Henrique Dubugras NÃO confirmado → Sharpe vira fio opcional. Demo serve os dois: prova/rigor pro
+Vaz, moat/TAM pra Monica. Demo Day = soft pitch do Relay (seed VC + founder Sequoia na sala), não só os $10k.
+
+**Status:** ✅ Tudo implementado e testado (PRs #23–#26). Racional consolidado aqui pra pitch.

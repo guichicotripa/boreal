@@ -514,3 +514,30 @@ Guilherme sinalizou (comentário no PR #18) que a branch precisava integrar a ma
 **Aprendizado:**
 - Quando o outro lado refatora a estrutura de um componente que você também mexeu, **merge > rebase**: o rebase reaplica cada commit e força resolver o mesmo conflito N vezes; o merge consolida num ponto só. History fica menos linear, mas o Guilherme pode squash no merge do PR.
 - Regra de domínio (#20) na prática: o conteúdo (campos `red_flags`/`proximo_passo` vindos de `types.ts`) é do motor; a renderização é da interface. A integração respeitou isso — peguei os campos do contrato e dei o estilo do brandkit.
+
+---
+
+## [2026-06-02/03] Guilherme | Push deep-tech pros jurados + refino da tese + memo quant + pipeline v2
+
+Sprint grande de 2 dias. Foco: tornar **visível e provável** o deep-tech que o Boreal já tinha, e
+recalibrar pro painel real (Monica/Maya VC + Henrique Vaz/Enter técnico). Racional completo de cada
+peça em `brain/decisions.md` → "[2026-06-02/03] RACIONAL DAS MELHORIAS" (pra usar no pitch).
+
+**O que foi construído (PRs #23–#26):**
+- **`/validacao`** — prova do score: recall@top10% **67%** metalmec, leakage-free, + **hindcast nominal**
+  (empresas reais com nome que venderam + rank pré-deal) + **calibração por lift** (pesos medidos; o dado
+  corrigiu a intuição: quadro estagnado 0,81×, sócio único 0× saíram).
+- **`/consolidadores`** — lente do comprador; reenquadrado pra descritivo após backtest dar 1,4×.
+- **`/mercado`** — TAM honesto (30.732 quentes × 0,46% giro) + **coorte de destino** (80% paradas-viáveis,
+  7% fecham) + **macro Selic** → refino da tese (estoque viável sub-coberto + represamento cíclico).
+- **Gatilho "por que agora" + rascunho de abordagem** no research; estado "não é o momento" quando há sucessor.
+- **Memo quant** — precedentes (da mina) + cenário de referência + "pedir ao dono". Sem DCF fabricado.
+- **Pipeline v2** — funil de 6 estágios + DRI + próxima ação + log de atividade + **loop de outcome**
+  (score previsto × desfecho real). Migration 0004.
+
+**Validação:** tudo testado — backtests ao vivo (BigQuery), API E2E contra DB real, render no browser
+(screenshots). Dois bugs pegos pelo rigor: "17%→28%" no scoring (não reproduz) e "58% baixada" na coorte
+(faltava filtro ativa-em-2023; real 7%). Sem checar, teríamos contado história errada num pitch.
+
+**Aprendizado:** o "porquê" estava só em commits/PRs — fácil de perder no pitch. Consolidado em
+`decisions.md`. Daqui pra frente: registrar racional (incl. o que rejeitamos) junto com o código.
