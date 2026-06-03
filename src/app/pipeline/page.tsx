@@ -10,11 +10,11 @@ import {
 } from "@/components/ui/select";
 import type { Oportunidade, EstagioOportunidade, ResultadoOportunidade } from "@/lib/types";
 
-const ESTAGIOS: { id: EstagioOportunidade; label: string; cor: string }[] = [
-  { id: "a_analisar", label: "A analisar", cor: "text-floral" },
-  { id: "qualificada", label: "Qualificada", cor: "text-risk-mid" },
-  { id: "apresentada", label: "Apresentada à boutique", cor: "text-floral" },
-  { id: "descartada", label: "Descartada", cor: "text-olive" },
+const ESTAGIOS: { id: EstagioOportunidade; label: string; cor: string; emptyMsg: string }[] = [
+  { id: "a_analisar",  label: "A analisar",             cor: "text-floral", emptyMsg: "Salve empresas da busca para iniciar a análise." },
+  { id: "qualificada", label: "Qualificada",             cor: "text-floral", emptyMsg: "Nenhuma empresa qualificada ainda." },
+  { id: "apresentada", label: "Apresentada à boutique", cor: "text-floral", emptyMsg: "Nenhuma empresa apresentada ainda." },
+  { id: "descartada",  label: "Descartada",              cor: "text-olive",  emptyMsg: "Nenhuma empresa descartada." },
 ];
 
 const RESULTADOS: { id: ResultadoOportunidade; label: string }[] = [
@@ -94,11 +94,16 @@ export default function Pipeline() {
             {ESTAGIOS.map((col) => {
               const lista = ops.filter((o) => o.estagio === col.id);
               return (
-                <div key={col.id} className="flex flex-col gap-3">
+                <div key={col.id} className="flex flex-col gap-3 border-t-2 border-floral/15 pt-3">
                   <div className={`flex items-center justify-between font-data text-[10px] font-medium uppercase tracking-wider ${col.cor}`}>
                     <span>{col.label}</span>
                     <span className="tabular-nums text-olive">{lista.length}</span>
                   </div>
+                  {lista.length === 0 && (
+                    <p className="rounded border border-dashed border-hairline px-3 py-4 text-[11px] text-olive">
+                      {col.emptyMsg}
+                    </p>
+                  )}
                   {lista.map((o) => (
                     <div key={o.id} className="rounded-lg border border-hairline bg-surface p-3">
                       <h3 className="text-sm font-medium text-floral">{o.empresa.razao_social}</h3>
