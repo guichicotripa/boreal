@@ -1,6 +1,21 @@
 import type { Metadata } from "next";
 import validacao from "@/lib/validacao.json";
 import hindcast from "@/lib/hindcast.json";
+import lift from "@/lib/lift.json";
+
+type Feature = {
+  nome: string;
+  universo_pct: number;
+  adquiridas_pct: number;
+  lift: number;
+  sinal: string;
+};
+
+const SINAL_COR: Record<string, string> = {
+  forte: "text-floral",
+  fraco: "text-bone",
+  negativo: "text-risk-high",
+};
 
 type Deal = {
   nome: string;
@@ -196,6 +211,47 @@ export default function Validacao() {
             clínica nova), que um score de <em>sucessão</em> não deve prever. Mostramos o número cru
             em vez de esconder — onde o modelo funciona, ele funciona porque o sinal existe, não
             porque escolhemos a dedo.
+          </p>
+        </section>
+
+        {/* O loop de calibração — os pesos são fit, não chutados */}
+        <section className="mt-10">
+          <h2 className="font-data text-[11px] uppercase tracking-wider text-olive">
+            O score não é chutado — ele se calibra contra o que aconteceu
+          </h2>
+          <p className="mt-2 text-sm leading-relaxed text-bone">
+            Cada feature foi medida contra 340 aquisições reais. O <strong className="text-floral">lift</strong> é
+            quanto ela aparece mais nas empresas vendidas do que no universo. É isso que define o peso —
+            e o dado <strong className="text-floral">corrigiu a nossa intuição</strong> duas vezes.
+          </p>
+          <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-hairline bg-surface text-left font-data text-[11px] uppercase tracking-wider text-olive">
+                  <th className="px-4 py-3 font-medium">Sinal</th>
+                  <th className="px-4 py-3 text-right font-medium">No universo</th>
+                  <th className="px-4 py-3 text-right font-medium">Nas vendidas</th>
+                  <th className="px-4 py-3 text-right font-medium">Lift</th>
+                </tr>
+              </thead>
+              <tbody className="font-data">
+                {(lift.features as Feature[]).map((f) => (
+                  <tr key={f.nome} className="border-b border-hairline last:border-0">
+                    <td className={`px-4 py-3 ${SINAL_COR[f.sinal] ?? "text-bone"}`}>{f.nome}</td>
+                    <td className="px-4 py-3 text-right tabular-nums text-bone">{f.universo_pct}%</td>
+                    <td className="px-4 py-3 text-right tabular-nums text-bone">{f.adquiridas_pct}%</td>
+                    <td className={`px-4 py-3 text-right tabular-nums ${SINAL_COR[f.sinal] ?? "text-bone"}`}>
+                      {f.lift.toLocaleString("pt-BR")}×
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-3 text-xs leading-snug text-olive">
+            &ldquo;Quadro estagnado&rdquo; (0,81×) e &ldquo;sócio único&rdquo; (0×) tinham lift baixo/negativo —
+            a gente <em>achava</em> que indicavam risco, mas as vendidas dizem o contrário. Saíram. Esse é o
+            loop: minerar o resultado real → medir o lift → recalibrar. Sem leakage, reproduzível.
           </p>
         </section>
 

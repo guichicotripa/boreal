@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import dados from "@/lib/consolidadores.json";
+import backtest from "@/lib/backtest-consolidadores.json";
 
 export const metadata: Metadata = {
   title: "Boreal · Consolidadores",
@@ -41,7 +42,7 @@ export default function Consolidadores() {
               A outra lente · quem compra
             </p>
             <h1 className="mt-2 font-display text-3xl tracking-tight md:text-4xl">
-              Consolidadores e o próximo alvo
+              Roll-ups se formando no registro
             </h1>
           </div>
           <a href="/" className="font-data text-sm text-bone transition-colors hover:text-floral">
@@ -72,15 +73,32 @@ export default function Consolidadores() {
                 Saúde · consolidação
               </p>
               <p className="mt-2 text-sm leading-snug text-bone">
-                Roll-ups comprando dezenas de clínicas. O modelo prevê o que eles vão{" "}
-                <strong className="text-floral">comprar a seguir</strong>.
+                Roll-ups comprando dezenas de clínicas. A gente os <strong className="text-floral">vê se
+                formar</strong> no registro, em tempo real.
               </p>
             </div>
           </div>
           <p className="mt-4 text-xs leading-snug text-olive">
             Mesma mina de dados (transições de sócios no CNPJ), invertida: em vez de detectar o sócio
             PJ <em>entrando</em> num alvo, agrupamos por <em>quem</em> entrou. Quem aparece em muitas
-            empresas do mesmo setor é um consolidador — e o perfil do que já comprou prevê o próximo.
+            empresas do mesmo setor é um consolidador — e dá pra mapear o <em>buy-box</em> dele (o perfil
+            do que já comprou).
+          </p>
+        </section>
+
+        {/* Honestidade: o backtest da previsão */}
+        <section className="mt-6 rounded-xl border border-hairline bg-smoky p-5">
+          <p className="font-data text-[11px] uppercase tracking-wider text-olive">
+            E o próximo alvo? Backtestamos — e não vendemos como previsão
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-bone">
+            Testamos out-of-sample (prever em {backtest.janela.previsao}, conferir em{" "}
+            {backtest.janela.outcome}): listar &ldquo;próximos alvos&rdquo; pelo buy-box dá só{" "}
+            <strong className="text-floral">{backtest.lift}× vs. acaso</strong> — fraco demais pra
+            chamar de preditivo. O buy-box a nível de CNAE+praça é grosseiro. Então mostramos os
+            consolidadores como <strong className="text-floral">detecção descritiva</strong> (quem está
+            ativo, com que padrão), não como oráculo. A força preditiva mora na sucessão (66%, em{" "}
+            <a href="/validacao" className="text-risk-mid underline-offset-2 hover:underline">/validacao</a>).
           </p>
         </section>
 
@@ -102,7 +120,7 @@ export default function Consolidadores() {
               </p>
 
               <p className="mt-5 font-data text-[11px] uppercase tracking-wider text-bone">
-                Próximos alvos prováveis
+                Candidatos no padrão do comprador
               </p>
               <ul className="mt-2 divide-y divide-hairline">
                 {c.proximos_alvos.map((a, i) => (
@@ -119,9 +137,10 @@ export default function Consolidadores() {
         </div>
 
         <p className="mt-8 font-data text-xs text-olive">
-          Alvos = empresas ainda independentes (só sócios PF no quadro), no buy-box do consolidador, com
-          sócio 61+. Gerado em {new Date(dados.gerado_em).toLocaleDateString("pt-BR")} · ground truth
-          minerado do CNPJ (Receita Federal via BigQuery).
+          Candidatos = empresas ainda independentes (só sócios PF no quadro), dentro do buy-box do
+          consolidador, com sócio 61+. <strong className="text-bone">Não é uma previsão validada</strong>{" "}
+          (ver backtest acima) — é o universo que se encaixa no padrão. Gerado em{" "}
+          {new Date(dados.gerado_em).toLocaleDateString("pt-BR")} · minerado do CNPJ (Receita Federal via BigQuery).
         </p>
       </main>
     </div>
