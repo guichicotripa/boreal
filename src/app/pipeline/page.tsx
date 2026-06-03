@@ -91,7 +91,9 @@ export default function Pipeline() {
             Nenhuma oportunidade salva ainda. Volte à busca e clique em &ldquo;+ salvar&rdquo; numa empresa.
           </p>
         ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+          <>
+            <Dashboard ops={ops} />
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
             {ESTAGIOS.map((col) => {
               const lista = ops.filter((o) => o.estagio === col.id);
               return (
@@ -111,7 +113,8 @@ export default function Pipeline() {
                 </div>
               );
             })}
-          </div>
+            </div>
+          </>
         )}
       </main>
     </div>
@@ -245,6 +248,76 @@ function Card({
 
 function dataCurta(iso: string) {
   return new Date(iso).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
+}
+
+// O LOOP DE OUTCOME (o moat): compara o score PREVISTO (no save) com o DESFECHO real.
+// Se as oportunidades que viraram receptivo/deal tinham score médio maior que as perdidas,
+// o score prevê o resultado do mundo real — e isso é training data que recalibra o modelo.
+function Dashboard({ ops }: { ops: Oportunidade[] }) {
+  const contatados = ops.filter((o) => ["abordado", "em_conversa", "entregue"].includes(o.estagio)).length;
+  const positivos = ops.filter((o) => o.resultado === "receptivo" || o.resultado === "deal_fechado");
+  const negativos = ops.filter((o) => o.resultado === "nao_receptivo" || o.resultado === "perdido");
+  const deals = ops.filter((o) => o.resultado === "deal_fechado").length;
+  const comDesfecho = positivos.length + negativos.length;
+  const hitReal = comDesfecho > 0 ? Math.round((positivos.length / comDesfecho) * 100) : null;
+
+  const media = (arr: Oportunidade[]) => {
+    const s = arr.map((o) => o.score_no_save).filter((n): n is number => n != null);
+    return s.length ? Math.round(s.reduce((a, b) => a + b, 0) / s.length) : null;
+  };
+  const scorePos = media(positivos);
+  const scoreNeg = media(negativos);
+  const loopFecha = scorePos != null && scoreNeg != null && scorePos > scoreNeg;
+
+  const Stat = ({ n, label }: { n: number | string; label: string }) => (
+    <div>
+      <p className="font-display text-2xl tabular-nums text-floral">{n}</p>
+      <p className="font-data text-[10px] uppercase tracking-wider text-olive">{label}</p>
+    </div>
+  );
+
+  return (
+    <section className="mb-8 rounded-xl border border-hairline bg-surface p-5">
+      <div className="grid grid-cols-3 gap-4 sm:grid-cols-5">
+        <Stat n={ops.length} label="No funil" />
+        <Stat n={contatados} label="Contatados" />
+        <Stat n={positivos.length} label="Receptivos" />
+        <Stat n={deals} label="Deals" />
+        <Stat n={hitReal != null ? `${hitReal}%` : "—"} label="Hit rate real" />
+      </div>
+
+      {/* O loop: previsto × realizado */}
+      <div className="mt-5 border-t border-hairline pt-4">
+        <p className="font-data text-[10px] uppercase tracking-wider text-olive">
+          Loop de outcome · score previsto × desfecho real
+        </p>
+        {scorePos != null || scoreNeg != null ? (
+          <>
+            <div className="mt-2 flex flex-wrap items-baseline gap-x-6 gap-y-1 text-sm">
+              <span className="text-bone">
+                Desfecho <span className="text-floral">positivo</span>: score médio{" "}
+                <span className="font-data text-floral">{scorePos ?? "—"}</span>
+              </span>
+              <span className="text-bone">
+                <span className="text-risk-high">negativo</span>: score médio{" "}
+                <span className="font-data text-risk-high">{scoreNeg ?? "—"}</span>
+              </span>
+            </div>
+            <p className="mt-2 text-xs leading-snug text-olive">
+              {loopFecha
+                ? "As empresas que reagiram bem tinham score maior — o score prevê o desfecho real. É o ground truth que recalibra o modelo (o moat)."
+                : "Conforme os desfechos entram, comparamos previsto × real. Se o positivo superar o negativo, o score se confirma — e vira training data."}
+            </p>
+          </>
+        ) : (
+          <p className="mt-2 text-xs leading-snug text-olive">
+            Ainda sem desfechos registrados. Mova oportunidades para &ldquo;Entregue&rdquo; e marque o
+            resultado — o loop começa a medir previsto × real.
+          </p>
+        )}
+      </div>
+    </section>
+  );
 }
 
 function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
