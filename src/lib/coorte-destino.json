@@ -1,0 +1,29 @@
+{
+  "gerado_em": "2026-06-03",
+  "janela": {
+    "de": "2023-06-10",
+    "ate": "2025-11-09"
+  },
+  "verticais": {
+    "metalmec": {
+      "total": 4841,
+      "destinos": {
+        "inalterada": 3886,
+        "socio_saiu_ou_pj": 373,
+        "baixada_inativa": 350,
+        "sucessao_familiar": 198,
+        "vendida": 34
+      }
+    },
+    "saude": {
+      "total": 6276,
+      "destinos": {
+        "inalterada": 4982,
+        "socio_saiu_ou_pj": 544,
+        "baixada_inativa": 409,
+        "sucessao_familiar": 321,
+        "vendida": 20
+      }
+    }
+  }
+}
