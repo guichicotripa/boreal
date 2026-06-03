@@ -522,10 +522,21 @@ function ResearchDisplay({ research }: { research: ResearchResult }) {
       {research.resumo && (
         <p className="text-sm leading-relaxed text-floral">{research.resumo}</p>
       )}
-      {research.gatilho && (
+      {research.gatilho ? (
         <div className="rounded-md border border-risk-high/30 bg-risk-high/10 p-2.5">
           <p className="font-data text-[10px] uppercase tracking-wider text-risk-high">Por que agora</p>
           <p className="mt-1 text-sm leading-snug text-floral">{research.gatilho}</p>
+        </div>
+      ) : (
+        <div className="rounded-md border border-hairline bg-smoky p-2.5">
+          <p className="font-data text-[10px] uppercase tracking-wider text-olive">
+            Sem gatilho de timing · não é o momento
+          </p>
+          <p className="mt-1 text-sm leading-snug text-bone">
+            {research.sinais.some((s) => s.peso < 0)
+              ? "A investigação encontrou sinal de sucessão já encaminhada (herdeiro ativo). Abordar agora tende a ser improdutivo — monitorar."
+              : "O perfil não indica uma janela de abordagem no momento. Manter no radar, sem priorizar contato."}
+          </p>
         </div>
       )}
       {research.sinais.length > 0 ? (
