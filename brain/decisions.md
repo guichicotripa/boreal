@@ -366,3 +366,21 @@ Laura. Henrique Dubugras NÃO confirmado → Sharpe vira fio opcional. Demo serv
 Vaz, moat/TAM pra Monica. Demo Day = soft pitch do Relay (seed VC + founder Sequoia na sala), não só os $10k.
 
 **Status:** ✅ Tudo implementado e testado (PRs #23–#26). Racional consolidado aqui pra pitch.
+
+---
+
+## [2026-06-03] Pipeline UX: card colapsável + sort + filtro (escala com volume)
+
+**Contexto:** com várias empresas salvas, o kanban floodou — tudo cai em "Identificado", cards altos
+(todos os campos sempre visíveis), sem ordem nem prioridade. Não dá pra saber quem trabalhar primeiro.
+
+**Decisão (prática de mercado Affinity/DealCloud — kanban é fluxo, densidade resolve volume):**
+1. **Card colapsável** — colapsado mostra só nome · score · dono · próxima ação (vermelho + borda
+   lateral se atrasada); expande no clique. Mata a poluição vertical.
+2. **Ordenação na coluna:** atrasadas → próxima ação mais cedo → maior score. Resolve "quem primeiro".
+3. **Filtro/busca:** texto (empresa/cidade/setor) + dono (DRI) + toggle "só atrasadas".
+
+**Rejeitado por ora (YAGNI):** view de tabela densa pro backlog em massa — fica pro passo seguinte se
+o volume pedir. Tudo client-side (sem schema/API novo).
+
+**Status:** ✅ Implementado e testado no browser (compacto + sort + "só atrasadas" filtrando). PR #27.

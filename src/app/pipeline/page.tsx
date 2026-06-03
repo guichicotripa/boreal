@@ -41,9 +41,27 @@ function hoje() {
   return new Date().toISOString().slice(0, 10);
 }
 
+function atrasou(o: Oportunidade) {
+  return o.proxima_acao_em != null && o.proxima_acao_em < hoje();
+}
+
+// Prioridade dentro da coluna: atrasadas primeiro → próxima ação mais cedo → maior score.
+function porPrioridade(a: Oportunidade, b: Oportunidade) {
+  const aA = atrasou(a) ? 0 : 1;
+  const bA = atrasou(b) ? 0 : 1;
+  if (aA !== bA) return aA - bA;
+  const ad = a.proxima_acao_em ?? "9999-99-99";
+  const bd = b.proxima_acao_em ?? "9999-99-99";
+  if (ad !== bd) return ad < bd ? -1 : 1;
+  return (b.score_no_save ?? -1) - (a.score_no_save ?? -1);
+}
+
 export default function Pipeline() {
   const [ops, setOps] = useState<Oportunidade[]>([]);
   const [loading, setLoading] = useState(true);
+  const [busca, setBusca] = useState("");
+  const [filtroDono, setFiltroDono] = useState("todos");
+  const [soAtrasadas, setSoAtrasadas] = useState(false);
 
   async function carregar() {
     setLoading(true);
@@ -71,13 +89,28 @@ export default function Pipeline() {
     await fetch(`/api/oportunidade?id=${id}`, { method: "DELETE" });
   }
 
+  const donos = Array.from(new Set(ops.map((o) => o.dono).filter((d): d is string => !!d))).sort();
+  const q = busca.trim().toLowerCase();
+  const filtradas = ops.filter((o) => {
+    if (soAtrasadas && !atrasou(o)) return false;
+    if (filtroDono !== "todos" && (o.dono ?? "") !== filtroDono) return false;
+    if (q) {
+      const hay = `${o.empresa.razao_social} ${o.empresa.municipio ?? ""} ${o.empresa.cnae_principal_desc ?? ""}`.toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  const filtroAtivo = soAtrasadas || filtroDono !== "todos" || q !== "";
+
   return (
     <div className="min-h-screen bg-smoky text-floral">
       <main className="mx-auto max-w-7xl px-6 py-12">
         <header className="mb-8 flex items-center justify-between">
           <div>
             <h1 className="font-display text-2xl tracking-tight">Pipeline de originação</h1>
-            <p className="mt-1 text-sm text-bone">{ops.length} oportunidades no funil</p>
+            <p className="mt-1 text-sm text-bone">
+              {filtroAtivo ? `${filtradas.length} de ${ops.length}` : ops.length} oportunidades no funil
+            </p>
           </div>
           <a href="/" className="font-data text-sm text-bone transition-colors hover:text-floral">
             ← Voltar à busca
@@ -93,9 +126,46 @@ export default function Pipeline() {
         ) : (
           <>
             <Dashboard ops={ops} />
+
+            {/* Controles — busca, dono, só atrasadas */}
+            <div className="mb-4 flex flex-wrap items-center gap-2">
+              <input
+                value={busca}
+                onChange={(e) => setBusca(e.target.value)}
+                placeholder="buscar empresa, cidade, setor…"
+                className="w-56 rounded border border-hairline bg-surface px-2 py-1.5 text-xs text-floral outline-none placeholder:text-olive focus:border-hairline-hover"
+              />
+              <select
+                value={filtroDono}
+                onChange={(e) => setFiltroDono(e.target.value)}
+                className="rounded border border-hairline bg-surface px-2 py-1.5 text-xs text-floral outline-none focus:border-hairline-hover"
+              >
+                <option value="todos">Todos os donos</option>
+                {donos.map((d) => (
+                  <option key={d} value={d}>{d}</option>
+                ))}
+              </select>
+              <button
+                onClick={() => setSoAtrasadas((v) => !v)}
+                className={`rounded border px-2 py-1.5 font-data text-[11px] uppercase tracking-wider transition-colors ${
+                  soAtrasadas ? "border-risk-high/50 text-risk-high" : "border-hairline text-bone hover:text-floral"
+                }`}
+              >
+                Só atrasadas
+              </button>
+              {filtroAtivo && (
+                <button
+                  onClick={() => { setBusca(""); setFiltroDono("todos"); setSoAtrasadas(false); }}
+                  className="font-data text-[11px] uppercase tracking-wider text-olive transition-colors hover:text-bone"
+                >
+                  limpar
+                </button>
+              )}
+            </div>
+
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
             {ESTAGIOS.map((col) => {
-              const lista = ops.filter((o) => o.estagio === col.id);
+              const lista = filtradas.filter((o) => o.estagio === col.id).sort(porPrioridade);
               return (
                 <div key={col.id} className="flex flex-col gap-3 border-t-2 border-floral/15 pt-3">
                   <div className={`flex items-center justify-between font-data text-[10px] font-medium uppercase tracking-wider ${col.cor}`}>
@@ -104,7 +174,7 @@ export default function Pipeline() {
                   </div>
                   {lista.length === 0 && (
                     <p className="rounded border border-dashed border-hairline px-2 py-3 text-[11px] text-olive">
-                      {col.emptyMsg}
+                      {filtroAtivo ? "Nada no filtro." : col.emptyMsg}
                     </p>
                   )}
                   {lista.map((o) => (
@@ -130,26 +200,55 @@ function Card({
   onPatch: (id: string, campos: Partial<Oportunidade>) => void;
   onRemove: (id: string) => void;
 }) {
-  const atrasada = o.proxima_acao_em != null && o.proxima_acao_em < hoje();
+  const [aberto, setAberto] = useState(false);
+  const atrasada = atrasou(o);
+  const dataCompacta = o.proxima_acao_em ? `${o.proxima_acao_em.slice(8, 10)}/${o.proxima_acao_em.slice(5, 7)}` : null;
 
   return (
-    <div className="rounded-lg border border-hairline bg-surface p-3">
-      <div className="flex items-start justify-between gap-2">
-        <h3 className="text-sm font-medium leading-snug text-floral">{o.empresa.razao_social}</h3>
-        {o.score_no_save != null && (
-          <span
-            className="shrink-0 rounded border border-hairline px-1.5 font-data text-[11px] tabular-nums text-bone"
-            title="score de propensão quando salvou (previsto)"
-          >
-            {o.score_no_save}
-          </span>
-        )}
-      </div>
-      <p className="mt-0.5 text-xs text-bone">
-        {o.empresa.municipio} / {o.empresa.uf}
-      </p>
+    <div
+      className={`rounded-lg border bg-surface ${
+        atrasada ? "border-hairline border-l-2 border-l-risk-high/60" : "border-hairline"
+      }`}
+    >
+      {/* Header colapsável — resumo escaneável */}
+      <button onClick={() => setAberto((v) => !v)} className="flex w-full items-start gap-2 p-3 text-left">
+        <div className="min-w-0 flex-1">
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="truncate text-sm font-medium leading-snug text-floral">{o.empresa.razao_social}</h3>
+            {o.score_no_save != null && (
+              <span
+                className="shrink-0 rounded border border-hairline px-1.5 font-data text-[11px] tabular-nums text-bone"
+                title="score de propensão quando salvou (previsto)"
+              >
+                {o.score_no_save}
+              </span>
+            )}
+          </div>
+          <p className="mt-0.5 text-[11px] text-bone">
+            {o.empresa.municipio} / {o.empresa.uf}
+          </p>
+          {/* resumo: dono · próxima ação */}
+          <p className="mt-1 text-[11px] leading-snug">
+            {o.dono ? <span className="text-bone">{o.dono}</span> : <span className="text-olive">sem dono</span>}
+            <span className="text-olive"> · </span>
+            {o.proxima_acao || dataCompacta ? (
+              <span className={atrasada ? "text-risk-high" : "text-bone"}>
+                {o.proxima_acao || "ação"}
+                {dataCompacta ? ` (${dataCompacta})` : ""}
+              </span>
+            ) : (
+              <span className="text-olive">sem ação</span>
+            )}
+          </p>
+        </div>
+        <span className="mt-0.5 shrink-0 font-data text-[11px] text-olive">{aberto ? "−" : "+"}</span>
+      </button>
+
+      {/* Detalhe — expandido */}
+      {!aberto ? null : (
+      <div className="border-t border-hairline px-3 pb-3 pt-2">
       {o.empresa.cnae_principal_desc && (
-        <p className="mt-1 text-[11px] leading-snug text-bone">{o.empresa.cnae_principal_desc}</p>
+        <p className="text-[11px] leading-snug text-bone">{o.empresa.cnae_principal_desc}</p>
       )}
       {(o.empresa.telefone || o.empresa.email) && (
         <p className="mt-1 text-[11px] text-bone">{o.empresa.telefone ?? o.empresa.email}</p>
@@ -242,6 +341,8 @@ function Card({
 
       {/* Log de atividade (toques) */}
       <LogAtividade oportunidadeId={o.id} />
+      </div>
+      )}
     </div>
   );
 }
