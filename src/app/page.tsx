@@ -66,13 +66,23 @@ export default function Home() {
             {/* Overline */}
             <p className="font-data text-[11px] uppercase tracking-[0.2em] text-bone">
               <span className="text-floral">BOREAL</span>{" "}
-              <span className="text-olive">·</span> Deal sourcing
+              <span className="text-olive">·</span> Modelo preditivo de M&amp;A
             </p>
 
             {/* Headline */}
             <h1 className="mt-6 font-display text-3xl leading-[1.1] tracking-tight text-floral md:text-[44px]">
-              A inteligência privada que encontra empresas familiares antes do mercado.
+              O modelo que prevê quem vai vender — antes do mercado.
             </h1>
+
+            {/* Subheadline — a credencial */}
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-bone">
+              Não é um buscador. É um modelo validado contra aquisições reais, sem leakage:{" "}
+              <strong className="text-floral">67% das vendas já estavam no nosso top 10%</strong>, 12
+              meses antes.{" "}
+              <a href="/validacao" className="text-risk-mid underline-offset-2 hover:underline">
+                ver a prova →
+              </a>
+            </p>
 
             {/* Search — underline + prompt */}
             <form
