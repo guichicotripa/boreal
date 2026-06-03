@@ -1,5 +1,15 @@
 import type { Metadata } from "next";
 import validacao from "@/lib/validacao.json";
+import hindcast from "@/lib/hindcast.json";
+
+type Deal = {
+  nome: string;
+  municipio: string;
+  fundada: number;
+  decil: number;
+  pct_rank: number;
+  ano_deal: number | null;
+};
 
 export const metadata: Metadata = {
   title: "Boreal · Validação",
@@ -64,6 +74,49 @@ export default function Validacao() {
             Por acaso seria 10%. Isso é{" "}
             <span className="text-risk-mid">{heroi.lift_top10}× melhor que aleatório</span> · decil
             médio {heroi.decil_medio.toLocaleString("pt-BR")}/10 (5,5 = sem sinal).
+          </p>
+        </section>
+
+        {/* Hindcast nominal — o número feito concreto */}
+        <section className="mt-10">
+          <h2 className="font-data text-[11px] uppercase tracking-wider text-olive">
+            E não é abstrato — essas empresas venderam de verdade
+          </h2>
+          <p className="mt-2 text-sm leading-relaxed text-bone">
+            Aquisições reais de metalmecânica que aconteceram <em>depois</em> da nossa data de corte.
+            A coluna &ldquo;rank&rdquo; é onde o modelo já as colocava <strong className="text-floral">antes</strong> do
+            deal — sem nunca ter visto o futuro.
+          </p>
+          <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-hairline bg-surface text-left font-data text-[11px] uppercase tracking-wider text-olive">
+                  <th className="px-4 py-3 font-medium">Empresa</th>
+                  <th className="px-4 py-3 font-medium">Praça</th>
+                  <th className="px-4 py-3 text-right font-medium">Vendida</th>
+                  <th className="px-4 py-3 text-right font-medium">Rank pré-deal</th>
+                </tr>
+              </thead>
+              <tbody>
+                {(hindcast.deals as Deal[]).slice(0, 10).map((d, i) => (
+                  <tr key={i} className="border-b border-hairline last:border-0">
+                    <td className="px-4 py-3 text-floral">{d.nome}</td>
+                    <td className="px-4 py-3 text-bone">{d.municipio}</td>
+                    <td className="px-4 py-3 text-right font-data tabular-nums text-bone">
+                      {d.ano_deal ?? "—"}
+                    </td>
+                    <td className="px-4 py-3 text-right font-data tabular-nums text-risk-mid">
+                      top {d.pct_rank <= 1 ? "1" : Math.ceil(d.pct_rank)}%
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-3 text-xs leading-snug text-olive">
+            {hindcast.no_top10} das {hindcast.total_aquisicoes} aquisições reais caíram no nosso top
+            decil ({hindcast.recall_top10}%). Mostramos as de melhor rank acima — mas o número agrega
+            todas, inclusive as que erramos. Sem cherry-pick.
           </p>
         </section>
 
