@@ -1,0 +1,126 @@
+{
+  "gerado_em": "2026-06-03",
+  "janela": {
+    "de": "2023-06-10",
+    "ate": "2025-11-09"
+  },
+  "uf": "SP",
+  "nota": "Precedentes minerados das transições do CNPJ (PJ entrou + PF saiu). Compradores = PJ que entrou em 2+ empresas do setor. Dado real, não estimativa.",
+  "divisoes": {
+    "24": {
+      "setor": "Metalurgia",
+      "grupo": "metalmec",
+      "n_deals": 7,
+      "exemplos": [
+        "Engemasa Engenharia E Materiais Ltda",
+        "Serralgodao Comercio E Industria Ltda",
+        "Metais Valfer Industria E Comercio Ltda",
+        "Alumita Extrusao De Metais Ltda"
+      ],
+      "compradores": [],
+      "padrao": "pontual"
+    },
+    "25": {
+      "setor": "Produtos de metal",
+      "grupo": "metalmec",
+      "n_deals": 32,
+      "exemplos": [
+        "Fameth Industria E Comercio De Produtos Metalurgicos Ltda",
+        "Mikro-Stamp Estamparia Comercio E Industria Ltda",
+        "Caldex Conexoes E Equipamentos Ltda",
+        "Aeroflexiveis Solucoes Industriais Ltda"
+      ],
+      "compradores": [
+        {
+          "nome": "Estrutalica Group Holding Ltda",
+          "n": 2
+        },
+        {
+          "nome": "I2l Participacao E Intermediacao De Negocios Ltda",
+          "n": 2
+        },
+        {
+          "nome": "Planmetal Estruturas Metalicas Ltda",
+          "n": 2
+        },
+        {
+          "nome": "Sunrise Participacoes Limitada",
+          "n": 2
+        },
+        {
+          "nome": "Maneggio Participacoes Limitada",
+          "n": 2
+        }
+      ],
+      "padrao": "consolidacao"
+    },
+    "28": {
+      "setor": "Máquinas e equipamentos",
+      "grupo": "metalmec",
+      "n_deals": 43,
+      "exemplos": [
+        "Mdg-Industria E Comercio Ltda",
+        "Carbogas Energia Ltda",
+        "Metalplan Equipamentos Ltda",
+        "Vonin Maquinas Industria E Comercio Ltda"
+      ],
+      "compradores": [
+        {
+          "nome": "Csr Participacoes Societarias Ltda",
+          "n": 3
+        },
+        {
+          "nome": "Gkz Participacoes Societarias Ltda",
+          "n": 3
+        },
+        {
+          "nome": "Cavaza Participacoes Societarias Ltda",
+          "n": 2
+        },
+        {
+          "nome": "Mjv Participacoes Societarias Ltda",
+          "n": 2
+        },
+        {
+          "nome": "Mercantil Participacoes Ltda",
+          "n": 2
+        }
+      ],
+      "padrao": "consolidacao"
+    },
+    "86": {
+      "setor": "Saúde",
+      "grupo": "saude",
+      "n_deals": 200,
+      "exemplos": [
+        "Lipedema Diagnosticos Ltda",
+        "Servico De Cardiologia E Cirurgia Cardiovascular Pediatrica De Sao Jose Do Rio Preto S/S Ltda",
+        "Clinica Flama S/S Ltda",
+        "Healthy Life Center Ltda"
+      ],
+      "compradores": [
+        {
+          "nome": "4id Servicos Medicos Ltda",
+          "n": 883
+        },
+        {
+          "nome": "Ksb Servicos Em Saude Ltda",
+          "n": 171
+        },
+        {
+          "nome": "Med Valor 2 Servicos Medicos Ltda",
+          "n": 82
+        },
+        {
+          "nome": "D. Mais Jab Holding Ltda",
+          "n": 80
+        },
+        {
+          "nome": "Doctor Medical Rd Ltda",
+          "n": 71
+        }
+      ],
+      "padrao": "consolidacao"
+    }
+  }
+}
