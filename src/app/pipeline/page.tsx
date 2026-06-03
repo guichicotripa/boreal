@@ -11,10 +11,12 @@ import {
 import type { Oportunidade, EstagioOportunidade, ResultadoOportunidade } from "@/lib/types";
 
 const ESTAGIOS: { id: EstagioOportunidade; label: string; cor: string; emptyMsg: string }[] = [
-  { id: "a_analisar",  label: "A analisar",             cor: "text-floral", emptyMsg: "Salve empresas da busca para iniciar a análise." },
-  { id: "qualificada", label: "Qualificada",             cor: "text-floral", emptyMsg: "Nenhuma empresa qualificada ainda." },
-  { id: "apresentada", label: "Apresentada à boutique", cor: "text-floral", emptyMsg: "Nenhuma empresa apresentada ainda." },
-  { id: "descartada",  label: "Descartada",              cor: "text-olive",  emptyMsg: "Nenhuma empresa descartada." },
+  { id: "identificado", label: "Identificado", cor: "text-bone",     emptyMsg: "Salve empresas da busca para começar." },
+  { id: "abordado",     label: "Abordado",     cor: "text-floral",   emptyMsg: "Ninguém abordado ainda." },
+  { id: "em_conversa",  label: "Em conversa",  cor: "text-risk-mid", emptyMsg: "Sem conversas em curso." },
+  { id: "qualificado",  label: "Qualificado",  cor: "text-risk-mid", emptyMsg: "Nenhuma qualificada ainda." },
+  { id: "entregue",     label: "Entregue",     cor: "text-floral",   emptyMsg: "Nada entregue à boutique." },
+  { id: "arquivado",    label: "Arquivado",    cor: "text-olive",    emptyMsg: "Nada arquivado." },
 ];
 
 const RESULTADOS: { id: ResultadoOportunidade; label: string }[] = [
@@ -25,8 +27,8 @@ const RESULTADOS: { id: ResultadoOportunidade; label: string }[] = [
   { id: "perdido", label: "Perdido" },
 ];
 
-function formatCnpj(cnpj: string) {
-  return cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");
+function hoje() {
+  return new Date().toISOString().slice(0, 10);
 }
 
 export default function Pipeline() {
@@ -45,21 +47,12 @@ export default function Pipeline() {
     carregar();
   }, []);
 
-  async function mover(id: string, estagio: EstagioOportunidade) {
-    setOps((prev) => prev.map((o) => (o.id === id ? { ...o, estagio } : o)));
+  async function patch(id: string, campos: Partial<Oportunidade>) {
+    setOps((prev) => prev.map((o) => (o.id === id ? { ...o, ...campos } : o)));
     await fetch("/api/oportunidade", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, estagio }),
-    });
-  }
-
-  async function atualizar(id: string, patch: Partial<Pick<Oportunidade, "resultado" | "notas">>) {
-    setOps((prev) => prev.map((o) => (o.id === id ? { ...o, ...patch } : o)));
-    await fetch("/api/oportunidade", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, ...patch }),
+      body: JSON.stringify({ id, ...campos }),
     });
   }
 
@@ -70,13 +63,11 @@ export default function Pipeline() {
 
   return (
     <div className="min-h-screen bg-smoky text-floral">
-      <main className="mx-auto max-w-6xl px-6 py-12">
+      <main className="mx-auto max-w-7xl px-6 py-12">
         <header className="mb-8 flex items-center justify-between">
           <div>
             <h1 className="font-display text-2xl tracking-tight">Pipeline de originação</h1>
-            <p className="mt-1 text-sm text-bone">
-              Oportunidades curadas · {ops.length} no total
-            </p>
+            <p className="mt-1 text-sm text-bone">{ops.length} oportunidades no funil</p>
           </div>
           <a href="/" className="font-data text-sm text-bone transition-colors hover:text-floral">
             ← Voltar à busca
@@ -90,7 +81,7 @@ export default function Pipeline() {
             Nenhuma oportunidade salva ainda. Volte à busca e clique em &ldquo;+ salvar&rdquo; numa empresa.
           </p>
         ) : (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
             {ESTAGIOS.map((col) => {
               const lista = ops.filter((o) => o.estagio === col.id);
               return (
@@ -100,99 +91,12 @@ export default function Pipeline() {
                     <span className="tabular-nums text-olive">{lista.length}</span>
                   </div>
                   {lista.length === 0 && (
-                    <p className="rounded border border-dashed border-hairline px-3 py-4 text-[11px] text-olive">
+                    <p className="rounded border border-dashed border-hairline px-2 py-3 text-[11px] text-olive">
                       {col.emptyMsg}
                     </p>
                   )}
                   {lista.map((o) => (
-                    <div key={o.id} className="rounded-lg border border-hairline bg-surface p-3">
-                      <h3 className="text-sm font-medium text-floral">{o.empresa.razao_social}</h3>
-                      <p className="mt-0.5 text-xs text-bone">
-                        {o.empresa.municipio} / {o.empresa.uf}
-                      </p>
-                      {o.empresa.cnae_principal_desc && (
-                        <p className="mt-1 text-[11px] leading-snug text-bone">
-                          {o.empresa.cnae_principal_desc}
-                        </p>
-                      )}
-                      {(o.empresa.telefone || o.empresa.email) && (
-                        <p className="mt-1 text-[11px] text-bone">
-                          {o.empresa.telefone ?? o.empresa.email}
-                        </p>
-                      )}
-                      <div className="mt-2 flex items-center gap-2">
-                        <Select
-                          value={o.estagio}
-                          onValueChange={(v) => mover(o.id, v as EstagioOportunidade)}
-                        >
-                          <SelectTrigger className="h-auto flex-1 border-hairline px-1.5 py-1 text-[11px] text-floral focus:ring-0 focus:border-hairline-hover">
-                            <SelectValue>
-                              {ESTAGIOS.find((s) => s.id === o.estagio)?.label ?? o.estagio}
-                            </SelectValue>
-                          </SelectTrigger>
-                          <SelectContent sideOffset={0} className="border-hairline bg-[#1c1d17] text-floral">
-                            {ESTAGIOS.map((s) => (
-                              <SelectItem
-                                key={s.id}
-                                value={s.id}
-                                className="text-[11px] text-floral focus:bg-surface-hover focus:text-floral"
-                              >
-                                {s.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <button
-                          onClick={() => remover(o.id)}
-                          className="text-[11px] text-olive transition-colors hover:text-risk-high"
-                          title="remover do pipeline"
-                        >
-                          ✕
-                        </button>
-                      </div>
-
-                      {o.estagio === "apresentada" && (
-                        <Select
-                          value={o.resultado}
-                          onValueChange={(v) => atualizar(o.id, { resultado: v as ResultadoOportunidade })}
-                        >
-                          <SelectTrigger className={`mt-2 h-auto w-full px-1.5 py-1 text-[11px] focus:ring-0 ${
-                            o.resultado === "deal_fechado"
-                              ? "border-floral/30 bg-smoky text-floral"
-                              : o.resultado === "receptivo"
-                                ? "border-hairline bg-smoky text-floral"
-                                : o.resultado === "nao_receptivo" || o.resultado === "perdido"
-                                  ? "border-risk-high/30 bg-smoky text-risk-high"
-                                  : "border-hairline bg-smoky text-bone"
-                          }`}>
-                            <SelectValue>
-                              {RESULTADOS.find((r) => r.id === o.resultado)?.label ?? o.resultado}
-                            </SelectValue>
-                          </SelectTrigger>
-                          <SelectContent sideOffset={0} className="border-hairline bg-[#1c1d17] text-floral">
-                            {RESULTADOS.map((r) => (
-                              <SelectItem
-                                key={r.id}
-                                value={r.id}
-                                className="text-[11px] text-floral focus:bg-surface-hover focus:text-floral"
-                              >
-                                {r.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      )}
-
-                      <textarea
-                        defaultValue={o.notas ?? ""}
-                        onBlur={(e) => {
-                          if (e.target.value !== (o.notas ?? "")) atualizar(o.id, { notas: e.target.value });
-                        }}
-                        placeholder="anotações…"
-                        rows={2}
-                        className="mt-2 w-full resize-none rounded border border-hairline bg-surface px-1.5 py-1 text-[11px] text-floral outline-none placeholder:text-olive focus:border-hairline-hover"
-                      />
-                    </div>
+                    <Card key={o.id} o={o} onPatch={patch} onRemove={remover} />
                   ))}
                 </div>
               );
@@ -200,6 +104,128 @@ export default function Pipeline() {
           </div>
         )}
       </main>
+    </div>
+  );
+}
+
+function Card({
+  o,
+  onPatch,
+  onRemove,
+}: {
+  o: Oportunidade;
+  onPatch: (id: string, campos: Partial<Oportunidade>) => void;
+  onRemove: (id: string) => void;
+}) {
+  const atrasada = o.proxima_acao_em != null && o.proxima_acao_em < hoje();
+
+  return (
+    <div className="rounded-lg border border-hairline bg-surface p-3">
+      <div className="flex items-start justify-between gap-2">
+        <h3 className="text-sm font-medium leading-snug text-floral">{o.empresa.razao_social}</h3>
+        {o.score_no_save != null && (
+          <span
+            className="shrink-0 rounded border border-hairline px-1.5 font-data text-[11px] tabular-nums text-bone"
+            title="score de propensão quando salvou (previsto)"
+          >
+            {o.score_no_save}
+          </span>
+        )}
+      </div>
+      <p className="mt-0.5 text-xs text-bone">
+        {o.empresa.municipio} / {o.empresa.uf}
+      </p>
+      {o.empresa.cnae_principal_desc && (
+        <p className="mt-1 text-[11px] leading-snug text-bone">{o.empresa.cnae_principal_desc}</p>
+      )}
+      {(o.empresa.telefone || o.empresa.email) && (
+        <p className="mt-1 text-[11px] text-bone">{o.empresa.telefone ?? o.empresa.email}</p>
+      )}
+
+      {/* Estágio + remover */}
+      <div className="mt-2 flex items-center gap-2">
+        <Select value={o.estagio} onValueChange={(v) => onPatch(o.id, { estagio: v as EstagioOportunidade })}>
+          <SelectTrigger className="h-auto flex-1 border-hairline px-1.5 py-1 text-[11px] text-floral focus:ring-0 focus:border-hairline-hover">
+            <SelectValue>{ESTAGIOS.find((s) => s.id === o.estagio)?.label ?? o.estagio}</SelectValue>
+          </SelectTrigger>
+          <SelectContent sideOffset={0} className="border-hairline bg-[#1c1d17] text-floral">
+            {ESTAGIOS.map((s) => (
+              <SelectItem key={s.id} value={s.id} className="text-[11px] text-floral focus:bg-surface-hover focus:text-floral">
+                {s.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <button onClick={() => onRemove(o.id)} className="text-[11px] text-olive transition-colors hover:text-risk-high" title="remover do pipeline">
+          ✕
+        </button>
+      </div>
+
+      {/* DRI */}
+      <input
+        defaultValue={o.dono ?? ""}
+        onBlur={(e) => {
+          if (e.target.value !== (o.dono ?? "")) onPatch(o.id, { dono: e.target.value });
+        }}
+        placeholder="dono (DRI)…"
+        className="mt-2 w-full rounded border border-hairline bg-surface px-1.5 py-1 text-[11px] text-floral outline-none placeholder:text-olive focus:border-hairline-hover"
+      />
+
+      {/* Próxima ação + data */}
+      <input
+        defaultValue={o.proxima_acao ?? ""}
+        onBlur={(e) => {
+          if (e.target.value !== (o.proxima_acao ?? "")) onPatch(o.id, { proxima_acao: e.target.value });
+        }}
+        placeholder="próxima ação…"
+        className="mt-1.5 w-full rounded border border-hairline bg-surface px-1.5 py-1 text-[11px] text-floral outline-none placeholder:text-olive focus:border-hairline-hover"
+      />
+      <input
+        type="date"
+        defaultValue={o.proxima_acao_em ?? ""}
+        onChange={(e) => onPatch(o.id, { proxima_acao_em: e.target.value || null })}
+        className={`mt-1.5 w-full rounded border bg-surface px-1.5 py-1 font-data text-[11px] outline-none focus:border-hairline-hover ${
+          atrasada ? "border-risk-high/50 text-risk-high" : "border-hairline text-bone"
+        }`}
+        title={atrasada ? "ação atrasada" : "quando"}
+      />
+
+      {/* Resultado — só quando entregue */}
+      {o.estagio === "entregue" && (
+        <Select value={o.resultado} onValueChange={(v) => onPatch(o.id, { resultado: v as ResultadoOportunidade })}>
+          <SelectTrigger
+            className={`mt-2 h-auto w-full px-1.5 py-1 text-[11px] focus:ring-0 ${
+              o.resultado === "deal_fechado"
+                ? "border-floral/30 bg-smoky text-floral"
+                : o.resultado === "receptivo"
+                  ? "border-hairline bg-smoky text-floral"
+                  : o.resultado === "nao_receptivo" || o.resultado === "perdido"
+                    ? "border-risk-high/30 bg-smoky text-risk-high"
+                    : "border-hairline bg-smoky text-bone"
+            }`}
+          >
+            <SelectValue>{RESULTADOS.find((r) => r.id === o.resultado)?.label ?? o.resultado}</SelectValue>
+          </SelectTrigger>
+          <SelectContent sideOffset={0} className="border-hairline bg-[#1c1d17] text-floral">
+            {RESULTADOS.map((r) => (
+              <SelectItem key={r.id} value={r.id} className="text-[11px] text-floral focus:bg-surface-hover focus:text-floral">
+                {r.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
+
+      {/* Notas */}
+      <textarea
+        defaultValue={o.notas ?? ""}
+        onBlur={(e) => {
+          if (e.target.value !== (o.notas ?? "")) onPatch(o.id, { notas: e.target.value });
+        }}
+        placeholder="anotações…"
+        rows={2}
+        className="mt-2 w-full resize-none rounded border border-hairline bg-surface px-1.5 py-1 text-[11px] text-floral outline-none placeholder:text-olive focus:border-hairline-hover"
+      />
     </div>
   );
 }

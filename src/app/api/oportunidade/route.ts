@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase";
+import { calcScore } from "@/lib/scoring";
+import type { Empresa } from "@/lib/types";
 
 export const runtime = "nodejs";
 
-const ESTAGIOS = ["a_analisar", "qualificada", "apresentada", "descartada"] as const;
+const ESTAGIOS = ["identificado", "abordado", "em_conversa", "qualificado", "entregue", "arquivado"] as const;
 type Estagio = (typeof ESTAGIOS)[number];
 const RESULTADOS = ["pendente", "receptivo", "nao_receptivo", "deal_fechado", "perdido"] as const;
 type Resultado = (typeof RESULTADOS)[number];
@@ -14,7 +16,7 @@ export async function GET() {
   const { data, error } = await supabase
     .from("oportunidade")
     .select(
-      `id, estagio, resultado, notas, created_at,
+      `id, estagio, resultado, notas, dono, proxima_acao, proxima_acao_em, score_no_save, created_at,
        empresa:empresa_id (
          id, cnpj, razao_social, nome_fantasia, cnae_principal_desc,
          municipio, uf, capital_social, porte, telefone, email
@@ -38,10 +40,24 @@ export async function POST(req: NextRequest) {
   if (!empresaId) return NextResponse.json({ error: "empresaId vazio" }, { status: 400 });
 
   const supabase = createAdminClient();
+
+  // Snapshot do score no momento do save = o "previsto" do loop de outcome. Computado no servidor
+  // a partir dos sócios (não confia no client). Idempotente: só grava na primeira vez (não sobrescreve
+  // o previsto histórico se a empresa for re-salva).
+  const { data: emp } = await supabase
+    .from("empresa")
+    .select("id, data_inicio_atividade, porte, socio(faixa_etaria, data_entrada_sociedade)")
+    .eq("id", empresaId)
+    .single();
+  const scoreNoSave = emp ? calcScore(emp as unknown as Empresa).score : null;
+
   const { data, error } = await supabase
     .from("oportunidade")
-    .upsert({ empresa_id: empresaId, updated_at: new Date().toISOString() }, { onConflict: "empresa_id" })
-    .select("id, estagio")
+    .upsert(
+      { empresa_id: empresaId, score_no_save: scoreNoSave, updated_at: new Date().toISOString() },
+      { onConflict: "empresa_id", ignoreDuplicates: false }
+    )
+    .select("id, estagio, score_no_save")
     .single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
@@ -56,7 +72,10 @@ export async function PATCH(req: NextRequest) {
   } catch {
     return NextResponse.json({ error: "JSON inválido" }, { status: 400 });
   }
-  const b = body as { id?: string; estagio?: string; resultado?: string; notas?: string };
+  const b = body as {
+    id?: string; estagio?: string; resultado?: string; notas?: string;
+    dono?: string; proxima_acao?: string; proxima_acao_em?: string | null;
+  };
   const id = String(b?.id ?? "").trim();
   if (!id) return NextResponse.json({ error: "id vazio" }, { status: 400 });
 
@@ -74,6 +93,11 @@ export async function PATCH(req: NextRequest) {
     patch.resultado = b.resultado;
   }
   if (b.notas !== undefined) patch.notas = String(b.notas);
+  if (b.dono !== undefined) patch.dono = b.dono ? String(b.dono) : null;
+  if (b.proxima_acao !== undefined) patch.proxima_acao = b.proxima_acao ? String(b.proxima_acao) : null;
+  if (b.proxima_acao_em !== undefined) {
+    patch.proxima_acao_em = b.proxima_acao_em ? String(b.proxima_acao_em) : null;
+  }
 
   const supabase = createAdminClient();
   const { data, error } = await supabase

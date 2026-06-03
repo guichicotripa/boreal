@@ -89,15 +89,33 @@ export type DossierResponse = {
   analise: DossierAnalise;
 };
 
-export type EstagioOportunidade = "a_analisar" | "qualificada" | "apresentada" | "descartada";
+// Funil de originação (v2): da identificação ao desfecho.
+export type EstagioOportunidade =
+  | "identificado" | "abordado" | "em_conversa" | "qualificado" | "entregue" | "arquivado";
 export type ResultadoOportunidade =
   | "pendente" | "receptivo" | "nao_receptivo" | "deal_fechado" | "perdido";
+
+// Tipos de toque no log de atividade (relationship intel, manual-first).
+export type TipoInteracao = "ligacao" | "email" | "reuniao" | "whatsapp" | "nota";
+
+export type Interacao = {
+  id: string;
+  oportunidade_id: string;
+  tipo: TipoInteracao;
+  descricao: string;
+  autor: string | null;
+  criado_em: string;
+};
 
 export type Oportunidade = {
   id: string;
   estagio: EstagioOportunidade;
   resultado: ResultadoOportunidade;
   notas: string | null;
+  dono: string | null;            // DRI
+  proxima_acao: string | null;
+  proxima_acao_em: string | null; // YYYY-MM-DD
+  score_no_save: number | null;   // "previsto" do loop de outcome
   created_at: string;
   empresa: Pick<
     Empresa,
