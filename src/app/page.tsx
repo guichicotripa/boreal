@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import type { SearchResponse, Empresa, DossierAnalise, ResearchResult } from "@/lib/types";
 import { scoreTier } from "@/lib/scoring";
+import { precedentesParaEmpresa, cenarioIlustrativo, dadosParaFechar } from "@/lib/memo-extras";
 
 const EXEMPLOS = [
   "metalmecânica no interior de SP com sócios acima de 60 anos",
@@ -597,6 +598,9 @@ function ResearchDisplay({ research }: { research: ResearchResult }) {
 }
 
 function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierAnalise }) {
+  const precedentes = precedentesParaEmpresa(empresa);
+  const cenario = cenarioIlustrativo(empresa);
+  const dadosFechar = dadosParaFechar(empresa);
   return (
     <div className="mt-3 space-y-4 rounded-lg border border-hairline bg-surface p-4 text-sm">
       <span className="font-data text-[10px] uppercase tracking-wider text-bone">Memo de investimento</span>
@@ -661,6 +665,60 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
           </ul>
         </div>
       )}
+      {/* Quant #1 — Precedentes de M&A do setor (minerado do CNPJ, dado real) */}
+      {precedentes && (
+        <div>
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+            Precedentes de M&amp;A no setor
+          </h4>
+          <p className="leading-relaxed text-floral">
+            <strong>{precedentes.n_deals}</strong> aquisições em {precedentes.setor} (SP) nos últimos{" "}
+            {precedentes.periodo_anos.toLocaleString("pt-BR")} anos —{" "}
+            {precedentes.padrao === "consolidacao"
+              ? "setor em consolidação ativa."
+              : "compras pontuais, sem consolidador dominante."}
+          </p>
+          {precedentes.compradores.length > 0 && (
+            <p className="mt-1 text-[11px] leading-relaxed text-bone">
+              <span className="text-bone/55">Compradores ativos:</span>{" "}
+              {precedentes.compradores.map((c) => `${c.nome} (${c.n})`).join(" · ")}
+            </p>
+          )}
+          {precedentes.exemplos.length > 0 && (
+            <p className="mt-0.5 text-[11px] leading-relaxed text-bone/70">
+              Ex. adquiridas: {precedentes.exemplos.join(" · ")}
+            </p>
+          )}
+          <p className="mt-1 font-data text-[10px] text-olive">Minerado do CNPJ — transações reais, não estimativa.</p>
+        </div>
+      )}
+
+      {/* Quant #2 — Cenário de retorno: faixas de referência (frame, não valuation) */}
+      <div>
+        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+          Cenário de retorno — referência (ilustrativo)
+        </h4>
+        <div className="grid grid-cols-2 gap-x-4 gap-y-1 font-data text-xs sm:grid-cols-4">
+          <div><span className="text-bone/55">Entrada</span><br /><span className="text-floral">{cenario.multiplo_entrada}</span></div>
+          <div><span className="text-bone/55">Saída</span><br /><span className="text-floral">{cenario.multiplo_saida}</span></div>
+          <div><span className="text-bone/55">Hold</span><br /><span className="text-floral">{cenario.hold}</span></div>
+          <div><span className="text-bone/55">Alvo</span><br /><span className="text-floral">{cenario.retorno_alvo}</span></div>
+        </div>
+        <p className="mt-1.5 text-[11px] leading-relaxed text-olive">{cenario.nota}</p>
+      </div>
+
+      {/* Quant #3 — Para fechar o número: o que pedir ao dono (sourcing → IC) */}
+      <div>
+        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+          Para fechar o número — pedir ao dono
+        </h4>
+        <ul className="list-disc space-y-1 pl-5 text-[13px] leading-relaxed text-bone">
+          {dadosFechar.map((d, i) => (
+            <li key={i}>{d}</li>
+          ))}
+        </ul>
+      </div>
+
       {/* D.4: tese hairline (recuada, contexto) */}
       <div className="border-l-2 border-bone/30 pl-3">
         <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
