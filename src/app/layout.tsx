@@ -60,6 +60,12 @@ export default function RootLayout({
                 Validação
               </a>
               <a
+                href="/mercado"
+                className="font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:text-floral"
+              >
+                Mercado
+              </a>
+              <a
                 href="/consolidadores"
                 className="font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:text-floral"
               >
