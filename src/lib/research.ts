@@ -71,13 +71,24 @@ REGRA CRÍTICA: o campo "tipo" DEVE ser EXATAMENTE um dos sete identificadores a
 entre aspas). NUNCA escreva um título livre no campo "tipo" — use o identificador literal. A
 descrição do achado vai no campo "descricao", não no "tipo".
 
+Depois de listar os sinais, decida duas coisas práticas pro originador:
+
+- "gatilho" — em UMA frase, o motivo mais acionável pra abordar ESTA empresa AGORA (o "por que agora").
+  Use o achado mais time-sensitive: sócio principal em idade avançada sem sucessor, co-sócio que saiu,
+  menção a venda, banco contratado. Se NÃO houver nada que justifique timing, retorne null (não force).
+- "mensagem_abordagem" — um rascunho curto (3-4 frases, PT-BR, tom respeitoso e consultivo, NÃO vendedor)
+  de primeiro contato com o(s) sócio(s)/empresa. DEVE citar o gatilho/achado concreto pra não ser
+  genérica. É ponto de partida pro humano editar, não envio automático. Se não houver gatilho, retorne null.
+
 Ao final, responda APENAS com este JSON (sem markdown), exemplo do formato exato:
 {
   "presenca_digital": "baixa",
   "resumo": "1-2 frases do que a investigação concluiu",
   "sinais": [
     {"tipo": "sucessor_familiar_ativo", "descricao": "André, filho do fundador, já é diretor desde 2015", "fonte_url": "https://..."}
-  ]
+  ],
+  "gatilho": "Sócio fundador na faixa 80+ e sem sucessor identificado na gestão — janela de sucessão aberta.",
+  "mensagem_abordagem": "Prezado(a) [nome], acompanho o setor de [x] no interior de SP..."
 }
 Valores válidos de "tipo": ${TIPOS}. Se não achar nada conclusivo, retorne "sinais": [] e explique no resumo.
 
@@ -130,6 +141,13 @@ EFICIÊNCIA: faça no máximo 4 buscas na web, depois conclua com o JSON. Não e
     `(${sinais.length} sinais, via API + web search)`
   );
 
+  const gatilho =
+    typeof parsed.gatilho === "string" && parsed.gatilho.trim() ? parsed.gatilho.trim() : null;
+  const mensagem =
+    typeof parsed.mensagem_abordagem === "string" && parsed.mensagem_abordagem.trim()
+      ? parsed.mensagem_abordagem.trim()
+      : null;
+
   return {
     sinais,
     presenca_digital: ["alta", "media", "baixa", "nenhuma"].includes(parsed.presenca_digital)
@@ -139,5 +157,8 @@ EFICIÊNCIA: faça no máximo 4 buscas na web, depois conclua com o JSON. Não e
     score_v0: scoreV0,
     score_v1: scoreV1,
     delta: scoreV1 - scoreV0,
+    gatilho,
+    // só mantém a mensagem se houver gatilho — sem motivo de timing, não inventa abordagem
+    mensagem_abordagem: gatilho ? mensagem : null,
   };
 }

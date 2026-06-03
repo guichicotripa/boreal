@@ -522,6 +522,12 @@ function ResearchDisplay({ research }: { research: ResearchResult }) {
       {research.resumo && (
         <p className="text-sm leading-relaxed text-floral">{research.resumo}</p>
       )}
+      {research.gatilho && (
+        <div className="rounded-md border border-risk-high/30 bg-risk-high/10 p-2.5">
+          <p className="font-data text-[10px] uppercase tracking-wider text-risk-high">Por que agora</p>
+          <p className="mt-1 text-sm leading-snug text-floral">{research.gatilho}</p>
+        </div>
+      )}
       {research.sinais.length > 0 ? (
         <ul className="flex flex-col gap-2">
           {research.sinais.map((s, i) => (
@@ -546,6 +552,16 @@ function ResearchDisplay({ research }: { research: ResearchResult }) {
         </ul>
       ) : (
         <p className="text-xs text-bone">Nenhum sinal qualitativo conclusivo encontrado.</p>
+      )}
+      {research.mensagem_abordagem && (
+        <div className="rounded-md border border-hairline bg-smoky p-2.5">
+          <p className="font-data text-[10px] uppercase tracking-wider text-olive">
+            Rascunho de abordagem · edite antes de enviar
+          </p>
+          <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-bone">
+            {research.mensagem_abordagem}
+          </p>
+        </div>
       )}
     </div>
   );

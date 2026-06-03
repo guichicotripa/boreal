@@ -59,6 +59,11 @@ export type ResearchResult = {
   score_v0: number;
   score_v1: number;
   delta: number;
+  // "Por que agora": o gatilho de timing mais acionável (ou null se nada time-sensitive).
+  // Transforma um nome numa lead — diz QUANDO/por que abordar, não só em quem.
+  gatilho: string | null;
+  // Rascunho do 1º contato, citando o gatilho (não-genérico). Ponto de partida pro humano.
+  mensagem_abordagem: string | null;
 };
 
 // Red flag a investigar antes de avançar o deal (classificado por severidade).
