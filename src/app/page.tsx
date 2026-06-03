@@ -82,6 +82,9 @@ export default function Home() {
               }}
               className="mt-8"
             >
+              <p className="mb-3 font-data text-[10px] uppercase tracking-[0.18em] text-olive">
+                Descreva uma tese em linguagem livre
+              </p>
               <div className="flex items-center gap-2 border-b border-hairline-hover pb-3 transition-colors focus-within:border-floral/30">
                 <span className="font-data text-sm text-olive">›</span>
                 <input
@@ -93,9 +96,14 @@ export default function Home() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-80 disabled:opacity-50"
+                  className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity disabled:opacity-50"
                 >
-                  {loading ? "Buscando…" : "Buscar tese →"}
+                  {loading ? "Buscando…" : (
+                    <>
+                      <span>Buscar tese</span>
+                      <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>
@@ -139,7 +147,7 @@ export default function Home() {
                     </span>
                     {res.reasoned && res.reasonedCount && (
                       <span className="whitespace-nowrap font-data text-xs uppercase tracking-wide text-olive">
-                        · {res.reasonedCount} comentadas por IA
+                        · top {res.reasonedCount} analisadas por IA
                       </span>
                     )}
                   </span>
@@ -255,9 +263,9 @@ function LoadingSteps() {
 }
 
 const TIER_STYLES = {
-  alto:  { borderL: "border-l-risk-high",  badge: "border-risk-high/40 bg-risk-high/5", text: "text-risk-high" },
-  medio: { borderL: "border-l-risk-mid",   badge: "border-risk-mid/40 bg-risk-mid/5",   text: "text-risk-mid"  },
-  baixo: { borderL: "border-l-hairline",   badge: "border-hairline bg-surface",         text: "text-bone"      },
+  alto:  { borderL: "border-l-risk-high",  badge: "border-risk-high/40 bg-risk-high/5", text: "text-risk-high", label: "ALTO"  },
+  medio: { borderL: "border-l-risk-mid",   badge: "border-risk-mid/40 bg-risk-mid/5",   text: "text-risk-mid",  label: "MÉD"   },
+  baixo: { borderL: "border-l-hairline",   badge: "border-hairline bg-surface",         text: "text-bone",      label: "BAIXO" },
 } as const;
 
 const FAIXA_COLOR: Record<string, string> = {
@@ -288,9 +296,9 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
   const t = TIER_STYLES[tier];
   const socios = e.socio ?? [];
 
-  const badges: string[] = e.insight?.flags?.length
+  const badges: string[] = (e.insight?.flags?.length
     ? e.insight.flags
-    : (e.score?.sinais ?? []).slice(0, 4);
+    : (e.score?.sinais ?? [])).slice(0, 3);
 
   async function investigar() {
     if (research || researchLoading) return;
@@ -340,10 +348,10 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
       <div className="flex items-start gap-3">
         <div className={`shrink-0 rounded border ${t.badge} px-2 py-1 text-center`}>
           <div className={`font-data text-lg tabular-nums leading-none ${t.text}`}>{score}</div>
-          <div className="font-data text-[9px] uppercase tracking-wide text-olive">
-            {String(rank).padStart(2, "0")}
+          <div className={`font-data text-[9px] uppercase tracking-wide ${t.text} opacity-70`}>
+            {t.label}
             {research?.delta && research.delta !== 0 && (
-              <span className={research.delta > 0 ? " text-risk-high" : ""}>
+              <span className={`opacity-100 ${research.delta > 0 ? "text-risk-high" : "text-bone"}`}>
                 {" "}{research.delta > 0 ? "↑" : "↓"}
               </span>
             )}
@@ -388,6 +396,17 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
 
       {/* Ações */}
       <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-hairline pt-2">
+        {socios.length > 0 && (
+          <>
+            <button
+              onClick={() => setSociosAberto((v) => !v)}
+              className="font-data text-xs text-bone transition-colors hover:text-floral"
+            >
+              {sociosAberto ? "Ocultar detalhes" : "Ver detalhes"}
+            </button>
+            <span className="text-olive">·</span>
+          </>
+        )}
         <button
           onClick={investigar}
           disabled={researchLoading}
@@ -401,7 +420,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
         <button
           onClick={gerarMemo}
           disabled={memoLoading}
-          className="font-data text-xs text-bone transition-colors hover:text-floral hover:underline disabled:opacity-50"
+          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50"
         >
           {memoLoading
             ? "Gerando memo…"
@@ -409,36 +428,11 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
               ? memoAberto ? "Ocultar memo" : "Ver memo"
               : "Gerar memo de investimento"}
         </button>
-        {socios.length > 0 && (
-          <>
-            <span className="text-olive">·</span>
-            <button
-              onClick={() => setSociosAberto((v) => !v)}
-              className="font-data text-xs text-bone transition-colors hover:text-floral hover:underline"
-            >
-              {sociosAberto ? "Ocultar detalhes" : "Ver detalhes"}
-            </button>
-          </>
-        )}
       </div>
 
       {/* Erros */}
       {researchErro && <p className="mt-2 text-xs text-risk-high">{researchErro}</p>}
       {memoErro && <p className="mt-2 text-xs text-risk-high">{memoErro}</p>}
-
-      {/* Painel: investigação */}
-      {researchLoading && (
-        <p className="mt-3 animate-pulse text-xs text-bone">
-          A IA está pesquisando sócios, herdeiros, imprensa e quadro societário em fontes públicas…
-        </p>
-      )}
-      {research && <ResearchDisplay research={research} />}
-
-      {/* Painel: memo */}
-      {memoAberto && memoLoading && (
-        <p className="mt-3 animate-pulse font-data text-xs text-bone">Gerando memo de investimento…</p>
-      )}
-      {memoAberto && memoAnalise && <MemoDisplay empresa={e} analise={memoAnalise} />}
 
       {/* Painel: sócios */}
       {sociosAberto && (
@@ -469,6 +463,20 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
           )}
         </div>
       )}
+
+      {/* Painel: investigação */}
+      {researchLoading && (
+        <p className="mt-3 animate-pulse text-xs text-bone">
+          A IA está pesquisando sócios, herdeiros, imprensa e quadro societário em fontes públicas…
+        </p>
+      )}
+      {research && <ResearchDisplay research={research} />}
+
+      {/* Painel: memo */}
+      {memoAberto && memoLoading && (
+        <p className="mt-3 animate-pulse font-data text-xs text-bone">Gerando memo de investimento…</p>
+      )}
+      {memoAberto && memoAnalise && <MemoDisplay empresa={e} analise={memoAnalise} />}
     </li>
   );
 }
@@ -502,7 +510,7 @@ function SalvarButton({ empresaId }: { empresaId: string }) {
           : "border border-hairline text-bone hover:border-hairline-hover hover:text-floral"
       }`}
     >
-      {estado === "salvo" ? "✓ no pipeline" : estado === "salvando" ? "salvando…" : "+ salvar"}
+      {estado === "salvo" ? "✓ no pipeline" : estado === "salvando" ? "Salvando…" : "Salvar no pipeline"}
     </button>
   );
 }
@@ -554,46 +562,59 @@ function ResearchDisplay({ research }: { research: ResearchResult }) {
 function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierAnalise }) {
   return (
     <div className="mt-3 space-y-4 rounded-lg border border-hairline bg-surface p-4 text-sm">
+      <span className="font-data text-[10px] uppercase tracking-wider text-bone">Memo de investimento</span>
       <p className="leading-relaxed text-floral">{analise.overview}</p>
       <Timeline empresa={empresa} />
       <div>
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
+        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
           Análise de risco sucessório
         </h4>
         <p className="leading-relaxed text-floral">{analise.analise_sucessoria}</p>
       </div>
 
-      {/* Red flags a investigar — conteúdo do #17 (Guilherme), reestilizado no brandkit */}
+      {/* Red flags a investigar — D.2: ordenado por severidade, max 5 · D.3: como_verificar em linha própria */}
       {analise.red_flags?.length ? (
         <div>
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
             Red flags a investigar
           </h4>
-          <ul className="space-y-1.5">
-            {analise.red_flags.map((rf, i) => {
-              const cor =
-                rf.severidade === "alta"
-                  ? "border-risk-high/50 text-risk-high"
-                  : rf.severidade === "media"
-                    ? "border-risk-mid/50 text-risk-mid"
-                    : "border-hairline text-bone";
-              return (
-                <li key={i} className="leading-relaxed text-floral">
-                  <span className={`mr-2 rounded border px-1.5 py-0.5 font-data text-[10px] uppercase tracking-wider ${cor}`}>
-                    {rf.severidade}
-                  </span>
-                  <span className="text-floral">{rf.risco}</span>
-                  {rf.como_verificar && <span className="text-bone"> — {rf.como_verificar}</span>}
-                </li>
-              );
-            })}
+          <ul className="space-y-2.5">
+            {[...analise.red_flags]
+              .sort((a, b) => {
+                const ord = { alta: 0, media: 1, baixa: 2 } as Record<string, number>;
+                return (ord[a.severidade] ?? 3) - (ord[b.severidade] ?? 3);
+              })
+              .slice(0, 5)
+              .map((rf, i) => {
+                const cor =
+                  rf.severidade === "alta"
+                    ? "border-risk-high/50 text-risk-high"
+                    : rf.severidade === "media"
+                      ? "border-risk-mid/50 text-risk-mid"
+                      : "border-hairline text-bone";
+                return (
+                  <li key={i}>
+                    <div>
+                      <span className={`mr-2 rounded border px-1.5 py-0.5 font-data text-[10px] uppercase tracking-wider ${cor}`}>
+                        {rf.severidade}
+                      </span>
+                      <span className="text-floral">{rf.risco}</span>
+                    </div>
+                    {rf.como_verificar && (
+                      <p className="mt-1 pl-0.5 text-[11px] leading-relaxed text-bone">
+                        {rf.como_verificar}
+                      </p>
+                    )}
+                  </li>
+                );
+              })}
           </ul>
         </div>
       ) : null}
 
       {analise.perguntas_abordagem.length > 0 && (
         <div>
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
             Perguntas para o primeiro contato
           </h4>
           <ul className="list-decimal space-y-1 pl-5 text-floral">
@@ -603,17 +624,18 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
           </ul>
         </div>
       )}
-      <div className="border-l-2 border-risk-mid pl-3">
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
+      {/* D.4: tese hairline (recuada, contexto) */}
+      <div className="border-l-2 border-bone/30 pl-3">
+        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
           Tese de aproximação
         </h4>
         <p className="leading-relaxed text-floral">{analise.tese_aproximacao}</p>
       </div>
 
-      {/* Próximo passo — conteúdo do #17 (Guilherme), reestilizado no brandkit */}
+      {/* D.4: próximo passo surface-hover (mais destaque, CTA) */}
       {analise.proximo_passo && (
-        <div>
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">
+        <div className="rounded-md bg-surface-hover p-3">
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
             Próximo passo
           </h4>
           <p className="leading-relaxed text-floral">→ {analise.proximo_passo}</p>
@@ -653,7 +675,7 @@ function Timeline({ empresa }: { empresa: Empresa }) {
 
   return (
     <div>
-      <h4 className="mb-2 font-data text-[10px] uppercase tracking-wider text-olive">
+      <h4 className="mb-2 font-data text-[10px] uppercase tracking-wider text-bone/55">
         Linha do tempo societária
       </h4>
       {/* Altura explícita evita margin collapse (conteúdo é absoluto) */}
