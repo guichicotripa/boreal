@@ -20,7 +20,14 @@
       "recall_top10": 67,
       "n_aquisicoes_sucessao": 37,
       "recall_sucessao": 97,
-      "deals_ano": 32
+      "deals_ano": 32,
+      "nacional": {
+        "universo": 526259,
+        "n_aquisicoes": 215,
+        "recall_top10": 63,
+        "n_aquisicoes_sucessao": 79,
+        "recall_sucessao": 100
+      }
     },
     {
       "id": "saude",
@@ -34,7 +41,14 @@
       "recall_top10": 19,
       "n_aquisicoes_sucessao": 22,
       "recall_sucessao": 100,
-      "deals_ano": 110
+      "deals_ano": 110,
+      "nacional": {
+        "universo": 753634,
+        "n_aquisicoes": 906,
+        "recall_top10": 30,
+        "n_aquisicoes_sucessao": 137,
+        "recall_sucessao": 99
+      }
     },
     {
       "id": "educacao",
@@ -49,7 +63,15 @@
       "recall_top10": 26,
       "n_aquisicoes_sucessao": 8,
       "recall_sucessao": 88,
-      "deals_ano": 11
+      "deals_ano": 11,
+      "nacional": {
+        "universo": 150190,
+        "n_aquisicoes": 62,
+        "recall_top10": 37,
+        "n_aquisicoes_sucessao": 24,
+        "recall_sucessao": 83
+      }
     }
-  ]
+  ],
+  "nacional_gerado_em": "2026-06-04"
 }

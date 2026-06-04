@@ -476,3 +476,18 @@ de sucessão em todo lugar. O "baixo" geral é cobertura do jogo, não falha do 
 consolidação que o score de sucessão não deve prever. A lente certa é medir/operar no perfil certo.
 
 **Status:** ✅ Implementado e testado (curl): /setores 97/100/88%, busca educação 38/50 perfil_sucessorio. PR #31.
+
+---
+
+## [2026-06-04] Robustez: validação Brasil-inteiro (a amostra se sustenta)
+
+**Pergunta do Guilherme:** aumentar a amostragem (educação N=8 frágil). **Distinção que registrei:**
+ingerir mais no Supabase = cobertura de busca, NÃO aumenta o N da validação (que já roda no universo
+cheio do BigQuery). O lever certo é GEOGRAFIA — rodar Brasil-inteiro em vez de só SP.
+
+**Resultado (validacao-nacional.mjs):** o recall nas vendas de sucessão se sustenta com N 2–6× maior.
+metalmec 97%→100% (N 37→79), saúde 100%→99% (N 22→137), educação 88%→83% (N 8→24). Total N=240.
+Educação saiu de frágil pra robusto. Persistido no bloco `nacional` do setores.json + linha "confirmado
+Brasil-inteiro" na página. App segue SP (cobertura); o recall é propriedade do score, vale nacional.
+
+**Status:** ✅ PR #32.

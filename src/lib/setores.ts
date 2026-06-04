@@ -20,6 +20,14 @@ export type SetorMetricas = {
   n_aquisicoes_sucessao: number;
   recall_sucessao: number | null;    // recall nas vendas de SUCESSÃO (onde a lente vale) — a métrica honesta
   deals_ano: number;
+  // Robustez: o mesmo recall medido BRASIL INTEIRO (N maior). Confirma que o número de SP se sustenta.
+  nacional?: {
+    universo: number;
+    n_aquisicoes: number;
+    recall_top10: number | null;
+    n_aquisicoes_sucessao: number;
+    recall_sucessao: number | null;
+  };
 };
 
 export type Setor = SetorMetricas & {
