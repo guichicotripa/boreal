@@ -7,6 +7,10 @@ import { precedentesParaEmpresa, cenarioIlustrativo, dadosParaFechar } from "@/l
 import type { EmpresaSimilar } from "@/lib/similar";
 import { setorPorId } from "@/lib/setores";
 
+type TrajetoriaPonto = { ano: number; n_pf: number; n_pj: number; faixa_max: string | null };
+type TrajetoriaEvento = { ano: number; texto: string; tipo: "entrou" | "saiu" | "envelheceu" };
+type TrajetoriaResult = { pontos: TrajetoriaPonto[]; eventos: TrajetoriaEvento[] };
+
 const EXEMPLOS = [
   "metalmecânica no interior de SP com sócios acima de 60 anos",
   "fabricantes de máquinas e equipamentos fundados antes de 1990",
@@ -333,6 +337,12 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
   const [similaresAberto, setSimilaresAberto] = useState(false);
   const [similaresErro, setSimilaresErro] = useState<string | null>(null);
 
+  // Trajetória societária (sucessão em movimento, multi-snapshot)
+  const [traj, setTraj] = useState<TrajetoriaResult | null>(null);
+  const [trajLoading, setTrajLoading] = useState(false);
+  const [trajAberto, setTrajAberto] = useState(false);
+  const [trajErro, setTrajErro] = useState<string | null>(null);
+
   const scoreV0 = e.score?.score ?? 0;
   const score = research?.score_v1 ?? scoreV0;
   const tier = scoreTier(score);
@@ -404,6 +414,28 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
       setSimilaresErro((err as Error).message);
     } finally {
       setSimilaresLoading(false);
+    }
+  }
+
+  async function buscarTrajetoria() {
+    if (traj) { setTrajAberto((v) => !v); return; }
+    if (trajLoading) return;
+    setTrajLoading(true);
+    setTrajErro(null);
+    setTrajAberto(true);
+    try {
+      const r = await fetch("/api/trajetoria", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ empresaId: e.id }),
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error ?? "erro na trajetória");
+      setTraj({ pontos: data.pontos ?? [], eventos: data.eventos ?? [] });
+    } catch (err) {
+      setTrajErro((err as Error).message);
+    } finally {
+      setTrajLoading(false);
     }
   }
 
@@ -515,12 +547,61 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
               ? similaresAberto ? "Ocultar similares" : "Ver similares"
               : "Achar similares"}
         </button>
+        <span className="text-olive">·</span>
+        <button
+          onClick={buscarTrajetoria}
+          disabled={trajLoading}
+          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50"
+        >
+          {trajLoading ? "Carregando…" : traj ? (trajAberto ? "Ocultar trajetória" : "Ver trajetória") : "Trajetória societária"}
+        </button>
       </div>
 
       {/* Erros */}
       {researchErro && <p className="mt-2 text-xs text-risk-high">{researchErro}</p>}
       {memoErro && <p className="mt-2 text-xs text-risk-high">{memoErro}</p>}
       {similaresErro && <p className="mt-2 text-xs text-risk-high">{similaresErro}</p>}
+      {trajErro && <p className="mt-2 text-xs text-risk-high">{trajErro}</p>}
+
+      {/* Painel: trajetória societária (sucessão em movimento) */}
+      {trajAberto && (
+        <div className="mt-3 rounded-lg border border-hairline bg-surface p-3">
+          <p className="mb-2 font-data text-[10px] uppercase tracking-wider text-olive">
+            Trajetória societária · a sucessão em movimento (2022→2025)
+          </p>
+          {trajLoading ? (
+            <p className="text-xs text-bone">Reconstruindo o quadro ao longo do tempo…</p>
+          ) : traj && traj.pontos.length > 0 ? (
+            <>
+              <div className="flex flex-wrap gap-2">
+                {traj.pontos.map((p, i) => (
+                  <div key={i} className="rounded border border-hairline px-2 py-1 text-center">
+                    <p className="font-data text-[11px] tabular-nums text-floral">{p.ano}</p>
+                    <p className="font-data text-[10px] text-bone">{p.n_pf}PF{p.n_pj > 0 ? `+${p.n_pj}PJ` : ""}</p>
+                    {p.faixa_max && <p className="font-data text-[10px] text-olive">{p.faixa_max}</p>}
+                  </div>
+                ))}
+              </div>
+              {traj.eventos.length > 0 ? (
+                <ul className="mt-3 space-y-1">
+                  {traj.eventos.map((ev, i) => (
+                    <li key={i} className="text-[11px] leading-snug">
+                      <span className="font-data text-olive">{ev.ano}</span>{" "}
+                      <span className={ev.tipo === "entrou" ? "text-floral" : ev.tipo === "saiu" ? "text-risk-high" : "text-risk-mid"}>
+                        {ev.texto}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mt-2 text-[11px] text-olive">Quadro estável no período — sem entrada/saída/envelhecimento de faixa.</p>
+              )}
+            </>
+          ) : (
+            <p className="text-xs text-bone">Sem histórico societário no período.</p>
+          )}
+        </div>
+      )}
 
       {/* Painel: similares (look-alike) */}
       {similaresAberto && (
