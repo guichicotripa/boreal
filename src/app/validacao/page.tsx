@@ -81,14 +81,14 @@ export default function Validacao() {
             {heroi.recall_top10}%
           </p>
           <p className="mt-4 max-w-xl text-lg leading-snug text-bone">
-            das <strong className="text-floral">{heroi.n_aquisicoes} aquisições reais</strong> dos
+            das <strong>{heroi.n_aquisicoes} aquisições reais</strong> dos
             últimos {validacao.janela.anos} anos em {NOME_VERTICAL[heroi.vertical] ?? heroi.vertical}{" "}
-            estavam no <strong className="text-floral">top 10%</strong> do nosso ranking — calculado{" "}
-            <strong className="text-floral">12 meses antes</strong> de o deal acontecer.
+            estavam no <strong>top 10%</strong> do nosso ranking — calculado{" "}
+            <strong>12 meses antes</strong> de o deal acontecer.
           </p>
           <p className="mt-3 font-data text-sm text-olive">
             Por acaso seria 10%. Isso é{" "}
-            <span className="text-risk-mid">{heroi.lift_top10}× melhor que aleatório</span> · decil
+            <span className="text-floral">{heroi.lift_top10}× melhor que aleatório</span> · decil
             médio {heroi.decil_medio.toLocaleString("pt-BR")}/10 (5,5 = sem sinal).
           </p>
         </section>
@@ -99,8 +99,8 @@ export default function Validacao() {
             E não é abstrato — essas empresas venderam de verdade
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-bone">
-            Aquisições reais de metalmecânica que aconteceram <em>depois</em> da nossa data de corte.
-            A coluna &ldquo;rank&rdquo; é onde o modelo já as colocava <strong className="text-floral">antes</strong> do
+            Aquisições reais de metalmecânica que aconteceram <span className="text-floral">depois</span>{" "}da nossa data de corte.
+            A coluna &ldquo;rank&rdquo; é onde o modelo já as colocava <span className="text-floral">antes</span> do
             deal — sem nunca ter visto o futuro.
           </p>
           <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
@@ -121,7 +121,7 @@ export default function Validacao() {
                     <td className="px-4 py-3 text-right font-data tabular-nums text-bone">
                       {d.ano_deal ?? "—"}
                     </td>
-                    <td className="px-4 py-3 text-right font-data tabular-nums text-risk-mid">
+                    <td className="px-4 py-3 text-right font-data tabular-nums text-floral">
                       top {d.pct_rank <= 1 ? "1" : Math.ceil(d.pct_rank)}%
                     </td>
                   </tr>
@@ -143,26 +143,26 @@ export default function Validacao() {
           </h2>
           <ol className="mt-4 space-y-4">
             <li className="flex gap-4">
-              <span className="font-display text-2xl text-risk-mid">1</span>
+              <span className="font-display text-2xl text-floral">1</span>
               <p className="text-bone">
-                <strong className="text-floral">Ground truth de graça.</strong> Comparamos dois
+                <strong>Ground truth de graça.</strong> Comparamos dois
                 snapshots da Receita Federal (2023 → 2025) e detectamos a assinatura de uma aquisição
                 no registro: <span className="text-floral">um sócio PJ entra e um sócio PF sai</span>.
                 Sem comprar dados, sem garimpar imprensa.
               </p>
             </li>
             <li className="flex gap-4">
-              <span className="font-display text-2xl text-risk-mid">2</span>
+              <span className="font-display text-2xl text-floral">2</span>
               <p className="text-bone">
-                <strong className="text-floral">Zero leakage.</strong> O score é calculado só com os
+                <strong>Zero leakage.</strong> O score é calculado só com os
                 dados de 2023 — <span className="text-floral">antes</span> de qualquer aquisição. O
                 modelo nunca vê o futuro que está tentando prever.
               </p>
             </li>
             <li className="flex gap-4">
-              <span className="font-display text-2xl text-risk-mid">3</span>
+              <span className="font-display text-2xl text-floral">3</span>
               <p className="text-bone">
-                <strong className="text-floral">Medimos o recall.</strong> Das empresas que de fato
+                <strong>Medimos o recall.</strong> Das empresas que de fato
                 foram adquiridas, quantas o ranking tinha colocado no top decil do próprio setor? É o
                 único teste que importa: o modelo acerta antes do fato.
               </p>
@@ -221,9 +221,9 @@ export default function Validacao() {
             O score não é chutado — ele se calibra contra o que aconteceu
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-bone">
-            Cada feature foi medida contra 340 aquisições reais. O <strong className="text-floral">lift</strong> é
+            Cada feature foi medida contra 340 aquisições reais. O <strong>lift</strong> é
             quanto ela aparece mais nas empresas vendidas do que no universo. É isso que define o peso —
-            e o dado <strong className="text-floral">corrigiu a nossa intuição</strong> duas vezes.
+            e o dado <strong>corrigiu a nossa intuição</strong> duas vezes.
           </p>
           <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
             <table className="w-full text-sm">
@@ -264,7 +264,7 @@ export default function Validacao() {
           <p className="mt-3 leading-relaxed text-bone">
             Quase toda ferramenta de &ldquo;IA pra deal sourcing&rdquo; te entrega uma lista bonita e
             não consegue te dizer se ela <em>funciona</em>. O Boreal consegue: é um{" "}
-            <strong className="text-floral">
+            <strong>
               modelo preditivo de eventos de liquidez no mercado privado
             </strong>
             , validado contra o que de fato aconteceu, sem viés de retrovisor. Esse é o ativo — não a
