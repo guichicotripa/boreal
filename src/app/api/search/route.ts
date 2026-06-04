@@ -7,6 +7,7 @@ import { reasonAboutEmpresas } from "@/lib/reasoner";
 import type { Empresa, Socio, SearchResponse } from "@/lib/types";
 import demoCache from "@/lib/demo-cache.json";
 import setoresData from "@/lib/setores.json";
+import setorCache from "@/lib/setor-cache.json";
 
 function cnaesDoSetor(id: string): string[] | null {
   return (setoresData.setores as { id: string; cnaes: string[] }[]).find((s) => s.id === id)?.cnaes ?? null;
@@ -45,10 +46,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "query vazia" }, { status: 400 });
   }
 
-  // ── 0. Cache dos demos canônicos — só pra busca por texto puro (sem setor) ────
+  // ── 0. Cache — demos canônicos (texto) ou browse de setor (instantâneo no demo) ──
   const skipCache = req.nextUrl.searchParams.get("fresh") === "1";
   if (!skipCache && queryText && !setorCnaes) {
     const hit = CACHE[normalizeQuery(queryText)];
+    if (hit) {
+      return NextResponse.json({ ...hit, cached: true });
+    }
+  }
+  // Browse de setor sem texto: serve do cache (saúde/educação ficam instantâneos como o metalmec).
+  if (!skipCache && setorId && !queryText) {
+    const hit = (setorCache.porSetor as Record<string, SearchResponse>)[setorId];
     if (hit) {
       return NextResponse.json({ ...hit, cached: true });
     }
