@@ -5,6 +5,7 @@ import type { SearchResponse, Empresa, DossierAnalise, ResearchResult } from "@/
 import { scoreTier } from "@/lib/scoring";
 import { precedentesParaEmpresa, cenarioIlustrativo, dadosParaFechar } from "@/lib/memo-extras";
 import type { EmpresaSimilar } from "@/lib/similar";
+import { setorPorId } from "@/lib/setores";
 
 const EXEMPLOS = [
   "metalmecânica no interior de SP com sócios acima de 60 anos",
@@ -37,9 +38,20 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [res, setRes] = useState<SearchResponse | null>(null);
   const [erro, setErro] = useState<string | null>(null);
+  const [setorAtivo, setSetorAtivo] = useState<string | null>(null);
 
-  async function buscar(q: string) {
-    if (!q.trim()) return;
+  // Se veio de /setores (?setor=...), busca o setor direto.
+  useEffect(() => {
+    const s = new URLSearchParams(window.location.search).get("setor");
+    if (s && setorPorId(s)) {
+      setSetorAtivo(s);
+      buscar("", s);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function buscar(q: string, setor?: string) {
+    if (!q.trim() && !setor) return;
     setLoading(true);
     setErro(null);
     setRes(null);
@@ -47,7 +59,7 @@ export default function Home() {
       const r = await fetch("/api/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: q }),
+        body: JSON.stringify(setor ? { query: q, setor } : { query: q }),
       });
       const data = await r.json();
       if (!r.ok) throw new Error(data.error ?? "erro na busca");
@@ -86,11 +98,24 @@ export default function Home() {
               </a>
             </p>
 
+            {/* Banner de setor ativo (veio de /setores) */}
+            {setorAtivo && setorPorId(setorAtivo) && (
+              <div className="mt-6 flex items-center justify-between gap-2 rounded-lg border border-hairline bg-surface px-3 py-2">
+                <p className="text-sm text-bone">
+                  Setor: <strong className="text-floral">{setorPorId(setorAtivo)!.nome}</strong>
+                  <span className="text-olive"> · lente {setorPorId(setorAtivo)!.lente === "consolidacao" ? "consolidação" : "sucessão"}</span>
+                </p>
+                <a href="/" className="font-data text-[11px] uppercase tracking-wider text-olive transition-colors hover:text-floral">
+                  limpar
+                </a>
+              </div>
+            )}
+
             {/* Search — underline + prompt */}
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                buscar(texto);
+                buscar(texto, setorAtivo ?? undefined);
               }}
               className="mt-8"
             >

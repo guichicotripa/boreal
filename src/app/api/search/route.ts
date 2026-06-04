@@ -6,6 +6,11 @@ import { calcScore } from "@/lib/scoring";
 import { reasonAboutEmpresas } from "@/lib/reasoner";
 import type { Empresa, Socio, SearchResponse } from "@/lib/types";
 import demoCache from "@/lib/demo-cache.json";
+import setoresData from "@/lib/setores.json";
+
+function cnaesDoSetor(id: string): string[] | null {
+  return (setoresData.setores as { id: string; cnaes: string[] }[]).find((s) => s.id === id)?.cnaes ?? null;
+}
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -33,14 +38,16 @@ export async function POST(req: NextRequest) {
   }
 
   const queryText = String((body as { query?: string })?.query ?? "").trim();
-  if (!queryText) {
+  // Setor escolhido (página /setores) escopa os CNAEs — permite "trabalhar setor por setor".
+  const setorId = String((body as { setor?: string })?.setor ?? "").trim();
+  const setorCnaes = setorId ? cnaesDoSetor(setorId) : null;
+  if (!queryText && !setorCnaes) {
     return NextResponse.json({ error: "query vazia" }, { status: 400 });
   }
 
-  // ── 0. Cache dos demos canônicos — resposta instantânea e determinística ──────
-  // Permite pular o cache com ?fresh=1 (útil pra rebuildar o cache).
+  // ── 0. Cache dos demos canônicos — só pra busca por texto puro (sem setor) ────
   const skipCache = req.nextUrl.searchParams.get("fresh") === "1";
-  if (!skipCache) {
+  if (!skipCache && queryText && !setorCnaes) {
     const hit = CACHE[normalizeQuery(queryText)];
     if (hit) {
       return NextResponse.json({ ...hit, cached: true });
@@ -50,14 +57,23 @@ export async function POST(req: NextRequest) {
   // ── 1. NL → filtros (LLM via Agent SDK; cai no heurístico se falhar) ─────────
   let filters;
   let parsedBy: "llm" | "heuristic";
-  try {
-    filters = await parseQueryLLM(queryText);
-    parsedBy = "llm";
-  } catch (err) {
-    console.error("LLM parse falhou, usando heurístico:", (err as Error).message);
-    filters = parseQueryHeuristic(queryText);
+  if (queryText) {
+    try {
+      filters = await parseQueryLLM(queryText);
+      parsedBy = "llm";
+    } catch (err) {
+      console.error("LLM parse falhou, usando heurístico:", (err as Error).message);
+      filters = parseQueryHeuristic(queryText);
+      parsedBy = "heuristic";
+    }
+  } else {
+    // Browse de setor sem texto: só o setor, ordenado por score.
+    filters = { cnaePrefixes: [], minFaixaEtaria: null, maxAnoFundacao: null, limit: 50 };
     parsedBy = "heuristic";
   }
+
+  // Setor escolhido sobrepõe os CNAEs inferidos (a praça/idade do NL seguem valendo).
+  if (setorCnaes) filters.cnaePrefixes = setorCnaes;
 
   // ── 2. Monta e roda a query no Supabase ──────────────────────────────────────
   const supabase = createAdminClient();
