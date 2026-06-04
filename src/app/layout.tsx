@@ -54,6 +54,12 @@ export default function RootLayout({
             <NavLogo />
             <div className="flex items-center gap-5">
               <a
+                href="/setores"
+                className="font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:text-floral"
+              >
+                Setores
+              </a>
+              <a
                 href="/validacao"
                 className="font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:text-floral"
               >

@@ -1,0 +1,49 @@
+{
+  "gerado_em": "2026-06-04",
+  "janela": {
+    "de": "2023-06-10",
+    "ate": "2025-11-09"
+  },
+  "uf": "SP",
+  "setores": [
+    {
+      "id": "metalmec",
+      "nome": "Metalmecânica",
+      "cnaes": [
+        "24",
+        "25",
+        "28"
+      ],
+      "universo": 140726,
+      "quente": 12957,
+      "n_aquisicoes": 76,
+      "recall_top10": 70,
+      "deals_ano": 32
+    },
+    {
+      "id": "saude",
+      "nome": "Saúde",
+      "cnaes": [
+        "86"
+      ],
+      "universo": 210159,
+      "quente": 17775,
+      "n_aquisicoes": 264,
+      "recall_top10": 17,
+      "deals_ano": 110
+    },
+    {
+      "id": "educacao",
+      "nome": "Educação básica",
+      "cnaes": [
+        "851",
+        "852"
+      ],
+      "universo": 30596,
+      "quente": 7050,
+      "n_aquisicoes": 27,
+      "recall_top10": 26,
+      "deals_ano": 11
+    }
+  ]
+}

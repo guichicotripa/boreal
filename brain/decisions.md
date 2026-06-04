@@ -429,3 +429,25 @@ janela de sucessão). Alerta renderiza no card (borda + banner vermelho).
 (em vez de janela fixa); estender pro universo, não só pipeline.
 
 **Status:** ✅ Implementado e testado via script (sem Chrome, a pedido). PR #29.
+
+---
+
+## [2026-06-04] Setor como 1ª classe — cobertura sector-by-sector (venture-scale)
+
+**Contexto:** ideia do Guilherme — trabalhar setor por setor, cada um com sua peculiaridade/score.
+Já provado pela tese das duas lentes. Refinamento na decisão: não é só "pesos diferentes" — às vezes é
+uma LENTE diferente (sucessão × consolidação). E a calibração vem do loop de validação, NUNCA de knob manual.
+
+**Decisão:** setor vira config de 1ª classe. `build-setores.mjs` valida os 3 (SP, leakage-free) →
+`setores.json` → `setores.ts` (registry: CNAEs + lente + status do gate) → página `/setores` (cobertura,
+recall validado, lente por setor). Aumentar cobertura = adicionar setor + rodar validação.
+
+**Números validados (04/06):** metalmec recall 70% (✅ sucessão), saúde 17% (🔴 → lente consolidação),
+educação 26% (🟡 itera, sucessão, N=27 pequeno; foco Relay é NE, aqui medido SP).
+
+**Próximo (Step 4–5):** busca sector-aware (?setor escopa CNAEs) + **ingest saúde/educação no Supabase**
+(hoje só metalmec ~2k indexado — é o gargalo real de cobertura).
+
+**Pro clube:** metalmec segue herói; setores é a história venture-scale (infra sector-agnostic) p/ Monica.
+
+**Status:** 🟡 Framework (config + página) feito e testado (PR #30). Ingest pendente.
