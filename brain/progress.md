@@ -541,3 +541,23 @@ peça em `brain/decisions.md` → "[2026-06-02/03] RACIONAL DAS MELHORIAS" (pra 
 
 **Aprendizado:** o "porquê" estava só em commits/PRs — fácil de perder no pitch. Consolidado em
 `decisions.md`. Daqui pra frente: registrar racional (incl. o que rejeitamos) junto com o código.
+
+---
+
+## [2026-06-04] Guilherme | Cobertura multi-setor + score por lentes + robustez nacional
+
+Dia longo (PRs #28–#32). Detalhe do racional em `brain/decisions.md`.
+
+- **Look-alike (#28)** — achar similares (CNAE+praça+porte+época), inspirado no Grata.
+- **Monitor de transições (#29)** — sensor forward: alerta de mudança societária no pipeline. Pegou
+  mudança real na PRENSA. O que mais diferencia do Grata.
+- **Setores 1ª classe (#30)** — registry + página `/setores` + ingest saúde/educação no Supabase
+  (cobertura 1→3 setores).
+- **Score por lentes (#31)** — o achado do dia: o score de sucessão acerta **88–100% nas vendas de
+  sucessão em TODO setor**. Recall baixo de saúde/educação = consolidação (o score não deve prever),
+  não falha. Flag `perfil_sucessorio`. Decomp: educação 26% geral → 88% no perfil de sucessão.
+- **Validação Brasil-inteiro (#32)** — robustez: recall se sustenta com N 2–6× maior (educação N=8→24,
+  88%→83%). Distinção: ingest=cobertura, não aumenta N da validação; lever é geografia.
+
+**Aprendizado:** "aumentar a amostra" tinha uma armadilha — ingerir mais no banco não muda o N da
+validação. O N é a realidade (quantas aquisições aconteceram), e o lever é geografia/tempo.
