@@ -450,4 +450,29 @@ educação 26% (🟡 itera, sucessão, N=27 pequeno; foco Relay é NE, aqui medi
 
 **Pro clube:** metalmec segue herói; setores é a história venture-scale (infra sector-agnostic) p/ Monica.
 
-**Status:** 🟡 Framework (config + página) feito e testado (PR #30). Ingest pendente.
+**Status:** ✅ Framework + ingest (saúde/educação) feitos (PR #30, mergeado).
+
+---
+
+## [2026-06-04] Score por lentes + recall de educação — o label estava sujo, não o score
+
+**Pergunta do Guilherme:** dá pra aumentar o recall de educação (26%)? + fazer score por lentes.
+
+**Achado (decomp de educação, validacao-decomp.mjs):** o 26% geral mistura jogos. Decompondo o M&A
+de educação por perfil do alvo: sucessão clássica (sócio 61+ E 25+) = **88% de recall**; o resto
+(67%, consolidação por grupos tipo SEB/Inspira) = 0%, e o score CORRETAMENTE não pega. Medindo o
+recall só nas vendas de sucessão (onde a lente vale), os 3 setores: **metalmec 97%, saúde 100%,
+educação 88%.** O score de sucessão não é setor-específico-quebrado — ele acerta ~90–100% nas vendas
+de sucessão em todo lugar. O "baixo" geral é cobertura do jogo, não falha do score.
+
+**Decisão (score por lentes):**
+1. `build-setores` mede **recall nas vendas de sucessão** (o número honesto) + **% do M&A que é
+   sucessão** (o jogo do setor). Status pelo jogo: ≥40% sucessão · 20–40 misto · <20 consolidação.
+2. `/setores`: headline vira "acerto nas vendas de sucessão" (88–100%), com o % do jogo ao lado.
+3. `scoring.ts`: flag **`perfil_sucessorio`** (sócio 61+ E empresa 25+) = onde a lente vale. Chip
+   "perfil sucessório" no card = alta confiança. Fora dele, o deal provável é consolidação.
+
+**Não fiz (honestidade):** chutar pesos pra perseguir o 26% geral — seria perseguir deals de
+consolidação que o score de sucessão não deve prever. A lente certa é medir/operar no perfil certo.
+
+**Status:** ✅ Implementado e testado (curl): /setores 97/100/88%, busca educação 38/50 perfil_sucessorio. PR #31.

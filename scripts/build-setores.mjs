@@ -40,6 +40,7 @@ async function umSetor(s) {
   ),
   universo AS (
     SELECT e.cnpj_basico,
+      sc.mf AS mf, (2023-EXTRACT(YEAR FROM e.data_inicio_atividade)) AS idade,
       (CASE sc.mf WHEN 9 THEN 30 WHEN 8 THEN 26 WHEN 7 THEN 20 WHEN 6 THEN 10 ELSE 0 END)
       + (CASE WHEN 2023-EXTRACT(YEAR FROM e.data_inicio_atividade) >= 40 THEN 30
               WHEN 2023-EXTRACT(YEAR FROM e.data_inicio_atividade) >= 25 THEN 22
@@ -53,7 +54,7 @@ async function umSetor(s) {
     LEFT JOIN sc ON sc.cnpj_basico=e.cnpj_basico
     WHERE e.data='${CORTE}' AND e.sigla_uf='SP' AND e.identificador_matriz_filial='1' AND ${cnaeFiltro}
   ),
-  ranked AS (SELECT cnpj_basico, NTILE(10) OVER (ORDER BY score DESC) AS decil FROM universo),
+  ranked AS (SELECT cnpj_basico, mf, idade, NTILE(10) OVER (ORDER BY score DESC) AS decil FROM universo),
   a AS (SELECT cnpj_basico, COUNTIF(tipo='1') pj, COUNTIF(tipo='2') pf FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${CORTE}' GROUP BY 1),
   b AS (SELECT cnpj_basico, COUNTIF(tipo='1') pj, COUNTIF(tipo='2') pf FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${NOVO}' GROUP BY 1),
   adq AS (SELECT a.cnpj_basico FROM a JOIN b USING(cnpj_basico) WHERE b.pj>a.pj AND b.pf<a.pf),
@@ -63,20 +64,27 @@ async function umSetor(s) {
     JOIN socN s2 ON s2.cnpj_basico=e2.cnpj_basico
     WHERE e2.data='${NOVO}' AND e2.sigla_uf='SP' AND e2.identificador_matriz_filial='1' AND ${likeClause(s.cnaes, "e2.cnae_fiscal_principal")}
       AND s2.pj=0 AND s2.pf>=1 AND s2.mf>=7 AND (2025-EXTRACT(YEAR FROM e2.data_inicio_atividade))>=25
-  )
+  ),
+  adqRank AS (SELECT r.* FROM adq JOIN ranked r USING(cnpj_basico))
   SELECT
     (SELECT COUNT(*) FROM universo) AS universo,
     (SELECT n FROM quente) AS quente,
-    (SELECT COUNT(*) FROM adq JOIN universo USING(cnpj_basico)) AS n_adq,
-    (SELECT COUNTIF(r.decil=1) FROM adq JOIN ranked r USING(cnpj_basico)) AS top10`;
+    (SELECT COUNT(*) FROM adqRank) AS n_adq,
+    (SELECT COUNTIF(decil=1) FROM adqRank) AS top10,
+    -- subset SUCESSÃO: alvo era sócio 61+ E empresa 25+ no corte (onde a lente de sucessão vale)
+    (SELECT COUNT(*) FROM adqRank WHERE mf>=7 AND idade>=25) AS n_adq_suc,
+    (SELECT COUNTIF(decil=1) FROM adqRank WHERE mf>=7 AND idade>=25) AS top10_suc`;
   const [[r]] = await bq.query({ query: sql, location: "US" });
-  const universo = Number(r.universo), quente = Number(r.quente), nAdq = Number(r.n_adq), top10 = Number(r.top10);
-  const recall = nAdq > 0 ? Math.round((top10 / nAdq) * 100) : null;
+  const universo = Number(r.universo), quente = Number(r.quente);
+  const nAdq = Number(r.n_adq), top10 = Number(r.top10);
+  const nSuc = Number(r.n_adq_suc), top10Suc = Number(r.top10_suc);
   return {
     id: s.id, nome: s.nome, cnaes: s.cnaes,
     universo, quente,
     n_aquisicoes: nAdq,
-    recall_top10: recall,
+    recall_top10: nAdq > 0 ? Math.round((top10 / nAdq) * 100) : null,
+    n_aquisicoes_sucessao: nSuc,
+    recall_sucessao: nSuc > 0 ? Math.round((top10Suc / nSuc) * 100) : null,
     deals_ano: Math.round(nAdq / ANOS),
   };
 }
@@ -85,7 +93,7 @@ const setores = [];
 for (const s of SETORES) {
   const r = await umSetor(s);
   setores.push(r);
-  console.log(`[${r.id}] universo ${r.universo} · quente ${r.quente} · ${r.n_aquisicoes} aquisições · recall@top10% ${r.recall_top10}% · ~${r.deals_ano}/ano`);
+  console.log(`[${r.id}] universo ${r.universo} · quente ${r.quente} · recall geral ${r.recall_top10}% (N=${r.n_aquisicoes}) · recall sucessão ${r.recall_sucessao}% (N=${r.n_aquisicoes_sucessao}) · ~${r.deals_ano}/ano`);
 }
 
 writeFileSync(

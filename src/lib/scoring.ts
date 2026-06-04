@@ -27,7 +27,19 @@ export type ScoreResult = {
   score: number;            // 0–100
   breakdown: ScoreBreakdown;
   sinais: string[];         // bullets human-readable, ordenados por força
+  // Score por lentes: o score de sucessão SÓ valida (88–100%) quando a empresa está no perfil
+  // sucessório (sócio 61+ E empresa 25+). Fora dele, o deal provável é consolidação — baixa confiança.
+  perfil_sucessorio: boolean;
 };
+
+// Onde a lente de sucessão é confiável: sócio 61+ (faixa≥7) E empresa com 25+ anos.
+export function perfilSucessorio(empresa: Empresa, socios: Socio[] = empresa.socio ?? []): boolean {
+  const faixas = faixasPF(socios);
+  const idoso = faixas.length > 0 && Math.max(...faixas) >= 7;
+  const ano = empresa.data_inicio_atividade ? Number(empresa.data_inicio_atividade.slice(0, 4)) : NaN;
+  const antiga = Number.isFinite(ano) && new Date().getFullYear() - ano >= 25;
+  return idoso && antiga;
+}
 
 // Sócios pessoa física têm faixa etária 1–9; PJ / não-aplicável têm 0 ou null.
 function faixasPF(socios: Socio[]): number[] {
@@ -108,7 +120,7 @@ export function calcScore(empresa: Empresa, socios: Socio[] = empresa.socio ?? [
     .sort((a, b) => b.pts - a.pts)
     .map((x) => x.sinal as string);
 
-  return { score, breakdown, sinais };
+  return { score, breakdown, sinais, perfil_sucessorio: perfilSucessorio(empresa, socios) };
 }
 
 // ── Helper de classificação (cor/label na UI) ────────────────────────────────

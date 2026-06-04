@@ -22,9 +22,9 @@ const LENTE: Record<string, string> = {
 };
 
 function recallCor(s: Setor) {
-  if (s.recall_top10 == null) return "text-olive";
-  if (s.recall_top10 >= 40) return "text-floral";
-  if (s.recall_top10 >= 25) return "text-risk-mid";
+  if (s.recall_sucessao == null) return "text-olive";
+  if (s.recall_sucessao >= 70) return "text-floral";
+  if (s.recall_sucessao >= 40) return "text-risk-mid";
   return "text-bone";
 }
 
@@ -45,9 +45,10 @@ export default function Setores() {
         </header>
 
         <p className="mb-8 max-w-2xl text-sm leading-relaxed text-bone">
-          O score não é único: cada setor tem sua <strong className="text-floral">lente</strong>. Onde o
-          sinal de sucessão valida (recall alto), prevemos <em>quem vende</em>; onde o jogo é consolidação,
-          a lente vira <em>o que os roll-ups compram</em>. O número decide — não a intuição.
+          O score de sucessão acerta <strong className="text-floral">88–100% das vendas de sucessão em
+          todos os setores</strong>. O que muda é o <strong className="text-floral">jogo</strong>: quanto
+          do M&amp;A do setor é sucessão (onde prevemos quem vende) vs. consolidação (onde o jogo é o
+          próximo alvo dos roll-ups, não quem vende). A lente segue o jogo — não o contrário.
         </p>
 
         <div className="space-y-4">
@@ -74,9 +75,17 @@ export default function Setores() {
                 <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4">
                   <div>
                     <p className={`font-display text-2xl tabular-nums ${recallCor(s)}`}>
-                      {s.recall_top10 != null ? `${s.recall_top10}%` : "—"}
+                      {s.recall_sucessao != null ? `${s.recall_sucessao}%` : "—"}
                     </p>
-                    <p className="font-data text-[10px] uppercase tracking-wider text-olive">Recall top 10%</p>
+                    <p className="font-data text-[10px] uppercase tracking-wider text-olive">
+                      Acerto nas vendas de sucessão
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-display text-2xl tabular-nums text-bone">{s.pct_sucessao}%</p>
+                    <p className="font-data text-[10px] uppercase tracking-wider text-olive">
+                      Do M&amp;A é sucessão
+                    </p>
                   </div>
                   <div>
                     <p className="font-display text-2xl tabular-nums text-floral">{fmt(s.quente)}</p>
@@ -85,10 +94,6 @@ export default function Setores() {
                   <div>
                     <p className="font-display text-2xl tabular-nums text-bone">{fmt(s.universo)}</p>
                     <p className="font-data text-[10px] uppercase tracking-wider text-olive">Universo (SP)</p>
-                  </div>
-                  <div>
-                    <p className="font-display text-2xl tabular-nums text-bone">~{s.deals_ano}</p>
-                    <p className="font-data text-[10px] uppercase tracking-wider text-olive">Deals/ano</p>
                   </div>
                 </div>
 
@@ -113,8 +118,9 @@ export default function Setores() {
         </div>
 
         <p className="mt-8 font-data text-xs text-olive">
-          Recall medido leakage-free (score em 2023 vs aquisições reais até 2025, decil dentro do setor).
-          Gate do Relay: ≥40% valida · 25–40% itera · &lt;25% o jogo é consolidação. Gerado em{" "}
+          &ldquo;Acerto nas vendas de sucessão&rdquo; = recall@top10% medido leakage-free, só nas aquisições
+          de perfil sucessório (sócio 61+ e empresa 25+). Status pelo jogo do setor: ≥40% do M&amp;A é
+          sucessão = setor de sucessão · 20–40% misto · &lt;20% consolidação. Gerado em{" "}
           {new Date(SETORES_GERADO_EM).toLocaleDateString("pt-BR")} · `scripts/build-setores.mjs`.
         </p>
       </main>

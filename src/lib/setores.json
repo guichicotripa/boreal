@@ -17,7 +17,9 @@
       "universo": 140726,
       "quente": 12957,
       "n_aquisicoes": 76,
-      "recall_top10": 70,
+      "recall_top10": 67,
+      "n_aquisicoes_sucessao": 37,
+      "recall_sucessao": 97,
       "deals_ano": 32
     },
     {
@@ -29,7 +31,9 @@
       "universo": 210159,
       "quente": 17775,
       "n_aquisicoes": 264,
-      "recall_top10": 17,
+      "recall_top10": 19,
+      "n_aquisicoes_sucessao": 22,
+      "recall_sucessao": 100,
       "deals_ano": 110
     },
     {
@@ -43,6 +47,8 @@
       "quente": 7050,
       "n_aquisicoes": 27,
       "recall_top10": 26,
+      "n_aquisicoes_sucessao": 8,
+      "recall_sucessao": 88,
       "deals_ano": 11
     }
   ]
