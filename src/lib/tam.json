@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-06-03",
+  "gerado_em": "2026-06-04",
   "janela": {
     "de": "2023-06-10",
     "ate": "2025-11-09",
@@ -23,10 +23,19 @@
       "quente": 17775,
       "deals_periodo": 254,
       "deals_ano": 106
+    },
+    {
+      "id": "educacao",
+      "nome": "Educação básica · SP",
+      "total": 31817,
+      "independentes": 23615,
+      "quente": 7050,
+      "deals_periodo": 26,
+      "deals_ano": 11
     }
   ],
-  "quente_total": 30732,
-  "deals_ano_total": 140,
-  "giro_anual_pct": 0.46,
+  "quente_total": 37782,
+  "deals_ano_total": 151,
+  "giro_anual_pct": 0.4,
   "nota": "Universo quente = empresa independente (só sócios PF), sócio 61+ e 25+ anos de operação. Deals/ano = transações reais detectadas na mina do CNPJ. O gap entre os dois é a iliquidez que originação ativa destrava. Valores em R$ na página são sensibilidade ilustrativa, não dado por empresa."
 }

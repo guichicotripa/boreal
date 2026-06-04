@@ -19,6 +19,7 @@ const ANOS = 2.4;
 const VERTICAIS = [
   { id: "metalmec", nome: "Metalmecânica · SP", like: "(e.cnae_fiscal_principal LIKE '24%' OR e.cnae_fiscal_principal LIKE '25%' OR e.cnae_fiscal_principal LIKE '28%')" },
   { id: "saude", nome: "Saúde · SP", like: "e.cnae_fiscal_principal LIKE '86%'" },
+  { id: "educacao", nome: "Educação básica · SP", like: "(e.cnae_fiscal_principal LIKE '851%' OR e.cnae_fiscal_principal LIKE '852%')" },
 ];
 
 async function funil(v) {

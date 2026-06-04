@@ -92,11 +92,13 @@ export default function Home() {
               O modelo que prevê quem vai vender — antes do mercado.
             </h1>
 
-            {/* Subheadline — a credencial */}
+            {/* Subheadline — a credencial (moldura de sucessão, onde a lente vale) */}
             <p className="mt-4 max-w-xl text-sm leading-relaxed text-bone">
-              Não é um buscador. É um modelo validado contra aquisições reais, sem leakage:{" "}
-              <strong className="text-floral">67% das vendas já estavam no nosso top 10%</strong>, 12
-              meses antes.{" "}
+              Não é um buscador. É um modelo validado contra vendas reais, sem leakage:{" "}
+              <strong className="text-floral">
+                {setorPorId("metalmec")?.recall_sucessao ?? 97}% das vendas por sucessão já estavam no nosso top 10%
+              </strong>
+              , 12 meses antes.{" "}
               <a href="/validacao" className="text-risk-mid underline-offset-2 hover:underline">
                 ver a prova →
               </a>
