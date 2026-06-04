@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import type { SearchResponse, Empresa, DossierAnalise, ResearchResult } from "@/lib/types";
 import { scoreTier } from "@/lib/scoring";
 import { precedentesParaEmpresa, cenarioIlustrativo, dadosParaFechar } from "@/lib/memo-extras";
+import type { EmpresaSimilar } from "@/lib/similar";
 
 const EXEMPLOS = [
   "metalmecânica no interior de SP com sócios acima de 60 anos",
@@ -301,6 +302,12 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
   // Sócios
   const [sociosAberto, setSociosAberto] = useState(false);
 
+  // Look-alike (achar similares)
+  const [similares, setSimilares] = useState<EmpresaSimilar[] | null>(null);
+  const [similaresLoading, setSimilaresLoading] = useState(false);
+  const [similaresAberto, setSimilaresAberto] = useState(false);
+  const [similaresErro, setSimilaresErro] = useState<string | null>(null);
+
   const scoreV0 = e.score?.score ?? 0;
   const score = research?.score_v1 ?? scoreV0;
   const tier = scoreTier(score);
@@ -350,6 +357,28 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
       setMemoErro((err as Error).message);
     } finally {
       setMemoLoading(false);
+    }
+  }
+
+  async function buscarSimilares() {
+    if (similares) { setSimilaresAberto((v) => !v); return; }
+    if (similaresLoading) return;
+    setSimilaresLoading(true);
+    setSimilaresErro(null);
+    setSimilaresAberto(true);
+    try {
+      const r = await fetch("/api/similar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ empresaId: e.id }),
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error ?? "erro ao buscar similares");
+      setSimilares(data.similares ?? []);
+    } catch (err) {
+      setSimilaresErro((err as Error).message);
+    } finally {
+      setSimilaresLoading(false);
     }
   }
 
@@ -439,11 +468,63 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
               ? memoAberto ? "Ocultar memo" : "Ver memo"
               : "Gerar memo de investimento"}
         </button>
+        <span className="text-olive">·</span>
+        <button
+          onClick={buscarSimilares}
+          disabled={similaresLoading}
+          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50"
+        >
+          {similaresLoading
+            ? "Buscando…"
+            : similares
+              ? similaresAberto ? "Ocultar similares" : "Ver similares"
+              : "Achar similares"}
+        </button>
       </div>
 
       {/* Erros */}
       {researchErro && <p className="mt-2 text-xs text-risk-high">{researchErro}</p>}
       {memoErro && <p className="mt-2 text-xs text-risk-high">{memoErro}</p>}
+      {similaresErro && <p className="mt-2 text-xs text-risk-high">{similaresErro}</p>}
+
+      {/* Painel: similares (look-alike) */}
+      {similaresAberto && (
+        <div className="mt-3 rounded-lg border border-hairline bg-surface p-3">
+          <p className="mb-2 font-data text-[10px] uppercase tracking-wider text-olive">
+            Empresas similares no universo
+          </p>
+          {similaresLoading ? (
+            <p className="text-xs text-bone">Buscando parecidas…</p>
+          ) : similares && similares.length > 0 ? (
+            <ul className="divide-y divide-hairline">
+              {similares.map((s) => (
+                <li key={s.id} className="flex items-center justify-between gap-3 py-2">
+                  <div className="min-w-0">
+                    <p className="truncate text-sm text-floral">{s.razao_social}</p>
+                    <p className="font-data text-[11px] text-olive">
+                      {s.municipio}/{s.uf}
+                      {s.similaridade.motivos.length > 0 && ` · ${s.similaridade.motivos.join(", ")}`}
+                    </p>
+                  </div>
+                  <div className="flex shrink-0 items-center gap-2">
+                    <span className="font-data text-[11px] tabular-nums text-bone" title="similaridade">
+                      {s.similaridade.pontos}%
+                    </span>
+                    <span
+                      className="rounded border border-hairline px-1.5 font-data text-[11px] tabular-nums text-floral"
+                      title="score de sucessão"
+                    >
+                      {s.score?.score ?? 0}
+                    </span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-xs text-bone">Nenhuma empresa parecida no universo indexado.</p>
+          )}
+        </div>
+      )}
 
       {/* Painel: sócios */}
       {sociosAberto && (

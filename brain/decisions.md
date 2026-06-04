@@ -384,3 +384,27 @@ Vaz, moat/TAM pra Monica. Demo Day = soft pitch do Relay (seed VC + founder Sequ
 o volume pedir. Tudo client-side (sem schema/API novo).
 
 **Status:** ✅ Implementado e testado no browser (compacto + sort + "só atrasadas" filtrando). PR #27.
+
+---
+
+## [2026-06-03] Look-alike (achar similares) — inspirado no Grata, com nosso dado
+
+**Contexto:** o Guilherme mandou 3 vídeos do Grata (concorrente US de deal sourcing). Scrapeados via
+Jina Reader (transcrição), não Chrome. A feature-bandeira deles é busca semântica + **similarity
+matching** ("acha 1 boa → me dá mais como esta"). Achado estratégico: o sinal central do Grata é
+**"ownership transitions → purchase-ready"** = literalmente a nossa tese. Validação externa do wedge.
+
+**Decisão:** construir **look-alike** — dada uma empresa, achar as mais parecidas no universo. Similaridade
+determinística e EXPLICÁVEL (CNAE + praça + porte + época), desempate pelo score de sucessão. `similar.ts`
+(puro) + `/api/similar` + botão "achar similares" no card.
+
+**Rejeitado (reforça diferenciação):** copiar o **EBITDA estimado "99% accuracy"** do Grata — nossa
+credibilidade é justamente NÃO fabricar financeiro. "O Grata chuta EBITDA, nós não fingimos." Também
+fora: marketplace de deals, contatos US, integrações CRM.
+
+**Próximo (não agora):** **monitor de transições** — virar a mineração (hoje histórica, p/ ground truth)
+em alerta forward ("empresa do pipeline teve mudança societária"). É o sensor do loop, e unicamente nosso
+(snapshot-diff do CNPJ). Precisa de infra de snapshot periódico — fica pro Relay-produção.
+
+**Status:** ✅ Look-alike implementado e testado via API (PRENSA → 12 similares, 75% NARDINI/SANCHES).
+Grata salvo como entidade na wiki do segundo cérebro. PR #28.
