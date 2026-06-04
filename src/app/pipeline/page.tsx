@@ -28,12 +28,12 @@ const TIPOS_INTERACAO: { id: TipoInteracao; label: string }[] = [
 ];
 
 const ESTAGIOS: { id: EstagioOportunidade; label: string; cor: string; emptyMsg: string }[] = [
-  { id: "identificado", label: "Identificado", cor: "text-bone",     emptyMsg: "Salve empresas da busca para começar." },
-  { id: "abordado",     label: "Abordado",     cor: "text-floral",   emptyMsg: "Ninguém abordado ainda." },
-  { id: "em_conversa",  label: "Em conversa",  cor: "text-risk-mid", emptyMsg: "Sem conversas em curso." },
-  { id: "qualificado",  label: "Qualificado",  cor: "text-risk-mid", emptyMsg: "Nenhuma qualificada ainda." },
-  { id: "entregue",     label: "Entregue",     cor: "text-floral",   emptyMsg: "Nada entregue à boutique." },
-  { id: "arquivado",    label: "Arquivado",    cor: "text-olive",    emptyMsg: "Nada arquivado." },
+  { id: "identificado", label: "Identificado", cor: "text-bone", emptyMsg: "Salve empresas da busca para começar." },
+  { id: "abordado",     label: "Abordado",     cor: "text-bone", emptyMsg: "Ninguém abordado ainda." },
+  { id: "em_conversa",  label: "Em conversa",  cor: "text-bone", emptyMsg: "Sem conversas em curso." },
+  { id: "qualificado",  label: "Qualificado",  cor: "text-bone", emptyMsg: "Nenhuma qualificada ainda." },
+  { id: "entregue",     label: "Entregue",     cor: "text-bone", emptyMsg: "Nada entregue à boutique." },
+  { id: "arquivado",    label: "Arquivado",    cor: "text-olive",   emptyMsg: "Nada arquivado." },
 ];
 
 const RESULTADOS: { id: ResultadoOportunidade; label: string }[] = [
@@ -112,15 +112,16 @@ export default function Pipeline() {
   return (
     <div className="min-h-screen bg-smoky text-floral">
       <main className="mx-auto max-w-7xl px-6 py-12">
-        <header className="mb-8 flex items-center justify-between">
+        <header className="mb-8 flex items-start justify-between">
           <div>
             <h1 className="font-display text-2xl tracking-tight">Pipeline de originação</h1>
             <p className="mt-1 text-sm text-bone">
               {filtroAtivo ? `${filtradas.length} de ${ops.length}` : ops.length} oportunidades no funil
             </p>
           </div>
-          <a href="/" className="font-data text-sm text-bone transition-colors hover:text-floral">
-            ← Voltar à busca
+          <a href="/" className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70">
+            <span className="transition-transform duration-200 group-hover:-translate-x-1">←</span>
+            <span>Voltar à busca</span>
           </a>
         </header>
 
@@ -330,7 +331,7 @@ function Card({
                 : o.resultado === "receptivo"
                   ? "border-hairline bg-smoky text-floral"
                   : o.resultado === "nao_receptivo" || o.resultado === "perdido"
-                    ? "border-risk-high/30 bg-smoky text-risk-high"
+                    ? "border-hairline bg-smoky text-olive"
                     : "border-hairline bg-smoky text-bone"
             }`}
           >
@@ -412,14 +413,12 @@ function Dashboard({ ops }: { ops: Oportunidade[] }) {
         </p>
         {scorePos != null || scoreNeg != null ? (
           <>
-            <div className="mt-2 flex flex-wrap items-baseline gap-x-6 gap-y-1 text-sm">
-              <span className="text-bone">
-                Desfecho <span className="text-floral">positivo</span>: score médio{" "}
+            <div className="mt-2 flex flex-wrap items-baseline gap-x-6 gap-y-1 text-sm text-bone">
+              <span><strong>Desfecho positivo</strong>: score médio{" "}
                 <span className="font-data text-floral">{scorePos ?? "—"}</span>
               </span>
-              <span className="text-bone">
-                <span className="text-risk-high">negativo</span>: score médio{" "}
-                <span className="font-data text-risk-high">{scoreNeg ?? "—"}</span>
+              <span><strong>Desfecho negativo</strong>: score médio{" "}
+                <span className="font-data text-floral">{scoreNeg ?? "—"}</span>
               </span>
             </div>
             <p className="mt-2 text-xs leading-snug text-olive">

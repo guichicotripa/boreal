@@ -36,7 +36,7 @@ export default function Consolidadores() {
   return (
     <div className="min-h-screen bg-smoky text-floral">
       <main className="mx-auto max-w-3xl px-6 py-12">
-        <header className="mb-10 flex items-center justify-between">
+        <header className="mb-10 flex items-start justify-between">
           <div>
             <p className="font-data text-[11px] uppercase tracking-wider text-olive">
               A outra lente · quem compra
@@ -45,8 +45,9 @@ export default function Consolidadores() {
               Roll-ups se formando no registro
             </h1>
           </div>
-          <a href="/" className="font-data text-sm text-bone transition-colors hover:text-floral">
-            ← Busca
+          <a href="/" className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70">
+            <span className="transition-transform duration-200 group-hover:-translate-x-1">←</span>
+            <span>Voltar à busca</span>
           </a>
         </header>
 
