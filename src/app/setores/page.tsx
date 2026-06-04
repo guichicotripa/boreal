@@ -99,6 +99,14 @@ export default function Setores() {
 
                 <p className="mt-4 text-sm leading-relaxed text-bone">{s.descricao}</p>
 
+                {s.nacional?.recall_sucessao != null && (
+                  <p className="mt-2 font-data text-[11px] text-olive">
+                    ✓ Confirmado Brasil-inteiro:{" "}
+                    <span className="text-floral">{s.nacional.recall_sucessao}%</span> nas vendas de
+                    sucessão (N={s.nacional.n_aquisicoes_sucessao}, vs N={s.n_aquisicoes_sucessao} em SP).
+                  </p>
+                )}
+
                 <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 font-data text-xs">
                   <a href={`/?setor=${s.id}`} className="text-floral transition-colors hover:underline">
                     Buscar neste setor →
