@@ -54,7 +54,7 @@ export default function Consolidadores() {
         {/* Tese das duas lentes */}
         <section className="rounded-xl border border-hairline bg-surface p-6">
           <p className="leading-relaxed text-bone">
-            O mercado tem <strong className="text-floral">dois jogos</strong>, e o registro revela
+            O mercado tem <strong>dois jogos</strong>, e o registro revela
             qual setor joga qual.
           </p>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
@@ -63,8 +63,8 @@ export default function Consolidadores() {
                 Metalmecânica · sucessão
               </p>
               <p className="mt-2 text-sm leading-snug text-bone">
-                Donos envelhecendo, sem sucessor. O modelo prevê quem vai <strong className="text-floral">vender</strong>.{" "}
-                <a href="/validacao" className="text-risk-mid underline-offset-2 hover:underline">
+                Donos envelhecendo, sem sucessor. O modelo prevê quem vai <strong>vender</strong>.{" "}
+                <a href="/validacao" className="text-floral underline-offset-2 hover:underline">
                   67% de recall →
                 </a>
               </p>
@@ -74,7 +74,7 @@ export default function Consolidadores() {
                 Saúde · consolidação
               </p>
               <p className="mt-2 text-sm leading-snug text-bone">
-                Roll-ups comprando dezenas de clínicas. A gente os <strong className="text-floral">vê se
+                Roll-ups comprando dezenas de clínicas. A gente os <strong>vê se
                 formar</strong> no registro, em tempo real.
               </p>
             </div>
@@ -95,11 +95,11 @@ export default function Consolidadores() {
           <p className="mt-2 text-sm leading-relaxed text-bone">
             Testamos out-of-sample (prever em {backtest.janela.previsao}, conferir em{" "}
             {backtest.janela.outcome}): listar &ldquo;próximos alvos&rdquo; pelo buy-box dá só{" "}
-            <strong className="text-floral">{backtest.lift}× vs. acaso</strong> — fraco demais pra
+            <strong>{backtest.lift}× vs. acaso</strong> — fraco demais pra
             chamar de preditivo. O buy-box a nível de CNAE+praça é grosseiro. Então mostramos os
-            consolidadores como <strong className="text-floral">detecção descritiva</strong> (quem está
+            consolidadores como <strong>detecção descritiva</strong> (quem está
             ativo, com que padrão), não como oráculo. A força preditiva mora na sucessão (66%, em{" "}
-            <a href="/validacao" className="text-risk-mid underline-offset-2 hover:underline">/validacao</a>).
+            <a href="/validacao" className="text-floral underline-offset-2 hover:underline">/validacao</a>).
           </p>
         </section>
 
@@ -111,7 +111,7 @@ export default function Consolidadores() {
                 <h2 className="font-display text-xl tracking-tight text-floral">
                   {titulo(c.consolidador)}
                 </h2>
-                <span className="shrink-0 font-data text-sm text-risk-mid">
+                <span className="shrink-0 font-data text-sm text-floral">
                   {c.n_adquiridas} já adquiridas
                 </span>
               </div>
