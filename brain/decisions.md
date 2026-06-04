@@ -408,3 +408,24 @@ em alerta forward ("empresa do pipeline teve mudança societária"). É o sensor
 
 **Status:** ✅ Look-alike implementado e testado via API (PRENSA → 12 similares, 75% NARDINI/SANCHES).
 Grata salvo como entidade na wiki do segundo cérebro. PR #28.
+
+---
+
+## [2026-06-03] Monitor de transições — o sensor forward (o que mais diferencia do Grata)
+
+**Contexto:** o Grata MONITORA transições societárias pra flag "purchase-ready". Nós minerávamos isso
+só historicamente (ground truth). Virar forward = a peça que nos diferencia (nosso snapshot-diff do CNPJ
+é único) e fecha o sensor do loop de outcome do pipeline.
+
+**Decisão:** monitor que, pros CNPJs do pipeline, diffa o quadro societário entre dois snapshots do CNPJ
+e detecta MUDANÇA (PJ entrou=aquisição; PF saiu=saída/falecimento→janela de sucessão; PF entrou=sucessão).
+Arquitetura = demo-cache: `scripts/monitor-transicoes.mjs` (pesado, BigQuery) → `src/lib/monitor.json` →
+UI lê instantâneo e mostra alerta no card. "Em produção é worker periódico; aqui é script."
+
+**Validação:** rodado no pipeline real — **detectou mudança real na PRENSA** (sócio PF saiu 2023→2025,
+janela de sucessão). Alerta renderiza no card (borda + banner vermelho).
+
+**Próximo (produção, não agora):** worker periódico que re-roda e alerta; baseline = snapshot no save
+(em vez de janela fixa); estender pro universo, não só pipeline.
+
+**Status:** ✅ Implementado e testado via script (sem Chrome, a pedido). PR #29.

@@ -11,6 +11,13 @@ import {
 import type {
   Oportunidade, EstagioOportunidade, ResultadoOportunidade, Interacao, TipoInteracao,
 } from "@/lib/types";
+import monitor from "@/lib/monitor.json";
+
+type Mudanca = { tipo: string; severidade: string; descricao: string };
+const MUDANCAS = monitor.mudancas as Record<string, Mudanca>;
+function mudancaDe(cnpj: string): Mudanca | null {
+  return MUDANCAS[cnpj.slice(0, 8)] ?? null;
+}
 
 const TIPOS_INTERACAO: { id: TipoInteracao; label: string }[] = [
   { id: "ligacao", label: "Ligação" },
@@ -203,13 +210,24 @@ function Card({
   const [aberto, setAberto] = useState(false);
   const atrasada = atrasou(o);
   const dataCompacta = o.proxima_acao_em ? `${o.proxima_acao_em.slice(8, 10)}/${o.proxima_acao_em.slice(5, 7)}` : null;
+  const mudanca = mudancaDe(o.empresa.cnpj);
 
   return (
     <div
       className={`rounded-lg border bg-surface ${
-        atrasada ? "border-hairline border-l-2 border-l-risk-high/60" : "border-hairline"
+        mudanca ? "border-risk-high/40" : atrasada ? "border-hairline border-l-2 border-l-risk-high/60" : "border-hairline"
       }`}
     >
+      {/* Alerta de monitor — mudança societária detectada (o sensor forward) */}
+      {mudanca && (
+        <div className="rounded-t-lg border-b border-risk-high/30 bg-risk-high/10 px-3 py-1.5">
+          <p className="font-data text-[10px] uppercase tracking-wider text-risk-high">
+            ⚠ Mudança societária detectada
+          </p>
+          {aberto && <p className="mt-0.5 text-[11px] leading-snug text-bone">{mudanca.descricao}</p>}
+        </div>
+      )}
+
       {/* Header colapsável — resumo escaneável */}
       <button onClick={() => setAberto((v) => !v)} className="flex w-full items-start gap-2 p-3 text-left">
         <div className="min-w-0 flex-1">

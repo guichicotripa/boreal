@@ -1,0 +1,15 @@
+{
+  "gerado_em": "2026-06-04",
+  "janela": {
+    "de": "2023-06-10",
+    "ate": "2025-11-09"
+  },
+  "nota": "Mudança no quadro societário (CNPJ) entre os dois snapshots, pros CNPJs do pipeline.",
+  "mudancas": {
+    "50925890": {
+      "tipo": "pf_saiu",
+      "severidade": "media",
+      "descricao": "Sócio PF saiu — saída/falecimento; janela de sucessão pode ter aberto."
+    }
+  }
+}
