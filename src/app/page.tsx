@@ -423,7 +423,17 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
           </div>
         </div>
         <div className="min-w-0 flex-1">
-          <h3 className="font-display text-lg leading-tight text-floral">{e.razao_social}</h3>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <h3 className="font-display text-lg leading-tight text-floral">{e.razao_social}</h3>
+            {e.score?.perfil_sucessorio && (
+              <span
+                className="rounded border border-floral/30 px-1.5 font-data text-[10px] uppercase tracking-wider text-floral"
+                title="Sócio 61+ e empresa 25+: onde o score de sucessão valida (88–100%). Alta confiança."
+              >
+                perfil sucessório
+              </span>
+            )}
+          </div>
           <p className="font-data text-[11px] text-olive">
             {e.municipio}/{e.uf} · {formatCnpj(e.cnpj)}
           </p>
