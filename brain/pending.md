@@ -4,6 +4,20 @@
 
 ---
 
+## 🎨 Restyle sistema v1 (em curso — 03/06 · branch `maguto/restyle-sistema-v1`)
+
+Sistema de tipografia/cor documentado em `brand/uso-tipografia-cor.md`. Feito: base (strong 600, pesos
+sans 400/500/600), hero, card/memo. Faltam as páginas.
+
+- [ ] **Ajeitar erro de borda na box** — verificar qual box (notado durante o restyle)
+- [ ] Etapa 3 — pipeline (estágios ocre → bone/floral, labels bone/70, "atrasadas" mantém terracota)
+- [ ] Etapa 4 — validação (links/métricas/passos ocre → floral)
+- [ ] Etapa 5 — consolidadores ("já adquiridas"/link → floral, card backtest → surface)
+- [ ] Etapa 6 — mercado ("0,46%" ocre → floral)
+- [ ] Decidir peso do negrito (600 atual vs 700 real) ao chegar em /validação ou /mercado
+
+---
+
 ## 🟢 Data moat + validação (30/05) ✅ MARCO
 
 - [x] **Mineração de transições do CNPJ** — ground truth de M&A de graça (340 deals saúde+metalmec SP).

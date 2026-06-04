@@ -16,7 +16,7 @@ const newsreader = Newsreader({
 const plexSans = IBM_Plex_Sans({
   variable: "--font-plex-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["400", "500", "600"], // 400 body · 500 medium UI · 600 ênfase (strong). 300 removido (não usado)
 });
 
 // Wordmark — exclusivo para o lockup do logo

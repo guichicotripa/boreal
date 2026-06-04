@@ -152,4 +152,9 @@
     @apply font-sans;
     color-scheme: dark; /* faz o browser pintar form controls nativos (option, scrollbar) no tema escuro */
   }
+  /* Ênfase = peso 600 real (não faux-700 sintetizado, borrado). Herda a cor do
+     contexto — o destaque salta por peso, não por mudar de cor. Ver brand/uso-tipografia-cor.md */
+  strong {
+    font-weight: 600;
+  }
 }

@@ -93,12 +93,12 @@ export default function Home() {
             </h1>
 
             {/* Subheadline — a credencial */}
-            <p className="mt-4 max-w-xl text-sm leading-relaxed text-bone">
-              Não é um buscador. É um modelo validado contra aquisições reais, sem leakage:{" "}
-              <strong className="text-floral">67% das vendas já estavam no nosso top 10%</strong>, 12
-              meses antes.{" "}
-              <a href="/validacao" className="text-risk-mid underline-offset-2 hover:underline">
-                ver a prova →
+            <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-bone">
+              Não é um buscador. É um modelo validado contra aquisições reais, sem leakage.{" "}
+              <strong>67% das vendas estavam no top 10% do modelo, 12 meses antes.</strong>{" "}
+              <a href="/validacao" className="group/prova text-floral underline-offset-2 hover:underline">
+                ver a prova{" "}
+                <span className="inline-block transition-transform duration-200 group-hover/prova:translate-x-0.5">→</span>
               </a>
             </p>
 
@@ -292,7 +292,7 @@ function LoadingSteps() {
           }`}
         >
           {i === step ? (
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-risk-mid" />
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-bone" />
           ) : (
             <span className="text-olive">✓</span>
           )}
@@ -320,6 +320,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
   // Research — lógica levantada do ResearchPanel
   const [research, setResearch] = useState<ResearchResult | null>(null);
   const [researchLoading, setResearchLoading] = useState(false);
+  const [researchAberto, setResearchAberto] = useState(false);
   const [researchErro, setResearchErro] = useState<string | null>(null);
 
   // Memo — lógica levantada do DossierPanel
@@ -354,9 +355,11 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
     : (e.score?.sinais ?? [])).slice(0, 3);
 
   async function investigar() {
-    if (research || researchLoading) return;
+    if (research) { setResearchAberto((v) => !v); return; }
+    if (researchLoading) return;
     setResearchLoading(true);
     setResearchErro(null);
+    setResearchAberto(true);
     try {
       const r = await fetch("/api/research", {
         method: "POST",
@@ -517,11 +520,13 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
         <button
           onClick={investigar}
           disabled={researchLoading}
-          className={`font-data text-xs transition-colors disabled:opacity-50 ${
-            research ? "text-floral" : "text-bone hover:text-floral"
-          }`}
+          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50"
         >
-          {researchLoading ? "Investigando…" : research ? "✓ Investigado" : "Investigar com IA"}
+          {researchLoading
+            ? "Investigando…"
+            : research
+              ? researchAberto ? "Ocultar investigação" : "Ver investigação"
+              : "Investigar com IA"}
         </button>
         <span className="text-olive">·</span>
         <button
@@ -678,7 +683,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
           A IA está pesquisando sócios, herdeiros, imprensa e quadro societário em fontes públicas…
         </p>
       )}
-      {research && <ResearchDisplay research={research} />}
+      {research && researchAberto && <ResearchDisplay research={research} />}
 
       {/* Painel: memo */}
       {memoAberto && memoLoading && (
@@ -732,7 +737,7 @@ function ResearchDisplay({ research }: { research: ResearchResult }) {
   return (
     <div className="mt-3 space-y-3 rounded-lg border border-hairline bg-surface p-3">
       <div className="flex items-center justify-between">
-        <span className="font-data text-[10px] uppercase tracking-wider text-bone">Investigação da IA</span>
+        <span className="font-data text-[10px] uppercase tracking-wider text-bone/70">Investigação da IA</span>
         <span className="font-data text-[10px] text-olive">{PRESENCA_LABEL[research.presenca_digital]}</span>
       </div>
       {research.resumo && (
@@ -744,7 +749,7 @@ function ResearchDisplay({ research }: { research: ResearchResult }) {
           <p className="mt-1 text-sm leading-snug text-floral">{research.gatilho}</p>
         </div>
       ) : (
-        <div className="rounded-md border border-hairline bg-smoky p-2.5">
+        <div className="rounded-md bg-surface-hover p-2.5">
           <p className="font-data text-[10px] uppercase tracking-wider text-olive">
             Sem gatilho de timing · não é o momento
           </p>
@@ -781,7 +786,7 @@ function ResearchDisplay({ research }: { research: ResearchResult }) {
         <p className="text-xs text-bone">Nenhum sinal qualitativo conclusivo encontrado.</p>
       )}
       {research.mensagem_abordagem && (
-        <div className="rounded-md border border-hairline bg-smoky p-2.5">
+        <div className="rounded-md bg-surface-hover p-2.5">
           <p className="font-data text-[10px] uppercase tracking-wider text-olive">
             Rascunho de abordagem · edite antes de enviar
           </p>
@@ -799,12 +804,12 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
   const cenario = cenarioIlustrativo(empresa);
   const dadosFechar = dadosParaFechar(empresa);
   return (
-    <div className="mt-3 space-y-4 rounded-lg border border-hairline bg-surface p-4 text-sm">
-      <span className="font-data text-[10px] uppercase tracking-wider text-bone">Memo de investimento</span>
+    <div className="mt-3 space-y-5 rounded-lg border border-hairline bg-surface p-4 text-sm">
+      <span className="font-data text-[10px] uppercase tracking-wider text-bone/70">Memo de investimento</span>
       <p className="leading-relaxed text-floral">{analise.overview}</p>
       <Timeline empresa={empresa} />
       <div>
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
           Análise de risco sucessório
         </h4>
         <p className="leading-relaxed text-floral">{analise.analise_sucessoria}</p>
@@ -813,7 +818,7 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
       {/* Red flags a investigar — D.2: ordenado por severidade, max 5 · D.3: como_verificar em linha própria */}
       {analise.red_flags?.length ? (
         <div>
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
             Red flags a investigar
           </h4>
           <ul className="space-y-2.5">
@@ -852,7 +857,7 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
 
       {analise.perguntas_abordagem.length > 0 && (
         <div>
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
             Perguntas para o primeiro contato
           </h4>
           <ul className="list-decimal space-y-1 pl-5 text-floral">
@@ -865,7 +870,7 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
       {/* Quant #1 — Precedentes de M&A do setor (minerado do CNPJ, dado real) */}
       {precedentes && (
         <div>
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
             Precedentes de M&amp;A no setor
           </h4>
           <p className="leading-relaxed text-floral">
@@ -877,7 +882,7 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
           </p>
           {precedentes.compradores.length > 0 && (
             <p className="mt-1 text-[11px] leading-relaxed text-bone">
-              <span className="text-bone/55">Compradores ativos:</span>{" "}
+              <span className="text-bone/70">Compradores ativos:</span>{" "}
               {precedentes.compradores.map((c) => `${c.nome} (${c.n})`).join(" · ")}
             </p>
           )}
@@ -892,21 +897,21 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
 
       {/* Quant #2 — Cenário de retorno: faixas de referência (frame, não valuation) */}
       <div>
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
           Cenário de retorno — referência (ilustrativo)
         </h4>
         <div className="grid grid-cols-2 gap-x-4 gap-y-1 font-data text-xs sm:grid-cols-4">
-          <div><span className="text-bone/55">Entrada</span><br /><span className="text-floral">{cenario.multiplo_entrada}</span></div>
-          <div><span className="text-bone/55">Saída</span><br /><span className="text-floral">{cenario.multiplo_saida}</span></div>
-          <div><span className="text-bone/55">Hold</span><br /><span className="text-floral">{cenario.hold}</span></div>
-          <div><span className="text-bone/55">Alvo</span><br /><span className="text-floral">{cenario.retorno_alvo}</span></div>
+          <div><span className="text-bone/70">Entrada</span><br /><span className="text-floral">{cenario.multiplo_entrada}</span></div>
+          <div><span className="text-bone/70">Saída</span><br /><span className="text-floral">{cenario.multiplo_saida}</span></div>
+          <div><span className="text-bone/70">Hold</span><br /><span className="text-floral">{cenario.hold}</span></div>
+          <div><span className="text-bone/70">Alvo</span><br /><span className="text-floral">{cenario.retorno_alvo}</span></div>
         </div>
         <p className="mt-1.5 text-[11px] leading-relaxed text-olive">{cenario.nota}</p>
       </div>
 
       {/* Quant #3 — Para fechar o número: o que pedir ao dono (sourcing → IC) */}
       <div>
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
           Para fechar o número — pedir ao dono
         </h4>
         <ul className="list-disc space-y-1 pl-5 text-[13px] leading-relaxed text-bone">
@@ -918,7 +923,7 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
 
       {/* D.4: tese hairline (recuada, contexto) */}
       <div className="border-l-2 border-bone/30 pl-3">
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
           Tese de aproximação
         </h4>
         <p className="leading-relaxed text-floral">{analise.tese_aproximacao}</p>
@@ -927,7 +932,7 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
       {/* D.4: próximo passo surface-hover (mais destaque, CTA) */}
       {analise.proximo_passo && (
         <div className="rounded-md bg-surface-hover p-3">
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
             Próximo passo
           </h4>
           <p className="leading-relaxed text-floral">→ {analise.proximo_passo}</p>
@@ -967,7 +972,7 @@ function Timeline({ empresa }: { empresa: Empresa }) {
 
   return (
     <div>
-      <h4 className="mb-2 font-data text-[10px] uppercase tracking-wider text-bone/55">
+      <h4 className="mb-2 font-data text-[10px] uppercase tracking-wider text-bone/70">
         Linha do tempo societária
       </h4>
       {/* Altura explícita evita margin collapse (conteúdo é absoluto) */}
