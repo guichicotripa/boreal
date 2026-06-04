@@ -491,3 +491,26 @@ Educação saiu de frágil pra robusto. Persistido no bloco `nacional` do setore
 Brasil-inteiro" na página. App segue SP (cobertura); o recall é propriedade do score, vale nacional.
 
 **Status:** ✅ PR #32.
+
+---
+
+## [2026-06-04] Melhorias pós-setores: velocidade + worklist + trajetória (afiar, não dispersar)
+
+**Contexto:** "o que melhorar?". Filtro aplicado (mesmo do anti-drift): o app já tem muita feature; o
+ROI pro clube é afiar/provar + utilidade on-thesis, não inflar escopo. Guilherme escolheu 3 dos 4
+(deixou "fechar o loop" de fora — é camada humana, não código).
+
+1. **Velocidade (afiar pro demo):** browse de setor ia ao vivo (~30s pelo reasoner). Cache pré-computado
+   (`build-setor-cache.mjs` → `setor-cache.json`, padrão demo-cache). Saúde/educação agora instantâneos
+   (0,03–0,84s). O demo nunca trava.
+2. **Worklist (`/worklist`):** a view "ligar hoje" — junta as peças (score + perfil sucessório + contato +
+   one-liner do reasoner) num worklist priorizado e acionável (tel:/mailto:, salvar no pipeline). Responde
+   à crítica de utilidade, on-thesis (só perfil sucessório, onde a lente vale).
+3. **Trajetória societária (`/api/trajetoria`):** deep-tech on-thesis — reconstrói o quadro em 5 snapshots
+   (2022→2025) e detecta a sucessão EM MOVIMENTO: sócio envelhecendo de faixa, herdeiro entrando, sócio
+   saindo. Validado na PRENSA: Ubirajara cruzou 71-80→80+ em 2023; Ludovico saiu em 2025. Painel no card.
+
+**Não fiz (disciplina):** retreino do score (já valida 88-100%), score de consolidação (anti-drift),
+deploy (decisão do time é localhost no Demo Day).
+
+**Status:** ✅ Os 3 implementados e testados (API/curl, sem Chrome). PR #33.
