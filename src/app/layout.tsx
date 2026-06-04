@@ -60,6 +60,12 @@ export default function RootLayout({
                 Setores
               </a>
               <a
+                href="/worklist"
+                className="font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:text-floral"
+              >
+                Worklist
+              </a>
+              <a
                 href="/validacao"
                 className="font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:text-floral"
               >
