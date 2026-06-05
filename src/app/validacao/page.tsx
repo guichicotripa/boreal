@@ -175,6 +175,12 @@ export default function Validacao() {
           <h2 className="font-data text-[11px] uppercase tracking-wider text-olive">
             Resultado por setor
           </h2>
+          <p className="mt-2 text-sm leading-relaxed text-bone">
+            O score é mais forte onde sucessão é o driver estrutural de liquidez.
+            Em <strong>metalmecânica</strong>, recall de 67% com{" "}
+            <strong>lift de 6,7×</strong>. Em <strong>saúde</strong> — onde metade do M&A
+            é consolidação, não sucessão — o sinal cai para 1,8×. Mostramos os dois, sem filtrar.
+          </p>
           <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
             <table className="w-full text-sm">
               <thead>
@@ -204,10 +210,7 @@ export default function Validacao() {
             </table>
           </div>
           <p className="mt-3 text-xs leading-snug text-olive">
-            Saúde tem sinal fraco de propósito: ~metade do M&A do setor é consolidação (rede compra
-            clínica nova), que um score de <em>sucessão</em> não deve prever. Mostramos o número cru
-            em vez de esconder — onde o modelo funciona, ele funciona porque o sinal existe, não
-            porque escolhemos a dedo.
+            Sem cherry-pick: os números são crus, incluindo os setores onde o sinal é fraco.
           </p>
         </section>
 
@@ -221,6 +224,11 @@ export default function Validacao() {
             quanto ela aparece mais nas empresas vendidas do que no universo. É isso que define o peso —
             e o dado <strong>corrigiu a nossa intuição</strong> duas vezes.
           </p>
+          <p className="mt-3 text-sm leading-relaxed text-bone">
+            &ldquo;Quadro estagnado&rdquo; (0,81×) e &ldquo;sócio único&rdquo; (0×) tinham lift baixo/negativo —
+            a hipótese era que indicavam risco, mas as vendidas dizem o contrário. Saíram. Esse é o
+            loop: minerar o resultado real → medir o lift → recalibrar. Sem leakage, reproduzível.
+          </p>
           <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
             <table className="w-full text-sm">
               <thead>
@@ -232,24 +240,43 @@ export default function Validacao() {
                 </tr>
               </thead>
               <tbody className="font-data">
-                {(lift.features as Feature[]).map((f) => (
-                  <tr key={f.nome} className="border-b border-hairline last:border-0">
-                    <td className="px-4 py-3 text-floral">{f.nome}</td>
-                    <td className="px-4 py-3 text-right tabular-nums text-bone">{f.universo_pct}%</td>
-                    <td className="px-4 py-3 text-right tabular-nums text-bone">{f.adquiridas_pct}%</td>
-                    <td className="px-4 py-3 text-right tabular-nums text-floral">
-                      {f.lift.toLocaleString("pt-BR")}×
-                    </td>
-                  </tr>
-                ))}
+                <tr className="border-b border-hairline bg-surface">
+                  <td colSpan={4} className="px-4 py-2 font-data text-[10px] uppercase tracking-wider text-olive">
+                    Sinais que pesam no score
+                  </td>
+                </tr>
+                {(lift.features as Feature[])
+                  .filter((f) => f.sinal !== "negativo")
+                  .map((f) => (
+                    <tr key={f.nome} className="border-b border-hairline">
+                      <td className="px-4 py-3 text-floral">{f.nome}</td>
+                      <td className="px-4 py-3 text-right tabular-nums text-bone">{f.universo_pct}%</td>
+                      <td className="px-4 py-3 text-right tabular-nums text-bone">{f.adquiridas_pct}%</td>
+                      <td className="px-4 py-3 text-right tabular-nums text-floral">
+                        {f.lift.toLocaleString("pt-BR")}×
+                      </td>
+                    </tr>
+                  ))}
+                <tr className="border-b border-hairline bg-surface">
+                  <td colSpan={4} className="px-4 py-2 font-data text-[10px] uppercase tracking-wider text-olive">
+                    Sinais descartados pelo dado
+                  </td>
+                </tr>
+                {(lift.features as Feature[])
+                  .filter((f) => f.sinal === "negativo")
+                  .map((f) => (
+                    <tr key={f.nome} className="border-b border-hairline last:border-0">
+                      <td className="px-4 py-3 text-olive">{f.nome}</td>
+                      <td className="px-4 py-3 text-right tabular-nums text-olive">{f.universo_pct}%</td>
+                      <td className="px-4 py-3 text-right tabular-nums text-olive">{f.adquiridas_pct}%</td>
+                      <td className="px-4 py-3 text-right tabular-nums text-olive">
+                        {f.lift.toLocaleString("pt-BR")}×
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
-          <p className="mt-3 text-xs leading-snug text-olive">
-            &ldquo;Quadro estagnado&rdquo; (0,81×) e &ldquo;sócio único&rdquo; (0×) tinham lift baixo/negativo —
-            a gente <em>achava</em> que indicavam risco, mas as vendidas dizem o contrário. Saíram. Esse é o
-            loop: minerar o resultado real → medir o lift → recalibrar. Sem leakage, reproduzível.
-          </p>
         </section>
 
         {/* Metodologia detalhada + por que importa */}
