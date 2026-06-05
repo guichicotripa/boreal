@@ -20,6 +20,22 @@ sans 400/500/600), hero, card/memo. Faltam as páginas.
 - [ ] SINAL_COR em validacao/page.tsx — verificar com Guilherme se ainda é necessário
 - [ ] Abrir PR: `maguto/restyle-sistema-v1` → main
 
+## 🔵 Fix de dados — /validacao · hindcast.json (Guilherme)
+
+- [ ] **`hindcast.json`: campo `municipio` tem código IBGE em vez de nome da cidade** (ex: `3549102`
+  em vez de `"Sorocaba, SP"`). A tabela "Empresas Reais" da `/validacao` exibe o código bruto,
+  parece dump de banco. Fix: adicionar join com `basedosdados.br_bd_diretorios_brasil.municipio`
+  no script que gera o hindcast (mesmo join já usado no `enrich-empresas.mjs`). Renomear coluna
+  de "Praça" para "Município" ou "Cidade" na UI ao mesmo tempo.
+
+## 🔵 Dívida técnica — navegação `<a>` → `<Link>` (Guilherme, repo-wide)
+
+- [ ] **Migrar back links de `<a href="/">` para `<Link>` do `next/link`** em todas as páginas.
+  ESLint (`@next/next/no-html-link-for-pages`) acusa erro em todas as 7 páginas (home, validação,
+  pipeline, mercado, consolidadores, worklist, setores) — é convenção atual do repo, não bloqueia
+  o build, mas perde prefetch + dá full reload. Decisão de fazer ou não é repo-wide, fora do
+  escopo do restyle. Não migrar só uma página (criaria inconsistência).
+
 ---
 
 ## 🟢 Data moat + validação (30/05) ✅ MARCO
