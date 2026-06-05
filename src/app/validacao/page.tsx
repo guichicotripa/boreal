@@ -238,7 +238,7 @@ export default function Validacao() {
               </thead>
               <tbody className="font-data">
                 <tr className="border-b border-hairline bg-surface">
-                  <td colSpan={4} className="px-4 py-2 font-data text-[10px] uppercase tracking-wider text-olive">
+                  <td colSpan={4} className="px-4 py-2 font-data text-[10px] uppercase tracking-wider text-bone/70">
                     Sinais que pesam no score
                   </td>
                 </tr>
@@ -255,7 +255,7 @@ export default function Validacao() {
                     </tr>
                   ))}
                 <tr className="border-b border-hairline bg-surface">
-                  <td colSpan={4} className="px-4 py-2 font-data text-[10px] uppercase tracking-wider text-olive">
+                  <td colSpan={4} className="px-4 py-2 font-data text-[10px] uppercase tracking-wider text-bone/70">
                     Sinais descartados pelo dado
                   </td>
                 </tr>
