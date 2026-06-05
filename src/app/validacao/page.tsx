@@ -294,10 +294,10 @@ export default function Validacao() {
                   .filter((f) => f.sinal === "negativo")
                   .map((f) => (
                     <tr key={f.nome} className="border-b border-hairline last:border-0">
-                      <td className="px-4 py-3 text-olive">{f.nome}</td>
-                      <td className="px-4 py-3 text-right tabular-nums text-olive">{f.universo_pct}%</td>
-                      <td className="px-4 py-3 text-right tabular-nums text-olive">{f.adquiridas_pct}%</td>
-                      <td className="px-4 py-3 text-right tabular-nums text-olive">
+                      <td className="px-4 py-3 text-floral/70">{f.nome}</td>
+                      <td className="px-4 py-3 text-right tabular-nums text-bone/70">{f.universo_pct}%</td>
+                      <td className="px-4 py-3 text-right tabular-nums text-bone/70">{f.adquiridas_pct}%</td>
+                      <td className="px-4 py-3 text-right tabular-nums text-floral/70">
                         {f.lift.toLocaleString("pt-BR")}×
                       </td>
                     </tr>
