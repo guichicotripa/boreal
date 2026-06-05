@@ -145,7 +145,7 @@ export default function Validacao() {
             <li className="flex gap-4">
               <span className="font-display text-2xl text-floral">1</span>
               <p className="text-bone">
-                <strong>Ground truth de graça.</strong> Comparamos dois
+                <strong className="text-floral">Ground truth de graça.</strong> Comparamos dois
                 snapshots da Receita Federal (2023 → 2025) e detectamos a assinatura de uma aquisição
                 no registro: <strong>um sócio PJ entra e um sócio PF sai</strong>.
                 Sem comprar dados, sem garimpar imprensa.
@@ -154,7 +154,7 @@ export default function Validacao() {
             <li className="flex gap-4">
               <span className="font-display text-2xl text-floral">2</span>
               <p className="text-bone">
-                <strong>Zero leakage.</strong> O score é calculado só com os
+                <strong className="text-floral">Zero leakage.</strong> O score é calculado só com os
                 dados de 2023 — <strong>antes</strong> de qualquer aquisição. O
                 modelo nunca vê o futuro que está tentando prever.
               </p>
@@ -162,7 +162,7 @@ export default function Validacao() {
             <li className="flex gap-4">
               <span className="font-display text-2xl text-floral">3</span>
               <p className="text-bone">
-                <strong>Medimos o recall.</strong> Das empresas que de fato
+                <strong className="text-floral">Medimos o recall.</strong> Das empresas que de fato
                 foram adquiridas, quantas o ranking tinha colocado no top decil do próprio setor? É o
                 único teste que importa: o modelo acerta antes do fato.
               </p>
