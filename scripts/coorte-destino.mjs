@@ -22,14 +22,17 @@ WITH soc0 AS (
 -- coorte quente em 2023
 coorte AS (
   SELECT e.cnpj_basico,
-    CASE WHEN e.cnae_fiscal_principal LIKE '86%' THEN 'saude' ELSE 'metalmec' END AS vertical,
+    CASE WHEN e.cnae_fiscal_principal LIKE '86%' THEN 'saude'
+         WHEN e.cnae_fiscal_principal LIKE '851%' OR e.cnae_fiscal_principal LIKE '852%' THEN 'educacao'
+         ELSE 'metalmec' END AS vertical,
     s.pj AS pj0, s.pf AS pf0
   FROM \`basedosdados.br_me_cnpj.estabelecimentos\` e
   JOIN soc0 s ON s.cnpj_basico=e.cnpj_basico
   WHERE e.data='${T0}' AND e.sigla_uf='SP' AND e.identificador_matriz_filial='1'
     AND e.situacao_cadastral='2'  -- ATIVA em 2023 (senão "baixada em 2025" pode ser de antes da janela)
     AND (e.cnae_fiscal_principal LIKE '24%' OR e.cnae_fiscal_principal LIKE '25%'
-         OR e.cnae_fiscal_principal LIKE '28%' OR e.cnae_fiscal_principal LIKE '86%')
+         OR e.cnae_fiscal_principal LIKE '28%' OR e.cnae_fiscal_principal LIKE '86%'
+         OR e.cnae_fiscal_principal LIKE '851%' OR e.cnae_fiscal_principal LIKE '852%')
     AND s.pj=0 AND s.pf>=1 AND s.mf>=7 AND (2023 - EXTRACT(YEAR FROM e.data_inicio_atividade)) >= 25
 ),
 -- estado em 2025

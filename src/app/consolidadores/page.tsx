@@ -5,7 +5,7 @@ import backtest from "@/lib/backtest-consolidadores.json";
 export const metadata: Metadata = {
   title: "Boreal · Consolidadores",
   description:
-    "A outra lente: detectar roll-ups em formação no registro e prever o próximo alvo deles.",
+    "A outra lente: detectar roll-ups em formação no registro e mapear o buy-box deles (descritivo).",
 };
 
 type Alvo = {
@@ -97,7 +97,8 @@ export default function Consolidadores() {
             <strong className="text-floral">{backtest.lift}× vs. acaso</strong> — fraco demais pra
             chamar de preditivo. O buy-box a nível de CNAE+praça é grosseiro. Então mostramos os
             consolidadores como <strong className="text-floral">detecção descritiva</strong> (quem está
-            ativo, com que padrão), não como oráculo. A força preditiva mora na sucessão (66%, em{" "}
+            ativo, com que padrão), não como oráculo. A força preditiva mora na sucessão — <strong className="text-floral">97%
+            nas vendas de sucessão</strong> (em{" "}
             <a href="/validacao" className="text-risk-mid underline-offset-2 hover:underline">/validacao</a>).
           </p>
         </section>

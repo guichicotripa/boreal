@@ -1,10 +1,20 @@
 {
-  "gerado_em": "2026-06-03",
+  "gerado_em": "2026-06-04",
   "janela": {
     "de": "2023-06-10",
     "ate": "2025-11-09"
   },
   "verticais": {
+    "educacao": {
+      "total": 2128,
+      "destinos": {
+        "inalterada": 1756,
+        "socio_saiu_ou_pj": 157,
+        "baixada_inativa": 144,
+        "sucessao_familiar": 63,
+        "vendida": 8
+      }
+    },
     "metalmec": {
       "total": 4841,
       "destinos": {

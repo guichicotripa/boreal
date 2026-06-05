@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import validacao from "@/lib/validacao.json";
 import hindcast from "@/lib/hindcast.json";
 import lift from "@/lib/lift.json";
+import setoresData from "@/lib/setores.json";
+
+// Fonte única do número de sucessão (mesmo do /setores), pra não divergir.
+const METALMEC = (setoresData.setores as { id: string; recall_sucessao: number | null; recall_top10: number | null; nacional?: { recall_sucessao: number | null } }[]).find((s) => s.id === "metalmec")!;
 
 type Feature = {
   nome: string;
@@ -54,8 +58,6 @@ function fmt(n: number) {
 
 export default function Validacao() {
   const verticais = validacao.verticais as Vertical[];
-  // Herói = o vertical com o sinal mais forte (maior recall no top decil).
-  const heroi = [...verticais].sort((a, b) => b.recall_top10 - a.recall_top10)[0];
 
   return (
     <div className="min-h-screen bg-smoky text-floral">
@@ -74,21 +76,24 @@ export default function Validacao() {
           </a>
         </header>
 
-        {/* Número-herói */}
+        {/* Número-herói — a moldura de sucessão (onde a lente vale) */}
         <section className="rounded-xl border border-hairline bg-surface p-8">
           <p className="font-display text-[64px] leading-none tracking-tight text-floral md:text-[88px]">
-            {heroi.recall_top10}%
+            {METALMEC.recall_sucessao}%
           </p>
           <p className="mt-4 max-w-xl text-lg leading-snug text-bone">
-            das <strong className="text-floral">{heroi.n_aquisicoes} aquisições reais</strong> dos
-            últimos {validacao.janela.anos} anos em {NOME_VERTICAL[heroi.vertical] ?? heroi.vertical}{" "}
-            estavam no <strong className="text-floral">top 10%</strong> do nosso ranking — calculado{" "}
-            <strong className="text-floral">12 meses antes</strong> de o deal acontecer.
+            das <strong className="text-floral">vendas por sucessão</strong> em metalmecânica estavam no{" "}
+            <strong className="text-floral">top 10%</strong> do nosso ranking — calculado{" "}
+            <strong className="text-floral">12 meses antes</strong> de o deal, sem leakage.{" "}
+            <span className="text-olive">(Confirmado Brasil-inteiro: {METALMEC.nacional?.recall_sucessao}%.)</span>
+          </p>
+          <p className="mt-3 text-sm leading-snug text-olive">
+            {METALMEC.recall_top10}% se contar <em>todas</em> as aquisições do setor — mas ~metade do M&amp;A
+            de metalmec é sucessão; o resto é consolidação, que um score de sucessão não deve prever.
           </p>
           <p className="mt-3 font-data text-sm text-olive">
-            Por acaso seria 10%. Isso é{" "}
-            <span className="text-risk-mid">{heroi.lift_top10}× melhor que aleatório</span> · decil
-            médio {heroi.decil_medio.toLocaleString("pt-BR")}/10 (5,5 = sem sinal).
+            Por acaso seria 10%. Acertar {METALMEC.recall_sucessao}% é{" "}
+            <span className="text-risk-mid">~{Math.round((METALMEC.recall_sucessao ?? 0) / 10)}× melhor que aleatório</span>.
           </p>
         </section>
 
