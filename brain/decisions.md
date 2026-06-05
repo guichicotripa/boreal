@@ -543,3 +543,25 @@ Várias micro-decisões de design fechadas durante sandboxes.
    succession risk score).
 
 **Status:** ✅ Etapas 3–5 aplicadas. Etapa 6 (mercado) + /setores + /worklist pendentes.
+
+---
+
+## [2026-06-04] Varredura de auditoria — alinhar o app com a tese (6 fixes)
+
+**Contexto:** Guilherme pediu varredura completa pra achar o que está errado/inconsistente. Achados e fix:
+
+1. **demo-cache sem `perfil_sucessorio`** (gerado antes do flag) → o chip não aparecia nas buscas
+   canônicas da home. Fix: `patch-demo-cache-perfil.mjs` computa o flag deterministicamente (150 empresas).
+2. **/mercado só com 2 dos 3 setores** → faltava educação no TAM e na coorte. Fix: build-tam + coorte
+   regenerados com educação; cópia da página ("3 setores").
+3. **/consolidadores metadata e texto** ainda diziam "prever o próximo alvo"/"66%" → contradiz o reframe
+   honesto + anti-drift. Fix: metadata descritiva, "97% nas vendas de sucessão".
+4. **Headline FRACO na vitrine (o principal):** home/validacao lideravam com "67%" (overall, dilui com
+   consolidação) em vez do número honesto e forte da moldura de sucessão. Fix: home e /validacao agora
+   lideram com **97% das vendas de sucessão** (metalmec, confirmado Brasil-inteiro), com o 67% geral como
+   contexto. **Fonte única: setores.json** (mata a divergência 66/67 vs 97 — /validacao importa de lá).
+5. **66% × 67% solto** (hindcast/consolidadores) → alinhado na moldura de sucessão.
+
+**Confirmado certo:** sem EBITDA fabricado, scoring honesto, nav 6/6, setor-cache com flag.
+
+**Status:** ✅ Todos corrigidos e testados (curl). PR #34.

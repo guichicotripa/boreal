@@ -73,7 +73,7 @@ export default function Mercado() {
             </p>
             <p className="mt-3 text-sm leading-snug text-bone">
               empresas com <strong className="text-floral">dono mais velho (60+), 25+ anos de casa e
-              ainda na mão da família</strong> — só em metalmecânica e saúde, só em SP.
+              ainda na mão da família</strong> — em metalmecânica, saúde e educação, só em SP.
             </p>
           </div>
           <div className="rounded-xl border border-hairline bg-surface p-6">
@@ -194,7 +194,7 @@ export default function Mercado() {
           </p>
           <p className="mt-3 text-xs leading-snug text-olive">
             Conta ilustrativa, com premissas à mostra — não estimamos R$ por empresa (seria dado
-            inventado). E isto é <strong className="text-bone">2 setores em 1 estado</strong>: empresa
+            inventado). E isto é <strong className="text-bone">3 setores em 1 estado</strong>: empresa
             familiar é ~90% das empresas do Brasil.
           </p>
         </section>

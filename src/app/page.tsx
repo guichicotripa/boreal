@@ -11,11 +11,26 @@ type TrajetoriaPonto = { ano: number; n_pf: number; n_pj: number; faixa_max: str
 type TrajetoriaEvento = { ano: number; texto: string; tipo: "entrou" | "saiu" | "envelheceu" };
 type TrajetoriaResult = { pontos: TrajetoriaPonto[]; eventos: TrajetoriaEvento[] };
 
-const EXEMPLOS = [
-  "metalmecânica no interior de SP com sócios acima de 60 anos",
-  "fabricantes de máquinas e equipamentos fundados antes de 1990",
-  "fabricantes de máquinas no interior de SP",
-];
+// Teses de exemplo POR SETOR — quando um setor está ativo, os atalhos se adaptam a ele
+// (o CNAE vem do setor; o exemplo foca no perfil sucessório: idade do sócio, fundação).
+const EXEMPLOS_POR_SETOR: Record<string, string[]> = {
+  metalmec: [
+    "metalmecânica no interior de SP com sócios acima de 60 anos",
+    "fabricantes de máquinas e equipamentos fundados antes de 1990",
+    "fabricantes de máquinas no interior de SP",
+  ],
+  saude: [
+    "clínicas com sócios acima de 70 anos",
+    "laboratórios fundados antes de 1990",
+    "consultórios com sócio único idoso",
+  ],
+  educacao: [
+    "escolas familiares com sócios acima de 70 anos",
+    "colégios fundados antes de 1990",
+    "creches e educação infantil de dono idoso",
+  ],
+};
+const EXEMPLOS = EXEMPLOS_POR_SETOR.metalmec;
 
 const FAIXA_LABEL: Record<string, string> = {
   "1": "0–12", "2": "13–20", "3": "21–30", "4": "31–40", "5": "41–50",
@@ -92,11 +107,14 @@ export default function Home() {
               O modelo que prevê quem vai vender — antes do mercado.
             </h1>
 
-            {/* Subheadline — a credencial */}
+            {/* Subheadline — a credencial (moldura de sucessão, onde a lente vale) */}
             <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-bone">
-              Não é um buscador. É um modelo validado contra aquisições reais, sem leakage.{" "}
-              <strong>67% das vendas estavam no top 10% do modelo, 12 meses antes.</strong>{" "}
-              <a href="/validacao" className="group/prova text-floral underline-offset-2 hover:underline">
+              Não é um buscador. É um modelo validado contra vendas reais, sem leakage:{" "}
+              <strong>
+                {setorPorId("metalmec")?.recall_sucessao ?? 97}% das vendas por sucessão já estavam no nosso top 10%
+              </strong>
+              , 12 meses antes.{" "}
+              <a href="/validacao" className="group/prova whitespace-nowrap text-floral underline-offset-2 hover:underline">
                 ver a prova{" "}
                 <span className="inline-block transition-transform duration-200 group-hover/prova:translate-x-0.5">→</span>
               </a>
@@ -149,15 +167,15 @@ export default function Home() {
               </div>
             </form>
 
-            {/* Exemplos — teses sugeridas */}
+            {/* Exemplos — teses sugeridas, adaptadas ao setor ativo */}
             <div className="mt-6 flex flex-wrap gap-1.5">
-              {EXEMPLOS.map((ex) => (
+              {(EXEMPLOS_POR_SETOR[setorAtivo ?? "metalmec"] ?? EXEMPLOS).map((ex) => (
                 <button
                   key={ex}
                   type="button"
                   onClick={() => {
                     setTexto(ex);
-                    buscar(ex);
+                    buscar(ex, setorAtivo ?? undefined);
                   }}
                   className="rounded border border-hairline px-2 py-1 text-xs text-bone transition-colors hover:border-hairline-hover hover:text-floral"
                 >
@@ -460,14 +478,6 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             <h3 className="font-display text-lg leading-tight text-floral">{e.razao_social}</h3>
-            {e.score?.perfil_sucessorio && (
-              <span
-                className="rounded border border-floral/30 px-1.5 font-data text-[10px] uppercase tracking-wider text-floral"
-                title="Sócio 61+ e empresa 25+: onde o score de sucessão valida (88–100%). Alta confiança."
-              >
-                perfil sucessório
-              </span>
-            )}
           </div>
           <p className="font-data text-[11px] text-olive">
             {e.municipio}/{e.uf} · {formatCnpj(e.cnpj)}
