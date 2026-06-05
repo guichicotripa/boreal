@@ -96,12 +96,12 @@ export default function Validacao() {
         {/* Hindcast nominal — o número feito concreto */}
         <section className="mt-10">
           <h2 className="font-data text-[11px] uppercase tracking-wider text-olive">
-            E não é abstrato — essas empresas venderam de verdade
+            Aquisições reais — comprovadas depois do corte
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-bone">
-            Aquisições reais de metalmecânica que aconteceram <strong>depois</strong>{" "}da nossa data de corte.
-            A coluna &ldquo;rank&rdquo; é onde o modelo já as colocava <strong>antes</strong> do
-            deal — sem nunca ter visto o futuro.
+            Empresas que foram adquiridas depois de 2023-06-10. A coluna &ldquo;rank&rdquo; mostra
+            onde o modelo já as colocava <strong>antes</strong> do deal acontecer — sem nunca ter
+            visto o futuro.
           </p>
           <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
             <table className="w-full text-sm">
@@ -258,8 +258,8 @@ export default function Validacao() {
             Por que isso importa
           </h2>
           <p className="mt-3 leading-relaxed text-bone">
-            Quase toda ferramenta de &ldquo;IA pra deal sourcing&rdquo; te entrega uma lista bonita e
-            não consegue te dizer se ela <em>funciona</em>. O Boreal consegue: é um{" "}
+            A maioria das ferramentas de deal sourcing entrega uma lista e não consegue dizer se ela{" "}
+            <em>funciona</em>. O Boreal consegue: é um{" "}
             <strong>
               modelo preditivo de eventos de liquidez no mercado privado
             </strong>
@@ -272,6 +272,17 @@ export default function Validacao() {
             (Receita Federal via BigQuery).
           </p>
         </section>
+
+        {/* CTA final */}
+        <div className="mt-10 flex justify-center">
+          <a
+            href="/"
+            className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70"
+          >
+            <span className="transition-transform duration-200 group-hover:-translate-x-1">←</span>
+            <span>Rodar uma tese com esse score</span>
+          </a>
+        </div>
       </main>
     </div>
   );
