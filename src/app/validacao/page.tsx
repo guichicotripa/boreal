@@ -73,23 +73,49 @@ export default function Validacao() {
 
         {/* Número-herói — a moldura de sucessão (onde a lente vale) */}
         <section className="rounded-xl border border-hairline bg-surface p-8">
-          <p className="font-display text-[64px] leading-none tracking-tight text-floral md:text-[88px]">
-            {METALMEC.recall_sucessao}%
+          <p className="mb-5 font-data text-[11px] uppercase tracking-[0.14em] text-bone/70">
+            Recall · vendas por sucessão · metalmecânica
           </p>
-          <p className="mt-4 max-w-xl text-lg leading-snug text-bone">
-            das <strong>vendas por sucessão</strong> em metalmecânica estavam no{" "}
-            <strong>top 10%</strong> do nosso ranking — calculado{" "}
-            <strong>12 meses antes</strong> de o deal, sem leakage.{" "}
-            <span className="text-olive">(Confirmado Brasil-inteiro: {METALMEC.nacional?.recall_sucessao}%.)</span>
+
+          {/* figura editorial: o número lidera a frase, o texto flui ao redor */}
+          <p className="flow-root text-[19px] leading-normal text-bone">
+            <span className="float-left mr-5 mt-1 font-display text-[72px] leading-[0.85] tracking-tight text-floral">
+              {METALMEC.recall_sucessao}%
+            </span>
+            das vendas por sucessão estavam no <strong>top 10%</strong> do nosso ranking,{" "}
+            <strong>12 meses antes</strong> do deal — sem leakage.
           </p>
-          <p className="mt-3 text-sm leading-snug text-olive">
-            {METALMEC.recall_top10}% se contar <em>todas</em> as aquisições do setor — mas ~metade do M&amp;A
-            de metalmec é sucessão; o resto é consolidação, que um score de sucessão não deve prever.
-          </p>
-          <p className="mt-3 font-data text-sm text-olive">
-            Por acaso seria 10%. Acertar {METALMEC.recall_sucessao}% é{" "}
-            <span className="text-floral">~{Math.round((METALMEC.recall_sucessao ?? 0) / 10)}× melhor que aleatório</span>.
-          </p>
+
+          {/* stats à esquerda + nuance honesta à direita (empilham no mobile) */}
+          <div className="mt-6 flex flex-col gap-6 border-t border-hairline pt-5 sm:flex-row sm:items-start sm:gap-11">
+            <div className="flex shrink-0 gap-8">
+              <div>
+                <p className="font-data text-[22px] font-medium leading-none text-floral">
+                  ~{Math.round((METALMEC.recall_sucessao ?? 0) / 10)}×
+                </p>
+                <p className="mt-1.5 font-data text-[11px] leading-snug text-bone/70">
+                  melhor que o acaso
+                  <br />
+                  (acaso = 10%)
+                </p>
+              </div>
+              <div>
+                <p className="font-data text-[22px] font-medium leading-none text-floral">
+                  {METALMEC.nacional?.recall_sucessao}%
+                </p>
+                <p className="mt-1.5 font-data text-[11px] leading-snug text-bone/70">
+                  confirmado
+                  <br />
+                  Brasil inteiro
+                </p>
+              </div>
+            </div>
+            <p className="flex-1 text-[13px] leading-relaxed text-bone/60">
+              Contando todas as aquisições, o recall cai para {METALMEC.recall_top10}%.
+              Metade do M&amp;A do setor é consolidação, não sucessão. Um score de
+              sucessão não deveria prever isso.
+            </p>
+          </div>
         </section>
 
         {/* Hindcast nominal — o número feito concreto */}
