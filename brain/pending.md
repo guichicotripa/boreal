@@ -10,11 +10,15 @@ Sistema de tipografia/cor documentado em `brand/uso-tipografia-cor.md`. Feito: b
 sans 400/500/600), hero, card/memo. Faltam as páginas.
 
 - [ ] **Ajeitar erro de borda na box** — verificar qual box (notado durante o restyle)
-- [ ] Etapa 3 — pipeline (estágios ocre → bone/floral, labels bone/70, "atrasadas" mantém terracota)
-- [ ] Etapa 4 — validação (links/métricas/passos ocre → floral)
-- [ ] Etapa 5 — consolidadores ("já adquiridas"/link → floral, card backtest → surface)
-- [ ] Etapa 6 — mercado ("0,46%" ocre → floral)
-- [ ] Decidir peso do negrito (600 atual vs 700 real) ao chegar em /validação ou /mercado
+- [x] Etapa 3 — pipeline (`fb62e46`)
+- [x] Etapa 4 — validação (`4e769af` + `57b838f` + `5659693`)
+- [x] Etapa 5 — consolidadores (`fe59f28`) — aguarda revisão do Maguto no browser
+- [ ] Etapa 6 — mercado ("0,46%" ocre → floral + strong sem cor)
+- [ ] Etapa 7 — /setores (nova página do Guilherme, sem restyle)
+- [ ] Etapa 8 — /worklist (nova página do Guilherme, sem restyle)
+- [ ] Decidir peso do negrito (600 atual vs 700 real) — adiado
+- [ ] SINAL_COR em validacao/page.tsx — verificar com Guilherme se ainda é necessário
+- [ ] Abrir PR: `maguto/restyle-sistema-v1` → main
 
 ---
 
