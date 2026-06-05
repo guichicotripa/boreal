@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Newsreader, Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
-import { NavLogo } from "@/components/brand/NavLogo";
+import { Nav } from "@/components/brand/Nav";
 import "./globals.css";
 
 // Serif editorial — headlines, nomes de empresa, statements
@@ -49,49 +49,7 @@ export default function RootLayout({
       className={`dark ${newsreader.variable} ${plexSans.variable} ${archivo.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-smoky">
-        <nav className="sticky top-0 z-50 border-b border-hairline bg-smoky px-6 py-4">
-          <div className="mx-auto flex max-w-5xl items-center justify-between">
-            <NavLogo />
-            <div className="flex items-center gap-5">
-              <a
-                href="/setores"
-                className="font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:text-floral"
-              >
-                Setores
-              </a>
-              <a
-                href="/worklist"
-                className="font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:text-floral"
-              >
-                Worklist
-              </a>
-              <a
-                href="/validacao"
-                className="font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:text-floral"
-              >
-                Validação
-              </a>
-              <a
-                href="/mercado"
-                className="font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:text-floral"
-              >
-                Mercado
-              </a>
-              <a
-                href="/consolidadores"
-                className="font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:text-floral"
-              >
-                Consolidadores
-              </a>
-              <a
-                href="/pipeline"
-                className="font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:text-floral"
-              >
-                Pipeline
-              </a>
-            </div>
-          </div>
-        </nav>
+        <Nav />
         {children}
       </body>
     </html>

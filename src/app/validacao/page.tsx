@@ -99,8 +99,8 @@ export default function Validacao() {
             E não é abstrato — essas empresas venderam de verdade
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-bone">
-            Aquisições reais de metalmecânica que aconteceram <span className="text-floral">depois</span>{" "}da nossa data de corte.
-            A coluna &ldquo;rank&rdquo; é onde o modelo já as colocava <span className="text-floral">antes</span> do
+            Aquisições reais de metalmecânica que aconteceram <strong>depois</strong>{" "}da nossa data de corte.
+            A coluna &ldquo;rank&rdquo; é onde o modelo já as colocava <strong>antes</strong> do
             deal — sem nunca ter visto o futuro.
           </p>
           <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
@@ -147,7 +147,7 @@ export default function Validacao() {
               <p className="text-bone">
                 <strong>Ground truth de graça.</strong> Comparamos dois
                 snapshots da Receita Federal (2023 → 2025) e detectamos a assinatura de uma aquisição
-                no registro: <span className="text-floral">um sócio PJ entra e um sócio PF sai</span>.
+                no registro: <strong>um sócio PJ entra e um sócio PF sai</strong>.
                 Sem comprar dados, sem garimpar imprensa.
               </p>
             </li>
@@ -155,7 +155,7 @@ export default function Validacao() {
               <span className="font-display text-2xl text-floral">2</span>
               <p className="text-bone">
                 <strong>Zero leakage.</strong> O score é calculado só com os
-                dados de 2023 — <span className="text-floral">antes</span> de qualquer aquisição. O
+                dados de 2023 — <strong>antes</strong> de qualquer aquisição. O
                 modelo nunca vê o futuro que está tentando prever.
               </p>
             </li>
@@ -194,11 +194,7 @@ export default function Validacao() {
                     </td>
                     <td className="px-4 py-3 text-right tabular-nums text-bone">{fmt(v.universo)}</td>
                     <td className="px-4 py-3 text-right tabular-nums text-bone">{v.n_aquisicoes}</td>
-                    <td
-                      className={`px-4 py-3 text-right tabular-nums ${
-                        v.recall_top10 >= 40 ? "text-floral" : "text-olive"
-                      }`}
-                    >
+                    <td className="px-4 py-3 text-right tabular-nums text-floral">
                       {v.recall_top10}%
                     </td>
                     <td className="px-4 py-3 text-right tabular-nums text-bone">{v.lift_top10}×</td>
@@ -238,10 +234,10 @@ export default function Validacao() {
               <tbody className="font-data">
                 {(lift.features as Feature[]).map((f) => (
                   <tr key={f.nome} className="border-b border-hairline last:border-0">
-                    <td className={`px-4 py-3 ${SINAL_COR[f.sinal] ?? "text-bone"}`}>{f.nome}</td>
+                    <td className="px-4 py-3 text-floral">{f.nome}</td>
                     <td className="px-4 py-3 text-right tabular-nums text-bone">{f.universo_pct}%</td>
                     <td className="px-4 py-3 text-right tabular-nums text-bone">{f.adquiridas_pct}%</td>
-                    <td className={`px-4 py-3 text-right tabular-nums ${SINAL_COR[f.sinal] ?? "text-bone"}`}>
+                    <td className="px-4 py-3 text-right tabular-nums text-floral">
                       {f.lift.toLocaleString("pt-BR")}×
                     </td>
                   </tr>
