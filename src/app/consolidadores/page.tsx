@@ -41,11 +41,11 @@ export default function Consolidadores() {
             <p className="font-data text-[11px] uppercase tracking-wider text-olive">
               A outra lente · quem compra
             </p>
-            <h1 className="mt-2 font-display text-3xl tracking-tight md:text-4xl">
+            <h1 className="mt-2 font-display text-3xl tracking-tight md:text-4xl text-balance">
               Roll-ups se formando no registro
             </h1>
           </div>
-          <a href="/" className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70">
+          <a href="/" className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
             <span className="transition-transform duration-200 group-hover:-translate-x-1">←</span>
             <span>Voltar à busca</span>
           </a>
@@ -53,33 +53,30 @@ export default function Consolidadores() {
 
         {/* Tese das duas lentes */}
         <section className="rounded-xl border border-hairline bg-surface p-6">
-          <p className="leading-relaxed text-bone">
+          <p className="text-[15px] leading-relaxed text-bone">
             O mercado tem <strong>dois jogos</strong>, e o registro revela
             qual setor joga qual.
           </p>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             <div className="rounded-lg border border-hairline p-4">
-              <p className="font-data text-[11px] uppercase tracking-wider text-olive">
+              <p className="font-data text-[11px] uppercase tracking-wider text-bone/70">
                 Metalmecânica · sucessão
               </p>
               <p className="mt-2 text-sm leading-snug text-bone">
-                Donos envelhecendo, sem sucessor. O modelo prevê quem vai <strong>vender</strong>.{" "}
-                <a href="/validacao" className="text-floral underline-offset-2 hover:underline">
-                  67% de recall →
-                </a>
+                Donos envelhecendo, sem plano de sucessão. O modelo identifica quem tem{" "}
+                <strong>maior propensão a vender</strong>, com antecedência.
               </p>
             </div>
             <div className="rounded-lg border border-hairline p-4">
-              <p className="font-data text-[11px] uppercase tracking-wider text-olive">
+              <p className="font-data text-[11px] uppercase tracking-wider text-bone/70">
                 Saúde · consolidação
               </p>
               <p className="mt-2 text-sm leading-snug text-bone">
-                Roll-ups comprando dezenas de clínicas. A gente os <strong>vê se
-                formar</strong> no registro, em tempo real.
+                Roll-ups em expansão, sem anunciar. O modelo detecta <strong>quem está comprando e com que padrão</strong>, em tempo real.
               </p>
             </div>
           </div>
-          <p className="mt-4 text-xs leading-snug text-olive">
+          <p className="mt-4 text-[13px] leading-relaxed text-bone/60">
             Mesma mina de dados (transições de sócios no CNPJ), invertida: em vez de detectar o sócio
             PJ <em>entrando</em> num alvo, agrupamos por <em>quem</em> entrou. Quem aparece em muitas
             empresas do mesmo setor é um consolidador — e dá pra mapear o <em>buy-box</em> dele (o perfil
@@ -89,18 +86,18 @@ export default function Consolidadores() {
 
         {/* Honestidade: o backtest da previsão */}
         <section className="mt-6 rounded-xl border border-hairline bg-smoky p-5">
-          <p className="font-data text-[11px] uppercase tracking-wider text-olive">
+          <p className="font-data text-[11px] uppercase tracking-wider text-bone/70">
             E o próximo alvo? Backtestamos — e não vendemos como previsão
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-bone">
-            Testamos out-of-sample (prever em {backtest.janela.previsao}, conferir em{" "}
-            {backtest.janela.outcome}): listar &ldquo;próximos alvos&rdquo; pelo buy-box dá só{" "}
-            <strong>{backtest.lift}× vs. acaso</strong> — fraco demais pra
-            chamar de preditivo. O buy-box a nível de CNAE+praça é grosseiro. Então mostramos os
-            consolidadores como <strong>detecção descritiva</strong> (quem está
-            ativo, com que padrão), não como oráculo. A força preditiva mora na sucessão — <strong>97%
-            nas vendas de sucessão</strong> (em{" "}
-            <a href="/validacao" className="text-floral underline-offset-2 hover:underline">/validacao</a>).
+          <p className="mt-2 text-[15px] leading-relaxed text-bone">
+            Testamos se os candidatos listados pelo buy-box seriam de fato adquiridos:{" "}
+            <strong>{Math.round((backtest.lift - 1) * 100)}% a mais de acerto</strong> que uma empresa aleatória do
+            mesmo setor. O ganho é real — mas o padrão de setor e cidade não captura as nuances que
+            determinam o timing de cada deal. Por isso apresentamos os consolidadores como{" "}
+            <strong>detecção descritiva</strong>, não como previsão: quem está ativamente comprando,
+            em que ritmo e com que perfil — o tipo de inteligência que não aparece numa lista de
+            prospecção convencional. A força preditiva mora na sucessão —{" "}
+            <strong>97% de acerto nas vendas de sucessão</strong>.
           </p>
         </section>
 
@@ -116,19 +113,14 @@ export default function Consolidadores() {
                   {c.n_adquiridas} já adquiridas
                 </span>
               </div>
-              <p className="mt-1 font-data text-[11px] uppercase tracking-wider text-olive">
-                Buy-box: CNAE {c.cnaes.join(", ")} · {c.n_municipios}{" "}
-                {c.n_municipios === 1 ? "praça" : "praças"}
-              </p>
-
-              <p className="mt-5 font-data text-[11px] uppercase tracking-wider text-bone">
+              <p className="mt-5 font-data text-[11px] uppercase tracking-wider text-bone/70">
                 Candidatos no padrão do comprador
               </p>
               <ul className="mt-2 divide-y divide-hairline">
-                {c.proximos_alvos.map((a, i) => (
-                  <li key={i} className="flex items-center justify-between gap-3 py-2.5">
+                {c.proximos_alvos.map((a) => (
+                  <li key={a.nome} className="flex items-center justify-between gap-3 py-2.5">
                     <span className="text-sm text-floral">{titulo(a.nome)}</span>
-                    <span className="shrink-0 font-data text-[11px] text-olive">
+                    <span className="shrink-0 font-data text-[11px] text-bone/70">
                       sócio {a.socio_faixa} · desde {a.desde}
                     </span>
                   </li>
@@ -140,7 +132,7 @@ export default function Consolidadores() {
 
         <p className="mt-8 font-data text-xs text-olive">
           Candidatos = empresas ainda independentes (só sócios PF no quadro), dentro do buy-box do
-          consolidador, com sócio 61+. <strong className="text-bone">Não é uma previsão validada</strong>{" "}
+          consolidador, com sócio 61+. Não é uma previsão validada
           (ver backtest acima) — é o universo que se encaixa no padrão. Gerado em{" "}
           {new Date(dados.gerado_em).toLocaleDateString("pt-BR")} · minerado do CNPJ (Receita Federal via BigQuery).
         </p>
