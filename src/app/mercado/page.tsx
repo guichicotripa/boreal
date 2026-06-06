@@ -59,7 +59,7 @@ export default function Mercado() {
               Muita empresa. Quase nenhum negócio.
             </h1>
           </div>
-          <a href="/" className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70">
+          <a href="/" className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
             <span className="transition-transform duration-200 group-hover:-translate-x-1">←</span>
             <span>Voltar à busca</span>
           </a>
@@ -72,28 +72,28 @@ export default function Mercado() {
               {fmt(tam.quente_total)}
             </p>
             <p className="mt-3 text-sm leading-snug text-bone">
-              empresas com <strong className="text-floral">dono mais velho (60+), 25+ anos de casa e
+              empresas com <strong>dono mais velho (60+), 25+ anos de casa e
               ainda na mão da família</strong> — em metalmecânica, saúde e educação, só em SP.
             </p>
           </div>
           <div className="rounded-xl border border-hairline bg-surface p-6">
-            <p className="font-display text-[56px] leading-none tracking-tight text-risk-mid">
+            <p className="font-display text-[56px] leading-none tracking-tight text-floral">
               {tam.giro_anual_pct.toLocaleString("pt-BR")}%
             </p>
             <p className="mt-3 text-sm leading-snug text-bone">
               são vendidas por ano (~{tam.deals_ano_total} negócios). Praticamente{" "}
-              <strong className="text-floral">nenhuma muda de dono</strong>.
+              <strong>nenhuma muda de dono</strong>.
             </p>
           </div>
         </section>
 
         {/* Coorte — o que acontece com elas */}
         <section className="mt-10">
-          <h2 className="font-data text-[11px] uppercase tracking-wider text-olive">
+          <h2 className="font-data text-[11px] uppercase tracking-wider text-bone/70">
             O que acontece com elas em 2 anos?
           </h2>
-          <p className="mt-2 text-sm leading-relaxed text-bone">
-            Pegamos as {fmt(dest.total)} empresas mais &ldquo;quentes&rdquo; de 2023 e seguimos cada uma
+          <p className="mt-2 text-[15px] leading-relaxed text-bone">
+            Pegamos as {fmt(dest.total)}{" "}empresas mais sinalizadas de 2023 e seguimos cada uma
             até 2025. O resultado:
           </p>
           <ul className="mt-4 space-y-2">
@@ -107,7 +107,7 @@ export default function Mercado() {
                       d.forte ? "text-floral" : "text-bone"
                     }`}
                   >
-                    {p}%
+                    {p < 1 ? "<1" : p}%
                   </span>
                   <div className="h-2 flex-1 overflow-hidden rounded-full bg-surface">
                     <div
@@ -128,40 +128,40 @@ export default function Mercado() {
 
         {/* Macro — o juro explica parte */}
         <section className="mt-10 rounded-xl border border-hairline bg-surface p-6">
-          <h2 className="font-data text-[11px] uppercase tracking-wider text-olive">
+          <h2 className="font-data text-[11px] uppercase tracking-wider text-bone/70">
             E o juro explica parte disso
           </h2>
           <p className="mt-3 leading-relaxed text-bone">
-            Nos últimos 3 anos o juro (Selic) ficou entre <strong className="text-floral">13% e 15%</strong>{" "}
+            Nos últimos 3 anos o juro (Selic) ficou entre <strong>13% e 15%</strong>{" "}
             — o mais alto em quase 20 anos. Com dinheiro tão caro, quase ninguém compra empresa. Agora a
-            Selic <strong className="text-floral">começou a cair</strong> (14,5% em abril/2026) — e a fila
+            Selic <strong>começou a cair</strong> (14,5% em abril/2026), e a fila
             de empresas paradas só engordou nesse tempo.
           </p>
         </section>
 
         {/* A leitura honesta */}
-        <section className="mt-6 rounded-xl border border-floral/30 bg-floral/5 p-6">
+        <section className="mt-6 rounded-xl border border-hairline bg-surface p-6">
           <p className="leading-relaxed text-floral">
             Então o mercado não está vazio. Está <strong>cheio de empresas boas, paradas, que ninguém
-            procurou</strong> — e a fila cresce. Montar essa lista agora, enquanto o juro ainda segura os
+            procurou</strong>, e a fila cresce. Montar essa lista agora, enquanto o juro ainda segura os
             compradores, é chegar na frente pra quando ele cair.
           </p>
         </section>
 
         {/* Funil por vertical */}
         <section className="mt-10">
-          <h2 className="font-data text-[11px] uppercase tracking-wider text-olive">
+          <h2 className="font-data text-[11px] uppercase tracking-wider text-bone/70">
             De onde sai a conta
           </h2>
           <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-hairline bg-surface text-left font-data text-[11px] uppercase tracking-wider text-olive">
-                  <th className="px-4 py-3 font-medium">Setor</th>
-                  <th className="px-4 py-3 text-right font-medium">Todas</th>
-                  <th className="px-4 py-3 text-right font-medium">Da família</th>
-                  <th className="px-4 py-3 text-right font-medium">Quentes</th>
-                  <th className="px-4 py-3 text-right font-medium">Vendas/ano</th>
+                  <th scope="col" className="px-4 py-3 font-medium">Setor</th>
+                  <th scope="col" className="px-4 py-3 text-right font-medium">Todas</th>
+                  <th scope="col" className="px-4 py-3 text-right font-medium">Da família</th>
+                  <th scope="col" className="px-4 py-3 text-right font-medium">Sinalizadas</th>
+                  <th scope="col" className="px-4 py-3 text-right font-medium">Vendas/ano</th>
                 </tr>
               </thead>
               <tbody className="font-data">
@@ -181,20 +181,20 @@ export default function Mercado() {
 
         {/* Sensibilidade ilustrativa — honesta */}
         <section className="mt-10 rounded-xl border border-hairline bg-surface p-6">
-          <h2 className="font-data text-[11px] uppercase tracking-wider text-olive">
+          <h2 className="font-data text-[11px] uppercase tracking-wider text-bone/70">
             Quanto isso pode valer — conta ilustrativa
           </h2>
           <p className="mt-3 leading-relaxed text-bone">
             Se a originação ativa levar a venda de {tam.giro_anual_pct.toLocaleString("pt-BR")}% para{" "}
             {(GIRO_ALVO * 100).toFixed(0)}% ao ano, são{" "}
-            <strong className="text-floral">~{fmt(dealsPotenciais)} negócios/ano</strong> a mais. A um
+            <strong>~{fmt(dealsPotenciais)} negócios/ano</strong> a mais. A um
             ticket conservador de R${TICKET}M e fee de {(FEE * 100).toFixed(0)}%, isso é da ordem de{" "}
-            <strong className="text-floral">R$ {dealValueBi.toFixed(1)} bi/ano</strong> em negócios e{" "}
-            <strong className="text-floral">~R$ {fmt(feesMi)} mi/ano em comissão</strong>.
+            <strong>R$ {dealValueBi.toFixed(1)} bi/ano</strong> em negócios e{" "}
+            <strong>~R$ {fmt(feesMi)} mi/ano em comissão</strong>.
           </p>
           <p className="mt-3 text-xs leading-snug text-olive">
-            Conta ilustrativa, com premissas à mostra — não estimamos R$ por empresa (seria dado
-            inventado). E isto é <strong className="text-bone">3 setores em 1 estado</strong>: empresa
+            Conta ilustrativa, com premissas à mostra, não estimamos R$ por empresa (seria dado
+            inventado). E isto é <strong>3 setores em 1 estado</strong>: empresa
             familiar é ~90% das empresas do Brasil.
           </p>
         </section>
