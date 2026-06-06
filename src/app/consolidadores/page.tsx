@@ -85,18 +85,18 @@ export default function Consolidadores() {
         </section>
 
         {/* Honestidade: o backtest da previsão */}
-        <section className="mt-6 rounded-xl border border-hairline bg-smoky p-5">
+        <section className="mt-6">
           <p className="font-data text-[11px] uppercase tracking-wider text-bone/70">
             E o próximo alvo? Backtestamos — e não vendemos como previsão
           </p>
           <p className="mt-2 text-[15px] leading-relaxed text-bone">
             Testamos se os candidatos listados pelo buy-box seriam de fato adquiridos:{" "}
             <strong>{Math.round((backtest.lift - 1) * 100)}% a mais de acerto</strong> que uma empresa aleatória do
-            mesmo setor. O ganho é real — mas o padrão de setor e cidade não captura as nuances que
+            mesmo setor. O ganho é real. Mas o padrão de setor e cidade não captura as nuances que
             determinam o timing de cada deal. Por isso apresentamos os consolidadores como{" "}
             <strong>detecção descritiva</strong>, não como previsão: quem está ativamente comprando,
-            em que ritmo e com que perfil — o tipo de inteligência que não aparece numa lista de
-            prospecção convencional. A força preditiva mora na sucessão —{" "}
+            em que ritmo e com que perfil: o tipo de inteligência que não aparece numa lista de
+            prospecção convencional. A força preditiva mora na sucessão:{" "}
             <strong>97% de acerto nas vendas de sucessão</strong>.
           </p>
         </section>
