@@ -561,3 +561,45 @@ Dia longo (PRs #28–#32). Detalhe do racional em `brain/decisions.md`.
 
 **Aprendizado:** "aumentar a amostra" tinha uma armadilha — ingerir mais no banco não muda o N da
 validação. O N é a realidade (quantas aquisições aconteceram), e o lever é geografia/tempo.
+
+---
+
+## [2026-06-04] Maguto | Restyle sistema de tipografia/cor — etapas 3–5 + nav ativo
+
+Sessão de design/UI aplicando o sistema de tipografia/cor v1 (doc: `brand/uso-tipografia-cor.md`)
+nas páginas principais. 6 commits na branch `maguto/restyle-sistema-v1` (rebased em cima do
+`origin/main` com 7 commits novos do Guilherme — zero conflito).
+
+**Construído:**
+
+- **Etapa 3 — /pipeline** (`fb62e46`): labels de coluna Bone uniforme (arquivado Olive); ocre
+  removido das fases do funil; loop de outcome → label Bone semibold + número Floral regular
+  (sem `strong` em `font-data`); "Não receptivo"/"Perdido" de terracota → Olive; back link
+  padronizado em todas as páginas (Floral, uppercase 11px, seta animada, `items-start`).
+- **Etapa 4 — /validacao** (`4e769af` + `57b838f` + `5659693`): todos os `strong text-floral`
+  convertidos para `strong` (Bone 600); números de passo 1/2/3 → Floral; "X× melhor" e "top X%"
+  → Floral; tabela lift + resultado por setor → Floral; títulos dos passos ("Ground truth de
+  graça." etc.) → `strong text-floral` (funcionam como sub-títulos); "antes"/"depois" no
+  hindcast → `strong` Bone 600 (palavra curta, bold não imperceptível no contexto).
+- **Etapa 5 — /consolidadores** (`fe59f28`): mesma limpeza de `strong text-floral`; links
+  → Floral; "X já adquiridas" → Floral.
+- **Nav ativo** (`57b838f`): extraído nav em `src/components/brand/Nav.tsx` (client component,
+  `usePathname()`); ativo = `text-floral`; inativos = `text-bone/70 hover:text-bone`;
+  `aria-current="page"` no ativo.
+- **Rebase sobre origin/main** limpo — monitor (#29), look-alike (#28), setores (#30–32),
+  afiar (#33) integrados sem conflito. Pipeline.tsx: alerta de mudança societária (terracota
+  como alerta funcional) coexiste com restyle.
+
+**Resultado:** branch `maguto/restyle-sistema-v1` em cima da main. Pendente: PR + Etapa 6
+(mercado) + /setores e /worklist (novas, sem restyle) + erro de borda na box + decisão de
+peso do negrito.
+
+**Aprendizado:**
+- Workflow combinado: sandbox HTML antes de tocar o código, aguardar aprovação antes de commitar.
+  Dois erros de processo nesta sessão (etapa 5 sem sandbox; commit sem confirmação) — reforçar.
+- `strong { font-weight: 600 }` em `font-data` (mono) fica visivelmente pesado — não usar
+  `strong` em números monoespaçados, só cor.
+- "Ativo" no nav precisa de um segundo sinal além da cor se o hover dos inativos também usa
+  Floral. Solução: reservar Floral só ao ativo, inativos vivem em Bone/70.
+- Rebase > merge quando o histórico precisa ser linear pra PR limpo. Git resolveu automaticamente
+  porque as edições eram em regiões não sobrepostas do mesmo arquivo.

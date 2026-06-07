@@ -517,6 +517,35 @@ deploy (decisão do time é localhost no Demo Day).
 
 ---
 
+## [2026-06-04] Sistema de tipografia/cor v1 — decisões de aplicação
+
+**Contexto:** aplicação do sistema documentado em `brand/uso-tipografia-cor.md` nas páginas.
+Várias micro-decisões de design fechadas durante sandboxes.
+
+**Decisões:**
+
+1. **`strong` sem cor em prosa** — ênfase = Bone 600. Exceção: termos que funcionam como
+   sub-títulos (ex: "Ground truth de graça." nos passos da metodologia) → `strong text-floral`.
+
+2. **Números mono (`font-data`) nunca recebem `strong`** — peso 600 em Plex Mono fica
+   visivelmente pesado demais. Destaque por cor (Floral) sem mudança de peso.
+
+3. **Loop de outcome (pipeline)** — "Desfecho positivo/negativo": Bone semibold (label);
+   número: Floral regular (opção C do sandbox). Justificativa: é leitura de dados, não prosa.
+
+4. **Nav ativo — Opção B** — ativo = `text-floral`; inativos = `text-bone/70 hover:text-bone`.
+   Floral reservado ao ativo; hover dos inativos sobe só até Bone 100, nunca alcança Floral.
+
+5. **Back link padronizado** — todas as páginas: `font-data text-[11px] uppercase tracking-wider
+   text-floral`, seta `←` com `group-hover:-translate-x-1`, `items-start` no header flex.
+
+6. **"já adquiridas" e links** — contagem e links que estavam em ocre → Floral (ocre só pra
+   succession risk score).
+
+**Status:** ✅ Etapas 3–5 aplicadas. Etapa 6 (mercado) + /setores + /worklist pendentes.
+
+---
+
 ## [2026-06-04] Varredura de auditoria — alinhar o app com a tese (6 fixes)
 
 **Contexto:** Guilherme pediu varredura completa pra achar o que está errado/inconsistente. Achados e fix:

@@ -99,7 +99,8 @@ export default function Home() {
             {/* Overline */}
             <p className="font-data text-[11px] uppercase tracking-[0.2em] text-bone">
               <span className="text-floral">BOREAL</span>{" "}
-              <span className="text-olive">·</span> Modelo preditivo de M&amp;A
+              <span className="text-olive">·</span>{" "}
+              <span>Modelo preditivo de M&amp;A</span>
             </p>
 
             {/* Headline */}
@@ -108,14 +109,15 @@ export default function Home() {
             </h1>
 
             {/* Subheadline — a credencial (moldura de sucessão, onde a lente vale) */}
-            <p className="mt-4 max-w-xl text-sm leading-relaxed text-bone">
+            <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-bone">
               Não é um buscador. É um modelo validado contra vendas reais, sem leakage:{" "}
-              <strong className="text-floral">
+              <strong>
                 {setorPorId("metalmec")?.recall_sucessao ?? 97}% das vendas por sucessão já estavam no nosso top 10%
               </strong>
               , 12 meses antes.{" "}
-              <a href="/validacao" className="text-risk-mid underline-offset-2 hover:underline">
-                ver a prova →
+              <a href="/validacao" className="group/prova whitespace-nowrap text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
+                ver a prova{" "}
+                <span className="inline-block transition-transform duration-200 group-hover/prova:translate-x-0.5">→</span>
               </a>
             </p>
 
@@ -126,7 +128,7 @@ export default function Home() {
                   Setor: <strong className="text-floral">{setorPorId(setorAtivo)!.nome}</strong>
                   <span className="text-olive"> · lente {setorPorId(setorAtivo)!.lente === "consolidacao" ? "consolidação" : "sucessão"}</span>
                 </p>
-                <a href="/" className="font-data text-[11px] uppercase tracking-wider text-olive transition-colors hover:text-floral">
+                <a href="/" className="font-data text-[11px] uppercase tracking-wider text-olive transition-colors hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
                   limpar
                 </a>
               </div>
@@ -140,7 +142,7 @@ export default function Home() {
               }}
               className="mt-8"
             >
-              <p className="mb-3 font-data text-[10px] uppercase tracking-[0.18em] text-olive">
+              <p className="mb-3 font-data text-[10px] uppercase tracking-[0.18em] text-bone/70">
                 Descreva uma tese em linguagem livre
               </p>
               <div className="flex items-center gap-2 border-b border-hairline-hover pb-3 transition-colors focus-within:border-floral/30">
@@ -154,7 +156,7 @@ export default function Home() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity disabled:opacity-50"
+                  className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
                 >
                   {loading ? "Buscando…" : (
                     <>
@@ -176,7 +178,7 @@ export default function Home() {
                     setTexto(ex);
                     buscar(ex, setorAtivo ?? undefined);
                   }}
-                  className="rounded border border-hairline px-2 py-1 text-xs text-bone transition-colors hover:border-hairline-hover hover:text-floral"
+                  className="rounded border border-hairline px-2 py-1 text-xs text-bone transition-colors hover:border-hairline-hover hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
                 >
                   {ex}
                 </button>
@@ -188,10 +190,17 @@ export default function Home() {
 
             {/* Erro */}
             {erro && (
-              <div className="mt-10 rounded-lg border border-risk-high/30 bg-risk-high/5 px-4 py-3">
+              <div className="mt-10 py-10">
                 <p className="font-data text-[10px] uppercase tracking-wider text-olive">Erro na busca</p>
-                <p className="mt-1 text-sm text-risk-high">{erro}</p>
-                <p className="mt-2 text-xs text-bone">Tente reformular a consulta ou aguarde alguns instantes.</p>
+                <p className="mt-2 text-[15px] leading-relaxed text-bone">
+                  Não foi possível realizar a busca. Verifique a conexão e tente de novo.
+                </p>
+                <button
+                  onClick={() => buscar(texto, setorAtivo ?? undefined)}
+                  className="mt-3 inline-flex items-center gap-2 rounded border border-hairline px-3 py-2 font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:border-floral/40 hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+                >
+                  <span aria-hidden="true">↻</span> Tentar de novo
+                </button>
               </div>
             )}
 
@@ -249,7 +258,7 @@ export default function Home() {
 
           {/* Sidebar — cobertura do universo de busca */}
           <aside className="md:border-l md:border-hairline md:pl-6">
-            <p className="font-data text-[10px] uppercase tracking-wider text-olive">
+            <p className="font-data text-[10px] uppercase tracking-wider text-bone/70">
               Cobertura
             </p>
             <ul className="mt-3 space-y-1.5 font-data text-xs text-bone">
@@ -266,7 +275,7 @@ export default function Home() {
               <li>Interior de SP</li>
               <li>Score sucessório</li>
             </ul>
-            <p className="mt-6 font-data text-[10px] uppercase tracking-wider text-olive">
+            <p className="mt-6 font-data text-[10px] uppercase tracking-wider text-bone/70">
               Base
             </p>
             <p className="mt-1 font-data text-xs tabular-nums text-bone">
@@ -300,7 +309,7 @@ function LoadingSteps() {
   }, []);
 
   return (
-    <div className="mt-10 flex flex-col gap-2">
+    <div className="mt-10 flex flex-col gap-2" aria-live="polite" aria-busy="true">
       {LOADING_STEPS.slice(0, step + 1).map((s, i) => (
         <div
           key={i}
@@ -309,7 +318,7 @@ function LoadingSteps() {
           }`}
         >
           {i === step ? (
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-risk-mid" />
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-bone" />
           ) : (
             <span className="text-olive">✓</span>
           )}
@@ -321,9 +330,9 @@ function LoadingSteps() {
 }
 
 const TIER_STYLES = {
-  alto:  { borderL: "border-l-risk-high",  badge: "border-risk-high/40 bg-risk-high/5", text: "text-risk-high", label: "ALTO"  },
-  medio: { borderL: "border-l-risk-mid",   badge: "border-risk-mid/40 bg-risk-mid/5",   text: "text-risk-mid",  label: "MÉD"   },
-  baixo: { borderL: "border-l-hairline",   badge: "border-hairline bg-surface",         text: "text-bone",      label: "BAIXO" },
+  alto:  { badge: "border-risk-high/40 bg-risk-high/5", text: "text-risk-high", label: "ALTO"  },
+  medio: { badge: "border-risk-mid/40 bg-risk-mid/5",   text: "text-risk-mid",  label: "MÉD"   },
+  baixo: { badge: "border-hairline bg-surface",         text: "text-bone",      label: "BAIXO" },
 } as const;
 
 const FAIXA_COLOR: Record<string, string> = {
@@ -337,6 +346,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
   // Research — lógica levantada do ResearchPanel
   const [research, setResearch] = useState<ResearchResult | null>(null);
   const [researchLoading, setResearchLoading] = useState(false);
+  const [researchAberto, setResearchAberto] = useState(false);
   const [researchErro, setResearchErro] = useState<string | null>(null);
 
   // Memo — lógica levantada do DossierPanel
@@ -371,9 +381,11 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
     : (e.score?.sinais ?? [])).slice(0, 3);
 
   async function investigar() {
-    if (research || researchLoading) return;
+    if (research) { setResearchAberto((v) => !v); return; }
+    if (researchLoading) return;
     setResearchLoading(true);
     setResearchErro(null);
+    setResearchAberto(true);
     try {
       const r = await fetch("/api/research", {
         method: "POST",
@@ -457,7 +469,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
   }
 
   return (
-    <li className={`rounded-lg border border-hairline border-l-2 ${t.borderL} bg-surface overflow-hidden p-4 transition-colors hover:bg-surface-hover`}>
+    <li className="rounded-lg border border-hairline bg-surface overflow-hidden p-4 transition-colors hover:bg-surface-hover">
       {/* Header: score badge + nome + salvar */}
       <div className="flex items-start gap-3">
         <div className={`shrink-0 rounded border ${t.badge} px-2 py-1 text-center`}>
@@ -474,14 +486,6 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             <h3 className="font-display text-lg leading-tight text-floral">{e.razao_social}</h3>
-            {e.score?.perfil_sucessorio && (
-              <span
-                className="rounded border border-floral/30 px-1.5 font-data text-[10px] uppercase tracking-wider text-floral"
-                title="Sócio 61+ e empresa 25+: onde o score de sucessão valida (88–100%). Alta confiança."
-              >
-                perfil sucessório
-              </span>
-            )}
           </div>
           <p className="font-data text-[11px] text-olive">
             {e.municipio}/{e.uf} · {formatCnpj(e.cnpj)}
@@ -524,7 +528,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
           <>
             <button
               onClick={() => setSociosAberto((v) => !v)}
-              className="font-data text-xs text-bone transition-colors hover:text-floral"
+              className="font-data text-xs text-bone transition-colors hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
             >
               {sociosAberto ? "Ocultar detalhes" : "Ver detalhes"}
             </button>
@@ -534,17 +538,19 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
         <button
           onClick={investigar}
           disabled={researchLoading}
-          className={`font-data text-xs transition-colors disabled:opacity-50 ${
-            research ? "text-floral" : "text-bone hover:text-floral"
-          }`}
+          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
         >
-          {researchLoading ? "Investigando…" : research ? "✓ Investigado" : "Investigar com IA"}
+          {researchLoading
+            ? "Investigando…"
+            : research
+              ? researchAberto ? "Ocultar investigação" : "Ver investigação"
+              : "Investigar com IA"}
         </button>
         <span className="text-olive">·</span>
         <button
           onClick={gerarMemo}
           disabled={memoLoading}
-          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50"
+          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
         >
           {memoLoading
             ? "Gerando memo…"
@@ -556,7 +562,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
         <button
           onClick={buscarSimilares}
           disabled={similaresLoading}
-          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50"
+          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
         >
           {similaresLoading
             ? "Buscando…"
@@ -568,17 +574,17 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
         <button
           onClick={buscarTrajetoria}
           disabled={trajLoading}
-          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50"
+          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
         >
           {trajLoading ? "Carregando…" : traj ? (trajAberto ? "Ocultar trajetória" : "Ver trajetória") : "Trajetória societária"}
         </button>
       </div>
 
       {/* Erros */}
-      {researchErro && <p className="mt-2 text-xs text-risk-high">{researchErro}</p>}
-      {memoErro && <p className="mt-2 text-xs text-risk-high">{memoErro}</p>}
-      {similaresErro && <p className="mt-2 text-xs text-risk-high">{similaresErro}</p>}
-      {trajErro && <p className="mt-2 text-xs text-risk-high">{trajErro}</p>}
+      {researchErro && <p className="mt-2 text-xs text-bone/70">Não foi possível carregar a investigação. Tente de novo.</p>}
+      {memoErro && <p className="mt-2 text-xs text-bone/70">Não foi possível gerar o memo. Tente de novo.</p>}
+      {similaresErro && <p className="mt-2 text-xs text-bone/70">Não foi possível carregar os similares. Tente de novo.</p>}
+      {trajErro && <p className="mt-2 text-xs text-bone/70">Não foi possível carregar a trajetória. Tente de novo.</p>}
 
       {/* Painel: trajetória societária (sucessão em movimento) */}
       {trajAberto && (
@@ -633,7 +639,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
               {similares.map((s) => (
                 <li key={s.id} className="flex items-center justify-between gap-3 py-2">
                   <div className="min-w-0">
-                    <p className="truncate text-sm text-floral">{s.razao_social}</p>
+                    <p className="truncate font-display text-sm text-floral">{s.razao_social}</p>
                     <p className="font-data text-[11px] text-olive">
                       {s.municipio}/{s.uf}
                       {s.similaridade.motivos.length > 0 && ` · ${s.similaridade.motivos.join(", ")}`}
@@ -691,11 +697,11 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
 
       {/* Painel: investigação */}
       {researchLoading && (
-        <p className="mt-3 animate-pulse text-xs text-bone">
+        <p className="mt-3 animate-pulse text-xs text-bone" role="status">
           A IA está pesquisando sócios, herdeiros, imprensa e quadro societário em fontes públicas…
         </p>
       )}
-      {research && <ResearchDisplay research={research} />}
+      {research && researchAberto && <ResearchDisplay research={research} />}
 
       {/* Painel: memo */}
       {memoAberto && memoLoading && (
@@ -729,7 +735,7 @@ function SalvarButton({ empresaId }: { empresaId: string }) {
     <button
       onClick={salvar}
       disabled={estado !== "idle"}
-      className={`rounded-md px-2 py-1 text-[11px] font-medium transition-colors ${
+      className={`shrink-0 rounded-md px-2 py-1 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
         estado === "salvo"
           ? "text-floral"
           : "border border-hairline text-bone hover:border-hairline-hover hover:text-floral"
@@ -749,7 +755,7 @@ function ResearchDisplay({ research }: { research: ResearchResult }) {
   return (
     <div className="mt-3 space-y-3 rounded-lg border border-hairline bg-surface p-3">
       <div className="flex items-center justify-between">
-        <span className="font-data text-[10px] uppercase tracking-wider text-bone">Investigação da IA</span>
+        <span className="font-data text-[10px] uppercase tracking-wider text-bone/70">Investigação da IA</span>
         <span className="font-data text-[10px] text-olive">{PRESENCA_LABEL[research.presenca_digital]}</span>
       </div>
       {research.resumo && (
@@ -761,7 +767,7 @@ function ResearchDisplay({ research }: { research: ResearchResult }) {
           <p className="mt-1 text-sm leading-snug text-floral">{research.gatilho}</p>
         </div>
       ) : (
-        <div className="rounded-md border border-hairline bg-smoky p-2.5">
+        <div className="rounded-md bg-surface-hover p-2.5">
           <p className="font-data text-[10px] uppercase tracking-wider text-olive">
             Sem gatilho de timing · não é o momento
           </p>
@@ -786,7 +792,7 @@ function ResearchDisplay({ research }: { research: ResearchResult }) {
                 <span className="text-bone"> — {s.descricao}</span>
                 {s.fonte_url && (
                   <a href={s.fonte_url} target="_blank" rel="noopener noreferrer"
-                    className="ml-1 text-olive transition-colors hover:text-bone">
+                    className="ml-1 text-olive transition-colors hover:text-bone focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
                     ↗ fonte
                   </a>
                 )}
@@ -798,7 +804,7 @@ function ResearchDisplay({ research }: { research: ResearchResult }) {
         <p className="text-xs text-bone">Nenhum sinal qualitativo conclusivo encontrado.</p>
       )}
       {research.mensagem_abordagem && (
-        <div className="rounded-md border border-hairline bg-smoky p-2.5">
+        <div className="rounded-md bg-surface-hover p-2.5">
           <p className="font-data text-[10px] uppercase tracking-wider text-olive">
             Rascunho de abordagem · edite antes de enviar
           </p>
@@ -816,12 +822,12 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
   const cenario = cenarioIlustrativo(empresa);
   const dadosFechar = dadosParaFechar(empresa);
   return (
-    <div className="mt-3 space-y-4 rounded-lg border border-hairline bg-surface p-4 text-sm">
-      <span className="font-data text-[10px] uppercase tracking-wider text-bone">Memo de investimento</span>
+    <div className="mt-3 space-y-5 rounded-lg border border-hairline bg-surface p-4 text-sm">
+      <span className="font-data text-[10px] uppercase tracking-wider text-bone/70">Memo de investimento</span>
       <p className="leading-relaxed text-floral">{analise.overview}</p>
       <Timeline empresa={empresa} />
       <div>
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
           Análise de risco sucessório
         </h4>
         <p className="leading-relaxed text-floral">{analise.analise_sucessoria}</p>
@@ -830,7 +836,7 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
       {/* Red flags a investigar — D.2: ordenado por severidade, max 5 · D.3: como_verificar em linha própria */}
       {analise.red_flags?.length ? (
         <div>
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
             Red flags a investigar
           </h4>
           <ul className="space-y-2.5">
@@ -869,7 +875,7 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
 
       {analise.perguntas_abordagem.length > 0 && (
         <div>
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
             Perguntas para o primeiro contato
           </h4>
           <ul className="list-decimal space-y-1 pl-5 text-floral">
@@ -882,7 +888,7 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
       {/* Quant #1 — Precedentes de M&A do setor (minerado do CNPJ, dado real) */}
       {precedentes && (
         <div>
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
             Precedentes de M&amp;A no setor
           </h4>
           <p className="leading-relaxed text-floral">
@@ -894,7 +900,7 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
           </p>
           {precedentes.compradores.length > 0 && (
             <p className="mt-1 text-[11px] leading-relaxed text-bone">
-              <span className="text-bone/55">Compradores ativos:</span>{" "}
+              <span className="text-bone/70">Compradores ativos:</span>{" "}
               {precedentes.compradores.map((c) => `${c.nome} (${c.n})`).join(" · ")}
             </p>
           )}
@@ -909,21 +915,21 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
 
       {/* Quant #2 — Cenário de retorno: faixas de referência (frame, não valuation) */}
       <div>
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
           Cenário de retorno — referência (ilustrativo)
         </h4>
         <div className="grid grid-cols-2 gap-x-4 gap-y-1 font-data text-xs sm:grid-cols-4">
-          <div><span className="text-bone/55">Entrada</span><br /><span className="text-floral">{cenario.multiplo_entrada}</span></div>
-          <div><span className="text-bone/55">Saída</span><br /><span className="text-floral">{cenario.multiplo_saida}</span></div>
-          <div><span className="text-bone/55">Hold</span><br /><span className="text-floral">{cenario.hold}</span></div>
-          <div><span className="text-bone/55">Alvo</span><br /><span className="text-floral">{cenario.retorno_alvo}</span></div>
+          <div><span className="text-bone/70">Entrada</span><br /><span className="text-floral">{cenario.multiplo_entrada}</span></div>
+          <div><span className="text-bone/70">Saída</span><br /><span className="text-floral">{cenario.multiplo_saida}</span></div>
+          <div><span className="text-bone/70">Hold</span><br /><span className="text-floral">{cenario.hold}</span></div>
+          <div><span className="text-bone/70">Alvo</span><br /><span className="text-floral">{cenario.retorno_alvo}</span></div>
         </div>
         <p className="mt-1.5 text-[11px] leading-relaxed text-olive">{cenario.nota}</p>
       </div>
 
       {/* Quant #3 — Para fechar o número: o que pedir ao dono (sourcing → IC) */}
       <div>
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
           Para fechar o número — pedir ao dono
         </h4>
         <ul className="list-disc space-y-1 pl-5 text-[13px] leading-relaxed text-bone">
@@ -934,8 +940,8 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
       </div>
 
       {/* D.4: tese hairline (recuada, contexto) */}
-      <div className="border-l-2 border-bone/30 pl-3">
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+      <div className="pl-3">
+        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
           Tese de aproximação
         </h4>
         <p className="leading-relaxed text-floral">{analise.tese_aproximacao}</p>
@@ -944,7 +950,7 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
       {/* D.4: próximo passo surface-hover (mais destaque, CTA) */}
       {analise.proximo_passo && (
         <div className="rounded-md bg-surface-hover p-3">
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/55">
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
             Próximo passo
           </h4>
           <p className="leading-relaxed text-floral">→ {analise.proximo_passo}</p>
@@ -984,7 +990,7 @@ function Timeline({ empresa }: { empresa: Empresa }) {
 
   return (
     <div>
-      <h4 className="mb-2 font-data text-[10px] uppercase tracking-wider text-bone/55">
+      <h4 className="mb-2 font-data text-[10px] uppercase tracking-wider text-bone/70">
         Linha do tempo societária
       </h4>
       {/* Altura explícita evita margin collapse (conteúdo é absoluto) */}

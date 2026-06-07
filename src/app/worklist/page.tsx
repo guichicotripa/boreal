@@ -21,32 +21,31 @@ export default function Worklist() {
   const [setor, setSetor] = useState("metalmec");
   const [res, setRes] = useState<SearchResponse | null>(null);
   const [loading, setLoading] = useState(true);
-  const [salvos, setSalvos] = useState<Set<string>>(new Set());
+  const [erro, setErro] = useState(false);
 
   async function carregar(s: string) {
     setLoading(true);
-    const r = await fetch("/api/search", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ setor: s }),
-    });
-    const d = await r.json();
-    setRes(d);
-    setLoading(false);
+    setErro(false);
+    try {
+      const r = await fetch("/api/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ setor: s }),
+      });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const d = await r.json();
+      setRes(d);
+    } catch {
+      setErro(true);
+      setRes(null);
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
     carregar(setor);
   }, [setor]);
-
-  async function salvar(id: string) {
-    setSalvos((prev) => new Set(prev).add(id));
-    await fetch("/api/oportunidade", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ empresaId: id }),
-    });
-  }
 
   // O worklist: perfil sucessório (onde a lente vale) + com contato (acionável agora), por score.
   const lista = (res?.empresas ?? [])
@@ -61,14 +60,18 @@ export default function Worklist() {
             <p className="font-data text-[11px] uppercase tracking-wider text-olive">Ligar hoje</p>
             <h1 className="mt-2 font-display text-3xl tracking-tight md:text-4xl">Worklist</h1>
           </div>
-          <a href="/" className="font-data text-sm text-bone transition-colors hover:text-floral">
-            ← Busca
+          <a
+            href="/"
+            className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
+          >
+            <span className="transition-transform duration-200 group-hover:-translate-x-1">←</span>
+            <span>Voltar à busca</span>
           </a>
         </header>
 
-        <p className="mb-5 max-w-2xl text-sm leading-relaxed text-bone">
-          Alvos de <strong className="text-floral">perfil sucessório</strong> (onde o score vale 88–100%),
-          com contato disponível, priorizados. Ligue de cima pra baixo — cada linha tem o porquê e o telefone.
+        <p className="mb-5 max-w-2xl text-[15px] leading-relaxed text-bone">
+          Alvos de <strong>perfil sucessório</strong> onde o score vale 88–100%,
+          com contato disponível, priorizados. Ligue de cima para baixo, cada linha tem o porquê e o telefone.
         </p>
 
         {/* Seletor de setor */}
@@ -77,7 +80,8 @@ export default function Worklist() {
             <button
               key={s.id}
               onClick={() => setSetor(s.id)}
-              className={`rounded border px-2.5 py-1 font-data text-[11px] uppercase tracking-wider transition-colors ${
+              aria-pressed={setor === s.id}
+              className={`rounded border px-2.5 py-1 font-data text-[11px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
                 setor === s.id ? "border-floral/40 text-floral" : "border-hairline text-bone hover:text-floral"
               }`}
             >
@@ -86,54 +90,100 @@ export default function Worklist() {
           ))}
         </div>
 
-        {loading ? (
-          <p className="text-sm text-bone">Carregando…</p>
+        <div aria-live="polite" aria-busy={loading}>
+        {erro ? (
+          <div>
+            <p className="text-[15px] leading-relaxed text-bone">
+              Não consegui carregar os alvos. Verifique a conexão e tente de novo.
+            </p>
+            <button
+              onClick={() => carregar(setor)}
+              className="mt-3 inline-flex items-center gap-2 rounded border border-hairline px-3 py-2 font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:border-floral/40 hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+            >
+              <span aria-hidden="true">↻</span> Tentar de novo
+            </button>
+          </div>
+        ) : loading ? (
+          <p className="text-sm text-bone/70">Carregando…</p>
         ) : lista.length === 0 ? (
-          <p className="text-sm text-bone">Nenhum alvo de perfil sucessório com contato neste setor.</p>
+          <p className="text-sm text-olive">Nenhum alvo de perfil sucessório com contato neste setor.</p>
         ) : (
           <ol className="space-y-2">
-            {lista.map((e, i) => {
-              const salvo = salvos.has(e.id);
+            {lista.map((e) => {
               return (
                 <li key={e.id} className="flex items-start gap-3 rounded-lg border border-hairline bg-surface p-3">
-                  <span className="mt-0.5 w-5 shrink-0 text-right font-data text-sm tabular-nums text-olive">
-                    {i + 1}
-                  </span>
-                  <span className="mt-0.5 shrink-0 rounded border border-floral/30 px-1.5 font-data text-[11px] tabular-nums text-floral">
+                  <span
+                    title="score de sucessão"
+                    className="mt-0.5 shrink-0 rounded border border-hairline px-1.5 font-data text-[11px] tabular-nums text-floral"
+                  >
                     {e.score?.score ?? 0}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium leading-snug text-floral">{e.razao_social}</p>
-                    <p className="font-data text-[11px] text-olive">{e.municipio}/{e.uf}</p>
-                    <p className="mt-1 text-[12px] leading-snug text-bone">{porQue(e)}</p>
+                    <p className="font-display text-sm leading-snug text-floral">{e.razao_social}</p>
+                    <p className="font-data text-[11px] text-bone/70">{e.municipio}/{e.uf}</p>
+                    <p className="mt-1 text-xs leading-snug text-bone">{porQue(e)}</p>
                     <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-data text-[11px]">
                       {e.telefone && (
-                        <a href={`tel:${e.telefone.replace(/\D/g, "")}`} className="text-floral transition-colors hover:underline">
-                          ☎ {formatTelefone(e.telefone)}
+                        <a
+                          href={`tel:${e.telefone.replace(/\D/g, "")}`}
+                          className="text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
+                        >
+                          {formatTelefone(e.telefone)}
                         </a>
                       )}
                       {e.email && (
-                        <a href={`mailto:${e.email}`} className="text-bone transition-colors hover:text-floral">
-                          ✉ {e.email}
+                        <a
+                          href={`mailto:${e.email}`}
+                          className="text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
+                        >
+                          {e.email}
                         </a>
                       )}
                     </div>
                   </div>
-                  <button
-                    onClick={() => salvar(e.id)}
-                    disabled={salvo}
-                    className={`shrink-0 rounded border px-2 py-1 font-data text-[11px] uppercase tracking-wider transition-colors ${
-                      salvo ? "border-hairline text-olive" : "border-hairline text-bone hover:border-floral/40 hover:text-floral"
-                    }`}
-                  >
-                    {salvo ? "✓ salvo" : "+ pipeline"}
-                  </button>
+                  <SalvarButton empresaId={e.id} />
                 </li>
               );
             })}
           </ol>
         )}
+        </div>
       </main>
     </div>
+  );
+}
+
+// Mesmo padrão dos cards da home (page.tsx): 3 estados com rollback se a API falha.
+function SalvarButton({ empresaId }: { empresaId: string }) {
+  const [estado, setEstado] = useState<"idle" | "salvando" | "salvo">("idle");
+
+  async function salvar() {
+    if (estado === "salvo") return;
+    setEstado("salvando");
+    try {
+      const r = await fetch("/api/oportunidade", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ empresaId }),
+      });
+      if (!r.ok) throw new Error();
+      setEstado("salvo");
+    } catch {
+      setEstado("idle");
+    }
+  }
+
+  return (
+    <button
+      onClick={salvar}
+      disabled={estado !== "idle"}
+      className={`shrink-0 rounded-md px-2 py-1 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
+        estado === "salvo"
+          ? "text-floral"
+          : "border border-hairline text-bone hover:border-hairline-hover hover:text-floral"
+      }`}
+    >
+      {estado === "salvo" ? "✓ no pipeline" : estado === "salvando" ? "Salvando…" : "Salvar no pipeline"}
+    </button>
   );
 }

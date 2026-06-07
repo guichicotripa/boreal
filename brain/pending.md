@@ -4,6 +4,40 @@
 
 ---
 
+## 🎨 Restyle sistema v1 (em curso — 03/06 · branch `maguto/restyle-sistema-v1`)
+
+Sistema de tipografia/cor documentado em `brand/uso-tipografia-cor.md`. Feito: base (strong 600, pesos
+sans 400/500/600), hero, card/memo. Faltam as páginas.
+
+- [ ] **Ajeitar erro de borda na box** — verificar qual box (notado durante o restyle)
+- [x] Etapa 3 — pipeline (`fb62e46`)
+- [x] Etapa 4 — validação (`4e769af` + `57b838f` + `5659693`)
+- [x] Etapa 5 — consolidadores (`fe59f28`) — aguarda revisão do Maguto no browser
+- [ ] Etapa 6 — mercado ("0,46%" ocre → floral + strong sem cor)
+- [ ] Etapa 7 — /setores (nova página do Guilherme, sem restyle)
+- [ ] Etapa 8 — /worklist (nova página do Guilherme, sem restyle)
+- [ ] Decidir peso do negrito (600 atual vs 700 real) — adiado
+- [ ] SINAL_COR em validacao/page.tsx — verificar com Guilherme se ainda é necessário
+- [ ] Abrir PR: `maguto/restyle-sistema-v1` → main
+
+## 🔵 Fix de dados — /validacao · hindcast.json (Guilherme)
+
+- [ ] **`hindcast.json`: campo `municipio` tem código IBGE em vez de nome da cidade** (ex: `3549102`
+  em vez de `"Sorocaba, SP"`). A tabela "Empresas Reais" da `/validacao` exibe o código bruto,
+  parece dump de banco. Fix: adicionar join com `basedosdados.br_bd_diretorios_brasil.municipio`
+  no script que gera o hindcast (mesmo join já usado no `enrich-empresas.mjs`). Renomear coluna
+  de "Praça" para "Município" ou "Cidade" na UI ao mesmo tempo.
+
+## 🔵 Dívida técnica — navegação `<a>` → `<Link>` (Guilherme, repo-wide)
+
+- [ ] **Migrar back links de `<a href="/">` para `<Link>` do `next/link`** em todas as páginas.
+  ESLint (`@next/next/no-html-link-for-pages`) acusa erro em todas as 7 páginas (home, validação,
+  pipeline, mercado, consolidadores, worklist, setores) — é convenção atual do repo, não bloqueia
+  o build, mas perde prefetch + dá full reload. Decisão de fazer ou não é repo-wide, fora do
+  escopo do restyle. Não migrar só uma página (criaria inconsistência).
+
+---
+
 ## 🟢 Data moat + validação (30/05) ✅ MARCO
 
 - [x] **Mineração de transições do CNPJ** — ground truth de M&A de graça (340 deals saúde+metalmec SP).
