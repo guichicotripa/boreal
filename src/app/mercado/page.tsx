@@ -34,10 +34,10 @@ for (const v of Object.values(co)) {
 }
 const pct = (n: number) => Math.round((n / dest.total) * 100);
 const DESTINOS = [
-  { k: "inalterada", rotulo: "Seguem iguais — mesmo dono, empresa de pé", forte: true },
+  { k: "inalterada", rotulo: "Seguem iguais — mesmo dono, em operação", forte: true },
   { k: "socio_saiu_ou_pj", rotulo: "Mudaram de sócio", forte: false },
-  { k: "baixada_inativa", rotulo: "Fecharam as portas", forte: false },
-  { k: "sucessao_familiar", rotulo: "Passaram pra um herdeiro", forte: false },
+  { k: "baixada_inativa", rotulo: "Encerradas ou inativas", forte: false },
+  { k: "sucessao_familiar", rotulo: "Transferidas a um herdeiro", forte: false },
   { k: "vendida", rotulo: "Foram vendidas", forte: false },
 ] as const;
 
@@ -72,8 +72,8 @@ export default function Mercado() {
               {fmt(tam.quente_total)}
             </p>
             <p className="mt-3 text-sm leading-snug text-bone">
-              empresas com <strong>dono mais velho (60+), 25+ anos de casa e
-              ainda na mão da família</strong> — em metalmecânica, saúde e educação, só em SP.
+              empresas com <strong>sócio com 61+ anos, 25+ anos de operação e
+              ainda sob controle familiar</strong> — em metalmecânica, saúde e educação, só em SP.
             </p>
           </div>
           <div className="rounded-xl border border-hairline bg-surface p-6">
@@ -93,8 +93,7 @@ export default function Mercado() {
             O que acontece com elas em 2 anos?
           </h2>
           <p className="mt-2 text-[15px] leading-relaxed text-bone">
-            Pegamos as {fmt(dest.total)}{" "}empresas mais sinalizadas de 2023 e seguimos cada uma
-            até 2025. O resultado:
+            Acompanhamos as {fmt(dest.total)}{" "}empresas mais sinalizadas de 2023 até 2025. O resultado:
           </p>
           <ul className="mt-4 space-y-2">
             {DESTINOS.map((d) => {
@@ -120,28 +119,28 @@ export default function Mercado() {
               );
             })}
           </ul>
-          <p className="mt-4 rounded-lg border border-hairline bg-surface p-4 text-sm leading-relaxed text-floral">
-            Ou seja: a empresa <strong>não quebra nem é vendida</strong>. Ela só fica parada — o dono
-            vai envelhecendo e <strong>ninguém aparece pra conversar</strong>.
+          <p className="mt-4 text-[15px] leading-relaxed text-bone">
+            A empresa <strong>não quebra, nem é vendida</strong>. Ela só fica parada: o controlador
+            envelhece sem que nenhum comprador a aborde.
           </p>
         </section>
 
         {/* Macro — o juro explica parte */}
-        <section className="mt-10 rounded-xl border border-hairline bg-surface p-6">
+        <section className="mt-10">
           <h2 className="font-data text-[11px] uppercase tracking-wider text-bone/70">
             E o juro explica parte disso
           </h2>
-          <p className="mt-3 leading-relaxed text-bone">
-            Nos últimos 3 anos o juro (Selic) ficou entre <strong>13% e 15%</strong>{" "}
-            — o mais alto em quase 20 anos. Com dinheiro tão caro, quase ninguém compra empresa. Agora a
-            Selic <strong>começou a cair</strong> (14,5% em abril/2026), e a fila
-            de empresas paradas só engordou nesse tempo.
+          <p className="mt-2 text-[15px] leading-relaxed text-bone">
+            Nos últimos 3 anos o juro (Selic) ficou entre <strong>13% e 15%</strong>,
+            o mais alto em quase 20 anos. Com custo de capital elevado, o volume de aquisições é mínimo. Agora a
+            Selic <strong>começou a cair</strong> (14,5% em abril/2026). O estoque represado
+            nesse período só cresceu.
           </p>
         </section>
 
         {/* A leitura honesta */}
         <section className="mt-6 rounded-xl border border-hairline bg-surface p-6">
-          <p className="leading-relaxed text-floral">
+          <p className="text-[15px] leading-relaxed text-bone">
             Então o mercado não está vazio. Está <strong>cheio de empresas boas, paradas, que ninguém
             procurou</strong>, e a fila cresce. Montar essa lista agora, enquanto o juro ainda segura os
             compradores, é chegar na frente pra quando ele cair.
@@ -188,13 +187,13 @@ export default function Mercado() {
             Se a originação ativa levar a venda de {tam.giro_anual_pct.toLocaleString("pt-BR")}% para{" "}
             {(GIRO_ALVO * 100).toFixed(0)}% ao ano, são{" "}
             <strong>~{fmt(dealsPotenciais)} negócios/ano</strong> a mais. A um
-            ticket conservador de R${TICKET}M e fee de {(FEE * 100).toFixed(0)}%, isso é da ordem de{" "}
+            ticket conservador de R${TICKET}M e fee de {(FEE * 100).toFixed(0)}%, isso dá{" "}
             <strong>R$ {dealValueBi.toFixed(1)} bi/ano</strong> em negócios e{" "}
             <strong>~R$ {fmt(feesMi)} mi/ano em comissão</strong>.
           </p>
           <p className="mt-3 text-xs leading-snug text-olive">
-            Conta ilustrativa, com premissas à mostra, não estimamos R$ por empresa (seria dado
-            inventado). E isto é <strong>3 setores em 1 estado</strong>: empresa
+            Conta ilustrativa, com premissas à mostra. Não estimamos R$ por empresa (seria dado
+            inventado). São <strong>3 setores em 1 estado</strong>: empresa
             familiar é ~90% das empresas do Brasil.
           </p>
         </section>
