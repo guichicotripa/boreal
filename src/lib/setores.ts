@@ -42,19 +42,19 @@ const CONFIG: Record<string, { lente: Lente; descricao: string }> = {
   metalmec: {
     lente: "sucessao",
     descricao:
-      "Setor de sucessão: ~metade do M&A é venda por sucessão, e o score acerta 97% dessas. Lente forte.",
+      "Setor de sucessão: ~metade do M&A é venda por sucessão, e o score acerta 97% dessas. Sinal mais forte da cobertura atual.",
   },
   saude: {
     lente: "consolidacao",
     descricao:
-      "Setor de consolidação: só ~8% do M&A é sucessão (o resto é roll-up de clínicas). Nessas poucas, o " +
-      "score acerta 100% — mas o jogo do setor é o próximo alvo dos consolidadores, não quem vende.",
+      "Setor de consolidação: só ~8% do M&A é sucessão; o restante é roll-up de clínicas. Nessas poucas, o " +
+      "score acerta 100%, mas a dinâmica do setor é identificar o próximo alvo dos consolidadores, não quem vende.",
   },
   educacao: {
     lente: "sucessao",
     descricao:
-      "Misto: ~30% do M&A é escola familiar vendendo (o score acerta 88% dessas); o resto é consolidação " +
-      "(grupos tipo SEB/Inspira). Aplicamos a lente de sucessão no perfil familiar. Foco Relay: NE (aqui SP).",
+      "Misto: ~30% do M&A é venda de escola familiar, com 88% de acerto do score nessas vendas; o restante é consolidação, " +
+      "grupos como SEB e Inspira. Aplicamos a lente de sucessão no perfil familiar. Dados de SP; expansão para outras regiões em andamento.",
   },
 };
 
