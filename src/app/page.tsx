@@ -99,7 +99,8 @@ export default function Home() {
             {/* Overline */}
             <p className="font-data text-[11px] uppercase tracking-[0.2em] text-bone">
               <span className="text-floral">BOREAL</span>{" "}
-              <span className="text-olive">·</span> Modelo preditivo de M&amp;A
+              <span className="text-olive">·</span>{" "}
+              <span>Modelo preditivo de M&amp;A</span>
             </p>
 
             {/* Headline */}
@@ -114,7 +115,7 @@ export default function Home() {
                 {setorPorId("metalmec")?.recall_sucessao ?? 97}% das vendas por sucessão já estavam no nosso top 10%
               </strong>
               , 12 meses antes.{" "}
-              <a href="/validacao" className="group/prova whitespace-nowrap text-floral underline-offset-2 hover:underline">
+              <a href="/validacao" className="group/prova whitespace-nowrap text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
                 ver a prova{" "}
                 <span className="inline-block transition-transform duration-200 group-hover/prova:translate-x-0.5">→</span>
               </a>
@@ -127,7 +128,7 @@ export default function Home() {
                   Setor: <strong className="text-floral">{setorPorId(setorAtivo)!.nome}</strong>
                   <span className="text-olive"> · lente {setorPorId(setorAtivo)!.lente === "consolidacao" ? "consolidação" : "sucessão"}</span>
                 </p>
-                <a href="/" className="font-data text-[11px] uppercase tracking-wider text-olive transition-colors hover:text-floral">
+                <a href="/" className="font-data text-[11px] uppercase tracking-wider text-olive transition-colors hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
                   limpar
                 </a>
               </div>
@@ -141,7 +142,7 @@ export default function Home() {
               }}
               className="mt-8"
             >
-              <p className="mb-3 font-data text-[10px] uppercase tracking-[0.18em] text-olive">
+              <p className="mb-3 font-data text-[10px] uppercase tracking-[0.18em] text-bone/70">
                 Descreva uma tese em linguagem livre
               </p>
               <div className="flex items-center gap-2 border-b border-hairline-hover pb-3 transition-colors focus-within:border-floral/30">
@@ -155,7 +156,7 @@ export default function Home() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity disabled:opacity-50"
+                  className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
                 >
                   {loading ? "Buscando…" : (
                     <>
@@ -177,7 +178,7 @@ export default function Home() {
                     setTexto(ex);
                     buscar(ex, setorAtivo ?? undefined);
                   }}
-                  className="rounded border border-hairline px-2 py-1 text-xs text-bone transition-colors hover:border-hairline-hover hover:text-floral"
+                  className="rounded border border-hairline px-2 py-1 text-xs text-bone transition-colors hover:border-hairline-hover hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
                 >
                   {ex}
                 </button>
@@ -189,10 +190,17 @@ export default function Home() {
 
             {/* Erro */}
             {erro && (
-              <div className="mt-10 rounded-lg border border-risk-high/30 bg-risk-high/5 px-4 py-3">
+              <div className="mt-10 py-10">
                 <p className="font-data text-[10px] uppercase tracking-wider text-olive">Erro na busca</p>
-                <p className="mt-1 text-sm text-risk-high">{erro}</p>
-                <p className="mt-2 text-xs text-bone">Tente reformular a consulta ou aguarde alguns instantes.</p>
+                <p className="mt-2 text-[15px] leading-relaxed text-bone">
+                  Não foi possível realizar a busca. Verifique a conexão e tente de novo.
+                </p>
+                <button
+                  onClick={() => buscar(texto, setorAtivo ?? undefined)}
+                  className="mt-3 inline-flex items-center gap-2 rounded border border-hairline px-3 py-2 font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:border-floral/40 hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+                >
+                  <span aria-hidden="true">↻</span> Tentar de novo
+                </button>
               </div>
             )}
 
@@ -250,7 +258,7 @@ export default function Home() {
 
           {/* Sidebar — cobertura do universo de busca */}
           <aside className="md:border-l md:border-hairline md:pl-6">
-            <p className="font-data text-[10px] uppercase tracking-wider text-olive">
+            <p className="font-data text-[10px] uppercase tracking-wider text-bone/70">
               Cobertura
             </p>
             <ul className="mt-3 space-y-1.5 font-data text-xs text-bone">
@@ -267,7 +275,7 @@ export default function Home() {
               <li>Interior de SP</li>
               <li>Score sucessório</li>
             </ul>
-            <p className="mt-6 font-data text-[10px] uppercase tracking-wider text-olive">
+            <p className="mt-6 font-data text-[10px] uppercase tracking-wider text-bone/70">
               Base
             </p>
             <p className="mt-1 font-data text-xs tabular-nums text-bone">
@@ -301,7 +309,7 @@ function LoadingSteps() {
   }, []);
 
   return (
-    <div className="mt-10 flex flex-col gap-2">
+    <div className="mt-10 flex flex-col gap-2" aria-live="polite" aria-busy="true">
       {LOADING_STEPS.slice(0, step + 1).map((s, i) => (
         <div
           key={i}
@@ -322,9 +330,9 @@ function LoadingSteps() {
 }
 
 const TIER_STYLES = {
-  alto:  { borderL: "border-l-risk-high",  badge: "border-risk-high/40 bg-risk-high/5", text: "text-risk-high", label: "ALTO"  },
-  medio: { borderL: "border-l-risk-mid",   badge: "border-risk-mid/40 bg-risk-mid/5",   text: "text-risk-mid",  label: "MÉD"   },
-  baixo: { borderL: "border-l-hairline",   badge: "border-hairline bg-surface",         text: "text-bone",      label: "BAIXO" },
+  alto:  { badge: "border-risk-high/40 bg-risk-high/5", text: "text-risk-high", label: "ALTO"  },
+  medio: { badge: "border-risk-mid/40 bg-risk-mid/5",   text: "text-risk-mid",  label: "MÉD"   },
+  baixo: { badge: "border-hairline bg-surface",         text: "text-bone",      label: "BAIXO" },
 } as const;
 
 const FAIXA_COLOR: Record<string, string> = {
@@ -461,7 +469,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
   }
 
   return (
-    <li className={`rounded-lg border border-hairline border-l-2 ${t.borderL} bg-surface overflow-hidden p-4 transition-colors hover:bg-surface-hover`}>
+    <li className="rounded-lg border border-hairline bg-surface overflow-hidden p-4 transition-colors hover:bg-surface-hover">
       {/* Header: score badge + nome + salvar */}
       <div className="flex items-start gap-3">
         <div className={`shrink-0 rounded border ${t.badge} px-2 py-1 text-center`}>
@@ -520,7 +528,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
           <>
             <button
               onClick={() => setSociosAberto((v) => !v)}
-              className="font-data text-xs text-bone transition-colors hover:text-floral"
+              className="font-data text-xs text-bone transition-colors hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
             >
               {sociosAberto ? "Ocultar detalhes" : "Ver detalhes"}
             </button>
@@ -530,7 +538,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
         <button
           onClick={investigar}
           disabled={researchLoading}
-          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50"
+          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
         >
           {researchLoading
             ? "Investigando…"
@@ -542,7 +550,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
         <button
           onClick={gerarMemo}
           disabled={memoLoading}
-          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50"
+          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
         >
           {memoLoading
             ? "Gerando memo…"
@@ -554,7 +562,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
         <button
           onClick={buscarSimilares}
           disabled={similaresLoading}
-          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50"
+          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
         >
           {similaresLoading
             ? "Buscando…"
@@ -566,17 +574,17 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
         <button
           onClick={buscarTrajetoria}
           disabled={trajLoading}
-          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50"
+          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
         >
           {trajLoading ? "Carregando…" : traj ? (trajAberto ? "Ocultar trajetória" : "Ver trajetória") : "Trajetória societária"}
         </button>
       </div>
 
       {/* Erros */}
-      {researchErro && <p className="mt-2 text-xs text-risk-high">{researchErro}</p>}
-      {memoErro && <p className="mt-2 text-xs text-risk-high">{memoErro}</p>}
-      {similaresErro && <p className="mt-2 text-xs text-risk-high">{similaresErro}</p>}
-      {trajErro && <p className="mt-2 text-xs text-risk-high">{trajErro}</p>}
+      {researchErro && <p className="mt-2 text-xs text-bone/70">Não foi possível carregar a investigação. Tente de novo.</p>}
+      {memoErro && <p className="mt-2 text-xs text-bone/70">Não foi possível gerar o memo. Tente de novo.</p>}
+      {similaresErro && <p className="mt-2 text-xs text-bone/70">Não foi possível carregar os similares. Tente de novo.</p>}
+      {trajErro && <p className="mt-2 text-xs text-bone/70">Não foi possível carregar a trajetória. Tente de novo.</p>}
 
       {/* Painel: trajetória societária (sucessão em movimento) */}
       {trajAberto && (
@@ -631,7 +639,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
               {similares.map((s) => (
                 <li key={s.id} className="flex items-center justify-between gap-3 py-2">
                   <div className="min-w-0">
-                    <p className="truncate text-sm text-floral">{s.razao_social}</p>
+                    <p className="truncate font-display text-sm text-floral">{s.razao_social}</p>
                     <p className="font-data text-[11px] text-olive">
                       {s.municipio}/{s.uf}
                       {s.similaridade.motivos.length > 0 && ` · ${s.similaridade.motivos.join(", ")}`}
@@ -689,7 +697,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
 
       {/* Painel: investigação */}
       {researchLoading && (
-        <p className="mt-3 animate-pulse text-xs text-bone">
+        <p className="mt-3 animate-pulse text-xs text-bone" role="status">
           A IA está pesquisando sócios, herdeiros, imprensa e quadro societário em fontes públicas…
         </p>
       )}
@@ -727,7 +735,7 @@ function SalvarButton({ empresaId }: { empresaId: string }) {
     <button
       onClick={salvar}
       disabled={estado !== "idle"}
-      className={`rounded-md px-2 py-1 text-[11px] font-medium transition-colors ${
+      className={`shrink-0 rounded-md px-2 py-1 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
         estado === "salvo"
           ? "text-floral"
           : "border border-hairline text-bone hover:border-hairline-hover hover:text-floral"
@@ -784,7 +792,7 @@ function ResearchDisplay({ research }: { research: ResearchResult }) {
                 <span className="text-bone"> — {s.descricao}</span>
                 {s.fonte_url && (
                   <a href={s.fonte_url} target="_blank" rel="noopener noreferrer"
-                    className="ml-1 text-olive transition-colors hover:text-bone">
+                    className="ml-1 text-olive transition-colors hover:text-bone focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
                     ↗ fonte
                   </a>
                 )}
@@ -932,7 +940,7 @@ function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierA
       </div>
 
       {/* D.4: tese hairline (recuada, contexto) */}
-      <div className="border-l-2 border-bone/30 pl-3">
+      <div className="pl-3">
         <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
           Tese de aproximação
         </h4>
