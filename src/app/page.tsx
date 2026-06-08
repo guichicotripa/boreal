@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import type { SearchResponse, Empresa, DossierAnalise, ResearchResult } from "@/lib/types";
 import { scoreTier } from "@/lib/scoring";
 import { precedentesParaEmpresa, cenarioIlustrativo, dadosParaFechar } from "@/lib/memo-extras";
 import type { EmpresaSimilar } from "@/lib/similar";
 import { setorPorId, SETORES } from "@/lib/setores";
+import { storeEmpresa, storeOrigin } from "@/lib/empresa-store";
 
 // Teses de exemplo POR SETOR — quando um setor está ativo, os atalhos se adaptam a ele
 // (o CNAE vem do setor; o exemplo foca no perfil sucessório: idade do sócio, fundação).
@@ -474,7 +476,16 @@ function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-            <h3 className="font-display text-lg leading-tight text-floral">{e.razao_social}</h3>
+            <Link
+              href={`/empresa/${e.id}`}
+              onClick={() => { storeEmpresa(e); storeOrigin("busca"); }}
+              className="group/nome font-display text-lg leading-tight text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
+            >
+              {e.razao_social}
+              <span className="ml-1.5 inline-block font-data text-[10px] uppercase tracking-wider text-olive opacity-0 transition-opacity group-hover/nome:opacity-100">
+                ver perfil →
+              </span>
+            </Link>
           </div>
           <p className="font-data text-[11px] text-olive">
             {e.municipio}/{e.uf} · {formatCnpj(e.cnpj)}
