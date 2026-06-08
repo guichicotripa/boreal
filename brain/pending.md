@@ -4,6 +4,41 @@
 
 ---
 
+## 🟢 Home restyle Fase 1 (07/06 · Maguto) — pré-reunião 3
+
+Lote de baixo risco antes da reunião de terça (09/06). Tudo em `src/app/page.tsx` + `src/components/brand/Nav.tsx`.
+
+- [x] Copy da home enxuta (subhead sem moldura de venda; "ver metodologia →")
+- [x] Navbar: Início · Pipeline · Worklist + dropdown **Metodologia** (Validação/Mercado/Consolidadores/Setores)
+- [x] Card: stats strip (Porte · Capital · Fundada · Sócio+), capital compacto, badges + linha olive removidos, ações curtas
+- [x] Switcher de setor na home (segmented control) — troca o universo sem ir a /setores; cobertura segue o setor (2.000 empresas · SP por setor)
+- [x] Fix de toggle "não fecha" em investigar/memo/similares; labels olive→bone/70 na investigação
+- [x] Lint limpo (`set-state-in-effect` + prop `rank` órfã)
+
+## 🔴 Trajetória societária — handoff p/ Guilherme (removida da home 07/06)
+
+Removida do card da home (pesada inline: query BigQuery ao vivo, lenta/instável p/ empresas sem snapshot).
+**Rota `/api/trajetoria` + libs preservadas** — nada deletado do backend; só saíram botão/painel/handler do `page.tsx`
+(recuperáveis do git p/ a página da empresa).
+
+- [ ] **Cachear trajetória das empresas-top dos demos** → `trajetoria-cache.json` + rota lê cache-first (padrão
+  research-cache/dossier-cache). Pré-computar via BigQuery p/ clique instantâneo e confiável no Loom.
+- [ ] Reviver o painel de trajetória na **página da empresa** (Fase 2), não na home.
+
+## 🟡 Fase 2 — página da empresa + interatividade (versão final, esta semana)
+
+Decidido com o Maguto (07/06): busca e pipeline precisam ser navegáveis — clicar numa empresa abre a **página própria**
+dela (card + infos completas). Racional: o analista de M&A revisa muitas empresas e não lembra delas só pelo nome.
+
+- [ ] Rota `/empresa/[id]` — recebe as ações pesadas (investigar, memo, similares, trajetória) + sócios + contato +
+  **score explainer** (o `breakdown` já vem no payload do `calcScore`).
+- [ ] Card da busca vira link → página da empresa (card magro de verdade; lista longa fica varrível).
+- [ ] **Pipeline:** cards clicáveis → página da empresa (mesma lógica).
+- [ ] **Similares funcional:** botão "Salvar no pipeline" por linha + legenda do critério (CNAE+praça+porte+época).
+  Hoje é lista morta; vira "ache parecidas → salve as boas" (wedge do Grata).
+- [ ] Dependência opcional (Guilherme): `GET /api/empresa/[id]` (empresa + score) p/ a página sobreviver a
+  refresh/deploy. Sem isso, dá pra navegar via estado no clique (suficiente p/ o Loom).
+
 ## 🎨 Restyle sistema v1 (em curso — 03/06 · branch `maguto/restyle-sistema-v1`)
 
 Sistema de tipografia/cor documentado em `brand/uso-tipografia-cor.md`. Feito: base (strong 600, pesos
