@@ -4,10 +4,15 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import type { SearchResponse, Empresa, DossierAnalise, ResearchResult } from "@/lib/types";
 import { scoreTier } from "@/lib/scoring";
-import { precedentesParaEmpresa, cenarioIlustrativo, dadosParaFechar } from "@/lib/memo-extras";
+import {
+  FAIXA_LABEL, FAIXA_COLOR, TIER_STYLES,
+  formatCnpj, formatTelefone, formatCapitalCompact,
+} from "@/lib/format";
 import type { EmpresaSimilar } from "@/lib/similar";
 import { setorPorId, SETORES } from "@/lib/setores";
 import { storeEmpresa, storeOrigin } from "@/lib/empresa-store";
+import { ResearchDisplay } from "@/components/empresa/ResearchDisplay";
+import { MemoDisplay } from "@/components/empresa/MemoDisplay";
 
 // Teses de exemplo POR SETOR — quando um setor está ativo, os atalhos se adaptam a ele
 // (o CNAE vem do setor; o exemplo foca no perfil sucessório: idade do sócio, fundação).
@@ -29,29 +34,6 @@ const EXEMPLOS_POR_SETOR: Record<string, string[]> = {
   ],
 };
 const EXEMPLOS = EXEMPLOS_POR_SETOR.metalmec;
-
-const FAIXA_LABEL: Record<string, string> = {
-  "1": "0–12", "2": "13–20", "3": "21–30", "4": "31–40", "5": "41–50",
-  "6": "51–60", "7": "61–70", "8": "71–80", "9": "80+",
-};
-
-function formatCnpj(cnpj: string) {
-  return cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");
-}
-
-function formatTelefone(tel: string) {
-  const d = tel.replace(/\D/g, "");
-  if (d.length === 10) return d.replace(/^(\d{2})(\d{4})(\d{4})$/, "($1) $2-$3");
-  if (d.length === 11) return d.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
-  return tel;
-}
-
-// Capital compacto — bem mais varrível que o valor cheio (R$ 52,5 mi vs R$ 52.500.000).
-function formatCapitalCompact(v: number | null): string | null {
-  if (v == null) return null;
-  if (v >= 1_000_000) return `R$ ${(v / 1_000_000).toLocaleString("pt-BR", { maximumFractionDigits: 1 })} mi`;
-  return `R$ ${v.toLocaleString("pt-BR", { maximumFractionDigits: 0 })}`;
-}
 
 // Descrição curta dos CNAEs cobertos por setor — para o painel de cobertura.
 const CNAE_LABEL: Record<string, string> = {
@@ -342,19 +324,6 @@ function LoadingSteps() {
   );
 }
 
-const TIER_STYLES = {
-  alto:  { badge: "border-risk-high/40 bg-risk-high/5", text: "text-risk-high", label: "ALTO"  },
-  medio: { badge: "border-risk-mid/40 bg-risk-mid/5",   text: "text-risk-mid",  label: "MÉD"   },
-  baixo: { badge: "border-hairline bg-surface",         text: "text-bone",      label: "BAIXO" },
-} as const;
-
-const FAIXA_COLOR: Record<string, string> = {
-  "9": "bg-risk-high/15 text-risk-high", // 80+
-  "8": "bg-risk-high/15 text-risk-high", // 71-80
-  "7": "bg-risk-mid/15 text-risk-mid",   // 61-70
-  "6": "bg-surface text-bone",           // 51-60
-};
-
 function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
   // Research — lógica levantada do ResearchPanel
   const [research, setResearch] = useState<ResearchResult | null>(null);
@@ -643,13 +612,13 @@ function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
           A IA está pesquisando sócios, herdeiros, imprensa e quadro societário em fontes públicas…
         </p>
       )}
-      {research && researchAberto && <ResearchDisplay research={research} />}
+      {research && researchAberto && <div className="mt-3"><ResearchDisplay research={research} /></div>}
 
       {/* Painel: memo */}
       {memoAberto && memoLoading && (
         <p className="mt-3 animate-pulse font-data text-xs text-bone">Gerando memo de investimento…</p>
       )}
-      {memoAberto && memoAnalise && <MemoDisplay empresa={e} analise={memoAnalise} />}
+      {memoAberto && memoAnalise && <div className="mt-3"><MemoDisplay empresa={e} analise={memoAnalise} /></div>}
     </li>
   );
 }
@@ -701,319 +670,3 @@ function SalvarButton({ empresaId }: { empresaId: string }) {
   );
 }
 
-const PRESENCA_LABEL: Record<string, string> = {
-  alta: "presença digital alta", media: "presença digital média",
-  baixa: "presença digital baixa", nenhuma: "sem presença digital",
-};
-
-function ResearchDisplay({ research }: { research: ResearchResult }) {
-  return (
-    <div className="mt-3 space-y-3 rounded-lg border border-hairline bg-surface p-3">
-      <div className="flex items-center justify-between">
-        <span className="font-data text-[10px] uppercase tracking-wider text-bone/70">Investigação da IA</span>
-        <span className="font-data text-[10px] text-olive">{PRESENCA_LABEL[research.presenca_digital]}</span>
-      </div>
-      {research.resumo && (
-        <p className="text-sm leading-relaxed text-floral">{research.resumo}</p>
-      )}
-      {research.gatilho ? (
-        <div className="rounded-md border border-risk-high/30 bg-risk-high/10 p-2.5">
-          <p className="font-data text-[10px] uppercase tracking-wider text-risk-high">Por que agora</p>
-          <p className="mt-1 text-sm leading-snug text-floral">{research.gatilho}</p>
-        </div>
-      ) : (
-        <div className="rounded-md bg-surface-hover p-2.5">
-          <p className="font-data text-[10px] uppercase tracking-wider text-bone/70">
-            Sem gatilho de timing · não é o momento
-          </p>
-          <p className="mt-1 text-sm leading-snug text-bone">
-            {research.sinais.some((s) => s.peso < 0)
-              ? "A investigação encontrou sinal de sucessão já encaminhada (herdeiro ativo). Abordar agora tende a ser improdutivo — monitorar."
-              : "O perfil não indica uma janela de abordagem no momento. Manter no radar, sem priorizar contato."}
-          </p>
-        </div>
-      )}
-      {research.sinais.length > 0 ? (
-        <ul className="flex flex-col gap-2">
-          {research.sinais.map((s, i) => (
-            <li key={i} className="flex items-start gap-2 text-xs">
-              <span className={`mt-0.5 shrink-0 rounded px-1.5 py-0.5 font-data text-[10px] tabular-nums ${
-                s.peso > 0 ? "bg-risk-high/15 text-risk-high" : "bg-surface text-bone"
-              }`}>
-                {s.peso > 0 ? `+${s.peso}` : s.peso}
-              </span>
-              <div>
-                <span className="font-medium text-floral">{s.rotulo}</span>
-                <span className="text-bone"> — {s.descricao}</span>
-                {s.fonte_url && (
-                  <a href={s.fonte_url} target="_blank" rel="noopener noreferrer"
-                    className="ml-1 text-olive transition-colors hover:text-bone focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
-                    ↗ fonte
-                  </a>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="text-xs text-bone">Nenhum sinal qualitativo conclusivo encontrado.</p>
-      )}
-      {research.mensagem_abordagem && (
-        <div className="rounded-md bg-surface-hover p-2.5">
-          <p className="font-data text-[10px] uppercase tracking-wider text-bone/70">
-            Rascunho de abordagem · edite antes de enviar
-          </p>
-          <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-bone">
-            {research.mensagem_abordagem}
-          </p>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierAnalise }) {
-  const precedentes = precedentesParaEmpresa(empresa);
-  const cenario = cenarioIlustrativo(empresa);
-  const dadosFechar = dadosParaFechar(empresa);
-  return (
-    <div className="mt-3 space-y-5 rounded-lg border border-hairline bg-surface p-4 text-sm">
-      <span className="font-data text-[10px] uppercase tracking-wider text-bone/70">Memo de investimento</span>
-      <p className="leading-relaxed text-floral">{analise.overview}</p>
-      <Timeline empresa={empresa} />
-      <div>
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
-          Análise de risco sucessório
-        </h4>
-        <p className="leading-relaxed text-floral">{analise.analise_sucessoria}</p>
-      </div>
-
-      {/* Red flags a investigar — D.2: ordenado por severidade, max 5 · D.3: como_verificar em linha própria */}
-      {analise.red_flags?.length ? (
-        <div>
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
-            Red flags a investigar
-          </h4>
-          <ul className="space-y-2.5">
-            {[...analise.red_flags]
-              .sort((a, b) => {
-                const ord = { alta: 0, media: 1, baixa: 2 } as Record<string, number>;
-                return (ord[a.severidade] ?? 3) - (ord[b.severidade] ?? 3);
-              })
-              .slice(0, 5)
-              .map((rf, i) => {
-                const cor =
-                  rf.severidade === "alta"
-                    ? "border-risk-high/50 text-risk-high"
-                    : rf.severidade === "media"
-                      ? "border-risk-mid/50 text-risk-mid"
-                      : "border-hairline text-bone";
-                return (
-                  <li key={i}>
-                    <div>
-                      <span className={`mr-2 rounded border px-1.5 py-0.5 font-data text-[10px] uppercase tracking-wider ${cor}`}>
-                        {rf.severidade}
-                      </span>
-                      <span className="text-floral">{rf.risco}</span>
-                    </div>
-                    {rf.como_verificar && (
-                      <p className="mt-1 pl-0.5 text-[11px] leading-relaxed text-bone">
-                        {rf.como_verificar}
-                      </p>
-                    )}
-                  </li>
-                );
-              })}
-          </ul>
-        </div>
-      ) : null}
-
-      {analise.perguntas_abordagem.length > 0 && (
-        <div>
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
-            Perguntas para o primeiro contato
-          </h4>
-          <ul className="list-decimal space-y-1 pl-5 text-floral">
-            {analise.perguntas_abordagem.map((p, i) => (
-              <li key={i} className="leading-relaxed">{p}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {/* Quant #1 — Precedentes de M&A do setor (minerado do CNPJ, dado real) */}
-      {precedentes && (
-        <div>
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
-            Precedentes de M&amp;A no setor
-          </h4>
-          <p className="leading-relaxed text-floral">
-            <strong>{precedentes.n_deals}</strong> aquisições em {precedentes.setor} (SP) nos últimos{" "}
-            {precedentes.periodo_anos.toLocaleString("pt-BR")} anos —{" "}
-            {precedentes.padrao === "consolidacao"
-              ? "setor em consolidação ativa."
-              : "compras pontuais, sem consolidador dominante."}
-          </p>
-          {precedentes.compradores.length > 0 && (
-            <p className="mt-1 text-[11px] leading-relaxed text-bone">
-              <span className="text-bone/70">Compradores ativos:</span>{" "}
-              {precedentes.compradores.map((c) => `${c.nome} (${c.n})`).join(" · ")}
-            </p>
-          )}
-          {precedentes.exemplos.length > 0 && (
-            <p className="mt-0.5 text-[11px] leading-relaxed text-bone/70">
-              Ex. adquiridas: {precedentes.exemplos.join(" · ")}
-            </p>
-          )}
-          <p className="mt-1 font-data text-[10px] text-olive">Minerado do CNPJ — transações reais, não estimativa.</p>
-        </div>
-      )}
-
-      {/* Quant #2 — Cenário de retorno: faixas de referência (frame, não valuation) */}
-      <div>
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
-          Cenário de retorno — referência (ilustrativo)
-        </h4>
-        <div className="grid grid-cols-2 gap-x-4 gap-y-1 font-data text-xs sm:grid-cols-4">
-          <div><span className="text-bone/70">Entrada</span><br /><span className="text-floral">{cenario.multiplo_entrada}</span></div>
-          <div><span className="text-bone/70">Saída</span><br /><span className="text-floral">{cenario.multiplo_saida}</span></div>
-          <div><span className="text-bone/70">Hold</span><br /><span className="text-floral">{cenario.hold}</span></div>
-          <div><span className="text-bone/70">Alvo</span><br /><span className="text-floral">{cenario.retorno_alvo}</span></div>
-        </div>
-        <p className="mt-1.5 text-[11px] leading-relaxed text-olive">{cenario.nota}</p>
-      </div>
-
-      {/* Quant #3 — Para fechar o número: o que pedir ao dono (sourcing → IC) */}
-      <div>
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
-          Para fechar o número — pedir ao dono
-        </h4>
-        <ul className="list-disc space-y-1 pl-5 text-[13px] leading-relaxed text-bone">
-          {dadosFechar.map((d, i) => (
-            <li key={i}>{d}</li>
-          ))}
-        </ul>
-      </div>
-
-      {/* D.4: tese hairline (recuada, contexto) */}
-      <div className="pl-3">
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
-          Tese de aproximação
-        </h4>
-        <p className="leading-relaxed text-floral">{analise.tese_aproximacao}</p>
-      </div>
-
-      {/* D.4: próximo passo surface-hover (mais destaque, CTA) */}
-      {analise.proximo_passo && (
-        <div className="rounded-md bg-surface-hover p-3">
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
-            Próximo passo
-          </h4>
-          <p className="leading-relaxed text-floral">→ {analise.proximo_passo}</p>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// Timeline horizontal: fundação → entrada de cada sócio. Mostra "quadro travado"
-// visualmente. CSS puro, sem lib de chart. Agrupa eventos do mesmo ano e alinha
-// os labels conforme a posição (evita corte nas bordas).
-function Timeline({ empresa }: { empresa: Empresa }) {
-  const anoFund = empresa.data_inicio_atividade
-    ? Number(empresa.data_inicio_atividade.slice(0, 4))
-    : null;
-  if (!anoFund) return null;
-
-  const anoAtual = new Date().getFullYear();
-  const span = anoAtual - anoFund || 1;
-
-  // Agrupa labels por ano (fundação + sócio que entrou no mesmo ano não colidem).
-  const porAno = new Map<number, string[]>();
-  porAno.set(anoFund, ["Fundação"]);
-  for (const s of empresa.socio ?? []) {
-    const ano = s.data_entrada_sociedade ? Number(s.data_entrada_sociedade.slice(0, 4)) : null;
-    if (ano === null || !Number.isFinite(ano)) continue;
-    const nome = s.nome.split(" ")[0];
-    const arr = porAno.get(ano);
-    if (arr) arr.push(nome);
-    else porAno.set(ano, [nome]);
-  }
-
-  const eventos = [...porAno.entries()]
-    .map(([ano, labels]) => ({ ano, label: labels.join(" · ") }))
-    .sort((a, b) => a.ano - b.ano);
-
-  return (
-    <div>
-      <h4 className="mb-2 font-data text-[10px] uppercase tracking-wider text-bone/70">
-        Linha do tempo societária
-      </h4>
-      {/* Altura explícita evita margin collapse (conteúdo é absoluto) */}
-      <div className="relative mt-10 h-8 mb-4">
-        {/* Linha separada, insetada pelo raio do dot em cada lado */}
-        <div className="absolute inset-x-[18px] top-0 border-b border-hairline" />
-
-        {eventos.map((ev, i) => {
-          const pct = ((ev.ano - anoFund) / span) * 100;
-          const isLeft  = pct === 0;
-          const isRight = pct >= 92;
-
-          if (isLeft) {
-            return (
-              <div key={i} className="absolute left-0 -translate-y-1/2" style={{ width: 28 }}>
-                <span className="absolute -top-7 left-0 max-w-[8rem] truncate whitespace-nowrap text-[10px] text-bone">
-                  {ev.label}
-                </span>
-                <span className="mx-auto block h-2 w-2 rounded-full bg-risk-mid" />
-                <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-olive">
-                  {ev.ano}
-                </span>
-              </div>
-            );
-          }
-
-          if (isRight) {
-            return (
-              <div key={i} className="absolute -translate-y-1/2 -translate-x-1/2" style={{ left: `${pct}%`, width: 28 }}>
-                <span className="absolute -top-7 w-full truncate whitespace-nowrap text-center text-[10px] text-bone">
-                  {ev.label}
-                </span>
-                <span className="mx-auto block h-2 w-2 rounded-full bg-risk-mid" />
-                <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-olive">
-                  {ev.ano}
-                </span>
-              </div>
-            );
-          }
-
-          return (
-            <div
-              key={i}
-              className="absolute flex flex-col -translate-y-1/2 -translate-x-1/2 items-center text-center"
-              style={{ left: `${pct}%` }}
-            >
-              <span className="absolute -top-7 max-w-[8rem] truncate whitespace-nowrap text-[10px] text-bone">
-                {ev.label}
-              </span>
-              <span className="h-2 w-2 rounded-full bg-risk-mid" />
-              <span className="absolute top-3 font-data text-[10px] tabular-nums text-olive">
-                {ev.ano}
-              </span>
-            </div>
-          );
-        })}
-
-        {/* Marcador "Hoje" — container fixo 28px, tudo centrado */}
-        <div className="absolute right-0 -translate-y-1/2" style={{ width: 28 }}>
-          <span className="absolute -top-7 w-full text-center font-data text-[10px] uppercase tracking-wide text-olive">
-            Hoje
-          </span>
-          <span className="mx-auto block h-2 w-2 rounded-full border border-hairline-hover bg-transparent" />
-          <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-olive">
-            {anoAtual}
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-}
