@@ -17,9 +17,9 @@ export const FAIXA_COLOR: Record<string, string> = {
 
 // Estilo do badge de score por tier. Único lugar onde a cor de risco vive (regra do brand v3).
 export const TIER_STYLES = {
-  alto:  { badge: "border-risk-high/40 bg-risk-high/5", text: "text-risk-high", label: "ALTO"  },
-  medio: { badge: "border-risk-mid/40 bg-risk-mid/5",   text: "text-risk-mid",  label: "MÉD"   },
-  baixo: { badge: "border-hairline bg-surface",         text: "text-bone",      label: "BAIXO" },
+  alto:  { badge: "border-risk-high/40 bg-risk-high/5", text: "text-risk-high", bar: "bg-risk-high/70", label: "ALTO"  },
+  medio: { badge: "border-risk-mid/40 bg-risk-mid/5",   text: "text-risk-mid",  bar: "bg-risk-mid/70",  label: "MÉD"   },
+  baixo: { badge: "border-hairline bg-surface",         text: "text-bone",      bar: "bg-bone/60",      label: "BAIXO" },
 } as const;
 
 export const PRESENCA_LABEL: Record<string, string> = {

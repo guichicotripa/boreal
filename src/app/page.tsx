@@ -2,17 +2,14 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import type { SearchResponse, Empresa, DossierAnalise, ResearchResult } from "@/lib/types";
+import type { SearchResponse, Empresa } from "@/lib/types";
 import { scoreTier } from "@/lib/scoring";
 import {
-  FAIXA_LABEL, FAIXA_COLOR, TIER_STYLES,
-  formatCnpj, formatTelefone, formatCapitalCompact,
+  FAIXA_LABEL, TIER_STYLES,
+  formatCnpj, formatCapitalCompact,
 } from "@/lib/format";
-import type { EmpresaSimilar } from "@/lib/similar";
 import { setorPorId, SETORES } from "@/lib/setores";
 import { storeEmpresa, storeOrigin } from "@/lib/empresa-store";
-import { ResearchDisplay } from "@/components/empresa/ResearchDisplay";
-import { MemoDisplay } from "@/components/empresa/MemoDisplay";
 
 // Teses de exemplo POR SETOR — quando um setor está ativo, os atalhos se adaptam a ele
 // (o CNAE vem do setor; o exemplo foca no perfil sucessório: idade do sócio, fundação).
@@ -324,109 +321,22 @@ function LoadingSteps() {
   );
 }
 
+// Card de triagem — score + nome + stats. A profundidade (investigar, memo,
+// sócios, similares) vive na página da empresa (/empresa/[id]).
 function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
-  // Research — lógica levantada do ResearchPanel
-  const [research, setResearch] = useState<ResearchResult | null>(null);
-  const [researchLoading, setResearchLoading] = useState(false);
-  const [researchAberto, setResearchAberto] = useState(false);
-  const [researchErro, setResearchErro] = useState<string | null>(null);
-
-  // Memo — lógica levantada do DossierPanel
-  const [memoAnalise, setMemoAnalise] = useState<DossierAnalise | null>(null);
-  const [memoLoading, setMemoLoading] = useState(false);
-  const [memoAberto, setMemoAberto] = useState(false);
-  const [memoErro, setMemoErro] = useState<string | null>(null);
-
-  // Sócios
-  const [sociosAberto, setSociosAberto] = useState(false);
-
-  // Look-alike (achar similares)
-  const [similares, setSimilares] = useState<EmpresaSimilar[] | null>(null);
-  const [similaresLoading, setSimilaresLoading] = useState(false);
-  const [similaresAberto, setSimilaresAberto] = useState(false);
-  const [similaresErro, setSimilaresErro] = useState<string | null>(null);
-
-  const scoreV0 = e.score?.score ?? 0;
-  const score = research?.score_v1 ?? scoreV0;
+  const score = e.score?.score ?? 0;
   const tier = scoreTier(score);
   const t = TIER_STYLES[tier];
   const socios = e.socio ?? [];
 
-  // Stats de triagem — porte/capital/fundada/sócio mais velho.
   const anoFund = e.data_inicio_atividade ? e.data_inicio_atividade.slice(0, 4) : "—";
-  const anosOperacao = e.data_inicio_atividade
+  const anosOp = e.data_inicio_atividade
     ? new Date().getFullYear() - Number(e.data_inicio_atividade.slice(0, 4))
     : null;
   const faixasPF = socios
     .map((s) => Number(s.faixa_etaria))
     .filter((n) => Number.isFinite(n) && n >= 1 && n <= 9);
   const socioMaisVelho = faixasPF.length ? FAIXA_LABEL[String(Math.max(...faixasPF))] : null;
-
-  async function investigar() {
-    if (research || researchAberto) { setResearchAberto((v) => !v); return; }
-    if (researchLoading) return;
-    setResearchLoading(true);
-    setResearchErro(null);
-    setResearchAberto(true);
-    try {
-      const r = await fetch("/api/research", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ empresaId: e.id }),
-      });
-      const data = await r.json();
-      if (!r.ok) throw new Error(data.error ?? "erro na investigação");
-      setResearch(data.research);
-    } catch (err) {
-      setResearchErro((err as Error).message);
-    } finally {
-      setResearchLoading(false);
-    }
-  }
-
-  async function gerarMemo() {
-    if (memoAnalise || memoAberto) { setMemoAberto((v) => !v); return; }
-    if (memoLoading) return;
-    setMemoLoading(true);
-    setMemoErro(null);
-    setMemoAberto(true);
-    try {
-      const r = await fetch("/api/dossier", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ empresaId: e.id }),
-      });
-      const data = await r.json();
-      if (!r.ok) throw new Error(data.error ?? "erro ao gerar memo");
-      setMemoAnalise(data.analise);
-    } catch (err) {
-      setMemoErro((err as Error).message);
-    } finally {
-      setMemoLoading(false);
-    }
-  }
-
-  async function buscarSimilares() {
-    if (similares || similaresAberto) { setSimilaresAberto((v) => !v); return; }
-    if (similaresLoading) return;
-    setSimilaresLoading(true);
-    setSimilaresErro(null);
-    setSimilaresAberto(true);
-    try {
-      const r = await fetch("/api/similar", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ empresaId: e.id }),
-      });
-      const data = await r.json();
-      if (!r.ok) throw new Error(data.error ?? "erro ao buscar similares");
-      setSimilares(data.similares ?? []);
-    } catch (err) {
-      setSimilaresErro((err as Error).message);
-    } finally {
-      setSimilaresLoading(false);
-    }
-  }
 
   return (
     <li className="rounded-lg border border-hairline bg-surface overflow-hidden p-4 transition-colors hover:bg-surface-hover">
@@ -436,11 +346,6 @@ function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
           <div className={`font-data text-lg tabular-nums leading-none ${t.text}`}>{score}</div>
           <div className={`font-data text-[9px] uppercase tracking-wide ${t.text} opacity-70`}>
             {t.label}
-            {research?.delta && research.delta !== 0 && (
-              <span className={`opacity-100 ${research.delta > 0 ? "text-risk-high" : "text-bone"}`}>
-                {" "}{research.delta > 0 ? "↑" : "↓"}
-              </span>
-            )}
           </div>
         </div>
         <div className="min-w-0 flex-1">
@@ -448,12 +353,9 @@ function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
             <Link
               href={`/empresa/${e.id}`}
               onClick={() => { storeEmpresa(e); storeOrigin("busca"); }}
-              className="group/nome font-display text-lg leading-tight text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
+              className="font-display text-lg leading-tight text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
             >
               {e.razao_social}
-              <span className="ml-1.5 inline-block font-data text-[10px] uppercase tracking-wider text-olive opacity-0 transition-opacity group-hover/nome:opacity-100">
-                ver perfil →
-              </span>
             </Link>
           </div>
           <p className="font-data text-[11px] text-olive">
@@ -470,155 +372,17 @@ function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
         </p>
       )}
 
-      {/* Stats de triagem — porte e capital em primeira classe (mono, tabular) */}
+      {/* Stats strip */}
       <div className="mt-3 flex flex-wrap overflow-hidden rounded-lg border border-hairline">
         <Stat k="Porte" v={e.porte ?? "—"} hi />
         <Stat k="Capital" v={formatCapitalCompact(e.capital_social) ?? "—"} hi />
-        <Stat k="Fundada" v={anoFund} sub={anosOperacao != null ? `${anosOperacao}a` : undefined} />
+        <Stat k="Fundada" v={anoFund} sub={anosOp != null ? `${anosOp}a` : undefined} />
         <Stat
           k="Sócio +"
           v={socioMaisVelho ?? "—"}
           sub={socios.length ? `${socios.length} ${socios.length === 1 ? "sócio" : "sócios"}` : undefined}
         />
       </div>
-
-      {/* Ações */}
-      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-hairline pt-2">
-        {socios.length > 0 && (
-          <>
-            <button
-              onClick={() => setSociosAberto((v) => !v)}
-              className="font-data text-xs text-bone transition-colors hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
-            >
-              {sociosAberto ? "Ocultar detalhes" : "Ver detalhes"}
-            </button>
-            <span className="text-olive">·</span>
-          </>
-        )}
-        <button
-          onClick={investigar}
-          disabled={researchLoading}
-          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
-        >
-          {researchLoading
-            ? "Investigando…"
-            : research
-              ? researchAberto ? "Ocultar investigação" : "Ver investigação"
-              : "Investigar com IA"}
-        </button>
-        <span className="text-olive">·</span>
-        <button
-          onClick={gerarMemo}
-          disabled={memoLoading}
-          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
-        >
-          {memoLoading
-            ? "Gerando memo…"
-            : memoAnalise
-              ? memoAberto ? "Ocultar memo" : "Ver memo"
-              : "Memo"}
-        </button>
-        <span className="text-olive">·</span>
-        <button
-          onClick={buscarSimilares}
-          disabled={similaresLoading}
-          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
-        >
-          {similaresLoading
-            ? "Buscando…"
-            : similares
-              ? similaresAberto ? "Ocultar similares" : "Ver similares"
-              : "Similares"}
-        </button>
-      </div>
-
-      {/* Erros */}
-      {researchErro && <p className="mt-2 text-xs text-bone/70">Não foi possível carregar a investigação. Tente de novo.</p>}
-      {memoErro && <p className="mt-2 text-xs text-bone/70">Não foi possível gerar o memo. Tente de novo.</p>}
-      {similaresErro && <p className="mt-2 text-xs text-bone/70">Não foi possível carregar os similares. Tente de novo.</p>}
-
-      {/* Painel: similares (look-alike) */}
-      {similaresAberto && (
-        <div className="mt-3 rounded-lg border border-hairline bg-surface p-3">
-          <p className="mb-2 font-data text-[10px] uppercase tracking-wider text-olive">
-            Empresas similares no universo
-          </p>
-          {similaresLoading ? (
-            <p className="text-xs text-bone">Buscando parecidas…</p>
-          ) : similares && similares.length > 0 ? (
-            <ul className="divide-y divide-hairline">
-              {similares.map((s) => (
-                <li key={s.id} className="flex items-center justify-between gap-3 py-2">
-                  <div className="min-w-0">
-                    <p className="truncate font-display text-sm text-floral">{s.razao_social}</p>
-                    <p className="font-data text-[11px] text-olive">
-                      {s.municipio}/{s.uf}
-                      {s.similaridade.motivos.length > 0 && ` · ${s.similaridade.motivos.join(", ")}`}
-                    </p>
-                  </div>
-                  <div className="flex shrink-0 items-center gap-2">
-                    <span className="font-data text-[11px] tabular-nums text-bone" title="similaridade">
-                      {s.similaridade.pontos}%
-                    </span>
-                    <span
-                      className="rounded border border-hairline px-1.5 font-data text-[11px] tabular-nums text-floral"
-                      title="score de sucessão"
-                    >
-                      {s.score?.score ?? 0}
-                    </span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-xs text-bone">Nenhuma empresa parecida no universo indexado.</p>
-          )}
-        </div>
-      )}
-
-      {/* Painel: sócios */}
-      {sociosAberto && (
-        <div className="mt-3 rounded-lg border border-hairline bg-surface p-3 space-y-3">
-          <div>
-            <p className="mb-1.5 font-data text-[10px] uppercase tracking-wider text-olive">Sócios</p>
-            <ul className="flex flex-col gap-1.5">
-              {socios.map((s) => (
-                <li key={s.id} className="flex items-center gap-2">
-                  <span className="text-sm text-floral">{s.nome}</span>
-                  {s.faixa_etaria && FAIXA_LABEL[s.faixa_etaria] && (
-                    <span className={`rounded px-1.5 py-0.5 font-data text-xs ${FAIXA_COLOR[s.faixa_etaria] ?? "bg-surface text-bone"}`}>
-                      {FAIXA_LABEL[s.faixa_etaria]} anos
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-          {(e.telefone || e.email) && (
-            <div>
-              <p className="mb-1 font-data text-[10px] uppercase tracking-wider text-olive">Contato da empresa</p>
-              <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-bone">
-                {e.telefone && <span>{formatTelefone(e.telefone)}</span>}
-                {e.email && <span>{e.email}</span>}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Painel: investigação */}
-      {researchLoading && (
-        <p className="mt-3 animate-pulse text-xs text-bone" role="status">
-          A IA está pesquisando sócios, herdeiros, imprensa e quadro societário em fontes públicas…
-        </p>
-      )}
-      {research && researchAberto && <div className="mt-3"><ResearchDisplay research={research} /></div>}
-
-      {/* Painel: memo */}
-      {memoAberto && memoLoading && (
-        <p className="mt-3 animate-pulse font-data text-xs text-bone">Gerando memo de investimento…</p>
-      )}
-      {memoAberto && memoAnalise && <div className="mt-3"><MemoDisplay empresa={e} analise={memoAnalise} /></div>}
     </li>
   );
 }

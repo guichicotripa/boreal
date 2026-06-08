@@ -11,7 +11,7 @@ export function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: D
   const dadosFechar = dadosParaFechar(empresa);
   return (
     <div className="space-y-5 rounded-lg border border-hairline bg-surface p-4 text-sm">
-      <span className="font-data text-[10px] uppercase tracking-wider text-bone/70">Memo de investimento</span>
+      <span className="font-data text-[10px] uppercase tracking-wider text-bone/70">Dossiê</span>
       <p className="leading-relaxed text-floral">{analise.overview}</p>
       <Timeline empresa={empresa} />
       <div>

@@ -183,7 +183,7 @@ export default function EmpresaPage() {
 
   const e = empresa;
   const socios = e.socio ?? [];
-  const score = e.score?.score ?? 0;
+  const score = research?.score_v1 ?? e.score?.score ?? 0;
   const breakdown = e.score?.breakdown;
   const sinaisScore = e.score?.sinais ?? [];
   const perfilSuc = e.score?.perfil_sucessorio ?? false;
@@ -220,6 +220,11 @@ export default function EmpresaPage() {
           <div className={`flex shrink-0 items-baseline gap-2 rounded-md border ${t.badge} px-3 py-1.5`}>
             <span className={`font-data text-[28px] leading-none tabular-nums ${t.text}`}>{score}</span>
             <span className={`font-data text-[10px] uppercase tracking-wider ${t.text}`}>{t.label}</span>
+            {research?.delta != null && research.delta !== 0 && (
+              <span className={`font-data text-[10px] tabular-nums ${research.delta > 0 ? "text-risk-high" : "text-bone/60"}`}>
+                {research.delta > 0 ? `↑${research.delta}` : `↓${Math.abs(research.delta)}`}
+              </span>
+            )}
           </div>
           <div className="min-w-0">
             <p className="font-data text-[10px] uppercase tracking-wider text-bone/70">Risco sucessório</p>
@@ -302,13 +307,10 @@ export default function EmpresaPage() {
           {e.cnaes_secundarios && e.cnaes_secundarios.length > 0 && (
             <div className="mt-4">
               <p className="mb-1.5 font-data text-[10px] uppercase tracking-wider text-bone/70">Atividades secundárias</p>
-              <ul className="flex flex-wrap gap-1.5">
+              <ul className="space-y-1">
                 {e.cnaes_secundarios.map((c) => (
-                  <li
-                    key={c.codigo}
-                    className="rounded border border-hairline px-2 py-1 font-data text-[11px] text-bone"
-                    title={c.descricao ?? undefined}
-                  >
+                  <li key={c.codigo} className="flex items-center gap-2 text-[12px] leading-relaxed text-bone/60">
+                    <span className="shrink-0 text-olive">·</span>
                     {c.descricao ?? c.codigo}
                   </li>
                 ))}
@@ -382,13 +384,33 @@ export default function EmpresaPage() {
                       </span>
                       <span className="font-data text-[11px] tabular-nums text-bone/70">{pts}/{d.max}</span>
                     </div>
-                    <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-hairline">
-                      <div className="h-full rounded-full bg-bone" style={{ width: `${pct}%` }} />
+                    <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-surface">
+                      <div className={`h-full rounded-full ${t.bar}`} style={{ width: `${pct}%` }} />
                     </div>
                   </li>
                 );
               })}
             </ul>
+          )}
+
+          {research?.sinais && research.sinais.length > 0 && (
+            <div className="mt-5 border-t border-hairline pt-5">
+              <p className="mb-3 font-data text-[10px] uppercase tracking-wider text-bone/60">
+                Sinais — investigação com IA
+              </p>
+              <div className="space-y-1">
+                {research.sinais.map((s, i) => (
+                  <div key={i} className="flex items-start justify-between gap-4 py-1.5">
+                    <span className="text-[13px] text-bone">{s.rotulo}</span>
+                    <span className={`shrink-0 rounded px-1.5 py-0.5 font-data text-[10px] tabular-nums ${
+                      s.peso > 0 ? "bg-risk-high/15 text-risk-high" : "bg-surface text-bone"
+                    }`}>
+                      {s.peso > 0 ? `+${s.peso}` : s.peso}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
 
           {sinaisScore.length > 0 && (
@@ -437,7 +459,7 @@ export default function EmpresaPage() {
             <MemoDisplay empresa={e} analise={memo} />
           ) : memoLoading ? (
             <p className="animate-pulse text-[13px] text-bone/70" role="status">
-              Gerando memo de investimento…
+              Gerando dossiê…
             </p>
           ) : memoErro ? (
             <EstadoErro msg="Não foi possível gerar o memo." onRetry={gerarMemo} />
@@ -462,28 +484,35 @@ export default function EmpresaPage() {
             <p className="animate-pulse text-[13px] text-bone/70" role="status">Buscando empresas parecidas…</p>
           ) : similares && similares.length > 0 ? (
             <ul className="divide-y divide-hairline">
-              {similares.map((s) => (
-                <li key={s.id} className="flex items-center justify-between gap-3 py-2.5">
-                  <div className="min-w-0">
-                    <p className="truncate font-display text-[15px] text-floral">{s.razao_social}</p>
-                    <p className="font-data text-[11px] text-olive">
-                      {s.municipio}/{s.uf}
-                      {s.similaridade.motivos.length > 0 && ` · ${s.similaridade.motivos.join(", ")}`}
-                    </p>
-                  </div>
-                  <div className="flex shrink-0 items-center gap-2">
-                    <span className="font-data text-[11px] tabular-nums text-bone/70" title="similaridade">
-                      {s.similaridade.pontos}%
-                    </span>
-                    <span
-                      className="rounded border border-hairline px-1.5 font-data text-[11px] tabular-nums text-floral"
-                      title="score de sucessão"
+              {similares.map((s) => {
+                const sTier = scoreTier(s.score?.score ?? 0);
+                const sT = TIER_STYLES[sTier];
+                return (
+                  <li key={s.id}>
+                    <Link
+                      href={`/empresa/${s.id}`}
+                      onClick={() => storeEmpresa(s)}
+                      className="flex items-center justify-between gap-3 py-2.5 transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
                     >
-                      {s.score?.score ?? 0}
-                    </span>
-                  </div>
-                </li>
-              ))}
+                      <div className="min-w-0">
+                        <p className="truncate font-display text-[15px] text-floral">{s.razao_social}</p>
+                        <p className="font-data text-[11px] text-olive">
+                          {s.municipio}/{s.uf}
+                          {s.similaridade.motivos.length > 0 && ` · ${s.similaridade.motivos.join(", ")}`}
+                        </p>
+                      </div>
+                      <div className="flex shrink-0 items-center gap-2">
+                        <span className="font-data text-[11px] tabular-nums text-bone/50">
+                          {s.similaridade.pontos}% match
+                        </span>
+                        <span className={`rounded border ${sT.badge} px-1.5 font-data text-[11px] tabular-nums ${sT.text}`}>
+                          {s.score?.score ?? 0}
+                        </span>
+                      </div>
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           ) : (
             <p className="text-[13px] text-bone">Nenhuma empresa parecida no universo indexado.</p>
