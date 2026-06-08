@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import type { Empresa, ResearchResult, DossierAnalise } from "@/lib/types";
 import type { EmpresaSimilar } from "@/lib/similar";
 import { scoreTier } from "@/lib/scoring";
-import { readEmpresa, readOrigin, storeEmpresa, type Origin } from "@/lib/empresa-store";
+import { readEmpresa, readOrigin, storeEmpresa, storeScoreConhecido, type Origin } from "@/lib/empresa-store";
 import {
   formatCnpj, formatTelefone, formatCapitalCompact,
   FAIXA_LABEL, FAIXA_COLOR, TIER_STYLES, anosOperacao,
@@ -38,6 +38,7 @@ export default function EmpresaPage() {
 
   const [empresa, setEmpresa] = useState<Empresa | null>(null);
   const [carregado, setCarregado] = useState(false);
+  const [empresaLoading, setEmpresaLoading] = useState(false);
   const [origin, setOrigin] = useState<Origin>("busca");
 
   // Investigação — auto-disparada ao abrir (decisão de produto: overview rico imediato;
@@ -57,6 +58,23 @@ export default function EmpresaPage() {
 
   const [secaoAtiva, setSecaoAtiva] = useState<string>("sobre");
 
+  // Hidrata a empresa com os dados canônicos do servidor (sócios + breakdown completos).
+  // Fonte de verdade independente da entrada — corrige o caminho pipeline (objeto parcial)
+  // e o link direto/refresh (sessionStorage vazio).
+  const fetchEmpresa = useCallback(async () => {
+    setEmpresaLoading(true);
+    try {
+      const r = await fetch(`/api/empresa/${id}`);
+      if (!r.ok) return;
+      const data = await r.json();
+      if (data.empresa) setEmpresa(data.empresa);
+    } catch {
+      // mantém o que veio do sessionStorage (se houver)
+    } finally {
+      setEmpresaLoading(false);
+    }
+  }, [id]);
+
   const fetchResearch = useCallback(async () => {
     setResearchLoading(true);
     setResearchErro(false);
@@ -69,6 +87,10 @@ export default function EmpresaPage() {
       const data = await r.json();
       if (!r.ok) throw new Error(data.error);
       setResearch(data.research);
+      // Propaga o score_v1 + delta para a home (e demais telas) refletirem a investigação.
+      if (typeof data.research?.score_v1 === "number") {
+        storeScoreConhecido(id, data.research.score_v1, data.research.delta ?? 0);
+      }
     } catch {
       setResearchErro(true);
     } finally {
@@ -114,7 +136,9 @@ export default function EmpresaPage() {
     }
   }
 
-  // Carrega a empresa do sessionStorage (ponte da home/pipeline) e dispara os auto-fetches.
+  // Mount: paint instantâneo com o que estiver no sessionStorage (ponte da home/pipeline),
+  // depois hidrata com os dados canônicos do servidor se vier parcial (pipeline) ou nulo
+  // (link direto). research/similares disparam por id, independem do objeto.
   useEffect(() => {
     const e = readEmpresa(id);
     // Inicialização a partir do sessionStorage (sistema externo) no mount — set síncrono intencional.
@@ -123,11 +147,13 @@ export default function EmpresaPage() {
     setOrigin(readOrigin());
     setCarregado(true);
     /* eslint-enable react-hooks/set-state-in-effect */
-    if (e) {
-      fetchResearch();
-      fetchSimilares();
+    // Objeto parcial (sem sócios/breakdown) ou ausente → busca a versão completa pelo id.
+    if (!e || !e.socio || !e.score?.breakdown) {
+      fetchEmpresa();
     }
-  }, [id, fetchResearch, fetchSimilares]);
+    fetchResearch();
+    fetchSimilares();
+  }, [id, fetchEmpresa, fetchResearch, fetchSimilares]);
 
   // Scroll-spy — destaca a seção que está no topo da viewport conforme rola.
   useEffect(() => {
@@ -151,14 +177,14 @@ export default function EmpresaPage() {
     document.getElementById(secaoId)?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  // ── Estado: empresa não encontrada (link direto / refresh sem passar pela busca) ──
-  if (carregado && !empresa) {
+  // ── Estado: empresa não encontrada (GET falhou — id inexistente) ──
+  if (carregado && !empresa && !empresaLoading) {
     return (
       <main className="mx-auto max-w-3xl px-6 py-20">
-        <p className="font-data text-[10px] uppercase tracking-wider text-olive">Empresa não carregada</p>
-        <h1 className="mt-2 font-display text-2xl text-floral">Esta página abre a partir de uma busca.</h1>
+        <p className="font-data text-[10px] uppercase tracking-wider text-olive">Empresa não encontrada</p>
+        <h1 className="mt-2 font-display text-2xl text-floral">Não localizamos esta empresa.</h1>
         <p className="mt-3 max-w-md text-[15px] leading-relaxed text-bone">
-          Os dados da empresa vêm da sua busca ou do pipeline. Acesse por lá para abrir o perfil completo.
+          O identificador pode estar incorreto ou a empresa não está na base indexada. Volte à busca para encontrar empresas-alvo.
         </p>
         <Link
           href="/"

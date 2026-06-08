@@ -9,7 +9,7 @@ import {
   formatCnpj, formatCapitalCompact,
 } from "@/lib/format";
 import { setorPorId, SETORES } from "@/lib/setores";
-import { storeEmpresa, storeOrigin } from "@/lib/empresa-store";
+import { storeEmpresa, storeOrigin, readScoresConhecidos, type ScoreConhecido } from "@/lib/empresa-store";
 
 // Teses de exemplo POR SETOR — quando um setor está ativo, os atalhos se adaptam a ele
 // (o CNAE vem do setor; o exemplo foca no perfil sucessório: idade do sócio, fundação).
@@ -48,6 +48,20 @@ export default function Home() {
   const [res, setRes] = useState<SearchResponse | null>(null);
   const [erro, setErro] = useState<string | null>(null);
   const [setorAtivo, setSetorAtivo] = useState<string | null>(null);
+  // Overlay de score pós-investigação: a página da empresa persiste o score_v1;
+  // aqui refletimos ao montar e ao voltar (bfcache/refocus) sem refazer a busca.
+  const [scoreOverrides, setScoreOverrides] = useState<Record<string, ScoreConhecido>>({});
+
+  useEffect(() => {
+    const refresh = () => setScoreOverrides(readScoresConhecidos());
+    refresh();
+    window.addEventListener("pageshow", refresh);
+    window.addEventListener("focus", refresh);
+    return () => {
+      window.removeEventListener("pageshow", refresh);
+      window.removeEventListener("focus", refresh);
+    };
+  }, []);
 
   // Se veio de /setores (?setor=...), busca o setor direto.
   useEffect(() => {
@@ -239,7 +253,7 @@ export default function Home() {
 
                 <ul className="flex flex-col gap-3">
                   {res.empresas.map((e) => (
-                    <EmpresaCard key={e.id} empresa={e} />
+                    <EmpresaCard key={e.id} empresa={e} investigacao={scoreOverrides[e.id]} />
                   ))}
                 </ul>
 
@@ -323,8 +337,10 @@ function LoadingSteps() {
 
 // Card de triagem — score + nome + stats. A profundidade (investigar, memo,
 // sócios, similares) vive na página da empresa (/empresa/[id]).
-function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
-  const score = e.score?.score ?? 0;
+function EmpresaCard({ empresa: e, investigacao }: { empresa: Empresa; investigacao?: ScoreConhecido }) {
+  // Investigação = score_v1 + delta vs v0 (se a empresa já foi investigada nesta sessão).
+  const score = investigacao?.score ?? e.score?.score ?? 0;
+  const delta = investigacao?.delta ?? null;
   const tier = scoreTier(score);
   const t = TIER_STYLES[tier];
   const socios = e.socio ?? [];
@@ -342,11 +358,24 @@ function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
     <li className="rounded-lg border border-hairline bg-surface overflow-hidden p-4 transition-colors hover:bg-surface-hover">
       {/* Header: score badge + nome + salvar */}
       <div className="flex items-start gap-3">
-        <div className={`shrink-0 rounded border ${t.badge} px-2 py-1 text-center`}>
-          <div className={`font-data text-lg tabular-nums leading-none ${t.text}`}>{score}</div>
-          <div className={`font-data text-[9px] uppercase tracking-wide ${t.text} opacity-70`}>
-            {t.label}
+        <div className="flex shrink-0 flex-col items-center gap-1">
+          <div className={`rounded border ${t.badge} px-2 py-1 text-center`}>
+            <div className={`font-data text-lg tabular-nums leading-none ${t.text}`}>{score}</div>
+            <div className={`font-data text-[9px] uppercase tracking-wide ${t.text} opacity-70`}>
+              {t.label}
+            </div>
           </div>
+          {/* Sinal de investigação: empresa já investigada → mostra o ajuste do score */}
+          {delta != null && (
+            <span
+              className={`font-data text-[9px] tabular-nums ${
+                delta > 0 ? "text-risk-high" : delta < 0 ? "text-bone/60" : "text-bone/50"
+              }`}
+              title="ajuste do score após investigação com IA"
+            >
+              {delta > 0 ? `↑${delta}` : delta < 0 ? `↓${Math.abs(delta)}` : "✓ IA"}
+            </span>
+          )}
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">

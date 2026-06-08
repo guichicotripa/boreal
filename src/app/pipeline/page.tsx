@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { storeEmpresa, storeOrigin } from "@/lib/empresa-store";
+import { storeEmpresa, storeOrigin, readScoresConhecidos, type ScoreConhecido } from "@/lib/empresa-store";
 import {
   Select,
   SelectContent,
@@ -71,6 +71,9 @@ export default function Pipeline() {
   const [busca, setBusca] = useState("");
   const [filtroDono, setFiltroDono] = useState("todos");
   const [soAtrasadas, setSoAtrasadas] = useState(false);
+  // Overlay de score pós-investigação (mesmo mecanismo da home): o badge reflete o
+  // score_v1 da empresa investigada, ao montar e ao voltar (bfcache/refocus).
+  const [scoreOverrides, setScoreOverrides] = useState<Record<string, ScoreConhecido>>({});
 
   async function carregar() {
     setLoading(true);
@@ -82,6 +85,17 @@ export default function Pipeline() {
 
   useEffect(() => {
     carregar();
+  }, []);
+
+  useEffect(() => {
+    const refresh = () => setScoreOverrides(readScoresConhecidos());
+    refresh();
+    window.addEventListener("pageshow", refresh);
+    window.addEventListener("focus", refresh);
+    return () => {
+      window.removeEventListener("pageshow", refresh);
+      window.removeEventListener("focus", refresh);
+    };
   }, []);
 
   async function patch(id: string, campos: Partial<Oportunidade>) {
@@ -188,7 +202,7 @@ export default function Pipeline() {
                     </p>
                   )}
                   {lista.map((o) => (
-                    <Card key={o.id} o={o} onPatch={patch} onRemove={remover} />
+                    <Card key={o.id} o={o} onPatch={patch} onRemove={remover} scoreOverride={scoreOverrides[o.empresa.id]?.score} />
                   ))}
                 </div>
               );
@@ -205,15 +219,31 @@ function Card({
   o,
   onPatch,
   onRemove,
+  scoreOverride,
 }: {
   o: Oportunidade;
   onPatch: (id: string, campos: Partial<Oportunidade>) => void;
   onRemove: (id: string) => void;
+  scoreOverride?: number;
 }) {
   const [aberto, setAberto] = useState(false);
   const atrasada = atrasou(o);
   const dataCompacta = o.proxima_acao_em ? `${o.proxima_acao_em.slice(8, 10)}/${o.proxima_acao_em.slice(5, 7)}` : null;
   const mudanca = mudancaDe(o.empresa.cnpj);
+  // Score exibido: o v1 pós-investigação (se houver) sobrepõe o "previsto" do save.
+  const scoreExibido = scoreOverride ?? o.score_no_save;
+  const investigado = scoreOverride != null;
+
+  function abrirEmpresa() {
+    // o.empresa é um Pick parcial (sem score). Sintetiza o score para a página não
+    // exibir 0 antes da investigação carregar (breakdown ausente → barras só com GET endpoint).
+    const emp = { ...o.empresa } as unknown as Empresa;
+    if (emp.score == null && scoreExibido != null) {
+      emp.score = { score: scoreExibido, sinais: [], perfil_sucessorio: false } as unknown as Empresa["score"];
+    }
+    storeEmpresa(emp);
+    storeOrigin("pipeline");
+  }
 
   return (
     <div
@@ -231,24 +261,39 @@ function Card({
         </div>
       )}
 
-      {/* Header colapsável — resumo escaneável */}
-      <button onClick={() => setAberto((v) => !v)} className="flex w-full items-start gap-2 p-3 text-left">
+      {/* Header — clicar no espaço em volta expande/recolhe; só o nome navega pro perfil */}
+      <div
+        onClick={() => setAberto((v) => !v)}
+        onKeyDown={(ev) => {
+          if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); setAberto((v) => !v); }
+        }}
+        role="button"
+        tabIndex={0}
+        aria-expanded={aberto}
+        aria-label={aberto ? "Recolher detalhes" : "Expandir detalhes"}
+        className="flex w-full cursor-pointer items-start gap-2 p-3 text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-lg"
+      >
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
-            <h3 className="truncate text-sm font-medium leading-snug text-floral">{o.empresa.razao_social}</h3>
-            {o.score_no_save != null && (
+            <Link
+              href={`/empresa/${o.empresa.id}`}
+              onClick={(ev) => { ev.stopPropagation(); abrirEmpresa(); }}
+              className="block min-w-0 truncate text-sm font-medium leading-snug text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
+            >
+              {o.empresa.razao_social}
+            </Link>
+            {scoreExibido != null && (
               <span
                 className="shrink-0 rounded border border-hairline px-1.5 font-data text-[11px] tabular-nums text-bone"
-                title="score de propensão quando salvou (previsto)"
+                title={investigado ? "score atualizado pós-investigação" : "score de propensão quando salvou (previsto)"}
               >
-                {o.score_no_save}
+                {scoreExibido}
               </span>
             )}
           </div>
           <p className="mt-0.5 text-[11px] text-bone">
             {o.empresa.municipio} / {o.empresa.uf}
           </p>
-          {/* resumo: dono · próxima ação */}
           <p className="mt-1 text-[11px] leading-snug">
             {o.dono ? <span className="text-bone">{o.dono}</span> : <span className="text-olive">sem dono</span>}
             <span className="text-olive"> · </span>
@@ -262,8 +307,16 @@ function Card({
             )}
           </p>
         </div>
-        <span className="mt-0.5 shrink-0 font-data text-[11px] text-olive">{aberto ? "−" : "+"}</span>
-      </button>
+        <span aria-hidden="true" className="mt-1 shrink-0 text-olive">
+          <svg
+            viewBox="0 0 10 10"
+            fill="currentColor"
+            className={`h-[9px] w-[9px] transition-transform duration-200 ${aberto ? "rotate-180" : ""}`}
+          >
+            <path d="M1.5 2.5 L8.5 2.5 L5 7.5 Z" />
+          </svg>
+        </span>
+      </div>
 
       {/* Detalhe — expandido */}
       {!aberto ? null : (
@@ -274,15 +327,6 @@ function Card({
       {(o.empresa.telefone || o.empresa.email) && (
         <p className="mt-1 text-[11px] text-bone">{o.empresa.telefone ?? o.empresa.email}</p>
       )}
-
-      {/* Link para o perfil completo */}
-      <Link
-        href={`/empresa/${o.empresa.id}`}
-        onClick={() => { storeEmpresa(o.empresa as unknown as Empresa); storeOrigin("pipeline"); }}
-        className="mt-2 inline-flex items-center gap-1 font-data text-[10px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
-      >
-        Ver perfil completo <span aria-hidden="true">→</span>
-      </Link>
 
       {/* Estágio + remover */}
       <div className="mt-2 flex items-center gap-2">
