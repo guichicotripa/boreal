@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { storeEmpresa, storeOrigin } from "@/lib/empresa-store";
 import {
   Select,
   SelectContent,
@@ -9,7 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type {
-  Oportunidade, EstagioOportunidade, ResultadoOportunidade, Interacao, TipoInteracao,
+  Empresa, Oportunidade, EstagioOportunidade, ResultadoOportunidade, Interacao, TipoInteracao,
 } from "@/lib/types";
 import monitor from "@/lib/monitor.json";
 
@@ -272,6 +274,15 @@ function Card({
       {(o.empresa.telefone || o.empresa.email) && (
         <p className="mt-1 text-[11px] text-bone">{o.empresa.telefone ?? o.empresa.email}</p>
       )}
+
+      {/* Link para o perfil completo */}
+      <Link
+        href={`/empresa/${o.empresa.id}`}
+        onClick={() => { storeEmpresa(o.empresa as unknown as Empresa); storeOrigin("pipeline"); }}
+        className="mt-2 inline-flex items-center gap-1 font-data text-[10px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
+      >
+        Ver perfil completo <span aria-hidden="true">→</span>
+      </Link>
 
       {/* Estágio + remover */}
       <div className="mt-2 flex items-center gap-2">
