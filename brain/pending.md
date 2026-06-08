@@ -192,8 +192,6 @@ sans 400/500/600), hero, card/memo. Faltam as páginas.
           badges de severidade. Cruzar com o ponto B ("limitar badges a 3") pra não virar ruído visual.
         - **D.6 — ordem dos blocos no memo:** red flags entre análise sucessória e perguntas; próximo
           passo no fim (após a tese). Confirmar se é a melhor hierarquia de leitura.
-- [ ] **"Voltar à busca" com router.back()** — tentado, não funcionou, revertido. Investigar causa.
-- [ ] **Narrativa da home** — header amarrando a tese Silver Tsunami / sucessão.
 - [ ] ~~Deploy no Vercel~~ — **decisão (30/05): não fazer agora.** Pitch/Demo Day via tela
       compartilhada (localhost). Research já está na API se um dia o deploy fizer sentido.
 - [ ] Roteiro do Loom escrito, gravado, editado (sem pressa — 15 dias até o submit)
