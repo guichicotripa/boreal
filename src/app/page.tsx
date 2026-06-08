@@ -5,11 +5,7 @@ import type { SearchResponse, Empresa, DossierAnalise, ResearchResult } from "@/
 import { scoreTier } from "@/lib/scoring";
 import { precedentesParaEmpresa, cenarioIlustrativo, dadosParaFechar } from "@/lib/memo-extras";
 import type { EmpresaSimilar } from "@/lib/similar";
-import { setorPorId } from "@/lib/setores";
-
-type TrajetoriaPonto = { ano: number; n_pf: number; n_pj: number; faixa_max: string | null };
-type TrajetoriaEvento = { ano: number; texto: string; tipo: "entrou" | "saiu" | "envelheceu" };
-type TrajetoriaResult = { pontos: TrajetoriaPonto[]; eventos: TrajetoriaEvento[] };
+import { setorPorId, SETORES } from "@/lib/setores";
 
 // Teses de exemplo POR SETOR — quando um setor está ativo, os atalhos se adaptam a ele
 // (o CNAE vem do setor; o exemplo foca no perfil sucessório: idade do sócio, fundação).
@@ -48,9 +44,22 @@ function formatTelefone(tel: string) {
   return tel;
 }
 
-function anoFundacao(data: string | null) {
-  return data ? data.slice(0, 4) : "—";
+// Capital compacto — bem mais varrível que o valor cheio (R$ 52,5 mi vs R$ 52.500.000).
+function formatCapitalCompact(v: number | null): string | null {
+  if (v == null) return null;
+  if (v >= 1_000_000) return `R$ ${(v / 1_000_000).toLocaleString("pt-BR", { maximumFractionDigits: 1 })} mi`;
+  return `R$ ${v.toLocaleString("pt-BR", { maximumFractionDigits: 0 })}`;
 }
+
+// Descrição curta dos CNAEs cobertos por setor — para o painel de cobertura.
+const CNAE_LABEL: Record<string, string> = {
+  "24": "Metalurgia",
+  "25": "Produtos de metal",
+  "28": "Máquinas e equipamentos",
+  "86": "Atenção à saúde",
+  "851": "Educação infantil e fundamental",
+  "852": "Ensino médio",
+};
 
 export default function Home() {
   const [texto, setTexto] = useState("");
@@ -63,10 +72,10 @@ export default function Home() {
   useEffect(() => {
     const s = new URLSearchParams(window.location.search).get("setor");
     if (s && setorPorId(s)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSetorAtivo(s);
       buscar("", s);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function buscar(q: string, setor?: string) {
@@ -90,6 +99,9 @@ export default function Home() {
     }
   }
 
+  // Setor ativo (default metalmec) — dirige o painel de cobertura.
+  const setorCob = setorPorId(setorAtivo ?? "metalmec") ?? setorPorId("metalmec")!;
+
   return (
     <div className="min-h-screen bg-smoky text-floral">
       <main className="mx-auto max-w-5xl px-6 py-10 md:py-20">
@@ -108,31 +120,38 @@ export default function Home() {
               O modelo que prevê quem vai vender — antes do mercado.
             </h1>
 
-            {/* Subheadline — a credencial (moldura de sucessão, onde a lente vale) */}
+            {/* Subheadline — credencial enxuta: o número, sem a moldura de venda */}
             <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-bone">
-              Não é um buscador. É um modelo validado contra vendas reais, sem leakage:{" "}
-              <strong>
-                {setorPorId("metalmec")?.recall_sucessao ?? 97}% das vendas por sucessão já estavam no nosso top 10%
-              </strong>
-              , 12 meses antes.{" "}
+              <strong>{setorPorId("metalmec")?.recall_sucessao ?? 97}% das vendas por sucessão</strong>{" "}
+              já estavam no nosso top 10%, 12 meses antes.{" "}
               <a href="/validacao" className="group/prova whitespace-nowrap text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
-                ver a prova{" "}
+                ver metodologia{" "}
                 <span className="inline-block transition-transform duration-200 group-hover/prova:translate-x-0.5">→</span>
               </a>
             </p>
 
-            {/* Banner de setor ativo (veio de /setores) */}
-            {setorAtivo && setorPorId(setorAtivo) && (
-              <div className="mt-6 flex items-center justify-between gap-2 rounded-lg border border-hairline bg-surface px-3 py-2">
-                <p className="text-sm text-bone">
-                  Setor: <strong className="text-floral">{setorPorId(setorAtivo)!.nome}</strong>
-                  <span className="text-olive"> · lente {setorPorId(setorAtivo)!.lente === "consolidacao" ? "consolidação" : "sucessão"}</span>
-                </p>
-                <a href="/" className="font-data text-[11px] uppercase tracking-wider text-olive transition-colors hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
-                  limpar
-                </a>
+            {/* Switcher de setor — troca o universo sem ir até /setores */}
+            <div className="mt-8">
+              <p className="mb-2 font-data text-[10px] uppercase tracking-[0.18em] text-bone/70">Setor</p>
+              <div className="inline-flex flex-wrap gap-1 rounded-lg border border-hairline p-1">
+                {SETORES.map((s) => {
+                  const ativo = (setorAtivo ?? "metalmec") === s.id;
+                  return (
+                    <button
+                      key={s.id}
+                      type="button"
+                      onClick={() => { setSetorAtivo(s.id); buscar(texto, s.id); }}
+                      aria-pressed={ativo}
+                      className={`rounded-md px-3 py-1.5 font-data text-[11px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
+                        ativo ? "bg-surface-hover text-floral" : "text-bone/70 hover:text-bone"
+                      }`}
+                    >
+                      {s.nome}
+                    </button>
+                  );
+                })}
               </div>
-            )}
+            </div>
 
             {/* Search — underline + prompt */}
             <form
@@ -238,8 +257,8 @@ export default function Home() {
                 </div>
 
                 <ul className="flex flex-col gap-3">
-                  {res.empresas.map((e, i) => (
-                    <EmpresaCard key={e.id} empresa={e} rank={i + 1} />
+                  {res.empresas.map((e) => (
+                    <EmpresaCard key={e.id} empresa={e} />
                   ))}
                 </ul>
 
@@ -256,31 +275,23 @@ export default function Home() {
             )}
           </div>
 
-          {/* Sidebar — cobertura do universo de busca */}
+          {/* Sidebar — cobertura do setor ativo */}
           <aside className="md:border-l md:border-hairline md:pl-6">
             <p className="font-data text-[10px] uppercase tracking-wider text-bone/70">
               Cobertura
             </p>
+            <p className="mt-2 font-display text-sm text-floral">{setorCob.nome}</p>
             <ul className="mt-3 space-y-1.5 font-data text-xs text-bone">
-              <li>
-                <span className="text-floral">CNAE 24</span> · Metalurgia
-              </li>
-              <li>
-                <span className="text-floral">CNAE 25</span> · Produtos de metal
-              </li>
-              <li>
-                <span className="text-floral">CNAE 28</span> · Máquinas e equipamentos
-              </li>
+              {setorCob.cnaes.map((c) => (
+                <li key={c}>
+                  <span className="text-floral">CNAE {c}</span>
+                  {CNAE_LABEL[c] ? ` · ${CNAE_LABEL[c]}` : ""}
+                </li>
+              ))}
               <li className="text-olive">—</li>
-              <li>Interior de SP</li>
-              <li>Score sucessório</li>
+              <li>Lente: {setorCob.lente === "consolidacao" ? "consolidação" : "sucessão"}</li>
+              <li><span className="tabular-nums text-floral">2.000</span> empresas · São Paulo</li>
             </ul>
-            <p className="mt-6 font-data text-[10px] uppercase tracking-wider text-bone/70">
-              Base
-            </p>
-            <p className="mt-1 font-data text-xs tabular-nums text-bone">
-              2.000 empresas indexadas
-            </p>
           </aside>
         </div>
       </main>
@@ -342,7 +353,7 @@ const FAIXA_COLOR: Record<string, string> = {
   "6": "bg-surface text-bone",           // 51-60
 };
 
-function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
+function EmpresaCard({ empresa: e }: { empresa: Empresa }) {
   // Research — lógica levantada do ResearchPanel
   const [research, setResearch] = useState<ResearchResult | null>(null);
   const [researchLoading, setResearchLoading] = useState(false);
@@ -364,24 +375,24 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
   const [similaresAberto, setSimilaresAberto] = useState(false);
   const [similaresErro, setSimilaresErro] = useState<string | null>(null);
 
-  // Trajetória societária (sucessão em movimento, multi-snapshot)
-  const [traj, setTraj] = useState<TrajetoriaResult | null>(null);
-  const [trajLoading, setTrajLoading] = useState(false);
-  const [trajAberto, setTrajAberto] = useState(false);
-  const [trajErro, setTrajErro] = useState<string | null>(null);
-
   const scoreV0 = e.score?.score ?? 0;
   const score = research?.score_v1 ?? scoreV0;
   const tier = scoreTier(score);
   const t = TIER_STYLES[tier];
   const socios = e.socio ?? [];
 
-  const badges: string[] = (e.insight?.flags?.length
-    ? e.insight.flags
-    : (e.score?.sinais ?? [])).slice(0, 3);
+  // Stats de triagem — porte/capital/fundada/sócio mais velho.
+  const anoFund = e.data_inicio_atividade ? e.data_inicio_atividade.slice(0, 4) : "—";
+  const anosOperacao = e.data_inicio_atividade
+    ? new Date().getFullYear() - Number(e.data_inicio_atividade.slice(0, 4))
+    : null;
+  const faixasPF = socios
+    .map((s) => Number(s.faixa_etaria))
+    .filter((n) => Number.isFinite(n) && n >= 1 && n <= 9);
+  const socioMaisVelho = faixasPF.length ? FAIXA_LABEL[String(Math.max(...faixasPF))] : null;
 
   async function investigar() {
-    if (research) { setResearchAberto((v) => !v); return; }
+    if (research || researchAberto) { setResearchAberto((v) => !v); return; }
     if (researchLoading) return;
     setResearchLoading(true);
     setResearchErro(null);
@@ -403,7 +414,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
   }
 
   async function gerarMemo() {
-    if (memoAnalise) { setMemoAberto((v) => !v); return; }
+    if (memoAnalise || memoAberto) { setMemoAberto((v) => !v); return; }
     if (memoLoading) return;
     setMemoLoading(true);
     setMemoErro(null);
@@ -425,7 +436,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
   }
 
   async function buscarSimilares() {
-    if (similares) { setSimilaresAberto((v) => !v); return; }
+    if (similares || similaresAberto) { setSimilaresAberto((v) => !v); return; }
     if (similaresLoading) return;
     setSimilaresLoading(true);
     setSimilaresErro(null);
@@ -443,28 +454,6 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
       setSimilaresErro((err as Error).message);
     } finally {
       setSimilaresLoading(false);
-    }
-  }
-
-  async function buscarTrajetoria() {
-    if (traj) { setTrajAberto((v) => !v); return; }
-    if (trajLoading) return;
-    setTrajLoading(true);
-    setTrajErro(null);
-    setTrajAberto(true);
-    try {
-      const r = await fetch("/api/trajetoria", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ empresaId: e.id }),
-      });
-      const data = await r.json();
-      if (!r.ok) throw new Error(data.error ?? "erro na trajetória");
-      setTraj({ pontos: data.pontos ?? [], eventos: data.eventos ?? [] });
-    } catch (err) {
-      setTrajErro((err as Error).message);
-    } finally {
-      setTrajLoading(false);
     }
   }
 
@@ -501,26 +490,17 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
         </p>
       )}
 
-      {/* Badges de evidência */}
-      {badges.length > 0 && (
-        <div className="mt-2 flex flex-wrap gap-1.5">
-          {badges.map((f, i) => (
-            <span key={i} className="rounded border border-hairline px-2 py-0.5 font-data text-[10px] uppercase tracking-wide text-bone">
-              {f}
-            </span>
-          ))}
-        </div>
-      )}
-
-      {/* Metadata row */}
-      <p className="mt-2 font-data text-[11px] uppercase tracking-wide text-olive">
-        {[
-          e.data_inicio_atividade ? anoFundacao(e.data_inicio_atividade) : null,
-          e.capital_social != null ? `R$ ${Number(e.capital_social).toLocaleString("pt-BR")}` : null,
-          e.natureza_juridica ?? null,
-          e.cnae_principal_desc ?? null,
-        ].filter(Boolean).join(" · ")}
-      </p>
+      {/* Stats de triagem — porte e capital em primeira classe (mono, tabular) */}
+      <div className="mt-3 flex flex-wrap overflow-hidden rounded-lg border border-hairline">
+        <Stat k="Porte" v={e.porte ?? "—"} hi />
+        <Stat k="Capital" v={formatCapitalCompact(e.capital_social) ?? "—"} hi />
+        <Stat k="Fundada" v={anoFund} sub={anosOperacao != null ? `${anosOperacao}a` : undefined} />
+        <Stat
+          k="Sócio +"
+          v={socioMaisVelho ?? "—"}
+          sub={socios.length ? `${socios.length} ${socios.length === 1 ? "sócio" : "sócios"}` : undefined}
+        />
+      </div>
 
       {/* Ações */}
       <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-hairline pt-2">
@@ -556,7 +536,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
             ? "Gerando memo…"
             : memoAnalise
               ? memoAberto ? "Ocultar memo" : "Ver memo"
-              : "Gerar memo de investimento"}
+              : "Memo"}
         </button>
         <span className="text-olive">·</span>
         <button
@@ -568,15 +548,7 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
             ? "Buscando…"
             : similares
               ? similaresAberto ? "Ocultar similares" : "Ver similares"
-              : "Achar similares"}
-        </button>
-        <span className="text-olive">·</span>
-        <button
-          onClick={buscarTrajetoria}
-          disabled={trajLoading}
-          className="font-data text-xs text-bone transition-colors hover:text-floral disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
-        >
-          {trajLoading ? "Carregando…" : traj ? (trajAberto ? "Ocultar trajetória" : "Ver trajetória") : "Trajetória societária"}
+              : "Similares"}
         </button>
       </div>
 
@@ -584,47 +556,6 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
       {researchErro && <p className="mt-2 text-xs text-bone/70">Não foi possível carregar a investigação. Tente de novo.</p>}
       {memoErro && <p className="mt-2 text-xs text-bone/70">Não foi possível gerar o memo. Tente de novo.</p>}
       {similaresErro && <p className="mt-2 text-xs text-bone/70">Não foi possível carregar os similares. Tente de novo.</p>}
-      {trajErro && <p className="mt-2 text-xs text-bone/70">Não foi possível carregar a trajetória. Tente de novo.</p>}
-
-      {/* Painel: trajetória societária (sucessão em movimento) */}
-      {trajAberto && (
-        <div className="mt-3 rounded-lg border border-hairline bg-surface p-3">
-          <p className="mb-2 font-data text-[10px] uppercase tracking-wider text-olive">
-            Trajetória societária · a sucessão em movimento (2022→2025)
-          </p>
-          {trajLoading ? (
-            <p className="text-xs text-bone">Reconstruindo o quadro ao longo do tempo…</p>
-          ) : traj && traj.pontos.length > 0 ? (
-            <>
-              <div className="flex flex-wrap gap-2">
-                {traj.pontos.map((p, i) => (
-                  <div key={i} className="rounded border border-hairline px-2 py-1 text-center">
-                    <p className="font-data text-[11px] tabular-nums text-floral">{p.ano}</p>
-                    <p className="font-data text-[10px] text-bone">{p.n_pf}PF{p.n_pj > 0 ? `+${p.n_pj}PJ` : ""}</p>
-                    {p.faixa_max && <p className="font-data text-[10px] text-olive">{p.faixa_max}</p>}
-                  </div>
-                ))}
-              </div>
-              {traj.eventos.length > 0 ? (
-                <ul className="mt-3 space-y-1">
-                  {traj.eventos.map((ev, i) => (
-                    <li key={i} className="text-[11px] leading-snug">
-                      <span className="font-data text-olive">{ev.ano}</span>{" "}
-                      <span className={ev.tipo === "entrou" ? "text-floral" : ev.tipo === "saiu" ? "text-risk-high" : "text-risk-mid"}>
-                        {ev.texto}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="mt-2 text-[11px] text-olive">Quadro estável no período — sem entrada/saída/envelhecimento de faixa.</p>
-              )}
-            </>
-          ) : (
-            <p className="text-xs text-bone">Sem histórico societário no período.</p>
-          )}
-        </div>
-      )}
 
       {/* Painel: similares (look-alike) */}
       {similaresAberto && (
@@ -712,6 +643,19 @@ function EmpresaCard({ empresa: e, rank }: { empresa: Empresa; rank: number }) {
   );
 }
 
+// Célula da stats strip — rótulo mono + valor tabular. `hi` = destaque (porte/capital).
+function Stat({ k, v, sub, hi }: { k: string; v: string; sub?: string; hi?: boolean }) {
+  return (
+    <div className="min-w-[88px] flex-1 border-r border-hairline px-3 py-2 last:border-r-0">
+      <p className="font-data text-[9px] uppercase tracking-wider text-bone/70">{k}</p>
+      <p className={`mt-0.5 font-data text-[13px] tabular-nums ${hi ? "text-floral" : "text-bone"}`}>
+        {v}
+        {sub && <span className="text-olive"> · {sub}</span>}
+      </p>
+    </div>
+  );
+}
+
 function SalvarButton({ empresaId }: { empresaId: string }) {
   const [estado, setEstado] = useState<"idle" | "salvando" | "salvo">("idle");
 
@@ -768,7 +712,7 @@ function ResearchDisplay({ research }: { research: ResearchResult }) {
         </div>
       ) : (
         <div className="rounded-md bg-surface-hover p-2.5">
-          <p className="font-data text-[10px] uppercase tracking-wider text-olive">
+          <p className="font-data text-[10px] uppercase tracking-wider text-bone/70">
             Sem gatilho de timing · não é o momento
           </p>
           <p className="mt-1 text-sm leading-snug text-bone">
@@ -805,7 +749,7 @@ function ResearchDisplay({ research }: { research: ResearchResult }) {
       )}
       {research.mensagem_abordagem && (
         <div className="rounded-md bg-surface-hover p-2.5">
-          <p className="font-data text-[10px] uppercase tracking-wider text-olive">
+          <p className="font-data text-[10px] uppercase tracking-wider text-bone/70">
             Rascunho de abordagem · edite antes de enviar
           </p>
           <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-bone">
