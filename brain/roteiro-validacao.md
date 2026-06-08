@@ -1,6 +1,6 @@
 # Roteiro de validacao - calls com galera de M&A do clube
 
-Criado: 2026-05-29. Usar nas calls com Daniella, Nathalia e Brenda.
+Criado: 2026-05-29. Atualizado: 2026-06-07. Usar nas calls com Daniella, Nathalia, Brenda e Illa.
 Principio: Mom Test - perguntas sobre o passado, nunca hipoteticos. Mostrar produto so no fim.
 
 ---
@@ -10,8 +10,11 @@ Principio: Mom Test - perguntas sobre o passado, nunca hipoteticos. Mostrar prod
 Daniella Tavares   | GC Volaris/Constellation, 150 M&As/ano, buy-and-hold  | P1
 Nathalia Freitas   | Advogada M&A + societario, tech e agro, BH             | P2
 Brenda Paula Cunha | Societario, M&A, governanca, sucessao empresarial       | P3
+Illa Elias         | Manager Corporate Finance / M&A na PwC Belgium          | Cross-border / Big 4
 Karina Martinez    | Background M&A + finmercado, agora em startup AI        | Opcional
 Maria Julia Mourao | Estudante, interesse em M&A                             | Pular
+
+LinkedIn Illa: https://www.linkedin.com/in/illa-elias-6a4080160/
 
 ---
 
@@ -59,6 +62,31 @@ Sinal de ouro: dificuldade em identificar quando o fundador esta pronto - essa e
 5. "O que te ajudaria a identificar esses casos mais cedo?"
 
 Sinal de ouro: citar dados publicos que usa hoje - valida exatamente o que o Boreal minera.
+
+### Illa - Manager M&A PwC Belgium, em sabatico criando produto
+
+Contexto: 28 anos, mineira de BH, formada em Relacoes Economicas Internacionais. Gerente de Fusoes e Aquisicoes na PwC Belgium. Esta em ano sabatico no Japao com o marido, empreendendo. Comecou em fevereiro a Lucy Assist (chatbot WhatsApp que recebe Reels/TikTok de viagem e devolve lista de lugares + links Google Maps). Sem experiencia previa em programacao - construindo com ChatGPT e Claude. Contas: @illavieira (Insta pessoal) e @lucy_assist. Objetivo no clube: evoluir a Lucy com feedback + achar caminho de monetizacao.
+
+Implicacoes pro roteiro:
+- Ela esta FORA do dia a dia de M&A - nao perguntar "como funciona hoje" e sim "como funcionava quando voce estava ativa".
+- Ela nao e cliente potencial do Boreal - e validadora de premissa: se uma banker mid-market de Big 4 europeu confirma que origination era manual ate la, a dor do Boreal vira universal, nao so Brasil-sucessao.
+- Ela e construtora ativa (Lucy) - vai entender o jogo. Sem palavreado de venda, papo de founder pra founder.
+- Reciprocidade obrigatoria: testar a Lucy antes da call (ela pediu na apresentacao) e levar 1-2 pontos de feedback honestos. Isso e cultura do clube + abre a call no tom certo.
+
+Mom Test perguntas (todas no passado, sobre o trabalho real dela na PwC):
+
+1. "Conta da ultima vez que voce pegou um mandato sell-side ou buy-side na PwC do zero - como o alvo (ou comprador) apareceu? Voce/o time foi atras, alguem trouxe, veio de network?"
+2. "Quando o mandato exigia uma long-list de targets do zero, como o time montava? Quanto tempo levava ate ter a primeira lista decente?"
+3. "Quais ferramentas voce abria primeiro nesse comeco - Pitchbook, Mergermarket, Capital IQ, Orbis, alguma coisa interna da PwC? O que cada uma resolvia bem e o que faltava?"
+4. "Tinha alguma parte desse comeco que era claramente artesanal - planilha, ligacao pra alguem do network, garimpo de relatorio anual - que voce detestava fazer e ja se perguntava por que ainda era assim?"
+5. "Em algum momento na PwC voce olhou pra alguma parte do trabalho e pensou 'isso aqui era pra ser um produto'? Foi essa fagulha que te trouxe pra Lucy ou veio por outro caminho?"
+
+Sinal de ouro:
+- Confirmar que mesmo com o stack premium da Big 4 a long-list inicial era parcialmente manual (valida tese universal).
+- Tempo concreto na 2 ("levava 1-2 semanas", "5 dias do junior") - vira numero forte pro Loom.
+- Pergunta 5 abre conversa de construtora: se ela citar dor de M&A especifica, e ouro indireto; se for outra coisa, e respeito pelo projeto dela.
+
+Antes da call: testar a Lucy Assist (instrucoes em @lucy_assist no Insta). Ir com 1-2 observacoes honestas - elogio que cita coisa especifica + 1 sugestao concreta.
 
 ---
 
