@@ -9,7 +9,7 @@
   "deals": [
     {
       "nome": "Fer-Alvarez Produtos Siderurgicos Ind. Com. Ltda",
-      "municipio": "3549102",
+      "municipio": "São João da Boa Vista",
       "cnae": "2599399",
       "fundada": 1981,
       "score": 100,
@@ -19,7 +19,7 @@
     },
     {
       "nome": "Minor Industria Mecanica De Precisao Ltda",
-      "municipio": "3515004",
+      "municipio": "Embu das Artes",
       "cnae": "2829199",
       "fundada": 1966,
       "score": 100,
@@ -29,7 +29,7 @@
     },
     {
       "nome": "Fischer Industria Mecanica Ltda.",
-      "municipio": "3543907",
+      "municipio": "Rio Claro",
       "cnae": "2451200",
       "fundada": 1957,
       "score": 100,
@@ -39,7 +39,7 @@
     },
     {
       "nome": "Giorgi Embalagens Personalizadas, Industria E Comercio Ltda",
-      "municipio": "3550308",
+      "municipio": "São Paulo",
       "cnae": "2591800",
       "fundada": 1966,
       "score": 100,
@@ -49,7 +49,7 @@
     },
     {
       "nome": "Polimold Industrial Ltda.",
-      "municipio": "3548708",
+      "municipio": "São Bernardo do Campo",
       "cnae": "2869100",
       "fundada": 1974,
       "score": 100,
@@ -59,7 +59,7 @@
     },
     {
       "nome": "Topema Cozinhas Profissionais Industria E Comercio Ltda",
-      "municipio": "3513801",
+      "municipio": "Diadema",
       "cnae": "2821601",
       "fundada": 1966,
       "score": 100,
@@ -69,7 +69,7 @@
     },
     {
       "nome": "Ita Industrial Ltda",
-      "municipio": "3515004",
+      "municipio": "Embu das Artes",
       "cnae": "2829199",
       "fundada": 1973,
       "score": 100,
@@ -79,7 +79,7 @@
     },
     {
       "nome": "Industria E Comercio De Refrigeracao Real Ltda",
-      "municipio": "3547809",
+      "municipio": "Santo André",
       "cnae": "2823200",
       "fundada": 1972,
       "score": 100,
@@ -89,7 +89,7 @@
     },
     {
       "nome": "Serralgodao Comercio E Industria Ltda",
-      "municipio": "3550308",
+      "municipio": "São Paulo",
       "cnae": "2424502",
       "fundada": 1966,
       "score": 100,
@@ -99,7 +99,7 @@
     },
     {
       "nome": "Industria E Comercio De Evaporadores Refrio Ltda",
-      "municipio": "3519071",
+      "municipio": "Hortolândia",
       "cnae": "2829199",
       "fundada": 1980,
       "score": 96,
@@ -109,7 +109,7 @@
     },
     {
       "nome": "Cmp Metalgraphica Paulista Ltda",
-      "municipio": "3509205",
+      "municipio": "Cajamar",
       "cnae": "2591800",
       "fundada": 1966,
       "score": 96,
@@ -119,7 +119,7 @@
     },
     {
       "nome": "Aluminio Araras Ltda",
-      "municipio": "3503307",
+      "municipio": "Araras",
       "cnae": "2532201",
       "fundada": 1979,
       "score": 96,
@@ -129,7 +129,7 @@
     },
     {
       "nome": "Caldex Conexoes E Equipamentos Ltda",
-      "municipio": "3513801",
+      "municipio": "Diadema",
       "cnae": "2599399",
       "fundada": 1974,
       "score": 96,
@@ -139,7 +139,7 @@
     },
     {
       "nome": "Trineva Artefatos De Refrigeracao Ltda",
-      "municipio": "3550308",
+      "municipio": "São Paulo",
       "cnae": "2823200",
       "fundada": 1968,
       "score": 96,
@@ -149,7 +149,7 @@
     },
     {
       "nome": "Hanna Industria Mecanica Ltda",
-      "municipio": "3526902",
+      "municipio": "Limeira",
       "cnae": "2599399",
       "fundada": 1942,
       "score": 96,
@@ -159,7 +159,7 @@
     },
     {
       "nome": "Palini & Alves Ltda",
-      "municipio": "3515186",
+      "municipio": "Espírito Santo do Pinhal",
       "cnae": "2833000",
       "fundada": 1979,
       "score": 90,
@@ -169,7 +169,7 @@
     },
     {
       "nome": "Industrias Marrucci Ltda",
-      "municipio": "3538709",
+      "municipio": "Piracicaba",
       "cnae": "2812700",
       "fundada": 1971,
       "score": 90,
@@ -179,7 +179,7 @@
     },
     {
       "nome": "Lgmt Equipamentos Industriais Ltda",
-      "municipio": "3538709",
+      "municipio": "Piracicaba",
       "cnae": "2869100",
       "fundada": 1977,
       "score": 90,
@@ -189,7 +189,7 @@
     },
     {
       "nome": "Jvs Equipamentos Para Automacao Industrial Ltda.",
-      "municipio": "3523404",
+      "municipio": "Itatiba",
       "cnae": "2829199",
       "fundada": 1992,
       "score": 88,
@@ -199,7 +199,7 @@
     },
     {
       "nome": "Metalplan Equipamentos Ltda",
-      "municipio": "3509205",
+      "municipio": "Cajamar",
       "cnae": "2814301",
       "fundada": 1986,
       "score": 88,
@@ -209,7 +209,7 @@
     },
     {
       "nome": "Mored Comercio E Servicos Ltda",
-      "municipio": "3550308",
+      "municipio": "São Paulo",
       "cnae": "2599399",
       "fundada": 1987,
       "score": 88,
@@ -219,7 +219,7 @@
     },
     {
       "nome": "Ns-I Norte Sul Industrial Ltda",
-      "municipio": "3550308",
+      "municipio": "São Paulo",
       "cnae": "2869100",
       "fundada": 1994,
       "score": 88,
@@ -229,7 +229,7 @@
     },
     {
       "nome": "Conteudo Comercio E Servicos Ltda",
-      "municipio": "3512803",
+      "municipio": "Cosmópolis",
       "cnae": "2539002",
       "fundada": 1986,
       "score": 88,
@@ -239,7 +239,7 @@
     },
     {
       "nome": "Industria Mecanica Comodoro Ltda",
-      "municipio": "3550308",
+      "municipio": "São Paulo",
       "cnae": "2813500",
       "fundada": 1956,
       "score": 85,
@@ -249,7 +249,7 @@
     },
     {
       "nome": "Mikro-Stamp Estamparia Comercio E Industria Ltda",
-      "municipio": "3509502",
+      "municipio": "Campinas",
       "cnae": "2532201",
       "fundada": 1987,
       "score": 82,
@@ -259,7 +259,7 @@
     },
     {
       "nome": "Femes Ferramentaria E Maquinas Especiais Ltda",
-      "municipio": "3524006",
+      "municipio": "Itupeva",
       "cnae": "2869100",
       "fundada": 1991,
       "score": 82,
@@ -269,7 +269,7 @@
     },
     {
       "nome": "Tecnofix Industria E Comercio De Parafusos Ltda",
-      "municipio": "3552205",
+      "municipio": "Sorocaba",
       "cnae": "2592602",
       "fundada": 1989,
       "score": 82,
@@ -279,7 +279,7 @@
     },
     {
       "nome": "Fundicao Moreno Ltda",
-      "municipio": "3551702",
+      "municipio": "Sertãozinho",
       "cnae": "2451200",
       "fundada": 1998,
       "score": 82,
@@ -289,7 +289,7 @@
     },
     {
       "nome": "J W Industria E Comercio De Equipamentos Em Aco Inoxidavel Ltda Em Recuperacao Judicial",
-      "municipio": "3551702",
+      "municipio": "Sertãozinho",
       "cnae": "2829199",
       "fundada": 1995,
       "score": 82,
@@ -299,7 +299,7 @@
     },
     {
       "nome": "Caldsteel Equipamentos Industriais Ltda",
-      "municipio": "3554102",
+      "municipio": "Taubaté",
       "cnae": "2521700",
       "fundada": 1998,
       "score": 82,
@@ -309,7 +309,7 @@
     },
     {
       "nome": "Icems Industria E Comercio De Equipamentos Ltda.",
-      "municipio": "3548906",
+      "municipio": "São Carlos",
       "cnae": "2852600",
       "fundada": 1974,
       "score": 81,
@@ -319,7 +319,7 @@
     },
     {
       "nome": "Engemasa Engenharia E Materiais Ltda",
-      "municipio": "3548906",
+      "municipio": "São Carlos",
       "cnae": "2451200",
       "fundada": 1976,
       "score": 80,
@@ -329,7 +329,7 @@
     },
     {
       "nome": "Danpower Caldeiras E Equipamentos Ltda",
-      "municipio": "3538709",
+      "municipio": "Piracicaba",
       "cnae": "2522500",
       "fundada": 2001,
       "score": 76,
@@ -339,7 +339,7 @@
     },
     {
       "nome": "Techmelt Maquinas E Equipamentos Ltda",
-      "municipio": "3536505",
+      "municipio": "Paulínia",
       "cnae": "2865800",
       "fundada": 1981,
       "score": 75,
@@ -349,7 +349,7 @@
     },
     {
       "nome": "Grantham Engineering Industria E Comercio De Equipamentos Industriais Ltda",
-      "municipio": "3556453",
+      "municipio": "Vargem Grande Paulista",
       "cnae": "2821602",
       "fundada": 1984,
       "score": 73,
@@ -359,7 +359,7 @@
     },
     {
       "nome": "Industria E Comercio Dambrosio Ltda",
-      "municipio": "3523107",
+      "municipio": "Itaquaquecetuba",
       "cnae": "2452100",
       "fundada": 1996,
       "score": 73,
@@ -369,7 +369,7 @@
     },
     {
       "nome": "Aahbran Engenharia Manutencao E Montagem Industrial Ltda",
-      "municipio": "3538709",
+      "municipio": "Piracicaba",
       "cnae": "2869100",
       "fundada": 2003,
       "score": 70,
@@ -379,7 +379,7 @@
     },
     {
       "nome": "Milacron Mold-Masters Sistemas De Processamento De Plasticos Ltda.",
-      "municipio": "3509502",
+      "municipio": "Campinas",
       "cnae": "2869100",
       "fundada": 2017,
       "score": 70,
@@ -389,7 +389,7 @@
     },
     {
       "nome": "Progeu Industria E Comercio De Acessorios Para Piscinas Ltda",
-      "municipio": "3511300",
+      "municipio": "Cedral",
       "cnae": "2829199",
       "fundada": 2004,
       "score": 70,
@@ -399,7 +399,7 @@
     },
     {
       "nome": "Semag - Equipamentos Industriais De Guariba Ltda.",
-      "municipio": "3518602",
+      "municipio": "Guariba",
       "cnae": "2513600",
       "fundada": 2001,
       "score": 70,
@@ -409,7 +409,7 @@
     },
     {
       "nome": "Tecnoservice Tecnologia Em Servicos Ltda",
-      "municipio": "3556206",
+      "municipio": "Valinhos",
       "cnae": "2599399",
       "fundada": 2001,
       "score": 70,
@@ -419,7 +419,7 @@
     },
     {
       "nome": "Mdg-Industria E Comercio Ltda",
-      "municipio": "3548906",
+      "municipio": "São Carlos",
       "cnae": "2862300",
       "fundada": 1987,
       "score": 67,
@@ -429,7 +429,7 @@
     },
     {
       "nome": "Unicer Comercial Ltda",
-      "municipio": "3526704",
+      "municipio": "Leme",
       "cnae": "2869100",
       "fundada": 1987,
       "score": 67,
@@ -439,7 +439,7 @@
     },
     {
       "nome": "Hanna Energy Industria De Ferramentas Ltda",
-      "municipio": "3526902",
+      "municipio": "Limeira",
       "cnae": "2543800",
       "fundada": 2019,
       "score": 66,
@@ -449,7 +449,7 @@
     },
     {
       "nome": "Carbogas Energia Ltda",
-      "municipio": "3548708",
+      "municipio": "São Bernardo do Campo",
       "cnae": "2869100",
       "fundada": 1998,
       "score": 62,
@@ -459,7 +459,7 @@
     },
     {
       "nome": "Alf Industria E Comercio De Fixadores Ltda",
-      "municipio": "3548708",
+      "municipio": "São Bernardo do Campo",
       "cnae": "2592601",
       "fundada": 2009,
       "score": 60,
@@ -469,7 +469,7 @@
     },
     {
       "nome": "Luxor Solucoes E Projetos Residenciais Ltda",
-      "municipio": "3529005",
+      "municipio": "Marília",
       "cnae": "2512800",
       "fundada": 2023,
       "score": 60,
@@ -479,7 +479,7 @@
     },
     {
       "nome": "Cavenaghi Industria E Comercio De Equipamentos Especiais Ltda",
-      "municipio": "3550308",
+      "municipio": "São Paulo",
       "cnae": "2869100",
       "fundada": 2001,
       "score": 60,
@@ -489,7 +489,7 @@
     },
     {
       "nome": "Americana Sistemas De Identificacao Para Embalagens Ltda",
-      "municipio": "3501608",
+      "municipio": "Americana",
       "cnae": "2865800",
       "fundada": 2008,
       "score": 60,
@@ -499,7 +499,7 @@
     },
     {
       "nome": "Thaurok Industria E Comercio Ltda",
-      "municipio": "3501608",
+      "municipio": "Americana",
       "cnae": "2825900",
       "fundada": 2009,
       "score": 60,
@@ -509,7 +509,7 @@
     },
     {
       "nome": "Compromesso Industria Metalurgica Ltda",
-      "municipio": "3523107",
+      "municipio": "Itaquaquecetuba",
       "cnae": "2539001",
       "fundada": 2008,
       "score": 60,
@@ -519,7 +519,7 @@
     },
     {
       "nome": "Fam Construcoes Metalicas Pesadas Ltda",
-      "municipio": "3525201",
+      "municipio": "Jarinu",
       "cnae": "2511000",
       "fundada": 2006,
       "score": 60,
@@ -529,7 +529,7 @@
     },
     {
       "nome": "Aesseal Brasil Ltda.",
-      "municipio": "3550308",
+      "municipio": "São Paulo",
       "cnae": "2829199",
       "fundada": 2000,
       "score": 60,
@@ -539,7 +539,7 @@
     },
     {
       "nome": "Metais Valfer Industria E Comercio Ltda",
-      "municipio": "3503802",
+      "municipio": "Artur Nogueira",
       "cnae": "2452100",
       "fundada": 1993,
       "score": 57,
@@ -549,7 +549,7 @@
     },
     {
       "nome": "Artmetal Industria E Comercio Ltda",
-      "municipio": "3505708",
+      "municipio": "Barueri",
       "cnae": "2599302",
       "fundada": 1999,
       "score": 55,
@@ -559,7 +559,7 @@
     },
     {
       "nome": "Fameth Industria E Comercio De Produtos Metalurgicos Ltda",
-      "municipio": "3529401",
+      "municipio": "Mauá",
       "cnae": "2532201",
       "fundada": 2002,
       "score": 55,
@@ -569,7 +569,7 @@
     },
     {
       "nome": "Lapt Servico De Usinagem Ltda",
-      "municipio": "3509007",
+      "municipio": "Caieiras",
       "cnae": "2599399",
       "fundada": 2005,
       "score": 51,
@@ -579,7 +579,7 @@
     },
     {
       "nome": "M T C Comercio De Materiais De Construcao E Montagens Ltda",
-      "municipio": "3549904",
+      "municipio": "São José dos Campos",
       "cnae": "2511000",
       "fundada": 2013,
       "score": 51,
@@ -589,7 +589,7 @@
     },
     {
       "nome": "Spajo Industrializacao De Pecas Ltda",
-      "municipio": "3510807",
+      "municipio": "Casa Branca",
       "cnae": "2539001",
       "fundada": 2013,
       "score": 51,
@@ -599,7 +599,7 @@
     },
     {
       "nome": "Agroefetiva Industria E Servicos Ltda",
-      "municipio": "3507506",
+      "municipio": "Botucatu",
       "cnae": "2833000",
       "fundada": 2016,
       "score": 50,
@@ -609,7 +609,7 @@
     },
     {
       "nome": "Nordic Water Produtos Para Tratamento De Aguas Ltda",
-      "municipio": "3550308",
+      "municipio": "São Paulo",
       "cnae": "2825900",
       "fundada": 2012,
       "score": 50,
@@ -619,7 +619,7 @@
     },
     {
       "nome": "Anjo Montagem E Colocacao De Esquadrias Ltda",
-      "municipio": "3550308",
+      "municipio": "São Paulo",
       "cnae": "2512800",
       "fundada": 2002,
       "score": 50,
@@ -629,7 +629,7 @@
     },
     {
       "nome": "Metalsato Industria E Comercio Ltda",
-      "municipio": "3552205",
+      "municipio": "Sorocaba",
       "cnae": "2532201",
       "fundada": 2008,
       "score": 45,
@@ -639,7 +639,7 @@
     },
     {
       "nome": "Alumita Extrusao De Metais Ltda",
-      "municipio": "3520509",
+      "municipio": "Indaiatuba",
       "cnae": "2441502",
       "fundada": 2007,
       "score": 45,
@@ -649,7 +649,7 @@
     },
     {
       "nome": "Jws Industria E Comercio De Equipamentos E Sistemas Ltda Em Recuperacao Judicial",
-      "municipio": "3551702",
+      "municipio": "Sertãozinho",
       "cnae": "2829199",
       "fundada": 2008,
       "score": 45,
@@ -659,7 +659,7 @@
     },
     {
       "nome": "Goldtech Tecnologia Em Mineracao Ltda",
-      "municipio": "3543402",
+      "municipio": "Ribeirão Preto",
       "cnae": "2852600",
       "fundada": 2022,
       "score": 41,
@@ -669,7 +669,7 @@
     },
     {
       "nome": "Induservice Industria De Maquinas Ltda",
-      "municipio": "3528502",
+      "municipio": "Mairiporã",
       "cnae": "2829199",
       "fundada": 2010,
       "score": 40,
@@ -679,7 +679,7 @@
     },
     {
       "nome": "Lepam Industria E Comercio De Bombas Ltda",
-      "municipio": "3511508",
+      "municipio": "Cerquilho",
       "cnae": "2829199",
       "fundada": 2021,
       "score": 40,
@@ -689,7 +689,7 @@
     },
     {
       "nome": "Vonin Maquinas Industria E Comercio Ltda",
-      "municipio": "3550308",
+      "municipio": "São Paulo",
       "cnae": "2862300",
       "fundada": 2014,
       "score": 40,
@@ -699,7 +699,7 @@
     },
     {
       "nome": "Brasil Industria E Comercio De Soldas Ltda",
-      "municipio": "3513801",
+      "municipio": "Diadema",
       "cnae": "2449103",
       "fundada": 2013,
       "score": 40,
@@ -709,7 +709,7 @@
     },
     {
       "nome": "Aeroflexiveis Solucoes Industriais Ltda",
-      "municipio": "3547809",
+      "municipio": "Santo André",
       "cnae": "2599399",
       "fundada": 2017,
       "score": 35,
@@ -719,7 +719,7 @@
     },
     {
       "nome": "Aifos Ventilacao Ltda",
-      "municipio": "3509502",
+      "municipio": "Campinas",
       "cnae": "2829199",
       "fundada": 1999,
       "score": 35,
@@ -729,7 +729,7 @@
     },
     {
       "nome": "Plastitool Industria E Comercio Ltda",
-      "municipio": "3509502",
+      "municipio": "Campinas",
       "cnae": "2840200",
       "fundada": 2013,
       "score": 25,
@@ -739,7 +739,7 @@
     },
     {
       "nome": "Erf Maquinas Agricolas Ltda",
-      "municipio": "3526902",
+      "municipio": "Limeira",
       "cnae": "2833000",
       "fundada": 2020,
       "score": 25,
@@ -749,7 +749,7 @@
     },
     {
       "nome": "Bm Importacao E Exportacao Ltda",
-      "municipio": "3520509",
+      "municipio": "Indaiatuba",
       "cnae": "2829199",
       "fundada": 2010,
       "score": 25,
@@ -759,7 +759,7 @@
     },
     {
       "nome": "Solaris Implementos Industria De Maquinas Ltda",
-      "municipio": "3557105",
+      "municipio": "Votuporanga",
       "cnae": "2829199",
       "fundada": 2021,
       "score": 15,
