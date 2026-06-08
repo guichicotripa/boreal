@@ -150,6 +150,11 @@ terracota (`bg-risk-high/10`) — funciona como *alerta de oportunidade quente*,
 14. **Focus ring em links.** Todo `<a>` interativo deve ter `focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm`.
 15. **`scope="col"` em `<th>`.** Todas as células de cabeçalho de tabela precisam de `scope="col"` para leitores de tela.
 
+## Decisões registradas (página da empresa 2026-06-08)
+
+16. **Barras do breakdown do score na cor do tier.** As 4 barras de dimensão do score (`/empresa/[id]`) usam a cor do tier de risco (`TIER_STYLES.bar`: risk-high/70, risk-mid/70, bone/60), não mais neutras. Racional: as barras SÃO o detalhamento do score — colori-las com o tier reforça a leitura de risco de relance e é coerente com "ocre = score". Refina a regra #7: o ocre vive no total **e** no breakdown que o compõe (ambos são score), nunca em link/CTA/decoração. Reverte a sub-decisão anterior ("barras neutras").
+17. **Caption informativa nunca em Olive — vale também para `/empresa/[id]`.** Reforço da decisão #9: nota de seção, "sócio desde", metadata de similares = Bone/60 (caption) ou Bone/70 (label/metadata). Olive só em assinatura de rodapé ("Dados públicos da Receita Federal") e divisores (·).
+
 ---
 
-*v3 — 2026-06-05. Atualizado após restyle completo de /validacao + crítica impeccable.*
+*v3 — 2026-06-05. Atualizado 2026-06-08 (decisões #16–17, página da empresa).*

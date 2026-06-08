@@ -24,7 +24,8 @@ const SECOES = [
   { id: "similares", label: "Similares" },
 ] as const;
 
-// As 4 dimensões do score (scoring.ts). Barras NEUTRAS — a cor de risco vive só no total.
+// As 4 dimensões do score (scoring.ts). Barras na cor do tier de risco (TIER_STYLES.bar) —
+// reforçam a leitura de risco de relance. Decisão aprovada 2026-06-08 (ver brand guide #16).
 const DIMENSOES = [
   { key: "idade_socios", label: "Idade dos sócios", max: 30 },
   { key: "antiguidade_empresa", label: "Antiguidade da empresa", max: 30 },
@@ -243,7 +244,7 @@ export default function EmpresaPage() {
 
         {/* Resumo do score (número + tier + leitura) — breakdown completo fica na seção Score */}
         <div className="mt-6 flex flex-col gap-3 rounded-lg border border-hairline bg-surface p-4 sm:flex-row sm:items-center sm:gap-5">
-          <div className={`flex shrink-0 items-baseline gap-2 rounded-md border ${t.badge} px-3 py-1.5`}>
+          <div aria-live="polite" className={`flex shrink-0 items-baseline gap-2 rounded-md border ${t.badge} px-3 py-1.5`}>
             <span className={`font-data text-[28px] leading-none tabular-nums ${t.text}`}>{score}</span>
             <span className={`font-data text-[10px] uppercase tracking-wider ${t.text}`}>{t.label}</span>
             {research?.delta != null && research.delta !== 0 && (
@@ -325,7 +326,7 @@ export default function EmpresaPage() {
             <Campo k="Natureza jurídica" v={e.natureza_juridica} />
             <Campo k="Capital social" v={formatCapitalCompact(e.capital_social)} />
             <Campo k="Porte" v={e.porte} />
-            <Campo k="CNAE principal" v={e.cnae_principal ? `${e.cnae_principal}` : null} sub={e.cnae_principal_desc} />
+            <Campo k="CNAE principal" v={e.cnae_principal} sub={e.cnae_principal_desc} />
             <Campo k="Telefone" v={e.telefone ? formatTelefone(e.telefone) : null} />
             <Campo k="E-mail" v={e.email} />
           </dl>
@@ -362,7 +363,7 @@ export default function EmpresaPage() {
                     <div className="min-w-0">
                       <p className="text-[15px] text-floral">{s.nome}</p>
                       {ent && (
-                        <p className="font-data text-[11px] text-olive">sócio desde {ent}</p>
+                        <p className="font-data text-[11px] text-bone/70">sócio desde {ent}</p>
                       )}
                     </div>
                     {s.faixa_etaria && FAIXA_LABEL[s.faixa_etaria] && (
@@ -421,7 +422,7 @@ export default function EmpresaPage() {
 
           {research?.sinais && research.sinais.length > 0 && (
             <div className="mt-5 border-t border-hairline pt-5">
-              <p className="mb-3 font-data text-[10px] uppercase tracking-wider text-bone/60">
+              <p className="mb-3 font-data text-[10px] uppercase tracking-wider text-bone/70">
                 Sinais — investigação com IA
               </p>
               <div className="space-y-1">
@@ -431,7 +432,7 @@ export default function EmpresaPage() {
                     <span className={`shrink-0 rounded px-1.5 py-0.5 font-data text-[10px] tabular-nums ${
                       s.peso > 0 ? "bg-risk-high/15 text-risk-high" : "bg-surface text-bone"
                     }`}>
-                      {s.peso > 0 ? `+${s.peso}` : s.peso}
+                      {s.peso > 0 ? `+${s.peso}` : `−${Math.abs(s.peso)}`}
                     </span>
                   </div>
                 ))}
@@ -440,14 +441,19 @@ export default function EmpresaPage() {
           )}
 
           {sinaisScore.length > 0 && (
-            <ul className="mt-5 space-y-1.5">
-              {sinaisScore.map((s, i) => (
-                <li key={i} className="flex items-start gap-2 text-[13px] text-bone">
-                  <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-olive" />
-                  {s}
-                </li>
-              ))}
-            </ul>
+            <div className="mt-5 border-t border-hairline pt-5">
+              <p className="mb-3 font-data text-[10px] uppercase tracking-wider text-bone/70">
+                Sinais estruturais — da Receita
+              </p>
+              <ul className="space-y-1.5">
+                {sinaisScore.map((s, i) => (
+                  <li key={i} className="flex items-start gap-2 text-[13px] text-bone">
+                    <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-olive" />
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
 
           <Link
@@ -522,13 +528,13 @@ export default function EmpresaPage() {
                     >
                       <div className="min-w-0">
                         <p className="truncate font-display text-[15px] text-floral">{s.razao_social}</p>
-                        <p className="font-data text-[11px] text-olive">
+                        <p className="font-data text-[11px] text-bone/60">
                           {s.municipio}/{s.uf}
                           {s.similaridade.motivos.length > 0 && ` · ${s.similaridade.motivos.join(", ")}`}
                         </p>
                       </div>
                       <div className="flex shrink-0 items-center gap-2">
-                        <span className="font-data text-[11px] tabular-nums text-bone/50">
+                        <span className="font-data text-[11px] tabular-nums text-bone/60">
                           {s.similaridade.pontos}% match
                         </span>
                         <span className={`rounded border ${sT.badge} px-1.5 font-data text-[11px] tabular-nums ${sT.text}`}>
@@ -561,7 +567,7 @@ function Secao({
     <section id={id} className="scroll-mt-28 border-t border-hairline py-8 first:border-t-0">
       <div className="mb-4">
         <h2 className="font-data text-[11px] uppercase tracking-wider text-bone/70">{titulo}</h2>
-        {nota && <p className="mt-1 text-[12px] text-olive">{nota}</p>}
+        {nota && <p className="mt-1 text-[12px] text-bone/60">{nota}</p>}
       </div>
       {children}
     </section>
