@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SETORES, SETORES_GERADO_EM, type Setor } from "@/lib/setores";
+import { contextoSetor } from "@/lib/setor-contexto";
+import { ContextoSetor } from "@/components/ContextoSetor";
 
 export const metadata: Metadata = {
   title: "Boreal · Setores",
@@ -56,6 +58,7 @@ export default function Setores() {
         <div className="space-y-4">
           {SETORES.map((s) => {
             const st = STATUS[s.status];
+            const ctx = contextoSetor(s.id);
             return (
               <section key={s.id} className="rounded-xl border border-hairline bg-surface p-6">
                 <div className="flex flex-wrap items-center justify-between gap-2">
@@ -107,6 +110,15 @@ export default function Setores() {
                     <strong>{s.nacional.recall_sucessao}%</strong> de acerto nas vendas de
                     sucessão (Brasil inteiro, N={s.nacional.n_aquisicoes_sucessao} aquisições).
                   </p>
+                )}
+
+                {ctx && (
+                  <div className="mt-5 border-t border-hairline pt-5">
+                    <p className="mb-3 font-data text-[11px] uppercase tracking-wider text-bone/70">
+                      Contexto de mercado
+                    </p>
+                    <ContextoSetor ctx={ctx} />
+                  </div>
                 )}
 
                 <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 font-data text-xs">
