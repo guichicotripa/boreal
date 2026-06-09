@@ -19,8 +19,10 @@ export async function GET() {
       `id, estagio, resultado, notas, dono, proxima_acao, proxima_acao_em, score_no_save, created_at,
        empresa:empresa_id (
          id, cnpj, razao_social, nome_fantasia, cnae_principal_desc,
-         municipio, uf, capital_social, porte, telefone, email
-       )`
+         municipio, uf, capital_social, porte, telefone, email,
+         socio(nome, faixa_etaria)
+       ),
+       interacoes:interacao(criado_em)`
     )
     .order("created_at", { ascending: false });
 

@@ -117,11 +117,16 @@ export type Oportunidade = {
   proxima_acao_em: string | null; // YYYY-MM-DD
   score_no_save: number | null;   // "previsto" do loop de outcome
   created_at: string;
+  /** Datas dos toques — para calcular último contato sem query extra. */
+  interacoes?: { criado_em: string }[];
   empresa: Pick<
     Empresa,
     "id" | "cnpj" | "razao_social" | "nome_fantasia" | "cnae_principal_desc"
     | "municipio" | "uf" | "capital_social" | "porte" | "telefone" | "email"
-  >;
+  > & {
+    /** Sócios com nome e faixa etária — para identificar o fundador na row. */
+    socio?: Pick<Socio, "nome" | "faixa_etaria">[];
+  };
 };
 
 export type SearchResponse = {
