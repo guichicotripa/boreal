@@ -4,6 +4,24 @@
 
 ---
 
+## 🔴 Handoff Maguto → Guilherme (09/06) — não implementado
+
+Pipeline remodel (PR #39) mergeado na main (`41c62ee`). Itens abaixo foram registrados pelo Maguto mas **não implementados** — ficaram para o Guilherme resolver.
+
+### INÍCIO (`/`)
+- [ ] **Info dos setores à direita** — coluna direita da home mostrando cobertura/info por setor. Design em aberto; discutir com Maguto qual dado exibir (ex.: N empresas por setor, setores cobertos, etc.).
+
+### PIPELINE (`/pipeline`)
+- [ ] **Col Dono/Estágio — texto muito à esquerda** — o container `min-w-0 space-y-0.5` da coluna 3 não tem padding horizontal; o texto "Guilherme" e o select "IDENTIFICADO" começam rente à borda da célula, visualmente feio. Fix: adicionar `px-2` (ou similar) ao wrapper da col 3.
+- [ ] **DateInput — remover ícone nativo** — `<input type="date">` renderiza ícone de agenda do browser + o SVG bone customizado; ficam dois ícones. Manter só o SVG bone (já tem hover ajustado). Fix: adicionar `[&::-webkit-calendar-picker-indicator]:hidden` ao className do input nativo em `DateInput`.
+- [ ] **Atividade: botão "+" mais próximo do título, com box própria** — o `+` de adicionar toque/log fica longe do label "Atividade" e não tem delimitação visual. Jogar adjacente ao título e dar uma caixa delimitada para o bloco de log.
+- [ ] **View geral (cross-stage)** — aba ou toggle que mostra _todas_ as oportunidades numa tabela única, sem filtrar por estágio. Candidatos: aba "Todos" antes das abas de estágio, ou um toggle "Estágios | Todos" no header do pipeline.
+- [ ] **Aba Agenda — underline amarelo → floral** — active state usa `border-risk-mid` (ocre) em vez de `border-floral`. Fix: trocar `accentAgenda ? "border-risk-mid text-floral" : "border-floral text-floral"` por `"border-floral text-floral"` (Agenda recebe o mesmo tratamento dos demais estágios).
+- [ ] **Separar Agenda dos estágios visualmente** — Agenda é uma dimensão operacional (fila de ações), não um estágio do funil. Hoje aparece na mesma barra de tabs que Identificado/Abordado/etc, o que confunde a narrativa. Solução: separador visual ou agrupamento distinto, mantendo navegabilidade por teclado (← →) entre todas as abas. Em aberto qual forma — discutir e decidir antes de implementar.
+- [ ] **Review com impeccable no final** — após as features acima prontas, rodar `/impeccable polish pipeline/page.tsx` para quality pass de design antes de qualquer demo/Loom.
+
+---
+
 ## 🟡 Pipeline remodel (planejado 08/06 · Maguto)
 
 Problema: kanban de 6 colunas espreme os cards (nome ilegível) e com volume vira scroll
@@ -56,14 +74,14 @@ Removida do card da home (pesada inline: query BigQuery ao vivo, lenta/instável
 Decidido com o Maguto (07/06): busca e pipeline precisam ser navegáveis — clicar numa empresa abre a **página própria**
 dela (card + infos completas). Racional: o analista de M&A revisa muitas empresas e não lembra delas só pelo nome.
 
-- [ ] Rota `/empresa/[id]` — recebe as ações pesadas (investigar, memo, similares, trajetória) + sócios + contato +
-  **score explainer** (o `breakdown` já vem no payload do `calcScore`).
-- [ ] Card da busca vira link → página da empresa (card magro de verdade; lista longa fica varrível).
-- [ ] **Pipeline:** cards clicáveis → página da empresa (mesma lógica).
+- [x] Rota `/empresa/[id]` — recebe as ações pesadas (investigar, memo, similares, trajetória) + sócios + contato +
+  **score explainer** (o `breakdown` já vem no payload do `calcScore`). _(PR #38, `a60b01c`)_
+- [x] Card da busca vira link → página da empresa (card magro de verdade; lista longa fica varrível). _(PR #38)_
+- [x] **Pipeline:** cards clicáveis → página da empresa (mesma lógica). _(`138249b`)_
 - [ ] **Similares funcional:** botão "Salvar no pipeline" por linha + legenda do critério (CNAE+praça+porte+época).
   Hoje é lista morta; vira "ache parecidas → salve as boas" (wedge do Grata).
-- [ ] Dependência opcional (Guilherme): `GET /api/empresa/[id]` (empresa + score) p/ a página sobreviver a
-  refresh/deploy. Sem isso, dá pra navegar via estado no clique (suficiente p/ o Loom).
+- [x] Dependência opcional (Guilherme): `GET /api/empresa/[id]` (empresa + score) p/ a página sobreviver a
+  refresh/deploy. Sem isso, dá pra navegar via estado no clique (suficiente p/ o Loom). _(`138249b`, feito pelo Maguto)_
 
 ## 🎨 Restyle sistema v1 (em curso — 03/06 · branch `maguto/restyle-sistema-v1`)
 
@@ -74,20 +92,17 @@ sans 400/500/600), hero, card/memo. Faltam as páginas.
 - [x] Etapa 3 — pipeline (`fb62e46`)
 - [x] Etapa 4 — validação (`4e769af` + `57b838f` + `5659693`)
 - [x] Etapa 5 — consolidadores (`fe59f28`) — aguarda revisão do Maguto no browser
-- [ ] Etapa 6 — mercado ("0,46%" ocre → floral + strong sem cor)
-- [ ] Etapa 7 — /setores (nova página do Guilherme, sem restyle)
-- [ ] Etapa 8 — /worklist (nova página do Guilherme, sem restyle)
+- [x] Etapa 6 — mercado ("0,46%" ocre → floral + strong sem cor) _(PR #35, `3bfe6a0`)_
+- [x] Etapa 7 — /setores (nova página do Guilherme, sem restyle) _(PR #35)_
+- [x] Etapa 8 — /worklist (nova página do Guilherme, sem restyle) _(PR #35; /worklist depois aposentada no PR #39)_
 - [ ] Decidir peso do negrito (600 atual vs 700 real) — adiado
 - [ ] SINAL_COR em validacao/page.tsx — verificar com Guilherme se ainda é necessário
-- [ ] Abrir PR: `maguto/restyle-sistema-v1` → main
+- [x] Abrir PR: `maguto/restyle-sistema-v1` → main _(PR #35 mergeado em main, `3bfe6a0`)_
 
 ## 🔵 Fix de dados — /validacao · hindcast.json (Guilherme)
 
-- [ ] **`hindcast.json`: campo `municipio` tem código IBGE em vez de nome da cidade** (ex: `3549102`
-  em vez de `"Sorocaba, SP"`). A tabela "Empresas Reais" da `/validacao` exibe o código bruto,
-  parece dump de banco. Fix: adicionar join com `basedosdados.br_bd_diretorios_brasil.municipio`
-  no script que gera o hindcast (mesmo join já usado no `enrich-empresas.mjs`). Renomear coluna
-  de "Praça" para "Município" ou "Cidade" na UI ao mesmo tempo.
+- [x] **`hindcast.json`: campo `municipio` tem código IBGE em vez de nome da cidade** (ex: `3549102`
+  em vez de `"Sorocaba, SP"`). _(PR #36, `083b440` — lookup via API IBGE, 76 deals corrigidos)_
 
 ## 🔵 Dívida técnica — navegação `<a>` → `<Link>` (Guilherme, repo-wide)
 
