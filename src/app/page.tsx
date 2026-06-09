@@ -292,7 +292,7 @@ export default function Home() {
             )}
           </div>
 
-          {/* Sidebar — cobertura do setor ativo */}
+          {/* Sidebar — cobertura + dinâmica do setor ativo */}
           <aside className="md:border-l md:border-hairline md:pl-6">
             <p className="font-data text-[10px] uppercase tracking-wider text-bone/70">
               Cobertura
@@ -305,10 +305,37 @@ export default function Home() {
                   {CNAE_LABEL[c] ? ` · ${CNAE_LABEL[c]}` : ""}
                 </li>
               ))}
-              <li className="text-olive">—</li>
-              <li>Lente: {setorCob.lente === "consolidacao" ? "consolidação" : "sucessão"}</li>
-              <li><span className="tabular-nums text-floral">2.000</span> empresas · São Paulo</li>
             </ul>
+
+            {/* Dinâmica do setor — números VALIDADOS no universo SP (não a base do demo) */}
+            <p className="mt-5 font-data text-[10px] uppercase tracking-wider text-bone/70">
+              Dinâmica do setor · SP
+            </p>
+            <ul className="mt-3 space-y-1.5 font-data text-xs text-bone">
+              <li>Lente: {setorCob.lente === "consolidacao" ? "consolidação" : "sucessão"}</li>
+              <li>
+                <span className="tabular-nums text-floral">{setorCob.pct_sucessao}%</span> do M&amp;A é por sucessão
+              </li>
+              {setorCob.recall_sucessao != null && (
+                <li>
+                  <span className="tabular-nums text-floral">{setorCob.recall_sucessao}%</span> de acerto nessas vendas
+                </li>
+              )}
+              <li>
+                ~<span className="tabular-nums text-floral">{setorCob.deals_ano}</span> transações/ano
+              </li>
+            </ul>
+
+            <p className="mt-5 font-data text-[11px] text-bone/60">
+              Base do demo: <span className="tabular-nums">2.000</span> empresas · SP
+            </p>
+            <Link
+              href="/setores"
+              className="group/setor mt-2 inline-block font-data text-xs text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
+            >
+              ver análise do setor{" "}
+              <span className="inline-block transition-transform duration-200 group-hover/setor:translate-x-0.5">→</span>
+            </Link>
           </aside>
         </div>
       </main>
