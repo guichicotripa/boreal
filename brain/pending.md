@@ -65,9 +65,12 @@ Removida do card da home (pesada inline: query BigQuery ao vivo, lenta/instável
 **Rota `/api/trajetoria` + libs preservadas** — nada deletado do backend; só saíram botão/painel/handler do `page.tsx`
 (recuperáveis do git p/ a página da empresa).
 
-- [ ] **Cachear trajetória das empresas-top dos demos** → `trajetoria-cache.json` + rota lê cache-first (padrão
-  research-cache/dossier-cache). Pré-computar via BigQuery p/ clique instantâneo e confiável no Loom.
-- [ ] Reviver o painel de trajetória na **página da empresa** (Fase 2), não na home.
+- [x] **Cachear trajetória das empresas-top dos demos** → `trajetoria-cache.json` + rota lê cache-first.
+  _(`build-trajetoria-cache.mjs` em lote via BigQuery, 110 empresas / 87 com eventos; `/api/trajetoria`
+  cache-first com `?fresh=1` pra forçar. Branch `gui/contexto-illa`.)_
+- [x] ~~Reviver o painel de trajetória na **página da empresa**~~ → **consolidado no dossiê** (decisão
+  09/06 com Guilherme): a seção standalone duplicava a linha do tempo do dossiê. O sinal que a Timeline
+  não tem (saídas + envelhecimento de faixa) virou o bloco "Movimentação societária" dentro do dossiê.
 
 ## 🟡 Fase 2 — página da empresa + interatividade (versão final, esta semana)
 
@@ -103,14 +106,16 @@ sans 400/500/600), hero, card/memo. Faltam as páginas.
 
 - [x] **`hindcast.json`: campo `municipio` tem código IBGE em vez de nome da cidade** (ex: `3549102`
   em vez de `"Sorocaba, SP"`). _(PR #36, `083b440` — lookup via API IBGE, 76 deals corrigidos)_
+  _Causa raiz também corrigida (`gui/contexto-illa`, `b67084b`): o `build-hindcast-cache.mjs` gerava
+  o código cru e reverteria o fix do JSON na próxima regeneração — agora faz JOIN com a tabela
+  `municipio` no BigQuery e formata "Cidade, SP". Sem isso, qualquer rebuild voltaria a quebrar._
 
 ## 🔵 Dívida técnica — navegação `<a>` → `<Link>` (Guilherme, repo-wide)
 
-- [ ] **Migrar back links de `<a href="/">` para `<Link>` do `next/link`** em todas as páginas.
-  ESLint (`@next/next/no-html-link-for-pages`) acusa erro em todas as 7 páginas (home, validação,
-  pipeline, mercado, consolidadores, worklist, setores) — é convenção atual do repo, não bloqueia
-  o build, mas perde prefetch + dá full reload. Decisão de fazer ou não é repo-wide, fora do
-  escopo do restyle. Não migrar só uma página (criaria inconsistência).
+- [x] **Migrar back links de `<a href="/">` para `<Link>` do `next/link`** em todas as páginas.
+  _(Feito repo-wide em home, validação, pipeline, mercado, consolidadores e setores; `/worklist`
+  não existe mais. Zerou as 8+ violações de `@next/next/no-html-link-for-pages`. Links externos
+  (http, `target=_blank`) seguem como `<a>`. Branch `gui/contexto-illa`.)_
 
 ---
 

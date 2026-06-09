@@ -104,7 +104,7 @@ export default function Setores() {
                 {s.nacional?.recall_sucessao != null && (
                   <p className="mt-2 font-data text-[11px] text-bone/60">
                     Testado fora de SP:{" "}
-                    <span className="font-medium">{s.nacional.recall_sucessao}%</span> de acerto nas vendas de
+                    <strong>{s.nacional.recall_sucessao}%</strong> de acerto nas vendas de
                     sucessão (Brasil inteiro, N={s.nacional.n_aquisicoes_sucessao} aquisições).
                   </p>
                 )}
