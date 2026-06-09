@@ -14,6 +14,14 @@ const bq = new BigQuery({
 const CORTE = "2023-06-10";
 const NOVO = "2025-11-09";
 
+// Lookup IBGE → nome da cidade (mesmo padrão do enrich-empresas.mjs).
+// Sem isso, municipio sai como código bruto (ex: "3549102") — parece dump de banco.
+const [municipios] = await bq.query({
+  query: "SELECT id_municipio, nome FROM `basedosdados.br_bd_diretorios_brasil.municipio`",
+  location: "US",
+});
+const mapMunicipio = Object.fromEntries(municipios.map((r) => [r.id_municipio, r.nome]));
+
 const sql = `
 WITH sc AS (
   SELECT cnpj_basico, MAX(SAFE_CAST(faixa_etaria AS INT64)) AS mf, COUNTIF(tipo='2') AS n_pf
@@ -74,7 +82,7 @@ const top10 = rows.filter((r) => r.decil === 1).length;
 
 const deals = rows.map((r) => ({
   nome: titulo(r.razao_social),
-  municipio: titulo(String(r.mun)),
+  municipio: mapMunicipio[r.mun] ? `${mapMunicipio[r.mun]}, SP` : titulo(String(r.mun)),
   cnae: r.cnae,
   fundada: Number(r.ano_fund),
   score: Number(r.score),

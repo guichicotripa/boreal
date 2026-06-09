@@ -133,7 +133,7 @@ export default function Validacao() {
               <thead>
                 <tr className="border-b border-hairline bg-surface text-left font-data text-[11px] uppercase tracking-wider text-bone/70">
                   <th scope="col" className="px-4 py-3 font-medium">Empresa</th>
-                  <th scope="col" className="px-4 py-3 font-medium">Praça</th>
+                  <th scope="col" className="px-4 py-3 font-medium">Município</th>
                   <th scope="col" className="px-4 py-3 text-right font-medium">Vendida</th>
                   <th scope="col" className="px-4 py-3 text-right font-medium">Rank pré-deal</th>
                 </tr>
