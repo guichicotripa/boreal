@@ -124,3 +124,23 @@ Cale a boca apos cada etapa. A reacao crua vale mais que qualquer pergunta.
 - Uma frase que ela usou - com as palavras dela, nao as tuas
 
 Essas frases viram o copy do produto e o roteiro do Loom.
+---
+
+## RESULTADO da call — Illa Elias (Manager M&A, PwC Belgium) · 07/06
+
+> Validadora de premissa (não cliente — em sabático, fora do M&A, construindo a Lucy). Mom Test no passado.
+
+**VALIDOU (sem indução):**
+- **Wedge de dado:** "no Brasil é difícil ter acesso aos balanços; a proativa é difícil **porque você não tem dado** — não quer gastar recurso indo conversar sem saber o EBITDA." Na Bélgica o registro é público; no BR não → é exatamente o problema que o Boreal resolve minerando o CNPJ.
+- **Score por lentes (ela chegou sozinha!):** "seu projeto tem **mais força nos setores que não são sexy**; industrial/metalúrgica = sucessão (o filho quer ser banqueiro); tech/saúde = muita transação, difícil ser só sucessão." Confirma metalmec=sucessão / saúde=consolidação. Refinou: "consolidação pode ser sucessão também — quem vende às vezes quer aposentar."
+- **Honestidade (não fabricar EBITDA):** "mesmo tendo o EBITDA, **eu não colocaria um valor** — tem muita normalização, o da DRE não é o que vende a empresa. Muito arriscado." Aprovou os add-backs.
+- **Origination proativa estruturada por SETOR:** na PwC BE, times por setor com metas de mapeamento + cota de contatos/mês. Valida o framework de setores.
+
+**Frases (copy / Loom):**
+- "Você está no futuro, Guilherme — eu estou vinte passos atrás."
+- "Se chegar na Bélgica, quero ser a primeira a usar."
+- **"Seu projeto tem mais força nos setores que não são sexy — industrial é o caso de sucessão."** ← a do Loom.
+
+**Feature (Gui GOSTOU — candidato pós-clube): mais contexto de SETOR no dossiê** — tendências de mercado, principais players (BR + internacional), o que estão fazendo (consolidando/expandindo), macro afetando o setor, business model/produtos/clientes, e # de transações no setor (X esse ano, Y ano passado, % PE vs estratégico). [# transações JÁ temos = precedentes.] Export de slides (datapack): mais útil pra Bélgica, baixa prioridade.
+
+**⏸ PARKED — a conversar com o time (NÃO é decisão):** Illa puxou forte pra **plataforma/SaaS** (escalável, global, margem boa) e **contra virar boutique/advisory** ("a boutique especializada sempre ganha o deal"). Monetização: R$200–300/mês, por setor/região, exclusividade regional. **Ressalva: ela valida PREMISSA, não necessariamente guia a decisão de MODELO. Tensiona a "virada de tese" advisory do relay.md. Não decidido — Gui quer conversar mais.**

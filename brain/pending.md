@@ -160,7 +160,7 @@ sans 400/500/600), hero, card/memo. Faltam as páginas.
 - [x] **Cache de research** — `research-cache.json` + `build-research-cache.mjs`. Top 3 dos demos
       pré-investigado → clique instantâneo (0.5s vs ~68s ao vivo). PR #6 mergeado.
 
-## ⚪ Semana 3 — Polish + Loom (até 14/06) ← FOCO ATUAL
+## ⚪ Semana 3 — Polish + Loom (SUBMIT até 10/06 23h59) ← FOCO ATUAL
 
 - [x] **Cache de demos** — `demo-cache.json` + `build-demo-cache.mjs`. Queries instantâneas.
 - [x] **Demo dos dois lados** — **MECANOTECNICA 85→96** ↑ (IA achou herdeiro na pecuária → sem
@@ -194,8 +194,8 @@ sans 400/500/600), hero, card/memo. Faltam as páginas.
           passo no fim (após a tese). Confirmar se é a melhor hierarquia de leitura.
 - [ ] ~~Deploy no Vercel~~ — **decisão (30/05): não fazer agora.** Pitch/Demo Day via tela
       compartilhada (localhost). Research já está na API se um dia o deploy fizer sentido.
-- [ ] Roteiro do Loom escrito, gravado, editado (sem pressa — 15 dias até o submit)
-- [ ] **Submeter até sábado 14/06**
+- [ ] Roteiro do Loom escrito (✅ v8 no clube §7), gravar + editar — PRAZO CURTO
+- [ ] **⏰ SUBMETER o Loom até 10/06 23h59** (link de submissão já em mãos)
 
 ## 🔵 Semana 4 — Demo Day (15–16/06)
 
