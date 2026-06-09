@@ -6,6 +6,8 @@ import { useParams } from "next/navigation";
 import type { Empresa, ResearchResult, DossierAnalise } from "@/lib/types";
 import type { EmpresaSimilar } from "@/lib/similar";
 import { scoreTier } from "@/lib/scoring";
+import { setorPorCnae } from "@/lib/setores";
+import { contextoSetor, CONTEXTO_ATUALIZADO_EM } from "@/lib/setor-contexto";
 import { readEmpresa, readOrigin, storeEmpresa, storeScoreConhecido, type Origin } from "@/lib/empresa-store";
 import {
   formatCnpj, formatTelefone, formatCapitalCompact,
@@ -17,6 +19,7 @@ import { MemoDisplay } from "@/components/empresa/MemoDisplay";
 // Seções na ordem de leitura do analista: identidade → evidência → score → ação → lateral.
 const SECOES = [
   { id: "sobre", label: "Sobre" },
+  { id: "setor", label: "Setor" },
   { id: "socios", label: "Sócios" },
   { id: "score", label: "Score" },
   { id: "investigar", label: "Investigar" },
@@ -347,6 +350,69 @@ export default function EmpresaPage() {
 
           <p className="mt-4 font-data text-[10px] text-olive">Dados públicos da Receita Federal.</p>
         </Secao>
+
+        {/* ── CONTEXTO DO SETOR ── (leitura macro/competitiva do mercado antes da abordagem) */}
+        {(() => {
+          const setor = setorPorCnae(e.cnae_principal);
+          const ctx = contextoSetor(setor?.id);
+          if (!ctx || !setor) return null;
+          return (
+            <Secao
+              id="setor"
+              titulo="Contexto do setor"
+              nota={`${setor.nome} · lente ${setor.lente === "consolidacao" ? "consolidação" : "sucessão"}`}
+            >
+              <p className="text-[15px] leading-relaxed text-bone">{ctx.macro}</p>
+              <p className="mt-3 text-[15px] leading-relaxed text-bone">{ctx.dinamica}</p>
+
+              {ctx.players.length > 0 && (
+                <div className="mt-5">
+                  <p className="mb-2 font-data text-[10px] uppercase tracking-wider text-bone/70">Principais consolidadores</p>
+                  <ul className="space-y-2">
+                    {ctx.players.map((p) => (
+                      <li key={p.nome} className="text-[14px] leading-relaxed text-bone">
+                        <span className="text-floral">{p.nome}</span> — {p.nota}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <div className="mt-5">
+                <p className="mb-2 font-data text-[10px] uppercase tracking-wider text-bone/70">Tendências</p>
+                <ul className="space-y-1.5">
+                  {ctx.tendencias.map((t) => (
+                    <li key={t} className="flex gap-2 text-[14px] leading-relaxed text-bone">
+                      <span className="shrink-0 text-olive">·</span>
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-5">
+                <p className="mb-1.5 font-data text-[10px] uppercase tracking-wider text-bone/70">Fontes</p>
+                <ul className="space-y-1">
+                  {ctx.fontes.map((f) => (
+                    <li key={f.url}>
+                      <a
+                        href={f.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[12px] leading-relaxed text-floral underline-offset-2 hover:underline"
+                      >
+                        {f.titulo}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-2 font-data text-[10px] text-olive">
+                  Contexto de mercado curado · atualizado em {CONTEXTO_ATUALIZADO_EM}.
+                </p>
+              </div>
+            </Secao>
+          );
+        })()}
 
         {/* ── SÓCIOS ── (evidência do score: idade é o driver de maior peso) */}
         <Secao

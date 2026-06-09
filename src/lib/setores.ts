@@ -82,4 +82,12 @@ export function setorPorId(id: string): Setor | null {
   return SETORES.find((s) => s.id === id) ?? null;
 }
 
+// Mapeia um CNAE (código completo, ex "2511700") ao setor coberto, por prefixo.
+// Os prefixos não colidem (metalmec 24/25/28 · saúde 86 · educação 851/852).
+export function setorPorCnae(cnae: string | null | undefined): Setor | null {
+  if (!cnae) return null;
+  const c = String(cnae).replace(/\D/g, "");
+  return SETORES.find((s) => s.cnaes.some((p) => c.startsWith(p))) ?? null;
+}
+
 export const SETORES_GERADO_EM = setoresData.gerado_em;

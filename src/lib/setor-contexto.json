@@ -1,0 +1,59 @@
+{
+  "atualizado_em": "2026-06-09",
+  "nota": "Contexto de mercado curado manualmente (não gerado por modelo), com fonte por setor. Dá ao analista a leitura macro/competitiva do setor antes da abordagem — o que a maioria não dá o trabalho de levantar.",
+  "setores": {
+    "metalmec": {
+      "macro": "Indústria metalúrgica em recuperação (+3,1% em 2024, após anos de retração), mas 2025 desacelera: produção de aço bruto cresce só ~1,2% e importações de laminados saltam ~20%, pressionando margens. A tarifa de 25% dos EUA sobre o aço brasileiro (mar/2025) e a Selic a 15% travaram investimento; o ciclo de corte de juros projetado para 2026 (Selic ~11–13%) tende a destravar M&A.",
+      "dinamica": "Ao contrário de saúde e educação, a metalmecânica é pulverizada e não tem consolidadores nacionais dominantes no middle market familiar. O M&A aqui é majoritariamente sucessão de empresas familiares do interior (~metade das transações), não roll-up de fundos — e o comprador costuma ser estratégico/local, com presença de private equity ainda baixa. É exatamente o segmento que nenhuma plataforma de dados cobre.",
+      "players": [],
+      "tendencias": [
+        "Automação, robótica e análise preditiva como principal vetor de modernização e ganho de margem.",
+        "Importações predatórias de aço pressionam a indústria nacional; a siderurgia recuou parte do compromisso de R$ 100 bi de investimento (2024–2028).",
+        "Câmbio volátil em 2026 (eleições) adiciona risco a quem depende de insumo importado ou exportação."
+      ],
+      "fontes": [
+        { "titulo": "Aço Brasil — Indústria do Aço em Números 2025", "url": "https://www.acobrasil.org.br/site/wp-content/uploads/2025/05/Mini_anuario_2025_AcoBrasil.pdf" },
+        { "titulo": "Times Brasil — Importações de aço disparam em 2025 e pressionam a indústria nacional", "url": "https://timesbrasil.com.br/empresas-e-negocios/importacoes-de-aco-disparam-em-2025-e-pressionam-industria-nacional/" },
+        { "titulo": "A Voz da Indústria — Cenário da indústria metalúrgica no Brasil", "url": "https://avozdaindustria.com.br/oportunidades/industria-metalurgica-no-brasil/" }
+      ]
+    },
+    "saude": {
+      "macro": "Setor extremamente fragmentado (mais de 700 operadoras de planos e milhares de clínicas e laboratórios). O M&A retomou força em 2024–2025, agora sob um novo prisma: verticalização e joint ventures (operadora + prestador + tecnologia), não só escala horizontal.",
+      "dinamica": "Dominado por consolidação: grandes redes compram clínicas e hospitais (roll-up), com compradores predominantemente estratégicos (as próprias redes). Só ~8% das transações são sucessão familiar — por isso aqui a lente do Boreal é consolidação, não sucessão.",
+      "players": [
+        { "nome": "Rede D'Or", "nota": "Comprou o Hospital São Lucas (Porto Alegre, set/2025) por R$ 1,2 bi — sinergia de 180 leitos + centro oncológico." },
+        { "nome": "Hapvida", "nota": "Adquiriu a SulAmérica Clínicas (abr/2025) por R$ 900 mi, múltiplo de 10,8x, com foco em telemedicina." },
+        { "nome": "Dasa", "nota": "Joint venture com a Amil (2024): 25 hospitais, 4.400 leitos e R$ 9,9 bi de receita combinada." }
+      ],
+      "tendencias": [
+        "Verticalização: integração de operadora, prestador e tecnologia em plataformas mais coesas.",
+        "Joint ventures e parcerias operacionais no lugar de aquisição integral.",
+        "Telemedicina como eixo das aquisições recentes."
+      ],
+      "fontes": [
+        { "titulo": "XVI Finance — A onda de M&As e a reconfiguração do setor de saúde no Brasil", "url": "https://xvifinance.com.br/2025/07/18/fusoes-aquisicoes-setor-saude-brasil/" },
+        { "titulo": "Suno — Hapvida, Dasa e Rede D'Or lideram consolidação", "url": "https://www.suno.com.br/noticias/consolidacao-hapvida-hapv3-dasa-dasa3-e-rede-dor-rdor3/" },
+        { "titulo": "Fortezza Partners — Tendências em M&A no setor de saúde brasileiro", "url": "https://fortezzapartners.com.br/tendencias-em-ma-no-setor-de-saude-brasileiro/" }
+      ]
+    },
+    "educacao": {
+      "macro": "A educação básica privada premium vive uma nova onda de M&A, puxada por demanda crescente e pela entrada de fundos de private equity e grupos internacionais. O efeito é a queda no número de escolas independentes e mais influência de grandes redes.",
+      "dinamica": "Misto: ~30% das transações são venda de escola familiar (onde a lente de sucessão do Boreal vale, com ~88% de acerto); o resto é roll-up premium. Os compradores são majoritariamente financeiros (fundos de PE) e estratégicos internacionais.",
+      "players": [
+        { "nome": "SEB (Sistema Educacional Brasileiro)", "nota": "Assumiu o controle total da rede bilíngue Maple Bear (2024)." },
+        { "nome": "Inspira (BTG / L Catterton)", "nota": "A gestora americana L Catterton negocia investir ~R$ 1 bi na rede, hoje controlada por fundo do BTG." },
+        { "nome": "Eleva / Grupo Salta", "nota": "Gerida pelo Inspired Education Group (Londres, 80+ escolas em 5 continentes); os fundos Atmos e Advent discutem participação no Grupo Salta (sócio: Jorge Paulo Lemann). Parte da Salta/ex-Eleva foi vendida por R$ 1 bi." }
+      ],
+      "tendencias": [
+        "Fundos de PE e grupos internacionais consolidando redes regionais.",
+        "Expansão de cursos digitais e plataformas de ensino híbrido.",
+        "Escola familiar regional bem gerida = alvo clássico de roll-up premium."
+      ],
+      "fontes": [
+        { "titulo": "Portal Fusões & Aquisições — Educação básica premium se consolida e tem alta de M&A", "url": "https://fusoesaquisicoes.com/acontece-no-setor/com-aumento-na-demanda-mercado-brasileiro-de-educacao-basica-premium-se-consolida-e-tem-alta-de-ma/" },
+        { "titulo": "Investidor10 — Parte do Grupo Salta (antiga Eleva) é vendida por R$ 1 bilhão", "url": "https://investidor10.com.br/noticias/parte-do-grupo-salta-antiga-eleva-e-vendida-por-r-1-bilhao-101951/" },
+        { "titulo": "Barte — Consolidação de escolas de educação básica atrai fundos e grupos internacionais", "url": "https://www.barte.com/blog-posts/consolidacao-de-escolas-de-educacao-basica-atrai-fundos-e-grupos-internacionais" }
+      ]
+    }
+  }
+}
