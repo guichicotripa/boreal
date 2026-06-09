@@ -51,6 +51,8 @@ export default function Home() {
   // Overlay de score pós-investigação: a página da empresa persiste o score_v1;
   // aqui refletimos ao montar e ao voltar (bfcache/refocus) sem refazer a busca.
   const [scoreOverrides, setScoreOverrides] = useState<Record<string, ScoreConhecido>>({});
+  // IDs de empresas já salvas no pipeline — inicializa e atualiza ao voltar de qualquer rota.
+  const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const refresh = () => setScoreOverrides(readScoresConhecidos());
@@ -60,6 +62,26 @@ export default function Home() {
     return () => {
       window.removeEventListener("pageshow", refresh);
       window.removeEventListener("focus", refresh);
+    };
+  }, []);
+
+  useEffect(() => {
+    async function refreshSaved() {
+      try {
+        const r = await fetch("/api/oportunidade");
+        const d = await r.json();
+        const ids = new Set<string>(
+          (d.oportunidades ?? []).map((o: { empresa: { id: string } }) => o.empresa.id)
+        );
+        setSavedIds(ids);
+      } catch { /* silencioso */ }
+    }
+    refreshSaved();
+    window.addEventListener("pageshow", refreshSaved);
+    window.addEventListener("focus", refreshSaved);
+    return () => {
+      window.removeEventListener("pageshow", refreshSaved);
+      window.removeEventListener("focus", refreshSaved);
     };
   }, []);
 
@@ -253,7 +275,7 @@ export default function Home() {
 
                 <ul className="flex flex-col gap-3">
                   {res.empresas.map((e) => (
-                    <EmpresaCard key={e.id} empresa={e} investigacao={scoreOverrides[e.id]} />
+                    <EmpresaCard key={e.id} empresa={e} investigacao={scoreOverrides[e.id]} jaSalvo={savedIds.has(e.id)} />
                   ))}
                 </ul>
 
@@ -337,7 +359,7 @@ function LoadingSteps() {
 
 // Card de triagem — score + nome + stats. A profundidade (investigar, memo,
 // sócios, similares) vive na página da empresa (/empresa/[id]).
-function EmpresaCard({ empresa: e, investigacao }: { empresa: Empresa; investigacao?: ScoreConhecido }) {
+function EmpresaCard({ empresa: e, investigacao, jaSalvo }: { empresa: Empresa; investigacao?: ScoreConhecido; jaSalvo?: boolean }) {
   // Investigação = score_v1 + delta vs v0 (se a empresa já foi investigada nesta sessão).
   const score = investigacao?.score ?? e.score?.score ?? 0;
   const delta = investigacao?.delta ?? null;
@@ -391,7 +413,7 @@ function EmpresaCard({ empresa: e, investigacao }: { empresa: Empresa; investiga
             {e.municipio}/{e.uf} · {formatCnpj(e.cnpj)}
           </p>
         </div>
-        <SalvarButton empresaId={e.id} />
+        <SalvarButton empresaId={e.id} jaSalvo={jaSalvo} />
       </div>
 
       {/* One-liner */}
@@ -429,8 +451,15 @@ function Stat({ k, v, sub, hi }: { k: string; v: string; sub?: string; hi?: bool
   );
 }
 
-function SalvarButton({ empresaId }: { empresaId: string }) {
-  const [estado, setEstado] = useState<"idle" | "salvando" | "salvo">("idle");
+function SalvarButton({ empresaId, jaSalvo }: { empresaId: string; jaSalvo?: boolean }) {
+  const [estado, setEstado] = useState<"idle" | "salvando" | "salvo">(
+    jaSalvo ? "salvo" : "idle"
+  );
+
+  // Sincroniza quando o parent atualiza savedIds (ex: ao voltar de outra rota).
+  useEffect(() => {
+    if (jaSalvo) setEstado("salvo");
+  }, [jaSalvo]);
 
   async function salvar() {
     if (estado === "salvo") return;

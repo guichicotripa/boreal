@@ -7,7 +7,6 @@ import { NavLogo } from "./NavLogo";
 const FLUXO: { href: string; label: string }[] = [
   { href: "/", label: "Início" },
   { href: "/pipeline", label: "Pipeline" },
-  { href: "/worklist", label: "Worklist" },
 ];
 
 // Páginas de metodologia/credibilidade — agrupadas no mega-menu (servem ao pitch, não ao dia a dia).

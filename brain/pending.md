@@ -4,6 +4,32 @@
 
 ---
 
+## 🟡 Pipeline remodel (planejado 08/06 · Maguto)
+
+Problema: kanban de 6 colunas espreme os cards (nome ilegível) e com volume vira scroll
+infinito + expandir card a card. O board paga o custo das colunas sem usar o benefício (não
+tem drag — troca de estágio já é via `<Select>`).
+
+**Direção fechada:**
+- **Layout = tabs de estágio + linhas largas** (uma view de estágio por vez, em largura cheia,
+  legível sem expandir). Caminho natural pro híbrido Funil/Lista (opção C) depois, se der tempo.
+- **Worklist fria (`/worklist`) morre** — sua função de descoberta já é melhor servida pela busca
+  (ranqueia por score + mostra contato + deixa salvar). Aposentar a rota; opcional: preset
+  "perfil sucessório · com contato" na home pra preservar o atalho de prospecção.
+- **Agenda entra no pipeline** — fila quente sobre os salvos (com ação devida, ordenada por
+  prioridade: atrasadas → data → score). É a visão de ação do pipeline, não é "worklist". Nome: **Agenda**.
+
+**Em aberto:**
+- [ ] **Aba inicial: Agenda vs Identificado** — standby, Maguto vai alinhar com Guilherme
+  (operacional pede Agenda; narrativa do Loom pode pedir o funil/overview).
+- [ ] **Notas na linha: opção A/B/C** — em discussão (A: só indicador→página; B: expand só de
+  notas, log na página; C: notas+log inline). Tendência B.
+- [ ] **Alerta de mudança societária (monitor) — repensar a forma na linha.** O ponto terracota
+  testado no sandbox destoa do guideline (linguagem de notificação, atropela a semântica
+  reservada de ocre/terracota). Manter o sinal (é o sensor forward, diferencial vs. Grata) mas
+  na linguagem do brand: micro-rótulo tipográfico mono uppercase risk-high (ex: `⚠ TRANSIÇÃO`),
+  como o banner já faz hoje em `pipeline/page.tsx`. **Não é prioridade — fazer depois do remodel.**
+
 ## 🟢 Home restyle Fase 1 (07/06 · Maguto) — pré-reunião 3
 
 Lote de baixo risco antes da reunião de terça (09/06). Tudo em `src/app/page.tsx` + `src/components/brand/Nav.tsx`.
