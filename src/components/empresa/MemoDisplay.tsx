@@ -1,11 +1,21 @@
-import type { Empresa, DossierAnalise } from "@/lib/types";
+import type { Empresa, DossierAnalise, TrajetoriaResult } from "@/lib/types";
 import { precedentesParaEmpresa, cenarioIlustrativo, dadosParaFechar } from "@/lib/memo-extras";
 import { Timeline } from "./Timeline";
 
 // Memo de investimento: narrativa LLM (overview, análise sucessória, red flags,
 // perguntas, tese, próximo passo) + três blocos quantitativos determinísticos
 // (precedentes, cenário, dados para fechar). Compartilhado entre home e página da empresa.
-export function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: DossierAnalise }) {
+// `trajetoria` é opcional: quando presente, mostra a movimentação societária real
+// (entrou/saiu/envelheceu) reconstruída do CNPJ — o que a Timeline (só entradas atuais) não vê.
+export function MemoDisplay({
+  empresa,
+  analise,
+  trajetoria,
+}: {
+  empresa: Empresa;
+  analise: DossierAnalise;
+  trajetoria?: TrajetoriaResult | null;
+}) {
   const precedentes = precedentesParaEmpresa(empresa);
   const cenario = cenarioIlustrativo(empresa);
   const dadosFechar = dadosParaFechar(empresa);
@@ -14,6 +24,35 @@ export function MemoDisplay({ empresa, analise }: { empresa: Empresa; analise: D
       <span className="font-data text-[10px] uppercase tracking-wider text-bone/70">Dossiê</span>
       <p className="leading-relaxed text-floral">{analise.overview}</p>
       <Timeline empresa={empresa} />
+
+      {/* Movimentação societária real (2022→2025) — o que a Timeline não mostra:
+          saídas e envelhecimento de faixa, reconstruídos comparando snapshots do CNPJ. */}
+      {trajetoria && trajetoria.eventos.length > 0 && (
+        <div>
+          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
+            Movimentação societária (2022→2025)
+          </h4>
+          <ul className="space-y-1">
+            {trajetoria.eventos.map((ev, i) => (
+              <li key={`${ev.ano}-${i}`} className="flex gap-2 text-[13px] leading-snug">
+                <span className="shrink-0 font-data tabular-nums text-olive">{ev.ano}</span>
+                <span
+                  className={
+                    ev.tipo === "entrou"
+                      ? "text-floral"
+                      : ev.tipo === "saiu"
+                        ? "text-risk-high"
+                        : "text-risk-mid"
+                  }
+                >
+                  {ev.texto}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-1 font-data text-[10px] text-olive">Reconstruído do CNPJ — entradas, saídas e envelhecimento de faixa.</p>
+        </div>
+      )}
       <div>
         <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
           Análise de risco sucessório

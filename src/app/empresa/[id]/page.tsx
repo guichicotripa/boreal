@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import type { Empresa, ResearchResult, DossierAnalise } from "@/lib/types";
+import type { Empresa, ResearchResult, DossierAnalise, TrajetoriaResult } from "@/lib/types";
 import type { EmpresaSimilar } from "@/lib/similar";
 import { scoreTier } from "@/lib/scoring";
 import { setorPorCnae } from "@/lib/setores";
@@ -21,7 +21,6 @@ const SECOES = [
   { id: "sobre", label: "Sobre" },
   { id: "setor", label: "Setor" },
   { id: "socios", label: "Sócios" },
-  { id: "trajetoria", label: "Trajetória" },
   { id: "score", label: "Score" },
   { id: "investigar", label: "Investigar" },
   { id: "dossie", label: "Dossiê" },
@@ -36,12 +35,6 @@ const DIMENSOES = [
   { key: "porte_relevancia", label: "Porte / relevância", max: 30 },
   { key: "quadro_plural", label: "Quadro plural", max: 10 },
 ] as const;
-
-// Trajetória societária — o quadro de sócios reconstruído em múltiplos snapshots do CNPJ.
-// É o sensor "forward" (sucessão em movimento), diferencial vs. um retrato estático.
-type TrajetoriaPonto = { ano: number; n_pf: number; n_pj: number; faixa_max: string | null };
-type TrajetoriaEvento = { ano: number; texto: string; tipo: "entrou" | "saiu" | "envelheceu" };
-type TrajetoriaResult = { pontos: TrajetoriaPonto[]; eventos: TrajetoriaEvento[] };
 
 export default function EmpresaPage() {
   const params = useParams<{ id: string }>();
@@ -67,9 +60,8 @@ export default function EmpresaPage() {
   const [similares, setSimilares] = useState<EmpresaSimilar[] | null>(null);
   const [similaresLoading, setSimilaresLoading] = useState(false);
 
-  // Trajetória societária — auto (cache-first; instantâneo nos demos).
+  // Trajetória societária — auto (cache-first; alimenta o bloco de movimentação no dossiê).
   const [traj, setTraj] = useState<TrajetoriaResult | null>(null);
-  const [trajLoading, setTrajLoading] = useState(false);
 
   const [secaoAtiva, setSecaoAtiva] = useState<string>("sobre");
 
@@ -132,7 +124,6 @@ export default function EmpresaPage() {
   }, [id]);
 
   const fetchTrajetoria = useCallback(async () => {
-    setTrajLoading(true);
     try {
       const r = await fetch("/api/trajetoria", {
         method: "POST",
@@ -142,9 +133,7 @@ export default function EmpresaPage() {
       const data = await r.json();
       if (r.ok) setTraj({ pontos: data.pontos ?? [], eventos: data.eventos ?? [] });
     } catch {
-      // silencioso — a seção mostra "sem histórico" se não vier nada
-    } finally {
-      setTrajLoading(false);
+      // silencioso — o bloco no dossiê simplesmente não aparece se não vier nada
     }
   }, [id]);
 
@@ -477,57 +466,6 @@ export default function EmpresaPage() {
           )}
         </Secao>
 
-        {/* ── TRAJETÓRIA ── (sucessão em movimento: o quadro societário ao longo do tempo) */}
-        <Secao
-          id="trajetoria"
-          titulo="Trajetória"
-          nota="A sucessão em movimento — o quadro societário reconstruído no CNPJ, 2022→2025."
-        >
-          {trajLoading ? (
-            <p className="text-[15px] text-bone">Reconstruindo o quadro ao longo do tempo…</p>
-          ) : traj && traj.pontos.length > 0 ? (
-            <>
-              <div className="flex flex-wrap gap-2">
-                {traj.pontos.map((p) => (
-                  <div key={p.ano} className="rounded-lg border border-hairline px-3 py-2 text-center">
-                    <p className="font-data text-[13px] tabular-nums text-floral">{p.ano}</p>
-                    <p className="font-data text-[11px] text-bone">
-                      {p.n_pf} PF{p.n_pj > 0 ? ` + ${p.n_pj} PJ` : ""}
-                    </p>
-                    {p.faixa_max && <p className="font-data text-[11px] text-olive">máx {p.faixa_max}</p>}
-                  </div>
-                ))}
-              </div>
-              {traj.eventos.length > 0 ? (
-                <ul className="mt-4 space-y-1.5">
-                  {traj.eventos.map((ev, i) => (
-                    <li key={`${ev.ano}-${i}`} className="flex gap-2 text-[13px] leading-snug">
-                      <span className="shrink-0 font-data tabular-nums text-olive">{ev.ano}</span>
-                      <span
-                        className={
-                          ev.tipo === "entrou"
-                            ? "text-floral"
-                            : ev.tipo === "saiu"
-                            ? "text-risk-high"
-                            : "text-risk-mid"
-                        }
-                      >
-                        {ev.texto}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="mt-3 text-[13px] text-olive">
-                  Quadro estável no período — sem entrada, saída ou envelhecimento de faixa.
-                </p>
-              )}
-            </>
-          ) : (
-            <p className="text-[15px] text-bone">Sem histórico societário no período.</p>
-          )}
-        </Secao>
-
         {/* ── SCORE ── (breakdown completo — barras neutras) */}
         <Secao id="score" titulo="Score">
           <div className="flex items-baseline gap-3">
@@ -636,7 +574,7 @@ export default function EmpresaPage() {
           nota="Síntese a partir dos sinais investigados acima."
         >
           {memo ? (
-            <MemoDisplay empresa={e} analise={memo} />
+            <MemoDisplay empresa={e} analise={memo} trajetoria={traj} />
           ) : memoLoading ? (
             <p className="animate-pulse text-[13px] text-bone/70" role="status">
               Gerando dossiê…

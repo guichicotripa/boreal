@@ -69,6 +69,12 @@ export type ResearchResult = {
   mensagem_abordagem: string | null;
 };
 
+// Trajetória societária — o quadro de sócios reconstruído em múltiplos snapshots do CNPJ.
+// Captura o que o retrato atual não mostra: SAÍDAS e ENVELHECIMENTO de faixa ao longo do tempo.
+export type TrajetoriaPonto = { ano: number; n_pf: number; n_pj: number; faixa_max: string | null };
+export type TrajetoriaEvento = { ano: number; texto: string; tipo: "entrou" | "saiu" | "envelheceu" };
+export type TrajetoriaResult = { pontos: TrajetoriaPonto[]; eventos: TrajetoriaEvento[] };
+
 // Red flag a investigar antes de avançar o deal (classificado por severidade).
 // Não afirma que o passivo existe — lista o risco provável dado o perfil + onde checar.
 export type RedFlag = {
