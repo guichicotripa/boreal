@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import validacao from "@/lib/validacao.json";
 import hindcast from "@/lib/hindcast.json";
 import lift from "@/lib/lift.json";
@@ -65,10 +66,10 @@ export default function Validacao() {
               Como sabemos que o score funciona
             </h1>
           </div>
-          <a href="/" className="group flex items-center gap-2 rounded-sm font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50">
+          <Link href="/" className="group flex items-center gap-2 rounded-sm font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50">
             <span className="transition-transform duration-200 group-hover:-translate-x-1">←</span>
             <span>Voltar à busca</span>
-          </a>
+          </Link>
         </header>
 
         {/* Número-herói — a moldura de sucessão (onde a lente vale) */}
@@ -330,13 +331,13 @@ export default function Validacao() {
 
         {/* CTA final */}
         <div className="mt-10 flex justify-center">
-          <a
+          <Link
             href="/"
             className="group flex items-center gap-2 rounded-sm font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
           >
             <span>Rodar uma tese com esse score</span>
             <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
-          </a>
+          </Link>
         </div>
       </main>
     </div>

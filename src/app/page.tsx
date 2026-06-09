@@ -141,10 +141,10 @@ export default function Home() {
             <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-bone">
               <strong>{setorPorId("metalmec")?.recall_sucessao ?? 97}% das vendas por sucessão</strong>{" "}
               já estavam no nosso top 10%, 12 meses antes.{" "}
-              <a href="/validacao" className="group/prova whitespace-nowrap text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
+              <Link href="/validacao" className="group/prova whitespace-nowrap text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
                 ver metodologia{" "}
                 <span className="inline-block transition-transform duration-200 group-hover/prova:translate-x-0.5">→</span>
-              </a>
+              </Link>
             </p>
 
             {/* Switcher de setor — troca o universo sem ir até /setores */}

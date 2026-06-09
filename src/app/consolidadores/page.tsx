@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import dados from "@/lib/consolidadores.json";
 import backtest from "@/lib/backtest-consolidadores.json";
 
@@ -45,10 +46,10 @@ export default function Consolidadores() {
               Roll-ups se formando no registro
             </h1>
           </div>
-          <a href="/" className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
+          <Link href="/" className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
             <span className="transition-transform duration-200 group-hover:-translate-x-1">←</span>
             <span>Voltar à busca</span>
-          </a>
+          </Link>
         </header>
 
         {/* Tese das duas lentes */}

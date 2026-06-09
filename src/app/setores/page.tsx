@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { SETORES, SETORES_GERADO_EM, type Setor } from "@/lib/setores";
 
 export const metadata: Metadata = {
@@ -39,10 +40,10 @@ export default function Setores() {
             </p>
             <h1 className="mt-2 font-display text-3xl tracking-tight md:text-4xl">Setores</h1>
           </div>
-          <a href="/" className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
+          <Link href="/" className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
             <span className="transition-transform duration-200 group-hover:-translate-x-1">←</span>
             <span>Voltar à busca</span>
-          </a>
+          </Link>
         </header>
 
         <p className="mb-8 max-w-2xl text-[15px] leading-relaxed text-bone">
@@ -110,16 +111,16 @@ export default function Setores() {
 
                 <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 font-data text-xs">
                   {s.lente === "consolidacao" && (
-                    <a href="/consolidadores" className="text-bone transition-colors hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
+                    <Link href="/consolidadores" className="text-bone transition-colors hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
                       Ver consolidadores
-                    </a>
+                    </Link>
                   )}
-                  <a href="/mercado" className="text-bone transition-colors hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
+                  <Link href="/mercado" className="text-bone transition-colors hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
                     Ver mercado
-                  </a>
-                  <a href={`/?setor=${s.id}`} className="group flex items-center gap-1 text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
+                  </Link>
+                  <Link href={`/?setor=${s.id}`} className="group flex items-center gap-1 text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
                     Buscar neste setor <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
-                  </a>
+                  </Link>
                 </div>
               </section>
             );

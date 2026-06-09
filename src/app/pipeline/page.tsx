@@ -393,13 +393,13 @@ export default function Pipeline() {
               {filtroAtivo ? `${filtradas.length} de ${ops.length}` : ops.length} oportunidades no funil
             </p>
           </div>
-          <a
+          <Link
             href="/"
             className="group flex items-center gap-2 rounded-sm font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
           >
             <span className="transition-transform duration-200 group-hover:-translate-x-1">←</span>
             <span>Voltar à busca</span>
-          </a>
+          </Link>
         </header>
 
         {loading ? (
