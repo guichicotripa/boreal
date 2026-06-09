@@ -584,7 +584,7 @@ function TabButton({
       role="tab"
       aria-selected={active}
       onClick={onClick}
-      className={`mr-0.5 flex shrink-0 items-center gap-1.5 border-b-2 pb-2.5 pr-3 pt-1 font-data text-[11px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
+      className={`mr-4 flex shrink-0 items-center gap-1.5 border-b-2 pb-2.5 pt-1 font-data text-[11px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
         active
           ? accentAgenda
             ? "border-risk-mid text-floral"
