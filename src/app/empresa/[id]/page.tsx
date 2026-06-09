@@ -320,8 +320,10 @@ export default function EmpresaPage() {
               <div className="h-3 w-11/12 animate-pulse rounded bg-surface-hover" />
               <div className="h-3 w-4/5 animate-pulse rounded bg-surface-hover" />
             </div>
-          ) : research?.resumo ? (
-            <p className="mt-3 text-[15px] leading-relaxed text-bone">{research.resumo}</p>
+          ) : research?.perfil_negocio || research?.resumo ? (
+            <p className="mt-3 text-[15px] leading-relaxed text-bone">
+              {research.perfil_negocio || research.resumo}
+            </p>
           ) : null}
 
           {/* Campos estruturados (instantâneos, da Receita) */}

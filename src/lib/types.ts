@@ -56,6 +56,9 @@ export type ResearchResult = {
   sinais: SinalQualitativo[];
   presenca_digital: "alta" | "media" | "baixa" | "nenhuma";
   resumo: string;
+  // Perfil do negócio: o que faz, produtos/serviços, modelo, clientes — descrição
+  // editorial achada na web. NÃO afeta o score. null se não houver base pública.
+  perfil_negocio?: string | null;
   score_v0: number;
   score_v1: number;
   delta: number;

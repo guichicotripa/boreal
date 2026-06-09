@@ -80,10 +80,18 @@ Depois de listar os sinais, decida duas coisas práticas pro originador:
   de primeiro contato com o(s) sócio(s)/empresa. DEVE citar o gatilho/achado concreto pra não ser
   genérica. É ponto de partida pro humano editar, não envio automático. Se não houver gatilho, retorne null.
 
+Separado da análise sucessória, descreva o NEGÓCIO da empresa:
+
+- "perfil_negocio" — 2-3 frases sobre o que a empresa faz na prática: produtos/serviços principais,
+  modelo de negócio (como ganha dinheiro) e tipo de cliente (B2B/B2C, setores atendidos, clientes
+  conhecidos se públicos). Baseie-se SÓ no que encontrar na web/site da empresa; não invente nem
+  estime faturamento. Se não achar nada além do CNAE, retorne null.
+
 Ao final, responda APENAS com este JSON (sem markdown), exemplo do formato exato:
 {
   "presenca_digital": "baixa",
   "resumo": "1-2 frases do que a investigação concluiu",
+  "perfil_negocio": "Fabricante de moldes para injeção plástica; vende B2B para a indústria automotiva e de embalagens.",
   "sinais": [
     {"tipo": "sucessor_familiar_ativo", "descricao": "André, filho do fundador, já é diretor desde 2015", "fonte_url": "https://..."}
   ],
@@ -154,6 +162,10 @@ EFICIÊNCIA: faça no máximo 4 buscas na web, depois conclua com o JSON. Não e
       ? parsed.presenca_digital
       : "baixa",
     resumo: String(parsed.resumo ?? "").trim(),
+    perfil_negocio:
+      typeof parsed.perfil_negocio === "string" && parsed.perfil_negocio.trim()
+        ? parsed.perfil_negocio.trim()
+        : null,
     score_v0: scoreV0,
     score_v1: scoreV1,
     delta: scoreV1 - scoreV0,
