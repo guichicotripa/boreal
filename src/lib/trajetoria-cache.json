@@ -1,0 +1,5241 @@
+{
+  "6849dfd9-a629-4b41-b0c5-447dea74f9ec": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "UBIRAJARA RODRIGUES: 71–80 → 80+"
+      },
+      {
+        "ano": 2025,
+        "tipo": "saiu",
+        "texto": "Saiu LUDOVICO PASZTOR"
+      }
+    ]
+  },
+  "d20b27e5-ebb9-4c4c-a111-f4495de4b3a3": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 5,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "entrou",
+        "texto": "Entrou ANDRE HENRIQUE GUILHERME LANDAU REMY (51–60)"
+      },
+      {
+        "ano": 2023,
+        "tipo": "entrou",
+        "texto": "Entrou ROBERTO LANDAU REMY (51–60)"
+      },
+      {
+        "ano": 2023,
+        "tipo": "saiu",
+        "texto": "Saiu SILVIA LANDAU REMY VON BRUCHHAUSEN"
+      },
+      {
+        "ano": 2023,
+        "tipo": "saiu",
+        "texto": "Saiu MARION ELSA RUGGERI"
+      },
+      {
+        "ano": 2023,
+        "tipo": "saiu",
+        "texto": "Saiu MARIA WOLFRING"
+      }
+    ]
+  },
+  "348e7971-40a9-4d14-99fe-fb3dbdbc8b99": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "MARCUS EDUARDO CLEMENTE MUSSA: 41–50 → 51–60"
+      },
+      {
+        "ano": 2024,
+        "tipo": "entrou",
+        "texto": "Entrou YARA CLEMENTE ZURLINI (71–80)"
+      },
+      {
+        "ano": 2024,
+        "tipo": "saiu",
+        "texto": "Saiu FLAVIO ZURLINI"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "YARA CLEMENTE ZURLINI: 71–80 → 80+"
+      }
+    ]
+  },
+  "a4379107-47b5-48ec-a641-960e7fdd861c": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "93e85e19-cb56-4def-9341-a44a28b8532a": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "MARIA GONZALES MARQUES: 71–80 → 80+"
+      }
+    ]
+  },
+  "3cb74ff6-9ea4-4ffd-b62a-df4b980bf9b1": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "ROLANDO NASCHOLD: 41–50 → 51–60"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "RICARDO NASCHOLD NETO: 71–80 → 80+"
+      }
+    ]
+  },
+  "abd53ffc-b84d-43fc-b1f5-f2bf43f559e5": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "SIMONE PEREZ DOS SANTOS: 31–40 → 41–50"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "ADALBERTO APARECIDO PEREZ: 71–80 → 80+"
+      }
+    ]
+  },
+  "1d12d49d-8aab-44cd-a026-ecd2f33c6d72": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "SERGIO RAMOS DA CRUZ: 41–50 → 51–60"
+      }
+    ]
+  },
+  "71bce076-1b06-46e9-ab85-5343aae0635a": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "EREMI ODILON MEISTER: 71–80 → 80+"
+      }
+    ]
+  },
+  "2be6459d-b98a-4f34-a5d7-1888c79b3f56": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "JOSE FELICIO BRUNETTO: 71–80 → 80+"
+      }
+    ]
+  },
+  "46202083-c0cf-486d-a446-dae94523be0c": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "MAKOTO ISSHIKI: 71–80 → 80+"
+      }
+    ]
+  },
+  "156d2053-3780-4ae2-ba47-4e7028454b6f": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "LUIZ CLAUDIO MADEIRA: 71–80 → 80+"
+      }
+    ]
+  },
+  "dc3be646-b092-46c5-9012-be02748124ca": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "ANA RITA MOURA: 51–60 → 61–70"
+      }
+    ]
+  },
+  "8ac64950-c193-48d3-8c85-7430eb95c07d": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "JAQUEZ DA SILVA GUIDIO: 71–80 → 80+"
+      }
+    ]
+  },
+  "be94194f-1327-47ac-a0bf-6ac7d44b4196": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "0b76906d-2a8f-4876-a76d-9ebe2b8cd95c": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "JOAO CHAVES NETO: 71–80 → 80+"
+      }
+    ]
+  },
+  "2e80ed04-c195-48c4-94ac-ae5b0f6e7e34": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "CARMEM SILVIA NOGUEIRA VANNUCCI: 61–70 → 71–80"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "VALMIR EDSON VANNUCCI: 71–80 → 80+"
+      }
+    ]
+  },
+  "a814cfb9-a55e-4abc-a5ac-de5ad04a944f": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "CLODOALDO ANDRE ESPANHOL: 41–50 → 51–60"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "ROQUE ESPANHOL: 71–80 → 80+"
+      }
+    ]
+  },
+  "83811931-1c35-4edc-8535-b5ab256e148c": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "MARIZA RIBEIRO DE SOUZA: 71–80 → 80+"
+      }
+    ]
+  },
+  "b5c0fafb-e1a3-4072-92d3-85a781070e8a": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "EDUARDO ROTILIANO: 51–60 → 61–70"
+      }
+    ]
+  },
+  "12fada0a-d32b-4eac-a3a1-f70a08080432": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "DOLORES BEATRIZ MARCOS CASTRO SANCHEZ: 51–60 → 61–70"
+      }
+    ]
+  },
+  "3bdbee29-20da-4c68-9796-cefd83e5e8e7": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "126578e5-4737-4382-ab10-3adac2e49ce7": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "PAULO EDAIR GAZZOLA: 71–80 → 80+"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "GENESIA BERNARDI GAZZOLA: 71–80 → 80+"
+      }
+    ]
+  },
+  "f5954119-d8d5-4f1e-bae7-e02794e43c25": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "SANDRA HAYAKAWA: 71–80 → 80+"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "ALEXANDRE HAYAKAWA: 41–50 → 51–60"
+      }
+    ]
+  },
+  "4e81a076-88c1-4a7b-a316-ff9feb46b55a": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "7b5ed8f0-d784-4e90-a024-40f61f1e1979": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "CESAR ROBERTO COUTINHO DE MESQUITA: 71–80 → 80+"
+      }
+    ]
+  },
+  "68e3725e-5a91-413c-951a-9b6e07f20fd7": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 2,
+        "faixa_max": "51–60"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 2,
+        "faixa_max": "51–60"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 2,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 2,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 2,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "ADRIANO MENNA ZEZZE: 31–40 → 41–50"
+      },
+      {
+        "ano": 2024,
+        "tipo": "entrou",
+        "texto": "Entrou VINCENZO ANTONIO AMERICO ZEZZE (80+)"
+      },
+      {
+        "ano": 2024,
+        "tipo": "saiu",
+        "texto": "Saiu ADRIANO MENNA ZEZZE"
+      }
+    ]
+  },
+  "ca393f20-6996-4926-b01f-8a80765f42cc": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "FRANCISCO ALONSO JUNIOR: 71–80 → 80+"
+      }
+    ]
+  },
+  "e5d0e0a7-e7b3-4f23-b087-b01534cdf62b": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "APARECIDA MATTAS CEREDA: 71–80 → 80+"
+      }
+    ]
+  },
+  "3aa2904a-d1fd-4578-ae0f-3df3bd746507": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "MAURA DE JESUS MASSUCATTO: 71–80 → 80+"
+      }
+    ]
+  },
+  "3fe83da2-78cb-46ca-bef8-55c50c4c81af": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "c304732f-b28c-4df0-a071-c5f6d34c74dc": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "LUIZ FERNANDO BORDINHAO: 51–60 → 61–70"
+      }
+    ]
+  },
+  "b0e0df3a-a8c5-4d2f-8d71-334cd98c8c43": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "JACKSON ALLEGRETTI: 71–80 → 80+"
+      }
+    ]
+  },
+  "f5748f8c-89e2-4e6b-9865-8657c7ee0009": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "RODRIGO PEGORARO: 41–50 → 51–60"
+      }
+    ]
+  },
+  "700bda53-d1a9-4028-b201-884ecf7eced1": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "ROGERIO GOLUBEV: 41–50 → 51–60"
+      },
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "LOURDES GOLUBEV: 71–80 → 80+"
+      }
+    ]
+  },
+  "6bcad3c9-67bd-453c-a4c0-f517ce97bec2": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "ELSA MARIA MANTUANELI BELAZ: 71–80 → 80+"
+      }
+    ]
+  },
+  "b09fca95-391c-4508-8e7b-840102af3829": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "6e60f65b-d4c4-480b-ab7e-5dfa38de91f1": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "8151ad58-04dd-4948-b4f0-eb1c4b19ec29": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "MILTON NUNES DE PAULA: 71–80 → 80+"
+      }
+    ]
+  },
+  "03f710e6-1b13-4a6e-9693-afe9e599b3d1": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "MARLENE APARECIDA DIAS CARVALHO: 51–60 → 61–70"
+      }
+    ]
+  },
+  "d9636716-d91e-4bdf-9398-25a7755b429a": {
+    "pontos": [
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      }
+    ],
+    "eventos": []
+  },
+  "de17bf5b-a107-4b25-b6b9-1f96b85f77f8": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "61–70"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "61–70"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "61–70"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "JOSE CARLOS TORQUETTO: 61–70 → 71–80"
+      }
+    ]
+  },
+  "e6a9bb5f-914b-433f-ba41-64ae7519109e": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "saiu",
+        "texto": "Saiu CESAR ACOSTA GARCIA"
+      }
+    ]
+  },
+  "7c5c24ba-0ec1-4d10-8a6c-8591ac2b07fd": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "AIRTON FIDENCIO: 71–80 → 80+"
+      }
+    ]
+  },
+  "9320412f-36ac-43ed-8afd-ef61a7e8c85d": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "EMERSON BISSONI: 41–50 → 51–60"
+      },
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "MARIA DE LOURDES POLESSI BISSONI: 71–80 → 80+"
+      }
+    ]
+  },
+  "f7a189bb-b4c8-48b0-952f-bd225a93876f": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "ALESSANDRO DOS SANTOS DE LIMA: 31–40 → 41–50"
+      }
+    ]
+  },
+  "069f234e-fdb6-4ffe-b862-92b89ce4c6d2": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "SATIKO KOBASHI KUMAYAMA: 71–80 → 80+"
+      }
+    ]
+  },
+  "ec9c316e-dba3-4472-b804-2857b861d841": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "HELOISA ALVES COSTA: 51–60 → 61–70"
+      }
+    ]
+  },
+  "c9e85fbc-b84d-4adc-83a5-865ae3fdf113": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "ANTONIO JOSE CORREA: 71–80 → 80+"
+      }
+    ]
+  },
+  "f0886278-2c71-4259-8c9e-94f45755c909": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "MARIA JOSE DA PIEDADE SILVA: 71–80 → 80+"
+      }
+    ]
+  },
+  "a1b5ba2c-98cf-457c-8c7c-1a75016345f1": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 5,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 5,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 5,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 5,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 5,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "MARCO ANTONIO ALVES SIQUEIRA: 51–60 → 61–70"
+      }
+    ]
+  },
+  "09a74c58-0a65-4258-8295-0eed87e23635": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 5,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 5,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 6,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 6,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 5,
+        "n_pj": 1,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "RUY KORBIVCHER: 71–80 → 80+"
+      },
+      {
+        "ano": 2024,
+        "tipo": "entrou",
+        "texto": "Entrou DORA SELMA FIX VENTURA (80+)"
+      },
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "SILVIA DE AZEVEDO BARRETTO FIX: 71–80 → 80+"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "ALEXANDRE ROBERTO RIBENBOIM FIX: 71–80 → 80+"
+      },
+      {
+        "ano": 2025,
+        "tipo": "entrou",
+        "texto": "Entrou POLIMOLD INDUSTRIAL LTDA. (PJ)"
+      },
+      {
+        "ano": 2025,
+        "tipo": "saiu",
+        "texto": "Saiu MARCIO ALEXANDRE DE OLIVEIRA"
+      }
+    ]
+  },
+  "e8c6e669-a2b1-47ce-a805-e37298521d7e": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "8591511c-6728-4868-9d06-6d8ec033eb93": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 5,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 5,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 5,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 5,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 5,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "HELIO BENEDITO BAZANI: 61–70 → 71–80"
+      },
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "SERGIO AUGUSTO BAZANI: 71–80 → 80+"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "MARIO SEBASTIAO BAZANI: 71–80 → 80+"
+      }
+    ]
+  },
+  "a3468dab-4986-4ea2-802a-07114303054d": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 4,
+        "n_pj": 1,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 4,
+        "n_pj": 1,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 4,
+        "n_pj": 1,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 4,
+        "n_pj": 1,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 4,
+        "n_pj": 1,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "WILSON MOLINA RIBAS: 71–80 → 80+"
+      },
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "NILZA TORRES MOLINA: 71–80 → 80+"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "WILSON ROBERTO MOLINA: 51–60 → 61–70"
+      }
+    ]
+  },
+  "c952110f-3687-4f85-9fe7-29d71a24fbfb": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "LILIAN DE SYLOS VADERS: 41–50 → 51–60"
+      }
+    ]
+  },
+  "9968434d-8c7e-4188-bc79-688e0cae7bce": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "7f857ff3-ef88-4f01-a3da-1480ca3eca1f": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 1,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 1,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 1,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 1,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 1,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "NELSON GAREY: 71–80 → 80+"
+      }
+    ]
+  },
+  "ae16bcca-40b3-4c41-9e4f-72bdb7c7bd70": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 16,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 16,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 16,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 13,
+        "n_pj": 1,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 13,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "FRANCISCO ANTONIO STOCKMANN: 61–70 → 71–80"
+      },
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "MARIA ELISA STOCKMANN TOZZI: 51–60 → 61–70"
+      },
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "ANA ROSA CORRENTE FEDRIZZI: 41–50 → 51–60"
+      },
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "AUGUSTO CORRENTE FILHO: 71–80 → 80+"
+      },
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "ELEUSA MARIA STOCKMANN LEIBHOLZ: 61–70 → 71–80"
+      },
+      {
+        "ano": 2025,
+        "tipo": "entrou",
+        "texto": "Entrou ARIANA RENATA CORRENTE (51–60)"
+      },
+      {
+        "ano": 2025,
+        "tipo": "entrou",
+        "texto": "Entrou TURBIMAQ TURBINAS E MAQUINAS LTDA (PJ)"
+      },
+      {
+        "ano": 2025,
+        "tipo": "saiu",
+        "texto": "Saiu MARIA ELISA STOCKMANN TOZZI"
+      },
+      {
+        "ano": 2025,
+        "tipo": "saiu",
+        "texto": "Saiu ARIANA RENATA CORRENTE BAIOCO"
+      },
+      {
+        "ano": 2025,
+        "tipo": "saiu",
+        "texto": "Saiu HENRIQUE STOCKMANN"
+      },
+      {
+        "ano": 2025,
+        "tipo": "saiu",
+        "texto": "Saiu ELEUSA MARIA STOCKMANN LEIBHOLZ"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "JOSE ROBERTO STOCKMANN: 61–70 → 71–80"
+      },
+      {
+        "ano": 2025,
+        "tipo": "saiu",
+        "texto": "Saiu TURBIMAQ TURBINAS E MAQUINAS LTDA"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "RAUL STOCKMANN: 31–40 → 41–50"
+      }
+    ]
+  },
+  "57670a65-4ae7-46c7-b527-98ea957368d4": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "ARTHUR MANFREDO GUTMANN: 71–80 → 80+"
+      }
+    ]
+  },
+  "ff9ffe0e-8dae-4729-a753-2f5ffe655f91": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 9,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 9,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 9,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 9,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 9,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "ANDRE LUIS MANTOVANI: 31–40 → 41–50"
+      },
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "FREDERICO GUILHERME QUEIROZ MANTOVANI: 31–40 → 41–50"
+      },
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "HENRIQUE MANTOVANI FILHO: 41–50 → 51–60"
+      },
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "FRANCISCO DE QUEIROZ MANTOVANI: 31–40 → 41–50"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "ZELIA APARECIDA DE QUEIROZ MANTOVANI: 61–70 → 71–80"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "FELIPE CARLOS QUEIROZ MANTOVANI: 31–40 → 41–50"
+      }
+    ]
+  },
+  "445199cd-7c68-43ff-820f-e1b1e2494821": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "66400c91-dfb7-4bf6-9321-d0121b109755": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "saiu",
+        "texto": "Saiu ALBERTO RODRIGUEZ CASTILLO"
+      },
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "SIMONE RODRIGUEZ CASTILLO: 41–50 → 51–60"
+      }
+    ]
+  },
+  "cdd3983d-36d2-4dd5-ac45-e6b4f66e0656": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "ROBERTO LUIZ CADIOLI: 61–70 → 71–80"
+      },
+      {
+        "ano": 2025,
+        "tipo": "saiu",
+        "texto": "Saiu GETULIO CADIOLI"
+      }
+    ]
+  },
+  "82a9378d-ba5b-4189-a509-85cd5950fd6a": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "ARTHUR ANGELO MILANEZ: 31–40 → 41–50"
+      }
+    ]
+  },
+  "9f10cc17-df41-4857-9759-430a38759eab": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "JOSE CAMPANHER: 71–80 → 80+"
+      }
+    ]
+  },
+  "73f37326-baaa-4ab8-9b44-636c41dc842f": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "BENEDITO VOLANTE: 71–80 → 80+"
+      }
+    ]
+  },
+  "798b170e-bfd5-40d6-9151-ae7c53340487": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "JURANDIR VERTINI: 71–80 → 80+"
+      }
+    ]
+  },
+  "41820acf-f9f0-4a6e-bdd0-2a28b0cdbee9": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "a33e1843-b467-43c6-8544-637a827cca5c": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "MIGUEL GORTAN: 51–60 → 61–70"
+      }
+    ]
+  },
+  "112aba8e-1e06-4186-8fd5-1b38f6af6d63": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "600cef17-c205-4a42-a269-da66d72adbcc": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "db1d73a1-fdfa-4d98-97fb-72a83684ed47": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "146cf1b6-cde8-4ddf-a583-5807ad59af98": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "AYAO SUZUKI: 71–80 → 80+"
+      },
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "ERIKA SUZUKI: 41–50 → 51–60"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "KAREN SUZUKI: 41–50 → 51–60"
+      }
+    ]
+  },
+  "37e0335c-351e-46ab-9606-f3b8e6518dfe": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "JESSE VENANCIO DE LIMA: 41–50 → 51–60"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "DAVID FREDRICK SMITH: 71–80 → 80+"
+      }
+    ]
+  },
+  "b9753501-8712-442b-bfb7-d9337bf5e8de": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "DANIEL PICELLI: 71–80 → 80+"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "VAGNER ROBERTO PICELLI: 51–60 → 61–70"
+      }
+    ]
+  },
+  "d2b40572-13bf-425f-a0a1-094ffa85e06b": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "IZACO CAMILO SCATTOLIN: 51–60 → 61–70"
+      }
+    ]
+  },
+  "54113787-a555-4f53-b16f-83189cbd1b71": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "VANDA SANTINA ALBANEZ: 51–60 → 61–70"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "MARCOS ALBANEZ: 51–60 → 61–70"
+      }
+    ]
+  },
+  "67b934aa-9ada-4afe-8f6a-047b2eb1c1d7": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "27138853-7a2d-4379-bc1e-dc5dd5c22fdb": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "entrou",
+        "texto": "Entrou FRANCESCA ZAMBROTTA MARINARO (80+)"
+      },
+      {
+        "ano": 2024,
+        "tipo": "saiu",
+        "texto": "Saiu ANSELMO MARINARO"
+      }
+    ]
+  },
+  "72bb1d96-2b51-4891-a060-9c26d19ac774": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "184b5cb1-4576-4c31-b3b3-4eba7146c576": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      }
+    ],
+    "eventos": []
+  },
+  "122557fd-2ea5-4493-b641-674fc3aa25c6": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "51–60"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "saiu",
+        "texto": "Saiu LUIZA PREBIANCHI ZAQUELA"
+      },
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "WILSON ZAQUELA: 71–80 → 80+"
+      },
+      {
+        "ano": 2025,
+        "tipo": "saiu",
+        "texto": "Saiu WAGNER NAPOLEAO VICENTINI"
+      },
+      {
+        "ano": 2025,
+        "tipo": "saiu",
+        "texto": "Saiu WILSON ZAQUELA"
+      },
+      {
+        "ano": 2025,
+        "tipo": "entrou",
+        "texto": "Entrou WILSON ZAQUELA (80+)"
+      }
+    ]
+  },
+  "83a8f708-b720-4776-a9d9-d10fb6ff285f": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "JAAKKO JUHANI PYKALAINEN: 71–80 → 80+"
+      },
+      {
+        "ano": 2024,
+        "tipo": "entrou",
+        "texto": "Entrou ELIZEU LIMA DE ASSIS (41–50)"
+      },
+      {
+        "ano": 2024,
+        "tipo": "saiu",
+        "texto": "Saiu JAAKKO JUHANI PYKALAINEN"
+      },
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "EILA ORVOKKI PYKALAINEN: 71–80 → 80+"
+      }
+    ]
+  },
+  "011772db-95bd-410a-80a4-3586b646a7dd": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "entrou",
+        "texto": "Entrou ELISSON YUJI MORIYA (41–50)"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "LUZIA TOMIKO MORIYA: 71–80 → 80+"
+      }
+    ]
+  },
+  "ca4091c9-81e0-4e19-8653-7e0f88faffd7": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "ILZE EUGENIA CHISTE STRASSA: 51–60 → 61–70"
+      }
+    ]
+  },
+  "e5891d54-3cc2-4f88-8887-29436513b3c8": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "8df6e0e6-5625-4f71-bbe3-0863e8f1cc31": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "ADIRSON BASTAZINI: 71–80 → 80+"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "CARLA BASTAZINI: 41–50 → 51–60"
+      }
+    ]
+  },
+  "a657a9d7-16ae-4a2b-a373-a28b28b225fb": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "DIVA BOSQUIERO BUENO: 71–80 → 80+"
+      },
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "EDUARDO BUENO: 71–80 → 80+"
+      }
+    ]
+  },
+  "c9647dfe-fef7-4bb8-aef7-2cadba58848b": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "CLOVIS MARTINS: 71–80 → 80+"
+      }
+    ]
+  },
+  "52ca6449-872d-44b9-86b4-85f8ecf06142": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "CARLOS EDUARDO AMARAL PALAZZI: 51–60 → 61–70"
+      }
+    ]
+  },
+  "9a532e2a-8ecd-4bab-91f4-472315417438": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "JOSE CARLOS DIAS CORREA: 71–80 → 80+"
+      }
+    ]
+  },
+  "de0b1b84-bf46-47e6-87a5-9315603a77e4": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "ALBERTO PUTIN: ? → 80+"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "ALBERTO PUTIN: ? → 80+"
+      }
+    ]
+  },
+  "cd2239b6-b6e0-4500-8773-5e875b800f21": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 1,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 1,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 1,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 1,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 1,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "JOAO MARCOS GALVAO: 61–70 → 71–80"
+      }
+    ]
+  },
+  "2e5de3d3-889d-4129-9564-9aef3ede36e9": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "JOSE ANGELO BREDA: 71–80 → 80+"
+      }
+    ]
+  },
+  "03b2af31-2763-48c8-b9d4-97ee72b48653": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 1,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 1,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 1,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 1,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 1,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "4095cfaf-41c2-413f-8cb3-1cf370a9d404": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "JOAO ANTONIO RODRIGUES PIRES: 71–80 → 80+"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "MARCELO PASSERI PIRES: 41–50 → 51–60"
+      }
+    ]
+  },
+  "ecdf0c3b-a63d-4a88-9ef6-27a697b577e1": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "3b98a475-f063-4658-ae65-2bfd76155fdb": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "OLIVIO VIZIN: 71–80 → 80+"
+      },
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "CARMEN LUCIANE VIZIN: 51–60 → 61–70"
+      }
+    ]
+  },
+  "7dbcb3d5-2545-4833-bea8-a25e8d63214b": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "RODRIGO CHRISTAN: 41–50 → 51–60"
+      }
+    ]
+  },
+  "0777f807-71b1-4a86-bc04-c5a4a0e5d78e": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "VALENTIM BONFIM DE PAULA: 71–80 → 80+"
+      }
+    ]
+  },
+  "30872a10-8fdd-4817-9a4a-b3a2fb139bd5": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 3,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 3,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 3,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 3,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 3,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "c3dcf7b0-487a-43fd-88e3-dfdb7388403f": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 3,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "GERSON RODRIGUES DE MORAIS: 51–60 → 61–70"
+      }
+    ]
+  },
+  "247d98bc-631b-4df8-a086-0bb880bb07f4": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": []
+  },
+  "758c5df6-5b76-47d3-8144-a4438fc93cbc": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "HELIO CAVALCANTE DE AZEVEDO: 71–80 → 80+"
+      }
+    ]
+  },
+  "e853f310-f061-40be-b9d9-d382aa4ea71b": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "61–70"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "61–70"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 4,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "entrou",
+        "texto": "Entrou NELSON MANFREDINI (80+)"
+      },
+      {
+        "ano": 2025,
+        "tipo": "entrou",
+        "texto": "Entrou NELSON MANFREDINI JUNIOR (41–50)"
+      },
+      {
+        "ano": 2025,
+        "tipo": "entrou",
+        "texto": "Entrou CLAUDIA MANFREDINI (41–50)"
+      }
+    ]
+  },
+  "cd83312f-aec0-44e7-9a0d-129d56b66d7c": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 2,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2023,
+        "tipo": "envelheceu",
+        "texto": "OLINDA MARIA PINTO BONIN: 71–80 → 80+"
+      },
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "VALQUIRIA BONIN: 51–60 → 61–70"
+      }
+    ]
+  },
+  "d581f6c3-0e25-4286-a71f-28f581c2c061": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "THEREZINHA DE LOURDES PARRINI LIMA: 71–80 → 80+"
+      }
+    ]
+  },
+  "2810e68d-0a60-40e5-b959-5fd046fb4de6": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2024,
+        "tipo": "envelheceu",
+        "texto": "PETER BRAKLING: 71–80 → 80+"
+      }
+    ]
+  },
+  "d6254a79-5e39-4065-ae27-5dd8d209e31d": {
+    "pontos": [
+      {
+        "ano": 2022,
+        "data": "2022-01-08",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2023,
+        "data": "2023-01-15",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2024,
+        "data": "2024-01-16",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "71–80"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-01-14",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      },
+      {
+        "ano": 2025,
+        "data": "2025-11-09",
+        "n_pf": 1,
+        "n_pj": 0,
+        "faixa_max": "80+"
+      }
+    ],
+    "eventos": [
+      {
+        "ano": 2025,
+        "tipo": "envelheceu",
+        "texto": "MARIA DE MELO DA CRUZ: 71–80 → 80+"
+      }
+    ]
+  }
+}

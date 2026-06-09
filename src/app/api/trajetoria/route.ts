@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { BigQuery } from "@google-cloud/bigquery";
 import { createAdminClient } from "@/lib/supabase";
+import trajetoriaCache from "@/lib/trajetoria-cache.json";
 import path from "path";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
+
+// Cache das empresas dos demos → clique instantâneo e confiável no Loom (sem ida ao BigQuery).
+// Regenerar: node --env-file=.env.local scripts/build-trajetoria-cache.mjs
+const CACHE = trajetoriaCache as Record<string, { pontos: unknown[]; eventos: unknown[] }>;
 
 // Pontos no tempo (anuais + atual) pra ver a sucessão EM MOVIMENTO, não só um retrato.
 const SNAPSHOTS = ["2022-01-08", "2023-01-15", "2024-01-16", "2025-01-14", "2025-11-09"];
@@ -22,6 +27,12 @@ export async function POST(req: NextRequest) {
   try { body = await req.json(); } catch { return NextResponse.json({ error: "JSON inválido" }, { status: 400 }); }
   const empresaId = String((body as { empresaId?: string })?.empresaId ?? "").trim();
   if (!empresaId) return NextResponse.json({ error: "empresaId vazio" }, { status: 400 });
+
+  // Cache hit → resposta instantânea (empresas-top dos demos pré-computadas).
+  const skipCache = req.nextUrl.searchParams.get("fresh") === "1";
+  if (!skipCache && CACHE[empresaId]) {
+    return NextResponse.json({ ...CACHE[empresaId], cached: true });
+  }
 
   const sb = createAdminClient();
   const { data: emp } = await sb.from("empresa").select("cnpj").eq("id", empresaId).single();
