@@ -315,7 +315,7 @@ export default function Home() {
             <ul className="mt-3 space-y-1.5 font-data text-xs text-bone">
               <li>Lente: {setorCob.lente === "consolidacao" ? "consolidação" : "sucessão"}</li>
               <li>
-                <span className="tabular-nums text-floral">{setorCob.pct_sucessao}%</span> do M&amp;A é por sucessão
+                <span className="tabular-nums text-floral">{setorCob.pct_sucessao}%</span>{" "}do M&amp;A é por sucessão
               </li>
               {setorCob.recall_sucessao != null && (
                 <li>
