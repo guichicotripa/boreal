@@ -396,10 +396,10 @@ export default function EmpresaPage() {
         >
           {socios.length > 0 ? (
             <ul className="divide-y divide-hairline">
-              {socios.map((s) => {
+              {socios.map((s, i) => {
                 const ent = s.data_entrada_sociedade?.slice(0, 4);
                 return (
-                  <li key={s.id} className="flex items-center justify-between gap-3 py-2.5">
+                  <li key={s.id ?? `${s.nome}-${i}`} className="flex items-center justify-between gap-3 py-2.5">
                     <div className="min-w-0">
                       <p className="text-[15px] text-floral">{s.nome}</p>
                       {ent && (

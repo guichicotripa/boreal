@@ -1,6 +1,25 @@
-import type { Empresa, DossierAnalise, TrajetoriaResult } from "@/lib/types";
+import type { Empresa, DossierAnalise, TrajetoriaResult, TrajetoriaEvento } from "@/lib/types";
 import { precedentesParaEmpresa, cenarioIlustrativo, dadosParaFechar } from "@/lib/memo-extras";
 import { Timeline } from "./Timeline";
+
+// Separa o nome do sócio (sempre floral) do status (cor por tipo). Os eventos vêm
+// com o nome embutido no `texto` ("Saiu FULANO", "FULANO: 71–80 → 80+"), então
+// parseamos por tipo. O envelhecimento ganha o verbo que faltava: sem ele,
+// "FULANO: 71–80 → 80+" ao lado de "Entrou X" parecia uma entrada em 2023.
+function partesEvento(ev: TrajetoriaEvento): { nome: string; status: string } {
+  if (ev.tipo === "saiu") {
+    return { nome: ev.texto.replace(/^Saiu\s+/, ""), status: "saiu" };
+  }
+  if (ev.tipo === "entrou") {
+    const m = ev.texto.match(/^Entrou\s+(.*?)(?:\s+\(([^)]*)\))?$/);
+    return { nome: m?.[1] ?? ev.texto, status: m?.[2] ? `entrou (${m[2]})` : "entrou" };
+  }
+  // envelheceu: "NOME: 71–80 → 80+"
+  const idx = ev.texto.indexOf(":");
+  return idx >= 0
+    ? { nome: ev.texto.slice(0, idx).trim(), status: `envelheceu · ${ev.texto.slice(idx + 1).trim()}` }
+    : { nome: ev.texto, status: "envelheceu" };
+}
 
 // Memo de investimento: narrativa LLM (overview, análise sucessória, red flags,
 // perguntas, tese, próximo passo) + três blocos quantitativos determinísticos
@@ -33,24 +52,26 @@ export function MemoDisplay({
             Movimentação societária (2022→2025)
           </h4>
           <ul className="space-y-1">
-            {trajetoria.eventos.map((ev, i) => (
-              <li key={`${ev.ano}-${i}`} className="flex gap-2 text-[13px] leading-snug">
-                <span className="shrink-0 font-data tabular-nums text-olive">{ev.ano}</span>
-                <span
-                  className={
-                    ev.tipo === "entrou"
-                      ? "text-floral"
-                      : ev.tipo === "saiu"
-                        ? "text-risk-high"
-                        : "text-risk-mid"
-                  }
-                >
-                  {ev.texto}
-                </span>
-              </li>
-            ))}
+            {trajetoria.eventos.map((ev, i) => {
+              const { nome, status } = partesEvento(ev);
+              const statusColor =
+                ev.tipo === "entrou"
+                  ? "text-floral/60"
+                  : ev.tipo === "saiu"
+                    ? "text-risk-high"
+                    : "text-risk-mid";
+              return (
+                <li key={`${ev.ano}-${i}`} className="flex gap-2 text-[13px] leading-snug">
+                  <span className="shrink-0 font-data tabular-nums text-olive">{ev.ano}</span>
+                  <span className="min-w-0">
+                    <span className="text-floral">{nome}</span>
+                    {status && <span className={`ml-1.5 ${statusColor}`}>{status}</span>}
+                  </span>
+                </li>
+              );
+            })}
           </ul>
-          <p className="mt-1 font-data text-[10px] text-olive">Reconstruído do CNPJ — entradas, saídas e envelhecimento de faixa.</p>
+          <p className="mt-1 font-data text-[10px] text-olive">Reconstruído comparando snapshots anuais do CNPJ — o ano marca quando a mudança foi detectada, não quando o sócio entrou.</p>
         </div>
       )}
       <div>

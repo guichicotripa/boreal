@@ -15,6 +15,7 @@
 
   --color-surface: rgba(255, 251, 244, 0.03); /* cards */
   --color-surface-hover: rgba(255, 251, 244, 0.05);
+  --color-overlay: #1c1d17; /* popover/dropdown/toast — superfície elevada opaca (surface é alpha, transparente demais) */
   --color-hairline: rgba(255, 251, 244, 0.07); /* bordas */
   --color-hairline-hover: rgba(255, 251, 244, 0.12);
 
@@ -156,5 +157,17 @@
      contexto — o destaque salta por peso, não por mudar de cor. Ver brand/uso-tipografia-cor.md */
   strong {
     font-weight: 600;
+  }
+  /* Acessibilidade: motion é opcional. Quem pede menos movimento no SO recebe
+     transições instantâneas (alternativa exigida pelo brand guide). */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
