@@ -657,3 +657,63 @@ badge e estilo do memo antes de tocar o código; deletados antes do PR. Cada eta
   (tier) elimina a inconsistência sem precisar de re-ranking dinâmico.
 - Cor de risco (terracota/ocre) deve ser exclusiva de sinalização de score/severidade; usar nos
   destaques editoriais (tese, CTA) cria ambiguidade semântica — destaques usam paleta neutra.
+
+---
+
+## [2026-06-03] Maguto | Restyle sistema tipografia/cor — criação do doc + etapas 0–2
+
+> ⚠️ Entrada retroativa registrada em 2026-06-11. A sessão de 03/06 não foi salva no brain do Boreal
+> na época (só o segundo cérebro pessoal foi atualizado). Este registro fecha o gap. É a sessão que
+> **antecede** o "etapas 3–5 + nav" de 04/06 — cria o doc do sistema e aplica as etapas 0–2 (base,
+> hero, card). O código entrou na main via PR #35 junto com as etapas 3–5.
+
+Sessão de sync + início do restyle. Branch `maguto/restyle-sistema-v1` criada a partir da main.
+
+**Sync com o trabalho do Guilherme:**
+- PR #22 (etapas A–D + polish do Maguto) mergeado (`e4004cf`). Pipeline v2 (#26/#27 — funil de 6
+  estágios + DRI + log de atividade), deep-tech (#23 — `/validacao`, `/consolidadores`), `/mercado`
+  (#24) e memo com blocos quantitativos (#25) integrados na main pelo Guilherme.
+
+**Bug do pipeline — diagnóstico corrigido:**
+- 3 oportunidades apareciam fora das lanes do board. Diagnóstico inicial errado ("dados de teste com
+  vocabulário inventado", `identificado`/`em_conversa`); cheguei a tentar migrar/limpar o Supabase
+  (bloqueado pelo sandbox classifier, acertadamente). Causa real: a `main` local estava 5 commits atrás —
+  o board renderizava o vocabulário do **pipeline v0** enquanto os dados já eram do **pipeline v2**.
+  Resolvido com `git pull` (`828ce46`). **Aprendizado:** `git fetch` antes de concluir que dado está
+  sujo — divergência dado×código costuma ser branch desatualizada.
+
+**Construído — `brand/uso-tipografia-cor.md`:** doc do sistema de tipografia/cor v1 (receitas por papel:
+fonte + peso + cor + opacidade + tamanho). Fonte de verdade de aplicação, complementa o `BRAND.md`.
+
+**Etapa 0 — base:**
+- `globals.css`: `strong { font-weight: 600 }` global — mata o faux-700 sintetizado (borrado), ênfase
+  passa a ser peso real.
+- `layout.tsx`: Plex Sans `400/500/600` (remove o 300 não usado, carrega o 600).
+
+**Etapa 1 — hero (`page.tsx`):**
+- Copy enxuta no subheadline ("estavam no top 10% do modelo, 12 meses antes" — menos tom "marketing proof").
+- Subheadline → Bone `text-[15px]` (corpo de leitura).
+- "ver a prova": ocre (`risk-mid`) → Floral + seta `→` que anda no hover.
+
+**Etapa 2 — card/memo (`page.tsx`):**
+- Labels de seção uniformizados em Bone/70 (antes: mistura de `text-bone` cheio e `text-bone/55`).
+- Espaçamento entre tópicos do memo `space-y-4` → `space-y-5` (20px).
+- Dot pulsante de loading: ocre → Bone (ocre é cor de score, não de UI).
+- **Toggle Ver/Ocultar investigação** — bug: depois de investigar não havia como fechar o painel.
+  Replicado o padrão do memo (estado `researchAberto`, resultado fica em memória, sem re-fetch).
+- Boxes da investigação ("sem gatilho de timing" e "rascunho de abordagem"): `bg-smoky` (afundava,
+  destoava) → `bg-surface-hover` sem borda, igual à box "Próximo passo" do memo.
+- Decisão de hierarquia: corpo do memo permanece **Floral** (revertido após teste — bone "apaga" o
+  painel compacto; a regra híbrida de bone-pra-leitura vale só pras páginas de prosa).
+
+**Resultado:** doc do sistema + etapas 0–2 na branch `maguto/restyle-sistema-v1` (commit local da época,
+depois rebased). Continuação (etapas 3–5 + nav) na sessão de 04/06.
+
+**Aprendizado:**
+- Faux-bold 700 (Plex Sans não carrega 700 → o browser sintetiza) fica borrado; 600 real é mais limpo.
+- O cansaço de ler em Bone era **tamanho** (14px), não a cor — Bone 15px é confortável e mais sóbrio que
+  Floral em volume (que "vibra"/hala). Daí a regra de corpo de leitura = Bone 15px.
+- Contexto manda na regra: a hierarquia "bone-pra-leitura" funciona em página de prosa, mas no painel
+  compacto (card/memo) o corpo precisa ser Floral pra não apagar.
+- Validar decisões de design em sandbox HTML standalone (antes/depois) antes de tocar o código acelera
+  a convergência e evita retrabalho no app.

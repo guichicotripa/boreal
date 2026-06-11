@@ -601,3 +601,38 @@ re-ranking, e re-rankear a lista a cada investigação é complexidade de estrut
 delta `↑/↓` sem nenhuma lógica de ordenação extra.
 
 **Status:** ✅ Implementada (PR #22).
+
+---
+
+## [2026-06-03] Sistema de tipografia/cor v1 — decisões fundamentais
+
+> ⚠️ Entrada retroativa registrada em 2026-06-11. A sessão de 03/06 não foi salva no brain do Boreal
+> na época (só o segundo cérebro pessoal). Este registro fecha o gap. São as decisões **fundamentais**
+> que originaram `brand/uso-tipografia-cor.md`; as decisões de **aplicação** subsequentes (etapas 3–5)
+> estão na entrada de [2026-06-04] mais abaixo.
+
+**Contexto:** as páginas novas do Guilherme (validação, mercado, consolidadores, pipeline v2) usavam o
+ocre (`risk-mid`) como cor de destaque genérico (links, métricas, passos) — viola "cor de risco só pra
+score". Faltava um sistema explícito de quando usar cada fonte/peso/cor/opacidade. Decisões fechadas via
+sandbox HTML (antes/depois) nesta sessão e documentadas em `brand/uso-tipografia-cor.md`.
+
+**Decisões:**
+
+1. **Contraste por peso, não por cor** — ênfase no corpo = `strong` peso 600 na mesma cor. Floral e Bone
+   não se misturam na mesma frase como ênfase (poluem); convivem entre blocos (síntese Floral + corpo Bone).
+
+2. **Corpo de leitura = Bone em 15px** — Floral (quase-branco) em volume cansa/hala; o desconforto do Bone
+   era o tamanho 14px, não a cor. Bone 15px é confortável e mais sóbrio ("Private, not loud").
+
+3. **Regra híbrida** — síntese/impacto curto em Floral; leitura longa em Bone. **Exceção:** painel compacto
+   (card/memo) usa corpo Floral — bone "apaga" o painel; a regra de bone-pra-leitura vale só pra páginas de prosa.
+
+4. **`strong` = 600 global** (`globals.css`), sem cor própria — mata o faux-700 sintetizado (borrado).
+   Plex Sans `400/500/600` (remove o 300).
+
+5. **Escala de opacidade fixa** — /100 · /70 · /45 (acaba com `/55`, `/30` arbitrários). Labels de seção = Bone/70.
+
+6. **Ocre/terracota só pra score de succession risk.** Link/ação = Floral. Exceção registrada: box
+   "Por que agora" (gatilho de timing) usa terracota como alerta de oportunidade.
+
+**Status:** ✅ Documentado em `brand/uso-tipografia-cor.md`. Etapas 0–2 aplicadas nesta sessão; 3–5 em 04/06.
