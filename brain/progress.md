@@ -603,3 +603,57 @@ peso do negrito.
   Floral. Solução: reservar Floral só ao ativo, inativos vivem em Bone/70.
 - Rebase > merge quando o histórico precisa ser linear pra PR limpo. Git resolveu automaticamente
   porque as edições eram em regiões não sobrepostas do mesmo arquivo.
+
+---
+
+> ⚠️ **Entrada retroativa (registrada em 11/06).** A sessão de 01/06 abaixo não foi salva
+> no brain do Boreal na época — só o segundo cérebro foi atualizado. Logada aqui depois para
+> fechar a jornada. O trabalho descrito (PRs #21 e #22) precede tudo que veio depois neste log.
+
+## [2026-06-01] Maguto | Bugs de encoding/select + ajustes UI/UX (etapas A–D)
+
+Sessão pós-merge do restyle (PR #18). Duas frentes: corrigir dois bugs visuais reportados pelo
+Guilherme e implementar os ajustes UI/UX pós-restyle (doc `boreal_ajustes_finais_ui_ux_3105.md`).
+
+**Bugs corrigidos (PR #21):**
+- **Encoding corrompido no "Investigar com IA":** `research-cache.json` e `dossier-cache.json`
+  tinham double-encoding UTF-8→Latin-1 (subprocess do Claude Code no Windows gravando stdout em
+  CP-1252). `ç`/`ã`/`é` apareciam como `Ã§`/`Ã£`/`Ã©`, em-dashes fragmentavam em GS/replacement
+  char. Criado `scripts/fix-mojibake.mjs` (idempotente: buffer latin1→utf8 + limpa residuais).
+  149 → 0 ocorrências no research-cache, 12 → 0 no dossier-cache.
+- **Select do pipeline com fundo branco:** o `<select>` nativo ignorava `bg-surface` (o popup das
+  `<option>` é pintado pelo OS). Substituído pelo componente shadcn `Select` (base-ui). Popup com
+  fundo sólido `#1c1d17` (par visual com o trigger fechado, `sideOffset={0}`), label exibido via
+  children do `SelectValue` (evita fallback pro id cru). `color-scheme: dark` no `globals.css`.
+
+**Ajustes UI/UX (PR #22) — etapas A/B/C/D:**
+- **A (Home):** label "Descreva uma tese em linguagem livre" acima do input; "comentadas por IA"
+  → "top N analisadas por IA"; botão "Buscar tese" com a seta `→` separada e animação
+  `translate-x-1` no hover.
+- **B (Cards):** badge passa a mostrar tier `ALTO/MÉD/BAIXO` no lugar do rank (rank ficava
+  desatualizado quando a investigação alterava o score — tier é derivado do score atual, sempre
+  fiel, zero re-ranking); badges de evidência limitados a 3; ações reordenadas (Ver detalhes →
+  Investigar → Memo) com os painéis expandidos na mesma ordem; título "Memo de investimento" no
+  `MemoDisplay`; `SalvarButton` "Salvar no pipeline"; `hover:underline` removido (padronizado).
+- **C (Pipeline):** lanes com `border-t-2 border-floral/15` uniforme (sem distinção por cor —
+  hierarquia vem do volume de cards); empty states contextuais por coluna.
+- **D (Memo):** red flags ordenados por severidade (alta→media→baixa), máx 5; `como_verificar`
+  em linha própria (bone, 11px) em vez de inline com travessão; tese com `border-bone/30` neutro
+  (era `border-risk-mid`); próximo passo com `bg-surface-hover` (CTA destacado, sem cor de risco);
+  títulos de seção do memo em `text-bone/55` (era `text-olive`, baixo contraste no fundo escuro).
+
+**Processo:** sandboxes HTML (`sandbox-badge.html`, `sandbox-memo-d.html`) usados pra decidir
+badge e estilo do memo antes de tocar o código; deletados antes do PR. Cada etapa validada no
+`localhost:3000` + `tsc --noEmit` limpo antes de commitar.
+
+**Resultado:** PR #21 (2 commits, mergeado) e PR #22 (6 commits, branch `maguto/etapa-a-copy`).
+
+**Aprendizado:**
+- `<select>` nativo no Windows/Chrome não respeita `bg`/`color-scheme` no popup das `<option>` —
+  pra dark-mode confiável tem que trocar pelo componente custom (base-ui/shadcn).
+- Mojibake em cache vem do encoding do **stdout do subprocess**, não do código que grava o JSON —
+  `[IO.File]::WriteAllText` UTF-8 sem BOM no lado que gera, e fix idempotente no que já corrompeu.
+- Rank fixo no card briga com score que muda pós-investigação: derivar o rótulo do score atual
+  (tier) elimina a inconsistência sem precisar de re-ranking dinâmico.
+- Cor de risco (terracota/ocre) deve ser exclusiva de sinalização de score/severidade; usar nos
+  destaques editoriais (tese, CTA) cria ambiguidade semântica — destaques usam paleta neutra.

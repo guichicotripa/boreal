@@ -565,3 +565,39 @@ Várias micro-decisões de design fechadas durante sandboxes.
 **Confirmado certo:** sem EBITDA fabricado, scoring honesto, nav 6/6, setor-cache com flag.
 
 **Status:** ✅ Todos corrigidos e testados (curl). PR #34.
+
+---
+
+> ⚠️ **Entradas retroativas (registradas em 11/06).** As duas decisões abaixo foram tomadas na
+> sessão de 01/06 (PR #22) mas não chegaram a ser logadas no brain na época — só o segundo cérebro
+> foi atualizado. Registradas aqui depois. Cronologicamente precedem as decisões de 04/06 acima.
+
+## [2026-06-01] Cores de risco reservadas para score/severidade — destaque editorial é neutro
+
+**Contexto:** ao destacar "Tese de aproximação" e "Próximo passo" no memo, a cor `risk-mid` (ocre)
+estava sendo usada tanto pra score médio nos cards quanto pra realçar texto editorial. Mesma
+ambiguidade já vista na lane "Qualificada" do pipeline (ocre = "atenção/risco médio"?).
+
+**Decisão:** terracota (`risk-high`) e ocre (`risk-mid`) ficam **exclusivas** de sinalização de
+score, badge de tier e severidade de red flags. Destaques editoriais (tese, próximo passo, lanes do
+pipeline) usam paleta neutra (hairline, bone, surface-hover). Regra vale pra qualquer elemento
+editorial futuro.
+
+**Consequência:** tese `border-risk-mid` → `border-bone/30`; próximo passo → `bg-surface-hover`;
+lanes do pipeline → `border-floral/15` uniforme. Validado em sandbox com os 3 tiers lado a lado.
+
+**Status:** ✅ Implementada (PR #22).
+
+---
+
+## [2026-06-01] Badge do card: tier (ALTO/MÉD/BAIXO) no lugar do rank
+
+**Contexto:** o badge mostrava o número de rank (01, 02…) abaixo do score. Mas a investigação com
+IA altera o score (sobe/desce), o que mudaria a ordenação — o rank impresso fica infiel sem
+re-ranking, e re-rankear a lista a cada investigação é complexidade de estrutura desnecessária.
+
+**Decisão:** trocar o rank por um rótulo de tier derivado do score atual (`scoreTier`: ≥70 alto,
+≥50 médio, <50 baixo). Sempre fiel — seja score v0 ou v1 pós-investigação. Atualiza junto com o
+delta `↑/↓` sem nenhuma lógica de ordenação extra.
+
+**Status:** ✅ Implementada (PR #22).
