@@ -953,3 +953,19 @@ de 1px.
 header e linhas quando o conteúdo da `auto` puder diferir entre eles.
 
 **Status:** ✅ Implementado. PR #40 mergeado na main (`eb569e3`).
+
+---
+
+> ⚠️ **Entrada retroativa** — registrada em 2026-06-11. Decisão tomada na sessão de 2026-06-10 (polish pré-deploy), não salva no brain na época.
+
+## [2026-06-10] Fazer deploy no Vercel para a submissão (reverte "não fazer deploy agora")
+
+**Contexto:** a submissão do Clube exige mandar um link para os jurados avaliarem — não dá pra contar só com tela compartilhada/Loom. Isso reverte a decisão anterior nesta mesma página ("Não fazer deploy agora. Pitch/Demo Day via tela compartilhada (localhost)").
+
+**Decisão:** deployar no Vercel. Consequência imediata no lado interface: passou a valer a pena o polish de primeira impressão do link (favicon, OG/Twitter, `<title>`/description) — feito nesta sessão (ver `progress.md`).
+
+**Por que já estava destravado:** `research.ts`/`dossier.ts` já rodam na Anthropic API (web search tool), sem dependência do Agent SDK local — o motor funciona em serverless. A arquitetura escolhida antes já era "deploy-ready".
+
+**Pendências que o deploy abre (handoff Guilherme, infra):** env vars no Vercel; `/api/trajetoria` com BigQuery `keyFilename` quebra em serverless (precisa JSON inline); teto de custo pra link aberto.
+
+**Status:** 🟡 Interface pronta (metadata/OG/favicon na main via PR #40 / `eb569e3`). Deploy + infra pendentes (Guilherme).

@@ -1318,3 +1318,26 @@ dados). PR #40 mergeado na main.
   de forma diferente em cada um. Regra: deixar **uma só** coluna flexível; fixar todas as outras.
 - Box model precisa bater entre header e linhas: se a linha tem `border` e o header não, há drift de
   1px. Igualar com `border-transparent`.
+
+---
+
+> ⚠️ **Entrada retroativa** — registrada em 2026-06-11. Esta sessão de 2026-06-10 (polish pré-deploy, separada da sessão de alinhamento das colunas acima) não foi salva no brain na época. O código já está na main: entrou junto com o PR #40 (squash `eb569e3`).
+
+## [2026-06-10] Deploy polish — favicon, OG image, metadata e space fix
+
+**Contexto:** decidido fazer deploy no Vercel para a submissão (link vai aos jurados — ver decisão correspondente em `decisions.md`). Isso tornou relevante o polish de "primeira impressão" do link compartilhado, que antes não importava (plano anterior era localhost no Demo Day).
+
+**Mudanças** (commit `cd7429c` "meta: favicon, OG image e title para deploy Vercel", empilhado no PR #40):
+- `src/app/icon.svg` (novo) — favicon. Reusa a geometria da onda dupla do `Mark.tsx` (stroke Floral White sobre fundo Smoky arredondado). Antes não havia favicon nenhum.
+- `src/app/opengraph-image.tsx` (novo) — preview OG/Twitter 1200×630 via `ImageResponse` (`next/og`). Layout tipográfico, paleta da marca, **sem** dependência de fonte externa (render previsível no satori; o build pré-renderiza como rota estática, confirmando que não quebra em runtime). Antes, link compartilhado mostrava preview em branco.
+- `src/app/layout.tsx` — `metadata` completo: `title` template (`%s · Boreal`, default "Boreal — Deal sourcing por risco sucessório"), `description` on-thesis, `openGraph`, `twitter` (`summary_large_image`) e `metadataBase` resolvido por `VERCEL_PROJECT_PRODUCTION_URL` (automático no Vercel) com escape via `NEXT_PUBLIC_SITE_URL`. Antes era só `title: "Boreal"`.
+- `src/app/page.tsx:318` — space fix no painel de cobertura setorial: faltava espaço entre `{pct_sucessao}%` e "do M&A é por sucessão" (colado em todos os setores). Resolvido com nó de texto JSX `{" "}` entre o `<span>` e o texto.
+
+**Correção de registro:** o log do PR #40 (entrada de alinhamento das colunas, acima) afirma que `icon.svg`, `layout.tsx` e `opengraph-image.tsx` "não são desta sessão; foram adicionados à branch por outro contribuidor antes do merge". **Isso está incorreto** — são exatamente esta sessão (deploy-polish, `cd7429c`). Não houve "outro contribuidor": foram empilhados no PR #40 e carregados pra main pelo squash `eb569e3`.
+
+**Validação:** `tsc --noEmit` + `next build` limpos (18 rotas; `/icon.svg` e `/opengraph-image` como estáticas). Favicon validado no browser pelo Maguto.
+
+**Handoff infra (domínio Guilherme) — bloqueia o link ir ao ar:**
+- Env vars no Vercel: Supabase (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`) + `ANTHROPIC_API_KEY`.
+- `/api/trajetoria` usa BigQuery via `keyFilename` (caminho de arquivo local) → **quebra em serverless**; precisa virar credencial JSON inline em env var.
+- Teto de custo de API: link aberto = buscas fresh (~$0,04) + "Investigar com IA" (~$0,20/empresa) sem limite.
