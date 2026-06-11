@@ -28,7 +28,6 @@ import {
   useSortable,
   arrayMove,
 } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 
 // ── helpers ───────────────────────────────────────────────────────────────────
 
@@ -113,14 +112,47 @@ const RESULTADOS: { id: ResultadoOportunidade; label: string }[] = [
   { id: "perdido",       label: "Perdido"            },
 ];
 
-// 14px grip | 48px score | 1fr empresa | 155px dono+estagio | 128px proxima acao | 175px contato | auto notas | 28px remove
-const COL = "14px 48px 1fr 155px 128px 175px auto 28px";
+// 14px grip | 48px score | 1fr empresa | 144px dono+estagio | 128px proxima acao | 175px contato | 92px notas | 28px remove
+// Notas é FIXA (92px), não `auto`: como `auto` mede o conteúdo (texto curto no header, botão largo nas linhas),
+// ela roubava largura da 1fr e desalinhava todas as colunas após Empresa entre header e linhas.
+const COL = "14px 48px 1fr 144px 128px 175px 92px 28px";
 
 type ActiveTab = "agenda" | EstagioOportunidade;
 type ScoreSort = "asc" | "desc" | null;
 type UndoAction =
   | { type: "patch"; id: string; previousCampos: Partial<Oportunidade> }
   | { type: "remove"; oportunidade: Oportunidade };
+
+// ── PipelineSkeleton ──────────────────────────────────────────────────────────
+
+// Loading = skeleton da estrutura real (não spinner/texto), conforme brand guide.
+// Os blocos usam a família de superfícies em alpha; o pulse respeita prefers-reduced-motion.
+function PipelineSkeleton() {
+  return (
+    <div className="animate-pulse" role="status" aria-label="Carregando pipeline">
+      {/* stats strip */}
+      <div className="mb-6 h-[104px] rounded-xl border border-hairline bg-surface" />
+      {/* tab nav */}
+      <div className="flex gap-6 border-b border-hairline pb-2.5">
+        {[60, 92, 104, 96, 84, 88].map((w, i) => (
+          <div key={i} className="h-3 rounded bg-hairline" style={{ width: w }} />
+        ))}
+      </div>
+      {/* filter bar */}
+      <div className="my-3 flex gap-2">
+        <div className="h-8 w-56 rounded bg-hairline" />
+        <div className="h-8 w-40 rounded bg-hairline" />
+        <div className="h-8 w-28 rounded bg-hairline" />
+      </div>
+      {/* rows */}
+      <div className="flex flex-col gap-px">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div key={i} className="h-[60px] rounded-lg border border-hairline bg-surface" />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 // ── Pipeline ──────────────────────────────────────────────────────────────────
 
@@ -163,15 +195,17 @@ export default function Pipeline() {
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } })
   );
 
-  async function carregar() {
-    setLoading(true);
-    const r = await fetch("/api/oportunidade");
-    const d = await r.json();
-    setOps(d.oportunidades ?? []);
-    setLoading(false);
-  }
-
-  useEffect(() => { carregar(); }, []);
+  useEffect(() => {
+    let ativo = true;
+    (async () => {
+      const r = await fetch("/api/oportunidade");
+      const d = await r.json();
+      if (!ativo) return;
+      setOps(d.oportunidades ?? []);
+      setLoading(false);
+    })();
+    return () => { ativo = false; };
+  }, []);
 
   useEffect(() => {
     const refresh = () => setScoreOverrides(readScoresConhecidos());
@@ -295,8 +329,12 @@ export default function Pipeline() {
     }
 
     if (scoreSort) {
+      // Ordena pelo MESMO score que a linha exibe (Row: scoreOverride ?? score_no_save),
+      // senão empresa investigada mostra 81 mas ordena como 100.
+      const scoreDe = (o: Oportunidade) =>
+        scoreOverrides[o.empresa.id]?.score ?? o.score_no_save ?? -1;
       return [...base].sort((a, b) => {
-        const aS = a.score_no_save ?? -1, bS = b.score_no_save ?? -1;
+        const aS = scoreDe(a), bS = scoreDe(b);
         return scoreSort === "asc" ? aS - bS : bS - aS;
       });
     }
@@ -317,13 +355,12 @@ export default function Pipeline() {
   const isAgenda = activeTab === "agenda";
   const isEntregue = activeTab === "entregue";
 
-  // Drag disponível em todas as abas quando não há sort override ativo
-  const isDraggable = !scoreSort && !donoSort && !acaoSort;
-
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
-    if (!over || active.id === over.id || !isDraggable) return;
+    if (!over || active.id === over.id) return;
     const tab: string = activeTab;
+    // `currentList` já reflete o sort ativo (se houver). Arrastar congela essa
+    // ordem visível como baseline manual e aplica o move por cima.
     const ids = currentList.map((o) => o.id);
     const oldIdx = ids.indexOf(String(active.id));
     const newIdx = ids.indexOf(String(over.id));
@@ -332,6 +369,12 @@ export default function Pipeline() {
     const next = { ...customOrder, [tab]: newOrder };
     setCustomOrder(next);
     try { localStorage.setItem("pipeline-order", JSON.stringify(next)); } catch {}
+    // Desfaz a imposição do sort: a ordem passa a ser filtro + mudança do usuário.
+    if (scoreSort || donoSort || acaoSort) {
+      setScoreSort(null);
+      setDonoSort(false);
+      setAcaoSort(null);
+    }
   }
 
   // Atalhos de teclado: setas navegam abas, Ctrl+Z desfaz
@@ -403,7 +446,7 @@ export default function Pipeline() {
         </header>
 
         {loading ? (
-          <p className="text-sm text-bone">Carregando…</p>
+          <PipelineSkeleton />
         ) : ops.length === 0 ? (
           <p className="text-sm text-bone">
             Nenhuma oportunidade salva ainda. Volte à busca e clique em &ldquo;+ salvar&rdquo; numa empresa.
@@ -429,8 +472,23 @@ export default function Pipeline() {
                 count={agendaList.length}
                 active={isAgenda}
                 onClick={() => setActiveTab("agenda")}
-                accentAgenda
+                icon={
+                  <svg
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.3"
+                    strokeLinecap="round"
+                    className="h-3 w-3 -translate-y-px"
+                    aria-hidden
+                  >
+                    <rect x="1.75" y="2.75" width="10.5" height="9.5" rx="1.5" />
+                    <path d="M1.75 5.5 H12.25" />
+                    <path d="M4.5 1.25 V3.5 M9.5 1.25 V3.5" />
+                  </svg>
+                }
               />
+              <span className="mx-3 h-4 self-center border-r border-hairline" aria-hidden />
               {ESTAGIOS.map((s) => (
                 <TabButton
                   key={s.id}
@@ -448,16 +506,16 @@ export default function Pipeline() {
                 value={busca}
                 onChange={(e) => setBusca(e.target.value)}
                 placeholder="buscar empresa, cidade, setor…"
-                className="w-56 rounded border border-hairline bg-surface px-2 py-1.5 text-xs text-floral outline-none placeholder:text-bone/40 focus:border-hairline-hover"
+                className="w-56 rounded border border-hairline bg-surface px-2 py-1.5 text-xs text-floral outline-none placeholder:text-bone/45 focus:border-hairline-hover"
               />
               {/* Filtro dono — Radix Select para manter o dark theme */}
               <Select value={filtroDono} onValueChange={(v) => setFiltroDono(v ?? "todos")}>
-                <SelectTrigger className="h-auto w-40 rounded border border-hairline bg-surface px-2 py-1.5 font-sans text-xs text-floral outline-none focus:ring-0 focus:border-hairline-hover [&>svg]:opacity-40 [&>svg]:h-3 [&>svg]:w-3">
+                <SelectTrigger className="h-auto w-40 rounded border border-hairline bg-surface px-2 py-1.5 font-sans text-xs text-floral outline-none focus:ring-0 focus-visible:ring-1 focus-visible:ring-floral/50 focus:border-hairline-hover [&>svg]:opacity-40 [&>svg]:h-3 [&>svg]:w-3">
                   <SelectValue>
                     {filtroDono === "todos" ? "Todos os donos" : filtroDono}
                   </SelectValue>
                 </SelectTrigger>
-                <SelectContent sideOffset={4} className="border-hairline bg-[#1c1d17] text-floral">
+                <SelectContent sideOffset={4} className="border-hairline bg-overlay text-floral">
                   <SelectItem value="todos" className="text-[11px] text-floral focus:bg-surface-hover focus:text-floral">
                     Todos os donos
                   </SelectItem>
@@ -470,7 +528,8 @@ export default function Pipeline() {
               </Select>
               <button
                 onClick={() => setSoAtrasadas((v) => !v)}
-                className={`rounded border px-2 py-1.5 font-data text-[11px] uppercase tracking-wider transition-colors focus-visible:outline-none ${
+                aria-pressed={soAtrasadas}
+                className={`rounded border px-2 py-1.5 font-data text-[11px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
                   soAtrasadas
                     ? "border-risk-high/50 text-risk-high"
                     : "border-hairline text-bone hover:text-floral"
@@ -481,7 +540,7 @@ export default function Pipeline() {
               {filtroAtivo && (
                 <button
                   onClick={() => { setBusca(""); setFiltroDono("todos"); setSoAtrasadas(false); }}
-                  className="font-data text-[11px] uppercase tracking-wider text-bone/60 transition-colors hover:text-bone"
+                  className="rounded-sm font-data text-[11px] uppercase tracking-wider text-bone/60 transition-colors hover:text-bone focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
                 >
                   limpar
                 </button>
@@ -490,7 +549,7 @@ export default function Pipeline() {
 
             {/* Row list */}
             {currentList.length === 0 ? (
-              <p className="mt-2 rounded border border-dashed border-hairline px-3 py-6 text-center text-[11px] text-bone/50">
+              <p className="mt-2 rounded border border-dashed border-hairline px-3 py-6 text-center text-[11px] text-bone/60">
                 {filtroAtivo
                   ? "Nenhuma empresa neste filtro."
                   : isAgenda
@@ -514,31 +573,20 @@ export default function Pipeline() {
                   onDragEnd={handleDragEnd}
                 >
                   <SortableContext
-                    items={isDraggable ? currentList.map((o) => o.id) : []}
+                    items={currentList.map((o) => o.id)}
                     strategy={verticalListSortingStrategy}
                   >
                     <ol className="flex flex-col gap-px" aria-live="polite">
-                      {currentList.map((o) =>
-                        isDraggable ? (
-                          <SortableRow
-                            key={o.id}
-                            o={o}
-                            onPatch={patch}
-                            onRemove={remover}
-                            scoreOverride={scoreOverrides[o.empresa.id]?.score}
-                            context={isAgenda ? "agenda" : "stage"}
-                          />
-                        ) : (
-                          <Row
-                            key={o.id}
-                            o={o}
-                            onPatch={patch}
-                            onRemove={remover}
-                            scoreOverride={scoreOverrides[o.empresa.id]?.score}
-                            context={isAgenda ? "agenda" : "stage"}
-                          />
-                        )
-                      )}
+                      {currentList.map((o) => (
+                        <SortableRow
+                          key={o.id}
+                          o={o}
+                          onPatch={patch}
+                          onRemove={remover}
+                          scoreOverride={scoreOverrides[o.empresa.id]?.score}
+                          context={isAgenda ? "agenda" : "stage"}
+                        />
+                      ))}
                     </ol>
                   </SortableContext>
                 </DndContext>
@@ -550,11 +598,11 @@ export default function Pipeline() {
 
       {/* Toast de feedback */}
       {toast && (
-        <div className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-4 rounded-lg border border-hairline bg-[#1c1d17] px-4 py-2.5 shadow-xl shadow-black/60">
+        <div className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-4 rounded-lg border border-hairline bg-overlay px-4 py-2.5 shadow-lg shadow-black/40">
           <span className="whitespace-nowrap font-data text-[11px] text-bone">{toast}</span>
           <button
             onClick={performUndo}
-            className="shrink-0 font-data text-[10px] uppercase tracking-wider text-bone/50 transition-colors hover:text-floral focus-visible:outline-none"
+            className="shrink-0 font-data text-[10px] uppercase tracking-wider text-bone/60 transition-colors hover:text-floral focus-visible:outline-none"
           >
             Desfazer
           </button>
@@ -571,31 +619,28 @@ function TabButton({
   count,
   active,
   onClick,
-  accentAgenda = false,
+  icon,
 }: {
   label: string;
   count: number;
   active: boolean;
   onClick: () => void;
-  accentAgenda?: boolean;
+  icon?: React.ReactNode;
 }) {
   return (
     <button
       role="tab"
       aria-selected={active}
       onClick={onClick}
-      className={`mr-4 flex shrink-0 items-center gap-1.5 border-b-2 pb-2.5 pt-1 font-data text-[11px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
-        active
-          ? accentAgenda
-            ? "border-risk-mid text-floral"
-            : "border-floral text-floral"
-          : "border-transparent text-bone hover:text-floral"
+      className={`mr-2 flex shrink-0 items-center gap-1.5 border-b-2 pl-1.5 pr-0 pb-2.5 pt-1 font-data text-[11px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
+        active ? "border-floral text-floral" : "border-transparent text-bone hover:text-floral"
       }`}
     >
+      {icon}
       {label}
       <span
         className={`rounded-full border px-1.5 py-px font-data text-[10px] tabular-nums ${
-          active ? "border-hairline-hover text-bone" : "border-hairline text-bone/50"
+          active ? "border-hairline-hover text-bone" : "border-hairline text-bone/60"
         }`}
       >
         {count}
@@ -625,7 +670,7 @@ function ColHeader({
 }) {
   return (
     <div
-      className="mb-0.5 grid items-center gap-x-4 border-b border-hairline/40 px-3 pb-1.5 font-data text-[10px] uppercase tracking-wider text-bone/55"
+      className="mb-0.5 grid items-center gap-x-4 border-x border-x-transparent border-b border-b-hairline/40 px-3 pb-1.5 font-data text-[10px] uppercase tracking-wider text-bone/60"
       style={{ gridTemplateColumns: COL }}
     >
       {/* grip placeholder */}
@@ -644,9 +689,10 @@ function ColHeader({
         {scoreSort === "desc" && <span className="text-floral">↓</span>}
       </button>
       <span>Empresa</span>
+      {/* pl-[18px] = px-2 (8px) do container + pl-2.5 (10px) do input/chip — alinha o título com o texto "dono" abaixo */}
       <button
         onClick={onDonoSort}
-        className="flex items-center gap-1 transition-colors hover:text-bone focus-visible:outline-none"
+        className="flex items-center gap-1 pl-[18px] transition-colors hover:text-bone focus-visible:outline-none"
         title={donoSort ? "remover ordenação" : "ordenar por dono"}
       >
         {isEntregue ? "Dono · Resultado" : "Dono · Estágio"}
@@ -769,7 +815,7 @@ function Row({
       ref={nodeRef}
       style={dragStyle}
       className={`rounded-lg border bg-surface transition-colors ${
-        isDragging ? "relative z-10 opacity-50 shadow-xl" : ""
+        isDragging ? "relative z-10 opacity-50 shadow-lg shadow-black/40" : ""
       } ${mudanca ? "border-risk-high/40" : "border-hairline"}`}
     >
       {/* Main grid row */}
@@ -837,7 +883,7 @@ function Row({
               {score}
             </span>
           ) : (
-            <span className="rounded border border-hairline px-1.5 font-data text-[11px] text-bone/40">
+            <span className="rounded border border-hairline px-1.5 font-data text-[11px] text-bone/45">
               --
             </span>
           )}
@@ -857,19 +903,19 @@ function Row({
             {o.empresa.cnae_principal_desc ? ` · ${o.empresa.cnae_principal_desc}` : ""}
           </p>
           {socio && (
-            <p className="truncate font-data text-[10px] text-bone/50">{socio.nome}</p>
+            <p className="truncate font-data text-[10px] text-bone/60">{socio.nome}</p>
           )}
         </div>
 
         {/* Col 3: Dono + Estágio / Resultado */}
-        <div className="min-w-0 space-y-0.5" onClick={(e) => e.stopPropagation()}>
+        <div className="min-w-0 space-y-0.5 px-2" onClick={(e) => e.stopPropagation()}>
           <input
             defaultValue={o.dono ?? ""}
             onBlur={(e) => {
               if (e.target.value !== (o.dono ?? "")) onPatch(o.id, { dono: e.target.value });
             }}
             placeholder="sem dono"
-            className="w-full bg-transparent text-[12px] text-bone outline-none placeholder:text-bone/35"
+            className="w-full bg-transparent pl-2.5 text-left text-[12px] text-bone outline-none placeholder:text-bone/45"
           />
           {isEntregue ? (
             <ResultadoChip o={o} onPatch={onPatch} />
@@ -889,7 +935,7 @@ function Row({
                     onPatch(o.id, { proxima_acao: e.target.value });
                 }}
                 placeholder="próxima ação…"
-                className="w-full bg-transparent text-[12px] text-bone outline-none placeholder:text-bone/35"
+                className="w-full bg-transparent text-[12px] text-bone outline-none placeholder:text-bone/45"
               />
               <DateInput
                 defaultValue={o.proxima_acao_em ?? ""}
@@ -905,7 +951,7 @@ function Row({
           {o.empresa.telefone ? (
             <a
               href={`tel:${o.empresa.telefone.replace(/\D/g, "")}`}
-              className="block truncate rounded-sm font-data text-[11px] text-floral transition-opacity hover:opacity-70 focus-visible:outline-none"
+              className="block truncate rounded-sm font-data text-[11px] text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
             >
               {formatTelefone(o.empresa.telefone)}
             </a>
@@ -913,16 +959,16 @@ function Row({
           {o.empresa.email ? (
             <a
               href={`mailto:${o.empresa.email}`}
-              className="block truncate rounded-sm font-data text-[11px] text-floral transition-opacity hover:opacity-70 focus-visible:outline-none"
+              className="block truncate rounded-sm font-data text-[11px] text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
             >
               {o.empresa.email}
             </a>
           ) : null}
           {!o.empresa.telefone && !o.empresa.email && (
-            <span className="font-data text-[11px] text-bone/50">sem contato</span>
+            <span className="font-data text-[11px] text-bone/60">sem contato</span>
           )}
           {/* Indicador de último contato */}
-          <p className={`font-data text-[10px] ${toqueAtrasado ? "text-risk-mid" : "text-bone/40"}`}>
+          <p className={`font-data text-[10px] ${toqueAtrasado ? "text-risk-mid" : "text-bone/60"}`}>
             {ultimoToque
               ? `contato ${diasDesde(ultimoToque)}d atrás`
               : `sem contato · ${diasSemToque}d`}
@@ -935,7 +981,7 @@ function Row({
           className={`justify-self-start flex items-center gap-1.5 rounded border px-2 py-1 font-data text-[10px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
             hasNota
               ? "border-hairline text-bone hover:border-hairline-hover hover:text-floral"
-              : "border-hairline/60 text-bone/50 hover:border-hairline hover:text-bone"
+              : "border-hairline/60 text-bone/60 hover:border-hairline hover:text-bone"
           }`}
         >
           {hasNota && (
@@ -948,7 +994,7 @@ function Row({
         <button
           onClick={(e) => { e.stopPropagation(); onRemove(o.id); }}
           title="remover do pipeline"
-          className="text-[12px] text-bone/30 transition-colors hover:text-risk-high focus-visible:outline-none"
+          className="text-[12px] text-bone/45 transition-colors hover:text-risk-high focus-visible:outline-none"
         >
           ✕
         </button>
@@ -970,7 +1016,7 @@ function Row({
             }}
             placeholder="anotações…"
             rows={2}
-            className="w-full resize-none rounded border border-hairline bg-surface px-1.5 py-1 text-[12px] text-floral outline-none placeholder:text-bone/35 focus:border-hairline-hover"
+            className="w-full resize-none rounded border border-hairline bg-surface px-1.5 py-1 text-[12px] text-floral outline-none placeholder:text-bone/45 focus:border-hairline-hover"
           />
           {context === "agenda" && <LogAtividade oportunidadeId={o.id} />}
         </div>
@@ -1005,7 +1051,7 @@ function DateInput({
         defaultValue={defaultValue}
         onChange={(e) => onChange(e.target.value || null)}
         title={atrasada ? "ação atrasada" : "data da próxima ação"}
-        className={`bg-transparent font-data text-[10px] outline-none ${
+        className={`bg-transparent font-data text-[10px] outline-none [&::-webkit-calendar-picker-indicator]:hidden ${
           atrasada ? "text-risk-high" : "text-bone/60"
         }`}
       />
@@ -1017,7 +1063,7 @@ function DateInput({
         className={`flex h-5 w-5 shrink-0 items-center justify-center rounded transition-colors hover:bg-hairline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
           atrasada
             ? "text-risk-high/50 hover:text-risk-high"
-            : "text-bone/25 hover:text-bone/70"
+            : "text-bone hover:text-floral"
         }`}
       >
         <svg viewBox="0 0 12 12" fill="none" className="h-3 w-3" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round">
@@ -1044,12 +1090,12 @@ function EstagioChip({
       value={o.estagio}
       onValueChange={(v) => onPatch(o.id, { estagio: v as EstagioOportunidade })}
     >
-      <SelectTrigger className="h-auto w-full border-0 bg-transparent px-0 py-0 font-data text-[10px] uppercase tracking-wider text-bone/60 transition-colors hover:text-bone focus:ring-0 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:opacity-40">
-        <SelectValue>
+      <SelectTrigger className="relative h-auto w-fit max-w-full justify-start border-0 bg-transparent pl-2.5 pr-5 py-0.5 font-data text-[10px] uppercase tracking-wider text-bone/60 transition-colors hover:text-bone focus:ring-0 focus-visible:ring-1 focus-visible:ring-floral/50 [&>svg]:absolute [&>svg]:right-1 [&>svg]:top-1/2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:-translate-y-1/2 [&>svg]:opacity-40">
+        <SelectValue className="flex-none text-left">
           {ESTAGIOS.find((s) => s.id === o.estagio)?.label ?? o.estagio}
         </SelectValue>
       </SelectTrigger>
-      <SelectContent sideOffset={4} className="border-hairline bg-[#1c1d17] text-floral">
+      <SelectContent sideOffset={4} className="border-hairline bg-overlay text-floral">
         {ESTAGIOS.map((s) => (
           <SelectItem
             key={s.id}
@@ -1076,8 +1122,8 @@ function ResultadoChip({
   const colorClass =
     o.resultado === "deal_fechado"  ? "text-floral" :
     o.resultado === "receptivo"     ? "text-bone"   :
-    o.resultado === "nao_receptivo" ? "text-bone/55" :
-    o.resultado === "perdido"       ? "text-bone/40" :
+    o.resultado === "nao_receptivo" ? "text-bone/60" :
+    o.resultado === "perdido"       ? "text-bone/45" :
     "text-bone/70";
 
   return (
@@ -1086,13 +1132,13 @@ function ResultadoChip({
       onValueChange={(v) => onPatch(o.id, { resultado: v as ResultadoOportunidade })}
     >
       <SelectTrigger
-        className={`h-auto w-full border-0 bg-transparent px-0 py-0 font-data text-[10px] uppercase tracking-wider transition-colors hover:text-bone focus:ring-0 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:opacity-40 ${colorClass}`}
+        className={`relative h-auto w-fit max-w-full justify-start border-0 bg-transparent pl-2.5 pr-5 py-0.5 font-data text-[10px] uppercase tracking-wider transition-colors hover:text-bone focus:ring-0 focus-visible:ring-1 focus-visible:ring-floral/50 [&>svg]:absolute [&>svg]:right-1 [&>svg]:top-1/2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:-translate-y-1/2 [&>svg]:opacity-40 ${colorClass}`}
       >
-        <SelectValue>
+        <SelectValue className="flex-none text-left">
           {RESULTADOS.find((r) => r.id === o.resultado)?.label ?? o.resultado}
         </SelectValue>
       </SelectTrigger>
-      <SelectContent sideOffset={4} className="border-hairline bg-[#1c1d17] text-floral">
+      <SelectContent sideOffset={4} className="border-hairline bg-overlay text-floral">
         {RESULTADOS.map((r) => (
           <SelectItem
             key={r.id}
@@ -1108,6 +1154,27 @@ function ResultadoChip({
 }
 
 // ── Dashboard ─────────────────────────────────────────────────────────────────
+
+function Chevron({ up }: { up: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 10 10"
+      fill="currentColor"
+      className={`h-[9px] w-[9px] transition-transform duration-200 ${up ? "rotate-180" : ""}`}
+    >
+      <path d="M1.5 2.5 L8.5 2.5 L5 7.5 Z" />
+    </svg>
+  );
+}
+
+function Stat({ n, label }: { n: number | string; label: string }) {
+  return (
+    <div>
+      <p className="font-display text-2xl tabular-nums text-floral">{n}</p>
+      <p className="font-data text-[10px] uppercase tracking-wider text-bone/60">{label}</p>
+    </div>
+  );
+}
 
 // O LOOP DE OUTCOME (o moat): compara o score PREVISTO (no save) com o DESFECHO real.
 // Se as oportunidades que viraram receptivo/deal tinham score médio maior que as perdidas,
@@ -1143,16 +1210,6 @@ function Dashboard({
   const scoreNeg = media(negativos);
   const loopFecha = scorePos != null && scoreNeg != null && scorePos > scoreNeg;
 
-  const Chevron = ({ up }: { up: boolean }) => (
-    <svg
-      viewBox="0 0 10 10"
-      fill="currentColor"
-      className={`h-[9px] w-[9px] transition-transform duration-200 ${up ? "rotate-180" : ""}`}
-    >
-      <path d="M1.5 2.5 L8.5 2.5 L5 7.5 Z" />
-    </svg>
-  );
-
   if (collapsed) {
     return (
       <div
@@ -1180,13 +1237,6 @@ function Dashboard({
     );
   }
 
-  const Stat = ({ n, label }: { n: number | string; label: string }) => (
-    <div>
-      <p className="font-display text-2xl tabular-nums text-floral">{n}</p>
-      <p className="font-data text-[10px] uppercase tracking-wider text-bone/55">{label}</p>
-    </div>
-  );
-
   return (
     <section className="mb-6 rounded-xl border border-hairline bg-surface p-5">
       {/* Stats row — clicking anywhere here collapses */}
@@ -1212,7 +1262,7 @@ function Dashboard({
 
       {/* O loop: previsto x realizado */}
       <div className="mt-5 border-t border-hairline pt-4">
-        <p className="font-data text-[10px] uppercase tracking-wider text-bone/55">
+        <p className="font-data text-[10px] uppercase tracking-wider text-bone/60">
           Loop de outcome · score previsto × desfecho real
         </p>
         {scorePos != null || scoreNeg != null ? (
@@ -1282,23 +1332,33 @@ function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
   const total = itens?.length ?? 0;
 
   return (
-    <div className="mt-2 border-t border-hairline pt-2">
-      <button
-        onClick={toggle}
-        className="flex w-full items-center justify-between font-data text-[10px] uppercase tracking-wider text-bone/60 transition-colors hover:text-bone"
-      >
-        <span>Atividade{total > 0 ? ` · ${total}` : ""}</span>
-        <span>{aberto ? "−" : "+"}</span>
-      </button>
+    <div className="mt-2 rounded border border-hairline px-2.5 py-2">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="font-data text-[10px] uppercase tracking-wider text-bone">
+            {total > 0 ? `Contatos · ${total}` : "Contatos"}
+          </span>
+          <span className="font-data text-[10px] text-bone/45">
+            ligações, emails, reuniões…
+          </span>
+        </div>
+        <button
+          onClick={toggle}
+          className="flex h-5 items-center gap-1 rounded border border-hairline px-1.5 font-data text-[10px] text-bone transition-colors hover:border-hairline-hover hover:text-floral focus-visible:outline-none"
+        >
+          <span>{aberto ? "−" : "+"}</span>
+          {!aberto && <span className="text-bone/60">registrar</span>}
+        </button>
+      </div>
 
       {aberto && (
         <div className="mt-2 space-y-2">
           <div className="flex gap-1">
             <Select value={tipo} onValueChange={(v) => setTipo(v as TipoInteracao)}>
-              <SelectTrigger className="h-auto w-24 shrink-0 border-hairline px-1.5 py-1 text-[11px] text-floral focus:ring-0 focus:border-hairline-hover">
+              <SelectTrigger className="h-auto w-24 shrink-0 border-hairline px-1.5 py-1 text-[11px] text-floral focus:ring-0 focus-visible:ring-1 focus-visible:ring-floral/50 focus:border-hairline-hover">
                 <SelectValue>{TIPOS_INTERACAO.find((t) => t.id === tipo)?.label}</SelectValue>
               </SelectTrigger>
-              <SelectContent sideOffset={0} className="border-hairline bg-[#1c1d17] text-floral">
+              <SelectContent sideOffset={0} className="border-hairline bg-overlay text-floral">
                 {TIPOS_INTERACAO.map((t) => (
                   <SelectItem
                     key={t.id}
@@ -1315,7 +1375,7 @@ function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
               onChange={(e) => setTexto(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") adicionar(); }}
               placeholder="registrar contato…"
-              className="min-w-0 flex-1 rounded border border-hairline bg-surface px-1.5 py-1 text-[11px] text-floral outline-none placeholder:text-bone/35 focus:border-hairline-hover"
+              className="min-w-0 flex-1 rounded border border-hairline bg-surface px-1.5 py-1 text-[11px] text-floral outline-none placeholder:text-bone/45 focus:border-hairline-hover"
             />
             <button
               onClick={adicionar}
@@ -1329,8 +1389,8 @@ function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
             <ul className="space-y-1.5">
               {itens.map((it) => (
                 <li key={it.id} className="text-[11px] leading-snug">
-                  <span className="font-data text-bone/55">{dataCurta(it.criado_em)}</span>{" "}
-                  <span className="font-data uppercase tracking-wide text-bone/55">
+                  <span className="font-data text-bone/60">{dataCurta(it.criado_em)}</span>{" "}
+                  <span className="font-data uppercase tracking-wide text-bone/60">
                     {TIPOS_INTERACAO.find((t) => t.id === it.tipo)?.label ?? it.tipo}
                   </span>
                   <span className="text-bone"> — {it.descricao}</span>
@@ -1338,9 +1398,9 @@ function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
               ))}
             </ul>
           ) : itens ? (
-            <p className="text-[11px] text-bone/50">Nenhum contato registrado.</p>
+            <p className="text-[11px] text-bone/60">Nenhum contato registrado.</p>
           ) : (
-            <p className="text-[11px] text-bone/50">Carregando…</p>
+            <p className="text-[11px] text-bone/60">Carregando…</p>
           )}
         </div>
       )}

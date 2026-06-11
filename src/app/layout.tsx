@@ -32,10 +32,38 @@ const plexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
 });
 
+// URL base pro OG/canonical. No Vercel vem de VERCEL_PROJECT_PRODUCTION_URL
+// automaticamente; localmente cai no localhost. Override explícito via env.
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
+
 export const metadata: Metadata = {
-  title: "Boreal",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Boreal — Deal sourcing por risco sucessório",
+    template: "%s · Boreal",
+  },
   description:
-    "Deal sourcing para PE/M&A — empresas com risco sucessório, priorizadas por IA.",
+    "Boreal encontra empresas industriais familiares no middle market brasileiro e prioriza oportunidades por risco sucessório — a partir de uma tese em linguagem natural.",
+  applicationName: "Boreal",
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    siteName: "Boreal",
+    url: siteUrl,
+    title: "Boreal — Deal sourcing por risco sucessório",
+    description:
+      "O gargalo do deal sourcing, colapsado de duas semanas para trinta segundos.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Boreal — Deal sourcing por risco sucessório",
+    description:
+      "O gargalo do deal sourcing, colapsado de duas semanas para trinta segundos.",
+  },
 };
 
 export default function RootLayout({

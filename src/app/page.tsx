@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { SearchResponse, Empresa } from "@/lib/types";
 import { scoreTier } from "@/lib/scoring";
 import {
@@ -314,7 +315,7 @@ export default function Home() {
             <ul className="mt-3 space-y-1.5 font-data text-xs text-bone">
               <li>Lente: {setorCob.lente === "consolidacao" ? "consolidação" : "sucessão"}</li>
               <li>
-                <span className="tabular-nums text-floral">{setorCob.pct_sucessao}%</span> do M&amp;A é por sucessão
+                <span className="tabular-nums text-floral">{setorCob.pct_sucessao}%</span>{" "}do M&amp;A é por sucessão
               </li>
               {setorCob.recall_sucessao != null && (
                 <li>
@@ -387,6 +388,26 @@ function LoadingSteps() {
 // Card de triagem — score + nome + stats. A profundidade (investigar, memo,
 // sócios, similares) vive na página da empresa (/empresa/[id]).
 function EmpresaCard({ empresa: e, investigacao, jaSalvo }: { empresa: Empresa; investigacao?: ScoreConhecido; jaSalvo?: boolean }) {
+  const router = useRouter();
+  // Posição do pointerdown — distingue clique limpo de arrasto de seleção.
+  const downRef = useRef<{ x: number; y: number } | null>(null);
+
+  function abrirEmpresa() {
+    storeEmpresa(e);
+    storeOrigin("busca");
+    router.push(`/empresa/${e.id}`);
+  }
+
+  // Clicar no card todo navega — mas sem atropelar seleção/cópia nem os elementos
+  // interativos internos (título, botão Salvar).
+  function onCardClick(ev: React.MouseEvent<HTMLLIElement>) {
+    if ((ev.target as HTMLElement).closest("a, button, input, textarea, select")) return;
+    if ((window.getSelection()?.toString().trim().length ?? 0) > 0) return;
+    const d = downRef.current;
+    if (d && (Math.abs(ev.clientX - d.x) > 4 || Math.abs(ev.clientY - d.y) > 4)) return;
+    abrirEmpresa();
+  }
+
   // Investigação = score_v1 + delta vs v0 (se a empresa já foi investigada nesta sessão).
   const score = investigacao?.score ?? e.score?.score ?? 0;
   const delta = investigacao?.delta ?? null;
@@ -404,7 +425,11 @@ function EmpresaCard({ empresa: e, investigacao, jaSalvo }: { empresa: Empresa; 
   const socioMaisVelho = faixasPF.length ? FAIXA_LABEL[String(Math.max(...faixasPF))] : null;
 
   return (
-    <li className="rounded-lg border border-hairline bg-surface overflow-hidden p-4 transition-colors hover:bg-surface-hover">
+    <li
+      onPointerDown={(ev) => { downRef.current = { x: ev.clientX, y: ev.clientY }; }}
+      onClick={onCardClick}
+      className="rounded-lg border border-hairline bg-surface overflow-hidden p-4 transition-colors hover:bg-surface-hover"
+    >
       {/* Header: score badge + nome + salvar */}
       <div className="flex items-start gap-3">
         <div className="flex shrink-0 flex-col items-center gap-1">
