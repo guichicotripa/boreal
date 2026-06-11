@@ -4,21 +4,21 @@
 
 ---
 
-## 🔴 Handoff Maguto → Guilherme (09/06) — não implementado
+## 🟢 Handoff Maguto → Guilherme (09/06) — RESOLVIDO (11/06)
 
-Pipeline remodel (PR #39) mergeado na main (`41c62ee`). Itens abaixo foram registrados pelo Maguto mas **não implementados** — ficaram para o Guilherme resolver.
+Pipeline remodel (PR #39) mergeado na main (`41c62ee`). Itens abaixo implementados pelo Maguto em sessões posteriores; info dos setores descartada por decisão.
 
 ### INÍCIO (`/`)
-- [ ] **Info dos setores à direita** — coluna direita da home mostrando cobertura/info por setor. Design em aberto; discutir com Maguto qual dado exibir (ex.: N empresas por setor, setores cobertos, etc.).
+- [x] ~~**Info dos setores à direita**~~ — **decidido NÃO colocar** (optamos por não ter a coluna de setores na home).
 
 ### PIPELINE (`/pipeline`)
-- [ ] **Col Dono/Estágio — texto muito à esquerda** — o container `min-w-0 space-y-0.5` da coluna 3 não tem padding horizontal; o texto "Guilherme" e o select "IDENTIFICADO" começam rente à borda da célula, visualmente feio. Fix: adicionar `px-2` (ou similar) ao wrapper da col 3.
-- [ ] **DateInput — remover ícone nativo** — `<input type="date">` renderiza ícone de agenda do browser + o SVG bone customizado; ficam dois ícones. Manter só o SVG bone (já tem hover ajustado). Fix: adicionar `[&::-webkit-calendar-picker-indicator]:hidden` ao className do input nativo em `DateInput`.
-- [ ] **Atividade: botão "+" mais próximo do título, com box própria** — o `+` de adicionar toque/log fica longe do label "Atividade" e não tem delimitação visual. Jogar adjacente ao título e dar uma caixa delimitada para o bloco de log.
-- [ ] **View geral (cross-stage)** — aba ou toggle que mostra _todas_ as oportunidades numa tabela única, sem filtrar por estágio. Candidatos: aba "Todos" antes das abas de estágio, ou um toggle "Estágios | Todos" no header do pipeline.
-- [ ] **Aba Agenda — underline amarelo → floral** — active state usa `border-risk-mid` (ocre) em vez de `border-floral`. Fix: trocar `accentAgenda ? "border-risk-mid text-floral" : "border-floral text-floral"` por `"border-floral text-floral"` (Agenda recebe o mesmo tratamento dos demais estágios).
-- [ ] **Separar Agenda dos estágios visualmente** — Agenda é uma dimensão operacional (fila de ações), não um estágio do funil. Hoje aparece na mesma barra de tabs que Identificado/Abordado/etc, o que confunde a narrativa. Solução: separador visual ou agrupamento distinto, mantendo navegabilidade por teclado (← →) entre todas as abas. Em aberto qual forma — discutir e decidir antes de implementar.
-- [ ] **Review com impeccable no final** — após as features acima prontas, rodar `/impeccable polish pipeline/page.tsx` para quality pass de design antes de qualquer demo/Loom.
+- [x] **Col Dono/Estágio — texto muito à esquerda** — o container `min-w-0 space-y-0.5` da coluna 3 não tem padding horizontal; o texto "Guilherme" e o select "IDENTIFICADO" começam rente à borda da célula, visualmente feio. Fix: adicionar `px-2` (ou similar) ao wrapper da col 3.
+- [x] **DateInput — remover ícone nativo** — `<input type="date">` renderiza ícone de agenda do browser + o SVG bone customizado; ficam dois ícones. Manter só o SVG bone (já tem hover ajustado). Fix: adicionar `[&::-webkit-calendar-picker-indicator]:hidden` ao className do input nativo em `DateInput`.
+- [x] **Atividade: botão "+" mais próximo do título, com box própria** — o `+` de adicionar toque/log fica longe do label "Atividade" e não tem delimitação visual. Jogar adjacente ao título e dar uma caixa delimitada para o bloco de log.
+- [x] **View geral (cross-stage)** — aba ou toggle que mostra _todas_ as oportunidades numa tabela única, sem filtrar por estágio. Candidatos: aba "Todos" antes das abas de estágio, ou um toggle "Estágios | Todos" no header do pipeline.
+- [x] **Aba Agenda — underline amarelo → floral** — active state usa `border-risk-mid` (ocre) em vez de `border-floral`. Fix: trocar `accentAgenda ? "border-risk-mid text-floral" : "border-floral text-floral"` por `"border-floral text-floral"` (Agenda recebe o mesmo tratamento dos demais estágios).
+- [x] **Separar Agenda dos estágios visualmente** — Agenda é uma dimensão operacional (fila de ações), não um estágio do funil. Hoje aparece na mesma barra de tabs que Identificado/Abordado/etc, o que confunde a narrativa. Solução: separador visual ou agrupamento distinto, mantendo navegabilidade por teclado (← →) entre todas as abas. Em aberto qual forma — discutir e decidir antes de implementar.
+- [x] **Review com impeccable no final** — após as features acima prontas, rodar `/impeccable polish pipeline/page.tsx` para quality pass de design antes de qualquer demo/Loom.
 
 ---
 
@@ -81,8 +81,8 @@ dela (card + infos completas). Racional: o analista de M&A revisa muitas empresa
   **score explainer** (o `breakdown` já vem no payload do `calcScore`). _(PR #38, `a60b01c`)_
 - [x] Card da busca vira link → página da empresa (card magro de verdade; lista longa fica varrível). _(PR #38)_
 - [x] **Pipeline:** cards clicáveis → página da empresa (mesma lógica). _(`138249b`)_
-- [ ] **Similares funcional:** botão "Salvar no pipeline" por linha + legenda do critério (CNAE+praça+porte+época).
-  Hoje é lista morta; vira "ache parecidas → salve as boas" (wedge do Grata).
+- [x] **Similares funcional:** botão "Salvar no pipeline" por linha + legenda do critério (CNAE+praça+porte+época).
+  Hoje é lista morta; vira "ache parecidas → salve as boas" (wedge do Grata). _(resolvido)_
 - [x] Dependência opcional (Guilherme): `GET /api/empresa/[id]` (empresa + score) p/ a página sobreviver a
   refresh/deploy. Sem isso, dá pra navegar via estado no clique (suficiente p/ o Loom). _(`138249b`, feito pelo Maguto)_
 
@@ -91,15 +91,15 @@ dela (card + infos completas). Racional: o analista de M&A revisa muitas empresa
 Sistema de tipografia/cor documentado em `brand/uso-tipografia-cor.md`. Feito: base (strong 600, pesos
 sans 400/500/600), hero, card/memo. Faltam as páginas.
 
-- [ ] **Ajeitar erro de borda na box** — verificar qual box (notado durante o restyle)
+- [x] **Ajeitar erro de borda na box** — resolvido.
 - [x] Etapa 3 — pipeline (`fb62e46`)
 - [x] Etapa 4 — validação (`4e769af` + `57b838f` + `5659693`)
 - [x] Etapa 5 — consolidadores (`fe59f28`) — aguarda revisão do Maguto no browser
 - [x] Etapa 6 — mercado ("0,46%" ocre → floral + strong sem cor) _(PR #35, `3bfe6a0`)_
 - [x] Etapa 7 — /setores (nova página do Guilherme, sem restyle) _(PR #35)_
 - [x] Etapa 8 — /worklist (nova página do Guilherme, sem restyle) _(PR #35; /worklist depois aposentada no PR #39)_
-- [ ] Decidir peso do negrito (600 atual vs 700 real) — adiado
-- [ ] SINAL_COR em validacao/page.tsx — verificar com Guilherme se ainda é necessário
+- [x] Decidir peso do negrito — **decidido manter 600** (atual).
+- [x] SINAL_COR em validacao/page.tsx — **decidido manter como está; não usaremos SINAL_COR.**
 - [x] Abrir PR: `maguto/restyle-sistema-v1` → main _(PR #35 mergeado em main, `3bfe6a0`)_
 
 ## 🔵 Fix de dados — /validacao · hindcast.json (Guilherme)
@@ -238,10 +238,13 @@ sans 400/500/600), hero, card/memo. Faltam as páginas.
           badges de severidade. Cruzar com o ponto B ("limitar badges a 3") pra não virar ruído visual.
         - **D.6 — ordem dos blocos no memo:** red flags entre análise sucessória e perguntas; próximo
           passo no fim (após a tese). Confirmar se é a melhor hierarquia de leitura.
-- [ ] ~~Deploy no Vercel~~ — **decisão (30/05): não fazer agora.** Pitch/Demo Day via tela
-      compartilhada (localhost). Research já está na API se um dia o deploy fizer sentido.
-- [ ] Roteiro do Loom escrito (✅ v8 no clube §7), gravar + editar — PRAZO CURTO
-- [ ] **⏰ SUBMETER o Loom até 10/06 23h59** (link de submissão já em mãos)
+- [ ] **Deploy no Vercel — decisão REVERTIDA (10/06): deployamos pros jurados.** O link está no ar,
+      mas **rodando versão antiga: o PR #40 (alinhamento de colunas + polish de empresa/home) ainda NÃO
+      está no Vercel.** Guilherme tem que re-deployar / sincronizar o Vercel com a main. Infra pendente:
+      env vars, `/api/trajetoria` quebra em serverless (BigQuery `keyFilename` → JSON inline), teto de
+      custo do link aberto. (decisão registrada em `decisions.md`, entrada retroativa 11/06)
+- [x] Roteiro do Loom escrito (v11 em `brain/submissao-clube.md`), gravar + editar.
+- [x] **⏰ SUBMETER o Loom até 10/06 23h59** — **submetido a tempo (10/06).**
 
 ## 🔵 Semana 4 — Demo Day (15–16/06)
 
