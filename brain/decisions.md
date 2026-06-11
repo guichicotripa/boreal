@@ -636,3 +636,52 @@ sandbox HTML (antes/depois) nesta sessão e documentadas em `brand/uso-tipografi
    "Por que agora" (gatilho de timing) usa terracota como alerta de oportunidade.
 
 **Status:** ✅ Documentado em `brand/uso-tipografia-cor.md`. Etapas 0–2 aplicadas nesta sessão; 3–5 em 04/06.
+
+---
+
+> ⚠️ **Entrada retroativa (registrada em 11/06).** A sessão de 05/06 não foi salva no brain do Boreal na
+> época — só o segundo cérebro pessoal. Logada aqui depois. Evolui o "Sistema de tipografia/cor v1" de
+> 04/06 acima para **v3**, com os padrões fechados durante o restyle profundo de /validacao (card hero,
+> contraste, a11y). Documentado em `brand/uso-tipografia-cor.md` v3.
+
+## [2026-06-05] Sistema de tipografia/cor v3 — contraste, statement de seção e figura editorial
+
+**Contexto:** o restyle profundo de /validacao + a crítica do `$impeccable` (25→29/40) expuseram lacunas
+do v1: labels em Olive reprovando WCAG, captions misturando dois papéis, e nenhum padrão pro número que
+lidera uma frase. Fechado em sandbox e aplicado na página.
+
+**Decisões (incremento v1 → v3):**
+
+7. **Step de opacidade /60** — adicionado entre /70 e /45. Uso: caption informativa (texto secundário ao
+   claim principal mas que ainda carrega dado). Passa WCAG AA (~4,7:1). Escala vira /100 · /70 · /60 · /45.
+
+8. **Caption split em dois tiers** — caption informativa (dado que o leitor precisa, ex: "67% contando
+   todas") = Bone/60; assinatura/rodapé puro (fonte, data de geração) = Olive. Olive em caption informativa
+   reprova contraste (~2,5:1).
+
+9. **Label de seção repetível = Bone/70, não Olive** — o eyebrow Olive é **único por página** (decoração de
+   abertura). h2/labels de seção que se repetem usam Bone/70. Confundir os dois gera excesso de Olive e
+   reprova WCAG (Olive em Smoky ~2,7:1).
+
+10. **Statement de seção (h2 editorial)** — quando a seção tem argumento central e não é só rótulo
+    estrutural: eyebrow Bone/70 + h2 `font-display` Floral 22px. Máximo um por página.
+
+11. **Figura editorial (número que lidera frase)** — número-herói que faz parte da frase usa `float-left`
+    com `display:flow-root` no pai (**nunca `overflow:hidden`** — corta o glifo). Tamanho 64–84px; o texto
+    flui ao redor.
+
+12. **Stats block pós-figura** — credenciais que saem da prosa (lift, confirmação nacional) ficam num bloco
+    separado por `border-t border-hairline`: valor `font-data text-[22px] font-medium text-floral`, caption
+    `font-data text-[11px] text-bone/70`.
+
+13. **De-ênfase em tabela = mesmas cores em /70** — linhas descartadas/secundárias mantêm a linguagem de
+    cor da tabela (Floral nome, Bone números) rebaixada em /70; não trocam pra Olive (que é cor diferente,
+    não versão atenuada).
+
+14. **Focus ring padrão em links** — todo `<a>` interativo:
+    `focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm`.
+
+15. **`scope="col"` em `<th>`** — toda célula de cabeçalho de tabela, para leitores de tela.
+
+**Status:** ✅ Documentado em `brand/uso-tipografia-cor.md` v3. Aplicado em /validacao (05/06) e
+/consolidadores (06/06).

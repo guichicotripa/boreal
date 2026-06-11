@@ -717,3 +717,98 @@ depois rebased). Continuação (etapas 3–5 + nav) na sessão de 04/06.
   compacto (card/memo) o corpo precisa ser Floral pra não apagar.
 - Validar decisões de design em sandbox HTML standalone (antes/depois) antes de tocar o código acelera
   a convergência e evita retrabalho no app.
+
+---
+
+> ⚠️ **Entrada retroativa (registrada em 11/06).** A sessão de 05/06 não foi salva no brain do Boreal
+> na época — só o segundo cérebro pessoal foi atualizado. Logada aqui depois para fechar o gap. É o
+> passe **profundo** de /validacao, que vem **depois** do passe leve "etapas 3–5 + nav" de 04/06
+> (aquele só limpou `strong text-floral`; este reformula card, contraste, a11y e ritmo). Commits
+> `a451a8b`→`a81cdc4` na branch `maguto/restyle-sistema-v1` (à frente da main, sem PR mergeado ainda).
+
+## [2026-06-05] Maguto | /validacao restyle profundo — impeccable + card hero (craft) + merge #34
+
+Sessão de design/UI focada inteira na página `/validacao`. Filtrado o feedback do ChatGPT (descartado o
+que conflitava com nossas decisões; aprovado o que agregava), rodada a crítica completa do `$impeccable`
+e reformulado o card hero com o `$impeccable craft`.
+
+**Crítica + correções (`$impeccable critique`, score 25 → 29/40):**
+- **a11y:** focus rings (`focus-visible:ring-1 ring-floral/50`) em todos os links interativos;
+  `scope="col"` em todos os `<th>`; `key` estável (`key={d.nome}`) no lugar de `key={i}` nas listas.
+- **Contraste:** labels de seção (h2) Olive → Bone/70 (Olive em Smoky reprova WCAG ~2,7:1; Bone/70 ≈6,4:1);
+  caption split em dois tiers — informativa (dado que o leitor precisa) → Bone/60, assinatura/rodapé → Olive.
+- **Ritmo tipográfico:** statement "O score não é chutado…" promovido a título serif Floral 22px com
+  eyebrow Bone/70 (statement de seção); body de prosa 14px → 15px (Bone).
+
+**Estrutura da página:**
+- Lead-in antes da tabela de setor; tabela de lift separada em grupos (ativos / descartados).
+- Sinais descartados na tabela: Olive → Floral/70 + Bone/70 (mesma linguagem de cor da tabela, só
+  rebaixada em /70 — Olive seria cor diferente, não versão atenuada).
+
+**Card hero reformulado (`$impeccable craft`):**
+- Padrão **figura editorial**: o número (97%) flutua à esquerda (`float-left` + `display:flow-root` no
+  pai, nunca `overflow:hidden`) e lidera a frase ("97% das vendas… estavam no top 10%"); o texto flui ao
+  redor. Stats block separado por `border-t` (lift, confirmação nacional). Nuance honesta do 67% (recall
+  geral contando todas as aquisições) ao lado, de-emphasizada mas não escondida.
+- Motivo: o template "hero-metric" (número grande + label + stats) é banido pelo `layout.md` do impeccable;
+  a figura editorial é idiomática à voz editorial da marca.
+
+**Merge do PR #34 do Guilherme (auditoria de tese) na branch:**
+- `#34` trouxe **97% sucessão como headline** (era "67% geral") e `setores.json` como fonte única de dados
+  de setor. Merge (não rebase — Guilherme refatorou componentes que também editamos pesado) com 4 conflitos
+  resolvidos (`page.tsx` home, `consolidadores`, `decisions.md`, `pending.md`): conteúdo dele preservado,
+  nosso sistema de cor/tipo aplicado por cima. O 67% migrou para bloco de nuance no pé do card hero.
+
+**Copy:** auditoria de travessões em /validacao (3 trocados por vírgula, 5 mantidos como aposto/realce);
+"a gente" informal → registro formal; "telling not showing" removido.
+
+**Doc:** `brand/uso-tipografia-cor.md` atualizado de v1 → **v3** (8 novas decisões — ver `decisions.md`).
+
+**Resultado:** /validacao fechada na branch `maguto/restyle-sistema-v1`; commits `6ab90b9`, `a451a8b`,
+`c7e6f86`, `708d085`, `e1b913e`, `8be1e55` (merge #34), `4510413` (card craft), `1c3e218`, `a81cdc4` (brand v3).
+
+**Aprendizado:**
+- **Figura editorial usa `display:flow-root`, não `overflow:hidden`** — com `overflow:hidden` o topo do
+  glifo Newsreader do número flutuado era cortado; `flow-root` contém o float sem clipar.
+- **De-ênfase em tabela = /70 na mesma cor, não troca pra Olive** — manter a linguagem de cor (Floral/Bone)
+  rebaixada em opacidade lê como "mesmo tipo de dado, descartado"; trocar a cor lê como "outro tipo de dado".
+- **Merge > rebase quando o outro lado refatorou o mesmo componente** — 1 conflito unificado por arquivo
+  em vez de replay commit-a-commit.
+- Chrome MCP (`tabs_context_mcp`) falhou de forma consistente em screenshots do dev server ("No group with
+  id"); validação visual feita pelo usuário no browser + sandboxes HTML standalone.
+
+---
+
+> ⚠️ **Entrada retroativa (registrada em 11/06).** A sessão de 06/06 (madrugada, commit 01:00) não foi
+> salva no brain do Boreal na época — só o segundo cérebro pessoal. Logada aqui depois. É o passe
+> **profundo** de /consolidadores (Etapa 5), que vem depois do passe leve `fe59f28` de 04/06. Commit
+> `04130b1` na branch `maguto/restyle-sistema-v1`.
+
+## [2026-06-06] Maguto | /consolidadores restyle profundo (Etapa 5)
+
+Sessão de restyle + reescrita de copy da `/consolidadores`. Workflow `/review` (wrapper do impeccable)
+rodado na página — score 23/40, primeira run do alvo.
+
+**Sistema de cor/tipo alinhado ao brand guide:**
+- 4 eyebrows internos Olive → Bone/70 (mini-cards de tese, eyebrow do backtest, label "Candidatos");
+  caption de metodologia (buy-box) Olive → Bone/60; body do backtest `text-sm` → `text-[15px]`;
+  metadata sócio/desde → Bone/70.
+- Focus rings nos 3 links; `key={a.nome}` (era `key={i}`); H1 com `text-balance`.
+- **Buy-box CNAE labels removidos** de cada card de consolidador — código CNAE é opaco pro leitor
+  não-técnico e o setor já é evidente pelos nomes das candidatas.
+- "Não é uma previsão validada" no rodapé: `<strong text-bone>` removido (saltava demais), virou Olive simples.
+
+**Copy do backtest reescrita (clareza técnico + leigo):**
+- "1,4× vs. acaso" → **"40% a mais de acerto"** (em negrito), matematicamente idêntico mas lê como ganho,
+  não como fração; calculado dinâmico do JSON (`Math.round((lift - 1) * 100)`).
+- "detecção descritiva" mantida mas explicada inline; "97% de acerto nas vendas de sucessão" (negrito) no fim.
+- Mini-cards reescritos em paralelo: "O modelo identifica quem tem **maior propensão a vender**, com
+  antecedência." / "O modelo detecta **quem está comprando e com que padrão**, em tempo real." (reforça
+  que é o mesmo sistema em dois contextos).
+
+**Resultado:** /consolidadores fechada na branch `maguto/restyle-sistema-v1`; commit `04130b1`.
+
+**Aprendizado:**
+- O mesmo dado lido como "40% a mais de acerto" comunica melhor que "1,4×" sem mentir — escolher a
+  forma que não diminui o produto.
+- CNAE cru no card é ruído pro não-técnico; quando o setor já está implícito nos nomes, o código não agrega.
