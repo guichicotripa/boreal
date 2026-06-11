@@ -861,3 +861,54 @@ breakdown v0 enquanto o número mostra o v1. Alternativa descartada na hora: op�
 barras por `score_v1/score_v0`).
 
 **Status:** ✅ Barras na cor do tier na main (`138249b`); brand guide #16/#17 (`a639e25`). 🟡 Caminho B aberto.
+
+---
+
+> ⚠️ **Entradas retroativas (registradas em 11/06).** Decisões da sessão de **08–09/06** (PR #39 —
+> pipeline remodel). Não foram salvas no brain do Boreal na época. Código na main: commits `5b740f0`
+> + `2b24f8` → merge `41c62ee`.
+
+## [2026-06-08/09] Pipeline: kanban descartado — tabs por estágio + linhas de largura cheia
+
+**Contexto:** com o pipeline crescendo, o kanban de 6 colunas gerava 3 problemas simultâneos: (1) nome
+da empresa truncado em cards estreitos — ilegível em volume; (2) scroll horizontal + vertical ao mesmo
+tempo; (3) nenhum ganho de drag já que a mudança de estágio era via `<Select>`, não via arraste de
+coluna. O layout pagava o custo do kanban sem receber o benefício.
+
+**Decisão:** substituir por **uma aba por estágio + linhas de largura cheia** (full-width row list).
+Uma view de estágio por vez, em largura total da tela, legível sem expandir. Grid template fixo
+compartilhado por header e rows (`COL = "14px 48px 1fr 155px 128px 175px auto 28px"`). Drag-to-reorder
+vertical dentro de cada aba (ordem persiste em `localStorage`). Sort toggles de 3 estados (asc/desc/off)
+em Score, Dono e Próxima Ação.
+
+**Aba Agenda:** fila operacional cross-stage (oportunidades com `proxima_acao_em` definida, de qualquer
+estágio, ordenadas por data depois score). Incluída como primeira aba para acesso rápido. Conceito:
+é uma **dimensão de trabalho**, não um estágio do funil — ver decisão abaixo sobre separação visual.
+
+**Worklist (`/worklist`) aposentada:** a Agenda substitui a função de "fila quente de ação". Rota e
+entrada no nav removidas.
+
+**Rejeitado:** kanban com colunas menores, tabela flat sem tabs (perde o contexto de estágio), view
+"híbrida" simultânea (scope creep para a sessão).
+
+**Status:** ✅ Implementado. PR #39 mergeado na main (`41c62ee`).
+
+---
+
+## [2026-06-08/09] Aba Agenda: dimensão operacional distinta dos estágios de negociação
+
+**Contexto:** ao incluir a Agenda como primeira aba na barra de navegação do pipeline, ela ficou
+visualmente no mesmo nível semântico que "Identificado", "Abordado", etc. — como se fosse um estágio
+do funil. Não é: a Agenda é uma fila cross-stage (dimensão temporal/operacional), enquanto os estágios
+são fases do deal (dimensão de progresso). Um analista pode ter empresas em "Em conversa" E em "Qualificado"
+aparecendo juntas na Agenda se ambas têm próxima ação devida.
+
+**Decisão (provisória):** manter a Agenda na mesma barra de tabs por ora (preserva navegabilidade por
+teclado ← →), com a separação visual deferred para um próximo passo. Soluções candidatas discutidas mas
+não implementadas: separador visual entre "Agenda" e as abas de estágio, label "Funil" sobre o grupo de
+estágios, ou agrupamento visual distinto que não quebre a barra de tabs.
+
+**Pendência aberta (handoff Guilherme):** encontrar a solução que diferencia os dois contextos sem
+sacrificar a navegabilidade. Registrada em `brain/pending.md`.
+
+**Status:** 🟡 Agenda funcional na main; separação visual pendente.

@@ -1138,3 +1138,109 @@ direto, refresh). Commits `120f015`/`138249b`/`a639e25` na main.
   ler no mount só não basta quando o usuário volta pelo botão do navegador.
 - Cruzar pro domínio do parceiro (criar rota em `api/`) é aceitável quando desbloqueia e é ~20 linhas
   espelhando código existente — mas **registrar e avisar** é parte do trabalho, não opcional.
+
+---
+
+> ⚠️ **Entrada retroativa (registrada em 11/06).** A sessão abaixo é de **08–09/06** e cobre o PR #39
+> (pipeline remodel completo). Não foi salva no brain do Boreal na época — só o segundo cérebro pessoal
+> foi atualizado. Commits `5b740f0` (remodel) + `2b24f8` (underline fix) → merge `41c62ee` na main.
+
+## [2026-06-08/09] Maguto | Pipeline remodel — kanban → tabs por estágio + drag-to-reorder + undo (PR #39)
+
+Sessão longa de reescrita do `src/app/pipeline/page.tsx` (~950 linhas, single-file). Motivação: o kanban
+de 6 colunas espremía os nomes de empresa (ilegível em volume), gerava scroll infinito e não justificava
+o custo — a mudança de estágio já era via `<Select>`, então não havia ganho real de drag. Decisão tomada
+antes de codar: **layout = tabs por estágio + linhas de largura cheia, uma view por vez**.
+
+**Arquitetura geral:**
+- Tipo `ActiveTab = "agenda" | EstagioOportunidade` — 7 abas no total (Agenda + 6 estágios).
+- Grid fixo por coluna: `COL = "14px 48px 1fr 155px 128px 175px auto 28px"` (grip · score · empresa ·
+  dono+estágio · próxima ação · contato · notas · remove). Todas as linhas e o header compartilham o mesmo
+  `grid-template-columns` — nenhum header desalinhado.
+- Aba **Agenda**: fila operacional cross-stage (oportunidades com `proxima_acao_em` definida, de qualquer
+  estágio, ordenadas por data/score). Não é um estágio do funil — é uma dimensão de trabalho. Detalhe:
+  incluída na barra de tabs para navegabilidade, mas o conceito é distinto (pendência de separação visual).
+
+**Drag-to-reorder (`@dnd-kit/sortable`):**
+- Dependências: `@dnd-kit/core`, `@dnd-kit/sortable`, `@dnd-kit/utilities`.
+- `SortableContext` + `useSortable` por row; `DndContext` wrapping a lista de cada aba.
+- Ordem persistida em `localStorage["pipeline-order"]` como `Record<string, string[]>` (tab id →
+  array de IDs de oportunidade ordenados). Lido no `useState` initializer (SSR-safe com `typeof window`).
+- **Animação — translate-only:** `CSS.Transform.toString()` inclui `scaleX`/`scaleY`, o que achatava o
+  card ao arrastar. Corrigido com string manual: `translate3d(0px, ${Math.round(transform.y)}px, 0)`.
+- **Drag handle invisível:** `text-bone/0` + `group-hover:text-bone/25` não funciona em Tailwind v4 com
+  CSS custom properties (a opacidade não cascateia corretamente). Solução: `opacity-25` no container div,
+  `group-hover:opacity-50`, com o SVG sempre renderizado em `text-bone fill="currentColor"` (sem condicional
+  no render). O `pointer-events-none opacity-0` cobre o caso "drag não disponível".
+- `isDraggable = !scoreSort && !donoSort && !acaoSort` — drag desabilitado automaticamente quando qualquer
+  sort está ativo (ordens conflitam).
+
+**Sort toggles (3 estados: `asc | desc | null`):**
+- Colunas: Score (`ScoreSort`), Dono (`boolean` para simples toggle), Próxima Ação (`ScoreSort`).
+- Clicar cicla `null → "asc" → "desc" → null`. Indicador visual (chevron rotaciona, cor muda).
+- Quando sort ativo: `isDraggable` desliga, custom order do localStorage é ignorado.
+
+**DateInput — input nativo intacto + botão `showPicker()`:**
+- Problema: tentativas de esconder o indicador nativo do `<input type="date">` (via
+  `[&::-webkit-calendar-picker-indicator]:hidden` ou `opacity-0 [width:0px]`) quebravam a edição em texto.
+- Solução: **não tocar no input**. Renderizar o `<input>` completamente limpo (sem classes que afetem o
+  pseudo-elemento) + botão customizado ao lado que chama `ref.current?.showPicker()` num `try/catch`
+  (browser support não universal). O usuário edita em texto clicando no input, abre o calendário pelo ícone.
+
+**Dashboard expand/collapse:**
+- Antes: só o triângulo do canto direito expandia. Depois: clicar em qualquer parte do header expande/
+  recolhe (hit area maior, mais natural). `role="button"` + `tabIndex` + `onKeyDown` Enter/Espaço.
+
+**Dono filter — migração Radix → Base UI Select:**
+- O `<select>` nativo/Radix não respeitava o dark theme. Migrado para Base UI `Select` (já usado no
+  estágio inline da row).
+- Armadilha de tipo: a assinatura do `onValueChange` em Base UI é
+  `(value: string | null, eventDetails: SelectValueChangeDetails) => void`, não `(value: string) => void`.
+  Fix: `onValueChange={(v) => setFiltroDono(v ?? "todos")}`.
+
+**Undo Ctrl+Z — `useRef` em vez de `useState`:**
+- `lastActionRef = useRef<UndoAction | null>(null)` — **não** `useState`. Razão: o handler de `keydown`
+  é registrado no `useEffect` com `[activeTab]` na dep array; se `lastActionRef` fosse estado, o closure
+  do handler capturaria o valor no momento do registro (stale closure clássico). Com `useRef`, o handler
+  sempre lê `.current` que reflete o valor atual.
+- Tipo `UndoAction = { type: "patch"; id: string; previousCampos: Partial<Oportunidade> } | { type: "remove";
+  oportunidade: Oportunidade }`.
+- Undo de remoção: POST para recriar + PATCH para restaurar campos → estado local restaurado otimisticamente,
+  ID atualizado após confirmação do servidor.
+
+**Toast de remoção:**
+- `useState<string | null>(null)` com `toastTimerRef` (ref do timeout para cancelar/resetar).
+- Ao remover: mensagem `"${nome} removida do pipeline"` + botão "Desfazer" que chama `performUndo()`.
+- Posicionado `fixed bottom-6 left-1/2 -translate-x-1/2 z-50`.
+
+**Keyboard nav ← → entre tabs:**
+- `useEffect` com listener `window.addEventListener("keydown", onKey)`.
+- `ALL_TABS: ActiveTab[] = ["agenda", ...ESTAGIOS.map(s => s.id)]` — lista ordenada de todas as abas.
+- Guarda: `!!target.closest("input, textarea, select")` — não captura quando foco está num campo de texto.
+- Ctrl+Z no mesmo handler (não conflita com a guarda de input).
+
+**Worklist deletada:**
+- `src/app/worklist/page.tsx` removido integralmente.
+- `Nav.tsx`: entrada `{ href: "/worklist", label: "Worklist" }` removida do array `FLUXO`.
+- Erro de TS pós-deleção (`validator.ts` em `.next/types/` com referência cacheada): resolvido deletando
+  a pasta `.next` e re-rodando `tsc`.
+
+**Tab underline fix (`2b24f8`):**
+- O indicador da aba ativa estava deslocado à direita do texto. Causa: `mr-0.5 pr-3` no `TabButton`
+  criava espaço extra que o underline cobria. Fix: `mr-4` (só margem entre botões, sem padding extra).
+
+**Resultado:** typecheck + `next build` verdes. PR #39 aberto e mergeado na main (`41c62ee`). Itens
+não implementados registrados em `brain/pending.md` para handoff ao Guilherme: botão "+" da atividade
+com box própria, view geral cross-stage, separação visual Agenda/estágios, info de setores na home,
+review com impeccable no final.
+
+**Aprendizado:**
+- `CSS.Transform.toString()` sempre inclui `scaleX`/`scaleY = 1` no output, o que causa reflow visual
+  ao arrastar mesmo quando os valores são neutros. Para drag vertical puro, montar a string manualmente
+  (`translate3d(0, Ypx, 0)`) é mais seguro e predizível.
+- Tailwind v4 com CSS custom properties e modificadores de opacidade (`text-bone/25`) é não-confiável
+  para valores que precisam transicionar (group-hover). A abordagem `opacity-X` no container é mais
+  robusta e agnóstica da engine de CSS.
+- `useRef` para estado de undo evita toda a classe de bugs de stale closure sem precisar de dep array
+  pesada. Regra prática: se o estado só é lido dentro de handlers de evento (não renderizado), `useRef`
+  é mais correto que `useState`.
