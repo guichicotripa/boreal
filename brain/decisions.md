@@ -733,3 +733,36 @@ uniforme; a tese hairline manteve só a indentação (`pl-3`), sem a borda.
 pelo badge de score (ALTO/MÉD/BAIXO) — a faixa lateral era redundante e adicionava ruído visual.
 
 **Status:** ✅ Implementada (PR #35, home/etapa 9).
+
+---
+
+> ⚠️ **Entrada retroativa (registrada em 11/06).** Decisão tomada na sessão de **07/06** (restyle home
+> Fase 1 / PR #37), logada só no segundo cérebro pessoal na época. Registrada aqui para fechar o gap.
+
+## [2026-06-07] Home = superfície de triagem; profundidade na página da empresa (arquitetura Fase 1/Fase 2)
+
+**Contexto:** os recursos pesados do card (investigar com IA, memo, similares, trajetória) estavam todos
+inline na home, deixando o card alto e a lista de ~50 empresas inviável de varrer (demorava pra chegar na
+empresa 50). Discussão sobre como um analista de M&A realmente trabalha no sourcing.
+
+**Decisão:** a home é uma **superfície de triagem** — o analista varre rápido decidindo "vale aprofundar?",
+e o card mostra só o essencial de triagem (score + sinal de sucessão + porte/capital + fundação + sócio
+mais velho). A **profundidade vai pra uma página própria da empresa** (`/empresa/[id]`, Fase 2), clicável
+a partir da **busca E do pipeline** (o analista revisa muitas empresas e não as lembra só pelo nome).
+Mapeia o funil de sourcing: universo + triagem (home) → deep dive (página da empresa) → outreach
+(pipeline/worklist). Execução em 2 fases: Fase 1 (card stats, navbar/mega-menu, switcher, copy, fixes —
+PR #37, feita) e Fase 2 (página da empresa + card magro + pipeline em abas + similares funcional + score
+explainer).
+
+**Sub-decisões da mesma sessão:**
+- **Porte honesto:** mantém os termos da Receita (ME/EPP/DEMAIS; DEMAIS = médio/grande). Não se separa
+  médio de grande nem se estima faturamento/EBITDA — estende a regra de 29/05 ("não fabricar financeiro";
+  é o diferencial vs. o Grata, que chuta EBITDA). Porte + capital social são o único sinal de tamanho que
+  o dado público dá.
+- **Trajetória fora da home:** sai do card (query BigQuery ao vivo, pesada) e vira cache + painel na
+  página da empresa. Rota/lib preservadas; handoff no `pending.md`.
+
+**Consequência:** o card vira componente de apresentação leve → a lista escala sem paginação. As ações
+pesadas deixam de ser dead-ends inline e ganham contexto na página da empresa.
+
+**Status:** 🟡 Fase 1 implementada (PR #37). Fase 2 especificada no `pending.md`, pendente.

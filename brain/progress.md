@@ -889,3 +889,79 @@ typecheck limpo em todas as etapas; sandboxes de iteração deletados antes de c
   PR de feature já mergeado — diff limpo, reversão trivial.
 - `municipio` resolvido no `demo-cache` mas cru no `hindcast.json`: caches gerados por scripts diferentes
   podem divergir na resolução; vale um check de consistência quando o mesmo campo aparece em mais de uma fonte.
+
+---
+
+> ⚠️ **Entrada retroativa (registrada em 11/06).** A sessão abaixo é de **07/06** (à noite, distinta do
+> restyle etapas 6-9 acima). O código foi mergeado na main na época (PR #37), mas a jornada só ficou no
+> segundo cérebro pessoal — não foi logada no brain do repo. Registrada agora para fechar o gap.
+
+## [2026-06-07] Maguto | Restyle home Fase 1 — card stats + mega-menu Metodologia + switcher de setor (PR #37)
+
+Sessão de planejamento + execução do restyle da home, dividida em **duas fases**: Fase 1 (baixo risco,
+antes da reunião 3 de 09/06) e Fase 2 (estrutural, até o Loom). Esta entrada cobre a **Fase 1**, mergeada.
+Branch `maguto/home-restyle-fase1` a partir de `origin/main` limpa (separada do fix do município, que virou
+o #36). Workflow: sandbox HTML por decisão visual + aprovação antes do código.
+
+**Verificação de dependência (antes de codar):** a página da empresa da Fase 2 precisaria de empresa-por-id.
+Lido o código: `/api/dossier` já carrega empresa por id, e o card já tem o objeto `empresa` completo (com
+`score.breakdown`) em memória ao clicar. Conclusão: dá pra navegar via estado no clique — **não bloqueia**
+no Guilherme; `GET /api/empresa/[id]` fica como polish opcional (refresh/deploy).
+
+**Navbar (`Nav.tsx`):**
+- Top-level reduzido ao fluxo real do usuário: **Início · Pipeline · Worklist**.
+- Validação/Mercado/Consolidadores/Setores agrupados num **mega-menu "Metodologia"** — grid 2×2 (400px),
+  abre no **hover** + `group-focus-within` (acessível por teclado e toque), título Floral 500 + descrição
+  por item, fundo opaco (`bg-smoky`), **rabinho** (tail rotacionado) ancorando no gatilho.
+- **Chevron SVG** centrado no viewBox (substituiu o glyph `▾`, cuja tinta não é centrada na caixa e
+  "pulava" verticalmente ao girar 180°).
+- Ponte de hover via `pt-3` transparente no container do menu (sem dead-zone entre gatilho e box).
+
+**Card de empresa (`page.tsx`):**
+- **Stats strip** novo: Porte · Capital · Fundada (+anos) · Sócio+ (+nº de sócios), com **porte e capital
+  em primeira classe** (mono, tabular) — antes ficavam enterrados na linha olive junto de natureza/CNAE.
+- Capital compacto (`R$ 52,5 mi` em vez de `R$ 52.500.000`).
+- Removidos: bloco de badges de evidência (redundante com a stats strip) e a linha de metadata olive
+  (natureza jurídica + CNAE completo migram pro "Ver detalhes"/página da empresa).
+- Rótulos de ação encurtados (Memo, Similares).
+- Porte mantém os termos da Receita (DEMAIS = médio/grande; a Receita não separa médio de grande, e
+  separar exigiria faturamento que não temos).
+
+**Switcher de setor (`page.tsx`):**
+- Segmented control (Metalmecânica/Saúde/Educação) na home reusa o estado `setorAtivo` que já existia (só
+  era setável vindo de `/setores?setor=`). Clicar troca o universo e dispara a busca do setor.
+- Sidebar de cobertura passa a seguir o setor ativo: nome + CNAEs (com descrição) + lente + contagem.
+  Confirmado por query no Supabase: **2.000 empresas indexadas por setor, todas em SP** — daí a linha
+  "2.000 empresas · São Paulo".
+
+**Copy:** subhead da home enxuto — removida a moldura de venda ("Não é um buscador. É um modelo validado…"),
+mantido o `97% das vendas por sucessão` como linha factual; link "ver a prova" → "ver metodologia".
+
+**Fixes pontuais:**
+- Labels olive→`bone/70` em `ResearchDisplay` ("Sem gatilho de timing", "Rascunho de abordagem") — estavam
+  ilegíveis em olive.
+- Bug de toggle: investigar/memo/similares só alternavam o painel quando havia dado; em erro ou retorno
+  vazio o painel travava aberto. Corrigido com `if (x || xAberto)` — fecham em qualquer estado.
+- Opacidade do mega-menu: `bg-surface` (3%) deixava o conteúdo vazar; trocado por `bg-smoky` opaco.
+
+**Trajetória societária — REMOVIDA da home:** botão, painel, handler, estados e types tirados do
+`page.tsx`. Era uma query **BigQuery ao vivo** (pesada/instável inline, e dead-end sem a página da empresa).
+**Rota `/api/trajetoria` + libs preservadas** (nada deletado do backend). Handoff registrado no `pending.md`:
+cachear a trajetória do top dos demos (`trajetoria-cache.json` + rota cache-first) e reviver na página da
+empresa (Fase 2).
+
+**Lint:** corrigido `react-hooks/set-state-in-effect` no efeito que lê `?setor=` (disable pontual no
+`setSetorAtivo`, não no efeito todo) e removida a prop `rank` órfã do `EmpresaCard` (não usada desde a
+decisão "tier label substitui rank").
+
+**PR #37 (squash `4d63e0d`):** 3 commits (`feat(nav)`, `feat(home)`, `docs(brain)`). typecheck + eslint +
+`next build` (17 páginas) verdes. Mergeado junto com o #36 (fix município).
+
+**Aprendizado:**
+- Glyph de fonte (`▾`) não é centrado na sua caixa → rotação 180° desloca a tinta verticalmente; **SVG
+  simétrico** no viewBox resolve (mesmo centro geométrico nos dois estados).
+- O card pesado (6 `useState` + 4 fetch + 4 painéis inline) é o que torna a lista de 50 inviável de varrer;
+  mover as ações pesadas pra uma página da empresa deixa o card um componente de apresentação leve → lista
+  escala sem paginação. (Base da Fase 2.)
+- Hover-menu acessível sem JS de estado: CSS `group-hover` + `group-focus-within` cobre mouse, teclado e
+  toque (foco abre); `pt` transparente faz a ponte de hover.
