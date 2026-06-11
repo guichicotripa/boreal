@@ -812,3 +812,80 @@ rodado na página — score 23/40, primeira run do alvo.
 - O mesmo dado lido como "40% a mais de acerto" comunica melhor que "1,4×" sem mentir — escolher a
   forma que não diminui o produto.
 - CNAE cru no card é ruído pro não-técnico; quando o setor já está implícito nos nomes, o código não agrega.
+
+---
+
+> ⚠️ **Entrada retroativa (registrada em 11/06).** A sessão de 06-07/06 não foi salva no brain do Boreal
+> na época — só o segundo cérebro pessoal foi atualizado. Logada aqui depois para fechar o gap. É a
+> **continuação** do restyle profundo: vem depois de /consolidadores (06/06, acima) e fecha as últimas
+> 4 páginas (etapas 6-9), abrindo o PR #35 que mergeou o sistema v1 inteiro na main. Inclui também o
+> fix do hindcast (PR #36). Todo o código descrito já está na main; este registro só fecha a jornada.
+
+## [2026-06-06/07] Maguto | Restyle etapas 6-9 (/mercado, /setores, /worklist, home) + PR #35 + fix hindcast município (#36)
+
+Sessão longa de fechamento do restyle sistema v1. Aplica o brand guide v3 nas 4 páginas que faltavam,
+roda o `/review` (wrapper do impeccable) em cada uma, e abre o PR que leva tudo pra main. Workflow
+combinado: sandbox HTML antes de tocar o código, aprovação antes de commitar. Branch
+`maguto/restyle-sistema-v1`.
+
+**Etapa 6 — /mercado** (`aff5d17` parcial + `ae5f334`):
+- Hierarquia das boxes refeita (TAM, coorte de destino, macro Selic) — peso visual por importância,
+  não uniforme. Revisão de copy.
+- Sistema de cor/tipo do brand guide aplicado: labels Bone/70, números Floral, `strong` 600 sem cor
+  em prosa.
+
+**Etapa 7 — /setores** (`bbad3a1`):
+- Copy review: metadescription, eyebrow, lead sem parênteses, labels LENTE, footer sem referência
+  ao script de build. Formalização do registro (sem informalidade).
+- Brand guide aplicado (cor/tipo).
+
+**Etapa 8 — /worklist** (`3525437`):
+- **Crítico:** `try/catch` em `carregar()` + estado de erro **variante C** (Bone monocromático, botão
+  `border-hairline`, sem cor de alarme) — antes mostrava empty state genérico mesmo em erro de rede.
+- **a11y:** `aria-live`/`aria-busy` no loading, `aria-pressed` nos toggles, chip de score com `title`
+  + `border-hairline`, back link com animação padronizada.
+- **Polish:** "pra" → "para", ordinal posicional removido (Bone/45 reprovava WCAG + redundante com o
+  chip de score), `SalvarButton` idêntico à home (3 estados + rollback otimista).
+
+**Etapa 9 — home + pipeline** (`3adec20`):
+- **Error states:** erro principal da busca vira **variante B** (label Olive mono + mensagem Bone 15px
+  + `py-10` de respiro + botão retry `border-hairline`) — prominência por label e respiro, não por cor;
+  erros inline (investigação/memo/similares/trajetória) `text-risk-high` → `text-bone/70` com copy
+  impessoal ("Não foi possível carregar…").
+- **Absolute ban (impeccable):** `border-l-2` removido de EmpresaCard e da tese hairline (side-stripe
+  border > 1px é proibido) — ver decisão em `decisions.md`.
+- **Hover/focus padronizados:** `transition-opacity hover:opacity-70` em "ver a prova" e "Buscar tese"
+  (mesmo padrão dos "Voltar à busca"); focus rings em todos os interativos (chips, links, botões,
+  SalvarButton); `aria-live` no LoadingSteps; `role="status"` no `animate-pulse` da investigação.
+- **Separador overline** "BOREAL · Modelo preditivo de M&A": `{" "}` explícito em ambos os lados do `·`
+  (com `tracking-[0.2em]`, espaço de text-node renderiza assimétrico; espaço JSX explícito corrige).
+- Labels de sidebar e search: `text-olive` → `text-bone/70` (hierarquia tier 3).
+- `/pipeline`: focus ring adicionado ao back link (era o único das 9 páginas que faltava).
+
+**PR #35 — sistema v1 completo:** branch `maguto/restyle-sistema-v1` mergeada na main. Antes do merge,
+verificado que a branch estava em cima do HEAD da main (PR #34 do Guilherme, 04/06) — sem conflito,
+merge direto. Cobertura final: as 9 páginas (`/` home, `/pipeline`, `/worklist`, `/setores`,
+`/mercado`, `/consolidadores`, `/validacao`, `/analise`, `/comparar`) no brand guide v3.
+
+**Fix hindcast município (PR #36, `083b440`):**
+- Bug: a tabela de aquisições reais em `/validacao` exibia o **código IBGE bruto** (ex: `3550308`) na
+  coluna "Praça" em vez do nome da cidade. O campo `municipio` de `src/lib/hindcast.json` foi gerado
+  sem passar pela camada de resolução (o `demo-cache` já vem resolvido; o hindcast escapou).
+- Fix: lookup dos 43 códigos IBGE únicos via API do IBGE (`/api/v1/localidades/estados/35/municipios`),
+  76 deals corrigidos (ex: `3550308` → São Paulo, `3538709` → Piracicaba). Só dado, sem mudança de
+  lógica; typecheck limpo.
+- PR isolado a pedido do Matheus (diff de 1 arquivo, fácil de reverter) numa branch nova a partir da
+  main, em vez de empilhar no PR já mergeado. Mergeado.
+
+**Resultado:** restyle sistema v1 100% na main (PR #35); bug de exibição do hindcast corrigido (PR #36).
+typecheck limpo em todas as etapas; sandboxes de iteração deletados antes de cada commit.
+
+**Aprendizado:**
+- Prominência de error state pode vir de **label + respiro vertical**, não de cor — variante B (Olive
+  label + Bone + `py-10`) chama atenção sem o ruído da terracota, que destoava do resto do sistema.
+- Espaço de separador com `letter-spacing` alto: text-node space e `{" "}` JSX renderizam diferente;
+  usar `{" "}` explícito dos dois lados garante simetria.
+- Diff de dado isolado (hindcast) merece PR próprio em branch nova a partir da main, não empilhar num
+  PR de feature já mergeado — diff limpo, reversão trivial.
+- `municipio` resolvido no `demo-cache` mas cru no `hindcast.json`: caches gerados por scripts diferentes
+  podem divergir na resolução; vale um check de consistência quando o mesmo campo aparece em mais de uma fonte.

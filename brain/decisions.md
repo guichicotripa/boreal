@@ -685,3 +685,51 @@ lidera uma frase. Fechado em sandbox e aplicado na página.
 
 **Status:** ✅ Documentado em `brand/uso-tipografia-cor.md` v3. Aplicado em /validacao (05/06) e
 /consolidadores (06/06).
+
+---
+
+> ⚠️ **Entradas retroativas (registradas em 11/06).** As duas decisões abaixo foram tomadas na sessão
+> de 06-07/06 (restyle etapas 8-9 + PR #35) mas não chegaram a ser logadas no brain na época — só o
+> segundo cérebro pessoal. Registradas aqui depois. Estendem regras anteriores de cor/brand.
+
+## [2026-06-07] Error state monocromático — sem cor de alarme (variantes C e B)
+
+**Contexto:** /worklist mostrava empty state genérico ("Nenhum alvo…") mesmo em erro de rede, e a home
+não tinha tratamento visual de erro de busca distinto. A proposta inicial usava terracota (`risk-high`)
+pra sinalizar o erro, mas em volume ficou colorido demais e brigava com a regra de 01/06 ("cor de risco
+só pra score/severidade"). Mensagem 100% em Bone, por outro lado, ficou monótona.
+
+**Decisão:** estado de erro usa paleta neutra, sem terracota/vermelho, em duas variantes conforme o
+contexto:
+- **Variante C (async / worklist):** mensagem `text-bone` + botão retry `border-hairline` (hover →
+  `border-floral/40`). Para falhas de carregamento de lista.
+- **Variante B (síncrono / home):** label Olive mono uppercase ("Erro na busca") + mensagem Bone 15px +
+  `py-10` de respiro vertical + botão retry. A prominência vem do **label + respiro**, não da cor.
+
+Erros inline nos cards (investigação/memo/similares/trajetória): `text-risk-high` → `text-bone/70` com
+copy impessoal ("Não foi possível carregar…", não "não consegui").
+
+**Por quê:** estende a regra de 01/06 — cores de risco são exclusivas de score/severidade, nunca de
+estado de UI. Testadas 3 variantes em sandbox contextual; a B venceu a A (centralizada com `font-display`,
+"gritante demais") por dar destaque sem o peso de uma cor de alarme.
+
+**Status:** ✅ Implementada. Variante C em /worklist (PR #35), variante B na home (PR #35). Padrão para
+todos os estados de erro assíncronos do Boreal.
+
+---
+
+## [2026-06-07] Banimento de side-stripe border (`border-left > 1px`) em cards
+
+**Contexto:** EmpresaCard usava `border-l-2` por tier (vermelho/laranja/neutro) e a "tese de aproximação"
+tinha uma borda lateral colorida. O `/review` (impeccable) marcou ambos como **absolute ban**: borda
+lateral colorida > 1px em cards/list-items/callouts é tido como tell de design genérico, nunca intencional.
+
+**Decisão:** remover toda `border-left`/`border-right` colorida > 1px de cards e blocos editoriais. A
+hierarquia passa a vir de borda completa (`border-hairline`), tint de fundo (`hover:bg-surface-hover`),
+ou simplesmente da tipografia — não de uma faixa lateral. EmpresaCard ficou com `border border-hairline`
+uniforme; a tese hairline manteve só a indentação (`pl-3`), sem a borda.
+
+**Por quê:** alinha o Boreal à regra do impeccable e ao princípio de que a cor de tier já é comunicada
+pelo badge de score (ALTO/MÉD/BAIXO) — a faixa lateral era redundante e adicionava ruído visual.
+
+**Status:** ✅ Implementada (PR #35, home/etapa 9).
