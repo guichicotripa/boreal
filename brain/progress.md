@@ -1036,3 +1036,105 @@ tabela de rotas; home e demais páginas intactas. PR #38 mergeado na main (`a60b
   reiniciar antes de caçar erro inexistente.
 - Quando o tipo da fonte é um `Pick<>` parcial (`Oportunidade.empresa`) e o destino lida com campos nulos,
   o cast pontual é mais honesto que alargar o tipo do payload do pipeline só pra navegação.
+
+---
+
+> ⚠️ **Entrada retroativa (registrada em 11/06).** A sessão abaixo é de **08/06 (à noite)** — distinta e
+> **posterior** ao scaffold da Fase 2 / PR #38 logado acima (aquele é a sessão da manhã). Não foi salva no
+> brain do Boreal na época (só o segundo cérebro pessoal). Logada agora para fechar o gap. Todo o código já
+> está na main: commits `120f015` → `138249b` → `a639e25` (push direto). É o passe de polish + correção de
+> bugs da página da empresa, a criação do `GET /api/empresa/[id]` e a aplicação do `/review`.
+
+## [2026-06-08] Maguto | Polish /empresa/[id] + GET /api/empresa/[id] + /review (sessão da noite)
+
+Continuação do mesmo dia, depois do PR #38. Sessão de iteração guiada por sandbox (decisão visual no
+sandbox HTML → aprovação → código) fechando os bugs da página da empresa, a navegação do pipeline e um
+passe de `/review`. Branch de trabalho na main local; 3 commits pushados direto (mesmo fluxo combinado).
+
+**De-dup concluído + card da home enxuto (`120f015`):**
+- O PR #38 criou os componentes canônicos em `src/components/empresa/`, mas a home (`page.tsx`) ainda tinha
+  cópias **inline** de `ResearchDisplay`/`MemoDisplay`/`Timeline` + helpers. Removidas as duplicatas (-355
+  linhas) → a home importa do canônico e do `src/lib/format`.
+- **4 botões de ação removidos do card da home** (Investigar/Memo/Similares/Ver detalhes): a página
+  `/empresa/[id]` virou a versão expandida, então o card volta a ser só superfície de triagem. Removido
+  também o "ver perfil →" do hover (causava layout shift jogando a linha olive pra baixo).
+
+**Bugs da página da empresa corrigidos:**
+- **Score reativo:** o número-herói usava `e.score?.score` estático (v0 do sessionStorage); passou a
+  `research?.score_v1 ?? e.score?.score ?? 0` → número, tier, cor e chip da nav atualizam quando a
+  investigação carrega. Badge de **delta** (`↑N`/`↓N`) no hero.
+- **Bloco "Sinais — investigação com IA"** na seção Score: cada sinal qualitativo com seu peso em badge
+  (`+12` terracota / `−25` neutro), espelhando o vocabulário do `ResearchDisplay`.
+- **CNAEs secundários** viraram lista de tópicos (`·` olive centrado) em vez de boxes (box criava
+  hierarquia indevida — atividade secundária é secundária).
+- **Similares clicáveis:** cada similar vira `Link` pra `/empresa/[id]` (com `storeEmpresa`), badge de score
+  por tier (antes todos floral), `% match` rotulado.
+- Label "Memo de investimento" → "Dossiê" (alinha o nome interno ao externo).
+
+**Barras do breakdown na cor do tier (`TIER_STYLES.bar`):** as 4 barras deixaram de ser neutras (bone) e
+passaram a seguir a cor de risco da empresa (risk-high/70, risk-mid/70, bone/60). Iterado em sandbox (bone →
+floral → terracota → cor do tier da empresa). Adotado o padrão do `/mercado` (track `bg-surface`, `h-2`).
+Decisão registrada no brand guide (#16) — ver `decisions.md`.
+
+**`GET /api/empresa/[id]` CRIADO (`138249b`) — ⚠️ cruzou pro domínio `api/` do Guilherme (avisar):**
+- Raiz dos bugs de abrir empresa pela pipeline: `Oportunidade.empresa` é um `Pick<>` parcial (sem `socio`,
+  `score`, `data_inicio_atividade`, `cnaes_secundarios`) → quadro societário vazio, sem barras de breakdown,
+  score 0. O Maguto cravou a pergunta certa: "não é a mesma página da home? por que não funciona igual?" —
+  é a mesma página; o que difere é o **dado que a alimenta**.
+- Fix de raiz: a página deve **buscar os próprios dados pelo `id`**, não depender da bagagem do
+  sessionStorage. Novo arquivo `src/app/api/empresa/[id]/route.ts` — GET que retorna a `Empresa` completa
+  (sócios + `score` via `calcScore` + breakdown), espelhando a query da rota de research (incluindo
+  `telefone`/`email`/`cnaes_secundarios`, que o select da research omite).
+- A página agora **hidrata pelo id**: paint instantâneo do sessionStorage + `fetch(/api/empresa/${id})`
+  quando o objeto vem parcial (pipeline) ou nulo (link direto). **Link direto e refresh passaram a
+  funcionar**; o estado "não encontrada" só dispara em 404 real. A ponte sessionStorage vira só otimização
+  de primeiro paint + overlay do score_v1.
+
+**Overlay de score pós-investigação (`empresa-store.ts`):** `storeScoreConhecido`/`readScoresConhecidos`
+guardam `{score, delta}` por empresa em sessionStorage. A página da empresa grava o `score_v1` ao investigar;
+home e pipeline lêem o overlay ao montar **e ao voltar** (`pageshow` cobre o bfcache do botão voltar,
+`focus` cobre re-foco da aba) → o card reflete o score atualizado. **Indicador de delta no card da home**
+(`↑N`/`↓N`/`✓ IA`) sinaliza que a empresa já foi investigada.
+
+**Pipeline card clicável como na home (`138249b`):**
+- Nome da empresa virou `Link` pra `/empresa/[id]` (sintetiza `score` a partir do `score_no_save` pra não
+  exibir 0 antes da hidratação). Botão "Ver perfil completo →" removido.
+- Critério de clique: **mouse no nome abre a empresa; clicar no espaço em volta (header inteiro) expande/
+  recolhe** o detalhe editável (hit area grande; o `+`/`−` minúsculo era difícil de acertar). `role="button"`
+  + `tabIndex` + `onKeyDown` (Enter/Espaço) + `aria-expanded`; o `Link` do nome usa `stopPropagation`.
+- Símbolo do expand: o **triângulo SVG da Metodologia** (`M1.5 2.5 L8.5 2.5 L5 7.5 Z`, rotaciona 180° ao
+  abrir) no lugar do `+`/`−`. Badge do pipeline reflete o `score_v1` pós-investigação (o `score_no_save`
+  original fica intacto no Dashboard do loop de outcome).
+
+**`/review` da página da empresa (`a639e25`):** rodado o wrapper do impeccable (detector clean, ~33/40).
+Aplicado:
+- **Crítico — contraste:** Olive em captions informativas (nota das seções, "sócio desde", meta dos
+  similares) reprova WCAG ~2,5:1 e a decisão #9 do brand guide → trocado por Bone/60 (caption) e Bone/70
+  (metadata). Olive mantido só na assinatura "Dados públicos da Receita" e nos divisores `·`.
+- **Rótulos distintos para os 2 grupos de sinais** da seção Score: "Sinais — investigação com IA" (web) ×
+  "Sinais estruturais — da Receita" (determinísticos do `calcScore`) — antes o segundo grupo aparecia sem
+  rótulo logo abaixo do primeiro, dava pra confundir.
+- **Polish:** negativo com sinal de menos tipográfico (`−25`, não hífen ASCII), opacidades na escala
+  (label `bone/70`, `% match` `bone/60`), `aria-live="polite"` no badge de score (anuncia v0→v1),
+  redundância `${e.cnae_principal}` removida. Brand guide ganhou decisões #16 e #17.
+
+**Caminho B (delta nas barras) — implementado e REVERTIDO:** chegou a existir um helper `breakdownAjustado`
+(em `format.ts`) que redistribuía o ajuste da investigação sobre as 4 barras, com soma fechando exatamente em
+`score_v1` (mapeamento sinal→dimensão + cascata por teto/piso, 100% no domínio do frontend, sem tocar
+`research.ts`). Revertido a pedido do Maguto antes de commitar — segue como **pendência aberta** (o gráfico
+ainda mostra o breakdown v0 enquanto o número mostra o v1).
+
+**Resultado:** typecheck + `next build` (com a rota nova `ƒ /api/empresa/[id]`) verdes. Bugs de abrir
+empresa pela pipeline resolvidos na raiz; navegação consistente por todos os caminhos (busca, pipeline, link
+direto, refresh). Commits `120f015`/`138249b`/`a639e25` na main.
+
+**Aprendizado:**
+- A pergunta "não é a mesma página?" expôs o erro de arquitetura: a página dependia da bagagem do caller em
+  vez de buscar o próprio estado. **A página deve ser dona do seu fetch por id** — o sessionStorage é
+  otimização, não fonte de verdade. Um `Pick<>` parcial no caller (pipeline) é sintoma desse acoplamento.
+- Os 3 sintomas (sócios vazio, barras ausentes, score 0) eram **um só** root cause. Vale rastrear o dado até
+  a origem antes de remendar sintoma por sintoma (o synth do `score_no_save` foi paliativo até o endpoint).
+- Overlay cross-página com `sessionStorage` precisa de `pageshow`/`focus` pra cobrir bfcache e re-foco —
+  ler no mount só não basta quando o usuário volta pelo botão do navegador.
+- Cruzar pro domínio do parceiro (criar rota em `api/`) é aceitável quando desbloqueia e é ~20 linhas
+  espelhando código existente — mas **registrar e avisar** é parte do trabalho, não opcional.

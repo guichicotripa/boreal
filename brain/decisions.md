@@ -797,3 +797,67 @@ explicitamente isolado pra ser substituído pelo endpoint depois.
 
 **Status:** ✅ Implementada (PR #38, `a60b01c`). Dependência `GET /api/empresa/[id]` registrada no
 `pending.md` como handoff/polish (refresh + deploy + link direto).
+**Atualização (08/06 noite):** a ponte deixou de ser o único caminho — o `GET /api/empresa/[id]` foi criado
+na mesma noite (decisão abaixo) e a página passou a hidratar pelo id. O sessionStorage virou só otimização
+de primeiro paint + overlay do score_v1, exatamente como previsto.
+
+---
+
+> ⚠️ **Entrada retroativa (registrada em 11/06).** Decisão tomada na sessão de **08/06 (à noite)** — distinta
+> e posterior à da ponte sessionStorage acima (manhã / PR #38). Logada só no segundo cérebro pessoal na
+> época. Registrada aqui para fechar o gap. Código na main (`138249b`).
+
+## [2026-06-08] `GET /api/empresa/[id]` criado — a página busca os próprios dados pelo id
+
+**Contexto:** abrir empresa pela pipeline mostrava quadro societário vazio, sem barras de breakdown e score 0.
+Raiz: a página dependia 100% do objeto guardado no sessionStorage, e pela pipeline só chega o `Pick<Empresa,…>`
+parcial de `Oportunidade.empresa` (sem sócios/score/breakdown). O Maguto questionou: "não é a mesma página da
+home? por que não funciona igual?" — sim, é a mesma página; o que difere é o **dado que a alimenta**.
+
+**Decisão:** a página `/empresa/[id]` deve **buscar os próprios dados pelo `id`**, não depender da bagagem do
+caller. Criado `src/app/api/empresa/[id]/route.ts` — GET que retorna a `Empresa` completa (sócios + `score`
+via `calcScore` + breakdown), espelhando a query da rota de research (incluindo `telefone`/`email`/
+`cnaes_secundarios`, que o select da research omite). A página hidrata pelo id: paint instantâneo do
+sessionStorage + fetch canônico quando o objeto vem parcial (pipeline) ou nulo (link direto). Link direto e
+refresh passaram a funcionar; o estado "não encontrada" só dispara em 404 real.
+
+**Cruzamento de domínio:** `api/` é do Guilherme (regra de domínio: motor define `lib/`/`api/`, interface
+renderiza). Criei mesmo assim por ser bloqueador da UI e ~20 linhas espelhando código existente. **Registrado
+no `pending.md` com ⚠️ avisar Guilherme** para ele não duplicar. Supera o handoff que a decisão da ponte
+(manhã) tinha deixado em aberto.
+
+**Por quê (vs. alternativas):** alargar o payload do pipeline pra carregar a `Empresa` cheia duplicaria dado
+e incharia a lista; o GET por id é a fonte de verdade única, robusta a qualquer entrada (busca, pipeline, link
+direto, refresh, deploy). A ponte sessionStorage continua como otimização de primeiro paint + overlay do
+score_v1 pós-investigação (`storeScoreConhecido`/`readScoresConhecidos`).
+
+**Status:** ✅ Implementada (`138249b`, na main). Pendência: avisar Guilherme da rota.
+
+---
+
+> ⚠️ **Entrada retroativa (registrada em 11/06).** Decisão da sessão de **08/06 (à noite)**, logada só no
+> segundo cérebro na época. Registrada aqui para fechar o gap. Código na main (`138249b`/`a639e25`); brand
+> guide v3 atualizado (decisões #16 e #17).
+
+## [2026-06-08] Barras do breakdown do score na cor do tier (brand guide #16/#17)
+
+**Contexto:** no scaffold (PR #38, manhã) as 4 barras de dimensão do score eram **neutras (bone)**, com a
+regra "cor de risco só comunica o total, nunca a sub-dimensão". Ao revisar à noite, o Maguto pediu que as
+barras seguissem a cor de risco da empresa (amarelo se médio, terracota se alto). Iterado em sandbox (bone →
+floral → terracota → cor do tier da empresa).
+
+**Decisão:** as barras usam `TIER_STYLES.bar` (risk-high/70, risk-mid/70, bone/60). Registrado no brand guide
+como **decisão #16** — refina a regra "ocre = só score": o ocre vive no total **e** no breakdown que o compõe
+(ambos são score), nunca em link/CTA/decoração. Reverte a sub-decisão "barras neutras" da manhã. **Decisão
+#17** (do mesmo `/review`) reforça: caption informativa nunca em Olive na página da empresa (corrige o achado
+crítico de contraste — nota das seções/"sócio desde"/meta dos similares → Bone/60–70; Olive só em assinatura
+e divisores).
+
+**Não resolvido (pendência aberta):** o **caminho B** — fazer as barras refletirem o *delta da investigação*
+(não só a cor). Implementei um helper `breakdownAjustado` (em `format.ts`) que redistribuía o ajuste da IA
+sobre as barras com soma fechando em `score_v1` (mapeamento sinal→dimensão + cascata por teto/piso, 100% no
+frontend, sem tocar `research.ts`) e **revertido a pedido** antes de commitar. O gráfico ainda mostra o
+breakdown v0 enquanto o número mostra o v1. Alternativa descartada na hora: opção A (escala proporcional das
+barras por `score_v1/score_v0`).
+
+**Status:** ✅ Barras na cor do tier na main (`138249b`); brand guide #16/#17 (`a639e25`). 🟡 Caminho B aberto.
