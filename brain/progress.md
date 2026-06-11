@@ -965,3 +965,74 @@ decisão "tier label substitui rank").
   escala sem paginação. (Base da Fase 2.)
 - Hover-menu acessível sem JS de estado: CSS `group-hover` + `group-focus-within` cobre mouse, teclado e
   toque (foco abre); `pt` transparente faz a ponte de hover.
+
+---
+
+> ⚠️ **Entrada retroativa (registrada em 11/06).** A sessão de **08/06** não foi salva no brain do Boreal
+> na época — só o segundo cérebro pessoal foi atualizado. Logada aqui depois para fechar o gap. É a
+> **Fase 2** do plano de 07/06 (a "página própria da empresa" decidida na entrada anterior): o scaffold
+> de `/empresa/[id]` + o wiring da navegação. Todo o código já está na main (PR #38, merge `a60b01c`).
+
+## [2026-06-08] Maguto | Fase 2: página /empresa/[id] scaffoldada + wiring (PR #38)
+
+Sessão que materializa a Fase 2 decidida em 07/06. O scaffold da página tinha sido construído numa sessão
+anterior (contexto compactado) mas **não commitado**; esta sessão fechou o commit, o wiring da navegação e
+o merge. Branch `maguto/empresa-page` a partir da main. Commit `7e9f0ec`, merge `a60b01c` (PR #38).
+
+**Página `/empresa/[id]` (`src/app/empresa/[id]/page.tsx`):**
+- **Hero que rola embora:** back link com a origem (← Busca / ← Pipeline), razão social, CNPJ/município/
+  fundação+idade/porte, e um bloco-resumo do score (número grande tier-colored + leitura `perfil_sucessorio`
+  + `one_liner`).
+- **Nav scroll-spy sticky** abaixo da Nav global (`top-[60px]`, empilhada com `z-30`), com chip de score
+  persistente + ação primária "Salvar no pipeline". Destaque da seção ativa via `IntersectionObserver`
+  (`rootMargin "-30% 0px -65% 0px"`), `scroll-mt-28` nas seções.
+- **6 seções:** Sobre (campos da Receita instantâneos + camada enriquecida da IA com skeleton), Sócios
+  (faixa etária, driver do score), Score (breakdown das 4 dimensões + cross-link "ver sócios →"),
+  Investigar (auto-disparada ao abrir), Dossiê (sob demanda, abre com "Síntese a partir dos sinais
+  investigados acima"), Similares (auto, critério explícito por CNAE/praça/porte).
+- Estado "empresa não carregada" (link direto / refresh sem passar pela busca): fallback monocromático
+  com link para a busca. Estados de erro na variante monocromática (sem cor de alarme), coerentes com o
+  brand v3.
+
+**Componentes extraídos para `src/components/empresa/` (agora a versão canônica):** `ResearchDisplay`,
+`MemoDisplay` e `Timeline` saíram de inline na home para módulos compartilhados — a página da empresa passa
+a ser a versão expandida e a home reusa os mesmos componentes (fonte única do vocabulário visual). Helpers
+e constantes de apresentação (`FAIXA_LABEL`, `FAIXA_COLOR`, `TIER_STYLES`, `formatCnpj`, `formatTelefone`,
+`formatCapitalCompact`, `anosOperacao`) centralizados em `src/lib/format.ts`.
+
+**Ponte de navegação (`src/lib/empresa-store.ts`):** a home/pipeline já têm o objeto `Empresa` completo em
+memória ao clicar; em vez de re-buscar no servidor (`GET /api/empresa/[id]` ainda não existia — domínio do
+Guilherme), o objeto é guardado em `sessionStorage` e a página lê de lá. Única camada que conhece o
+mecanismo → trivial de trocar por um fetch quando o endpoint existir. Racional em `decisions.md`.
+
+**Wiring da navegação:**
+- **Home (`page.tsx`):** o nome da empresa no card vira `Link` para `/empresa/${id}` com `storeEmpresa(e)` +
+  `storeOrigin("busca")`; affordance "ver perfil →" aparece no hover. Os botões de ação do card
+  (Investigar/Memo/Similares/Ver detalhes) seguem independentes — clicar no nome navega, as ações não.
+- **Pipeline (`pipeline/page.tsx`):** link "Ver perfil completo →" dentro do card expandido, com
+  `storeOrigin("pipeline")` — fica no detalhe aberto pra não conflitar com o accordion (header expande/
+  recolhe). `Oportunidade.empresa` é `Pick<Empresa,…>` (não a `Empresa` cheia): resolvido com cast
+  `as unknown as Empresa` — a página já lida com campos parciais nulos.
+
+**Tratamento das barras do Score:** breakdown desenhado com barras **neutras (bone)**, seguindo a regra
+brand v3 "cor de risco só comunica o total, nunca a sub-dimensão". *(Estado do momento; o tratamento das
+barras voltou a ser discutido depois.)*
+
+**Decisão deferida:** auto-trigger do Research ao abrir a página (custo ~$0.04/pageview na 1ª visita, zero
+com cache) ficou como **decisão-com-Guilherme**, registrada no `pending.md` — não bloqueia o scaffold.
+
+**Diagnóstico de ambiente:** durante a sessão, `npx tsc --noEmit` acusava dezenas de erros de sintaxe em
+`.next/dev/types/routes.d.ts` (arquivo gerado pelo Next, com JSDoc truncado vazando do template). Causa: o
+dev server ficou em estado inconsistente ao adicionar a rota nova com o server rodando. Não é erro de
+código — reiniciar o dev (`npm run dev`) regenera o `.next` limpo e registra a rota.
+
+**Resultado:** typecheck + eslint + `next build` verdes; `/empresa/[id]` aparece como `ƒ (Dynamic)` na
+tabela de rotas; home e demais páginas intactas. PR #38 mergeado na main (`a60b01c`), branch deletada.
+
+**Aprendizado:**
+- Isolar o mecanismo de transporte de estado num único módulo (`empresa-store.ts`) deixa a página agnóstica
+  de *como* a empresa chega — trocar `sessionStorage` por `GET /api/empresa/[id]` depois é mexer em 1 arquivo.
+- Erro de sintaxe em massa vindo de `.next/dev/types/` é quase sempre dev server stale, não bug no fonte —
+  reiniciar antes de caçar erro inexistente.
+- Quando o tipo da fonte é um `Pick<>` parcial (`Oportunidade.empresa`) e o destino lida com campos nulos,
+  o cast pontual é mais honesto que alargar o tipo do payload do pipeline só pra navegação.

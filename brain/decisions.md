@@ -766,3 +766,34 @@ explainer).
 pesadas deixam de ser dead-ends inline e ganham contexto na página da empresa.
 
 **Status:** 🟡 Fase 1 implementada (PR #37). Fase 2 especificada no `pending.md`, pendente.
+
+---
+
+> ⚠️ **Entrada retroativa (registrada em 11/06).** Decisão tomada na sessão de **08/06** (Fase 2 /
+> PR #38), logada só no segundo cérebro pessoal na época. Registrada aqui para fechar o gap.
+
+## [2026-06-08] Navegação para /empresa/[id] via ponte sessionStorage (temporária)
+
+**Contexto:** a Fase 2 (decisão de 07/06) precisava da página `/empresa/[id]` clicável a partir da busca e
+do pipeline. A página precisa do objeto `Empresa` (com `score.breakdown`, sócios, contato). A rota canônica
+`GET /api/empresa/[id]` é domínio do motor (Guilherme) e ainda não existia — esperar por ela bloquearia a
+interface no handoff.
+
+**Decisão:** a home e o pipeline já têm o objeto `Empresa` completo em memória quando o usuário clica num
+card. Em vez de re-buscar no servidor, guardar o objeto em `sessionStorage` no clique (`storeEmpresa` +
+`storeOrigin`) e a página lê de lá no mount. Todo o conhecimento do mecanismo fica **isolado num único
+módulo** (`src/lib/empresa-store.ts`) — quando o `GET /api/empresa/[id]` existir, troca-se `readEmpresa`
+por um fetch sem tocar na página. A ponte vira fallback / otimização de primeiro paint.
+
+**Sub-decisão (UX):** o **nome da empresa** no card vira o `Link` de navegação, não o card inteiro. O card
+tem ações próprias (Investigar/Memo/Similares/Ver detalhes) que precisam continuar clicáveis de forma
+independente; tornar o card inteiro um link sequestraria esses cliques. Affordance "ver perfil →" no hover
+do nome. No pipeline, o link mora dentro do detalhe expandido (o header do card já é o gatilho do accordion).
+
+**Por quê:** desbloqueia a interface sem depender do motor (regra de domínio #20 — `types.ts` é o contrato;
+a interface não espera implementação do backend pra navegar). O custo é uma página que não sobrevive a link
+direto / refresh (o `sessionStorage` só tem a empresa se você passou pela busca) — aceitável no protótipo, e
+explicitamente isolado pra ser substituído pelo endpoint depois.
+
+**Status:** ✅ Implementada (PR #38, `a60b01c`). Dependência `GET /api/empresa/[id]` registrada no
+`pending.md` como handoff/polish (refresh + deploy + link direto).
