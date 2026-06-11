@@ -912,3 +912,44 @@ estágios, ou agrupamento visual distinto que não quebre a barra de tabs.
 sacrificar a navegabilidade. Registrada em `brain/pending.md`.
 
 **Status:** 🟡 Agenda funcional na main; separação visual pendente.
+
+---
+
+> ⚠️ **Entradas retroativas** — registradas em 2026-06-11. A sessão de 2026-06-10 (alinhamento das
+> colunas do pipeline, PR #40) não foi salva no brain do Boreal na época; as duas decisões abaixo
+> fecham o gap. O código já estava na main desde o merge do PR #40 (`eb569e3`).
+
+## [2026-06-10] Pipeline: coluna Dono alinhada à esquerda (não centralizada)
+
+**Contexto:** na coluna Dono/Estágio, o nome do dono e o chip de estágio estavam centralizados na
+célula. Centralizado deixava o chip "solto" no espaço e destoava das demais colunas de texto do
+pipeline (Empresa, Próxima ação, Contato), todas alinhadas à esquerda. Tentativas de centralizar com
+respiro deixavam um vazio grande à esquerda do texto (a seta ocupa a direita, a esquerda ficava vazia).
+
+**Decisão:** alinhar nome e chip **à esquerda**, com respiro de `pl-2.5` (10px) para o texto não colar
+na borda. Comparação feita em sandbox (`sandbox-dono-align.html`) entre centralizado (A) e esquerda (B);
+escolhida a B por coerência com o resto do pipeline.
+
+**Rejeitado:** centralização perfeita (vazio assimétrico por causa do chevron à direita).
+
+**Status:** ✅ Implementado. PR #40 mergeado na main (`eb569e3`).
+
+---
+
+## [2026-06-10] Grid do pipeline: uma única coluna flexível (Notas vira largura fixa)
+
+**Contexto:** o grid `COL`, compartilhado por header e linhas, tinha **duas** colunas flexíveis: `1fr`
+(Empresa) e `auto` (Notas). `auto` dimensiona pelo conteúdo, que difere entre header (texto curto
+`Notas`) e linhas (botão `+ NOTA`, mais largo). Como a `auto` ficava mais larga nas linhas, roubava
+largura da `1fr` de forma diferente em cada contexto, deslocando todas as colunas após Empresa ~34px
+entre header e linhas. Foi a causa raiz do desalinhamento que parecia "de padding" mas não era.
+
+**Decisão:** o grid de header+linhas deve ter **uma só** coluna flexível (`1fr`); todas as outras
+fixas. Notas passou de `auto → 92px`. Complemento: igualar o box model entre header e linhas — como o
+`<li>` tem `border` e o header não, o header recebeu `border-x border-x-transparent` para zerar o drift
+de 1px.
+
+**Regra geral derivada:** nunca usar duas colunas flexíveis (`1fr` + `auto`) num grid replicado entre
+header e linhas quando o conteúdo da `auto` puder diferir entre eles.
+
+**Status:** ✅ Implementado. PR #40 mergeado na main (`eb569e3`).

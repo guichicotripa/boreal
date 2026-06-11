@@ -1244,3 +1244,77 @@ review com impeccable no final.
 - `useRef` para estado de undo evita toda a classe de bugs de stale closure sem precisar de dep array
   pesada. Regra prática: se o estado só é lido dentro de handlers de evento (não renderizado), `useRef`
   é mais correto que `useState`.
+
+---
+
+> ⚠️ **Entrada retroativa** — registrada em 2026-06-11. A sessão de 2026-06-10 (alinhamento das
+> colunas do pipeline) não foi salva no brain do Boreal na época; este registro fecha o gap. O código
+> já estava na main desde o merge do PR #40 (`eb569e3`).
+
+## [2026-06-10] Maguto | Alinhamento das colunas do pipeline + polish (PR #40)
+
+Sessão de polish de UI. PR #40 mergeado na main (squash `eb569e3`); commit de trabalho `3d1463e`
+(5 arquivos, +257/-138). Foco: o desalinhamento sistemático entre os títulos do header e os dados das
+linhas no pipeline.
+
+**Causa raiz do desalinhamento (a parte que importa):**
+- O grid `COL` tinha **duas** colunas flexíveis: `1fr` (Empresa) e `auto` (Notas). A coluna `auto`
+  dimensiona pelo conteúdo — no header é o texto curto `Notas` (~38px), nas linhas é o botão
+  `+ NOTA`/`notas` com borda+padding (~72px). Como `auto` ficava mais larga nas linhas, ela roubava
+  largura da única outra coluna flexível (`1fr` Empresa), deslocando **todas** as colunas após Empresa
+  (Dono, Próxima ação, Contato) ~34px para a esquerda nas linhas em relação ao header.
+- **Fix:** `COL` Notas `auto → 92px` (fixa), deixando `1fr` como a única coluna flexível e, portanto,
+  idêntica em header e linhas. `COL` final:
+  `"14px 48px 1fr 144px 128px 175px 92px 28px"`.
+- **Drift residual de 1px:** o `<li>` das linhas tem `border` e o header não. Header ganhou
+  `border-x border-x-transparent` para igualar o box model e zerar o drift.
+
+**Coluna Dono/Estágio:**
+- Largura `155px → 144px`.
+- Nome do dono e chip (Estágio/Resultado) alinhados à esquerda (antes centralizados): input com
+  `text-left pl-2.5`, chips sem `mx-auto`. O `pl-2.5` alinha o início do nome com o texto do chip.
+- Título do header alinhado sobre o dado: `pl-[18px]` = `px-2` (8px) do container + `pl-2.5` (10px) do
+  input/chip. (Tentativa anterior com `pl-2` só compensava o `px-2` e deixava ~10px de defasagem.)
+
+**Chips Estágio/Resultado (`EstagioChip`/`ResultadoChip`):**
+- Construídos sobre `@base-ui/react/select` (não Radix). `SelectValue` traz `flex-1 text-left` embutido
+  e `SelectTrigger` traz `justify-between` — ambos atrapalhavam o alinhamento.
+- Solução: chevron posicionado em absoluto (`[&>svg]:absolute right-1 …`), `SelectValue` com
+  `flex-none text-left`, trigger `justify-start w-fit` com padding assimétrico `pl-2.5 pr-5` (respiro à
+  esquerda, folga para o chevron à direita).
+
+**Demais polish no mesmo commit (vinham acumulados, não commitados):**
+- Drag-to-reorder passou a coexistir com ordenação (remove o gate `isDraggable`; ao arrastar, a lista
+  visível ordenada é commitada como `customOrder` e os sorts são limpos).
+- Score sort passou a usar `scoreOverrides` (`score_v1` da investigação) em vez de só `score_no_save` —
+  alinha o sort ao valor exibido.
+- `PipelineSkeleton` (loading skeleton substituindo render vazio); `Chevron`/`Stat` içados para escopo
+  de módulo; `carregar()` inlinado no `useEffect` com guard `ativo`; import `CSS` não usado removido
+  (resolve erros de lint `static-components` e `set-state-in-effect` em `pipeline/page.tsx`).
+- Tokens de opacidade normalizados para a escala `/100 · /70 · /60 · /45`; `focus-visible:ring` nos
+  interativos que faltavam; `aria-pressed` no toggle "Só atrasadas".
+- `globals.css`: token `--color-overlay` (#1c1d17, substitui `bg-[#1c1d17]` hard-coded em dropdowns/toast)
+  + bloco global `@media (prefers-reduced-motion: reduce)`.
+- `/empresa/[id]`: fix do warning de React key na lista de sócios — `key={s.id ?? \`${s.nome}-${i}\`}`
+  (a ponte de sessionStorage entrega sócios sem `id`).
+- Home (`page.tsx`): cards clicáveis (abrem a empresa) com guardas para **não** capturar clique sobre
+  texto/boxes de dados (preserva seleção/cópia); sem `cursor-pointer` para o cursor I-beam aparecer
+  naturalmente sobre o texto.
+- `MemoDisplay.tsx`: movimentação societária — helper `partesEvento()` separa nome (sempre `floral`) do
+  status (colorido por tipo: saiu→risk-high, envelheceu→risk-mid, entrou→floral/60); legenda reescrita
+  explicando a detecção por snapshot.
+
+**Nota factual sobre o PR #40 mergeado:** o squash `eb569e3` inclui 3 arquivos a mais que o commit
+desta sessão (`src/app/icon.svg`, `src/app/layout.tsx`, `src/app/opengraph-image.tsx` — favicon +
+OpenGraph). Esses **não** são desta sessão; foram adicionados à branch por outro contribuidor antes do
+merge.
+
+**Estado:** validado manualmente no browser (Dono, Próxima ação, Contato e Notas alinhados com seus
+dados). PR #40 mergeado na main.
+
+**Aprendizado:**
+- Grid com **duas** colunas flexíveis (`1fr` + `auto`) usado em header e linhas separados quebra o
+  alinhamento sempre que o conteúdo da `auto` difere entre os dois — a `auto` "rouba" largura da `1fr`
+  de forma diferente em cada um. Regra: deixar **uma só** coluna flexível; fixar todas as outras.
+- Box model precisa bater entre header e linhas: se a linha tem `border` e o header não, há drift de
+  1px. Igualar com `border-transparent`.
