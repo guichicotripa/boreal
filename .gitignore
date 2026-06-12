@@ -50,3 +50,4 @@ next-env.d.ts
 
 # obsidian — vault local, não vai pro repo
 .obsidian/
+.env*.local
