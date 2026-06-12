@@ -208,7 +208,7 @@ export default function Home() {
                 <input
                   value={texto}
                   onChange={(e) => setTexto(e.target.value)}
-                  placeholder="metalmecânica no interior de SP com sócios 70+ e fundada antes de 1990"
+                  placeholder={(EXEMPLOS_POR_SETOR[setorAtivo ?? "metalmec"] ?? EXEMPLOS)[0]}
                   className="flex-1 bg-transparent text-sm text-floral outline-none placeholder:text-olive"
                 />
                 <button
