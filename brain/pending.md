@@ -21,11 +21,16 @@
   upgrade pra Vercel Pro e adicionar o Maguto ao time.** (O 401 / deployment protection também já foi
   desligado, site público.)
 
-**Backlog de acabamento (PRs novos, domínio interface/Maguto):**
-- [ ] P1: `theme-color` (barra do browser mobile) + 404 com marca (`not-found.tsx`). *(favicon `icon.svg` já existe desde 10/06.)*
-- [ ] P2: unificar loading — skeleton de cards na busca (linguagem do `PipelineSkeleton`) + linha de status técnico + copy honesta + reservar altura (anti layout-shift).
-- [ ] P3: varredura de console/hydration no golden path + corrigir lint `set-state-in-effect` do `SalvarButton` + dado ausente em card/`/empresa/[id]`.
-- [ ] (Opcional, **domínio Guilherme**) pré-cachear os exemplos de saúde/educação pra ficarem instantâneos como metalmec — exige ajustar o guard de cache texto+setor no `route.ts` + gerar cache. Hoje rodam ao vivo (~10-30s).
+**Backlog de acabamento (PRs novos, domínio interface/Maguto):** — P1–P3 ✅ FEITOS (12/06, branch `maguto/acabamento-loading-404`)
+- [x] P1: `theme-color` (Smoky, via `viewport`) + 404 com marca (`not-found.tsx`). *(favicon `icon.svg` já existia.)*
+- [x] P2: loading da busca → `SearchSkeleton` (espelha o `EmpresaCard`, reserva altura, anti layout-shift) + linha de status técnico única que avança pelas fases. Substituiu o `LoadingSteps`.
+- [x] P3: `SalvarButton` com estado derivado da prop (zera o lint `set-state-in-effect`); varredura estática de hydration no golden path limpa; card/`/empresa/[id]` revisados (já bem-guardados, sem bug).
+- [x] **Extra:** liveness no loading da `/empresa/[id]` (`ResearchProgress`, fase rotativa + faixa 30-60s) + placeholder da busca seguindo o setor ativo (era fixo em metalmec).
+- [ ] (Opcional, **domínio Guilherme**) pré-cachear os exemplos de saúde/educação pra ficarem instantâneos como metalmec — exige ajustar o guard de cache texto+setor no `route.ts` + gerar cache. Hoje rodam ao vivo (~30-60s) **e atualmente FALHAM** (ver bloqueador de créditos abaixo).
+
+**🔴 BLOQUEADOR NOVO (12/06) — conta da API sem créditos:**
+- [ ] **A `ANTHROPIC_API_KEY` está sem saldo** — toda chamada ao vivo retorna 400 `"credit balance too low"` (erro em <1s, não é lentidão). Quebra research/dossiê/busca de teses novas no browser; **só funciona o cacheado** (4 empresas metalmec). **Atinge os jurados** se testarem fora do caminho metalmec. Guilherme conferindo os créditos em console.anthropic.com → Plans & Billing. A key é válida; é saldo. Nota: o item de 12/06 "one-liner destravado · key colada" tratava de a key estar **vazia** no `.env.local`; agora a key está lá mas a **conta** não tem crédito — problemas diferentes.
+- Dev: a **assinatura** (Agent SDK, login) voltou a funcionar (bloqueio antigo "org disabled subscription access" não está mais ativo). Política: durante o dev usamos a assinatura pra teste/reprodução; o app mantém a API direta.
 
 **Fora de escopo (decidido):** banner de fallback cross-query visível (risco de dado incoerente), detecção de "tese ampla demais", estados de sessão/permissão (sem auth), timeout elegante (baixo valor).
 

@@ -104,6 +104,23 @@ Quarta sessão. A primeira coisa demoável: digita em linguagem natural, recebe 
 
 *(append novas entradas abaixo desta linha)*
 
+## [2026-06-12] Maguto | Acabamento P1–P3 + liveness no loading da empresa
+
+Lote de polish do backlog (P1–P3) do `pending.md`, tudo em domínio interface.
+Branch `maguto/acabamento-loading-404`.
+
+- **P1** — `not-found.tsx` com marca (overline mono + headline serif + back link, vocabulário do hero) e `theme-color` (Smoky) via export `viewport` pro mobile.
+- **P2** — loading da busca virou `SearchSkeleton`: espelha o `EmpresaCard` (reserva altura = anti layout-shift) + uma linha de status técnico que avança pelas fases. Substituiu o `LoadingSteps` que empilhava passos e empurrava o conteúdo.
+- **P3** — `SalvarButton`: estado "salvo" derivado da prop em vez de espelhado por efeito (zera o lint `set-state-in-effect`). Varredura estática de hydration no golden path: limpa.
+- **Extra** — liveness no loading da `/empresa/[id]`: `ResearchProgress` com fase rotativa + faixa honesta (30-60s, batendo com o comentário da rota) em vez de número exato. Mesma linha de expectativa no skeleton da descrição.
+- **Extra** — placeholder da busca passou a seguir o setor ativo (era fixo em metalmec).
+
+**Resultado:** typecheck + lint verdes em todos os arquivos. 5 commits de código.
+**Aprendizado (2 gotchas):**
+1. **Research ao vivo falha no browser por BILLING, não bug:** a conta da `ANTHROPIC_API_KEY` está SEM CRÉDITOS (400 "credit balance too low", erro em <1s). Só o caminho cacheado funciona — e o cache tem só **4 empresas (todas metalmec)**, por isso saúde/educação travam. Guilherme conferindo os créditos. A key é válida; o problema é saldo (≠ "key resolvida").
+2. **Assinatura voltou a funcionar:** o Agent SDK via login (env sem `ANTHROPIC_API_KEY`) testou OK — o bloqueio antigo de "org disabled subscription access" não está mais ativo. Política acordada: durante o dev usamos a assinatura pra teste/reprodução; o app em si mantém a API direta.
+3. SVG inline (`Mark`) estica pra largura do container quando a utility de tamanho não está no bundle do JIT — em arquivo novo o dev server pode não tê-la escaneado. Fixar dimensão via `style` inline resolve de forma determinística.
+
 ## [2026-05-30] Maguto | Restyle brandkit — Etapas 7–10 + polimento navbar
 
 Sessão longa (continuação de contexto compactado). Branch: `maguto/restyle-brandkit`.
