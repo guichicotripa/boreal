@@ -37,6 +37,15 @@ const DIMENSOES = [
   { key: "quadro_plural", label: "Quadro plural", max: 10 },
 ] as const;
 
+// Fases da investigação ao vivo — dão sinal de progresso (não travou) em vez de um
+// texto estático. Espelham o que o research-agent faz em fontes públicas.
+const RESEARCH_FASES = [
+  "Lendo o quadro societário…",
+  "Buscando sócios e herdeiros na imprensa…",
+  "Cruzando sinais de sucessão e movimentação…",
+  "Sintetizando a investigação…",
+] as const;
+
 export default function EmpresaPage() {
   const params = useParams<{ id: string }>();
   const id = params.id;
@@ -334,10 +343,15 @@ export default function EmpresaPage() {
 
           {/* Camada enriquecida — descrição da IA (skeleton enquanto investiga) */}
           {researchLoading ? (
-            <div className="mt-3 space-y-2" aria-busy="true">
-              <div className="h-3 w-full animate-pulse rounded bg-surface-hover" />
-              <div className="h-3 w-11/12 animate-pulse rounded bg-surface-hover" />
-              <div className="h-3 w-4/5 animate-pulse rounded bg-surface-hover" />
+            <div className="mt-3" aria-busy="true">
+              <div className="space-y-2">
+                <div className="h-3 w-full animate-pulse rounded bg-surface-hover" />
+                <div className="h-3 w-11/12 animate-pulse rounded bg-surface-hover" />
+                <div className="h-3 w-4/5 animate-pulse rounded bg-surface-hover" />
+              </div>
+              <p className="mt-2 font-data text-[11px] text-olive">
+                Descrição enriquecida pela IA · costuma levar de 30 a 60s
+              </p>
             </div>
           ) : research?.perfil_negocio || research?.resumo ? (
             <p className="mt-3 text-[15px] leading-relaxed text-bone">
@@ -508,9 +522,7 @@ export default function EmpresaPage() {
         {/* ── INVESTIGAR ── (auto-disparada) */}
         <Secao id="investigar" titulo="Investigar">
           {researchLoading ? (
-            <p className="animate-pulse text-[13px] text-bone/70" role="status">
-              A IA está pesquisando sócios, herdeiros, imprensa e quadro societário em fontes públicas…
-            </p>
+            <ResearchProgress />
           ) : research ? (
             <ResearchDisplay research={research} />
           ) : researchErro ? (
@@ -624,6 +636,30 @@ function Campo({ k, v, sub }: { k: string; v: string | null | undefined; sub?: s
         {v}
         {sub && <span className="block text-[11px] leading-snug text-bone/70">{sub}</span>}
       </dd>
+    </div>
+  );
+}
+
+// Progresso da investigação ao vivo — fase rotativa (sinal de vida) + expectativa
+// honesta como faixa (não um número exato que vira promessa quebrada se estourar).
+function ResearchProgress() {
+  const [fase, setFase] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => {
+      setFase((f) => Math.min(f + 1, RESEARCH_FASES.length - 1));
+    }, 6000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div role="status" aria-live="polite">
+      <p className="flex items-center gap-2 text-[13px]">
+        <span className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-floral" />
+        <span className="text-floral">{RESEARCH_FASES[fase]}</span>
+      </p>
+      <p className="mt-1.5 font-data text-[11px] text-olive">
+        Pesquisa em fontes públicas · costuma levar de 30 a 60s
+      </p>
     </div>
   );
 }

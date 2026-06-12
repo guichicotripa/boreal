@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Newsreader, Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { Nav } from "@/components/brand/Nav";
 import "./globals.css";
@@ -64,6 +64,12 @@ export const metadata: Metadata = {
     description:
       "O gargalo do deal sourcing, colapsado de duas semanas para trinta segundos.",
   },
+};
+
+// Smoky Black — pinta a barra do browser no mobile (Chrome Android, Safari iOS)
+// com o fundo primário, em vez do branco padrão que quebra a moldura escura.
+export const viewport: Viewport = {
+  themeColor: "#11120d",
 };
 
 export default function RootLayout({
