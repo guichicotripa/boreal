@@ -4,6 +4,27 @@
 
 ---
 
+## 🟢 Sessão 12/06 — bug fixes + polish (PR #41 na main `a9e3d0d`)
+
+**Concluído:**
+- [x] Bugs de interface: reordenar por score pós-investigação, switcher de setor passivo, "buscar neste setor" passivo, consolidadores clicáveis (só os 6 ingeridos).
+- [x] Hero spacing (80→40px no topo, desktop).
+- [x] OG/Twitter: travessão → `·`; imagem OG repaginada (centralizada + onda dupla + Newsreader no satori).
+- [x] **Bug do one-liner saúde/educação destravado** — era `ANTHROPIC_API_KEY` vazia no `.env.local` local (não afetava o deploy). Key colada, verificado ao vivo.
+
+**Próximo (bloqueia o júri ver a versão nova):**
+- [ ] **🔴 Guilherme: sincronizar o Vercel com a main (`a9e3d0d`)** — o deploy está rodando versão pré-#41. Confirmar na URL de prod: busca-exemplo com one-liner + OG nova.
+
+**Backlog de acabamento (PRs novos, domínio interface/Maguto):**
+- [ ] P1: `theme-color` (barra do browser mobile) + 404 com marca (`not-found.tsx`). *(favicon `icon.svg` já existe desde 10/06.)*
+- [ ] P2: unificar loading — skeleton de cards na busca (linguagem do `PipelineSkeleton`) + linha de status técnico + copy honesta + reservar altura (anti layout-shift).
+- [ ] P3: varredura de console/hydration no golden path + corrigir lint `set-state-in-effect` do `SalvarButton` + dado ausente em card/`/empresa/[id]`.
+- [ ] (Opcional, **domínio Guilherme**) pré-cachear os exemplos de saúde/educação pra ficarem instantâneos como metalmec — exige ajustar o guard de cache texto+setor no `route.ts` + gerar cache. Hoje rodam ao vivo (~10-30s).
+
+**Fora de escopo (decidido):** banner de fallback cross-query visível (risco de dado incoerente), detecção de "tese ampla demais", estados de sessão/permissão (sem auth), timeout elegante (baixo valor).
+
+---
+
 ## 🟢 Handoff Maguto → Guilherme (09/06) — RESOLVIDO (11/06)
 
 Pipeline remodel (PR #39) mergeado na main (`41c62ee`). Itens abaixo implementados pelo Maguto em sessões posteriores; info dos setores descartada por decisão.
