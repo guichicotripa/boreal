@@ -244,7 +244,7 @@ export default function Home() {
             </div>
 
             {/* Loading */}
-            {loading && <LoadingSteps />}
+            {loading && <SearchSkeleton />}
 
             {/* Erro */}
             {erro && (
@@ -376,7 +376,17 @@ const LOADING_STEPS = [
   "Montando os resultados…",
 ];
 
-function LoadingSteps() {
+// Bloco de skeleton — dimensão via style inline pra não depender de utility
+// nova no JIT do Tailwind (mesmo motivo do PipelineSkeleton usar style p/ width).
+function Bar({ w, h = 12, className = "" }: { w: number | string; h?: number; className?: string }) {
+  return <div className={`rounded bg-hairline ${className}`} style={{ width: w, height: h }} />;
+}
+
+// Loading = skeleton dos cards (mesma forma do EmpresaCard) + uma linha de
+// status técnico que avança pelas fases reais da busca. Reserva a altura dos
+// resultados desde o 1º frame (anti layout-shift). Demos cacheados retornam
+// instantâneos, então isso só aparece em buscas novas.
+function SearchSkeleton() {
   const [step, setStep] = useState(0);
   useEffect(() => {
     const id = setInterval(() => {
@@ -386,23 +396,53 @@ function LoadingSteps() {
   }, []);
 
   return (
-    <div className="mt-10 flex flex-col gap-2" aria-live="polite" aria-busy="true">
-      {LOADING_STEPS.slice(0, step + 1).map((s, i) => (
-        <div
-          key={i}
-          className={`flex items-center gap-2 text-sm ${
-            i === step ? "text-floral" : "text-olive"
-          }`}
-        >
-          {i === step ? (
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-bone" />
-          ) : (
-            <span className="text-olive">✓</span>
-          )}
-          {s}
-        </div>
-      ))}
-    </div>
+    <section className="mt-10" role="status" aria-live="polite" aria-busy="true">
+      {/* Status técnico — uma linha só, avança pelas fases reais da busca */}
+      <div className="mb-4 flex items-center gap-2 text-sm">
+        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-floral" />
+        <span className="text-floral">{LOADING_STEPS[step]}</span>
+        <span className="font-data text-[10px] uppercase tracking-wider text-olive">
+          {step + 1}/{LOADING_STEPS.length}
+        </span>
+      </div>
+
+      {/* Skeleton de cards — espelha o EmpresaCard pra reservar a altura real */}
+      <ul className="flex animate-pulse flex-col gap-3" aria-hidden="true">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <li key={i} className="rounded-lg border border-hairline bg-surface p-4">
+            {/* header: badge + nome/cnpj + salvar */}
+            <div className="flex items-start gap-3">
+              <div
+                className="shrink-0 rounded border border-hairline bg-hairline"
+                style={{ width: 44, height: 44 }}
+              />
+              <div className="min-w-0 flex-1 space-y-2">
+                <Bar w="60%" h={16} />
+                <Bar w="40%" h={11} />
+              </div>
+              <div
+                className="shrink-0 rounded-md bg-hairline"
+                style={{ width: 112, height: 28 }}
+              />
+            </div>
+            {/* one-liner */}
+            <Bar w="80%" h={12} className="mt-3" />
+            {/* stats strip */}
+            <div className="mt-3 flex overflow-hidden rounded-lg border border-hairline">
+              {Array.from({ length: 4 }).map((_, j) => (
+                <div
+                  key={j}
+                  className="min-w-[88px] flex-1 border-r border-hairline px-3 py-2 last:border-r-0"
+                >
+                  <Bar w={36} h={8} />
+                  <Bar w={52} h={12} className="mt-2" />
+                </div>
+              ))}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
