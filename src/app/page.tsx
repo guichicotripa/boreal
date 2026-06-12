@@ -86,15 +86,27 @@ export default function Home() {
     };
   }, []);
 
-  // Se veio de /setores (?setor=...), busca o setor direto.
+  // Se veio de /setores (?setor=...), só ativa o setor — NÃO dispara busca.
+  // O usuário decide quando buscar (digitando uma tese ou clicando num exemplo).
   useEffect(() => {
     const s = new URLSearchParams(window.location.search).get("setor");
     if (s && setorPorId(s)) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setSetorAtivo(s);
-      buscar("", s);
+      setSetorAtivo(s === "metalmec" ? null : s);
     }
   }, []);
+
+  // Troca o setor ativo (adapta exemplos + painel de cobertura) sem rodar busca.
+  // Limpa resultados anteriores pra não deixar empresas de outro setor na tela.
+  // metalmec é o universo default (representado como null, igual ao `?? "metalmec"`
+  // usado no resto do arquivo): manter null faz os exemplos de metalmec baterem o
+  // demo-cache (sem setor na query) e voltarem com one-liner instantâneo. Setores
+  // não-default passam o id e vão ao vivo (dependem da ANTHROPIC_API_KEY pro reasoner).
+  function trocarSetor(id: string) {
+    setSetorAtivo(id === "metalmec" ? null : id);
+    setRes(null);
+    setErro(null);
+  }
 
   async function buscar(q: string, setor?: string) {
     if (!q.trim() && !setor) return;
@@ -119,6 +131,15 @@ export default function Home() {
 
   // Setor ativo (default metalmec) — dirige o painel de cobertura.
   const setorCob = setorPorId(setorAtivo ?? "metalmec") ?? setorPorId("metalmec")!;
+
+  // Score efetivo = score_v1 da investigação (se houve) ou o score_v0 da busca.
+  const scoreEfetivo = (e: Empresa) =>
+    scoreOverrides[e.id]?.score ?? e.score?.score ?? 0;
+  // Reordena por score efetivo desc — uma empresa investigada que caiu (ex: 100→81)
+  // desce na lista, em vez de ficar presa na posição da ordenação original.
+  const empresasOrdenadas = res
+    ? [...res.empresas].sort((a, b) => scoreEfetivo(b) - scoreEfetivo(a))
+    : [];
 
   return (
     <div className="min-h-screen bg-smoky text-floral">
@@ -158,7 +179,7 @@ export default function Home() {
                     <button
                       key={s.id}
                       type="button"
-                      onClick={() => { setSetorAtivo(s.id); buscar(texto, s.id); }}
+                      onClick={() => trocarSetor(s.id)}
                       aria-pressed={ativo}
                       className={`rounded-md px-3 py-1.5 font-data text-[11px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
                         ativo ? "bg-surface-hover text-floral" : "text-bone/70 hover:text-bone"
@@ -275,7 +296,7 @@ export default function Home() {
                 </div>
 
                 <ul className="flex flex-col gap-3">
-                  {res.empresas.map((e) => (
+                  {empresasOrdenadas.map((e) => (
                     <EmpresaCard key={e.id} empresa={e} investigacao={scoreOverrides[e.id]} jaSalvo={savedIds.has(e.id)} />
                   ))}
                 </ul>
