@@ -565,18 +565,16 @@ function Stat({ k, v, sub, hi }: { k: string; v: string; sub?: string; hi?: bool
 }
 
 function SalvarButton({ empresaId, jaSalvo }: { empresaId: string; jaSalvo?: boolean }) {
-  const [estado, setEstado] = useState<"idle" | "salvando" | "salvo">(
-    jaSalvo ? "salvo" : "idle"
-  );
-
-  // Sincroniza quando o parent atualiza savedIds (ex: ao voltar de outra rota).
-  useEffect(() => {
-    if (jaSalvo) setEstado("salvo");
-  }, [jaSalvo]);
+  // Estado local só rastreia a transição da ação. "Já salvo" é verdade externa
+  // (parent atualiza savedIds ao voltar de outra rota) — derivada da prop, não
+  // espelhada por efeito (evita set-state-in-effect).
+  const [acao, setAcao] = useState<"idle" | "salvando" | "salvo">("idle");
+  const estado: "idle" | "salvando" | "salvo" =
+    jaSalvo || acao === "salvo" ? "salvo" : acao;
 
   async function salvar() {
-    if (estado === "salvo") return;
-    setEstado("salvando");
+    if (estado !== "idle") return;
+    setAcao("salvando");
     try {
       const r = await fetch("/api/oportunidade", {
         method: "POST",
@@ -584,9 +582,9 @@ function SalvarButton({ empresaId, jaSalvo }: { empresaId: string; jaSalvo?: boo
         body: JSON.stringify({ empresaId }),
       });
       if (!r.ok) throw new Error();
-      setEstado("salvo");
+      setAcao("salvo");
     } catch {
-      setEstado("idle");
+      setAcao("idle");
     }
   }
 
