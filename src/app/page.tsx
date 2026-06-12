@@ -143,7 +143,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-smoky text-floral">
-      <main className="mx-auto max-w-5xl px-6 py-10 md:py-20">
+      <main className="mx-auto max-w-5xl px-6 py-10 md:pb-20">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-[2fr_1fr]">
           {/* Coluna principal — hero + search + resultados */}
           <div className="min-w-0">
