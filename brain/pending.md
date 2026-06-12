@@ -13,7 +13,13 @@
 - [x] **Bug do one-liner saúde/educação destravado** — era `ANTHROPIC_API_KEY` vazia no `.env.local` local (não afetava o deploy). Key colada, verificado ao vivo.
 
 **Próximo (bloqueia o júri ver a versão nova):**
-- [ ] **🔴 Guilherme: sincronizar o Vercel com a main (`a9e3d0d`)** — o deploy está rodando versão pré-#41. Confirmar na URL de prod: busca-exemplo com one-liner + OG nova.
+- [x] **🔴 Vercel sincronizado com a main** RESOLVIDO (12/06). Causa raiz: o plano Hobby da Vercel
+  bloqueia o auto-deploy de commits autorados por membro sem acesso ao projeto em repo privado (todos
+  os commits recentes são do Maguto), e por isso a produção travou pré-#41. Desbloqueado com um commit
+  do owner por cima (`ccd0d92`) que carrega a árvore atual e vira o HEAD autorizado. Atenção, é gambiarra:
+  todo push do Maguto vai bloquear de novo até um commit do owner entrar por cima. **Correção definitiva:
+  upgrade pra Vercel Pro e adicionar o Maguto ao time.** (O 401 / deployment protection também já foi
+  desligado, site público.)
 
 **Backlog de acabamento (PRs novos, domínio interface/Maguto):**
 - [ ] P1: `theme-color` (barra do browser mobile) + 404 com marca (`not-found.tsx`). *(favicon `icon.svg` já existe desde 10/06.)*
