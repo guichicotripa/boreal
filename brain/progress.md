@@ -1341,3 +1341,23 @@ dados). PR #40 mergeado na main.
 - Env vars no Vercel: Supabase (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`) + `ANTHROPIC_API_KEY`.
 - `/api/trajetoria` usa BigQuery via `keyFilename` (caminho de arquivo local) → **quebra em serverless**; precisa virar credencial JSON inline em env var.
 - Teto de custo de API: link aberto = buscas fresh (~$0,04) + "Investigar com IA" (~$0,20/empresa) sem limite.
+
+## [2026-06-12] Maguto | Bug fixes (busca/setor/consolidadores) + hero spacing + OG repaginada + one-liner destravado
+
+**Contexto:** lote de fixes de interface reportados pelo Maguto + acabamento pré-deploy. A versão no Vercel para os jurados está desatualizada (rodando pré-#41); este trabalho só chega ao júri após o sync. Tudo domínio de interface.
+
+**Mudanças (PR #41, squash `a9e3d0d` na main):**
+- **Reordenar por score pós-investigação** (home): a lista ordena pelo score efetivo (v1 da investigação, senão v0). Empresa investigada que cai (100→81) desce, em vez de ficar presa em 1º (`page.tsx`, `empresasOrdenadas`).
+- **Switcher de setor passivo**: trocar setor só adapta exemplos + cobertura e limpa resultados; não dispara busca. Selecionar metalmec volta pro estado default (`null`), mantendo os exemplos no caminho cacheado (sem `setor` na query → bate o `demo-cache`).
+- **"Buscar neste setor" (de /setores) passivo**: `/?setor=X` só ativa o setor, sem auto-rodar.
+- **Consolidadores clicáveis**: alvos linkam pra `/empresa/[id]` só quando existem na base ingerida (6 de 24; os outros 18 foram minerados do universo do BigQuery e nunca entraram no Supabase). Lookup nome→id server-side via `createAdminClient` — roda no build, a página fica estática com os links bakados (zero DB por request); degrada pra sem-link se falhar.
+- **Hero spacing**: padding-top do hero 80→40px no desktop (`py-10 md:pb-20`), base mantida em 80. O pré-hero estava longe demais do topo sob a nav sticky. (Distinto do "space fix" de 10/06, que era espaço faltando no texto do painel de cobertura.)
+- **OG/Twitter**: (a) travessão → ponto medial `·` no title/OG/Twitter/alt; (b) imagem OG repaginada da versão só-texto (10/06) pra **bloco centralizado** — lockup onda dupla + wordmark, headline em Newsreader, subtítulo em Plex Sans, carregando as fontes no satori (subset via Google Fonts, sem User-Agent de browser pra vir TTF; com fallback se o fetch falhar). Gap logo→texto 36px.
+
+**Bug do one-liner de saúde/educação — diagnosticado e destravado:**
+- Sintoma: cards de saúde/educação sem a descrição da IA (`one_liner`); metalmec ok.
+- Causa raiz: `ANTHROPIC_API_KEY` **vazia no `.env.local` local** → toda busca ao vivo falhava o reasoner (`Could not resolve authentication method`). Metalmec só funcionava porque os exemplos vivem no `demo-cache` (insights de 29/05). Saúde/educação não têm cache de texto (o route nunca cacheia texto+setor, guard `!setorCnaes` em `route.ts:51`) → caíam no caminho ao vivo morto.
+- Resolução: Maguto colou a key real no `.env.local`. Verificado ao vivo (`/api/search?fresh=1`, saúde): `parsedBy: llm`, `reasoned: true`, 15 one-liners de volta. **Não afetava o deploy** (Vercel tem env própria) — era só o local.
+
+**Resultado:** `next build` + `tsc` limpos (18 rotas; `/consolidadores` e `/opengraph-image` estáticas). PR #41 mergeado na main (`a9e3d0d`); branch deletada.
+**Aprendizado:** (1) front passando `setor` redundante quebra o cache — alinhar o switcher à convenção `?? "metalmec"` (default = `null`) restaurou o cache sem tocar no motor. (2) testar acento via `curl -d` inline no bash corrompe encoding (falso "cache miss"); usar `--data-binary @arquivo`. (3) repaginar OG no satori exige carregar fonte explicitamente (não traz Newsreader) — fetch do subset + fallback.
