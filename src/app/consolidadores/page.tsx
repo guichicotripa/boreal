@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import dados from "@/lib/consolidadores.json";
 import backtest from "@/lib/backtest-consolidadores.json";
+import { createAdminClient } from "@/lib/supabase";
 
 export const metadata: Metadata = {
   title: "Boreal · Consolidadores",
@@ -31,8 +32,25 @@ function titulo(s: string) {
     .replace(/ Ltda| S\/s| S\.a\.| Sa\b/gi, "");
 }
 
-export default function Consolidadores() {
+export default async function Consolidadores() {
   const consolidadores = dados.consolidadores as Consolidador[];
+
+  // Os alvos são minerados do universo completo do CNPJ; só uma parte foi ingerida
+  // na base. Resolve nome → id pra linkar só quem tem página própria (/empresa/[id]);
+  // os demais ficam como texto. Falha de lookup degrada pra sem-link (não quebra a página).
+  const nomes = consolidadores.flatMap((c) => c.proximos_alvos.map((a) => a.nome));
+  const idPorNome = new Map<string, string>();
+  try {
+    const { data } = await createAdminClient()
+      .from("empresa")
+      .select("id, razao_social")
+      .in("razao_social", nomes);
+    for (const e of (data ?? []) as { id: string; razao_social: string }[]) {
+      idPorNome.set(e.razao_social, e.id);
+    }
+  } catch {
+    /* sem links se o lookup falhar */
+  }
 
   return (
     <div className="min-h-screen bg-smoky text-floral">
@@ -118,14 +136,27 @@ export default function Consolidadores() {
                 Candidatos no padrão do comprador
               </p>
               <ul className="mt-2 divide-y divide-hairline">
-                {c.proximos_alvos.map((a) => (
-                  <li key={a.nome} className="flex items-center justify-between gap-3 py-2.5">
-                    <span className="text-sm text-floral">{titulo(a.nome)}</span>
-                    <span className="shrink-0 font-data text-[11px] text-bone/70">
-                      sócio {a.socio_faixa} · desde {a.desde}
-                    </span>
-                  </li>
-                ))}
+                {c.proximos_alvos.map((a) => {
+                  const id = idPorNome.get(a.nome);
+                  return (
+                    <li key={a.nome} className="flex items-center justify-between gap-3 py-2.5">
+                      {id ? (
+                        <Link
+                          href={`/empresa/${id}`}
+                          className="group flex items-center gap-1.5 text-sm text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
+                        >
+                          {titulo(a.nome)}
+                          <span className="text-olive transition-transform duration-200 group-hover:translate-x-0.5">→</span>
+                        </Link>
+                      ) : (
+                        <span className="text-sm text-floral">{titulo(a.nome)}</span>
+                      )}
+                      <span className="shrink-0 font-data text-[11px] text-bone/70">
+                        sócio {a.socio_faixa} · desde {a.desde}
+                      </span>
+                    </li>
+                  );
+                })}
               </ul>
             </section>
           ))}

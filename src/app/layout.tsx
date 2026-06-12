@@ -43,7 +43,7 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Boreal — Deal sourcing por risco sucessório",
+    default: "Boreal · Deal sourcing por risco sucessório",
     template: "%s · Boreal",
   },
   description:
@@ -54,13 +54,13 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     siteName: "Boreal",
     url: siteUrl,
-    title: "Boreal — Deal sourcing por risco sucessório",
+    title: "Boreal · Deal sourcing por risco sucessório",
     description:
       "O gargalo do deal sourcing, colapsado de duas semanas para trinta segundos.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Boreal — Deal sourcing por risco sucessório",
+    title: "Boreal · Deal sourcing por risco sucessório",
     description:
       "O gargalo do deal sourcing, colapsado de duas semanas para trinta segundos.",
   },
