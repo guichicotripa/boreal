@@ -48,6 +48,14 @@ export async function POST(req: NextRequest) {
 
   // ── 0. Cache — demos canônicos (texto) ou browse de setor (instantâneo no demo) ──
   const skipCache = req.nextUrl.searchParams.get("fresh") === "1";
+  // Tese + setor (saúde/educação): chave composta `setor|tese`, pra ficar instantâneo como o
+  // metalmec. Metalmec é o setor default (a home não manda setor) e cai no ramo de texto puro abaixo.
+  if (!skipCache && queryText && setorId) {
+    const hit = CACHE[`${setorId}|${normalizeQuery(queryText)}`];
+    if (hit) {
+      return NextResponse.json({ ...hit, cached: true });
+    }
+  }
   if (!skipCache && queryText && !setorCnaes) {
     const hit = CACHE[normalizeQuery(queryText)];
     if (hit) {
