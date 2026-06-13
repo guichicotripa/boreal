@@ -388,5 +388,925 @@
     ],
     "tese_aproximacao": "Mecanotecnica é um alvo clássico de sucessão em janela crítica: fundadores 80+, filho já na faixa 60+, quadro societário congelado há 26 anos e nenhum herdeiro jovem formalizado — o risco de saída desordenada é real e próximo. O ângulo de abordagem é proteção de legado, não venda: a conversa começa em 'como garantir que o que você construiu em 42 anos não se dissolva numa transição mal feita', não em valuation. Somos o interlocutor certo porque atuamos especificamente com empresas familiares industriais do interior paulista nesse estágio pré-decisão — não chegamos com LOI, chegamos com diagnóstico.",
     "proximo_passo": "Ligar para (19) 4124-0510 solicitando falar com Miguel Gortan (sócio mais jovem e provável interlocutor operacional), apresentando-se como assessor especializado em estruturação de empresas familiares industriais — sem mencionar M&A no primeiro contato."
+  },
+  "3cb74ff6-9ea4-4ffd-b62a-df4b980bf9b1": {
+    "overview": "NEF (Naschold Elementos de Fixação Indústria e Comércio) fabrica produtos de trefilados de metal padronizados — essencialmente fixadores metálicos industriais — em Capela do Alto, SP, operando há 46 anos com porte classificado como 'DEMAIS' (acima do limite EPP). Empresa familiar com nome próprio consolidado no segmento metalmecânico do interior paulista, sem atividades secundárias registradas, indicando foco operacional estreito no nicho principal.",
+    "analise_sucessoria": "O quadro societário está congelado desde o dia da fundação em 1980 — dois sócios Naschold com 49% cada, sem nenhuma entrada ou alteração em 46 anos. Ricardo Naschold Neto, na faixa 80+, configura risco imediato de evento sucessório involuntário por incapacidade ou falecimento. Rolando Naschold, na faixa 51-60, é provavelmente o gestor operacional mais ativo hoje, mas também não é jovem e não há registro de nenhum herdeiro de terceira geração no QSA — o que significa que a estrutura societária nunca absorveu qualquer transição planejada. Score 100 justificado: patriarca octogenário, quadro estático por quase meio século e ausência total de sinalização de sucessão.",
+    "red_flags": [
+      {
+        "risco": "Passivo fiscal oculto",
+        "severidade": "alta",
+        "como_verificar": "Consulta gratuita no portal PGFN (Dívida Ativa da União) pelo CNPJ 44.496.438/0001-88 + busca no CARF por autuações administrativas + TJSP por execuções fiscais estaduais. Indústria com 46 anos passou por múltiplos regimes tributários — risco real de parcelamentos em aberto, inscrições em dívida ativa ou autos de infração não quitados."
+      },
+      {
+        "risco": "Não-conformidade NR-12 (segurança de máquinas)",
+        "severidade": "alta",
+        "como_verificar": "Solicitar laudo de conformidade NR-12 atualizado em due diligence. Plantas de trefilação operam trefiladeiras, prensas e equipamentos de corte — maquinário adquirido nos anos 80-90 frequentemente não foi adequado à versão revisada da norma (2010/2019). Passivo trabalhista embutido caso haja acidentes ou fiscalização do MTE."
+      },
+      {
+        "risco": "Passivo ambiental",
+        "severidade": "media",
+        "como_verificar": "Consultar CETESB via portal estadual por autos de infração ou licença de operação vencida, usando CNPJ e endereço de Chapel do Alto. Processo de trefilação envolve lubrificantes, óleos e metais pesados — risco de contaminação de solo em plantas com décadas de operação sem laudo ambiental recente."
+      },
+      {
+        "risco": "Dependência do fundador (hub-and-spoke)",
+        "severidade": "alta",
+        "como_verificar": "Identificar na abordagem: quem assina contratos comerciais, quem mantém relacionamento com os principais clientes e se há gerência contratada com autonomia real. Com Ricardo 80+ e quadro estático desde 1980, alta probabilidade de que relações comerciais históricas estejam personalizadas no patriarca — risco de perda de receita em evento sucessório."
+      },
+      {
+        "risco": "Concentração de clientes em mercado regional",
+        "severidade": "media",
+        "como_verificar": "Perguntar diretamente a Rolando: quantos clientes respondem por 80% do faturamento e qual a distribuição geográfica da carteira. Município pequeno do interior paulista e nicho específico de fixadores sugerem base restrita, possivelmente concentrada em uma ou duas montadoras ou distribuidores regionais."
+      }
+    ],
+    "perguntas_abordagem": [
+      "O sr. Ricardo ainda participa da gestão comercial ou operacional do dia a dia, ou essa frente já migrou integralmente para o sr. Rolando nos últimos anos?",
+      "Vocês já estruturaram ou discutiram algum plano de continuidade para a NEF — seja via entrada de um gestor profissional, novo sócio ou reorganização do quadro societário?",
+      "A carteira de clientes é concentrada no interior paulista ou vocês já têm presença em outros estados? Há dependência relevante de um ou dois clientes no faturamento?",
+      "O parque de máquinas passou por renovação recente, ou a planta ainda opera com equipamentos da época de fundação? A empresa tem laudo NR-12 atualizado?",
+      "Há familiares da segunda ou terceira geração que trabalham na empresa hoje, mesmo sem figurar no quadro societário registrado?"
+    ],
+    "tese_aproximacao": "A NEF é um ativo industrial raro: quatro décadas e meia de operação em nicho defensável (fixadores trefilados padronizados), marca própria consolidada no interior paulista e o maior score possível de risco sucessório — patriarca octogenário sem nenhuma transição societária visível. A janela de abordagem é agora, antes que um evento involuntário force uma liquidação desordenada ou venda de emergência sem processo competitivo. Nosso ângulo é consultivo — 'planejamento de continuidade' — e nossa vantagem é o timing: chegamos com antecedência e com conhecimento do perfil de comprador industrial certo para este ativo, algo que assessores generalistas não entregam.",
+    "proximo_passo": "Ligar para (15) 3267-2042 pedindo para falar com Rolando Naschold, identificando-se como assessor especializado em transições societárias de indústrias familiares e propondo uma conversa de 20 minutos sobre planejamento de continuidade; se não houver retorno em 48h, enviar email para financeiro@naschold.com.br com o mesmo enquadramento — curto, sem jargão de M&A, com uma pergunta direta sobre disponibilidade."
+  },
+  "abd53ffc-b84d-43fc-b1f5-f2bf43f559e5": {
+    "overview": "A Tecmaes é fabricante de máquinas especiais e equipamentos industriais sediada em Ourinhos, interior de SP, com atividades secundárias em saneamento ambiental, plásticos e instalação de equipamentos. Fundada em 1991, opera há 35 anos no segmento de equipamentos sob medida (CNAE 2829199), classificada como 'Demais' (não ME/EPP), o que indica escala acima de microempresa — tamanho real de receita não estimável sem dados adicionais. Nicho de máquinas especiais tende a gerar carteira de clientes fidelizada e margens acima da média da indústria.",
+    "analise_sucessoria": "O risco sucessório é crítico e imediato. Adalberto Aparecido Perez, com 80+ anos, é o sócio-fundador original (entrou em 1994, três anos após a fundação) e figura como sócio-administrador ativo no QSA. Em 2014 — há 12 anos — duas mulheres com o sobrenome Perez (Sabrina e Simone Perez dos Santos, ambas na faixa 41-50) foram admitidas como sócias-administradoras, o que sugere segunda geração familiar inserida formalmente na estrutura. No entanto, o fato de Adalberto permanecer no QSA com qualificação de administrador indica que a transição não foi concluída: ele provavelmente ainda concentra relacionamentos comerciais, know-how técnico e autoridade operacional. Com o fundador em fase avançada de vida e duas herdeiras na casa dos 40 que já têm mais de uma década na empresa, o momento de transição formal — e potencial necessidade de liquidez ou reorganização societária — é agora.",
+    "red_flags": [
+      {
+        "risco": "Passivo fiscal acumulado",
+        "severidade": "alta",
+        "como_verificar": "Consulta PGFN (Dívida Ativa da União) pelo CNPJ em pgfn.fazenda.gov.br; CARF pelo CNPJ; TJSP (tjsp.jus.br) para execuções fiscais estaduais — tudo gratuito. Empresa com 35 anos em manufatura tem alta probabilidade de parcelamentos ou contingências não publicadas."
+      },
+      {
+        "risco": "Dependência do fundador (hub-and-spoke)",
+        "severidade": "alta",
+        "como_verificar": "Perguntar diretamente na conversa de originação: quem assina contratos, quem atende os principais clientes, quem tem autoridade técnica sobre projetos de engenharia. Sinal claro se Adalberto ainda é o interlocutor comercial principal apesar da idade."
+      },
+      {
+        "risco": "Inadequação à NR-12 (segurança de máquinas)",
+        "severidade": "media",
+        "como_verificar": "Verificar autuações do MTE pelo CNPJ; perguntar na DD se a planta passou por laudo de conformidade NR-12 recente. Fabricantes de máquinas industriais são simultaneamente obrigados a adequar seus produtos e sua própria linha de produção."
+      },
+      {
+        "risco": "Passivo ambiental (plásticos + fabricação industrial)",
+        "severidade": "media",
+        "como_verificar": "Consultar CETESB (cadastro de áreas contaminadas) e licença de operação ativa pelo CNPJ/endereço. Atividade secundária de plásticos em planta de 35 anos eleva a probabilidade de contaminação de solo ou irregularidade de licença."
+      },
+      {
+        "risco": "Concentração de clientes em nicho de máquinas especiais",
+        "severidade": "media",
+        "como_verificar": "Perguntar qual o percentual de receita dos 3 maiores clientes e se há contratos de longo prazo. Equipamentos sob encomenda quase sempre implicam base estreita de compradores recorrentes — risco relevante para valuation."
+      }
+    ],
+    "perguntas_abordagem": [
+      "O Adalberto ainda está ativo nas operações do dia a dia ou a gestão já migrou para a Sabrina e a Simone — quem responde pelos projetos com os clientes atualmente?",
+      "Em 2014 as duas sócias entraram juntas na empresa — foi uma decisão de planejamento sucessório consciente ou uma necessidade pontual? Existe algum plano formalizado de transição de gestão desde então?",
+      "A Tecmaes fabrica máquinas especiais há 35 anos — qual é o perfil dos clientes hoje, são contratos de fornecimento contínuo ou projetos pontuais? Há dependência de poucos compradores?",
+      "Com a atividade de instalação e saneamento ambiental como secundária, a empresa já passou por alguma auditoria de licença ambiental ou adequação NR-12 nos últimos anos?",
+      "Se fosse pensar nos próximos 5 anos da Tecmaes, a família já discutiu se o caminho é manter o controle familiar, trazer um sócio financeiro ou estruturar uma saída para o Adalberto?"
+    ],
+    "tese_aproximacao": "A Tecmaes é um alvo de alta qualidade para originação: fabricante especializado com 35 anos de operação em nicho defensável (máquinas especiais + saneamento), localizado em mercado com baixa cobertura de bancos de investimento, e em momento de transição geracional clara — fundador octogenário, duas herdeiras já formalizadas mas sem evidência de conclusão do processo sucessório. O ângulo de entrada não é 'venda da empresa', é 'como estruturar a transição de forma que o Adalberto liquide parte do patrimônio que construiu enquanto a Sabrina e a Simone ganham governança para crescer'. Nossa boutique traz acesso direto a compradores estratégicos e fundos de PE que valorizam ativos industriais de nicho no interior paulista — perfil que bancos de varejo e assessores locais de Ourinhos não conseguem conectar.",
+    "proximo_passo": "Ligar para (14) 3302-2222 e pedir para falar com Sabrina ou Simone Perez (não com o contábil) — apresentar como boutique especializada em transações para empresas industriais familiares no interior de SP, com o objetivo de agendar uma conversa de 20 minutos sobre o momento da empresa; evitar o email de contabilidade como primeiro contato, pois filtra para fora da decisão societária."
+  },
+  "1d12d49d-8aab-44cd-a026-ecd2f33c6d72": {
+    "overview": "MAQUENGE é fabricante de máquinas-ferramenta com 34 anos de operação, sediada em Piracicaba (SP) — polo industrial relevante do interior paulista. Porte declarado como 'DEMAIS' (exclui ME/EPP), o que sinaliza estrutura acima de pequena empresa. Atua também em instalação de máquinas industriais e locação de imóveis próprios, sugerindo ativo fixo acumulado ao longo das décadas.",
+    "analise_sucessoria": "O quadro societário está congelado desde a fundação em 1992 — 34 anos sem nenhuma alteração. Helio Ramos da Cruz (80+) é o sócio patriarca e muito provavelmente o fundador operacional; Sergio Ramos da Cruz (51–60), provavelmente filho, é o segundo sócio desde o início. A partilha de sobrenome sugere estrutura familiar clássica pai-filho. O problema: Helio está em faixa etária crítica sem que haja registro de entrada de terceira geração no QSA, e Sergio, com 51–60 anos, é ele próprio a segunda geração — não há herdeiro visível para a terceira. O score 92 reflete exatamente isso: urgência imediata por parte do patriarca, sem plano sucessório formalizado visível. Detalhe relevante: o e-mail de contato de Sergio aponta domínio @boneli.com.br, não @maquenge — isso pode indicar holding paralela, empresa de consultoria própria ou outro negócio, o que levanta a hipótese de que Sergio já não esteja 100% dedicado à Maquenge.",
+    "red_flags": [
+      {
+        "risco": "Passivo fiscal oculto",
+        "severidade": "alta",
+        "como_verificar": "Consulta gratuita à PGFN (Dívida Ativa da União) pelo CNPJ + CARF (processos administrativos) + TJSP (execuções fiscais estaduais). 34 anos de operação industrial em SP aumenta probabilidade de autuações de ICMS, PIS/COFINS ou INSS."
+      },
+      {
+        "risco": "Não-conformidade NR-12 (segurança de máquinas)",
+        "severidade": "alta",
+        "como_verificar": "Solicitar laudo de conformidade NR-12 e registros de auditoria do MTE/Auditores Fiscais do Trabalho. Fabricante de máquinas-ferramenta usa suas próprias máquinas na produção — dupla exposição: como fabricante (responsabilidade do produto) e como usuário (segurança do processo)."
+      },
+      {
+        "risco": "Passivo ambiental (resíduos de usinagem e fluidos de corte)",
+        "severidade": "media",
+        "como_verificar": "Verificar licença ambiental ativa junto à CETESB (sistema CADESP) e histórico de autos de infração. Usinagem gera resíduos classe I (óleos, fluidos clorados) — descarte irregular é comum em empresas antigas do setor."
+      },
+      {
+        "risco": "Dependência crítica do fundador (hub-and-spoke)",
+        "severidade": "alta",
+        "como_verificar": "Perguntar diretamente ao Sergio na abordagem: quem assina contratos com clientes-chave, quem faz a precificação de projetos especiais, Helio ainda frequenta a fábrica? Se o relacionamento comercial está na figura do Helio, o risco operacional é imediato."
+      },
+      {
+        "risco": "Conflito de interesse ou atenção dividida do sócio ativo (Sergio)",
+        "severidade": "media",
+        "como_verificar": "E-mail sergio.cruz@boneli.com.br sugere envolvimento com entidade 'Boneli' — pesquisar CNPJ de empresas com esse nome em SP, verificar se Sergio consta como sócio ou administrador. Se sim, avaliar se há concorrência de agenda ou de capital."
+      }
+    ],
+    "perguntas_abordagem": [
+      "Sergio, o seu pai ainda está envolvido nas decisões do dia a dia da Maquenge, ou você já assumiu a gestão operacional integralmente?",
+      "Vocês trabalham com projetos especiais de máquinas customizadas ou majoritariamente com linhas padronizadas? Pergunto porque isso muda bastante o perfil de quem consegue dar continuidade ao negócio.",
+      "A Maquenge tem base de clientes recorrentes — contratos de manutenção, peças, instalação — ou cada projeto é essencialmente uma venda nova?",
+      "Com 34 anos de operação e imóveis próprios, vocês já discutiram internamente algum modelo de separação entre o patrimônio imobiliário e a operação industrial?",
+      "Você tem visto outras empresas do setor em Piracicaba sendo abordadas por fundos ou estratégicos nos últimos 2 anos? Como vocês enxergam esse movimento?"
+    ],
+    "tese_aproximacao": "A Maquenge reúne três condicionantes raros no mesmo alvo: setor defensável (máquinas-ferramenta têm demanda estrutural com o avanço da automação industrial), localização premium (Piracicaba é epicentro do agronegócio mecanizado e da indústria metalmecânica paulista) e urgência sucessória real — patriarca acima de 80 anos, sem terceira geração visível no QSA. O ângulo de entrada não é 'vender a empresa', mas sim 'estruturar o legado': como garantir que o que Helio construiu em 34 anos não se dissolva em inventário ou briga societária. A abordagem deve ser feita via Sergio — ele é o interlocutor racional, tem e-mail disponível e provavelmente já carrega o peso de pensar no tema mesmo que não verbalize.",
+    "proximo_passo": "Contatar Sergio Ramos da Cruz por e-mail (sergio.cruz@boneli.com.br) com mensagem curta, referenciando o setor metalmecânico de Piracicaba e solicitando 20 minutos de conversa — sem mencionar venda; ângulo inicial deve ser 'mapeamento de empresas referência no setor para um projeto de mercado'; se não houver resposta em 5 dias úteis, ligar no (19) 98831788."
+  },
+  "71bce076-1b06-46e9-ab85-5343aae0635a": {
+    "overview": "Labortub é uma fabricante de embalagens metálicas (CNAE 2591-8/00) sediada em São Bernardo do Campo, no núcleo industrial do ABC paulista. Com 29 anos de operação contínua desde 1997, está classificada como DEMAIS — portanto fora do regime ME/EPP, o que indica escala operacional relevante. Mantém atividade secundária de manutenção de equipamentos, sugerindo estrutura verticalizada com ativos industriais próprios.",
+    "analise_sucessoria": "O risco sucessório aqui é imediato, não potencial. Eremi Odilon Meister é o sócio-fundador (desde 1997, qualificação 49 — sócio-administrador) e está na faixa 80+: praticamente toda a memória institucional, os relacionamentos comerciais de 29 anos e o know-how técnico do negócio provavelmente passam por ele. Claudio Gallina (61-70, entrou em 2006) divide a administração, mas está ele próprio na curva de saída. O quadro societário não se move há 20 anos — nenhum herdeiro, nenhum sócio júnior, nenhuma holding familiar visível no QSA — padrão clássico de empresa que nunca tocou no tema sucessão. Com score 92, este é exatamente o perfil onde a janela de origination se fecha rápido: por evento (saúde do fundador) ou por venda direta a um comprador menos preparado.",
+    "red_flags": [
+      {
+        "risco": "Passivo fiscal oculto",
+        "severidade": "alta",
+        "como_verificar": "Consultar PGFN (Dívida Ativa da União) em divida.pgfn.gov.br pelo CNPJ, CARF em carf.fazenda.gov.br, e execuções fiscais no TJSP (esaj.tjsp.jus.br — aba 'Consulta de Processos'). Fábricas com 29 anos no ABC raramente chegam aqui sem alguma pendência com Receita Federal ou SEFAZ-SP."
+      },
+      {
+        "risco": "Passivo NR-12 (segurança de máquinas)",
+        "severidade": "alta",
+        "como_verificar": "Fabricação de embalagens metálicas envolve prensas, corte e conformação — equipamentos com obrigações específicas da NR-12. Consultar histórico de notificações e interdições no portal do MTE (sit.trabalho.gov.br) pelo CNPJ ou CNAE. Empresas antigas raramente têm adequação completa."
+      },
+      {
+        "risco": "Passivo ambiental (efluentes industriais)",
+        "severidade": "media",
+        "como_verificar": "Processamento de metais gera óleos de corte, limalha e efluentes regulados pelo CETESB. SBC é área de controle ambiental intenso no ABC. Verificar no sistema CETESB Infocidades ou solicitar Certidão de Regularidade Ambiental pelo CNPJ antes de avançar na diligência."
+      },
+      {
+        "risco": "Dependência crítica do fundador (hub-and-spoke)",
+        "severidade": "alta",
+        "como_verificar": "Não é verificável externamente antes do contato — mas nas primeiras conversas perguntar diretamente: quem assina os contratos com os principais clientes, quem negocia com fornecedores estratégicos, e se há um gerente operacional que 'toca o dia a dia'. Se a resposta for o Eremi para tudo, a empresa perde valor expressivo com sua saída não planejada."
+      },
+      {
+        "risco": "Cadastro desatualizado na Receita (capital social zerado)",
+        "severidade": "baixa",
+        "como_verificar": "Capital social R$ 0 no registro federal indica que a ficha cadastral não é mantida ativamente — não implica insolvência, mas sugere baixa governança administrativa. Conferir contrato social atualizado no JUCESP (jucespdigital.sp.gov.br) para verificar se há alterações societárias recentes não espelhadas na Receita."
+      }
+    ],
+    "perguntas_abordagem": [
+      "Eremi, o senhor fundou a Labortub em 1997 — quase 30 anos. Em algum momento o senhor e o Claudio conversaram sobre quem vai conduzir a empresa nos próximos 10 anos?",
+      "A empresa tem hoje algum gestor profissional no operacional, ou as decisões comerciais e técnicas ainda passam pelos dois sócios diretamente?",
+      "Com um perfil de 29 anos no setor de embalagens metálicas no ABC, imagino que vocês têm contratos de longo prazo com clientes industriais — esses relacionamentos são pessoais ou institucionalizados?",
+      "Já chegou alguma proposta de compra ou parceria para a Labortub? Como o senhor reagiu?",
+      "Se o senhor pudesse escolher o desfecho ideal para a empresa nos próximos 3 a 5 anos — seja venda, fusão, ou entrada de um sócio financeiro — qual seria o que mais faria sentido para você e para o Claudio?"
+    ],
+    "tese_aproximacao": "Labortub reúne três condicionantes de um alvo prioritário: operação industrial consolidada com 29 anos em polo manufatureiro de primeiro nível (SBC/ABC), fundador na faixa 80+ sem herdeiro visível no quadro e score sucessório 92 — janela de saída que se aproxima por imperativos biológicos, não por planejamento. O ângulo correto não é 'queremos comprar', mas sim 'viemos falar sobre continuidade': o fundador provavelmente nunca articulou um plano formal e responde melhor a quem traz estrutura para pensar o legado do que a quem chega com proposta de valuation. O diferencial do originador é o timing — chegar antes que o evento force a decisão e o comprador seja quem aparecer primeiro.",
+    "proximo_passo": "Ligar para (11) 4390-9955 — número disponível no cadastro — e pedir para falar com Eremi Meister ou Claudio Gallina, apresentando-se como assessor de M&A especializado em empresas industriais do ABC; se não houver retorno em 48h, enviar email para labortub@ig.com.br com uma linha de assunto direta ('Continuidade e eventual transição da Labortub — breve conversa')."
+  },
+  "2be6459d-b98a-4f34-a5d7-1888c79b3f56": {
+    "overview": "Brasimpar é uma metalúrgica de artefatos estampados (CNAE 2532-2/01) fundada em 1985 em Guarulhos (SP), com 41 anos de operação no polo industrial da Grande São Paulo. Classificada como 'DEMAIS' pela Receita Federal (além de ME/EPP, sem implicação de porte financeiro aqui). Dado que reorienta toda a tese: a empresa está em Recuperação Judicial — consta expressamente na razão social registrada, o que é o fato dominante deste dossiê.",
+    "analise_sucessoria": "Sócio único e fundador, Jose Felicio Brunetto, faixa 80+, no quadro desde 1985 sem nenhuma alteração societária em 41 anos — zero co-gestores, zero herdeiros identificáveis no QSA, zero sinalização de transição planejada. Em condições normais, o risco sucessório já seria máximo: fundador octogenário, sócio único, empresa industrial de longa data. O processo de Recuperação Judicial comprime esse risco: o fundador enfrenta simultaneamente a ausência de sucessor e a pressão de viabilizar a empresa dentro do prazo do plano de RJ. Aqui a sucessão não é questão de médio prazo — é uma variável ativa no processo que está correndo agora.",
+    "red_flags": [
+      {
+        "risco": "Recuperação Judicial em curso — risco jurídico, operacional e de governança simultâneos",
+        "severidade": "alta",
+        "como_verificar": "Buscar no TJSP (tjsp.jus.br) pelo nome 'Brasimpar' ou pelo CNPJ. Verificar: número do processo, vara responsável, plano de recuperação aprovado ou pendente em assembleia de credores, status de cumprimento do plano, e nome do administrador judicial nomeado — esse último é um segundo ponto de contato valioso."
+      },
+      {
+        "risco": "Passivo fiscal acumulado — gatilho comum de RJ em indústria com décadas de operação",
+        "severidade": "alta",
+        "como_verificar": "Consultar dívida ativa na PGFN (portaldivida.pgfn.gov.br) pelo CNPJ — gratuito e imediato. Complementar com CARF (carf.fazenda.gov.br) para autuações em julgamento. Parte do passivo fiscal provavelmente já foi habilitada no processo de RJ; o montante total é verificável nos autos."
+      },
+      {
+        "risco": "Passivo trabalhista — metalúrgica com mão de obra operacional e 41 anos de histórico",
+        "severidade": "alta",
+        "como_verificar": "Buscar reclamações trabalhistas no TJSP (consulta por nome da empresa). Créditos trabalhistas têm prioridade na RJ; verificar o que já está habilitado no processo e o que ainda corre em paralelo nas varas do trabalho."
+      },
+      {
+        "risco": "Passivo ambiental — estampagem de metal gera resíduos metálicos, óleos de corte e efluentes",
+        "severidade": "media",
+        "como_verificar": "Consultar autos de infração na CETESB (licenciamento.cetesb.sp.gov.br) pelo CNPJ. Verificar se a licença de operação está ativa — metalúrgica sem licença válida agrava o risco e pode travar eventual transferência do ativo."
+      },
+      {
+        "risco": "NR-12 — maquinário de estampagem possivelmente antigo, sem histórico de adequação",
+        "severidade": "media",
+        "como_verificar": "Verificar autuações do Ministério do Trabalho (SFIT/MTE) pelo CNPJ. Em due diligence, solicitar laudo NR-12 atualizado e inventário de equipamentos com ano de fabricação."
+      },
+      {
+        "risco": "Dependência total do fundador (hub-and-spoke) — sócio único, 80+ anos, sem delegação visível de gestão",
+        "severidade": "alta",
+        "como_verificar": "Perguntar diretamente no primeiro contato se há diretores ou gerentes com autonomia decisória. O administrador judicial, que acompanha a operação pela RJ, também pode dar clareza sobre a estrutura de gestão real."
+      }
+    ],
+    "perguntas_abordagem": [
+      "O plano de recuperação judicial já foi aprovado em assembleia de credores, ou ainda está em negociação — e qual o horizonte que o senhor enxerga para encerrar o processo?",
+      "Quem conduz a operação no dia a dia? Há diretores ou gerentes de produção com autonomia para tomar decisões sem o senhor presente?",
+      "Os principais clientes mantiveram os contratos durante a RJ, ou o volume caiu de forma relevante com o início do processo?",
+      "O imóvel da planta em Guarulhos e os equipamentos de estampagem são ativos próprios da empresa, ou parte do passivo envolve garantias reais sobre esses bens?",
+      "Há interesse da família em continuar no negócio após a resolução da RJ, ou o senhor está aberto a discutir alternativas — seja parceria estratégica, entrada de sócio capitalista, ou desinvestimento?"
+    ],
+    "tese_aproximacao": "A Brasimpar não é um deal de sucessão convencional — é um ativo industrial em distress com fundador octogenário e sem saída sucessória estruturada, o que cria uma janela de oportunidade específica para quem tem capacidade de atuar em contexto de RJ. O ângulo de abordagem correto não é 'pensando no futuro da empresa', mas 'ajudando a resolver uma situação com prazo e pressão real'. O originador deve se posicionar como ponte entre o fundador e compradores ou fundos com expertise em turnaround de ativos industriais metalúrgicos — perfil onde velocidade de avaliação, conhecimento do setor e acesso direto ao decisor valem mais do que qualquer processo bancário.",
+    "proximo_passo": "Ligar para (11) 2423-7000 e pedir o Sr. Jose Felicio Brunetto ou o responsável pela gestão — não usar o email cobranca@brasimpar.com.br, que é canal operacional de RJ, não de relacionamento; paralelamente, localizar o administrador judicial nos autos do TJSP para ter um segundo ponto de entrada com contexto operacional do processo."
+  },
+  "8591511c-6728-4868-9d06-6d8ec033eb93": {
+    "overview": "Máquinas Pinheiro é uma fabricante de máquinas e equipamentos agrícolas sediada em Itapira, SP, com 54 anos de operação (fundada em 1972). O portfólio de CNAEs secundários revela integração vertical relevante: estamparia, usinagem, soldagem, estruturas metálicas e instalação de equipamentos industriais, o que sugere estrutura fabril própria de médio porte. Classificada como 'DEMAIS' (não-ME/EPP) pela Receita Federal, indicando escala operacional acima do segmento de pequenas empresas — porte real não estimável sem dados adicionais.",
+    "analise_sucessoria": "O quadro societário é 100% familiar: todos os cinco sócios carregam o sobrenome Bazani e ingressaram simultaneamente em 1996, há 30 anos sem qualquer alteração societária. Três sócios estão na faixa 80+ — incluindo os dois administradores (qualificação 22: Mário Sebastião e Antônio Lourenço), que respondem legalmente pela empresa. Os demais dois estão na faixa 71-80. Não há nenhum sócio jovem visível no QSA público, o que significa que a geração seguinte, se existe, ainda não foi formalmente inserida na estrutura. Com administradores octogenários e quadro congelado há três décadas, o risco sucessório é máximo: ausência de plano formalizado, risco de incapacidade súbita dos administradores e potencial disputa hereditária entre herdeiros não identificados.",
+    "red_flags": [
+      {
+        "risco": "Passivo fiscal oculto",
+        "severidade": "alta",
+        "como_verificar": "Consulta gratuita na PGFN (Dívida Ativa da União) pelo CNPJ + pesquisa de processos no CARF e TJSP (Tribunal de Justiça SP) — empresa industrial de 54 anos com múltiplas atividades tem alta probabilidade de autuações acumuladas"
+      },
+      {
+        "risco": "Não-conformidade NR-12 (segurança de máquinas e equipamentos)",
+        "severidade": "alta",
+        "como_verificar": "Solicitar laudo de conformidade NR-12 e histórico de autuações do SRTE-SP (Superintendência Regional do Trabalho) — fabricante e instaladora de máquinas com operação fabril própria está na mira prioritária das fiscalizações desde 2010"
+      },
+      {
+        "risco": "Passivo ambiental",
+        "severidade": "media",
+        "como_verificar": "Consulta ao CETESB (Companhia Ambiental do Estado de SP) por CNPJ ou endereço — atividades de usinagem, estamparia e soldagem geram resíduos Classe I (óleos, metais pesados); verificar licença de operação ativa e histórico de infrações"
+      },
+      {
+        "risco": "Dependência operacional dos administradores 80+ (hub-and-spoke)",
+        "severidade": "alta",
+        "como_verificar": "Avaliar na conversa inicial: quem assina contratos, qual o envolvimento do segundo escalão, se há gerência profissional instalada ou se as decisões comerciais e técnicas passam pelos Bazani sênior — incapacidade ou óbito sem delegação formal paralisa a empresa"
+      },
+      {
+        "risco": "Passivo trabalhista acumulado",
+        "severidade": "media",
+        "como_verificar": "Pesquisa de processos no TRT-15 (Campinas, jurisdição de Itapira) pelo CNPJ — empresa fabril com mais de 50 anos de operação tende a acumular ações de ex-funcionários; verificar volume e provisionamento"
+      }
+    ],
+    "perguntas_abordagem": [
+      "O senhor Mário ou o senhor Antônio ainda participam da operação diária — decisões comerciais, aprovação de contratos — ou já delegaram para uma gestão profissional?",
+      "Dos filhos ou sobrinhos da família Bazani, algum está ativo na empresa hoje, mesmo sem figurar no quadro societário?",
+      "Com 54 anos de marca Máquinas Pinheiro no mercado, já houve conversa interna sobre o que acontece com a empresa se um dos administradores precisar se afastar?",
+      "Vocês já receberam abordagem de outras empresas do setor — concorrentes, distribuidores, fundos — interessadas em alguma forma de parceria ou aquisição?",
+      "A carteira de clientes está concentrada em poucos compradores agrícolas da região ou está distribuída — e quem na empresa gerencia esse relacionamento hoje?"
+    ],
+    "tese_aproximacao": "54 anos de operação vertical em máquinas agrícolas no interior paulista, com capacidade fabril integrada (estamparia, usinagem, soldagem, instalação) — este é exatamente o ativo industrial difícil de replicar que PE/strategics buscam em plataformas para o agro. O gatilho é claro: dois administradores octogenários sem sucessão visível no QSA criam uma janela de liquidez voluntária antes que o problema se torne involuntário. O ângulo de abordagem é 'proteção do legado', não 'venda': a família construiu 54 anos de marca e não quer que isso se dissolva numa disputa de inventário — nós somos o interlocutor certo porque atuamos exclusivamente com empresas familiares nesse estágio, entendemos a dinâmica emocional da transição e temos acesso a compradores que valorizam continuidade operacional, não só EBITDA.",
+    "proximo_passo": "Sem telefone ou email disponível no CNPJ: localizar o sócio mais jovem (Hélio ou Herbert Bazani, faixa 71-80) via LinkedIn com filtro Itapira + 'Máquinas Pinheiro', ou acionar a ABIMAQ (Associação Brasileira da Indústria de Máquinas e Equipamentos) como entrada setorial neutra — e fazer o primeiro contato por mensagem direta com referência explícita ao setor e à longevidade da empresa, não à sucessão."
+  },
+  "a3468dab-4986-4ea2-802a-07114303054d": {
+    "overview": "Lavrita Engenharia é uma fabricante de máquinas e equipamentos industriais sediada em São Bernardo do Campo (SP), no coração do ABC paulista, com 52 anos de operação ininterrupta desde 1974. A empresa atua também em instalação de maquinário industrial, serviços de engenharia e representação comercial de veículos, indicando portfólio diversificado ancorado em soluções industriais de ciclo longo. Classificada como 'DEMAIS' pela Receita Federal — acima do enquadramento ME/EPP —, mas faturamento e EBITDA não são estimáveis sem dados adicionais.",
+    "analise_sucessoria": "O risco sucessório é máximo (score 100). Os dois fundadores originais — Wilson Molina Ribas e Nilza Torres Molina — estão na faixa 80+ e permanecem no quadro desde 1974, há 52 anos. A segunda geração (Wilson Roberto Molina, 61–70 anos, e Claudia Cristina Molina Ruivo, 51–60 anos) ingressou em 1993 e provavelmente já conduz a operação, mas também está em idade avançada — especialmente Wilson Roberto. A criação da WNRC Holding em 2012 é sinal de algum planejamento patrimonial, mas não elimina o risco operacional: se os fundadores ainda centralizam relacionamentos-chave e decisões estratégicas (padrão hub-and-spoke comum em industriais familiares dessa geração), a saída deles pode desestabilizar clientes, fornecedores e cultura interna. O quadro está essencialmente congelado desde 1993 — nenhuma terceira geração visível no QSA — e o timing para abordagem é urgente.",
+    "red_flags": [
+      {
+        "risco": "Passivo fiscal e tributário acumulado",
+        "severidade": "alta",
+        "como_verificar": "Consultar PGFN (Dívida Ativa da União) em pgfn.fazenda.gov.br pelo CNPJ; checar CARF e TJSP (e-SAJ) por execuções fiscais estaduais e federais em aberto — todos gratuitos e públicos"
+      },
+      {
+        "risco": "Passivo trabalhista (52 anos de operação industrial com mão de obra fabril)",
+        "severidade": "alta",
+        "como_verificar": "Consultar TRT-2 (portal.trt2.jus.br) e TST (consultapje.tst.jus.br) pelo CNPJ para identificar reclamatórias históricas e em curso; quantificar provisões na due diligence"
+      },
+      {
+        "risco": "Não-conformidade com NR-12 (segurança em operação e fabricação de máquinas)",
+        "severidade": "media",
+        "como_verificar": "Verificar histórico de autuações do Ministério do Trabalho (SFIT/MTE) pelo CNPJ; perguntar na abordagem se há laudos de conformidade emitidos por engenheiro de segurança nos últimos 5 anos"
+      },
+      {
+        "risco": "Passivo ambiental (indústria manufatureira no ABC paulista por cinco décadas)",
+        "severidade": "media",
+        "como_verificar": "Consultar CETESB (consulta pública de licenças e autos de infração) e IBAMA pelo CNPJ; verificar se há licença de operação vigente para a planta — ABC paulista tem histórico regulatório rigoroso"
+      },
+      {
+        "risco": "Dependência do fundador (hub-and-spoke) com risco de perda de know-how e relacionamentos",
+        "severidade": "alta",
+        "como_verificar": "No primeiro contato, perguntar quem assina contratos com clientes âncora, quem negocia com os principais fornecedores e quem detém o relacionamento técnico crítico — se a resposta apontar para Wilson Molina Ribas (80+), o risco é concreto e precificável"
+      }
+    ],
+    "perguntas_abordagem": [
+      "Wilson Roberto, quem responde pela operação do dia a dia hoje — você tem autonomia plena nas decisões comerciais e financeiras ou ainda consulta seu pai nas situações maiores?",
+      "A WNRC Holding foi criada em 2012 como parte de um planejamento de sucessão mais amplo ou foi principalmente uma reorganização patrimonial? Isso nos ajuda a entender em que ponto o processo já está.",
+      "Dado que vocês fabricam, instalam e prestam engenharia há mais de 50 anos, qual frente do negócio gera mais margem hoje — produto, instalação ou representação comercial?",
+      "Claudia está ativa na gestão? Se sim, em qual área ela está mais presente — comercial, financeiro ou técnico-operacional?",
+      "Quando o futuro de longo prazo da empresa entra em pauta na família — seja entrada de sócio estratégico, profissionalização da gestão ou liquidez parcial —, quem senta nessa mesa?"
+    ],
+    "tese_aproximacao": "A Lavrita é um ativo industrial raro: 52 anos de operação em São Bernardo do Campo, em segmento com alta barreira de entrada (fabricação + instalação + engenharia integradas), com risco sucessório máximo que cria janela de originação imediata. A existência da WNRC Holding indica uma família que já pensou em patrimonialização — o que reduz a resistência inicial à conversa —, mas que provavelmente não avançou para o próximo estágio (governança formal, profissionalização ou liquidez). O ângulo de entrada não deve ser 'compra de empresa', mas 'estruturação da transição com maximização de valor para a família Molina' — o que posiciona o boutique como conselheiro de processo, não comprador oportunista, e diferencia da abordagem direta de fundos.",
+    "proximo_passo": "Ligar para (11) 4173-5277 solicitando falar com Wilson Roberto Molina (sócio-administrador, segunda geração, 61–70 anos) e apresentar o boutique como especialista em transações com industriais familiares no ABC paulista — usar o email contabilidade@lavrita.com.br apenas como canal de follow-up escrito após o contato telefônico inicial."
+  },
+  "c952110f-3687-4f85-9fe7-29d71a24fbfb": {
+    "overview": "Máquinas Ferdinand Vaderss S.A. é uma indústria fabricante de máquinas e equipamentos de uso geral (CNAE 2829-1/99), com atividades secundárias em equipamentos de saneamento básico/ambiental e instalação de máquinas industriais. Fundada em 1969, opera há 57 anos em Cotia/SP — Grande São Paulo — com porte classificado como 'Demais' (não-ME/EPP), o que indica estrutura operacional relevante. Faturamento e número de funcionários não estimáveis sem dados adicionais.",
+    "analise_sucessoria": "O quadro societário sinaliza risco sucessório máximo por três razões combinadas. INGRID HELGE DAUCH (80+), sócia desde 2015, é provavelmente a matriarca ou figura fundadora — sobrenome distinto dos Vaders sugere ramo colateral ou cônjuge; sua presença ativa no QSA a essa idade é o sinal mais crítico. FERDINANDO VADERS JUNIOR (61-70), presidente da companhia desde 2019, é segunda geração e o provável gestor operacional atual. LILIAN DE SYLOS VADERS (51-60), diretora desde 2018, pode ser cônjuge ou filha de Ferdinando Junior — terceira geração hipotética, mas sem confirmação. A reestruturação recente do quadro (2015–2019) indica que uma transição foi iniciada, mas não completada: não há sócios abaixo dos 50 anos visíveis, o que significa que mesmo a 'nova geração' já está na casa dos 60 anos. A janela para uma saída planejada e ordenada está se fechando.",
+    "red_flags": [
+      {
+        "risco": "Capital social registrado como R$ 0 em Sociedade Anônima Fechada — anomalia que pode indicar desatualização cadastral grave, processo de dissolução silenciosa ou uso da entidade como holding sem atualização contábil",
+        "severidade": "alta",
+        "como_verificar": "Consultar JUCESP (Junta Comercial de SP) pelo CNPJ para verificar última alteração contratual e demonstrações financeiras arquivadas; SA fechada acima de determinado porte tem obrigação de publicar balanço"
+      },
+      {
+        "risco": "Email de contato pertence a domínio 'solutta.com' (escritório de legalização/contabilidade terceirizado) — indica que a empresa não gerencia correspondência própria ou está sendo administrada via prestador de serviços, sugerindo possível distanciamento da gestão ativa",
+        "severidade": "media",
+        "como_verificar": "Ligar no telefone 11-4504-7000 (linha fixa Cotia) para validar se ainda é o contato operacional da empresa; buscar site próprio ou perfil no LinkedIn pelo nome fantasia"
+      },
+      {
+        "risco": "Passivo fiscal oculto — 57 anos de operação industrial aumenta probabilidade de autuações acumuladas, parcelamentos REFIS/PERT não quitados ou execuções fiscais em aberto",
+        "severidade": "alta",
+        "como_verificar": "Consulta gratuita: PGFN Dívida Ativa da União (pgfn.fazenda.gov.br) + CARF pelo CNPJ + TJSP (esaj.tjsp.jus.br) para execuções fiscais estaduais e municipais de Cotia"
+      },
+      {
+        "risco": "Não-conformidade NR-12 (segurança em máquinas e equipamentos) — empresa fabrica E instala máquinas industriais; responsabilidade técnica do fabricante por acidentes em campo é passivo latente relevante",
+        "severidade": "alta",
+        "como_verificar": "Solicitar laudos de conformidade NR-12 no processo de due diligence; verificar ações trabalhistas no TRT-2 (São Paulo) por acidentes de trabalho"
+      },
+      {
+        "risco": "Dependência operacional do fundador/gestora sênior (hub-and-spoke) — com Ingrid Helge Dauch na faixa 80+ e presumivelmente detentora de relacionamentos históricos com clientes, saída não planejada pode gerar churn de receita imediato",
+        "severidade": "alta",
+        "como_verificar": "Perguntar diretamente no primeiro contato quem assina os contratos de maior valor e quem detém os relacionamentos-chave com clientes e fornecedores"
+      },
+      {
+        "risco": "Passivo ambiental — fabricação de máquinas para saneamento básico/ambiental em SP desde 1969 implica uso histórico de solventes, metais pesados e processos que podem ter gerado contaminação de solo",
+        "severidade": "media",
+        "como_verificar": "Consultar CETESB (sistema de áreas contaminadas) pelo endereço da planta em Cotia; verificar licenças ambientais ativas"
+      }
+    ],
+    "perguntas_abordagem": [
+      "A Ingrid Helge Dauch ainda participa da gestão do dia a dia ou o papel dela hoje é mais patrimonial? Quem toma as decisões operacionais e comerciais na prática?",
+      "Com 57 anos de operação e uma reestruturação societária recente (2015–2019), vocês já tinham uma conversa interna sobre o próximo ciclo da empresa — se ela continua familiar, cresce com um sócio estratégico ou tem uma saída?",
+      "A atividade de saneamento básico e ambiental — ela representa uma fatia relevante do faturamento ou é complementar? Isso tem crescido com o marco do saneamento?",
+      "Vocês têm concentração de clientes relevante — tipo, os 3 maiores clientes representam mais de 50% da receita? E esses relacionamentos estão vinculados ao nome de alguém específico na família?",
+      "O endereço de e-mail que temos no cadastro é de um escritório de legalização — qual é o canal certo para falar diretamente com o Ferdinando ou com quem cuida da estratégia da empresa?"
+    ],
+    "tese_aproximacao": "A Máquinas Ferdinand Vaderss combina três atributos raros num único alvo: longevidade operacional comprovada de 57 anos (resiliência de produto e mercado), exposição crescente ao setor de saneamento básico (tailwind regulatório do Marco do Saneamento, Lei 14.026/2020) e risco sucessório em estágio crítico — a gestora sênior tem 80+ anos e a 'nova geração' já está nos 60. O timing é preciso: a janela de transição ordenada existe agora, mas se estreita rápido. O ângulo de abordagem não é compra imediata — é iniciar como parceiro de planejamento sucessório, posicionando a boutique como quem entende o setor industrial do interior paulista e já estruturou saídas para empresas familiares em situação análoga, o que diferencia o contato de um cold call financeiro genérico.",
+    "proximo_passo": "Ligar no 11-4504-7000 (linha fixa da empresa em Cotia) para identificar se o ramal chega ao Ferdinando Vaders Junior ou a um gestor direto — o e-mail registrado vai para escritório terceiro e não é canal adequado para primeiro contato; se a ligação não avançar, buscar perfil de Ferdinando Vaders Junior no LinkedIn para abordagem direta com referência ao setor de máquinas industriais em SP."
+  },
+  "9968434d-8c7e-4188-bc79-688e0cae7bce": {
+    "overview": "INDUSTRIA E COMERCIO BARANA LTDA. é uma fabricante de máquinas e equipamentos agrícolas sediada em Limeira (SP), polo industrial consolidado do interior paulista. Opera desde 1980 — 46 anos de atividade contínua — com atividades secundárias em irrigação agrícola e instalação de equipamentos industriais. Classificada como 'DEMAIS' (fora do porte ME/EPP), o que indica empresa acima do porte micro/pequeno; faturamento e EBITDA não são estimáveis sem dados adicionais.",
+    "analise_sucessoria": "O quadro societário tem dois sócios com o sobrenome Barana, ambos registrados desde 1994 — sem nenhuma alteração há 32 anos. José Barana, faixa 80+, é muito provavelmente o fundador operacional: a empresa existe desde 1980 e o QSA foi formalizado 14 anos depois, padrão comum de reorganização familiar tardia. Josiane Barana, 51-60 anos, é provável filha ou cônjuge, mas participação no QSA não confirma engajamento operacional ativo. Não há nenhum herdeiro de terceira geração visível no quadro — ausência que, combinada com a idade avançada de José e a estagnação societária de três décadas, resulta em score de risco sucessório máximo (100). A janela decisória está aberta: fundadores na faixa 80+ entram num período em que pressões de saúde, estate planning e cansaço operacional tendem a precipitar conversas que antes eram evitadas.",
+    "red_flags": [
+      {
+        "risco": "Dependência operacional do fundador (hub-and-spoke)",
+        "severidade": "alta",
+        "como_verificar": "Perguntar no primeiro contato se José ainda assina contratos, aprova orçamentos e mantém relacionamentos com clientes-chave. Indicadores externos: nome do fundador em certificações ISO/Inmetro, menções em feiras do setor (Agrishow, FEIMAFE), cabeçalho de registros de marca no INPI."
+      },
+      {
+        "risco": "Passivo fiscal acumulado",
+        "severidade": "alta",
+        "como_verificar": "Consulta PGFN (Dívida Ativa da União) pelo CNPJ — gratuita em pgfn.fazenda.gov.br. Verificar também execuções fiscais estaduais no TJSP (busca por CNPJ, gratuita). Indústria ativa há 46 anos em SP tem alta probabilidade de histórico tributário com parcelamentos, autos de infração ou dívida ativa em aberto."
+      },
+      {
+        "risco": "Passivo de segurança do trabalho — NR-12",
+        "severidade": "media",
+        "como_verificar": "Consultar autuações do Ministério do Trabalho (portal e-SIT) pelo CNPJ. Fabricantes de máquinas agrícolas são obrigados a adequar equipamentos à NR-12 (segurança em máquinas e equipamentos); não-conformidades geram embargo de linha e multas relevantes. Verificar existência de laudos técnicos recentes."
+      },
+      {
+        "risco": "Passivo ambiental",
+        "severidade": "media",
+        "como_verificar": "Consultar CETESB (licença de operação ativa e autos de infração) pelo CNPJ ou endereço do estabelecimento — acesso via portal da CETESB/SP. Fabricação de máquinas envolve pintura industrial, usinagem e fluidos de corte — fontes comuns de passivo ambiental latente em plantas antigas."
+      },
+      {
+        "risco": "Capital social registrado como zero na base Receita Federal",
+        "severidade": "media",
+        "como_verificar": "Capital social = 0 é atípico e pode indicar contrato social desatualizado, integralização nunca formalizada na Junta, ou reestruturação societária incompleta. Solicitar contrato social consolidado na JUCESP para verificar a situação real — não reflete receita ou valor de mercado."
+      }
+    ],
+    "perguntas_abordagem": [
+      "O senhor José ainda está no dia a dia — aprovação de orçamentos, relacionamento com clientes maiores — ou a Josiane já assumiu a condução operacional? Pergunto porque o modelo de gestão muda muito como a gente pensa em parceiros estratégicos para o negócio.",
+      "Com 46 anos de mercado em máquinas agrícolas no interior de SP, imagino que a Barana tem relacionamentos muito consolidados com cooperativas ou distribuidoras regionais. Esses vínculos estão formalizados em contratos de longo prazo, ou é mais uma relação de confiança histórica?",
+      "A empresa trabalha principalmente com fabricação sob encomenda para revendas, ou tem linha própria de produtos com marca Barana? O posicionamento muda bastante o perfil de quem poderia agregar valor como parceiro.",
+      "Houve alguma conversa interna nos últimos anos sobre o futuro da empresa — entrada de um gestor profissional, parceria com outro grupo industrial, ou algum tipo de transição planejada? Algumas famílias do setor que acompanhamos estão antecipando esse movimento antes que a pressão de mercado ou um evento de saúde force a decisão.",
+      "O quadro societário está com a mesma composição desde 1994 — 32 anos sem alteração é raro. Foi uma escolha deliberada manter assim, ou simplesmente não surgiu o momento certo para revisar a estrutura?"
+    ],
+    "tese_aproximacao": "A Barana é um ativo industrial de nicho com 46 anos de operação em Limeira, num setor — máquinas agrícolas — com demanda estrutural crescente pelo agronegócio brasileiro: exatamente o tipo de plataforma que fundos de PE mid-market e compradores estratégicos do agro buscam como add-on ou ponto de entrada regional no interior de SP. O risco sucessório é máximo e o timing é agora: fundador 80+, sem geração seguinte no QSA, quadro societário parado há três décadas. O ângulo de abordagem é legado e continuidade — não venda forçada — mostrando que estruturar uma transição antes de uma crise de saúde ou disputa societária protege o nome da família e o valor do negócio. Somos o interlocutor certo porque atuamos especificamente nessa janela decisória com empresas familiares industriais, temos compradores mapeados no setor de equipamentos agrícolas e podemos conduzir o processo preservando a operação e os colaboradores.",
+    "proximo_passo": "Sem telefone ou e-mail na base: buscar Josiane Barana no LinkedIn (sócia mais jovem, maior probabilidade de presença digital) com mensagem direta e personalizada; em paralelo, consultar o contrato social na JUCESP para obter o endereço físico da sede e tentar abordagem presencial ou correspondência formal endereçada a José Barana."
+  },
+  "7f857ff3-ef88-4f01-a3da-1480ca3eca1f": {
+    "overview": "Darka Indústria e Comércio Ltda é uma fabricante de equipamentos hidráulicos e pneumáticos sediada em Diadema/SP, fundada em 1971 — 55 anos de operação no polo metalomecânico do ABC paulista. O porte declarado é 'DEMAIS' (acima de ME/EPP), mas o dado financeiro mais crítico não é o capital social: a empresa está formalmente em Recuperação Judicial, o que altera completamente o enquadramento deste ativo de 'risco sucessório' para 'ativo em distress com sobreposição sucessória'.",
+    "analise_sucessoria": "O quadro societário tem três entradas: Izabel Aparecida Figueiredo (Sócia-Administradora, 61-70 anos, desde 2004), Nelson Garey (Administrador — não necessariamente sócio com equity — 80+, desde 2010) e COOPERACAO REPRESENTACAO CONST ADM E PART LTDA (Sócia PJ, desde 2004). O risco sucessório é real, mas opaco: quem detém equity de fato são Izabel e a holding COOPERACAO, e não se sabe quem controla esta última — se for Nelson ou sua família, o 80+ do administrador se torna 80+ do controlador real. O quadro está estático desde 2010, sem entrada de geração mais jovem visível na Receita. A RJ adiciona urgência: em processos dessa natureza, sócios já não têm controle operacional pleno, e o timing para uma transação negociada é curto e condicionado ao plano aprovado pelo juízo.",
+    "red_flags": [
+      {
+        "risco": "Recuperação Judicial ativa",
+        "severidade": "alta",
+        "como_verificar": "Buscar processo no TJSP por razão social ou CNPJ (tjsp.jus.br, eSAJ, grátis). Identificar o administrador judicial nomeado, a fase do plano (aprovação, execução, encerramento) e o tamanho da dívida habilitada. Sem esse dado, qualquer tese de aquisição é prematura."
+      },
+      {
+        "risco": "Capital social zerado — possível patrimônio líquido negativo",
+        "severidade": "alta",
+        "como_verificar": "Capital social R$0 no Receita é incomum e pode indicar redução durante a RJ ou omissão cadastral. Solicitar balanço mais recente ao administrador judicial — em RJ, balanços periódicos são peça obrigatória do processo, portanto acessíveis via autos."
+      },
+      {
+        "risco": "Passivo fiscal oculto pré-RJ",
+        "severidade": "alta",
+        "como_verificar": "Consultar PGFN Certidão de Dívida Ativa (pgfn.gov.br, grátis por CNPJ) e CARF. Em RJ, débitos fiscais têm tratamento especial (art. 57 Lei 11.101) e podem não estar habilitados no plano — o passivo real pode exceder o que aparece na recuperação."
+      },
+      {
+        "risco": "Opacidade societária via PJ intermediária (COOPERACAO REPRESENTACAO)",
+        "severidade": "media",
+        "como_verificar": "Pesquisar CNPJ da COOPERACAO REPRESENTACAO CONST ADM E PART LTDA na Receita Federal para ver QSA dela — identificar se Nelson Garey ou família são os sócios finais. Isso determina se o '80+' é só administrador ou controlador."
+      },
+      {
+        "risco": "Passivo trabalhista e de segurança (NR-12) acumulado",
+        "severidade": "media",
+        "como_verificar": "Consultar TST (consulta-processual.tst.jus.br) pelo CNPJ. Indústria de 55 anos em Diadema com maquinário provavelmente antigo tem alta probabilidade de autuações NR-12 (segurança de máquinas) e ações trabalhistas — checar se foram ou não habilitadas no plano RJ."
+      },
+      {
+        "risco": "Passivo ambiental (operação industrial de 55 anos em polo do ABC)",
+        "severidade": "media",
+        "como_verificar": "Consultar CETESB (sistem.cetesb.sp.gov.br) por razão social e Cadastro Técnico Federal do IBAMA. Diadema tem histórico de contaminação de solo em áreas industriais — risco real para qualquer comprador de ativo."
+      }
+    ],
+    "perguntas_abordagem": [
+      "A Darka ainda opera produtivamente durante a RJ, ou a operação está paralisa­da? Quais linhas de produto continuam ativas?",
+      "Quem é o administrador judicial nomeado e em que fase está o plano de recuperação — já homologado, em execução ou em renegociação?",
+      "A COOPERACAO REPRESENTACAO é controlada por Nelson Garey ou por outros herdeiros? Existe um grupo familiar coeso ou há disputa interna sobre o destino da empresa?",
+      "Existe interesse dos sócios em uma saída total (venda de controle ou do fundo de comércio) versus um parceiro que entre com capital para viabilizar a saída da RJ?",
+      "A carteira de clientes — contratos de fornecimento de equipamentos hidráulicos/pneumáticos — sobreviveu à RJ ou houve perda significativa durante o processo?"
+    ],
+    "tese_aproximacao": "A Darka é um ativo industrial de nicho (hidráulica/pneumática, 55 anos, ABC paulista) em situação de dupla pressão: RJ ativa e controladores acima de 60-80 anos sem sucessão estruturada visível — combinação que cria janela de transação com urgência real e contrapartes motivadas. O ângulo não é sucessão clássica, mas sim recapitalização/aquisição em distress com viés de carve-out do negócio operacional limpo dos passivos. O adquirente ideal é um strategic do setor (fabricantes de componentes industriais, distribuidoras de automação) ou um PE focado em turnaround industrial — e o originador agrega valor aqui por ter acesso ao processo judicial (via administrador judicial) antes que o ativo apareça em leilão público, o que é exatamente o 'porquê nós': velocidade de acesso e capacidade de estruturar fora do processo formal.",
+    "proximo_passo": "Localizar o processo de RJ no TJSP (busca gratuita por CNPJ ou razão social em esaj.tjsp.jus.br) para identificar o administrador judicial nomeado — ele é o interlocutor mais indicado para o primeiro contato, com mais poder de interlocução que os próprios sócios neste momento; paralelamente, buscar Izabel Aparecida Figueiredo no LinkedIn como canal de aquecimento direto com a Sócia-Administradora."
+  },
+  "f2d357bf-bfaa-4f04-be51-e84e999b233e": {
+    "overview": "Centrolab é um laboratório de análises clínicas fundado em 1973 em Botucatu (SP), com 53 anos de operação contínua. Classificado como 'DEMAIS' pelo Simples Nacional — ou seja, fora das faixas de ME/EPP, o que indica escala operacional relevante para o padrão de labs independentes do interior. Porte financeiro não estimável sem demonstrativos; capital social registrado (R$ 429 mil) não reflete receita nem valor de mercado.",
+    "analise_sucessoria": "O quadro societário apresenta dois núcleos familiares distintos com dinâmica de transição já iniciada, mas incompleta. Luiz Gonzaga Miguel Balasteghin (71–80 anos, sócio-administrador desde a fundação em 1973) é o co-fundador e provável hub técnico-relacional da empresa — 53 anos de operação concentrados nele. Em 2015, cinco membros da família Chiaradia Gabriel ingressaram simultaneamente, incluindo Maria Lucia Morato Chiaradia Gabriel (80+), sinalizando uma reestruturação societária planejada naquela época. Em 2019, Karina Tuma Balasteghin (41–50 anos) entrou como sócia-administradora — sobrenome Balasteghin sugere relação familiar direta com Luiz Gonzaga, possivelmente filha. Essa sequência (2015 + 2019) indica que a família reconhece a necessidade de transição, mas o fundador principal ainda permanece administrador ativo. Com o sócio mais velho na faixa 80+ e o fundador em 71–80, a janela para uma saída planejada — antes de saída involuntária por incapacidade ou morte — é de 3 a 7 anos no máximo. Score sucessório 100/100 é justificado.",
+    "red_flags": [
+      {
+        "risco": "Dependência operacional e relacional do fundador (hub-and-spoke)",
+        "severidade": "alta",
+        "como_verificar": "Perguntar diretamente no primeiro contato: qual é a divisão de responsabilidades entre Luiz Gonzaga e Karina hoje? Ele ainda assina laudos, gerencia convênios ou representa a empresa com clientes-chave? Se sim, há risco severo de destruição de valor pós-saída."
+      },
+      {
+        "risco": "Irregularidade ou iminente vencimento de alvará ANVISA",
+        "severidade": "alta",
+        "como_verificar": "Consulta gratuita no portal ANVISA Consultas Públicas (consultas.anvisa.gov.br) pelo CNPJ 45427887000137. Labs clínicos operam sob Resolução RDC 302/2005 — verificar se o registro está ativo, vigente e sem processos administrativos pendentes."
+      },
+      {
+        "risco": "Passivo fiscal oculto",
+        "severidade": "media",
+        "como_verificar": "Consulta PGFN Dívida Ativa da União (portaldatransparencia.gov.br/consulta-ceis-cepim-cnep) + TJSP pelo CNPJ para execuções fiscais estaduais. Empresa de 53 anos tem exposição histórica maior a autuações de PIS/COFINS e contribuições previdenciárias."
+      },
+      {
+        "risco": "Passivo trabalhista acumulado",
+        "severidade": "media",
+        "como_verificar": "CNDT — Certidão Negativa de Débitos Trabalhistas (tst.jus.br/certidao) pelo CNPJ, gratuita e imediata. Labs clínicos têm quadro técnico (biomédicos, farmacêuticos, técnicos) com vínculo de longo prazo — potencial de rescisões contestadas e adicional de insalubridade em disputa."
+      },
+      {
+        "risco": "Concentração de receita em poucos convênios ou SUS",
+        "severidade": "media",
+        "como_verificar": "Não verificável externamente sem acesso a faturamento. Abordar no primeiro contato: qual o mix entre SUS, planos privados e particular? Se >40% de uma única fonte, há risco de receivables e renegociação unilateral."
+      }
+    ],
+    "perguntas_abordagem": [
+      "Em 2015 toda a família Chiaradia Gabriel entrou na sociedade, e em 2019 a Karina assumiu a administração — esse movimento fez parte de um planejamento de longo prazo para o Centrolab, ou foi uma reorganização pontual?",
+      "Hoje, qual é a divisão prática entre o Luiz Gonzaga e a Karina na gestão do dia a dia — operações técnicas, relacionamento com convênios, decisões financeiras?",
+      "O mercado de labs independentes no interior de SP tem recebido abordagens de consolidadores como DASA, Hermes Pardini ou grupos regionais — o Centrolab já recebeu alguma proposta ou sondagem nos últimos anos?",
+      "O mix de receita do laboratório hoje é majoritariamente SUS, planos privados ou particular? Houve mudança nesse perfil nos últimos 5 anos?",
+      "Além de Botucatu, o Centrolab opera unidades em outras cidades ou tem planos de expansão regional em discussão?"
+    ],
+    "tese_aproximacao": "O Centrolab é um ativo de 53 anos com marca consolidada em Botucatu, numa categoria (labs independentes de médio porte no interior de SP) que está sendo sistematicamente adquirida por consolidadores nacionais e regionais — criando uma janela de liquidez real e limitada no tempo. A reestruturação societária de 2015–2019 sinaliza que a família já está em modo de planejamento, mas ainda não fechou a equação sucessória, o que significa que a conversa certa hoje não é 'venda', mas 'quais opções existem para garantir que 53 anos de construção não se percam numa transição mal executada'. O ângulo de entrada é timing e preservação de legado — não oferta de compra — posicionando o originador como conselheiro que conhece o mercado de consolidação de labs e pode estruturar alternativas (venda estratégica, entrada de minority PE, MBO com Karina) antes que um consolidador chegue com uma proposta única e desequilibrada.",
+    "proximo_passo": "Ligar para 14 3815-7100 pedindo para falar com Karina Tuma Balasteghin (sócia-administradora) — evitar o email de contato cadastrado, que vai para a contabilidade externa (Exatus Contabilidade) e não chega ao tomador de decisão; se não houver retorno em 48h, localizar o perfil de Karina no LinkedIn para abordagem direta com mensagem curta ancorada no contexto de consolidação do setor de labs."
+  },
+  "4fba9c6a-cfd1-461f-bb3e-419ccacb428f": {
+    "overview": "IMUNE é uma clínica especializada em vacinação e doenças febris, fundada em 1974 em São Paulo — 52 anos de operação no setor de saúde privada. Opera como Sociedade Simples Pura, estrutura jurídica típica de parcerias entre profissionais de saúde (médicos), com cinco sócios-administradores ativos. Porte classificado como 'DEMAIS' (acima do limite de EPP), mas receita e valor não são estimáveis sem dados adicionais.",
+    "analise_sucessoria": "O risco sucessório é máximo. SERGIO ANTONIO MALAMAN (80+ anos) e VERA MARIA COUTINHO DE MORAES (71-80) são os dois sócios fundadores de 1974 — a clínica carrega provavelmente a reputação clínica e as relações institucionais construídas por eles ao longo de cinco décadas. O quadro ficou estável por décadas e só ganhou dois membros desde 2002, sem nenhum abaixo dos 51 anos. MARCIO CALDEIRA ALVES MOREIRA (61-70), o incorporado mais recente (2021), pode ter entrado como movimento proto-sucessório, mas está na mesma faixa etária avançada dos demais. Não há sócio de segunda geração ou perfil de herdeiro jovem visível no QSA. A probabilidade de os fundadores não terem um plano formalizado de saída é alta.",
+    "red_flags": [
+      {
+        "risco": "Dependência do fundador (hub-and-spoke clínico)",
+        "severidade": "alta",
+        "como_verificar": "Perguntar diretamente no primeiro contato quem assina os laudos, quem tem relacionamento com planos de saúde e convênios corporativos, e quem é o responsável técnico perante a Vigilância Sanitária e o CRM-SP. Se a resposta for SERGIO ou VERA, o risco é concreto."
+      },
+      {
+        "risco": "Restrição regulatória a não-médicos na sociedade (Sociedade Simples Pura)",
+        "severidade": "alta",
+        "como_verificar": "Consultar o CRM-SP e o estatuto social arquivado na JUCESP. Parcerias médicas podem exigir que sócios sejam profissionais habilitados — uma aquisição por player não-médico (consolidadora, fundo) exigiria reestruturação jurídica antes do fechamento."
+      },
+      {
+        "risco": "Passivo fiscal acumulado (52 anos de operação)",
+        "severidade": "media",
+        "como_verificar": "Consulta gratuita: PGFN Dívida Ativa (pgfn.fazenda.gov.br) pelo CNPJ + CARF (carf.fazenda.gov.br) + TJSP para execuções fiscais estaduais. Clínicas antigas com múltiplos sócios-administradores têm exposição não rara a IRPJ/CSLL de períodos anteriores."
+      },
+      {
+        "risco": "Ausência de governança formal entre cinco sócios-administradores",
+        "severidade": "media",
+        "como_verificar": "Solicitar o estatuto social e verificar se há acordo de sócios. Cinco co-administradores sem hierarquia definida criam risco de impasse em qualquer decisão relevante — inclusive a de vender ou trazer sócio estratégico."
+      },
+      {
+        "risco": "Irregularidade sanitária ou licença vencida (ANVISA / Vigilância Sanitária Municipal)",
+        "severidade": "media",
+        "como_verificar": "Consultar o Cadastro Nacional de Estabelecimentos de Saúde (CNES) e o sistema da COVISA-SP pelo CNPJ/CNAE. Clínicas de vacinação exigem licença de funcionamento renovável — vencimento não raramente atrasa em estruturas familiares/informais."
+      }
+    ],
+    "perguntas_abordagem": [
+      "Dr. [nome], com 52 anos de história da IMUNE, como o senhor enxerga a continuidade da clínica nos próximos 5 a 10 anos — há algum plano de sucessão ou transição em andamento entre os sócios?",
+      "Os dois sócios fundadores ainda estão ativos na operação clínica e nas decisões estratégicas, ou já existe uma divisão de responsabilidades com os sócios mais novos?",
+      "A clínica trabalha com programas de vacinação corporativa ou contratos com planos de saúde além do atendimento avulso? Essas relações estão formalizadas em contrato ou dependem de relacionamento pessoal com os sócios?",
+      "Quando MARCIO CALDEIRA entrou em 2021, foi uma decisão de expansão de capacidade clínica ou já havia uma discussão sobre sucessão e continuidade da sociedade?",
+      "Existe algum movimento recente de consolidadoras ou grupos de saúde que já tenham abordado a IMUNE? Como os sócios receberam essas conversas?"
+    ],
+    "tese_aproximacao": "A IMUNE combina três fatores que definem o alvo ideal de succession-driven M&A em saúde: marca estabelecida (52 anos), localização premium (São Paulo), e fundadores em idade crítica sem sucessão visível — o score máximo de risco não é coincidência. O setor de vacinação privada vive onda de consolidação pós-COVID (Grupo Sabin, Hermes Pardini, redes de farmácias) e uma clínica com reputação e base de pacientes construída em décadas vale substancialmente mais dentro de uma plataforma do que operando de forma isolada. O ângulo de abordagem não é compra imediata, mas partnership estratégico ou estrutura de tag-along que preserve a marca e garanta renda continuada aos fundadores — argumento que ressoa com médicos que construíram identidade profissional na clínica. Somos o interlocutor certo porque operamos exclusivamente com empresas familiares em risco sucessório no middle market brasileiro: não chegamos como comprador oportunista, mas como estruturador de saída digna para fundadores que não querem simplesmente fechar as portas.",
+    "proximo_passo": "Ligar para (11) 5051-5259 solicitando falar com ADRIANA MELO DE FARIA (sócia mais jovem, 51-60 anos) ou MARCIO CALDEIRA ALVES MOREIRA (entrada mais recente, 2021) — ambos têm maior probabilidade de receptividade a uma conversa exploratória do que os fundadores —, apresentando-se como assessor especializado em transições societárias em saúde e solicitando 20 minutos para trocar perspectivas sobre o mercado."
+  },
+  "64a09b5c-d791-41d2-847b-9a5d14362788": {
+    "overview": "Laboratório clínico com 53 anos de operação, sediado em Itapira-SP, porte EPP. Empresa familiar com sobrenome Passarella em todo o quadro societário — provavelmente referência consolidada no mercado local de exames. Setor de saúde diagnóstica no interior paulista, sujeito a regulação ANVISA e credenciamento junto a planos de saúde regionais.",
+    "analise_sucessoria": "O quadro indica três gerações comprimidas: Maria Eny (80+) entrou apenas em 2016 como sócia não-administradora — movimento típico de regularização patrimonial ou planejamento successório tardio, não de fundadora ativa. Ricardo (51–60, sócio-administrador desde 1984) é o pilar operacional — 40 anos à frente do negócio. Rodrigo (51–60, sócio-administrador desde 2010) divide a gestão. O risco sucessório não é imediato, mas está se construindo: nenhum herdeiro abaixo de 50 anos aparece no QSA, o quadro está congelado desde 2010, e em 10–15 anos Ricardo e Rodrigo enfrentarão a mesma pergunta que Maria já enfrenta. O eventual falecimento de Maria pode destravar uma discussão sucessória antes disso — dependendo de como a participação dela está estruturada no inventário.",
+    "red_flags": [
+      {
+        "risco": "Passivo fiscal acumulado",
+        "severidade": "media",
+        "como_verificar": "Consulta PGFN (Dívida Ativa da União) pelo CNPJ em pgfn.fazenda.gov.br + CARF pelo CNPJ + SEFAZ-SP para débitos estaduais. Laboratórios têm histórico de disputas sobre ISS e PIS/COFINS em serviços de saúde — verificar especialmente competências 2015–2020."
+      },
+      {
+        "risco": "Não-conformidade regulatória ANVISA / acreditação",
+        "severidade": "media",
+        "como_verificar": "Verificar status do CNES (Cadastro Nacional de Estabelecimentos de Saúde) no datasus.saude.gov.br e autorização de funcionamento ANVISA no DATAVISA. Laboratórios sem acreditação PALC ou ISO 15189 têm valor percebido menor para adquirentes estratégicos."
+      },
+      {
+        "risco": "Concentração de receita em poucos planos de saúde regionais",
+        "severidade": "media",
+        "como_verificar": "Não verificável por fontes abertas — perguntar diretamente na conversa. Interior de SP tende a ter 2–3 operadoras dominantes (Unimed regional, Amil, Sul América). Se >60% da receita vem de 1–2 contratos, é risco de churn relevante."
+      },
+      {
+        "risco": "Dependência crítica de Ricardo Passarella Neto (hub-and-spoke)",
+        "severidade": "alta",
+        "como_verificar": "Avaliar na conversa: Ricardo assina contratos com planos de saúde? Tem relacionamento pessoal com médicos solicitantes? Se sim, o negócio pode não sobreviver à sua saída sem período de transição longo."
+      },
+      {
+        "risco": "Passivo trabalhista com corpo técnico especializado",
+        "severidade": "baixa",
+        "como_verificar": "Consulta de processos no TRT-15 (Campinas, jurisdição de Itapira) pelo CNPJ. Biomédicos, farmacêuticos e técnicos de laboratório têm categorias com dissídios específicos — verificar se há ações em aberto."
+      }
+    ],
+    "perguntas_abordagem": [
+      "Ricardo, você está à frente do laboratório desde 1984 — ao longo de 40 anos, como você vê o papel do laboratório daqui a 10 anos, tanto para a família quanto para Itapira?",
+      "Rodrigo e você dividem a administração há mais de uma década: quando os dois decidirem dar um passo atrás, existe alguém da família ou da equipe que está sendo preparado para assumir essa gestão?",
+      "Nos últimos 2–3 anos, vocês receberam alguma aproximação de redes regionais de laboratórios ou grupos de diagnóstica — mesmo que informal?",
+      "Como está a composição da carteira de convênios hoje — vocês atendem predominantemente planos regionais, ou já têm credenciamento com as grandes operadoras nacionais?",
+      "A participação de Maria Eny no quadro societário está formalizada em algum acordo de sócios ou testamento — ou é um tema que a família ainda não tocou de frente?"
+    ],
+    "tese_aproximacao": "Laboratório clínico com meio século de operação em Itapira representa exatamente o perfil que redes consolidadoras de diagnóstica (Dasa, Hermes Pardini, grupos regionais como Sabin ou laboratórios de médio porte em expansão no interior de SP) buscam: marca local estabelecida, base de pacientes fidelizada, e gestores na faixa etária em que a conversa sobre legado começa a ser real. O ângulo não é 'vender o laboratório' — é 'garantir que o que você construiu em 53 anos continua existindo e crescendo, com ou sem você na operação diária'. Somos o interlocutor certo porque trabalhamos exclusivamente com empresas familiares nesse momento de transição, conhecemos o mercado de diagnóstica no interior paulista e não representamos nenhum adquirente específico — o que nos permite mapear a melhor opção para a família, não para um comprador.",
+    "proximo_passo": "Ligar para (19) 3863-1889 pedindo por Ricardo Passarella Neto — o e-mail registrado (contato@itacont.net) parece ser do escritório contábil, não do laboratório, então o telefone é o canal direto; se Ricardo não atender, identificar o site ou número próprio do laboratório via busca 'Laboratório São José Itapira' para ter um canal alternativo antes de tentar novamente."
+  },
+  "3bd2e008-b9bb-421a-bd8a-ba3917f19316": {
+    "overview": "Clínica médica ambulatorial de consultas, fundada em 2010 em São José dos Campos (SP), operando há 16 anos sob natureza jurídica Sociedade Simples Limitada. Classificada como 'DEMAIS' (fora do regime ME/EPP), o que indica faturamento acima do teto do Simples Nacional para essas categorias, embora o valor exato não seja estimável sem demonstrações financeiras. A razão social é idêntica ao nome da sócia-administradora mais jovem, indicando que ela é o ativo central da operação clínica.",
+    "analise_sucessoria": "O quadro societário, estático desde a fundação em 2010, é composto por mãe (Iracema, 80+, sócia não-administradora) e filha (Stella, 41–50, sócia-administradora). O risco não está na saída da administradora operacional — Stella tem 15–20 anos de atividade profissional à frente — mas na quota de Iracema (80+), que não passa por sucessão planejada: sem alteração societária em 16 anos, não há sinal de holding familiar, testamento societário ou cláusulas de compra compulsória no contrato social. Quando a quota de Iracema for inventariada, potenciais herdeiros desconhecidos entram na sociedade sem relação com a operação, podendo bloquear decisões ou forçar dissolução. Esse é o gatilho clássico para uma transação — não a aposentadoria do fundador, mas a fragmentação involuntária da propriedade.",
+    "red_flags": [
+      {
+        "risco": "Quota de sócia 80+ sem planejamento sucessório visível — risco de inventário e entrada de herdeiros não-operacionais na sociedade",
+        "severidade": "alta",
+        "como_verificar": "Solicitar contrato social consolidado (Junta Comercial SP / JUCESP — acesso público) e verificar se há cláusulas de preferência, usufruto ou restrição de transferência de quota; ausência confirma exposição"
+      },
+      {
+        "risco": "Responsabilidade técnica (RT) perante o CRM-SP pode estar formalmente atribuída a Iracema — se ela for a médica registrada como RT, incapacidade ou morte suspende a licença de funcionamento",
+        "severidade": "alta",
+        "como_verificar": "Consultar situação do CRM-SP de Iracema (portal CFM/CRM-SP, busca pública por nome) e verificar se há RT ativa associada ao CNPJ via alvará sanitário municipal de SJC"
+      },
+      {
+        "risco": "Passivo fiscal acumulado — empresa de 16 anos no regime de saúde, setor historicamente exposto a questionamentos de INSS sobre PJ de médico (pejotização)",
+        "severidade": "media",
+        "como_verificar": "Consulta PGFN (Dívida Ativa da União) pelo CNPJ em pgfn.fazenda.gov.br — gratuito; complementar com certidão negativa estadual SP e municipal SJC"
+      },
+      {
+        "risco": "Concentração de receita no CRM de Stella — se ela é a única médica praticante, a clínica é hub-and-spoke; qualquer afastamento (doença, desacordo societário pós-inventário) paralisa a receita",
+        "severidade": "media",
+        "como_verificar": "Perguntar diretamente no primeiro contato quantos médicos atendem sob o CNPJ; cruzar com alvará sanitário para ver capacidade instalada"
+      },
+      {
+        "risco": "Compliance CFM — clínicas com sócio não-médico (se Iracema não for médica) precisam atender Resolução CFM 1.931/2009 sobre razão social e publicidade; irregularidade pode gerar sanção",
+        "severidade": "baixa",
+        "como_verificar": "Verificar registro de Iracema no CRM-SP (portal público); se não constar como médica, avaliar aderência às resoluções de pessoa jurídica médica"
+      }
+    ],
+    "perguntas_abordagem": [
+      "A Dra. Iracema ainda atende pacientes ativamente, ou hoje sua participação na clínica é mais administrativa ou patrimonial?",
+      "Com 16 anos de operação, a Stella Mesquita já passou por alguma conversa sobre o futuro da sociedade — holding familiar, entrada de outros sócios ou eventual venda de participação?",
+      "A clínica atende por convênios, particular ou misto? E a base de pacientes está concentrada em poucos convênios ou pulverizada?",
+      "Vocês já tiveram abordagem de grupos médicos ou redes de clínicas interessadas em parceria ou aquisição em SJC? Como foi recebida?",
+      "Em caso de eventualidade com a Dra. Iracema, há algum mecanismo no contrato social que regule o destino da quota dela — ou isso ainda não foi endereçado formalmente?"
+    ],
+    "tese_aproximacao": "A clínica combina dois vetores de urgência: a quota de uma sócia 80+ sem blindagem sucessória visível e um ativo operacional consolidado (16 anos, base de pacientes em SJC, CNAE restrito a consultas — baixo capex) que é candidato natural à consolidação do mercado de saúde ambulatorial no Vale do Paraíba. O ângulo de entrada não é 'vender sua clínica' — é planejamento patrimonial: a conversa com Stella começa pelo risco que ela provavelmente já enxerga (o que acontece com a quota da mãe?) e migra naturalmente para opções estruturadas (buy-out da quota de Iracema via holding, parceria com grupo médico, ou processo M&A completo). Somos o interlocutor certo porque chegamos antes do inventário forçar a pauta — e com acesso a compradores estratégicos (redes de clínicas, fundos de saúde) que Stella dificilmente alcançaria sozinha.",
+    "proximo_passo": "Ligar para (12) 3911-4880 (número direto da clínica) ou enviar email para contmed@directnet.com.br solicitando 15 minutos com Stella Mesquita para uma conversa sobre estruturação societária de clínicas médicas em SJC — abordar como consultoria de planejamento patrimonial, não como M&A, para reduzir fricção no primeiro contato."
+  },
+  "60c0667e-342d-4219-89d9-69f82e9b4c8a": {
+    "overview": "Clínica médica em São Paulo (CNAE 8630503 — ambulatório com procedimentos cirúrgicos), o nome 'Plástica Saudável' indica fortemente foco em cirurgia plástica e/ou medicina estética. Constituída em 2011 como Sociedade Simples Limitada — forma jurídica padrão para sociedades de profissionais liberais. Porte declarado como 'DEMAIS' (acima de ME/EPP), mas sem DRE ou outra fonte financeira disponível o faturamento não é estimável.",
+    "analise_sucessoria": "O quadro é composto por dois sócios com o mesmo sobrenome — João Baptista Franchi (80+) e Ricardo Franchi (41-50) — ambos presentes desde a fundação em 2011, sem nenhuma alteração societária em 15 anos. A identidade de sobrenome sugere relação familiar direta, provavelmente pai e filho. João, na faixa 80+, está no limite ou além do pico de atividade cirúrgica ativa; Ricardo, entre 41-50, é o condutor operacional mais provável no momento. O risco sucessório é alto: se a reputação clínica, a carteira de pacientes e eventuais habilitações regulatórias estão concentradas em João, qualquer afastamento desestrutura o negócio. Ricardo pode já exercer a liderança operacional na prática, mas a estrutura societária está congelada — sem sinalização de planejamento sucessório, entrada de novo sócio ou reequilíbrio de quotas.",
+    "red_flags": [
+      {
+        "risco": "Dependência operacional do sócio mais velho (hub-and-spoke): se João Baptista é o médico-âncora com carteira de pacientes, reputação de mercado e habilitações em seu nome, seu afastamento pode destruir valor de forma rápida e irreversível.",
+        "severidade": "alta",
+        "como_verificar": "Perguntar diretamente a Ricardo qual percentual dos procedimentos é realizado por João vs. Ricardo; consultar o CRM-SP (cremesp.org.br) para verificar se o registro de João está ativo e sem restrições."
+      },
+      {
+        "risco": "Regularidade ANVISA e Vigilância Sanitária: clínicas que realizam procedimentos cirúrgicos exigem Licença de Funcionamento válida. Pendência aqui bloqueia operação e inviabiliza due diligence.",
+        "severidade": "media",
+        "como_verificar": "Consulta ao DATAVISA (sistemasweb.anvisa.gov.br) pelo CNPJ; verificar Alvará Sanitário junto à COVISA-SP — gratuito."
+      },
+      {
+        "risco": "Passivo fiscal (ISS municipal): clínicas de estética em SP enfrentam disputas históricas sobre alíquota de ISS, especialmente quando misturam procedimentos estéticos (não cobertos por plano) e reparadores. Risco latente em operações de 15 anos.",
+        "severidade": "media",
+        "como_verificar": "Consulta à PGFN (regularize.pgfn.gov.br) e ao CADIN Municipal de SP pelo CNPJ — gratuito."
+      },
+      {
+        "risco": "Passivo trabalhista: clínicas com recepcionistas, técnicos de enfermagem e anestesistas contratados via PJ frequentemente têm vínculos requalificados em ações trabalhistas.",
+        "severidade": "media",
+        "como_verificar": "Consulta ao TRT2 (portal.trt2.jus.br) pelo CNPJ e pelo nome dos sócios — gratuito."
+      },
+      {
+        "risco": "Contato disponível (jfodor@uol.com.br) não corresponde a nenhum sócio do QSA: risco real de não alcançar o decisor no primeiro contato, especialmente por email.",
+        "severidade": "baixa",
+        "como_verificar": "Ligar para 11 5574-8175 e confirmar se é a clínica antes de enviar email; pedir para falar com Dr. Ricardo Franchi diretamente."
+      }
+    ],
+    "perguntas_abordagem": [
+      "Dr. Ricardo, com o João ainda ativo, vocês já estruturaram algum plano de transição para os próximos anos — seja entrada de um sócio, um acordo de sucessão, ou outro formato?",
+      "Como está dividida hoje a agenda entre o senhor e o Dr. João em termos de procedimentos realizados e atendimentos?",
+      "A clínica já recebeu alguma aproximação de grupos médicos, fundos ou investidores interessados em parceria ou incorporação?",
+      "Além dos dois sócios, há outros médicos na equipe ou a operação cirúrgica está concentrada nos dois?",
+      "Como o senhor enxerga o posicionamento da clínica daqui a cinco anos, considerando a consolidação acelerada que está acontecendo no mercado de saúde estética em SP?"
+    ],
+    "tese_aproximacao": "A Plástica Saudável é um alvo clássico de risco sucessório em saúde: sócio fundador na faixa 80+ sem nenhuma alteração societária em 15 anos, em um segmento (cirurgia plástica/estética em São Paulo) que está passando por forte onda de consolidação por grupos de clínicas e operadores de saúde verticalizados. Ricardo provavelmente já carrega a operação na prática mas não tem estrutura formal de transição — o timing é ideal, antes que a saída forçada de João crie urgência que deteriora poder de barganha. O ângulo de aproximação é planejamento sucessório e estruturação societária, não 'venda': isso reduz a resistência inicial e abre a conversa de forma mais natural para um founder que ainda está ativo.",
+    "proximo_passo": "Ligar para 11 5574-8175 pedindo para falar com Dr. Ricardo Franchi; se não alcançar diretamente, enviar email para jfodor@uol.com.br com assunto neutro ('Conversa sobre estrutura da Plástica Saudável') — sem mencionar 'aquisição' ou 'venda' no primeiro contato."
+  },
+  "f9466f35-860c-44ab-b3de-ec6a25c25a3f": {
+    "overview": "CLINECOM S/S LTDA é uma prestadora de serviços de saúde (CNAE 8690-9/99 — outras atividades de atenção à saúde humana não especificadas) sediada em Catanduva, polo regional do interior paulista, com 36 anos de operação contínua desde 1990. A natureza jurídica Sociedade Simples Limitada é característica de empresas cujo objeto é o exercício de atividade profissional pelos próprios sócios — típico de clínicas, serviços especializados ou home care. Porte EPP; capital social de R$ 2.000 é registro contábil de 1990 e não reflete faturamento nem valor de mercado atual.",
+    "analise_sucessoria": "Risco sucessório é crítico e imediato: os dois únicos sócios — Renato Frati (sócio-administrador desde a fundação em 1990) e Odete Frati (sócia simples, entrada em 2017) — estão ambos na faixa 80+. A entrada de Odete em 2017, 27 anos após a fundação, sugere reorganização patrimonial ou conjugal, não incorporação de herdeiro operacional. Não há sócio mais jovem no quadro nem qualquer sinal de transição geracional em andamento. Renato concentra a administração desde o primeiro dia — padrão hub-and-spoke clássico de fundador —, e o quadro está congelado há 9 anos sem nenhuma alteração. Score de 77 reflete corretamente a severidade: dois octogenários, sem succession track visível.",
+    "red_flags": [
+      {
+        "risco": "Dependência operacional total do fundador como único administrador — saída não planejada pode paralisar a operação",
+        "severidade": "alta",
+        "como_verificar": "Confirmar no primeiro contato quem assina contratos, renova alvarás e gerencia equipe; verificar se há gerente profissional contratado ou se Renato é o hub central de todas as decisões"
+      },
+      {
+        "risco": "Passivo trabalhista oculto — setor de saúde tem alta rotatividade de técnicos, enfermeiros e recepcionistas e é alvo frequente de reclamações na Justiça do Trabalho",
+        "severidade": "alta",
+        "como_verificar": "Consultar processos pelo CNPJ no portal do TRT 15ª Região (Campinas, que cobre Catanduva) em pje.trt15.jus.br — gratuito e sem login"
+      },
+      {
+        "risco": "Passivo fiscal acumulado — pequenas prestadoras de saúde frequentemente têm pendências de ISS municipal, PIS/COFINS e contribuições previdenciárias sobre pro-labore",
+        "severidade": "media",
+        "como_verificar": "Consulta PGFN Dívida Ativa da União em regularize.pgfn.gov.br; Dívida Ativa Estadual SP em divida.sp.gov.br; certidão de débitos municipais direto na prefeitura de Catanduva — todos gratuitos pelo CNPJ"
+      },
+      {
+        "risco": "Risco regulatório sanitário — estabelecimentos de saúde precisam de licença da Vigilância Sanitária municipal e estadual (VISA/CVS-SP), que podem estar vencidas ou em situação irregular após décadas",
+        "severidade": "media",
+        "como_verificar": "Consultar o CNES (Cadastro Nacional de Estabelecimentos de Saúde) em cnes.datasus.gov.br pelo CNPJ para verificar se o estabelecimento está ativo e com registro vigente"
+      },
+      {
+        "risco": "Ausência de planejamento sucessório formal — nenhum herdeiro incorporado ao quadro em 36 anos de operação aumenta risco de dissolução involuntária ou litígio inventário",
+        "severidade": "alta",
+        "como_verificar": "Perguntar diretamente no primeiro contato se existe contrato de sucessão, testamento empresarial ou holding patrimonial constituída"
+      }
+    ],
+    "perguntas_abordagem": [
+      "O senhor Renato ainda está na gestão ativa do dia a dia da CLINECOM, ou já delegou a coordenação operacional para algum profissional contratado?",
+      "Em 2017, quando houve a reorganização societária com a entrada da Odete, isso foi parte de algum planejamento patrimonial mais amplo — ou a estrutura ainda está como estava naquela época?",
+      "Há algum familiar da próxima geração envolvido na operação — mesmo que informalmente, sem constar no quadro societário?",
+      "A CLINECOM atende majoritariamente planos de saúde, particular ou tem contrato com o SUS/prefeitura? Quero entender a estabilidade da base de receita antes de qualquer conversa.",
+      "Com 36 anos de operação em Catanduva, a empresa claramente construiu reputação na região — já houve alguma abordagem de grupos de saúde maiores interessados em parceria ou aquisição?"
+    ],
+    "tese_aproximacao": "CLINECOM é alvo de alta convicção: dois sócios octogenários sem sucessor visível em uma prestadora de saúde com três décadas e meia de operação em cidade polo do interior paulista — a janela para uma transição organizada está se fechando sem que haja sinal de que o processo foi iniciado. O ângulo correto não é venda, é proteção de legado e continuidade assistencial. Somos o interlocutor certo porque atuamos exclusivamente com empresas familiares em risco sucessório no middle market brasileiro, conhecemos o ecossistema de saúde no interior de SP e podemos estruturar uma transação que preserve a operação e os vínculos comunitários que uma empresa de 36 anos constrói — diferente de um comprador estratégico com agenda de integração imediata.",
+    "proximo_passo": "Ligar para (17) 3522-3439 — número registrado da empresa, provavelmente a recepção da clínica — identificar-se como assessor de M&A especializado em saúde no interior de SP e solicitar 15 minutos com Renato Frati para uma conversa inicial sobre planejamento de continuidade da empresa."
+  },
+  "a32e0f3a-95ea-4607-9207-642674f9c150": {
+    "overview": "Clínica ambulatorial especializada em cirurgia da obesidade em Campinas (SP), fundada em 2001 — 25 anos de operação contínua. Natureza jurídica de Sociedade Simples Limitada, típica de sociedades médicas. O CNAE registrado é atividade ambulatorial restrita a consultas, o que sugere que os procedimentos cirúrgicos são realizados em hospital conveniado, sendo a PJ o centro de gestão clínica, captação e faturamento de convênios. Porte declarado EPP; capital social de R$ 3.000 não reflete porte real — número histórico sem valor analítico.",
+    "analise_sucessoria": "Risco sucessório alto e com janela se fechando: os dois únicos sócios — José Carlos Pareja (80+, sócio-administrador) e Francisco Callejas Neto (71-80, sócio) — fundaram a empresa juntos em 2001 e nunca alteraram o quadro societário nos 25 anos seguintes. Não há nenhum sócio mais jovem, herdeiro aparente ou profissional de segunda geração visível no QSA. Com o sócio-administrador em faixa 80+, a probabilidade de evento-forçador (incapacidade, falecimento) nos próximos 3–5 anos é concreta. A ausência de qualquer movimentação societária desde a fundação indica que o tema sucessório provavelmente não foi endereçado de forma estruturada.",
+    "red_flags": [
+      {
+        "risco": "Dependência crítica do cirurgião-fundador (hub-and-spoke): se Pareja é o cirurgião principal, reputação, fluxo de pacientes e credenciamento nos planos de saúde podem estar vinculados ao seu CRM pessoal — não à PJ. Com 80+ anos, a continuidade operacional depende de uma pessoa específica.",
+        "severidade": "alta",
+        "como_verificar": "Pesquisar Dr. José Carlos Pareja no portal CFM (portal.cfm.org.br) e CRM-SP para verificar situação do registro e especialidade. No primeiro contato, perguntar diretamente: 'Há outros cirurgiões ativos na clínica hoje?'"
+      },
+      {
+        "risco": "Intransferibilidade societária: Sociedades Simples médicas têm restrições à entrada de sócios não-médicos segundo normas do CFM (Resolução CFM 1.931/2009 e 2.336/2023). Isso limita o universo de adquirentes e pode forçar estruturação alternativa (ex: gestora de saúde ou fundo com médico interveniente).",
+        "severidade": "alta",
+        "como_verificar": "Solicitar ato constitutivo atualizado na JUCESP e consultar CRM-SP sobre composição societária permitida para a atividade registrada no CNAE 8630503."
+      },
+      {
+        "risco": "Passivo fiscal latente: 25 anos de operação sob regime de Sociedade Simples, com capital social declarado historicamente baixo, eleva probabilidade de irregularidades em ISS, Cofins, CSLL ou contribuição previdenciária sobre pró-labore.",
+        "severidade": "media",
+        "como_verificar": "Consulta gratuita à Dívida Ativa da União via PGFN (portaldatransparencia.gov.br/PortalTransparenciaPGFN) pelo CNPJ 04.238.381/0001-00. Checar protestos no SCPC/Serasa PJ."
+      },
+      {
+        "risco": "Passivo trabalhista: longevidade da operação (25 anos) aumenta probabilidade de ações por ex-funcionários ou reclamatórias de médicos que atuaram como PJ mas com vínculo empregatício de fato — prática comum em clínicas desse porte.",
+        "severidade": "media",
+        "como_verificar": "Consulta ao TST (tst.jus.br) e TJSP (esaj.tjsp.jus.br) pelo CNPJ ou nome dos sócios como réu."
+      }
+    ],
+    "perguntas_abordagem": [
+      "O Dr. Pareja ainda opera ativamente, ou a agenda cirúrgica já passou a ser conduzida por outros médicos? Como está estruturada a equipe clínica hoje?",
+      "Os contratos com planos de saúde e hospitais credenciados estão no nome da pessoa jurídica ou vinculados ao CRM pessoal dos sócios?",
+      "Há algum médico mais jovem — sócio, associado ou contratado — já integrado à operação que tenha relação com a base de pacientes?",
+      "Como os senhores enxergam a clínica daqui a 5 anos — existe algum plano de sucessão, redução de jornada ou consideração de parceria estratégica em discussão?",
+      "A estrutura jurídica atual foi revisada desde 2001, ou mantém a configuração original da fundação?"
+    ],
+    "tese_aproximacao": "Clínica com 25 anos de marca estabelecida em Campinas em nicho de alta demanda crescente (cirurgia bariátrica e metabólica), com dois fundadores em faixa de saída e quadro societário completamente parado desde a fundação — perfil clássico de 'founder-dependent practice' que precisará de transição nos próximos 2–5 anos independente da vontade. O ângulo correto é proteção de legado e continuidade clínica, não liquidação. O originador entra como interlocutor que entende a sensibilidade do médico-fundador com o seu paciente e sua reputação, e que pode estruturar um processo que preserve a marca e o modelo assistencial — diferentemente de um comprador oportunista.",
+    "proximo_passo": "Sem telefone ou e-mail cadastrado: mapear o Dr. Francisco Callejas Neto (sócio mais jovem) via LinkedIn ou publicações no CRM-SP, e iniciar contato escrito (LinkedIn DM ou carta física para o endereço da sede em Campinas) posicionando a conversa como planejamento de longo prazo da clínica — não como oferta de compra."
+  },
+  "98c90d44-1b3c-4965-8adf-7d619e8f861f": {
+    "overview": "CENEFRO é uma clínica especializada em nefrologia em São Paulo, fundada em 1987 e em operação há 39 anos. Estruturada como Sociedade Simples Limitada — forma jurídica típica de parcerias médicas —, é classificada como EPP. Não há atividades secundárias registradas, o que sugere foco exclusivo no atendimento nefrológico.",
+    "analise_sucessoria": "O quadro societário reúne 7 sócios, todos com 61 anos ou mais, sem nenhum integrante jovem visível. Dois fundadores originais — Decio Verreschi e Ruy Antonio Barata — estão na faixa 80+ e figuram no QSA desde 1987; outros dois fundadores (Alberto Alcides Fernandes e Elizabeth de Castro Ferreira) estão na faixa 71–80. Os três sócios 'mais jovens' (Thelma, Waldir e Nubia, faixa 61–70) entraram entre 1992 e 1994. O QSA está congelado há 32 anos: nenhuma entrada, saída ou alteração desde 1994. Não há herdeiro nem médico de geração seguinte visível na estrutura. O risco sucessório é imediato: os fundadores octogenários estão no fim da carreira ativa, e os demais sócios chegam à mesma janela em 5–10 anos sem que haja uma transição estruturada em curso.",
+    "red_flags": [
+      {
+        "risco": "Capital social registrado como R$ 0 — indício de desatualização cadastral crônica",
+        "severidade": "media",
+        "como_verificar": "Consultar situação cadastral completa na Receita Federal (CNPJ público) e verificar se há pendências de regularização ou inconsistência com a realidade operacional antes da abordagem"
+      },
+      {
+        "risco": "Passivo fiscal potencial — 39 anos de operação no setor de saúde, incluindo obrigações previdenciárias sobre folha de médicos e terceiros",
+        "severidade": "alta",
+        "como_verificar": "Consulta gratuita à PGFN (Dívida Ativa da União) e ao CARF pelo CNPJ; verificar também certidões estaduais (SEFAZ-SP) e municipais (ISS)"
+      },
+      {
+        "risco": "Licença operacional vinculada a Diretor Técnico específico — em clínicas médicas, o DT com CRM ativo é pré-requisito para licença ANVISA/Vigilância Sanitária; aposentadoria ou óbito de sócios fundadores sem sucessão no DT pode paralisar a operação",
+        "severidade": "alta",
+        "como_verificar": "Consultar o Cadastro Nacional de Estabelecimentos de Saúde (CNES) pelo CNPJ para identificar quem é o DT registrado e verificar se é um dos sócios 80+"
+      },
+      {
+        "risco": "Inventário e bloqueio judicial de cotas — quando sócios 80+ falecerem sem planejamento sucessório, as cotas entram em inventário, podendo bloquear decisões societárias por meses ou anos",
+        "severidade": "alta",
+        "como_verificar": "Consulta ao TJSP pelo nome dos sócios para verificar se há ações judiciais em curso; também verificar cartório de protestos (Serasa/Boa Vista) pelo CNPJ"
+      },
+      {
+        "risco": "Concentração de receita em APAC/SUS — clínicas de nefrologia no Brasil têm dependência elevada de hemodiálise financiada pelo SUS; mudanças de tabela ou descredenciamento afetam diretamente a viabilidade",
+        "severidade": "media",
+        "como_verificar": "Perguntar diretamente no primeiro contato qual o mix SUS vs. planos privados; complementar com consulta ao CNES para ver tipo de atendimento habilitado"
+      }
+    ],
+    "perguntas_abordagem": [
+      "Com Decio Verreschi e Ruy Barata — fundadores desde 1987 — chegando ao final da carreira ativa, vocês já têm algum movimento estruturado de transição, seja para um médico mais jovem ou para uma rede maior?",
+      "A clínica opera sob licença ANVISA/CVS vinculada a um Diretor Técnico específico — já pensaram em como preservar essa licença numa eventual mudança de gestão médica?",
+      "O quadro societário está estável desde 1994; alguém do grupo já formalizou planejamento patrimonial (holding, testamento com cotas) para evitar inventário quando os sócios mais seniores se afastarem?",
+      "Qual a dependência atual de APAC/SUS versus planos privados na receita da clínica — e isso influenciaria uma decisão de parceria ou venda?",
+      "Há algum médico nefrológico mais jovem — sócio ou não — que já esteja sendo preparado para assumir a direção clínica ou eventual participação societária?"
+    ],
+    "tese_aproximacao": "CENEFRO reúne três gatilhos de urgência simultâneos: dois fundadores octogenários sem sucessão visível, QSA congelado há 32 anos, e risco regulatório real se o Diretor Técnico se afastar. Para redes de clínicas especializadas ou grupos hospitalares com interesse em nefrologia em SP, este é o tipo de ativo que não aparece em processo competitivo — ele desaparece por distrato ou inventário. O ângulo de abordagem é proteção de legado: 39 anos construídos por médicos que não querem ver a clínica se dissolver, e que ainda têm janela para estruturar uma saída digna antes que eventos externos (saúde dos fundadores, questão judicial) forcem uma solução pior.",
+    "proximo_passo": "Ligar para (11) 6205-3888 pedindo para falar com a administração da clínica ou, preferencialmente, com Thelma Medeiros da Cunha ou Waldir Falani (sócios 61–70, mais provavelmente ainda em atividade) — se o telefone não tiver resposta, enviar e-mail para nefroleste@uol.com.br com assunto direto mencionando planejamento sucessório para clínicas médicas."
+  },
+  "eaeea2cf-af37-4ce4-be2c-a96c639bd2c2": {
+    "overview": "Clínica médica especializada em angiologia e cirurgia vascular, fundada em 1993 em São José dos Campos (SP), com 33 anos de operação contínua. O CNAE secundário revela capacidade além de consultas: procedimentos cirúrgicos, exames complementares, assistência domiciliar e até cuidados geriátricos — portfólio que sugere uma operação de saúde mais estruturada do que um consultório simples. Porte declarado EPP; capital social de R$ 2.000 é registro histórico defasado e não reflete receita nem valor de mercado.",
+    "analise_sucessoria": "O quadro é composto por dois Zuppardo — provavelmente pai (Rodolpho, 80+) e filho (Rodolfo Lelis, 61-70) — ambos sócios-administradores desde a fundação em 1993. O quadro está congelado há 33 anos, sem entrada de novos sócios ou herdeiros de terceira geração visíveis. O ponto crítico: mesmo o sócio mais jovem está na faixa 61-70, ou seja, em horizonte de 5 a 10 anos também se aproxima da saída. Não há sinal de profissionalização da gestão nem de preparação de sucessor — a janela de transição negociada está aberta agora, antes de uma saída forçada por incapacidade ou morte do sócio principal.",
+    "red_flags": [
+      {
+        "risco": "Dependência clínica e operacional do fundador: se Rodolpho (80+) ainda figura como Responsável Técnico perante CRM-SP ou Vigilância Sanitária, sua saída pode invalidar alvarás e licenças operacionais da clínica",
+        "severidade": "alta",
+        "como_verificar": "Consultar o CNES (Cadastro Nacional de Estabelecimentos de Saúde, cnes.datasus.gov.br) pelo CNPJ para identificar o Responsável Técnico registrado e validade das licenças. Cruzar com busca do nome no CRM-SP (portal público)."
+      },
+      {
+        "risco": "Passivo fiscal: 33 anos de operação como Sociedade Simples expõe a ISS municipal acumulado, contribuições previdenciárias sobre pró-labore e eventuais parcelamentos ou execuções em aberto",
+        "severidade": "media",
+        "como_verificar": "Consulta gratuita na PGFN (Dívida Ativa da União) pelo CNPJ 96.484.043/0001-69 em regularize.pgfn.gov.br. Complementar com pesquisa de execuções fiscais no e-SAJ do TJSP por CNPJ e razão social."
+      },
+      {
+        "risco": "Passivo trabalhista: clínicas médicas com corpo clínico contratado via PJ ou cooperativa acumulam risco de ações de reconhecimento de vínculo empregatício",
+        "severidade": "media",
+        "como_verificar": "Pesquisa de processos no TRT-15 (competência de São José dos Campos) pelo CNPJ ou razão social, via portal público pje.trt15.jus.br — gratuito."
+      },
+      {
+        "risco": "Concentração em poucas operadoras de saúde: clínicas ambulatoriais/cirúrgicas nesse perfil frequentemente dependem de 1 a 3 convênios para mais de 60% do faturamento, criando risco de descredenciamento ou revisão de tabela",
+        "severidade": "media",
+        "como_verificar": "Não verificável publicamente. Levantar no primeiro contato: qual a proporção entre convênios, particular e SUS, e se algum convênio representa mais de 40% da receita."
+      }
+    ],
+    "perguntas_abordagem": [
+      "Dr. Rodolpho ainda realiza procedimentos cirúrgicos ativamente, ou nos últimos anos a operação clínica migrou principalmente para o Dr. Rodolfo Lelis?",
+      "Existe algum médico associado ou em formação que vocês enxergam como continuidade natural da clínica — alguém já absorvendo agenda ou pacientes?",
+      "Em 33 anos de operação, vocês já receberam abordagem de grupos de saúde ou redes de clínicas interessadas em incorporar a operação de vocês?",
+      "Como está composta a carteira hoje — a maior parte da receita vem de convênios, particular ou misto? Há concentração relevante em alguma operadora específica?",
+      "O Dr. Rodolpho tem algum horizonte definido de redução de jornada? Existe algum planejamento formal de sucessão ou esse tema ainda não foi endereçado internamente?"
+    ],
+    "tese_aproximacao": "Clínica especializada com 33 anos de reputação consolidada em angiologia vascular em São José dos Campos — mercado de alta renda per capita, polo industrial e de saúde no Vale do Paraíba, com demanda crescente por especialidades cardiovasculares dado o envelhecimento da população. A estrutura pai (80+) e filho (61-70), sem terceira geração visível no quadro, cria uma janela de transição involuntária em prazo curto — o ângulo de abordagem é preservação do legado clínico e continuidade da assistência, não 'venda', já que fundadores nesse perfil rejeitam linguagem transacional direta. Somos o interlocutor certo porque atuamos especificamente com sucessão em serviços médicos especializados no interior de SP, entendemos as restrições regulatórias de CRM/CFM/ANVISA e conectamos com compradores — sejam consolidadores de saúde ou family offices com tese em healthcare — que valorizam o nome e mantêm a equipe.",
+    "proximo_passo": "Ligar para (12) 3921-7919 pedindo o Dr. Rodolfo Lelis Zuppardo (sócio mais jovem, mais provável de engajar em conversa estratégica); em paralelo, contatar Edberto via edberto@emcont.com.br — o email é do contador da empresa, e contadores de clínicas médicas frequentemente já discutem planejamento sucessório com seus clientes, podendo funcionar como canal de apresentação aquecida."
+  },
+  "6f8f217a-4c83-45c2-b47e-975c60cf713d": {
+    "overview": "Centro de medicina chinesa e práticas integrativas em São Paulo, fundado em 1987 e em operação há 39 anos. Porte EPP, com atividade secundária de venda de livros — sugerindo um componente de formação ou divulgação do método, além do atendimento clínico. Dois sócios com sobrenome Yamamura indicam empresa de base estritamente familiar.",
+    "analise_sucessoria": "O risco sucessório é real e imediato. Ysao Yamamura (80+, Sócio-Administrador desde 1999) é provavelmente o fundador e praticante principal — em clínicas de medicina integrativa, o valor operacional tende a estar concentrado na figura do especialista sênior, cuja reputação e carteira de pacientes são pessoais e intransferíveis. Marcia Lika Yamamura (51-60, entrou em 2007) é o único contrapeso — possivelmente filha ou cônjuge —, mas já está numa faixa etária que ela mesma se aproxima de um horizonte de saída de médio prazo. O quadro societário está congelado há 18 anos, sem entrada de sócios mais jovens ou sinais de estruturação sucessória formal. A ausência de nome fantasia registrado reforça que a marca pode ser pessoal (Yamamura = o negócio), o que agrava o risco de descontinuidade.",
+    "red_flags": [
+      {
+        "risco": "Dependência crítica do fundador-praticante",
+        "severidade": "alta",
+        "como_verificar": "Verificar no site, redes sociais ou Google Maps se Ysao ainda figura como o principal atendente. Perguntar diretamente no primeiro contato quem conduz as consultas atualmente — se ele ainda pratica com 80+ anos, o negócio pode não sobreviver à sua saída sem transição gerenciada."
+      },
+      {
+        "risco": "Passivo fiscal ou previdenciário acumulado",
+        "severidade": "media",
+        "como_verificar": "Consulta gratuita no portal PGFN (Dívida Ativa da União) pelo CNPJ 58.370.818/0001-86. Complementar com busca no TJSP por execuções fiscais e no CARF por processos administrativos tributários."
+      },
+      {
+        "risco": "Irregularidade regulatória em práticas integrativas",
+        "severidade": "media",
+        "como_verificar": "Verificar registro e regularidade junto ao CRM/SP (se há médico responsável) ou ao conselho profissional pertinente (COFFITO, CFF, dependendo das modalidades praticadas). Checar autuações na Vigilância Sanitária municipal de SP. A regulamentação do setor se intensificou após 2017 com a expansão da PNPIC no SUS."
+      },
+      {
+        "risco": "Concentração de receita na carteira pessoal do fundador",
+        "severidade": "media",
+        "como_verificar": "Perguntar na abordagem qual proporção dos pacientes é recorrente e se está vinculada ao nome Ysao ou à instituição. Clínicas de especialidade com histórico de 39 anos tendem a ter base fiel, mas essa fidelidade frequentemente morre com o praticante."
+      }
+    ],
+    "perguntas_abordagem": [
+      "O Dr. Yamamura ainda conduz atendimentos diretamente hoje, ou o centro já opera com uma equipe de profissionais formados por ele?",
+      "A venda de livros sugere um trabalho de formação ou difusão do método — existe alguma escola ou programa estruturado vinculado ao centro?",
+      "Com quase 40 anos de operação, como vocês enxergam o futuro do centro — há alguma conversa sobre continuidade com a Marcia ou com outros profissionais que já foram formados aqui?",
+      "A marca e o método estão associados ao nome Yamamura ou existe uma sistematização que poderia ser licenciada ou replicada por outros praticantes independentemente?",
+      "Há algum interesse em ampliar o alcance do trabalho — seja via parceria com uma rede de saúde maior, seja via digitalização — ou a preferência é preservar o modelo de atendimento presencial como está?"
+    ],
+    "tese_aproximacao": "Centro com 39 anos numa especialidade de nicho com barreira de entrada altíssima — reputação e método construídos em décadas, não replicáveis rapidamente por um entrante. A janela sucessória está aberta agora: Ysao com 80+ e nenhuma geração mais jovem visível no quadro criam urgência real sem que o fundador precise se sentir pressionado — o timing é natural, não forçado. O ângulo correto provavelmente não é aquisição integral, mas uma conversa sobre continuidade do legado: parceria com rede de saúde integrativa, licenciamento do método, ou estruturação de saída com transição assistida que preserve o nome Yamamura. Somos o interlocutor adequado porque atuamos especificamente em empresas familiares em pré-sucessão, entendemos que a motivação aqui é legado antes de liquidez, e podemos apresentar estruturas que protegem o que foi construído.",
+    "proximo_passo": "Enviar email para cmysaoyamamura@terra.com.br — endereço com o sobrenome Yamamura, provavelmente de Marcia, o contato mais receptivo dado o perfil — apresentando a boutique com foco em empresas familiares longevas e pedindo 20 minutos para conversar sobre o futuro do centro; se não houver resposta em 5 dias úteis, ligar para (11) 5539-5945 e pedir para falar com a Dra. Marcia Yamamura."
+  },
+  "bd76c254-a6a2-4277-8781-106e4963f196": {
+    "overview": "Pro-Saúde é uma associação privada beneficente no setor de atenção hospitalar e assistência social, fundada em 1970 e com 56 anos de operação em São Paulo (SP). Por ser uma Associação Privada, não possui capital social comercial nem sócios no sentido jurídico-societário convencional — o quadro registrado representa membros da diretoria ou conselho deliberativo. A entidade está formalmente sob Recuperação Judicial, condição que altera radicalmente o perfil do deal e exige abordagem estruturada para ativos em distress.",
+    "analise_sucessoria": "O conselho tem 7 membros, todos ingressados entre 2018 e 2025 — renovação recente que provavelmente reflete reestruturação interna no contexto da Recuperação Judicial, não uma transição planejada de liderança. O presidente (qualificação 16) é João Bosco Oliver de Faria, 80+, que assumiu o cargo em 2023 — ou seja, um octogenário foi alçado à presidência já durante o período de crise, o que é sinal de ausência de liderança consolidada, não de estabilidade. Os três membros na faixa 51-60 (Antônio Robson, André Sampaio, George Khoury) compõem o núcleo mais jovem, mas nenhum ocupa a presidência mapeada. Não há sinal de sucessão planejada: o risco aqui não é de transmissão de cotas como numa empresa familiar, mas de colapso de governança — uma entidade de saúde de 56 anos sem liderança executiva de segunda geração identificada, sob RJ, com presidente octogenário.",
+    "red_flags": [
+      {
+        "risco": "Recuperação Judicial em curso — passivo com credores, plano sob supervisão judicial e risco de convolação em falência",
+        "severidade": "alta",
+        "como_verificar": "Consultar processo no TJSP pelo CNPJ 24.232.886/0001-67 (esaj.tjsp.jus.br — busca por CNPJ); verificar fase do plano, lista de credores, se o plano foi aprovado e qual o percentual de cumprimento"
+      },
+      {
+        "risco": "Natureza jurídica de Associação torna inviável a aquisição direta de cotas — somente alienação de ativos ou UPI dentro do rito da RJ é possível",
+        "severidade": "alta",
+        "como_verificar": "Ler o plano de recuperação aprovado (disponível no processo do TJSP) para identificar se há previsão de alienação de Unidade Produtiva Isolada (UPI) ou cessão de contratos; consultar o administrador judicial"
+      },
+      {
+        "risco": "Passivo trabalhista acumulado — setor de saúde com 56 anos de operação e RJ ativa concentram litígios trabalhistas relevantes",
+        "severidade": "alta",
+        "como_verificar": "Consulta no TRT-2 (SP) e TST pelo CNPJ (pje.tst.jus.br); no contexto de RJ o passivo trabalhista é crédito privilegiado — o plano aprovado consolida o montante, mas execuções extraconcursais continuam"
+      },
+      {
+        "risco": "Risco regulatório de licenças hospitalares — licenças ANVISA e COVISA-SP não se transferem automaticamente em alienação de ativos",
+        "severidade": "media",
+        "como_verificar": "Consultar situação das licenças sanitárias no portal da ANVISA (consultas.anvisa.gov.br) e da COVISA-SP; mapear quais unidades estão licenciadas e em nome de quem antes de qualquer estruturação"
+      },
+      {
+        "risco": "Dependência institucional crítica do presidente 80+ em período de RJ — saída abrupta ou incapacidade pode paralisar decisões e contratos",
+        "severidade": "media",
+        "como_verificar": "Verificar no estatuto social da associação a cadeia de substituição; checar se há administrador judicial atuando como interlocutor real das decisões operacionais — muitas vezes é ele quem manda de fato em RJ"
+      }
+    ],
+    "perguntas_abordagem": [
+      "O plano de recuperação judicial em vigor prevê alienação de alguma unidade hospitalar ou ativo operacional como UPI — e o conselho está aberto a assessoria especializada para estruturar esse processo com potenciais parceiros estratégicos?",
+      "A diretoria tem definida uma linha de sucessão para a presidência considerando que o cargo é exercido por alguém na faixa 80+ em meio a um processo de RJ — ou essa definição está postergada?",
+      "Quais contratos hospitalares — SUS, planos de saúde, convênios — estão sob maior pressão de rescisão pela condição de recuperanda, e como a gestão está priorizando a manutenção desses vínculos?",
+      "Existe alguma unidade ou linha de serviço dentro da Pro-Saúde que opera com maior autonomia e equilíbrio financeiro, que poderia ser estruturada separadamente para atrair um parceiro operacional sem arrastar o passivo do restante da entidade?",
+      "O conselho já avaliou formalmente uma parceria de gestão compartilhada com um grupo hospitalar privado — e qual seria a principal resistência interna ou estatutária a esse modelo?"
+    ],
+    "tese_aproximacao": "Pro-Saúde é um ativo de saúde em distress com infraestrutura hospitalar consolidada em São Paulo e 56 anos de operação — o contexto de Recuperação Judicial cria uma janela estruturada para originar um processo de alienação de UPI, parceria operacional ou gestão compartilhada que preserve a missão social da entidade e ao mesmo tempo entregue valor a um adquirente estratégico. O ângulo de entrada não é compra da associação (juridicamente inviável), mas assessoria na estruturação de desinvestimento ou parceria dentro do rito da RJ — um processo que exige conhecimento simultâneo do mercado de saúde, da dinâmica de recuperação judicial e do perfil de compradores institucionais. Somos o interlocutor certo porque operamos no cruzamento entre M&A de middle market, ativos em distress e setor de saúde — diferente de assessores generalistas que não entendem as especificidades de UPI em RJ nem os critérios de due diligence regulatória que qualquer grupo hospitalar vai exigir.",
+    "proximo_passo": "Ligar para (11) 2238-5566 (sede) e pedir para falar com o diretor financeiro ou com o administrador judicial responsável pelo processo — o objetivo do primeiro contato é mapear em qual fase está o plano de RJ e se há abertura para conversa sobre desinvestimento ou parceria antes de qualquer proposta formal."
+  },
+  "7dad5f96-7c65-4c79-a564-565596e01e77": {
+    "overview": "Fundação Privada de atendimento hospitalar com 60 anos de operação em São Paulo (SP), fundada em 1966. Porte DEMAIS (não ME/EPP) indica operação relevante, mas não é possível estimar faturamento ou EBITDA sem dados adicionais — capital social declarado zero é esperado para fundações, cujo patrimônio tem destinação estatutária específica e não reflete receita nem valor de mercado.",
+    "analise_sucessoria": "O conselho/diretoria apresenta padrão de transição em dois tempos: cinco membros fundadores (71–80 ou 80+ anos, todos desde 1966) convivem com quatro membros mais jovens (31–50 anos) incorporados em bloco em 2022. A renovação de 2022 — 44% dos assentos — indica que algum processo de sucessão de governança foi formalmente iniciado, mas a geração fundadora ainda ocupa maioria (5 de 9). Márcio Gonçalves Moreira (qualificação 16, faixa 71–80) aparenta ocupar posição hierárquica de topo, possivelmente Presidente do Conselho. O risco não é de omissão total no planejamento sucessório, mas de transição incompleta com potencial conflito de visão entre gerações — especialmente enquanto os fundadores retêm maioria no colegiado.",
+    "red_flags": [
+      {
+        "risco": "Natureza jurídica incompatível com M&A convencional — Fundação Privada não pode ser comprada, vendida ou ter patrimônio transferido a entidade privada com fins lucrativos sem aprovação do MPSP e, potencialmente, do Judiciário. Qualquer estrutura de deal precisa ser reformulada como contrato de gestão, parceria operacional ou, em hipótese extrema, extinção com incorporação (processo judicial longo). Este é o filtro de viabilidade que deve ser verificado antes de qualquer abordagem.",
+        "severidade": "alta",
+        "como_verificar": "Consultar estatuto social no RCPJ (Registro Civil de Pessoas Jurídicas) de SP e verificar finalidade e cláusulas de dissolução; confirmar tutela ativa da Promotoria de Fundações do MPSP (portal mpsp.mp.br, busca por CNPJ ou razão social)."
+      },
+      {
+        "risco": "Passivo trabalhista — setor hospitalar figura entre os maiores litigantes do TRT. Sessenta anos de operação com quadro de pessoal provavelmente extenso eleva a probabilidade de ações ativas e acordos não provisionados.",
+        "severidade": "alta",
+        "como_verificar": "Busca pelo CNPJ no portal TRT 2ª Região (SP) — PJe e sistema legado. Gratuito e público."
+      },
+      {
+        "risco": "Passivo fiscal e previdenciário — fundações hospitalares históricas acumulam frequentemente débitos de INSS e contribuições previdenciárias, especialmente em períodos de crise de caixa.",
+        "severidade": "media",
+        "como_verificar": "Consulta PGFN (Dívida Ativa da União) pelo CNPJ em pgfn.fazenda.gov.br — gratuito. Complementar com certidões negativas na Receita Federal (CND)."
+      },
+      {
+        "risco": "Compliance ANVISA e vigilância sanitária — hospital com 60 anos tem risco de autos de infração sanitária, licenças vencidas ou processos de adequação de estrutura física em andamento.",
+        "severidade": "media",
+        "como_verificar": "Portal ANVISA — consulta de autos de infração e situação do estabelecimento pelo CNPJ (consultaranvisa.anvisa.gov.br). Complementar com Vigilância Sanitária Municipal de SP (COVISA)."
+      },
+      {
+        "risco": "Risco reputacional e institucional — nome 'Leonor de Barros Camargo' pode ter apelo histórico-filantrópico local; qualquer movimento de reestruturação ou parceria operacional pode gerar reação pública ou resistência interna no conselho.",
+        "severidade": "baixa",
+        "como_verificar": "Busca de cobertura de imprensa (Google News, Folha, Estadão) pelo nome da fundação; verificar existência de contratos SUS que criem dependência institucional ou obrigações de continuidade de atendimento."
+      }
+    ],
+    "perguntas_abordagem": [
+      "Os quatro membros que entraram em 2022 já assumiram posições executivas formais ou ainda atuam como conselheiros sem função operacional — e qual foi o gatilho concreto para essa renovação em bloco naquele momento?",
+      "A fundação tem contratos de gestão ativos com o SUS ou operadoras de plano de saúde com vencimento nos próximos 24–36 meses que estejam sendo renegociados ou apresentem incerteza?",
+      "O conselho já discutiu formalmente algum modelo de parceria operacional — gestão compartilhada, contrato de gestão com grupo hospitalar ou estrutura similar — para garantir a continuidade da operação após a saída gradual dos fundadores?",
+      "Existe algum processo em andamento com a Promotoria de Fundações do MPSP referente a alteração de estatuto, finalidade ou destinação patrimonial?",
+      "Qual é hoje a proporção de receita SUS versus saúde suplementar, e a fundação tem apresentado resultado operacional equilibrado ou há déficit recorrente que esteja pressionando a diretoria a buscar alternativas estruturais?"
+    ],
+    "tese_aproximacao": "A fundação tem estrutura de governança em transição real — renovação de 44% do conselho em 2022 com geração fundadora ainda majoritária e envelhecida — o que cria janela de abordagem para conversas sobre sustentabilidade institucional pós-fundadores. O ângulo correto não é compra direta (vedado juridicamente para fundações privadas), mas posicionamento como assessor de estruturação de parceria operacional ou contrato de gestão com grupo hospitalar interessado em expansão de rede em SP sem greenfield. Somos o interlocutor adequado se tivermos mandato ativo de um comprador estratégico ou fundo de saúde buscando capacidade instalada em São Paulo.",
+    "proximo_passo": "Verificar o estatuto no RCPJ-SP para confirmar a viabilidade jurídica de qualquer estrutura de parceria antes do contato; se confirmada, abordar via email ariane.cont@haoc.org.br (financeiro/contabilidade da fundação) solicitando 20 minutos com o Diretor Executivo ou Presidente do Conselho."
+  },
+  "327265be-4c43-493a-9ea6-54c0011d1d39": {
+    "overview": "Hospital Espírita de Marília (HEM) é um hospital geral de natureza jurídica Associação Privada, fundado em 1967, com 59 anos de operação em Marília-SP. Por ser associação sem fins lucrativos, não há participação societária negociável — o porte classificado como 'DEMAIS' (acima de ME/EPP) indica estrutura operacional relevante para o interior paulista, mas faturamento não é estimável sem dados adicionais.",
+    "analise_sucessoria": "O risco aqui é de governança, não de propriedade — em uma Associação Privada não há sócios com equity, mas diretores eleitos. A diretoria tem 8 membros, todos com 61 anos ou mais: 5 na faixa 71–80, 1 com 80+ (Zoraide Ferioli Pereira) e 2 na faixa 61–70. O presidente (qualificação 16) é Vicente Armentano Junior, 71–80 anos, no cargo desde 2004. Não há nenhum membro jovem no quadro. A única entrada recente foi Expedito Machado de Faria (71–80) em 2024 — a associação está cooptando pares etários, não sucessores. Esse perfil cria pressão real sobre continuidade operacional no médio prazo sem nenhum plano de transição visível.",
+    "red_flags": [
+      {
+        "risco": "Natureza jurídica Associação Privada incompatível com M&A convencional — não há equity negociável",
+        "severidade": "alta",
+        "como_verificar": "Consultar estatuto social no cartório de registro de pessoas jurídicas de Marília ou via Receita Federal — verificar cláusulas de afiliação, conversão ou dissolução; avaliar viabilidade de contrato de gestão ou aquisição de ativos operacionais separadamente"
+      },
+      {
+        "risco": "Passivo trabalhista hospitalar — plantões, adicional noturno, insalubridade e grau de risco elevado são fontes recorrentes de passivo em hospitais com 59 anos de operação",
+        "severidade": "alta",
+        "como_verificar": "Consultar CNPJ no TST (Tribunal Superior do Trabalho) e TRT-15 (região de Marília) — gratuito, acesso em tst.jus.br e trt15.jus.br"
+      },
+      {
+        "risco": "Risco de licenciamento ANVISA — hospital com décadas de operação pode ter pendências em renovação de Alvará Sanitário ou inadequação de área física",
+        "severidade": "alta",
+        "como_verificar": "Consultar CNES (Cadastro Nacional de Estabelecimentos de Saúde) pelo CNPJ em cnes.datasus.gov.br — verifica licenças ativas, leitos autorizados e irregularidades registradas"
+      },
+      {
+        "risco": "Imunidade tributária contestável — entidades de saúde sem fins lucrativos podem ter imunidade de IPTU, CSLL e COFINS questionada se houver desvio de finalidade ou distribuição indireta de benefícios",
+        "severidade": "media",
+        "como_verificar": "Consultar PGFN Dívida Ativa e CARF pelo CNPJ em portaldivida.pgfn.gov.br — gratuito; checar autuações fiscais federais"
+      },
+      {
+        "risco": "Dependência operacional de diretoria voluntária envelhecida — em associações hospitalares a gestão executiva frequentemente está concentrada em 1–2 diretores históricos sem quadro gerencial profissionalizado abaixo",
+        "severidade": "media",
+        "como_verificar": "Perguntar diretamente no primeiro contato se há superintendente ou diretor executivo contratado, ou se a direção é voluntária e acumulada pelos conselheiros"
+      }
+    ],
+    "perguntas_abordagem": [
+      "O HEM tem um superintendente ou diretor executivo contratado, ou a gestão operacional é conduzida pelos próprios diretores da associação em caráter voluntário?",
+      "A diretoria já discutiu formalmente um plano de renovação do quadro para os próximos 5 anos — há candidatos identificados internamente ou na comunidade espírita local?",
+      "O hospital mantém alguma relação formal com a Federação Espírita Brasileira ou outras entidades da rede que influenciem decisões de governança ou parceria institucional?",
+      "Existe abertura da associação para modelos de parceria operacional — como contrato de gestão com grupo hospitalar — que mantenham a missão e a identidade espírita mas profissionalizem a administração?",
+      "Quais são as principais pressões operacionais hoje — mix SUS versus planos de saúde, ocupação de leitos, necessidade de investimento em infraestrutura ou equipamentos?"
+    ],
+    "tese_aproximacao": "O HEM é um ativo hospitalar com 59 anos de história, diretoria integralmente acima de 61 anos e zero renovação geracional visível — a janela de transição de governança está se abrindo. Por ser Associação Privada, a transação convencional não é o caminho: o ângulo correto é posicionar-se como facilitador de um modelo de gestão profissionalizada (contrato de gestão, afiliação a rede ou spin-off operacional) que preserve a missão espírita e resolva a pressão sucessória. O originador com credencial em entidades filantrópicas de saúde e conhecimento do mercado hospitalar do interior paulista tem diferencial claro frente a fundos generalistas que abordarão a mesma janela sem essa sensibilidade.",
+    "proximo_passo": "Ligar para (14) 2105-1455 pedindo para falar com o presidente Vicente Armentano Junior — apresentar-se como assessor especializado em governança de entidades de saúde sem fins lucrativos, não como comprador, e solicitar reunião exploratória sobre continuidade institucional e modelos de parceria."
   }
 }

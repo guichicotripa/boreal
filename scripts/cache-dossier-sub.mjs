@@ -103,12 +103,13 @@ const demo = readJson(DEMO);
 const research = fs.existsSync(RESEARCH) ? readJson(RESEARCH) : {};
 const cache = fs.existsSync(OUT) ? readJson(OUT) : {};
 
+const TOP = Number(process.argv[2] ?? 5); // top-N de cada query (default 5; passe 10 p/ cobertura ampla)
 const empresaById = new Map();
 const alvoIds = new Set();
 for (const resp of Object.values(demo)) {
   (resp.empresas ?? []).forEach((e, i) => {
     empresaById.set(e.id, e);
-    if (i < 5) alvoIds.add(e.id); // top 5 de cada query
+    if (i < TOP) alvoIds.add(e.id); // top N de cada query
   });
 }
 for (const id of Object.keys(research)) if (empresaById.has(id)) alvoIds.add(id); // PRENSA, MECANOTECNICA…
