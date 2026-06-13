@@ -117,7 +117,11 @@ for (const id of alvos) {
   process.stdout.write(`[${i}/${alvos.length}] ${e.razao_social.slice(0, 40)} … `);
   const t0 = Date.now();
   try {
-    const r = await investigar(e);
+    // Timeout por empresa: a busca na web às vezes trava; pula a ruim em vez de parar a fila.
+    const r = await Promise.race([
+      investigar(e),
+      new Promise((_, rej) => setTimeout(() => rej(new Error("timeout 240s")), 240000)),
+    ]);
     cache[id] = r;
     fs.writeFileSync(OUT, JSON.stringify(cache, null, 2));
     const arrow = r.delta > 0 ? "↑" : r.delta < 0 ? "↓" : "=";

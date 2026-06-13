@@ -102,5 +102,569 @@
     "gatilho": "Empresa fundada em 1977 (quase 50 anos), sem presença digital rastreável e com ao menos um sócio-administrador (José Luiz Papa) já diversificando ativamente para outro setor desde 2022 — sinais combinados de potencial desengajamento e ausência de planejamento sucessório formalizado.",
     "mensagem_abordagem": "Prezado(a) [Nome], acompanho o setor de fabricação de máquinas e equipamentos no interior de São Paulo e encontrei a CRIFERP como uma das empresas industriais de maior relevância em Pontal. Com quase cinco décadas de história, empresas como a de vocês frequentemente chegam a um momento em que vale refletir sobre estrutura societária, continuidade e opções estratégicas de longo prazo — seja para fortalecer a gestão, planejar a sucessão ou avaliar parcerias. Estaria disponível para uma conversa inicial, sem compromisso, para entender os planos e compartilhar como temos apoiado empresas similares nesse processo?",
     "perfil_negocio": null
+  },
+  "f2d357bf-bfaa-4f04-be51-e84e999b233e": {
+    "sinais": [
+      {
+        "tipo": "sucessor_familiar_ativo",
+        "rotulo": "Sucessor familiar já atuando",
+        "descricao": "Karina Tuma Balasteghin, filha do cofundador Luiz G. M. Balasteghin, assumiu a co-direção em 2019 e consta como sócia-administradora no quadro societário — sucessão interna concluída na linha Balasteghin. Os cinco sócios da família Chiaradia Gabriel (incluindo Paulo Henrique, Jose Luis, Maria Cristina, Maria Silvia e Maria Lucia) não ocupam posição administrativa registrada.",
+        "fonte_url": "https://www.laboratoriocentrolab.com.br/quem-somos",
+        "peso": -25
+      }
+    ],
+    "presenca_digital": "media",
+    "resumo": "Laboratório clínico familiar fundado em 1973 em Botucatu/SP, com quadro societário dividido entre as famílias Chiaradia Gabriel (cinco sócios sem cargo administrativo) e Balasteghin (dois sócios-administradores). Desde 2019, o controle operacional migrou integralmente para Luiz G.M. Balasteghin e sua filha Karina, enquanto a família Chiaradia Gabriel mantém participação passiva.",
+    "perfil_negocio": "Laboratório de análises clínicas com portfólio amplo — bioquímica, hematologia, imunologia, hormônios, parasitologia, urinálise e testes moleculares (PCR). Atende pacientes particulares e por convênios de saúde, com foco regional em Botucatu e entorno, operando em unidade única no centro da cidade.",
+    "score_v0": 100,
+    "score_v1": 75,
+    "delta": -25,
+    "gatilho": "Cinco sócios da família Chiaradia Gabriel detêm participação societária sem papel administrativo desde 2019 — bloco de sócios passivos em empresa de 53 anos, situação que frequentemente precede pedido de liquidez ou saída societária.",
+    "mensagem_abordagem": "O Centrolab é uma referência reconhecida em análises clínicas na região de Botucatu há mais de 50 anos. Observamos que, desde 2019, o controle operacional se concentrou na linha Balasteghin, enquanto membros da família Chiaradia Gabriel mantêm participação societária sem função administrativa aparente. Esse tipo de assimetria entre propriedade e gestão ativa é um momento em que famílias frequentemente avaliam opções de reestruturação ou liquidez parcial. Gostaríamos de entender se há reflexões em curso sobre o futuro societário da empresa."
+  },
+  "4fba9c6a-cfd1-461f-bb3e-419ccacb428f": {
+    "sinais": [],
+    "presenca_digital": "baixa",
+    "resumo": "IMUNE é uma clínica privada de vacinação fundada em 1974 em São Paulo, estruturada como sociedade entre cinco médicos de sobrenomes distintos. Após quatro buscas, nenhum dos sete sinais tipificados foi confirmado com evidência rastreável em fonte pública; a presença digital é escassa para uma empresa com 52 anos de operação.",
+    "perfil_negocio": "A IMUNE opera como clínica privada especializada em vacinação e imunização humana, com unidades nos bairros Indianópolis e Planalto Paulista (São Paulo-SP). Oferece vacinas do Calendário Oficial do Ministério da Saúde e imunobiológicos internacionais recomendados, atendendo crianças e adultos em consulta presencial. Nenhuma informação pública sobre faturamento, porte ou modelo de expansão foi encontrada.",
+    "score_v0": 100,
+    "score_v1": 100,
+    "delta": 0,
+    "gatilho": null,
+    "mensagem_abordagem": null
+  },
+  "64a09b5c-d791-41d2-847b-9a5d14362788": {
+    "sinais": [
+      {
+        "tipo": "sucessor_familiar_ativo",
+        "rotulo": "Sucessor familiar já atuando",
+        "descricao": "Ricardo Passarella Neto e Rodrigo Passarella figuram como sócios-administradores no registro CNPJ, enquanto Maria Eny Frassetto Passarella mantém apenas participação societária sem cargo de administração — indicando que a segunda geração Passarella já assumiu a gestão operacional da empresa.",
+        "fonte_url": "https://cnpj.biz/49918840000127",
+        "peso": -25
+      },
+      {
+        "tipo": "sucessor_familiar_ativo",
+        "rotulo": "Sucessor familiar já atuando",
+        "descricao": "Ricardo Passarella Neto está registrado profissionalmente como patologista clínico, a especialidade médica central para dirigir um laboratório de análises clínicas, reforçando que o herdeiro está qualificado e atuante na atividade-fim da empresa.",
+        "fonte_url": "https://www.medicosbrasil.com/profissional/ricardo-passarella-neto",
+        "peso": -25
+      }
+    ],
+    "presenca_digital": "media",
+    "resumo": "Laboratório clínico familiar com 53 anos de operação em Itapira (SP); dois membros da família Passarella já atuam como sócios-administradores — sendo um deles patologista clínico registrado — indicando que a transição geracional está em curso e o risco sucessório é baixo.",
+    "perfil_negocio": "Laboratório de análises clínicas fundado em 1973, sediado em Itapira (SP), com equipe de 16 profissionais e funcionamento 24h incluindo fins de semana e feriados. Oferece exames clínicos de rotina, biologia molecular, vacinação e coleta de sangue e urina, atendendo a população de Itapira e região com missão declarada de qualidade em medicina laboratorial.",
+    "score_v0": 85,
+    "score_v1": 35,
+    "delta": -50,
+    "gatilho": null,
+    "mensagem_abordagem": null
+  },
+  "3bd2e008-b9bb-421a-bd8a-ba3917f19316": {
+    "sinais": [],
+    "presenca_digital": "media",
+    "resumo": "Pequeno consultório médico individual operado pela própria Dra. Stella Cristina Vasconcellos Mesquita (psiquiatra/clínica geral), com Iracema de Vasconcellos Mesquita como co-sócia de mesmo sobrenome — estrutura familiar típica de clínicas solo no Brasil. Nenhum sinal público acionável de sucessão encontrado nas quatro buscas realizadas.",
+    "perfil_negocio": "Consultório ambulatorial focado em psiquiatria e clínica geral para crianças, adolescentes e adultos, operado pessoalmente pela Dra. Stella Cristina em São José dos Campos (Av. Nove de Julho, 95, Sala 33). Também atende no ambulatório de especialidades do Grupo São José Saúde. Negócio essencialmente pessoa-dependente: o valor clínico é inseparável da médica fundadora.",
+    "score_v0": 80,
+    "score_v1": 80,
+    "delta": 0,
+    "gatilho": null,
+    "mensagem_abordagem": null
+  },
+  "60c0667e-342d-4219-89d9-69f82e9b4c8a": {
+    "sinais": [
+      {
+        "tipo": "sem_presenca_digital",
+        "rotulo": "Sem pegada digital (perfil old-school)",
+        "descricao": "Nenhum site próprio, perfil no Doctoralia, redes sociais ou cobertura de imprensa foi localizado para a empresa. A única referência pública encontrada é o registro cadastral de CNPJ em agregadores de dados empresariais, com endereço e CNAE confirmados.",
+        "fonte_url": "https://www.econodata.com.br/consulta-empresa/14334384000193-plastica-saudavel-sociedade-simples-limitada",
+        "peso": 3
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "PLASTICA SAUDAVEL SOCIEDADE SIMPLES LIMITADA é uma sociedade médica familiar fundada em 2011 por JOAO BAPTISTA FRANCHI e RICARDO FRANCHI, voltada a consultas ambulatoriais na área de cirurgia plástica em São Paulo. Nenhuma presença digital relevante foi encontrada além do registro cadastral de CNPJ em agregadores públicos.",
+    "perfil_negocio": "Clínica de consultas médicas ambulatoriais estruturada como Sociedade Simples Limitada — formato jurídico típico de práticas médicas no Brasil —, localizada na Av. Iraí, 79, Indianópolis, São Paulo. O nome comercial sugere foco em cirurgia plástica, mas a atividade registrada é restrita a consultas (CNAE médico ambulatorial). Sem site próprio ou perfil ativo em plataformas de agendamento encontrado.",
+    "score_v0": 80,
+    "score_v1": 83,
+    "delta": 3,
+    "gatilho": "Sociedade médica familiar com 15 anos de existência, ausência total de presença digital e nenhuma evidência pública de planejamento sucessório — janela favorável para uma primeira abordagem consultiva antes que qualquer processo formal se inicie.",
+    "mensagem_abordagem": "Olá, Dr. Franchi. Identificamos a Plástica Saudável como uma prática médica familiar consolidada no segmento ambulatorial em São Paulo. Temos acompanhado movimentos de reorganização societária em clínicas de longa data e gostaríamos de entender se existe alguma reflexão sobre o futuro da estrutura da sociedade. Seria possível uma conversa de 20 minutos para trocarmos perspectivas?"
+  },
+  "f9466f35-860c-44ab-b3de-ec6a25c25a3f": {
+    "sinais": [
+      {
+        "tipo": "mencao_sucessao_venda",
+        "rotulo": "Menção pública a sucessão/venda",
+        "descricao": "O sócio fundador Dr. Renato Frati faleceu aos 81 anos (nascido em 30/03/1944 em Itajobi/SP). Seu óbito foi noticiado pela imprensa local e reconhecido com nota de pesar oficial pela Câmara Municipal de Catanduva. O falecimento de um sócio de LTDA impõe reorganização societária obrigatória (apuração de haveres ou transferência de quotas via inventário), colocando Odete Frati — única sócia remanescente — diante de decisões imediatas sobre o futuro da empresa.",
+        "fonte_url": "https://oregional.com.br/noticias/detalhes/medico-e-ex-vereador-dr-renato-frati-morre-aos-81-anos",
+        "peso": 12
+      },
+      {
+        "tipo": "sem_presenca_digital",
+        "rotulo": "Sem pegada digital (perfil old-school)",
+        "descricao": "CLINECOM S/S LTDA não possui site próprio nem perfil ativo em redes sociais. É encontrada exclusivamente em bases de dados de CNPJ (Econodata, cnpj.biz) e um perfil vazio no Doctoralia — padrão típico de clínica familiar gerida de forma não profissionalizada há décadas, sem investimento em comunicação ou marca.",
+        "fonte_url": "https://www.doctoralia.com.br/clinicas/clinecom-s-s-catanduva",
+        "peso": 3
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "CLINECOM S/S LTDA é uma clínica de saúde fundada em 1990 em Catanduva/SP pelo Dr. Renato Frati (neurologista, ex-vereador) e Odete Frati. O sócio fundador faleceu recentemente aos 81 anos, configurando um evento sucessório imediato e de alto impacto para a continuidade do negócio.",
+    "perfil_negocio": "Clínica de saúde humana ativa desde 1990 na Rua Belo Horizonte, 1202 — Centro de Catanduva/SP. Aparece listada no Doctoralia como clínica, mas sem descrição de especialidades ou serviços. O perfil do sócio fundador (neurologista e clínico geral com atuação ambulatorial em múltiplas cidades da região) sugere modelo de atendimento por consultas e convênios médicos, operação familiar de pequeno porte.",
+    "score_v0": 77,
+    "score_v1": 92,
+    "delta": 15,
+    "gatilho": "O sócio fundador Dr. Renato Frati faleceu aos 81 anos, forçando abertura de inventário e obrigando Odete Frati a definir o futuro societário de uma clínica de 35 anos — janela de 12 a 18 meses de máxima receptividade a conversas sobre transação, parceria ou reorganização.",
+    "mensagem_abordagem": "Sra. Odete, tomei conhecimento do falecimento do Dr. Renato Frati e gostaria de expressar minhas condolências. Em momentos de transição como este, clínicas com mais de três décadas de operação frequentemente se deparam com decisões importantes sobre continuidade e estrutura societária. Acompanho o setor de saúde no interior de SP e acredito que uma conversa exploratória, sem qualquer compromisso, poderia ser útil para entender as opções disponíveis para a CLINECOM."
+  },
+  "a32e0f3a-95ea-4607-9207-642674f9c150": {
+    "sinais": [],
+    "presenca_digital": "media",
+    "resumo": "Clínica de cirurgia bariátrica em Campinas operada por dois sócios-cirurgiões altamente seniores — Pareja formado em medicina em 1966 (~81 anos) e Callejas Neto formado em 1979 (~71 anos) — sem nenhuma evidência pública de plano sucessório, mudança societária ou herdeiro ativo no negócio.",
+    "perfil_negocio": "Centro especializado em cirurgia da obesidade (bariátrica) e balão intragástrico, atendendo pacientes com obesidade severa em Campinas/SP sob a marca CCOC. Modelo de clínica médico-proprietária: os dois sócios-fundadores são os próprios cirurgiões operadores, com vínculo paralelo à Unicamp onde Callejas Neto é docente. Referência regional com mais de 3.000 cirurgias realizadas desde 1998.",
+    "score_v0": 77,
+    "score_v1": 77,
+    "delta": 0,
+    "gatilho": "Ambos os sócios são cirurgiões em idade muito avançada (Pareja ~81 anos, graduado FMUSP 1966, fonte: http://obesidadesevera.com.br/index.php/drpareja/; Callejas Neto ~71 anos, graduado 1979, fonte: https://portal.dados.unicamp.br/perfil?docente=54178) sem qualquer sinal público de sucessor ou plano de transição — janela aberta para abordagem antes de qualquer processo formal.",
+    "mensagem_abordagem": "Dr. Pareja e Dr. Callejas, o CCOC é uma das referências históricas em cirurgia bariátrica no interior de SP — mais de 25 anos de operação e uma reputação clínica sólida que vai além das carreiras individuais dos fundadores. Clínicas de especialidade com esse perfil costumam ser ativos estratégicos valorizados por grupos de saúde em expansão. Poderíamos compartilhar como outros centros similares em São Paulo estruturaram transições que preservaram o legado clínico dos fundadores — seria possível uma conversa de 20 minutos?"
+  },
+  "98c90d44-1b3c-4965-8adf-7d619e8f861f": {
+    "sinais": [
+      {
+        "tipo": "sem_presenca_digital",
+        "rotulo": "Sem pegada digital (perfil old-school)",
+        "descricao": "A empresa não possui website identificável, perfil em redes sociais ou cobertura de imprensa. Aparece exclusivamente em bases públicas de CNPJ (cnpj.biz, Serasa Experian, cnpj.info). Nenhum dos sete sócios possui perfil LinkedIn público ou menção relevante associada à empresa encontrada nas buscas.",
+        "fonte_url": "https://cnpj.biz/58067968000115",
+        "peso": 3
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "Clínica de nefrologia fundada em 1987 em Itaquera, SP, operada por sete sócios médicos. Presença digital praticamente nula: nenhum site oficial identificado, sem cobertura de imprensa, sem perfis rastreáveis nas redes sociais.",
+    "perfil_negocio": "O CENEFRO Centro Nefrologico atua em atendimento hospitalar especializado em nefrologia na Zona Leste de São Paulo (Itaquera), provavelmente incluindo hemodiálise — atividade típica de centros nefrologicos com internação. Modelo de sociedade médica multiprofissional com sete sócios. Clientela composta por pacientes renais crônicos em regime de acompanhamento de longo prazo.",
+    "score_v0": 77,
+    "score_v1": 80,
+    "delta": 3,
+    "gatilho": "Clínica fundada há 39 anos com sete sócios médicos e presença digital inexistente — perfil clássico de sociedade de geração única sem sinalização visível de planejamento de continuidade.",
+    "mensagem_abordagem": "Dr. [Nome], o CENEFRO é uma referência consolidada em nefrologia na Zona Leste de São Paulo há quase quatro décadas, operando num segmento de demanda estruturalmente crescente. Trabalhamos com clínicas de médio porte avaliando caminhos de continuidade — reorganização societária, entrada de sócio estratégico ou outras estruturas. Faria sentido uma conversa breve sobre como os sócios enxergam o horizonte da operação?"
+  },
+  "eaeea2cf-af37-4ce4-be2c-a96c639bd2c2": {
+    "sinais": [
+      {
+        "tipo": "sucessor_familiar_ativo",
+        "rotulo": "Sucessor familiar já atuando",
+        "descricao": "RODOLFO LELIS ZUPPARDO é médico angiologista e cirurgião cardiovascular registrado e atua como diretor da clínica familiar, indicando que um membro da família já está ativo na gestão e na prática médica da empresa — o que reduz o risco sucessório clássico.",
+        "fonte_url": "https://www.doctoralia.com.br/rodolfo-lelis-zuppardo-2/angiologista/sao-jose-dos-campos",
+        "peso": -25
+      },
+      {
+        "tipo": "sem_presenca_digital",
+        "rotulo": "Sem pegada digital (perfil old-school)",
+        "descricao": "A empresa não possui site próprio identificável; aparece apenas em diretórios de cadastro de CNPJs e listagens de médicos (Econodata, Solutudo, Doctoralia), sem presença em redes sociais ou canais próprios de comunicação.",
+        "fonte_url": "https://www.econodata.com.br/consulta-empresa/96484043000169-angiologia-e-cirurgia-vascular-zuppardo-ltda",
+        "peso": 3
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "Clínica familiar de angiologia e cirurgia vascular ativa desde 1993 em São José dos Campos, com dois sócios do mesmo sobrenome atuando diretamente como médicos. RODOLFO LELIS ZUPPARDO figura como diretor e angiologista ativo, indicando continuidade familiar na prática clínica e reduzindo o sinal de risco sucessório imediato.",
+    "perfil_negocio": "Clínica médica especializada em angiologia e cirurgia vascular fundada em 1993, com foco em consultas ambulatoriais para diagnóstico e tratamento de doenças vasculares (varizes, patologias arteriais e venosas). Os dois sócios são médicos da mesma família e atuam diretamente na prestação de serviços, atendendo pacientes provavelmente por convênios médicos e particular.",
+    "score_v0": 77,
+    "score_v1": 55,
+    "delta": -22,
+    "gatilho": null,
+    "mensagem_abordagem": null
+  },
+  "6f8f217a-4c83-45c2-b47e-975c60cf713d": {
+    "sinais": [
+      {
+        "tipo": "sucessor_familiar_ativo",
+        "rotulo": "Sucessor familiar já atuando",
+        "descricao": "Dra. Marcia Lika Yamamura, filha do fundador Prof. Dr. Ysao Yamamura, já atua como Diretora e CEO do Center AO e como Chefe do Grupo de Acupuntura da UNIFESP — a segunda geração está no comando operacional da empresa, o que reduz significativamente o risco sucessório como gatilho de venda.",
+        "fonte_url": "https://br.linkedin.com/in/marcia-lika-yamamura-16b050b0",
+        "peso": -25
+      }
+    ],
+    "presenca_digital": "alta",
+    "resumo": "Centro de referência nacional em medicina chinesa e acupuntura fundado em 1987 pelo Prof. Dr. Ysao Yamamura (~84 anos); a filha Dra. Marcia Lika Yamamura já ocupa o cargo de Diretora e CEO do Center AO e chefia o Grupo de Acupuntura da UNIFESP, indicando que a transição geracional está em curso e operacionalmente resolvida.",
+    "perfil_negocio": "O Center AO é um centro de pesquisa, ensino clínico e prática de acupuntura e medicina chinesa localizado em São Paulo/SP, com vínculo histórico ao Departamento de Ortopedia e Traumatologia da UNIFESP/EPM. Oferece pós-graduação e especializações a médicos, além de atendimento clínico a pacientes. O modelo combina formação acadêmica de alto nível com clínica própria, sendo referência nacional na área.",
+    "score_v0": 77,
+    "score_v1": 52,
+    "delta": -25,
+    "gatilho": null,
+    "mensagem_abordagem": null
+  },
+  "bd76c254-a6a2-4277-8781-106e4963f196": {
+    "sinais": [
+      {
+        "tipo": "mencao_sucessao_venda",
+        "rotulo": "Menção pública a sucessão/venda",
+        "descricao": "A Pró-Saúde entrou com pedido de recuperação judicial em maio de 2023 (processo nº 1067393-13.2023.8.26.0100, 3ª Vara de Falências e Recuperações Judiciais de SP), apresentou plano de recuperação em abril de 2024 e o submeteu à assembleia de credores em outubro de 2024. A própria entidade mantém página pública de transparência sobre a reorganização, que inclui reestruturação operacional e financeira de grande escala.",
+        "fonte_url": "https://www.prosaude.org.br/recuperacao-judicial/",
+        "peso": 12
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "Associação beneficente sem fins lucrativos — não uma empresa familiar tradicional — em recuperação judicial desde maio de 2023, com plano de reorganização aprovado em assembleia de credores (out/2024) e aguardando homologação judicial. Gestora de dezenas de hospitais públicos via contratos de OS com governos, sem estrutura de capital vendável no modelo M&A convencional.",
+    "perfil_negocio": "Pró-Saúde é uma das maiores organizações sociais de saúde do Brasil, gerenciando hospitais e unidades públicas em múltiplos estados por meio de contratos com governos estaduais e municipais (modelo OS/parceria público-privada). Não possui acionistas: os 'sócios' listados são membros do conselho diretivo de uma associação civil sem fins lucrativos. Opera sem receita privada relevante — seu modelo depende inteiramente de repasses governamentais.",
+    "score_v0": 100,
+    "score_v1": 100,
+    "delta": 0,
+    "gatilho": "Plano de recuperação judicial aprovado em assembleia de credores (out/2024) aguarda homologação do juiz — janela de máxima incerteza estrutural em que parcerias ou transferências de gestão de ativos hospitalares podem ser avaliadas.",
+    "mensagem_abordagem": "Acompanhamos o processo de recuperação da Pró-Saúde e reconhecemos a escala e relevância do trabalho que realizam na gestão hospitalar pública brasileira. Em momentos de reorganização como este, algumas organizações avaliam parcerias estratégicas para fortalecer a sustentabilidade operacional de longo prazo. Gostaríamos de entender como estão pensando o próximo capítulo institucional e se faz sentido uma conversa exploratória sobre estruturas que possam apoiar essa transição."
+  },
+  "7dad5f96-7c65-4c79-a564-565596e01e77": {
+    "sinais": [
+      {
+        "tipo": "sucessor_familiar_ativo",
+        "rotulo": "Sucessor familiar já atuando",
+        "descricao": "Agostinho de Camargo Moraes Neto — portando o sobrenome 'Camargo' da família fundadora (Leonor de Barros Camargo e Augusto de Oliveira Camargo) — consta como membro ativo da diretoria, indicando continuidade da família fundadora na governança. Isso reduz o risco sucessório.",
+        "fonte_url": "https://www.econodata.com.br/consulta-empresa/60499365000134-fundacao-leonor-de-barros-camargo",
+        "peso": -25
+      },
+      {
+        "tipo": "csuite_externo",
+        "rotulo": "C-suite profissional externo à família",
+        "descricao": "Renato Sargo assumiu a superintendência do HAOC em 1997 (sobrenome distinto da família fundadora Camargo) e permanece listado como diretor da fundação até hoje — gestão profissional externa consolidada há quase 30 anos.",
+        "fonte_url": "https://www.haoc.org.br/noticia/haoc-completa-92-anos-com-expansao-constante-1240.html",
+        "peso": 6
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "Fundação beneficente (não empresa familiar com equity), fundada em 1934 e rebatizada em 1993, operadora do HAOC (Hospital Augusto de Oliveira Camargo) em Indaiatuba/SP. Estrutura jurídica de fundação sem fins lucrativos — sem participação societária passível de M&A convencional; governança por conselho curador com membros ligados à família fundadora Camargo ainda ativos.",
+    "perfil_negocio": "A Fundação Leonor de Barros Camargo opera o HAOC (Hospital Augusto de Oliveira Camargo) em Indaiatuba (SP), com múltiplas unidades hospitalares na cidade. Modelo filantrópico/beneficente registrado no CNAS, atendendo pacientes via SUS e convênios na região do interior paulista. Não há equity privado — é uma fundação sem fins lucrativos, o que a exclui do escopo de aquisição direta.",
+    "score_v0": 100,
+    "score_v1": 81,
+    "delta": -19,
+    "gatilho": null,
+    "mensagem_abordagem": null
+  },
+  "327265be-4c43-493a-9ea6-54c0011d1d39": {
+    "sinais": [
+      {
+        "tipo": "sucessor_familiar_ativo",
+        "rotulo": "Sucessor familiar já atuando",
+        "descricao": "Vicente Armentano Júnior (Presidente da diretoria) e Bruno Armentano (Diretor de unidade hospitalar) aparecem simultaneamente na gestão, indicando que um membro mais jovem da família Armentano já atua operacionalmente na instituição. Sinal que REDUZ risco de vácuo sucessório nesta família.",
+        "fonte_url": "https://www.marilia.sp.leg.br/imprensa/noticias/nova-configuracao-do-hem-permitira-triplicar-os-procedimentos-do-hospital-em-saude-metal",
+        "peso": -25
+      },
+      {
+        "tipo": "csuite_externo",
+        "rotulo": "C-suite profissional externo à família",
+        "descricao": "Dr. Arlindo Ferreira Júnior consta como Diretor Técnico no Relatório Anual de Atividades 2023, com sobrenome distinto de todos os membros da diretoria associativa (Armentano, Ferioli, Machado de Faria, Dall Antonia, Ramirez Martins). Profissional contratado externamente para a função técnica-médica.",
+        "fonte_url": "https://hem.org.br/wp-content/uploads/2025/01/Relatorio-Anual-de-Atividades-2023.pdf",
+        "peso": 6
+      }
+    ],
+    "presenca_digital": "media",
+    "resumo": "Hospital psiquiátrico filantrópico fundado em 1948, gerido por associação espírita com 330 leitos e referência regional em saúde mental para 62 municípios do interior paulista. Governança colegiada e comunitária — múltiplas famílias na diretoria, sem concentração de controle societário em um único núcleo familiar.",
+    "perfil_negocio": "Hospital especializado em saúde mental (psiquiatria e dependência química) com 330 leitos em Marília/SP, sendo 260 conveniados ao SUS e 30 voltados à dependência química em menores. Funciona como referência para 62 municípios da região, com 65% dos atendimentos via SUS e o restante por planos privados e particulares. Mantido pela Associação Espírita de Marília, sem fins lucrativos.",
+    "score_v0": 100,
+    "score_v1": 81,
+    "delta": -19,
+    "gatilho": null,
+    "mensagem_abordagem": null
+  },
+  "4ef46e0e-6c90-4777-9b31-abab2b92abef": {
+    "sinais": [
+      {
+        "tipo": "sem_presenca_digital",
+        "rotulo": "Sem pegada digital (perfil old-school)",
+        "descricao": "Nenhum site oficial, rede social ou cobertura jornalística encontrados em quatro buscas. Toda presença online resume-se a listagens automáticas de diretórios de CNPJ (Econodata, Hagah, CadastroEmpresa, cnpj.biz). A empresa também conta com um segundo CNPJ ativo (52.839.107/0002-02) em endereço distinto na mesma Vila Mariana, sem qualquer página própria.",
+        "fonte_url": "https://www.hagah.com.br/prest-assistencia-e-servicos-ltda-humberto-i-236",
+        "peso": 3
+      },
+      {
+        "tipo": "sucessor_familiar_ativo",
+        "rotulo": "Sucessor familiar já atuando",
+        "descricao": "Maria Cecília Leme Menendez Marchetti figura como sócia/administradora nos registros públicos de CNPJ, compartilhando o sobrenome Leme com João José Barbosa Leme e Zita Dezorzi Leme. A presença de um terceiro sócio com o mesmo sobrenome familiar já atuando no quadro societário é um indicativo de que pode haver sucessor familiar ativo — fator que reduz o risco sucessório imediato.",
+        "fonte_url": "https://www.econodata.com.br/consulta-empresa/52839107000121-PREST-ASSISTENCIA-E-SERVICOS-LTDA",
+        "peso": -25
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "Empresa ativa há 43 anos no setor de saúde humana em Vila Mariana (SP), com dois endereços registrados e quadro societário estável. Presença online restrita a listagens automáticas de diretórios — sem site oficial, imprensa ou perfis identificados.",
+    "perfil_negocio": null,
+    "score_v0": 100,
+    "score_v1": 78,
+    "delta": -22,
+    "gatilho": "Fundada em 1983, a empresa opera há mais de 4 décadas sem presença digital mensurável e sem evidência pública de planejamento de governança ou sucessão — momento típico em que famílias do setor de saúde avaliam a estrutura societária de forma reativa, não estratégica.",
+    "mensagem_abordagem": "Trabalhamos com famílias fundadoras do setor de saúde em São Paulo que, após décadas de operação consolidada, chegam a um momento de revisão da estrutura de propriedade e governança. Na Prest, identificamos uma trajetória semelhante — empresa sólida, de longa data, com pouca exposição ao mercado de capitais. Muitas famílias nesse estágio encontram valor em avaliar suas opções com antecedência, antes que a agenda force a decisão. Seria possível uma conversa de 20 minutos para entender melhor o momento em que vocês se encontram?"
+  },
+  "4f0e426e-a192-4eec-94d5-34cf42ea7456": {
+    "sinais": [],
+    "presenca_digital": "baixa",
+    "resumo": "IRMEV é uma clínica especializada em radioterapia e oncologia fundada em 1974 em Ribeirão Preto, com dois CNPJs ativos e website institucional com múltiplas páginas. Nenhuma evidência pública encontrada de venda, fusão, sucessão declarada ou qualquer dos demais sinais mapeados.",
+    "perfil_negocio": "O IRMEV oferece serviços de radioterapia (megavoltagem) e oncologia clínica para pacientes com câncer, operando com ao menos duas unidades físicas em Ribeirão Preto. Atende convênios médicos (incluindo Unimed conforme guia médico público) e tem mais de 50 anos de operação no setor de saúde privada especializada do interior paulista. O modelo é de clínica médica de especialidade, com corpo clínico próprio listado publicamente no site.",
+    "score_v0": 100,
+    "score_v1": 100,
+    "delta": 0,
+    "gatilho": null,
+    "mensagem_abordagem": null
+  },
+  "0cba5795-7568-404f-b932-44545957cb24": {
+    "sinais": [
+      {
+        "tipo": "mencao_sucessao_venda",
+        "rotulo": "Menção pública a sucessão/venda",
+        "descricao": "Em maio de 2019 o hospital anunciou demissões em massa e solicitou recuperação judicial para evitar pedido de falência por credores, iniciando reorganização financeira que persiste até hoje.",
+        "fonte_url": "https://jr.jor.br/2019/05/13/santa-elisa-faz-demissoes-e-pede-recuperacao-judicial/",
+        "peso": 12
+      },
+      {
+        "tipo": "mencao_sucessao_venda",
+        "rotulo": "Menção pública a sucessão/venda",
+        "descricao": "Notícia local de maio de 2021 confirma falecimento do fundador Dr. José Carlos Bandeira Soares de Camargo, evento que tipicamente acelera discussões de continuidade ou desinvestimento em empresas familiares — especialmente em processo de insolvência.",
+        "fonte_url": "https://tvtecjundiai.com.br/news/2021/05/03/morre-em-jundiai-fundador-do-hospital-santa-elisa-1/",
+        "peso": 12
+      },
+      {
+        "tipo": "sucessor_familiar_ativo",
+        "rotulo": "Sucessor familiar já atuando",
+        "descricao": "Luciano Soares de Camargo (sócio listado na empresa) consta em perfil público como Médico - Diretor Técnico do Hospital Santa Elisa, indicando membro da família fundadora ativo na gestão clínica — o que reduz parcialmente o vácuo sucessório imediato.",
+        "fonte_url": "https://rocketreach.co/luciano-camargo-email_125822944",
+        "peso": -25
+      }
+    ],
+    "presenca_digital": "media",
+    "resumo": "Hospital familiar fundado em 1969 pelo Dr. José Carlos Bandeira Soares de Camargo, em recuperação judicial desde 2019 e com falecimento do fundador em 2021; sócio de segunda geração (Luciano Soares de Camargo) ainda atua como Diretor Técnico, mas o prolongado estresse financeiro abre janela concreta de abordagem.",
+    "perfil_negocio": "Hospital geral privado em Jundiaí/SP com mais de 50 anos de operação, oferecendo internações, cirurgias e atendimento hospitalar a pacientes de planos de saúde e particular. Modelo B2C com receita via convênios médicos. Fundado e gerido por médicos da família Soares de Camargo por múltiplas décadas.",
+    "score_v0": 100,
+    "score_v1": 99,
+    "delta": -1,
+    "gatilho": "Recuperação judicial ativa há mais de 6 anos somada ao falecimento do fundador em 2021 cria pressão acumulada de governança e capital que torna os sócios potencialmente receptivos a explorar opções estratégicas agora.",
+    "mensagem_abordagem": "Dr. Luciano, acompanho a trajetória do Hospital Santa Elisa — uma das instituições mais tradicionais de Jundiaí — e entendo que o processo de recuperação judicial traz desafios significativos de capital e governança, especialmente após a transição dos últimos anos. Trabalhamos com empresas familiares do setor de saúde exatamente nesse momento, avaliando alternativas que preservam o legado e geram liquidez para os sócios. Seria possível uma conversa breve para entender melhor o momento do hospital e ver se faz sentido explorarmos juntos as opções disponíveis?"
+  },
+  "bb194e5b-404a-4134-ba00-d274a2d64f28": {
+    "sinais": [
+      {
+        "tipo": "sem_presenca_digital",
+        "rotulo": "Sem pegada digital (perfil old-school)",
+        "descricao": "Nenhum site oficial do hospital foi encontrado nas buscas. A presença digital se restringe a registros de CNPJ em bases abertas (Econodata, CNPJ.biz) e listagens de diretório empresarial. Os próprios sócios (Eduardo de Oliveira e Volney Waldivil Maia) não aparecem em perfis públicos no LinkedIn nem em notícias.",
+        "fonte_url": "https://www.econodata.com.br/consulta-empresa/60676228000128-hospital-monumento-ltda",
+        "peso": 3
+      },
+      {
+        "tipo": "csuite_externo",
+        "rotulo": "C-suite profissional externo à família",
+        "descricao": "Sérgio Ricardo Albano é listado como presidente da diretoria do CEHM (Centro de Estudos do Hospital Monumento), sobrenome distinto dos sócios fundadores Oliveira e Maia, indicando ao menos uma liderança executiva externa na estrutura associada ao hospital.",
+        "fonte_url": "https://www.saopauloaqui.com.br/1/9026/hospitais/hospital-monumento-cehm.html",
+        "peso": 6
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "Hospital de pequeno porte, 100% SUS, fundado em 1966 no Ipiranga (SP), sem site oficial encontrado e nenhuma notícia pública sobre venda, sucessão ou reorganização societária. Os dois sócios — Eduardo de Oliveira e Volney Waldivil Maia — não possuem presença digital identificável.",
+    "perfil_negocio": "Unidade de internação hospitalar geral que atende exclusivamente pelo SUS desde pelo menos 2004, via contrato com a Secretaria Municipal de Saúde de São Paulo. Opera também um Centro de Estudos (CEHM) voltado a atividades de ensino e residência médica vinculado ao hospital. Dados de capacidade instalada, faturamento ou mix de especialidades não foram localizados em fontes públicas.",
+    "score_v0": 100,
+    "score_v1": 100,
+    "delta": 0,
+    "gatilho": "Hospital familiar com 60 anos de operação, sócios sem qualquer presença digital identificável e sem evidência pública de planejamento sucessório — janela de abordagem clássica antes de qualquer movimentação societária formal.",
+    "mensagem_abordagem": "O Hospital Monumento é uma referência de seis décadas no Ipiranga, e percebemos que o hospital segue sob gestão direta dos fundadores sem estrutura sucessória visível publicamente. Em M&A de saúde, esse estágio de maturidade institucional normalmente abre espaço para conversas sobre continuidade — seja por incorporação estratégica, parceria operacional ou planejamento de longo prazo. Gostaríamos de entender as perspectivas dos sócios para os próximos anos antes que qualquer decisão seja tomada sob pressão de tempo."
+  },
+  "72ba3d83-0934-4ade-95f6-61dae7bec4de": {
+    "sinais": [
+      {
+        "tipo": "sucessor_familiar_ativo",
+        "rotulo": "Sucessor familiar já atuando",
+        "descricao": "Dra. Beatriz Pacheco Borges Sorrentino é sócia registrada da clínica E radiologista ativa listada no corpo clínico do site oficial. Adicionalmente, Dr. Bruno Sorrentino Parmigiani (CRM 236497) — portador do sobrenome da família fundadora — consta como médico ativo no corpo clínico da CRS, sugerindo provável terceira geração já inserida na operação. A presença de herdeiros médicos na ativa REDUZ o risco de vacância de liderança, mas não elimina a janela de transição patrimonial.",
+        "fonte_url": "https://crs.com.br/corpo-clinico/",
+        "peso": -25
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "Clínica radiológica familiar com 57 anos em Santos/SP, website ativo (crs.com.br), Facebook e LinkedIn presentes. Fundador Caetano Sorrentino Netto formou-se em medicina em 1959 — idade estimada de 88–90 anos em 2026 — com segunda e possível terceira geração da família já ativas na operação.",
+    "perfil_negocio": "A CRS – Clínica Radiológica de Santos oferece diagnóstico por imagem completo: radiologia geral, mamografia, ultrassonografia, Doppler, TC, RM e ecodopplercardiograma. Atende pacientes via convênios de saúde e pelo setor público, incluindo convênio formal firmado com a Prefeitura de Santos. Modelo ambulatorial B2C/B2B, com forte inserção local e portfólio amplo de modalidades de imagem.",
+    "score_v0": 100,
+    "score_v1": 75,
+    "delta": -25,
+    "gatilho": "O fundador Caetano Sorrentino Netto colou grau na Escola Paulista de Medicina em 1959, apontando para idade de ~88–90 anos em 2026: mesmo com herdeiros ativos, a janela de decisão sobre o destino patrimonial e institucional da clínica é concreta e provavelmente em curso agora.",
+    "mensagem_abordagem": "A Clínica Radiológica de Santos construiu em mais de cinco décadas uma das marcas mais sólidas em diagnóstico por imagem no litoral paulista. Com o Dr. Caetano em fase natural de transição e a Dra. Beatriz já à frente da operação, é um momento em que famílias fundadoras costumam avaliar como proteger o legado e estruturar o próximo capítulo — seja via parceria estratégica, capitalização ou preparação para uma transação. Gostaríamos de uma conversa breve para entender como a família Sorrentino pensa o futuro da clínica."
+  },
+  "87cf5d0a-6415-4160-bf2f-412d72172cac": {
+    "sinais": [
+      {
+        "tipo": "sucessor_familiar_ativo",
+        "rotulo": "Sucessor familiar já atuando",
+        "descricao": "Três filhos dos fundadores — Mariana Lucchini Graca Matsui, Leonardo Lucchini Graca e Rodrigo Lucchini Graca — já constam como sócios no CNPJ (Rodrigo ingressou em 29/12/2005). A geração seguinte tem participação societária formal, o que REDUZ o risco de ruptura abrupta. Contudo, Zeneide Thereza Lucchini Graca (fundadora, provável octogenária dado que a escola foi criada em 1968) ainda aparece como Sócio-Administradora, indicando que a transição de gestão para os herdeiros pode estar incompleta.",
+        "fonte_url": "https://cnpj.biz/43903210000100",
+        "peso": -25
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "Escola privada familiar fundada em 1968 por Drauzio Graça e Zeneide Lucchini Graça em Vila Prudente (SP), formalizada como CNPJ em 1974. Três filhos do casal fundador já constam como sócios, indicando sucessão familiar parcialmente estruturada — mas Zeneide ainda figura como Sócio-Administradora, sugerindo que a transferência efetiva de gestão pode não estar concluída.",
+    "perfil_negocio": "Colégio privado com oferta da Educação Infantil ao Ensino Médio em campus próprio de aproximadamente 10.000 m² no bairro de Vila Prudente, zona leste de São Paulo. Modelo de negócio baseado em mensalidades, atendendo famílias da região. A estrutura física inclui laboratórios, quadras esportivas, piscinas aquecidas e anfiteatro.",
+    "score_v0": 100,
+    "score_v1": 75,
+    "delta": -25,
+    "gatilho": "Escola com quase 60 anos de operação familiar e fundadora ainda na administração formal sugere janela para conversa sobre governança e transição de gestão antes de uma eventual decisão estratégica irreversível.",
+    "mensagem_abordagem": "O Colégio Civitatis tem uma história notável de quase 60 anos construída pela família Graça em Vila Prudente. Com a próxima geração já na sociedade, é natural que a família reflita sobre como estruturar a governança e a continuidade no longo prazo — seja fortalecendo a gestão familiar ou avaliando parcerias estratégicas. Gostaríamos de compartilhar como instituições de perfil semelhante têm navegado esse momento e entender como vocês estão pensando esse próximo capítulo."
+  },
+  "c879c6a1-0305-426a-8cd8-a814623e9014": {
+    "sinais": [
+      {
+        "tipo": "csuite_externo",
+        "rotulo": "C-suite profissional externo à família",
+        "descricao": "Valdenice Minatel ocupa o cargo de Diretora-Geral Educacional — posição C-level — com sobrenome diferente de todos os membros do conselho administrativo listados como sócios, evidenciando profissionalização da gestão pedagógica com executivo externo à associação fundadora.",
+        "fonte_url": "https://direcionalescolas.com.br/colegio-dante-alighieri-em-sp-desponta-na-vanguarda-da-tecnologia-educacional/",
+        "peso": 6
+      }
+    ],
+    "presenca_digital": "alta",
+    "resumo": "O Colégio Dante Alighieri é uma escola privada de prestígio em São Paulo, fundada em 1911 por imigrantes italianos e estruturada como associação com conselho administrativo eleito — não é empresa familiar no sentido convencional de controle familiar concentrado. O presidente José Luiz Farina (listado como sócio) foi reeleito em março de 2026 para mandato 2026–2029, sinalizando governança colegiada estável.",
+    "perfil_negocio": "Escola particular de ensino fundamental e médio com forte identidade ítalo-brasileira, reconhecida como uma das mais tradicionais de São Paulo. Opera como associação sem fins lucrativos, com conselho administrativo e fiscal eleitos pelos membros. Modelo de receita baseado em mensalidades, com reputação acadêmica sólida (alto índice de aprovações em vestibulares). Possui campi com infraestrutura própria na zona sul e arredores da Avenida Paulista.",
+    "score_v0": 100,
+    "score_v1": 100,
+    "delta": 0,
+    "gatilho": null,
+    "mensagem_abordagem": null
+  },
+  "78f6ab98-ac0c-443c-8a1d-d97229feba7e": {
+    "sinais": [
+      {
+        "tipo": "sucessor_familiar_ativo",
+        "rotulo": "Sucessor familiar já atuando",
+        "descricao": "Alexandre Gambirasio Silva (mesma família fundadora) assumiu a direção-geral da EGV em 2011, vindo da presidência da rede de idiomas Yázigi, e permanece como sócio-administrador. A transição de liderança já ocorreu dentro da família, reduzindo o risco sucessório imediato.",
+        "fonte_url": "https://www.granjaviana.com.br/noticia/egv-tem-novo",
+        "peso": -25
+      }
+    ],
+    "presenca_digital": "media",
+    "resumo": "Escola privada de ensino fundamental fundada em 1976 por Emília Gambirasio Silva e Clarice Mariano, ainda controlada pela família Gambirasio. Alexandre Gambirasio Silva assumiu a direção-geral em 2011, indicando que a sucessão familiar interna já ocorreu.",
+    "perfil_negocio": "Escola privada de ensino fundamental (K-12) localizada em Granja Viana, Cotia/SP, em operação desde 1976. Atende famílias da região com currículo diferenciado, incluindo certificação Cambridge English e programa de inglês ampliado na grade curricular. Modelo de mensalidades, negócio familiar.",
+    "score_v0": 100,
+    "score_v1": 75,
+    "delta": -25,
+    "gatilho": null,
+    "mensagem_abordagem": null
+  },
+  "7601a4c6-1034-4389-a066-4767e18d8d54": {
+    "sinais": [
+      {
+        "tipo": "mencao_sucessao_venda",
+        "rotulo": "Menção pública a sucessão/venda",
+        "descricao": "O sindicato de professores SINPROVALES convocou assembleia unificada dos docentes do Colégio Projeção, Grilinho Falante e D+ Educativo, tratando as três entidades como um único grupo empregador — evidência pública de fusão/consolidação societária das três marcas sob a família Lourenço. A busca confirmou que 'D+ Educativo resultou da união da unidade infantil D+ com o ex-Colégio Projeção', consolidando um grupo com múltiplos CNPJs sob o mesmo controle familiar.",
+        "fonte_url": "http://www.sinprovales.org.br/noticias/assembleia-dos-professores-do-colegio-projecao-griliho-falante-e-d",
+        "peso": 12
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "Escola fundada em 1986 em Indaiatuba, os sócios Joel e Marinalda Lourenço (fundadores, provavelmente 65–75 anos) passaram por uma fusão corporativa relevante — unindo Grilinho Falante e Colégio Projeção para criar a marca D+ Educativo. Nenhum perfil público dos sócios foi encontrado, indicando gestão familiar fechada sem sinalização de sucessão.",
+    "perfil_negocio": "D+ Educativo é um grupo de educação básica privada em Indaiatuba (SP) que opera desde a educação infantil até o ensino médio, resultado da fusão da Escola Grilinho Falante (fundada em 1986) com o tradicional Colégio Projeção. Adota o Sistema de Ensino Positivo e atende famílias de classe média da cidade sob modelo de mensalidades escolares.",
+    "score_v0": 100,
+    "score_v1": 100,
+    "delta": 0,
+    "gatilho": "Fusão recente de três entidades (Grilinho Falante + Colégio Projeção + D+) em um grupo maior, gerido por fundadores com ~40 anos de operação e sem sucessor público identificado — janela de complexidade pós-M&A com potencial interesse em saída ou parceiro estratégico.",
+    "mensagem_abordagem": "Joel, a trajetória de 40 anos do Grilinho Falante e a consolidação com o Colégio Projeção mostram uma construção sólida no mercado de educação de Indaiatuba. Em momentos de integração e crescimento de grupo como esse, muitos fundadores avaliam se faz sentido trazer um parceiro estratégico ou estruturar a continuidade do negócio. Gostaríamos de entender como você está pensando o próximo capítulo do D+ Educativo."
+  },
+  "1c7dd42d-abe8-4205-b4be-d208a7d189b9": {
+    "sinais": [],
+    "presenca_digital": "media",
+    "resumo": "O Colégio Rainha da Paz é uma instituição privada de origem filantrópica/religiosa (Irmãs Dominicanas) que opera há 57 anos em São Paulo, com site próprio e LinkedIn ativos; a sócia registrada Eva Leite Prado não possui presença pública encontrável online, o que dificulta análise de perfil sucessório.",
+    "perfil_negocio": "Colégio particular que atende da Educação Infantil ao Ensino Médio, localizado na Vila Madalena/Alto de Pinheiros (São Paulo/SP), em campus de 19 mil m². Opera sob modelo de associação sem fins lucrativos com vocação filantrópica; desde 2015 reserva 20% das vagas para bolsistas. Clientes são famílias da zona oeste paulistana.",
+    "score_v0": 90,
+    "score_v1": 90,
+    "delta": 0,
+    "gatilho": null,
+    "mensagem_abordagem": null
+  },
+  "9114c518-afea-4ba0-95a2-b5a79c347b12": {
+    "sinais": [
+      {
+        "tipo": "sem_presenca_digital",
+        "rotulo": "Sem pegada digital (perfil old-school)",
+        "descricao": "Nenhum site próprio ou página em redes sociais encontrado. Presença online restrita a listings automáticos em diretórios de empresas (Guia Mais, Econodata, cnpj.biz, Diário Cidade) e um e-mail Hotmail como contato institucional. Nenhuma publicação, nota de imprensa recente ou comunicação ativa localizada.",
+        "fonte_url": "https://www.guiamais.com.br/pereira-barreto-sp/escolas-e-colegios/escolas/2036904259-4936306/jardim-da-infancia-santo-andre",
+        "peso": 3
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "Escola de educação infantil fundada em 1981, operada por Anna Michi Ono — professora pioneira no letramento de filhos de imigrantes japoneses em Pereira Barreto, homenageada pela Câmara Municipal em 2021. Sem presença digital própria e sem qualquer sinal público de plano sucessório, perfil de risco sucessório elevado dado o histórico etário da fundadora.",
+    "perfil_negocio": "O Jardim da Infância Santo André é uma escola de educação infantil localizada no Centro de Pereira Barreto/SP, vinculada à Paróquia Santo André. Oferece educação infantil com foco no desenvolvimento cultural, social e cognitivo, com corpo docente descrito como experiente. Atende famílias da região em modelo de escola de pequeno porte; não há informações públicas sobre mensalidades ou número de alunos.",
+    "score_v0": 90,
+    "score_v1": 93,
+    "delta": 3,
+    "gatilho": "Anna Michi Ono concluiu o Curso Normal em 1954 e atuou como professora desde 1957 — estimativa de ~90 anos de idade em 2026, ainda como única sócia registrada da escola após 45 anos de existência, sem qualquer sinal público de plano sucessório ou herdeiro ativo.",
+    "mensagem_abordagem": "Prezada Sra. Anna, o Jardim da Infância Santo André carrega mais de quatro décadas de história educacional em Pereira Barreto — um legado reconhecido pela própria Câmara Municipal em 2021. É justamente esse tipo de instituição que merece uma conversa cuidadosa sobre continuidade: como garantir que o trabalho construído por toda uma vida siga firme para as próximas gerações? Temos acompanhado escolas familiares do interior de SP nessa reflexão e gostaríamos de entender se existe um plano estruturado para isso."
+  },
+  "54339cf3-16ca-4e35-8d5a-2685d195b4bb": {
+    "sinais": [
+      {
+        "tipo": "sucessor_familiar_ativo",
+        "rotulo": "Sucessor familiar já atuando",
+        "descricao": "Celia Regina Derwood Mills aparece no LinkedIn com vínculo empregatício na CEDE. O sobrenome composto 'Derwood Mills' é idêntico ao da fundadora Nancy Derwood Mills Caffé, indicando presença de membro da família na operação — sinal que reduz o risco sucessório.",
+        "fonte_url": "https://br.linkedin.com/in/celia-regina-derwood-mills-500a9917",
+        "peso": -25
+      },
+      {
+        "tipo": "herdeiro_fora_carreira",
+        "rotulo": "Herdeiro(s) em outra carreira",
+        "descricao": "Bruno Derwood Mills Costa de Carvalho — sobrenome une 'Derwood Mills' (família fundadora) e 'Costa' (presente em Mario Celso Derwood Mills Costa) — ingressou em medicina na Faculdade de Ciências Médicas da Santa Casa de São Paulo em 2015, fez pesquisa em cirurgia cardiovascular no NIH (EUA) e seguiu carreira médica, sem envolvimento identificado no negócio de educação.",
+        "fonte_url": "https://www.escavador.com/sobre/12217234/bruno-derwood-mills-costa-de-carvalho",
+        "peso": 8
+      },
+      {
+        "tipo": "herdeiro_fora_carreira",
+        "rotulo": "Herdeiro(s) em outra carreira",
+        "descricao": "Ruth Alencar Derwood Mills de Oliveira, que compartilha o sobrenome composto da família fundadora, aparece no LinkedIn como Gerente de Relacionamento Estilo no Banco do Brasil (agência Santo Amaro, SP) — carreira financeira sem relação com a escola.",
+        "fonte_url": "https://www.linkedin.com/in/ruth-alencar-derwood-mills-de-oliveira-b7584932/",
+        "peso": 8
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "Escola especial fundada em 1976 pela pedagoga Nancy Mills, voltada ao ensino fundamental para crianças com síndrome de Down e deficiência intelectual em São Paulo. Com 50 anos de operação familiar, surgem sinais contraditórios: um membro da família ativo na escola e ao menos dois membros da geração seguinte com carreiras consolidadas fora do setor.",
+    "perfil_negocio": "A CEDE é uma escola de educação especial em São Paulo que oferece ensino fundamental para crianças e jovens com síndrome de Down e deficiência intelectual desde 1976. Além do currículo regular, oferece atividades extracurriculares como música, artes visuais, culinária, esporte e saídas pedagógicas. Atende famílias que buscam educação especializada para filhos com necessidades especiais — nicho de alta fidelização e forte apelo institucional.",
+    "score_v0": 85,
+    "score_v1": 76,
+    "delta": -9,
+    "gatilho": "Escola familiar de nicho com 50 anos de operação: ao menos dois membros da geração seguinte (medicina e setor bancário) constroem carreiras fora do negócio, enquanto a fundadora completou meio século à frente da instituição — janela clássica de transição geracional sem sucessor externo designado publicamente.",
+    "mensagem_abordagem": "Acompanho de perto o segmento de ensino especial em São Paulo e o CEDE chama atenção pela trajetória consistente de 50 anos e pela missão que construiu no atendimento a crianças com síndrome de Down. Em instituições familiares com esse perfil, surge naturalmente a questão de como preservar e potencializar esse legado ao longo do tempo. Teria disponibilidade para uma conversa exploratória — sem compromisso — sobre as possibilidades estratégicas que existem para o CEDE no médio prazo?"
+  },
+  "8f6a41c8-d67d-4719-87d7-fe220a5d81d6": {
+    "sinais": [
+      {
+        "tipo": "sucessor_familiar_ativo",
+        "rotulo": "Sucessor familiar já atuando",
+        "descricao": "Paulo Cesar Massashi Sakamoto (geração seguinte dos fundadores Massatoshi e Ayako Kuba Sakamoto) figura como sócio/diretor tanto na empresa operacional Colégio Brasília de SP quanto na Associação Educacional Brasília de SP — a família já inseriu o herdeiro na estrutura formal de gestão e propriedade.",
+        "fonte_url": "https://www.econodata.com.br/consulta-empresa/52444411000250-COLEGIO-BRASILIA-DE-SAO-PAULO-EDUCACAO-BASICA-LTDA",
+        "peso": -25
+      }
+    ],
+    "presenca_digital": "alta",
+    "resumo": "Escola particular tradicional da família Sakamoto, em Vila Formosa (SP) desde 1972, com presença digital consolidada. O herdeiro Paulo Cesar Massashi Sakamoto já consta como sócio e diretor na empresa operacional e na Associação Educacional — indicando sucessão em andamento internamente, o que reduz a pressão de venda por risco geracional.",
+    "perfil_negocio": "Colégio particular de médio porte no bairro Vila Formosa/Anália Franco (São Paulo), atendendo alunos da Educação Infantil ao Ensino Médio em dois prédios. Modelo de mensalidades voltado a famílias de classe média da região do Tatuapé/Anália Franco. Destaque para preparação universitária no ensino médio (programa PPU — Portas para a Universidade).",
+    "score_v0": 85,
+    "score_v1": 60,
+    "delta": -25,
+    "gatilho": null,
+    "mensagem_abordagem": null
+  },
+  "e2ffc6dd-0fb3-4125-a2f4-e1a7a6d7610a": {
+    "sinais": [],
+    "presenca_digital": "media",
+    "resumo": "Escola privada de educação infantil ativa desde 1970 em Vila Madalena (SP), com três sócios da família Magalhães Villela. Nenhum sinal público de sucessão, venda, movimentação societária ou perfil dos sócios foi encontrado nas fontes consultadas.",
+    "perfil_negocio": "Escola particular de educação infantil (creche e pré-escola) fundada em 1970, localizada na Rua Caraçá, 215, Vila Madalena, São Paulo. Dispõe de 6 salas de aula, biblioteca, quadra coberta, playground e áreas verdes. Atende famílias da região de Alto de Pinheiros/Vila Madalena, bairro de alta renda na capital paulista.",
+    "score_v0": 85,
+    "score_v1": 85,
+    "delta": 0,
+    "gatilho": null,
+    "mensagem_abordagem": null
+  },
+  "3696d77c-6961-4b97-848e-1e3ce7720d70": {
+    "sinais": [],
+    "presenca_digital": "baixa",
+    "resumo": "Colégio familiar paulistano na 2ª geração — fundador falecido desde 1988 —, com governança concentrada em duas das três sócias (Marilia Bastos Pires consta como 'sócia relativamente incapaz' nos registros públicos do CNPJ). Nenhum movimento de venda, fusão ou sucessão foi identificado na imprensa.",
+    "perfil_negocio": "Escola privada fundada em 1960 no bairro Vila Maria, São Paulo, oferecendo Educação Infantil, Ensino Fundamental e Médio com foco em preparação para vestibular. Negócio familiar de 2ª geração com sede própria na zona norte da capital.",
+    "score_v0": 85,
+    "score_v1": 85,
+    "delta": 0,
+    "gatilho": "Empresa na 2ª geração sem evidência pública de plano sucessório, com uma das três sócias registrada como juridicamente incapaz — governança efetiva concentrada em apenas duas herdeiras sem sucessores da 3ª geração visíveis na sociedade.",
+    "mensagem_abordagem": "O Colégio Neolatino tem uma história de mais de 60 anos na Vila Maria e é referência consolidada de ensino na zona norte de São Paulo. Temos acompanhado instituições educacionais familiares de segunda geração que estão avaliando o planejamento do próximo capítulo — seja sucessão interna, parceria estratégica ou outra estrutura. Gostaríamos de trocar perspectivas sobre como outras escolas familiares têm navegado esse momento e entender se o tema é relevante para a família Pires agora."
+  },
+  "8a6306aa-2419-4d14-81ce-53a0e253e0cd": {
+    "sinais": [],
+    "presenca_digital": "media",
+    "resumo": "O Instituto Nossa Senhora Auxiliadora é uma escola da rede salesiana administrada por religiosas Filhas de Maria Auxiliadora — não é uma empresa familiar no sentido convencional de M&A. As 'sócias' registradas (Teresa Cristina Pisani Domiciano e Ir. Edméa Beatriz Battaglia) são freiras da congregação, e a sucessão da liderança ocorre por designação da ordem religiosa, não por herança familiar. Nenhum sinal clássico de risco sucessório foi encontrado em fontes públicas.",
+    "perfil_negocio": "Escola privada confessional católica que oferece educação infantil, ensino fundamental e ensino médio no bairro Belenzinho, São Paulo, desde 1918 (CNPJ registrado em 1971). Integra a Rede Salesiana de Escolas (RSE), com proposta pedagógica inspirada nos valores de Dom Bosco e Madre Mazzarello. Registrou 286 matrículas no censo escolar de 2024, com 35 professores.",
+    "score_v0": 100,
+    "score_v1": 100,
+    "delta": 0,
+    "gatilho": null,
+    "mensagem_abordagem": null
   }
 }
