@@ -666,5 +666,46 @@
     "delta": 0,
     "gatilho": null,
     "mensagem_abordagem": null
+  },
+  "2174a303-658d-4b57-ac38-6df1d0639acd": {
+    "sinais": [
+      {
+        "tipo": "sem_presenca_digital",
+        "rotulo": "Sem pegada digital (perfil old-school)",
+        "descricao": "A instituição possui site próprio (persio.org.br) e consta no Mapa das OSC do IPEA e na plataforma Atados, mas não foram encontradas notícias, perfis públicos de liderança, informações sobre governança, atas ou qualquer cobertura de imprensa. Nenhuma informação sobre os diretores Abdalla aparece além do registro cadastral. Pegada digital mínima para uma entidade com 57 anos de operação.",
+        "fonte_url": "http://www.persio.org.br/",
+        "peso": 3
+      }
+    ],
+    "presenca_digital": "baixa",
+    "resumo": "Organização da sociedade civil (OSC) sem fins lucrativos fundada em 1969, operando Centros de Educação Infantil (CEIs) conveniados com a Prefeitura de São Paulo e atendendo ~1.542 crianças de 0 a 3 anos. Não é uma empresa comercial — os sócios registrados (Aluisio Abdalla, Presidente; Antonio Abdalla, Diretor) são dirigentes de uma entidade beneficente, sem transação de M&A convencional evidente.",
+    "perfil_negocio": "A Instituição Beneficente Pérsio Guimarães Azevedo é uma OSC focada em educação infantil, operando CEIs conveniados com a Prefeitura de São Paulo em bairros como Vila Progredior e Paraisópolis. Atende crianças de 0 a 3 anos e iniciou suas atividades em 1979 com uma creche de 20 crianças, crescendo para múltiplas unidades. O modelo de receita é convênio público: a prefeitura repassa recursos e a instituição executa o serviço educacional sem fins lucrativos.",
+    "score_v0": 100,
+    "score_v1": 100,
+    "delta": 0,
+    "gatilho": null,
+    "mensagem_abordagem": null
+  },
+  "b899381c-f3ed-416e-810f-5f89a914382f": {
+    "sinais": [],
+    "presenca_digital": "media",
+    "resumo": "Berçário e pré-escola privada fundada em 1981 no Jardim Bonfiglioli (SP), com duas unidades registradas (dois CNPJs distintos). Após 45 anos de operação, as três sócias fundadoras figuram como únicas administradoras nos registros públicos, sem qualquer sinal de planejamento sucessório identificado nas fontes públicas consultadas.",
+    "perfil_negocio": "Berçário e pré-escola particular que atende crianças de 0 a 6 anos em São Paulo-SP, com duas unidades (CNPJs 48.292.635/0001-36 e 48.292.635/0002-17). Modelo de mensalidade direta às famílias; a escola destaca práticas de sustentabilidade e reciclagem no currículo. Mantém site próprio (pitangapora.com.br com blog ativo), perfil no Instagram (@pitanga_pora) e página no LinkedIn.",
+    "score_v0": 100,
+    "score_v1": 100,
+    "delta": 0,
+    "gatilho": null,
+    "mensagem_abordagem": null
+  },
+  "6702ef8c-9511-47e9-badf-bb2bf2fdd7cc": {
+    "sinais": [],
+    "presenca_digital": "baixa",
+    "resumo": "Escola privada ativa desde 1984 em São Paulo (Vila Maracanã), operando sob as marcas Externato Elvira Ramos e Casinha do Saber. Os três sócios-administradores pertencem ao mesmo núcleo familiar (sobrenomes Moura/Abreu/Rodrigues) e nenhum sinal público de movimentação societária, venda ou transição foi encontrado.",
+    "perfil_negocio": "Oferece educação infantil e ensino fundamental em São Paulo na Estrada de Itapecerica, 2775 (Vila Maracanã), com mais de 40 anos de operação. Escola particular de pequeno porte voltada a famílias da região; o site institucional extelviraramos.com.br exibe publicações de eventos escolares (Festa Junina 2024), indicando operação corrente. O nome da escola homenageia Elvira Ramos, mãe do sócio fundador Oswaldo Rodrigues de Abreu.",
+    "score_v0": 100,
+    "score_v1": 100,
+    "delta": 0,
+    "gatilho": null,
+    "mensagem_abordagem": null
   }
 }

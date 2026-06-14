@@ -1308,5 +1308,450 @@
     ],
     "tese_aproximacao": "O HEM é um ativo hospitalar com 59 anos de história, diretoria integralmente acima de 61 anos e zero renovação geracional visível — a janela de transição de governança está se abrindo. Por ser Associação Privada, a transação convencional não é o caminho: o ângulo correto é posicionar-se como facilitador de um modelo de gestão profissionalizada (contrato de gestão, afiliação a rede ou spin-off operacional) que preserve a missão espírita e resolva a pressão sucessória. O originador com credencial em entidades filantrópicas de saúde e conhecimento do mercado hospitalar do interior paulista tem diferencial claro frente a fundos generalistas que abordarão a mesma janela sem essa sensibilidade.",
     "proximo_passo": "Ligar para (14) 2105-1455 pedindo para falar com o presidente Vicente Armentano Junior — apresentar-se como assessor especializado em governança de entidades de saúde sem fins lucrativos, não como comprador, e solicitar reunião exploratória sobre continuidade institucional e modelos de parceria."
+  },
+  "4ef46e0e-6c90-4777-9b31-abab2b92abef": {
+    "overview": "PREST - ASSISTENCIA E SERVICOS LTDA é uma empresa de saúde (CNAE 8690999 — atividades de atenção à saúde humana não classificadas), fundada em 1983 e sediada em São Paulo/SP, com 43 anos de operação contínua. Classificada como 'DEMAIS' (acima de ME/EPP), opera como Sociedade Simples Limitada — estrutura típica de serviços de saúde com vínculo profissional. Sem nome fantasia registrado e sem atividades secundárias declaradas, o que sugere operação focada em um único serviço ou atendimento especializado.",
+    "analise_sucessoria": "O quadro societário é um caso clássico de risco sucessório máximo (score 100). João José Barbosa Leme e Zita Dezorzi Leme — sobrenome em comum, faixa 80+, ambos sócios-administradores (qualificação 22) — formam quase certamente um casal fundador que detém o controle operacional. Maria Cecília Leme Menendez Marchetti (61-70, qualificação 49 — sócia sem poderes de administração) carrega o sobrenome Leme e provavelmente é filha do casal, mas não administra a empresa. O quadro está congelado desde 2001 (todos entraram no mesmo ano), ou seja, 24 anos sem alteração societária — nenhum neto, cônjuge da próxima geração ou executivo externo incorporado. A janela é crítica: os dois administradores têm 80+ anos e qualquer evento de saúde ou incapacidade torna a continuidade operacional imediata um problema jurídico e prático.",
+    "red_flags": [
+      {
+        "risco": "Dependência operacional crítica dos administradores 80+",
+        "severidade": "alta",
+        "como_verificar": "Perguntar diretamente na abordagem quem assina contratos, aprova pagamentos e mantém relacionamento com clientes/convênios — se a resposta for 'João José ou Zita', confirma hub-and-spoke total"
+      },
+      {
+        "risco": "Passivo trabalhista em saúde — setor com alta rotatividade, regimes de plantão e enquadramento CLT contestado (PJ de enfermeiros, cuidadores, etc.)",
+        "severidade": "alta",
+        "como_verificar": "Consulta CNJPJ no TRT-2 (São Paulo) pelo CNPJ + buscas no Jusbrasil por razão social — gratuito"
+      },
+      {
+        "risco": "Capital social registrado em R$ 0 — anomalia contábil que pode indicar irregularidade cadastral, integralização não formalizada ou empresa em estado dormente parcial",
+        "severidade": "media",
+        "como_verificar": "Solicitar contrato social atualizado na Junta Comercial de SP (JUCESP) + verificar se há alterações contratuais pendentes de registro"
+      },
+      {
+        "risco": "Passivo fiscal — empresas de saúde em SP com 40+ anos frequentemente acumulam disputas de ISS (alíquota de serviços de saúde), INSS sobre pró-labore e SIMPLES Nacional retroativo",
+        "severidade": "media",
+        "como_verificar": "Consulta gratuita na PGFN (Dívida Ativa da União) pelo CNPJ + portal CARF + Secretaria Municipal da Fazenda SP para débitos de ISS"
+      },
+      {
+        "risco": "Risco regulatório/ANVISA — dependendo do serviço prestado (home care, clínica, assistência domiciliar), pode exigir alvará sanitário ativo e licença de funcionamento com responsável técnico vinculado a um dos sócios 80+",
+        "severidade": "media",
+        "como_verificar": "Consulta no CNES (Cadastro Nacional de Estabelecimentos de Saúde) pelo CNPJ e verificação de responsável técnico ativo no CRM/CFM/COREN-SP"
+      }
+    ],
+    "perguntas_abordagem": [
+      "Doutora/Senhora Maria Cecília, a PREST completa 43 anos este ano — como está pensando o futuro da operação nos próximos 3 a 5 anos, especialmente com relação à gestão do dia a dia?",
+      "Hoje, quem conduz as decisões operacionais e os contratos com clientes ou convênios — o senhor João José ainda está presente na gestão ativa?",
+      "A empresa já recebeu alguma aproximação de grupos de saúde ou investidores interessados em parceria ou aquisição? Como vocês olham para esse tipo de conversa?",
+      "Qual o perfil principal do serviço prestado — vocês atendem pacientes em clínica própria, fazem home care, têm contratos com operadoras de plano? Quero entender onde está a recorrência da receita.",
+      "Existe algum executivo ou profissional de saúde fora da família que já está preparado para assumir a responsabilidade técnica e operacional, ou a continuidade depende do envolvimento direto dos sócios atuais?"
+    ],
+    "tese_aproximacao": "Perfil de risco sucessório máximo em setor com demanda estrutural crescente (saúde, população envelhecendo) e histórico operacional de 43 anos — combinação que atrai tanto grupos consolidadores de saúde quanto family offices buscando ativos recorrentes. O momento é urgente: os dois administradores têm 80+ anos e a única sócia da geração seguinte (Maria Cecília, 61-70) não tem poderes de administração formalizados, o que cria risco jurídico real de vácuo de gestão. O ângulo de entrada é via Maria Cecília — ela é provavelmente a herdeira com mais interesse em resolver a continuidade — posicionando a conversa como 'planejamento de transição' e não 'venda', o que reduz resistência inicial típica de founders.",
+    "proximo_passo": "Ligar para (11) 5572-1332 ainda esta semana, pedir por Maria Cecília Marchetti, e apresentar a abordagem como consultoria de planejamento sucessório — não M&A — para mapear o interesse e confirmar quem é o interlocutor decisor na prática."
+  },
+  "4f0e426e-a192-4eec-94d5-34cf42ea7456": {
+    "overview": "IRMEV é uma clínica especializada em radioterapia, megavoltagem e quimioterapia, com 52 anos de operação em Ribeirão Preto (SP), polo médico de referência nacional ancorado na USP. Constituída como Sociedade Simples Pura — estrutura típica de sociedades médicas —, conta com quatro sócios com última alteração registrada no QSA em 2000. Porte classificado como DEMAIS (acima de ME/EPP); faturamento não estimável sem dados adicionais.",
+    "analise_sucessoria": "Risco sucessório máximo: todos os quatro sócios têm 61 anos ou mais, com Sérgio Bighetti na faixa 80+ — provável sócio original desde a fundação em 1974. O quadro societário está congelado há 26 anos sem nenhum ingresso de herdeiros ou médicos mais jovens visível no QSA. Em uma Sociedade Simples Pura, os sócios são tipicamente os próprios médicos que operam a clínica — a saída de qualquer um impacta simultaneamente a gestão e a capacidade assistencial. A ausência de qualquer sócio abaixo de 60 anos é o sinal mais crítico: não há plano de continuidade aparente, e a janela para uma transação ordenada — antes de uma saída involuntária por saúde ou falecimento — está se fechando.",
+    "red_flags": [
+      {
+        "risco": "Dependência operacional dos sócios-médicos (hub-and-spoke): se os quatro sócios são os médicos que executam os procedimentos, a capacidade instalada desaparece junto com eles",
+        "severidade": "alta",
+        "como_verificar": "Checar CRM-SP (portal cfm.org.br) para ver quais médicos têm vínculo ativo com o CNPJ. No primeiro contato, perguntar quantos médicos externos operam na clínica versus quantos são sócios."
+      },
+      {
+        "risco": "Passivo regulatório CNEN/ANVISA: uso de material radioativo e equipamentos de megavoltagem (aceleradores lineares) exige licenciamento contínuo — atrasos ou não-conformidades podem paralisar operações",
+        "severidade": "alta",
+        "como_verificar": "Consultar licenças ANVISA em consultas.anvisa.gov.br e situação de licenciamento junto à CNEN (cnen.gov.br/licenciamento-de-instalacoes). Verificar se as licenças estão vigentes e sem pendências."
+      },
+      {
+        "risco": "Obsolescência de equipamentos de radioterapia: aceleradores lineares têm vida útil de 10–15 anos e representam CAPEX elevado; clínica de 52 anos pode ter cronograma de renovação atrasado",
+        "severidade": "media",
+        "como_verificar": "Em due diligence: solicitar laudo técnico dos equipamentos e histórico de manutenção preventiva. Verificar ano de fabricação dos aceleradores via placa de identificação ou contrato com fabricante (Varian, Elekta)."
+      },
+      {
+        "risco": "Passivo trabalhista acumulado em 52 anos de operação com técnicos especializados em radioterapia — categoria com alto turnover e histórico de disputas sobre insalubridade",
+        "severidade": "media",
+        "como_verificar": "Consultar processos no TRT-15 (que cobre Ribeirão Preto) pelo CNPJ, via portal pje.trt15.jus.br — gratuito. Focar em ações de insalubridade e horas extras."
+      },
+      {
+        "risco": "Passivo fiscal: empresa de 52 anos classificada fora de regime simplificado, com possível histórico de parcelamentos ou autuações",
+        "severidade": "media",
+        "como_verificar": "Consultar Dívida Ativa da União em regularize.pgfn.gov.br (gratuito, por CNPJ) e SEFAZ-SP para dívida estadual. Consultar CARF para autuações em andamento."
+      }
+    ],
+    "perguntas_abordagem": [
+      "O IRMEV tem algum plano formal de continuidade em andamento — como a entrada de um médico mais jovem na sociedade ou uma conversa sobre o futuro da estrutura societária?",
+      "Com Sérgio Bighetti provavelmente reduzindo atividades clínicas, como a clínica está cobrindo a carga de procedimentos que ele historicamente carregava?",
+      "Os equipamentos de megavoltagem atuais foram renovados recentemente, ou há um ciclo de atualização previsto para os próximos 2–3 anos?",
+      "Como está a distribuição de receita entre convênios, SUS e particular — e isso mudou com a chegada de grupos como Oncoclínicas ou IOV ao mercado de Ribeirão Preto?",
+      "Já houve abordagens de grupos hospitalares ou fundos de saúde para parceria ou aquisição? Como os sócios costumam receber esse tipo de conversa?"
+    ],
+    "tese_aproximacao": "IRMEV é um ativo raro em oncologia radioterápica: 52 anos de reputação consolidada em um dos maiores polos médicos do Brasil, score de risco sucessório máximo e quadro societário inteiramente na faixa 61–80+, sem nenhum movimento de renovação em 26 anos. O timing é o argumento central — a janela para uma transação negociada, antes de uma saída involuntária que force uma liquidação desordenada, está se fechando. O ângulo de abordagem é proteção do legado clínico: não uma venda, mas uma estruturação que preserve o nome IRMEV, a equipe e o padrão de atendimento enquanto os fundadores ainda têm agency para escolher o parceiro certo.",
+    "proximo_passo": "Ligação telefônica no (16) 3610-3611, solicitando falar com Adilson Aparecido Faccio (sócio mais jovem, 61–70 anos, maior probabilidade de ser o gestor administrativo ativo), apresentando-se como assessor especializado em transações no setor de saúde e pedindo 20 minutos para uma conversa sobre estruturação futura da clínica."
+  },
+  "0cba5795-7568-404f-b932-44545957cb24": {
+    "overview": "Hospital Santa Elisa é um hospital geral com 56 anos de operação em Jundiaí (SP), classificado como porte 'DEMAIS' (acima de ME/EPP), atuando no segmento de internação hospitalar eletiva (CNAE 8610101). O dado mais crítico do dossiê é o status atual: a empresa está em Recuperação Judicial ativa — o que transforma este de um deal sucessório clássico em uma situação de distress com dinâmica jurídica própria.",
+    "analise_sucessoria": "O quadro societário é extremamente concentrado na família Soares de Camargo (5 dos 7 sócios), com estrutura praticamente inalterada desde 1986 — 40 anos sem renovação. Quatro sócios têm 80+ anos (Vera Lucia, Luiz Alves de Godoy, Jose Roberto Bandeira e Celio Ciari) e três estão na faixa 61-70 (Luciano, Luiz Alberto e Marcos, este último como sócio-administrador pela qualificação 49). A segunda geração Soares de Camargo está presente na faixa 61-70, mas não há nenhum sócio abaixo de 60 anos visível no QSA — nenhuma terceira geração registrada na sociedade. O risco sucessório formal é máximo (score 100), mas na prática foi eclipsado pela Recuperação Judicial: a pressão de liquidez e a intervenção judicial eliminam a janela de planejamento gradual que um deal sucessório convencional exige.",
+    "red_flags": [
+      {
+        "risco": "Recuperação Judicial ativa — passivo total desconhecido",
+        "severidade": "alta",
+        "como_verificar": "Buscar o número do processo no TJSP (tjsp.jus.br, pesquisa por CNPJ ou razão social). O plano de RJ aprovado pelos credores é público — ele revela o passivo total, prazo de pagamento e condições. Verificar também se há pedido de falência convertida."
+      },
+      {
+        "risco": "Passivo fiscal e previdenciário acumulado",
+        "severidade": "alta",
+        "como_verificar": "Consulta PGFN Dívida Ativa (consultacadastral.pgfn.gov.br) pelo CNPJ — gratuito e imediato. Para CARF, buscar no portal do MF. Hospitais em RJ tipicamente acumulam FGTS, INSS e ISS municipal."
+      },
+      {
+        "risco": "Passivo trabalhista com corpo médico e técnico",
+        "severidade": "alta",
+        "como_verificar": "Consultar TRT da 15ª Região (Campinas) pelo CNPJ no PJe — processos trabalhistas são públicos. Hospitais com 50+ anos de operação frequentemente têm vínculos celetistas mascarados como PJ."
+      },
+      {
+        "risco": "Passivo sanitário e regulatório (ANVISA / Vigilância Sanitária estadual)",
+        "severidade": "media",
+        "como_verificar": "Consultar situação do Alvará Sanitário no DATAVISA (datavisa.saude.gov.br) e histórico de autos de infração da ANVISA. Verificar se o CNES (Cadastro Nacional de Estabelecimentos de Saúde) está ativo e sem pendências."
+      },
+      {
+        "risco": "Concentração de receita em poucos convênios (risco de cancelamento na RJ)",
+        "severidade": "media",
+        "como_verificar": "Solicitar, na abordagem, o mix de faturamento por convênio (ANS, SUS, particular). Hospitais de médio porte em Jundiaí tendem a depender de 2-3 operadoras (Unimed, Bradesco Saúde, SUS municipal). Cancelamento de credenciamento durante RJ é risco real."
+      },
+      {
+        "risco": "Dependência operacional do sócio-administrador (Marcos Soares de Camargo, 61-70)",
+        "severidade": "media",
+        "como_verificar": "Verificar se há gestão profissional contratada ou se as decisões operacionais, comerciais e médicas passam todas pelo administrador familiar. Perguntar diretamente na abordagem quem responde pelo day-to-day."
+      }
+    ],
+    "perguntas_abordagem": [
+      "O plano de recuperação judicial já foi aprovado em assembleia de credores? Em que fase está o cumprimento — há risco de convolação em falência no horizonte próximo?",
+      "O hospital mantém operações plenas (leitos, centro cirúrgico, UTI) ou houve redução de capacidade instalada desde o pedido de RJ?",
+      "Existe um administrador judicial externo conduzindo o processo, ou a gestão continua integralmente nas mãos da família Soares de Camargo?",
+      "A família já recebeu abordagens de operadores hospitalares (Rede D'Or, Santa Casa regional, grupos regionais de Campinas) ou o movimento de M&A ainda não foi formalmente explorado?",
+      "Marcos Soares de Camargo é quem centraliza as decisões hoje — há alinhamento dos demais sócios (incluindo os 80+) quanto à disposição de ceder controle ou realizar uma saída total?"
+    ],
+    "tese_aproximacao": "Hospital de 56 anos em Jundiaí — cidade de ~400k habitantes e forte polo industrial — com ativo operacional real (leitos, licenças, carteira de convênios, imóvel presumivelmente próprio) mas família travada por Recuperação Judicial e sem sucessão visível: a combinação cria pressão de saída máxima e janela de negociação assimétrica a favor do comprador. O ângulo não é o M&A consultivo tradicional — é intermediar um investidor estratégico (operador hospitalar ou grupo de saúde regional) ou estruturar um DIP/aquisição pós-plano, segmento onde boutiques com acesso a compradores estratégicos têm vantagem clara sobre o advogado de RJ que não origina compradores. O 'por que nós' é simples: temos o pipeline de compradores que o administrador judicial não tem, e chegamos antes que o processo force uma liquidação desordenada.",
+    "proximo_passo": "Enviar email para contabil@hse.com.br (contato disponível no dossiê) identificando-se como assessor de M&A interessado em explorar alternativas estratégicas para o processo de RJ, e em paralelo puxar o processo no TJSP para mapear o administrador judicial, o plano aprovado e os principais credores antes da primeira conversa com a família."
+  },
+  "bb194e5b-404a-4134-ba00-d274a2d64f28": {
+    "overview": "Hospital Monumento é um hospital geral em São Paulo (CNAE 8610-1/01), com 60 anos de operação contínua desde 1966. Classificado como 'DEMAIS' pela Receita Federal — portanto fora da faixa ME/EPP —, o que indica escala operacional relevante, embora faturamento e EBITDA não sejam estimáveis sem dados adicionais. Estrutura jurídica é Sociedade Empresária Limitada com dois sócios fundadores.",
+    "analise_sucessoria": "O quadro societário está congelado desde a fundação: Eduardo de Oliveira (faixa 71–80 anos) e Volney Waldivil Maia (faixa 80+) detêm participações iguais (qualificação 49 — sócio) e jamais alteraram o QSA em seis décadas. Não há registro de entrada de herdeiros, gestores profissionais ou sócios mais jovens. A combinação de dois fundadores idosos, nenhuma movimentação societária em 60 anos e ausência total de plano de sucessão visível configura risco sucessório máximo — qualquer evento de saúde ou morte de um dos sócios pode paralisar decisões críticas ou forçar inventário em empresa operacional de saúde.",
+    "red_flags": [
+      {
+        "risco": "Passivo fiscal acumulado",
+        "severidade": "alta",
+        "como_verificar": "Consulta gratuita na PGFN (Dívida Ativa da União) pelo CNPJ + pesquisa no CARF e TJ-SP (execuções fiscais). Hospitais com 60 anos de operação sem reestruturação societária visível têm risco elevado de obrigações acessórias, contribuições patronais e autuações acumuladas de períodos anteriores."
+      },
+      {
+        "risco": "Passivo trabalhista latente",
+        "severidade": "alta",
+        "como_verificar": "Pesquisa no TRT da 2ª Região (SP) pelo CNPJ. Setor hospitalar tem altíssima rotatividade e jornadas especiais (plantões, escala 12x36), gerando histórico frequente de ações por horas extras, insalubridade, adicional noturno e equiparação salarial em empresas de longa operação."
+      },
+      {
+        "risco": "Risco regulatório e sanitário (ANVISA / CVS-SP)",
+        "severidade": "alta",
+        "como_verificar": "Consultar CNES (Cadastro Nacional de Estabelecimentos de Saúde) para verificar licenças ativas e pendências. Checar histórico de autos de infração no CVS-SP e ANVISA pelo CNPJ. Hospitais fundados em 1966 podem ter estrutura física defasada que não atende RDC vigente — risco de embargo ou restrição operacional."
+      },
+      {
+        "risco": "Dependência crítica dos fundadores (hub-and-spoke)",
+        "severidade": "alta",
+        "como_verificar": "Verificar em due diligence se há Diretor Técnico ou Administrador Hospitalar profissional — ou se os sócios concentram decisões clínicas e administrativas. A ausência de qualquer alteração no QSA em 60 anos é forte sinal de que não há camada gerencial profissional instalada."
+      },
+      {
+        "risco": "Passivo ambiental — gestão de resíduos de serviços de saúde (RSS)",
+        "severidade": "media",
+        "como_verificar": "Checar licenças CETESB e histórico de autos de infração no sistema estadual de meio ambiente pelo CNPJ. Operações hospitalares antigas têm risco de disposição inadequada de RSS em períodos anteriores à regulação vigente (RDC 222/2018), especialmente antes dos anos 2000."
+      }
+    ],
+    "perguntas_abordagem": [
+      "O Hospital Monumento opera há 60 anos — como o senhor e o Dr. Volney estão pensando a continuidade da gestão e da operação nos próximos 5 anos?",
+      "Existe algum familiar ou profissional já inserido na operação do hospital que esteja sendo preparado para assumir a direção?",
+      "Com a consolidação acelerada do setor hospitalar em SP — Rede D'Or, Kora, grupos de PE entrando no middle market — o senhor tem recebido abordagens de potenciais compradores ou parceiros estratégicos?",
+      "Quais são hoje as maiores restrições para modernizar infraestrutura ou ampliar capacidade: capital, gestão operacional ou ambiente regulatório?",
+      "Há algum processo em andamento de planejamento sucessório, holding familiar ou reestruturação societária que o senhor possa compartilhar?"
+    ],
+    "tese_aproximacao": "Hospital com 60 anos de operação em São Paulo, dois fundadores em faixa 71–80+ sem nenhuma renovação societária e sem sucessor visível — o score 100 de risco sucessório é plenamente justificado pelo perfil. O setor hospitalar paulistano está em consolidação ativa, o que cria janela de liquidez real para fundadores que queiram sair de forma planejada antes de um evento forçado (morte, incapacidade, conflito de espólio). O ângulo de abordagem é sucessório e patrimonial — não operacional: a mensagem é 'garantir o legado de 60 anos com dignidade e no timing certo, antes que um evento de saúde force uma venda desordenada a preço de liquidação'. Somos o interlocutor certo porque trabalhamos exclusivamente com empresas familiares em transição no setor de saúde e temos acesso direto ao comprador estratégico adequado para ativos hospitalares estabelecidos em SP.",
+    "proximo_passo": "Sem telefone ou e-mail disponível: acessar o CNES pelo CNPJ para identificar o Diretor Técnico registrado (contato público e profissional), mapear Eduardo de Oliveira (sócio mais jovem, faixa 71–80) no LinkedIn para abordagem direta, e acionar a ANAHP (Associação Nacional de Hospitais Privados) como canal de warm introduction — em paralelo, verificar se há escritório de contabilidade ou advogado societário identificável em documentos públicos para triangular via assessor de confiança dos sócios."
+  },
+  "72ba3d83-0934-4ade-95f6-61dae7bec4de": {
+    "overview": "Clínica Radiológica de Santos Ltda é uma empresa de diagnóstico por imagem fundada em 1969 — 57 anos de operação contínua — localizada em Santos/SP, classificada como 'DEMAIS' (acima de ME/EPP), portanto fora do estrato de microempresa. Opera com radiologia convencional como atividade principal e tomografia e ressonância magnética como atividades secundárias. Capital social registrado de R$23.000 é claramente defasado e não reflete o valor nem o porte real da operação.",
+    "analise_sucessoria": "O risco sucessório é máximo (score 100). Caetano Sorrentino Netto, 80+ anos, está no quadro societário desde 1999 — 27 anos sem alteração — e é provável responsável técnico ou figura central da clínica dado o perfil de empresa familiar da área médica. Beatriz Pacheco Borges Sorrentino, 51–60 anos, compartilha o sobrenome Sorrentino, sugerindo vínculo familiar direto (cônjuge ou familiar próximo), mas está em idade de começar a pensar em liquidez e transição. Não há sócios mais jovens no QSA nem qualquer sinal de ingresso de herdeiros ou gestores externos nos últimos 27 anos. A combinação de fundador octogenário, quadro estático e ausência de terceira geração visível é o perfil clássico de empresa familiar presa no limbo sucessório.",
+    "red_flags": [
+      {
+        "risco": "Dependência do fundador como responsável técnico médico",
+        "severidade": "alta",
+        "como_verificar": "Consultar CRM-SP pelo nome de Caetano Sorrentino Netto para verificar se é médico radiologista em atividade e se consta como RT da clínica junto à ANVISA/Vigilância Sanitária municipal de Santos. A saída ou incapacidade do RT invalida o alvará sanitário e trava a operação."
+      },
+      {
+        "risco": "Licenciamento ANVISA/CNEN para equipamentos de radiação ionizante vencido ou irregular",
+        "severidade": "alta",
+        "como_verificar": "Consultar o sistema CNES (Cadastro Nacional de Estabelecimentos de Saúde) pelo CNPJ/CNES da clínica — dados públicos — e verificar validade das licenças de operação de equipamentos de raios-X. Clínicas com mais de 50 anos frequentemente acumulam pendências em renovação de licenças por inércia administrativa."
+      },
+      {
+        "risco": "Passivo trabalhista acumulado em 57 anos de operação",
+        "severidade": "alta",
+        "como_verificar": "Consultar TRT-2 (São Paulo) pelo CNPJ no sistema PJe/DEJT — gratuito e público. Empresa com mais de cinco décadas em setor intensivo em mão de obra qualificada (técnicos de radiologia, enfermeiros, recepção) tende a ter histórico de ações trabalhistas."
+      },
+      {
+        "risco": "Passivo fiscal federal ou estadual não declarado",
+        "severidade": "media",
+        "como_verificar": "Consulta à PGFN (Dívida Ativa da União) pelo CNPJ em https://www.regularize.pgfn.gov.br — gratuito. Complementar com consulta ao CARF e SEFAZ-SP. Clínicas com regimes de tributação cambiantes ao longo de décadas são suscetíveis a autuações retroativas."
+      },
+      {
+        "risco": "Obsolescência ou passivo oculto em equipamentos de imagem",
+        "severidade": "media",
+        "como_verificar": "Não verificável por fontes abertas — requer due diligence operacional presencial. Clínica fundada em 1969 com atividades de ressonância magnética (tecnologia dos anos 80) implica múltiplos ciclos de renovação de equipamentos. Verificar se há financiamentos ativos junto a BNDES/bancos no BACEN SCR (acessível com autorização do target)."
+      }
+    ],
+    "perguntas_abordagem": [
+      "Dr. Caetano ainda atua clinicamente como radiologista responsável, ou a gestão técnica já foi passada para outro profissional?",
+      "Com 57 anos de história em Santos, vocês já foram abordados por grupos como Fleury, Dasa ou Alliar para alguma forma de parceria ou integração?",
+      "A clínica opera em imóvel próprio ou alugado — e esse imóvel faz parte do patrimônio da sociedade?",
+      "Beatriz, como você enxerga o próximo ciclo da clínica nos próximos 5 anos — expansão, manutenção do modelo atual ou alguma transição?",
+      "Vocês têm contador ou advogado societário que acompanha a empresa há bastante tempo? Seria útil incluí-lo numa conversa inicial."
+    ],
+    "tese_aproximacao": "Uma clínica de diagnóstico por imagem com 57 anos de operação em Santos — cidade portuária com base econômica sólida — representa um ativo raro: marca estabelecida, base de pacientes fidelizada e infraestrutura multisserviço (RX, tomografia, ressonância) que exigiria anos e capital para ser replicada. O timing é crítico: o principal sócio está em faixa etária de risco operacional imediato, e o mercado de diagnóstico por imagem está em ciclo ativo de consolidação no Brasil, com grupos regionais pagando múltiplos altos por clínicas com histórico e fluxo comprovado. O ângulo de abordagem é sucessório-construtivo — não 'compra de empresa' mas 'solução para continuidade do legado' — direcionado a Beatriz, que está na faixa etária de pensar em liquidez e tem nome composto que sugere inserção na família fundadora, tornando-a a interlocutora natural para uma conversa de estruturação.",
+    "proximo_passo": "Localizar Beatriz Pacheco Borges Sorrentino no LinkedIn (busca pelo nome completo + Santos/SP) e enviar mensagem direta referenciando os 57 anos da clínica e o contexto de consolidação do setor de diagnóstico por imagem no Brasil — ou, alternativamente, identificar o contador da empresa via QSA expandido (Receita Federal) e fazer o primeiro contato por meio dele como porta de entrada mais quente."
+  },
+  "87cf5d0a-6415-4160-bf2f-412d72172cac": {
+    "overview": "Centro Educacional e Cultural Civitatis é uma escola de ensino médio fundada em São Paulo em 1974, com 52 anos de operação contínua. Constituída como Sociedade Simples Limitada — forma jurídica típica de profissões liberais e serviços educacionais —, enquadra-se como 'DEMAIS' porte (não-ME/EPP), indicando que supera os limites de pequena empresa, sem que seja possível estimar receita ou valor de mercado com os dados disponíveis.",
+    "analise_sucessoria": "O risco sucessório é máximo. Drauzio Graça e Zeneide Thereza Lucchini Graça, ambos 80+, são os sócio-administradores desde a fundação em 1974 — ou seja, detêm o controle formal da empresa há 52 anos sem mudança. Em 2005, três filhos (Mariana, Rodrigo e Leonardo Lucchini Graça, hoje na faixa 41-50) entraram no quadro como sócios simples, sem qualificação de administrador. Esse congelamento da administração nos fundadores por mais 21 anos após a entrada dos herdeiros é o sinal mais forte: ou os fundadores resistem a soltar o controle, ou os herdeiros não chegaram a um consenso sobre quem assume. Quadro societário sem alteração desde 2005 reforça a inércia.",
+    "red_flags": [
+      {
+        "risco": "Passivo trabalhista oculto",
+        "severidade": "alta",
+        "como_verificar": "Consulta de processos no TRT-2 (São Paulo) pelo CNPJ — gratuito via PJE TRT. Setor educacional é intensivo em mão de obra e historicamente litigioso (professores, coordenadores, hora-atividade)."
+      },
+      {
+        "risco": "Irregularidade regulatória junto ao MEC/SEE-SP",
+        "severidade": "alta",
+        "como_verificar": "Consulta ao e-MEC (emec.mec.gov.br) pelo CNPJ para verificar situação do credenciamento e última avaliação. Escola particular de ensino médio depende de autorização ativa — qualquer pendência é risco de continuidade."
+      },
+      {
+        "risco": "Dependência do fundador (hub-and-spoke)",
+        "severidade": "alta",
+        "como_verificar": "Validar em primeiro contato: Drauzio ainda está presente operacionalmente? A reputação da escola está vinculada ao nome/figura do fundador? Checar se o site ou materiais de marketing referem o fundador como figura central."
+      },
+      {
+        "risco": "Passivo fiscal federal",
+        "severidade": "media",
+        "como_verificar": "Consulta à Dívida Ativa da União via portal PGFN (dívida ativa.pgfn.gov.br) pelo CNPJ — gratuito. Verificar também CARF para autuações em curso."
+      },
+      {
+        "risco": "Conflito societário latente entre herdeiros",
+        "severidade": "media",
+        "como_verificar": "Os três filhos têm participação igual (qualificação 22) e entraram juntos em 2005; sem diferenciação de papéis formais, conflito de governança é comum em escolas familiares de segunda geração. Verificar via conversa inicial com qualquer um dos três."
+      }
+    ],
+    "perguntas_abordagem": [
+      "O Drauzio ainda está presente no dia a dia da escola, ou a gestão operacional já passou para a Mariana, o Rodrigo ou o Leonardo?",
+      "Em 52 anos, o Civitatis passou por alguma expansão de unidades ou manteve operação concentrada num único endereço em São Paulo?",
+      "O imóvel onde a escola funciona é próprio da empresa ou alugado? Existe ativo imobiliário atrelado à operação?",
+      "Como vocês estão posicionando o Civitatis frente à expansão das grandes redes de ensino médio em SP — Poliedro, COC, SEB — nos últimos anos?",
+      "Os três irmãos têm visão alinhada sobre o futuro da escola — crescer, manter ou considerar uma transição de controle?"
+    ],
+    "tese_aproximacao": "Civitatis é um ativo educacional com meio século de operação em São Paulo, fundadores octogenários ainda no controle formal e três herdeiros sem mandato de administração — combinação clássica de successão travada. O momento é crítico: fundadores com 80+ anos criam urgência natural para resolução, e herdeiros na faixa dos 40 estão na janela de decisão (assumir, profissionalizar ou vender). O ângulo de entrada é 'parceiro para o próximo capítulo', não comprador agressivo — a escola tem nome e história, e os herdeiros provavelmente valorizam continuidade. Nossa boutique agrega valor aqui porque atuamos especificamente com empresas familiares em transição geracional no Brasil, entendemos a sensibilidade do fundador e temos acesso a compradores estratégicos (redes educacionais e fundos de PE com teses em educação básica privada) sem que o vendedor precise fazer esse mapeamento sozinho.",
+    "proximo_passo": "Sem contato direto disponível, mapear Rodrigo ou Leonardo Lucchini Graça no LinkedIn (perfil mais provável de estar ativo para segunda geração de 41-50 anos) e solicitar 20 minutos para apresentar uma perspectiva de mercado sobre consolidação no ensino médio privado paulistano — sem mencionar venda no primeiro contato."
+  },
+  "c879c6a1-0305-426a-8cd8-a814623e9014": {
+    "overview": "Colégio Dante Alighieri é uma das escolas privadas mais tradicionais de São Paulo, em operação há 60 anos (fundada em 1966), estruturada como Associação Privada — o que significa ausência de equity convencional e capital social zero, consistente com a natureza jurídica. Porte classificado como 'DEMAIS' (acima de ME/EPP), atuando em ensino fundamental (CNAE 8513900) na capital paulista. Por ser associação, qualquer estrutura de transação exige arquitetura jurídica não-convencional.",
+    "analise_sucessoria": "O quadro diretivo tem 10 membros, todos com 61 anos ou mais — nenhum membro abaixo dessa faixa visível no QSA. Dois diretores estão na faixa 80+ (Mario Eduardo Barra e Silvio Maria Crespi), e José Luiz Farina (71-80, qualificação 16 — provavelmente Presidente da associação) lidera a estrutura. Oito dos dez membros entraram em 2014 e permanecem; os dois ingressos posteriores (2020 e 2023) também são da faixa 61-70, sem sinalizar renovação geracional. Não há nenhum membro jovem que represente transição natural de liderança. Para uma associação de 60 anos com toda a diretoria acima de 60, o risco sucessório é de governança e continuidade institucional — não de fragmentação de herança como em Ltda familiar, mas igualmente urgente: a ausência de sucessores preparados pode levar à perda de reputação acumulada ou à abertura para parcerias externas.",
+    "red_flags": [
+      {
+        "risco": "Estrutura de associação privada inviabiliza M&A convencional",
+        "severidade": "alta",
+        "como_verificar": "Confirmar no contrato social/estatuto (disponível na Junta Comercial ou cartório de registro civil de PJ) se há cláusula de reversão de patrimônio e como se dá dissolução. Avaliar se há histórico de outras associações educacionais que migraram para Ltda/SA (modelos Eleva, Bahema são referência)."
+      },
+      {
+        "risco": "Passivo trabalhista e previdenciário relevante",
+        "severidade": "alta",
+        "como_verificar": "Consulta CNIS/CNDT (Certidão Negativa de Débitos Trabalhistas) pelo CNPJ, gratuita no TST. Escolas com décadas de operação acumulam ações de ex-professores por equiparação salarial, hora-atividade e adicional de insalubridade. Verificar no TRT-2 (São Paulo) por CNPJ."
+      },
+      {
+        "risco": "Risco regulatório MEC/INEP — autorização e renovação de funcionamento",
+        "severidade": "media",
+        "como_verificar": "Consultar Cadastro Nacional de Escolas (INEP/Educacenso) para checar situação do credenciamento. Associações que passam por mudança de gestão ou estrutura jurídica precisam revalidar autorização estadual (SEE-SP)."
+      },
+      {
+        "risco": "Dependência institucional da diretoria atual (hub-and-spoke de relacionamentos)",
+        "severidade": "media",
+        "como_verificar": "Levantar histórico de matrículas e reputação (ReclameAqui, Google Reviews, fóruns de pais) nos últimos 5 anos — queda de matrícula pode sinalizar fragilidade já em curso. Perguntar diretamente ao interlocutor sobre pipeline de renovação da diretoria."
+      },
+      {
+        "risco": "Passivo com comunidade italiana fundadora — restrições estatutárias de finalidade",
+        "severidade": "media",
+        "como_verificar": "Ler o estatuto social completo. Associações de origem étnica/comunitária frequentemente têm cláusulas que restringem transformação jurídica ou alienação de ativos sem aprovação da assembleia geral — o que complica qualquer estrutura de deal."
+      }
+    ],
+    "perguntas_abordagem": [
+      "A diretoria tem discutido formalmente um plano de renovação de liderança para os próximos 5 anos — existe algum grupo de diretores mais jovens sendo preparado?",
+      "Como a associação tem tratado a questão da sustentabilidade financeira de longo prazo, dado que o modelo de associação sem fins lucrativos limita acesso a capital para expansão ou modernização de infraestrutura?",
+      "Há alguma conversa em andamento sobre parceria estratégica com grupos educacionais ou mudança de estrutura jurídica que permita maior capitalização da instituição?",
+      "O estatuto atual prevê mecanismo claro de sucessão na presidência — e quando foi a última revisão do estatuto?",
+      "Como a escola tem se posicionado frente à pressão competitiva de grupos educacionais premium em São Paulo (ex: expansão de redes bilíngues e internacionais) — e isso tem afetado volume de matrículas?"
+    ],
+    "tese_aproximacao": "O Dante Alighieri tem um dos ativos mais escassos em educação premium paulistana: marca centenária, base de alumni fiel e localização consolidada — ativos que grupos como Eleva, Bahema e fundos focados em educação pagam múltiplos elevados para acessar. O gatilho é o vácuo de liderança: diretoria inteiramente acima de 60 anos, sem renovação geracional visível, numa estrutura associativa que não tem mecanismo natural de capitalização. O ângulo de entrada não é 'compra' direta — é uma conversa sobre perenidade institucional e modelos de parceria que outros colégios tradicionais já adotaram. O timing é relevante porque a janela de transição estruturada (antes de uma crise de governança) é finita.",
+    "proximo_passo": "Sem telefone ou email no dossiê — acionar via LinkedIn de José Luiz Farina (Presidente, qualificação 16, faixa 71-80) com mensagem curta referenciando a tradição da instituição e abrindo conversa sobre modelos de governança em colégios tradicionais; paralelamente, verificar se o site institucional do Dante Alighieri publica contato da secretaria geral, que pode intermediar o acesso à diretoria."
+  },
+  "78f6ab98-ac0c-443c-8a1d-d97229feba7e": {
+    "overview": "Educ Empreendimentos Educacionais Ltda opera a Escola Granja Viana em Cotia/SP, atuando em ensino fundamental desde 1976 — 50 anos de operação contínua num dos bairros de maior poder aquisitivo da Grande São Paulo. Porte declarado como 'DEMAIS' (acima de ME/EPP), o que indica estrutura relevante, mas faturamento e EBITDA não são estimáveis sem demonstrações financeiras.",
+    "analise_sucessoria": "O quadro exibe padrão clássico de risco sucessório em empresa familiar: Emília Gambirasio Silva (80+ anos, qualificação de sócia sem cargo administrativo, no quadro desde 1999) é a figura patriarcal — quase certamente fundadora ou sócia original. Alexandre Gambirasio Silva (51–60 anos, sócio-administrador desde 2012) compartilha o sobrenome e assumiu a gestão formal há 13 anos, o que sugere transição iniciada mas não concluída: Emília ainda detém participação societária ativa, sem sinalização pública de saída. O quadro está congelado desde 2012 (sem novos sócios, sem alteração de qualificação), o que indica ausência de plano sucessório estruturado ou de entrada de terceira geração. Risco sucessório real: falecimento ou incapacidade de Emília pode acionar disputas de inventário sobre a participação societária, travar decisões e abrir janela de venda forçada.",
+    "red_flags": [
+      {
+        "risco": "Passivo trabalhista acumulado",
+        "severidade": "alta",
+        "como_verificar": "Consulta de ações trabalhistas no TRT da 15ª Região (Campinas, abrange Cotia) e TRT-2 (SP) pelo CNPJ — acesso gratuito via PJe. Escola de 50 anos com quadro de professores e funcionários de apoio tende a ter histórico de reclamações por PLR, horas extras e FGTS não recolhido."
+      },
+      {
+        "risco": "Passivo fiscal — PGFN/CARF",
+        "severidade": "media",
+        "como_verificar": "Certidão de Débitos Relativos a Créditos Tributários Federais via Receita Federal pelo CNPJ (grátis, emissão online). Verificar também dívida ativa estadual (SEFAZ-SP) e municipal (Cotia). Empresas de ensino têm histórico de disputas sobre imunidade tributária."
+      },
+      {
+        "risco": "Regularidade de licenças e infraestrutura predial",
+        "severidade": "media",
+        "como_verificar": "Escola construída/operando desde 1976 em Cotia: verificar Alvará de Funcionamento municipal, laudo do Corpo de Bombeiros (PPCI) e credenciamento junto à Secretaria Estadual de Educação (SEE-SP) — todos documentos que o vendedor deve apresentar em due diligence. Estrutura antiga pode ter débito de adequação de acessibilidade (Lei Brasileira de Inclusão, 2015)."
+      },
+      {
+        "risco": "Dependência da marca e relacionamentos pessoais da fundadora",
+        "severidade": "media",
+        "como_verificar": "Avaliar em due diligence qualitativa: quantos alunos/famílias têm vínculo direto com Emília; se há contratos ou convênios assinados por ela pessoalmente. Conversa com Alexandre na abordagem inicial já sinaliza o quanto a operação está efetivamente descentralizada."
+      },
+      {
+        "risco": "Inadimplência de mensalidades e concentração de recebíveis",
+        "severidade": "baixa",
+        "como_verificar": "Solicitar relatório de inadimplência dos últimos 12 meses em fase de data room. Granja Viana é público de alta renda, o que atenua — mas escolas particulares em processo de estagnação de matrículas tendem a acumular famílias inadimplentes por fidelidade histórica com a fundadora."
+      }
+    ],
+    "perguntas_abordagem": [
+      "Alexandre, a escola completa 50 anos em 2026 — como vocês estão pensando o próximo capítulo da instituição, considerando que a Emília está em momento de afastamento gradual?",
+      "A Escola Granja Viana cresceu junto com o bairro; com a expansão de Granja Viana nos últimos anos, vocês avaliaram ampliar capacidade instalada ou abrir uma segunda unidade, e o que travou essa decisão?",
+      "Você está na administração desde 2012 — há algum movimento de renovação do quadro de liderança (diretora pedagógica, coordenadores) que permita a você ter mais distância operacional da escola?",
+      "Como está a evolução de matrículas nos últimos 3 anos? O público de Cotia/Granja Viana está crescendo, e a escola conseguiu acompanhar ou perdeu alunos para redes maiores?",
+      "Já houve alguma conversa formal, interna ou com assessores, sobre planejamento sucessório da participação da Emília na sociedade?"
+    ],
+    "tese_aproximacao": "A Escola Granja Viana é um ativo de marca consolidada em microlocal de altíssimo poder aquisitivo — 50 anos de operação em Granja Viana criam barreira de entrada difícil de replicar. O gatilho de timing é claro: Emília (80+) ainda detém participação ativa sem sinal público de saída, Alexandre (51–60) está operacionalmente no comando mas sem sócio de crescimento ou parceiro financeiro. O ângulo de abordagem não é compra, é continuidade com capitalização — 'como escalar o que vocês construíram'. Somos o interlocutor certo porque atuamos especificamente com empresas familiares de educação no interior de SP/Sul em momento de transição geracional, conhecemos os compradores estratégicos (grupos de ensino básico premium em expansão) e chegamos antes do processo virar inventário ou leilão forçado.",
+    "proximo_passo": "Enviar email para escoladagranja@egv.com.br endereçado a Alexandre Gambirasio Silva, referenciando os 50 anos da escola e abrindo conversa sobre planejamento estratégico — sem mencionar venda no primeiro contato; objetivo da primeira reunião é mapear intenção e estrutura societária."
+  },
+  "7601a4c6-1034-4389-a066-4767e18d8d54": {
+    "overview": "D+ Educativo é uma escola de educação básica e pré-escola localizada em Indaiatuba, SP, em operação há 40 anos (fundada em 1986). Constituída como Sociedade Simples Limitada — forma jurídica típica de prestação de serviços educacionais —, enquadra-se como 'DEMAIS' (não ME/EPP), o que sugere operação de porte superior a microempresa, embora receita e EBITDA não sejam estimáveis sem dados financeiros adicionais. O nome fantasia D+ Educativo indica reposicionamento de marca em algum momento da trajetória.",
+    "analise_sucessoria": "O quadro societário é composto exclusivamente por Joel José de Lourenço e Marinalda de Azevedo Lourenço — sobrenomes idênticos indicam muito provavelmente um casal —, ambos na faixa 80+, ambos como sócios-administradores (qualificação 49) desde 1998. O QSA está estático há 28 anos: nenhum herdeiro, nenhum sócio operacional mais jovem foi incorporado. Para uma escola com 40 anos de operação, gerida integralmente por um casal octogenário sem sucessor visível na estrutura jurídica, o risco sucessório é máximo — a continuidade do negócio depende integralmente da capacidade física e decisória de duas pessoas em idade avançada. A ausência de qualquer movimento societário desde 1998 reforça que não há planejamento sucessório em curso.",
+    "red_flags": [
+      {
+        "risco": "Dependência total dos fundadores (hub-and-spoke extremo): escola com 40 anos provavelmente tem marca, matrículas e relacionamento com famílias ancorados na reputação pessoal do casal — risco de dissolução do intangível na saída",
+        "severidade": "alta",
+        "como_verificar": "Avaliar na due diligence: contratos de matrícula estão em nome da PJ ou dos sócios? Quem assina acordos com prefeitura e SEDUC-SP?"
+      },
+      {
+        "risco": "Passivo trabalhista oculto: setor de educação tem alta rotatividade de professores, CLT rígida e histórico de ações na Justiça do Trabalho — risco elevado em empresa de 40 anos",
+        "severidade": "alta",
+        "como_verificar": "Consulta de processos no TRT-15 (Campinas, que cobre Indaiatuba) pelo CNPJ — gratuito no portal PJe/TRT15"
+      },
+      {
+        "risco": "Risco regulatório: escolas de educação básica dependem de autorização da Secretaria Municipal/SEDUC-SP e de INEP (Censo Escolar). Sem planejamento sucessório, a licença pode não ser transferível automaticamente",
+        "severidade": "alta",
+        "como_verificar": "Consultar INEP/Censo Escolar pelo código da escola e verificar situação do credenciamento junto à Secretaria de Educação de Indaiatuba"
+      },
+      {
+        "risco": "Passivo fiscal acumulado: empresas de serviços longevas frequentemente acumulam pendências no Simples Nacional ou regimes anteriores",
+        "severidade": "media",
+        "como_verificar": "Consulta de Dívida Ativa na PGFN pelo CNPJ (pgfn.fazenda.gov.br — gratuito) e situação junto à Receita Federal (Certidão Negativa)"
+      },
+      {
+        "risco": "Adequação à infraestrutura física: escola com décadas de operação pode ter pendências de AVCB (Auto de Vistoria do Corpo de Bombeiros) ou laudos de acessibilidade (ABNT NBR 9050)",
+        "severidade": "media",
+        "como_verificar": "Solicitar AVCB vigente e laudo de acessibilidade na due diligence; confirmar junto ao Corpo de Bombeiros SP"
+      }
+    ],
+    "perguntas_abordagem": [
+      "A D+ Educativo está há 40 anos em Indaiatuba — Joel, o senhor e sua família já pensaram em como vai ser a continuidade da escola daqui a 5 anos? Há alguém da família envolvido na gestão hoje?",
+      "A escola passou por alguma expansão recente — novas turmas, novos espaços — ou o modelo está estabilizado no formato atual?",
+      "Com 40 anos de operação, a escola certamente tem uma reputação consolidada na cidade. O relacionamento com as famílias e com a Secretaria de Educação está formalizado institucionalmente ou passa muito pelo contato direto de vocês?",
+      "Vocês já receberam alguma abordagem de grupos educacionais ou investidores interessados na escola? Como foi essa experiência?",
+      "Se o senhor decidisse dar um passo atrás da operação no próximo ano, qual seria o maior obstáculo que vê para que a escola continue funcionando bem?"
+    ],
+    "tese_aproximacao": "D+ Educativo é um alvo de succession risk clássico e urgente: dois fundadores octogenários, sem herdeiro visível no QSA, 40 anos de ativo intangível (marca, matrículas, relacionamento com Secretaria de Educação) que se deprecia rapidamente se não houver transição planejada. O ângulo é preservação de legado — não venda forçada —, posicionando a conversa como 'como garantir que o que vocês construíram em 40 anos continua existindo'. A boutique entra como interlocutor especializado em transações com empresas familiares do setor de serviços educacionais no interior de SP, com capacidade de estruturar a transição respeitando a cultura da escola e as condições dos fundadores — diferencial relevante frente a compradores estratégicos que tipicamente chegam com proposta de integração agressiva.",
+    "proximo_passo": "Sem telefone ou email cadastrado: localizar o endereço físico da escola via consulta ao INEP (Censo Escolar, campo 'endereço da unidade escolar') ou Google Maps pelo nome fantasia 'D+ Educativo Indaiatuba', e fazer contato inicial por visita presencial ou carta impressa endereçada nominalmente a Joel José de Lourenço — abordagem física tem taxa de resposta superior a LinkedIn para fundadores nessa faixa etária."
+  },
+  "1c7dd42d-abe8-4205-b4be-d208a7d189b9": {
+    "overview": "Colégio Rainha da Paz é uma instituição de ensino K-12 (educação infantil ao ensino médio, com atividades de treinamento profissional) estruturada como Associação Privada, fundada em 1969 e com 57 anos de operação contínua em São Paulo/SP. Porte classificado como 'Demais' (acima de ME/EPP), o que sinaliza operação de escala relevante para o setor. O capital social declarado é zero — padrão para associações sem fins lucrativos no Brasil, sem qualquer relação com receita ou valor da operação.",
+    "analise_sucessoria": "O quadro administrativo registra um único membro: EVA LEITE PRADO, 80+ anos, qualificada como administradora desde 2010. Não há nenhum membro mais jovem visível — nenhuma geração seguinte, nenhuma transição sinalizada em 15 anos de quadro estático. Aos 80+, o risco não é de conflito entre herdeiros, mas de colapso de governança por incapacidade ou falecimento sem plano constituído. O agravante estrutural é decisivo: como associação privada, o patrimônio pertence à entidade — não à Eva pessoalmente — o que elimina o incentivo econômico clássico para uma venda voluntária. Isso muda o ângulo de abordagem: o interlocutor precisa falar em legado e continuidade, não em liquidez.",
+    "red_flags": [
+      {
+        "risco": "Natureza jurídica de Associação Privada incompatível com aquisição societária direta",
+        "severidade": "alta",
+        "como_verificar": "Obter o estatuto social no cartório de registro de pessoas jurídicas (TJSP). Uma aquisição convencional é juridicamente inviável; as estruturas possíveis são: (a) cessão de gestão operacional via contrato de administração, (b) transformação da associação em Ltda/S/A seguida de aquisição societária — processo que exige aprovação da Junta Comercial e, para escola autorizada, da SEE-SP e/ou MEC, ou (c) aquisição de ativos operacionais isolados (marca, matrículas, equipamentos). Validar viabilidade com advogado especializado em direito educacional antes do segundo contato."
+      },
+      {
+        "risco": "Passivo trabalhista histórico acumulado",
+        "severidade": "alta",
+        "como_verificar": "Consultar processos no TRT-2 (São Paulo) pelo CNPJ 62410238000142 — gratuito via portal pje.trt2.jus.br. Escola com 57 anos de operação e múltiplos vínculos empregatícios tende a acumular reclamações de ex-professores e funcionários, especialmente relacionadas a FGTS, horas extras e verbas rescisórias."
+      },
+      {
+        "risco": "Dependência total da administradora única — risco de hub-and-spoke extremo",
+        "severidade": "alta",
+        "como_verificar": "Identificar quem assina contratos com famílias, responde perante SEE-SP e detém credenciais dos sistemas escolares (SEI, i-Educar ou similar). Se tudo centraliza em Eva, a operação pode ser inviabilizada rapidamente por eventos de saúde. Solicitar organograma e confirmar existência de gestor operacional de segunda linha independente dela."
+      },
+      {
+        "risco": "Regularidade de autorização de funcionamento junto à SEE-SP e MEC",
+        "severidade": "media",
+        "como_verificar": "Consultar situação de autorização no portal da Secretaria Estadual de Educação de SP (educacao.sp.gov.br) e no e-MEC (emec.mec.gov.br) pelo CNPJ. Irregularidade ativa — especialmente em ensino médio, que exige renovação periódica — pode comprometer qualquer estruturação de transação ou mudança de controle operacional."
+      },
+      {
+        "risco": "Passivo fiscal sobre imunidade tributária de associação (ISS, COFINS, IPTU)",
+        "severidade": "media",
+        "como_verificar": "Consultar PGFN (Dívida Ativa da União) em pgfn.fazenda.gov.br e certidão de débitos municipais na Prefeitura de SP (notaonline.prefeitura.sp.gov.br). Associações que operam com cobrança de mensalidades sem cumprir integralmente os requisitos do art. 14 do CTN (imunidade) são alvo frequente de autuações fiscais retroativas — risco elevado em entidades com décadas de operação."
+      }
+    ],
+    "perguntas_abordagem": [
+      "Além da Sra. Eva, o Colégio Rainha da Paz tem um conselho deliberativo ativo ou outros administradores que participam das decisões estratégicas da escola?",
+      "O imóvel onde o colégio opera é próprio da associação ou locado? Se próprio, está registrado em nome da associação ou de pessoa física?",
+      "A escola tem trabalhado com algum advogado ou consultor educacional para estruturar a continuidade operacional nos próximos anos?",
+      "Há interesse em explorar um modelo de parceria de gestão — onde um grupo especializado assume a operação preservando o nome, a missão e o histórico do colégio?",
+      "Qual é o número aproximado de alunos ativos hoje e quais faixas de ensino concentram a maior demanda — para entendermos o perfil da operação antes de qualquer conversa mais aprofundada?"
+    ],
+    "tese_aproximacao": "Colégio Rainha da Paz representa 57 anos de marca estabelecida no mercado educacional paulistano, com uma administradora 80+ sem sucessor visível e sem sinalização de planejamento sucessório — janela de transição curta e em risco de colapso desordenado. O ângulo não é aquisição societária direta (a estrutura de associação não permite), mas a viabilização de uma transição via cessão de gestão ou transformação societária seguida de aquisição — modelo que grupos K-12 e fundos com tese educacional operam com frequência. Nossa posição como boutique especializada em empresas familiares com risco sucessório nos coloca como interlocutor neutro e qualificado para Eva: não chegamos como compradores, mas como quem garante que a escola continue existindo com a missão intacta — e que ela não deixe um problema sem solução para trás.",
+    "proximo_passo": "Sem telefone ou email no cadastro, localizar o responsável pedagógico cadastrado junto à SEE-SP (portal educacao.sp.gov.br) ou o advogado/contador da associação via cartório de registro de PJ de SP, e enviar correspondência formal endereçada a Eva Leite Prado com linguagem exclusivamente centrada em preservação de legado e continuidade da escola — sem mencionar aquisição neste primeiro contato."
+  },
+  "9114c518-afea-4ba0-95a2-b5a79c347b12": {
+    "overview": "Associação Privada de educação infantil com 45 anos de operação em Pereira Barreto (SP), operando sob a marca Jardim da Infância Santo André. Por ser Associação Privada, não possui capital social — a estrutura jurídica é de entidade sem fins lucrativos, o que diferencia fundamentalmente a tese de transação de um deal societário clássico. Porte classificado como 'Demais' (acima de ME/EPP), mas faturamento e EBITDA não são estimáveis sem dados adicionais.",
+    "analise_sucessoria": "O QSA registra uma única administradora — ANNA MICHI ONO, Presidente (qualificação RF código 16), 80+ anos, com ingresso na direção em 2005. Não há nenhum outro membro no quadro: sem vice-presidente, sem diretores, sem qualquer indicação de herdeiro ou sucessor formalizado. Com 45 anos de operação e gestão aparentemente centralizada em uma única pessoa octogenária, o risco de descontinuidade operacional por falecimento ou incapacidade é imediato e sem amortecedor visível. O quadro está parado desde 2005 — nenhuma entrada de perfil mais jovem em duas décadas. Score 90 é defensável.",
+    "red_flags": [
+      {
+        "risco": "Estrutura de Associação Privada limita transacionabilidade — não há equity a transferir pela via convencional",
+        "severidade": "alta",
+        "como_verificar": "Solicitar estatuto social atualizado (Cartório de Registro Civil de PJ ou Junta Comercial local) para ler cláusulas de dissolução, destinação do patrimônio e forma de sucessão na presidência"
+      },
+      {
+        "risco": "Concentração total na presidente (hub-and-spoke) — operação pode não sobreviver ao afastamento de Anna",
+        "severidade": "alta",
+        "como_verificar": "Perguntar diretamente no primeiro contato quem gere pedagogia e administrativo no dia a dia; verificar se há coordenadores ou diretores atuando informalmente sem registro"
+      },
+      {
+        "risco": "Credenciamento junto à Secretaria Municipal de Educação potencialmente vinculado à gestora, não à pessoa jurídica",
+        "severidade": "alta",
+        "como_verificar": "Consultar e-MEC (emec.mec.gov.br) e Secretaria Municipal de Educação de Pereira Barreto pelo CNPJ para verificar titularidade do credenciamento e vencimento"
+      },
+      {
+        "risco": "Passivo trabalhista — setor de educação é intensivo em mão de obra com ACTs/CCTs específicos e alta sindicância",
+        "severidade": "media",
+        "como_verificar": "Certidão Negativa de Débitos Trabalhistas no TST (cndt.tst.jus.br) pelo CNPJ — gratuita e imediata"
+      },
+      {
+        "risco": "Passivo fiscal — isenções de Associação Privada são condicionadas a requisitos (CEBAS ou decreto municipal); descumprimento gera autuação retroativa",
+        "severidade": "media",
+        "como_verificar": "Consulta PGFN Dívida Ativa (regularize.pgfn.gov.br) e CARF pelo CNPJ; verificar se a associação mantém CEBAS ativo no portal do MEC"
+      }
+    ],
+    "perguntas_abordagem": [
+      "A sra. Anna ainda está à frente da gestão do dia a dia, ou já delegou a coordenação pedagógica e administrativa para outra pessoa?",
+      "O estatuto da associação tem cláusula de sucessão na presidência — há um vice-presidente ou diretores atuando formalmente que poderiam assumir?",
+      "A escola tem convênio ativo com a prefeitura de Pereira Barreto ou recebe recursos do FUNDEB? Isso afeta diretamente como pensamos a continuidade operacional.",
+      "Já houve alguma conversa com os colaboradores ou com familiares sobre o que acontece com a escola no longo prazo?",
+      "O credenciamento da escola junto à Secretaria Municipal de Educação está em nome da associação ou passou por alguma renovação recente?"
+    ],
+    "tese_aproximacao": "O Jardim da Infância Santo André é uma marca com 45 anos de presença em Pereira Barreto — ativo com reputação consolidada e clientela recorrente, em risco real de fechamento por ausência de sucessão numa cidade de ~25 mil habitantes onde a escola provavelmente tem participação relevante no segmento infantil. O ângulo de entrada não é compra de equity, é estruturação de continuidade: conversão da associação em operacional, transferência de gestão para grupo educacional, ou parceria de gestão com proteção patrimonial para Anna. A janela é agora — com gestora octogenária e zero redundância, qualquer originador que chegar com linguagem de 'solução para o legado' antes de um evento forçado captura o deal sem competição.",
+    "proximo_passo": "Ligar para (18) 3704-2531 ou enviar e-mail para j.santo.andre@hotmail.com apresentando-se como consultor especializado em planejamento de continuidade para instituições de ensino, pedindo 15 minutos com a sra. Anna Michi Ono para entender os planos da escola para os próximos anos."
   }
 }
