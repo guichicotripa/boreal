@@ -124,7 +124,11 @@ for (const id of alvos) {
   process.stdout.write(`[${i}/${alvos.length}] ${e.razao_social.slice(0, 40)} … `);
   const t0 = Date.now();
   try {
-    cache[id] = await gerarAnalise(e);
+    // Timeout por empresa: chamadas do Agent SDK às vezes penduram; pula em vez de travar a fila.
+    cache[id] = await Promise.race([
+      gerarAnalise(e),
+      new Promise((_, rej) => setTimeout(() => rej(new Error("timeout 180s")), 180000)),
+    ]);
     fs.writeFileSync(OUT, JSON.stringify(cache, null, 2)); // salva incremental (resiliente a falha)
     console.log(`${((Date.now() - t0) / 1000).toFixed(0)}s ok`);
   } catch (err) {
