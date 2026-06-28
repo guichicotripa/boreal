@@ -11,6 +11,7 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DEMO = path.resolve(__dirname, "../src/lib/demo-cache.json");
 const OUT = path.resolve(__dirname, "../src/lib/research-cache.json");
+const SITE = path.resolve(__dirname, "../src/lib/site-cache.json"); // texto do site (Scrapling), opcional
 const TOP = Number(process.argv[2] ?? 10);
 
 const PESOS = {
@@ -33,6 +34,12 @@ const SYSTEM =
 async function investigar(e) {
   const scoreV0 = e.score?.score ?? 0;
   const socios = (e.socio ?? []).map((s) => s.nome).join(", ");
+  // Contexto do site oficial (Scrapling), quando coletado: enriquece perfil + gatilho e foca as buscas.
+  const txtSite = siteCache[e.id]?.texto;
+  const ctxSite = txtSite
+    ? `\nCONTEXTO JÁ COLETADO DO SITE OFICIAL (base do perfil_negocio e guia das buscas — não re-buscar o ` +
+      `site, focar nos sinais de sucessão/venda):\n"""\n${txtSite.slice(0, 12000)}\n"""\n`
+    : "";
   const prompt = `Investigue esta empresa na web e procure sinais de risco/propensão sucessória.
 
 Empresa: ${e.razao_social}${e.nome_fantasia ? ` (${e.nome_fantasia})` : ""}
@@ -40,7 +47,7 @@ Setor: ${e.cnae_principal_desc ?? e.cnae_principal}
 Cidade: ${e.municipio} / ${e.uf}
 Fundada em: ${e.data_inicio_atividade?.slice(0, 4) ?? "?"}
 Sócios: ${socios || "não informado"}
-
+${ctxSite}
 Procure evidência pública para estes tipos de sinal (só reporte os que REALMENTE encontrar, com fonte):
 - "mencao_sucessao_venda" — notícia/post mencionando sucessão, venda, fusão ou reorganização
 - "banco_investimento" — empresa contratou assessor/banco de investimento
@@ -100,6 +107,7 @@ EFICIÊNCIA: no máximo 4 buscas na web, depois conclua.`;
 // ── Alvos: top-N das chaves compostas (saúde/educação) do demo-cache ──
 const readJson = (p) => JSON.parse(fs.readFileSync(p, "utf8").replace(/^﻿/, ""));
 const demo = readJson(DEMO);
+const siteCache = fs.existsSync(SITE) ? readJson(SITE) : {};
 const cache = fs.existsSync(OUT) ? readJson(OUT) : {};
 const byId = new Map();
 const alvoIds = new Set();
