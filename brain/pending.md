@@ -31,8 +31,11 @@ só depender do `web_search`. Medido no protótipo: perfil_negocio sai mais prof
 - [ ] **Moat de descoberta (Guilherme pediu pra desenvolver):** ligar CNPJ→site de forma sistemática e
   defensável pro mid-market BR. Hoje: email (26%) + web_search (resíduo) + RDAP (validação). Pensar em
   índice próprio CNPJ→domínio (acumular o que a gente confirma vira ativo que ninguém compra).
-- [ ] **Wire:** `research.ts` já aceita `contextoSite`; falta o script de cache (`cache-research-*.mjs`)
-  ler o `site-cache.json` e passar o texto. Não rodei a regeneração completa do cache (gasta assinatura).
+- [x] **Wire feito** (`2094b5b`): `cache-research-saude-edu.mjs` lê `site-cache.json` e injeta o texto.
+  A/B confirmou ganho de QUALIDADE (Alpina 3→4 sinais, perfis/gatilhos ancorados no site). Honestidade:
+  o "15x mais barato" vale só pro perfil isolado; no research completo o custo é ~neutro (contexto adiciona
+  tokens, buscas caem só 5→4) e o ganho é qualidade. **Falta** rodar a regeneração completa do cache de
+  produção (gasta assinatura/tempo) — operação manual quando quiser atualizar.
 - [ ] **Deploy:** Scrapling é Python+browser, **não roda no Vercel**. Coleta fica em worker offline
   (VPS quando fechar a Setter — vai hospedar openclaw/hermes e serve). Produto serve do cache.
 
