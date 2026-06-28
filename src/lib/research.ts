@@ -46,9 +46,22 @@ const TIPOS = Object.keys(PESOS).join(", ");
 
 function clamp(n: number) { return Math.max(0, Math.min(100, n)); }
 
-export async function investigarEmpresa(empresa: Empresa): Promise<ResearchResult> {
+export async function investigarEmpresa(
+  empresa: Empresa,
+  opts?: { contextoSite?: string },
+): Promise<ResearchResult> {
   const scoreV0 = empresa.score?.score ?? 0;
   const socios = (empresa.socio ?? []).map((s) => s.nome).join(", ");
+
+  // Contexto pré-coletado do site oficial (lido via Scrapling na geração de cache). Quando presente,
+  // o modelo usa como base do perfil_negocio e gasta menos buscas — o site já vem mastigado, então
+  // as buscas focam nos sinais de sucessão/venda que o site nunca traz. Browser não roda no Vercel,
+  // por isso a coleta é offline (script/worker) e só o texto entra aqui.
+  const ctxSite = opts?.contextoSite?.trim()
+    ? `\nCONTEXTO JÁ COLETADO DO SITE OFICIAL (extraído do site da empresa; use como base do ` +
+      `perfil_negocio e para guiar as buscas — NÃO re-busque o site, foque as buscas nos sinais de ` +
+      `sucessão/venda que o site não traz):\n"""\n${opts.contextoSite.trim().slice(0, 12000)}\n"""\n`
+    : "";
 
   const prompt = `Investigue esta empresa na web e procure sinais de risco/propensão sucessória.
 
@@ -57,7 +70,7 @@ Setor: ${empresa.cnae_principal_desc ?? empresa.cnae_principal}
 Cidade: ${empresa.municipio} / ${empresa.uf}
 Fundada em: ${empresa.data_inicio_atividade?.slice(0, 4) ?? "?"}
 Sócios: ${socios || "não informado"}
-
+${ctxSite}
 Procure evidência pública para estes tipos de sinal (só reporte os que REALMENTE encontrar, com fonte):
 - "mencao_sucessao_venda" — notícia/post mencionando sucessão, venda, fusão ou reorganização
 - "banco_investimento" — empresa contratou assessor/banco de investimento
@@ -109,7 +122,8 @@ EFICIÊNCIA: faça no máximo 4 buscas na web, depois conclua com o JSON. Não e
     max_tokens: 4096, // folga pra raciocínio das buscas + o JSON final
     system: SYSTEM,
     messages: [{ role: "user", content: prompt }],
-    tools: [{ type: "web_search_20250305", name: "web_search", max_uses: 4 }],
+    // Com o site já mastigado, 3 buscas bastam (foco em sucessão); sem contexto, 4.
+    tools: [{ type: "web_search_20250305", name: "web_search", max_uses: opts?.contextoSite ? 3 : 4 }],
   });
 
   // A resposta vem como blocks intercalados (text + server_tool_use + web_search_tool_result).

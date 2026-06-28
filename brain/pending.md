@@ -4,6 +4,40 @@
 
 ---
 
+## 🟡 Research híbrido com Scrapling (27/06 · branch `feat/research-scrapling-hibrido`)
+
+Objetivo: enriquecer o research lendo o SITE OFICIAL da empresa a fundo (Scrapling, stealth) em vez de
+só depender do `web_search`. Medido no protótipo: perfil_negocio sai mais profundo e **~15x mais barato**
+(R$0,06-0,07 vs R$1,08) quando a URL certa está em mãos.
+
+**Feito e testado:**
+- [x] `research.ts` aceita `opts.contextoSite` (aditivo, backward-compat): injeta o texto do site no
+  prompt, baixa as buscas de 4→3 (foco em sucessão, que o site nunca traz). Caller atual intacto.
+- [x] `scripts/scrape-sites.py` — coleta o site → `src/lib/site-cache.json`. Browser stealth, roda LOCAL.
+- [x] `scripts/proto-scrapling-perfil.py` — protótipo de medição (perfil v1 web_search vs v2 site).
+
+**Achado central — a descoberta do site (o elo fraco):**
+- **Email do CNPJ resolve ~26% de graça.** A Receita traz email de domínio próprio em 116/450 empresas
+  do demo-cache; `email.split('@')[1]` = site oficial, custo zero, ~100% preciso. Já é a 1ª opção do
+  `escolher_site` (filtra genérico/gmail e domínio de contador). Testado: Prensa e Alpina acertaram.
+- **SERP scraping (DuckDuckGo) é ruim pra descobrir** — whack-a-mole de agregadores (dnb, eguias, cylex,
+  saudecidade, todosnegocios). Serve só de fallback fraco.
+- **RDAP do registro.br confirma titular** (domínio.br → CNPJ), mas **recall baixo**: o domínio costuma
+  estar sob o CNPJ da holding/grupo, não da subsidiária. Vale como validação-bônus, não como mecanismo.
+
+**Em aberto:**
+- [ ] **Descoberta residual** (empresas sem email próprio + nome genérico, ex: clínica IMUNE): o SERP não
+  resolve. Caminho certo = `web_search`/LLM acha a URL oficial (preciso), Scrapling lê. NÃO usar SERP.
+- [ ] **Moat de descoberta (Guilherme pediu pra desenvolver):** ligar CNPJ→site de forma sistemática e
+  defensável pro mid-market BR. Hoje: email (26%) + web_search (resíduo) + RDAP (validação). Pensar em
+  índice próprio CNPJ→domínio (acumular o que a gente confirma vira ativo que ninguém compra).
+- [ ] **Wire:** `research.ts` já aceita `contextoSite`; falta o script de cache (`cache-research-*.mjs`)
+  ler o `site-cache.json` e passar o texto. Não rodei a regeneração completa do cache (gasta assinatura).
+- [ ] **Deploy:** Scrapling é Python+browser, **não roda no Vercel**. Coleta fica em worker offline
+  (VPS quando fechar a Setter — vai hospedar openclaw/hermes e serve). Produto serve do cache.
+
+---
+
 ## 🟢 Sessão 12/06 — bug fixes + polish (PR #41 na main `a9e3d0d`)
 
 **Concluído:**
