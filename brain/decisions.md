@@ -969,3 +969,83 @@ header e linhas quando o conteúdo da `auto` puder diferir entre eles.
 **Pendências que o deploy abre (handoff Guilherme, infra):** env vars no Vercel; `/api/trajetoria` com BigQuery `keyFilename` quebra em serverless (precisa JSON inline); teto de custo pra link aberto.
 
 **Status:** 🟡 Interface pronta (metadata/OG/favicon na main via PR #40 / `eb569e3`). Deploy + infra pendentes (Guilherme).
+
+---
+
+## [2026-06-28] Research híbrido — Scrapling lê o site oficial; descoberta por email do CNPJ
+
+**Contexto:** o `perfil_negocio` e os sinais saíam só do `web_search`. Hipótese: ler o SITE OFICIAL a
+fundo enriquece o output. Avaliados 2 repos de scraping que o Guilherme trouxe: **agent-reach** (rejeitado
+— catálogo social/chinês, eixo errado) e **Scrapling** (adotado, estreito — leitura stealth de página).
+
+**Decisão:** `research.ts` ganha um parâmetro opcional `contextoSite`; quando presente, injeta o texto do
+site no prompt (base do perfil + foco das buscas em sucessão). A coleta roda via Scrapling **offline**
+(Python + browser **não roda no Vercel**); produto serve do cache, como o resto. `scrape-sites.py` coleta
+→ `site-cache.json`; `cache-research-saude-edu.mjs` injeta. Branch `feat/research-scrapling-hibrido`.
+
+**Achado central — descoberta do site (o elo fraco do scraping):**
+- **Email do CNPJ resolve ~26% de graça e com precisão ~100%.** A Receita traz email de domínio próprio
+  em 116/450 empresas; `email.split('@')[1]` = site. É a 1ª opção do `escolher_site` (filtra genérico e
+  domínio de contador). Bate qualquer scraping de SERP. **Dado estruturado > scraping**, de novo.
+- **SERP scraping é ruim pra descobrir** (whack-a-mole de agregadores: dnb, eguias, cylex). Só fallback.
+- **RDAP do registro.br** confirma titular (.br → CNPJ) mas tem **recall baixo** (domínio sob a holding,
+  não a subsidiária). Vale como validação-bônus, não mecanismo. O reverso CNPJ→domínios não é público.
+
+**Honestidade de custo (corrigida em sessão):** o "15x mais barato" vale só pra preencher `perfil_negocio`
+isolado em massa (Scrapling + resumo, sem web_search). No **research completo** o híbrido é ~custo-neutro
+(o contexto adiciona tokens; buscas caem só 5→4) e o ganho é **qualidade** (A/B: Alpina 3→4 sinais, perfis
+e gatilhos ancorados no site real). Duas alavancas distintas, não uma.
+
+**Em aberto (moat que o Guilherme pediu pra desenvolver):** índice próprio CNPJ→site, acumulando o que a
+gente confirma. Liga dado estruturado (CNPJ) a conteúdo profundo (site) de forma sistemática no mid-market
+BR — ninguém faz, e o acúmulo vira ativo. Resíduo de descoberta (pegada fina) vai por `web_search`, não SERP.
+
+**Status:** ✅ Implementado e validado A/B na branch (3 commits, sem push). Regeneração do cache de produção
+e o índice de moat ficam pendentes.
+
+---
+
+## [2026-06-28] Maguto saiu do time (fim do Clube) — interface volta pro escopo do Guilherme
+
+**Contexto:** o Clube da Programação acabou (não fomos ao Demo Day). O Maguto, que era o **domínio
+interface** na divisão de trabalho (Gui motor / Maguto interface, `types.ts` como contrato — ver decisão
+de 2026-05-29), **parou de trabalhar no Boreal** depois do fim do clube.
+
+**Consequência prática:** não há mais um responsável dedicado de interface nem um revisor de UI/UX no
+browser. Guilherme cobre motor **e** interface. Toda feature de UI nova (a começar pelo heat-map de setor)
+exige **cuidado redobrado de qualidade visual** — acertar o design seguindo `brand/uso-tipografia-cor.md`
+de primeira, porque não há mais o passo "Maguto revisa no browser". O fluxo colaborativo de PR/branch
+(decisão 2026-05-29) perde a metade do Maguto; segue valendo a disciplina de branch + commit pequeno.
+
+**Status:** ✅ Registrado. Afeta o modo de trabalho daqui pra frente.
+
+---
+
+## [2026-06-28] Heat-map de setor — temperatura monocromática (estende a regra de cor do brand)
+
+**Contexto:** 1ª das 3 features pós-call Setter. O Henrique pediu um termômetro de setor pra priorizar o
+INBOUND ("quando um ativo chega, esse setor está quente?"). Página `/heat-map` que ordena os setores por
+ritmo de M&A (deals/ano, mineração do CNPJ) + densidade + consolidadores ativos. Reembala dado existente
+(`setores.ts`, `consolidadores.json`, `setor-contexto.json`); não é dado novo, é lente de priorização.
+
+**Decisão de design (a não-óbvia):** um "heat-map" pede cor quente (vermelho/laranja), mas o brand
+**reserva ocre/terracota só pra score de risco** (regra de 2026-06-01). Usar vermelho de heat violaria isso
+e deixaria a UI "loud", contra o "Private, not loud". **Temperatura comunicada por número real (deals/ano)
++ barra de intensidade monocromática Floral + rótulo textual** (Consolidação ativa / Movimento moderado /
+Mercado frio), nunca por cor de alarme. Estende a regra: cor de risco continua exclusiva de score.
+
+**Decisão de UX (corrigida no review):** a 1ª versão embutia o `ContextoSetor` inteiro, que **duplicava**
+"quem compra" (players macro tipo Rede D'Or/Hapvida) com o bloco de consolidadores minerados, inchando o
+card. Trocado por: bloco "Quem está comprando agora" = só os consolidadores **minerados do CNPJ** (o
+diferencial), + "Leitura de mercado" = 1 parágrafo macro + link pro contexto completo em `/setores`.
+Heat-map = triagem rápida; /setores = aprofundamento. Sem redundância.
+
+**Cobertura honesta:** 3 setores (saúde quente 110 deals/ano · metalmec morno 32 · educação frio 11).
+Consolidadores minerados só existem pra saúde hoje (os outros mostram "—").
+
+**Verificação:** typecheck limpo; renderização conferida via DOM/estilos computados (barra Floral
+`rgb(255,251,244)`, ordem por temperatura, 4 consolidadores na saúde). Screenshot travou no renderer
+headless do ambiente — verificação foi estrutural, não visual-pixel. **Pedir review visual ao Guilherme**
+(sem o Maguto, é o único revisor de UI).
+
+**Status:** ✅ Implementado na branch `feat/research-scrapling-hibrido`. Pendente review visual do Guilherme.

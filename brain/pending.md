@@ -4,6 +4,23 @@
 
 ---
 
+## 🟡 Features pós-call Setter (28/06 · branch `feat/research-scrapling-hibrido`)
+
+As 3 frentes que saíram da call do Henrique, em ordem de retorno:
+
+- [x] **1. Heat-map de setor** (`/heat-map` + `lib/heatmap.ts`) — termômetro de M&A pro INBOUND (pedido
+  explícito do Henrique). Ordena setores por deals/ano + densidade + consolidadores ativos. Temperatura
+  **monocromática** (Floral, sem cor de risco — ver decisions). Adicionado ao mega-menu. **Falta: review
+  visual do Guilherme** (screenshot travou no ambiente; verifiquei via DOM). Único revisor de UI agora.
+- [ ] **2. Selo de proveniência** (destrava o success fee) — carimbar empresa que entra no pipeline a
+  partir de uma lista do Boreal: origem + data + score + check de que não estava no CRM deles. NÃO cobrar
+  no piloto, só garantir o direito. Timestamp puro não basta (atribuição é o medo do Henrique).
+- [ ] **3. Descoberta de tech** — varrer CNAEs de tech (62xx/63xx) como MAPEAMENTO/descoberta, não predição
+  de venda (moat fraco em tech). Vender como "mapa do território + dossiê", honesto. Build sério da lente
+  tech (funding/headcount via scraping) fica pra depois.
+
+---
+
 ## 🟡 Research híbrido com Scrapling (27/06 · branch `feat/research-scrapling-hibrido`)
 
 Objetivo: enriquecer o research lendo o SITE OFICIAL da empresa a fundo (Scrapling, stealth) em vez de

@@ -11,6 +11,7 @@ const FLUXO: { href: string; label: string }[] = [
 
 // Páginas de metodologia/credibilidade — agrupadas no mega-menu (servem ao pitch, não ao dia a dia).
 const METODOLOGIA: { href: string; label: string; desc: string }[] = [
+  { href: "/heat-map", label: "Heat-map", desc: "Onde o M&A está quente agora" },
   { href: "/validacao", label: "Validação", desc: "Recall do score em vendas reais" },
   { href: "/mercado", label: "Mercado", desc: "TAM e dinâmica de M&A" },
   { href: "/consolidadores", label: "Consolidadores", desc: "Quem compra e o que procura" },
