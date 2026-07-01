@@ -2,15 +2,15 @@
 
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { treemapAgrupado } from "@/lib/treemap";
-import { gruposPorSecao, corTile, corTextoTile } from "@/lib/heatmap";
+import { corTile, corTextoTile, type GrupoSecao } from "@/lib/heatmap";
 
 const HEADER = 15; // faixa pro rótulo da seção
 const GAP = 2;
 
 // Treemap responsivo: mede o próprio container e faz o layout em px reais (aspect ratio fiel,
 // sem esticar). Re-layout no resize. Preenche 100% do pai — o pai é quem define a altura.
-export function Treemap() {
-  const grupos = useMemo(() => gruposPorSecao(), []);
+// `grupos` vem do pai (muda conforme a região selecionada).
+export function Treemap({ grupos }: { grupos: GrupoSecao[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const [dim, setDim] = useState({ w: 0, h: 0 });
 

@@ -1090,3 +1090,33 @@ mount) e faz o layout em px reais — aspect ratio fiel, re-layout no resize, se
 Gotcha de dev: o Fast Refresh acumulado deixava o container vazio até um reload limpo (não ocorre em prod).
 
 **Status:** ✅ Implementado na branch. Substitui os cards (v1). Pendente review visual.
+
+---
+
+## [2026-06-28] Heat-map v3 — Brasil inteiro, filtro por região, ground truth pra validação
+
+**Contexto:** o Guilherme quis o mapa pro Brasil todo, com filtro por região que atualiza o mapa, e pediu
+pra **guardar os dados minerados pra validação futura**.
+
+**Dados (BigQuery, `build-heatmap-setores.mjs` reescrito):** query agregada por (UF × divisão CNAE),
+Brasil inteiro. Duas saídas:
+1. `src/lib/heatmap-setores.json` — agregados por UF (só `div`, `universo`, `n_aquisicoes`; deals/ano e
+   densidade são derivados no front). 196KB (era 320KB antes de cortar os campos derivados).
+2. `scripts/data/aquisicoes-br.json` — **ground truth**: os 14.486 CNPJs adquiridos (PJ-in/PF-out) com UF
+   e divisão. **Fora do bundle do front.** Reservado pra validar o recall do score por setor/região depois.
+   Estende o data moat pra todos os setores e o país inteiro.
+
+**Consistência confirmada:** SP no build Brasil deu 4.395 aquisições, idêntico ao build só-SP anterior.
+
+**Decisões:**
+- **Guardar por UF, front agrega por região.** Dado granular guardado uma vez; o filtro de região soma as
+  UFs, e um filtro por estado no futuro não exige re-minerar.
+- **Cor normalizada dentro da seleção.** Cada região usa sua própria escala (a mais quente daquela região
+  fica clara) — contraste bom em qualquer vista; perde comparabilidade absoluta entre regiões (aceito).
+- **Seletor de região = pills** na barra (Brasil + 5 regiões). A página virou client (`MapaSetores.tsx`):
+  estado da região → `gruposPorSecao(regiao)` → `Treemap` recebe os grupos por prop e re-layouta.
+
+**Verificação:** typecheck limpo; DOM confere o filtro (Brasil 14.481 aquisições/69 tiles → Nordeste
+1.460/34 tiles, nota e cor recalibradas), sem scroll. Screenshot trava no headless — **review visual pendente**.
+
+**Status:** ✅ Implementado na branch. Pendente review visual do Guilherme.

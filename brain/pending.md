@@ -8,11 +8,15 @@
 
 As 3 frentes que saíram da call do Henrique, em ordem de retorno:
 
-- [x] **1. Heat-map de setor** — **v2: treemap tipo TradingView** (`/heat-map`, `lib/{heatmap,treemap,cnae}.ts`,
-  `build-heatmap-setores.mjs` → `heatmap-setores.json`). Métrica de M&A pra TODOS os setores (85 divisões
-  CNAE via BigQuery). Tile = volume de aquisições, cor cinza = densidade (piso N=10), agrupado por seção,
-  3 setores validados com dot. Monocromático (sem cor de risco). Substituiu os cards da v1. **Falta: review
-  visual do Guilherme** (screenshot trava no ambiente headless; verifiquei via DOM). Único revisor de UI.
+- [x] **1. Heat-map de setor** — **v3: treemap TradingView, Brasil + filtro por região** (`/heat-map`,
+  `lib/{heatmap,treemap,cnae}.ts`, `components/{MapaSetores,Treemap}.tsx`, `build-heatmap-setores.mjs`).
+  Métrica de M&A pra TODOS os setores (divisão CNAE) e TODO o Brasil (por UF), filtro por região que
+  recomputa o mapa client-side. Tile = volume de aquisições, cor cinza = densidade (normalizada na
+  seleção), full-viewport sem scroll, 3 setores validados com dot. **Ground truth** (14.486 aquisições)
+  salvo em `scripts/data/aquisicoes-br.json` pra validação futura. **Falta: review visual do Guilherme**
+  (screenshot trava no headless; verifiquei via DOM). Único revisor de UI.
+  - [ ] **Validação futura (a fazer):** rodar o score nas aquisições do ground truth por setor/região →
+    medir recall fora dos 3 setores cobertos. É o próximo passo do data moat.
 - [ ] **2. Selo de proveniência** (destrava o success fee) — carimbar empresa que entra no pipeline a
   partir de uma lista do Boreal: origem + data + score + check de que não estava no CRM deles. NÃO cobrar
   no piloto, só garantir o direito. Timestamp puro não basta (atribuição é o medo do Henrique).

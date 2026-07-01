@@ -58,3 +58,21 @@ export function nomeDivisao(div: string): string {
 
 // Divisões dos 3 setores com SCORE validado (setores.json) — ganham marcador no heat-map.
 export const DIVISOES_VALIDADAS = new Set(["24", "25", "28", "86", "85"]);
+
+// UF → região, pro filtro do heat-map.
+export const UF_REGIAO: Record<string, string> = {
+  AC: "N", AP: "N", AM: "N", PA: "N", RO: "N", RR: "N", TO: "N",
+  AL: "NE", BA: "NE", CE: "NE", MA: "NE", PB: "NE", PE: "NE", PI: "NE", RN: "NE", SE: "NE",
+  DF: "CO", GO: "CO", MT: "CO", MS: "CO",
+  ES: "SE", MG: "SE", RJ: "SE", SP: "SE",
+  PR: "S", RS: "S", SC: "S",
+};
+
+export const REGIOES: { id: string; nome: string }[] = [
+  { id: "BR", nome: "Brasil" },
+  { id: "SE", nome: "Sudeste" },
+  { id: "S", nome: "Sul" },
+  { id: "NE", nome: "Nordeste" },
+  { id: "CO", nome: "Centro-Oeste" },
+  { id: "N", nome: "Norte" },
+];
