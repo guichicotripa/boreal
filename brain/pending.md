@@ -8,10 +8,11 @@
 
 As 3 frentes que saíram da call do Henrique, em ordem de retorno:
 
-- [x] **1. Heat-map de setor** (`/heat-map` + `lib/heatmap.ts`) — termômetro de M&A pro INBOUND (pedido
-  explícito do Henrique). Ordena setores por deals/ano + densidade + consolidadores ativos. Temperatura
-  **monocromática** (Floral, sem cor de risco — ver decisions). Adicionado ao mega-menu. **Falta: review
-  visual do Guilherme** (screenshot travou no ambiente; verifiquei via DOM). Único revisor de UI agora.
+- [x] **1. Heat-map de setor** — **v2: treemap tipo TradingView** (`/heat-map`, `lib/{heatmap,treemap,cnae}.ts`,
+  `build-heatmap-setores.mjs` → `heatmap-setores.json`). Métrica de M&A pra TODOS os setores (85 divisões
+  CNAE via BigQuery). Tile = volume de aquisições, cor cinza = densidade (piso N=10), agrupado por seção,
+  3 setores validados com dot. Monocromático (sem cor de risco). Substituiu os cards da v1. **Falta: review
+  visual do Guilherme** (screenshot trava no ambiente headless; verifiquei via DOM). Único revisor de UI.
 - [ ] **2. Selo de proveniência** (destrava o success fee) — carimbar empresa que entra no pipeline a
   partir de uma lista do Boreal: origem + data + score + check de que não estava no CRM deles. NÃO cobrar
   no piloto, só garantir o direito. Timestamp puro não basta (atribuição é o medo do Henrique).

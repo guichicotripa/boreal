@@ -1,58 +1,97 @@
-// Heat-map de setor — termômetro de M&A pra priorizar o INBOUND (pedido do Henrique/Setter na call
-// de 25/06): quando um ativo chega, quão quente está o setor dele? Reembala sinais REAIS (deals/ano,
-// densidade de transações, consolidadores ativos) numa leitura de prioridade. NÃO é dado novo — é a
-// lente de priorização sobre setores.ts + consolidadores.json.
+// Heat-map de setores — dados pro treemap de atividade de M&A por divisão CNAE (pedido Setter:
+// termômetro pra priorizar o inbound). Junta a métrica minerada (heatmap-setores.json) com os
+// nomes/seções CNAE e calcula a cor MONOCROMÁTICA (escala de cinza) por intensidade.
+//
+// HONESTIDADE: mede atividade OBSERVADA de M&A (aquisições PJ-in/PF-out), consistente pra todos os
+// setores. A validação do score (recall) só existe nos 3 cobertos — marcados com `validado`.
 
-import { SETORES, type Setor } from "./setores";
-import consolidadoresData from "./consolidadores.json";
+import raw from "./heatmap-setores.json";
+import { nomeDivisao, secaoDe, DIVISOES_VALIDADAS } from "./cnae";
 
-export type Tier = "quente" | "morno" | "frio";
+const PISO_N = 10; // abaixo disso a densidade é ruído estatístico → cor neutra (sem afirmar temperatura)
+const MIN_TILE = 5; // divisões com menos aquisições viram tiles ilegíveis — omitidas do treemap
 
-export type SetorTemperatura = Setor & {
-  tier: Tier;
-  intensidade: number; // 0-100 — preenchimento da barra (deals/ano normalizado)
-  densidade_pct: number; // n_aquisicoes / quente * 100 — fração do estoque quente que girou na janela
-  n_consolidadores: number;
+type DivRaw = { div: string; universo: number; n_aquisicoes: number; deals_ano: number; densidade: number };
+
+export type DivisaoHeat = {
+  div: string;
+  nome: string;
+  secaoSigla: string;
+  secaoNome: string;
+  universo: number;
+  n_aquisicoes: number;
+  deals_ano: number;
+  densidade: number;
+  validado: boolean;
+  intensidade: number; // 0..1 — 0 = neutro/frio (ou sinal insuficiente), 1 = mais denso
 };
 
-export type Consolidador = { nome: string; n_adquiridas: number };
+const divisoesRaw = raw.divisoes as DivRaw[];
 
-// Teto da barra de intensidade: saúde (~110 deals/ano) é o topo observado nos setores cobertos.
-const TETO_DEALS = 120;
+// Normaliza a densidade só entre as divisões com sinal (N>=piso), pra a cor não ser
+// enganada por divisões minúsculas com 1-2 aquisições.
+const comSinal = divisoesRaw.filter((d) => d.n_aquisicoes >= PISO_N);
+const densidades = comSinal.map((d) => d.densidade);
+const dMin = densidades.length ? Math.min(...densidades) : 0;
+const dMax = densidades.length ? Math.max(...densidades) : 1;
 
-// consolidadores.json é, hoje, só de saúde (ver a nota do próprio arquivo). Mapa explícito por id
-// pra quando entrarem outros setores; sem isso, contagem é 0.
-const CONSOLIDADORES_POR_SETOR: Record<string, Consolidador[]> = {
-  saude: (Array.isArray(consolidadoresData.consolidadores) ? consolidadoresData.consolidadores : [])
-    .map((c) => ({ nome: c.consolidador, n_adquiridas: c.n_adquiridas }))
-    .sort((a, b) => b.n_adquiridas - a.n_adquiridas),
+function intensidadeDe(d: DivRaw): number {
+  if (d.n_aquisicoes < PISO_N || dMax <= dMin) return 0;
+  return Math.max(0, Math.min(1, (d.densidade - dMin) / (dMax - dMin)));
+}
+
+export const DIVISOES: DivisaoHeat[] = divisoesRaw.map((d) => {
+  const sec = secaoDe(d.div);
+  return {
+    div: d.div,
+    nome: nomeDivisao(d.div),
+    secaoSigla: sec.sigla,
+    secaoNome: sec.nome,
+    universo: d.universo,
+    n_aquisicoes: d.n_aquisicoes,
+    deals_ano: d.deals_ano,
+    densidade: d.densidade,
+    validado: DIVISOES_VALIDADAS.has(d.div),
+    intensidade: intensidadeDe(d),
+  };
+});
+
+// Cor do tile — cinza levemente quente (combina com o smoky/bone do brand). Mais claro = mais
+// denso/quente. Sem verde/vermelho: cor de risco segue reservada a score (regra do brand).
+export function corTile(intensidade: number): string {
+  const L = 19 + intensidade * 60; // 19%..79%
+  return `hsl(40 6% ${L}%)`;
+}
+
+// Texto legível sobre o tile: escuro em tile claro, bone em tile escuro.
+export function corTextoTile(intensidade: number): string {
+  return intensidade > 0.52 ? "#1c1a17" : "#D8CFBC";
+}
+
+export type GrupoSecao = {
+  secaoSigla: string;
+  secaoNome: string;
+  value: number;
+  itens: (DivisaoHeat & { value: number })[];
 };
 
-// Tier pelo RITMO de M&A (deals/ano), que é o que importa pro originador: volume de oportunidade.
-function tierDe(dealsAno: number): Tier {
-  if (dealsAno >= 80) return "quente";
-  if (dealsAno >= 20) return "morno";
-  return "frio";
+// Agrupa as divisões (com aquisições suficientes) por seção econômica; peso = nº de aquisições.
+export function gruposPorSecao(): GrupoSecao[] {
+  const porSecao = new Map<string, GrupoSecao>();
+  for (const d of DIVISOES) {
+    if (d.n_aquisicoes < MIN_TILE) continue;
+    let g = porSecao.get(d.secaoSigla);
+    if (!g) {
+      g = { secaoSigla: d.secaoSigla, secaoNome: d.secaoNome, value: 0, itens: [] };
+      porSecao.set(d.secaoSigla, g);
+    }
+    g.value += d.n_aquisicoes;
+    g.itens.push({ ...d, value: d.n_aquisicoes });
+  }
+  const grupos = [...porSecao.values()];
+  grupos.forEach((g) => g.itens.sort((a, b) => b.value - a.value));
+  return grupos.sort((a, b) => b.value - a.value);
 }
 
-export function setoresPorTemperatura(): SetorTemperatura[] {
-  return SETORES.map((s) => ({
-    ...s,
-    tier: tierDe(s.deals_ano),
-    intensidade: Math.min(100, Math.round((s.deals_ano / TETO_DEALS) * 100)),
-    densidade_pct: s.quente > 0 ? (s.n_aquisicoes / s.quente) * 100 : 0,
-    n_consolidadores: (CONSOLIDADORES_POR_SETOR[s.id] ?? []).length,
-  })).sort((a, b) => b.deals_ano - a.deals_ano); // mais quente primeiro
-}
-
-export function consolidadoresDoSetor(id: string): Consolidador[] {
-  return CONSOLIDADORES_POR_SETOR[id] ?? [];
-}
-
-export const TIER_LABEL: Record<Tier, string> = {
-  quente: "Consolidação ativa",
-  morno: "Movimento moderado",
-  frio: "Mercado frio",
-};
-
-export const CONSOLIDADORES_JANELA = consolidadoresData.janela;
+export const HEATMAP_JANELA = raw.janela;
+export const HEATMAP_GERADO_EM = raw.gerado_em;

@@ -1049,3 +1049,36 @@ headless do ambiente — verificação foi estrutural, não visual-pixel. **Pedi
 (sem o Maguto, é o único revisor de UI).
 
 **Status:** ✅ Implementado na branch `feat/research-scrapling-hibrido`. Pendente review visual do Guilherme.
+
+---
+
+## [2026-06-28] Heat-map v2 — treemap tipo TradingView, métrica pra TODOS os setores
+
+**Contexto:** o Guilherme não gostou do visual em cards (v1). Referência: o Stock Heatmap do TradingView
+(treemap: tiles dimensionados por market cap, coloridos por performance). Pediu a métrica pra **todos os
+setores** (não só os 3) e o visual de treemap monocromático.
+
+**Métrica pra todos os setores (BigQuery):** `build-heatmap-setores.mjs` roda UMA query agregada por divisão
+CNAE (2 díg, SP): universo + aquisições detectadas (PJ entra + PF sai, a mesma definição do ground truth).
+Resultado em `heatmap-setores.json` (85 divisões, 4.395 aquisições). **Honestidade:** é atividade OBSERVADA
+de M&A, consistente pra todos; a VALIDAÇÃO do score (recall) só existe nos 3 cobertos, marcados com dot.
+
+**Decisões de design (as não-óbvias, discutidas):**
+1. **Tamanho do tile = nº de aquisições, NÃO universo de empresas.** Universo é dominado por MEI (varejo
+   tem 4,16M empresas) e afogaria os setores de M&A real. Dimensionar por volume de deals foca no que
+   importa e **mata o ruído de N baixo** automaticamente (CNAE com 1 deal vira tile invisível).
+2. **Cor = densidade (aquisições ÷ universo), com piso de N.** Divisões com <10 aquisições ficam
+   cinza-neutro (sinal insuficiente), pra não pintar ruído de branco. Resultado correto: varejo é grande
+   mas ESCURO (muito volume, baixa densidade); finanças/construção/imobiliária são CLAROS (densos).
+3. **Monocromático (escala de cinza levemente quente `hsl(40 6% L%)`), sem verde/vermelho** — cor de risco
+   segue reservada a score. Alinha com o brand "Private, not loud" e com a referência do Guilherme.
+4. **Agrupado por seção econômica CNAE** (Indústria, Comércio, Finanças, Saúde…), 2 níveis como o TV.
+
+**Implementação:** `treemap.ts` = squarified treemap (Bruls 2000) puro, sem dependência nova. `cnae.ts` =
+nomes de divisão + seção por faixa. `heatmap.ts` reescrito (dados + cor). Página server-side (sem JS de
+cliente; tooltip nativo via `title`). Tiles em % de um canvas lógico (responsivo via aspect-ratio).
+
+**Verificação:** typecheck limpo; DOM confere 62 tiles, 5 validados com dot, cores corretas (varejo escuro,
+finanças claro). Screenshot travou no renderer headless — **review visual pendente com o Guilherme**.
+
+**Status:** ✅ Implementado na branch. Substitui os cards (v1). Pendente review visual.

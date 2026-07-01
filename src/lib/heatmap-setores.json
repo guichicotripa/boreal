@@ -1,0 +1,605 @@
+{
+  "gerado_em": "2026-07-01",
+  "janela": {
+    "de": "2023-06-10",
+    "ate": "2025-11-09"
+  },
+  "uf": "SP",
+  "divisoes": [
+    {
+      "div": "47",
+      "universo": 4161726,
+      "n_aquisicoes": 500,
+      "deals_ano": 208.3,
+      "densidade": 0.00012014246012351606
+    },
+    {
+      "div": "56",
+      "universo": 1603191,
+      "n_aquisicoes": 115,
+      "deals_ano": 47.9,
+      "densidade": 0.00007173193961293445
+    },
+    {
+      "div": "82",
+      "universo": 1063056,
+      "n_aquisicoes": 170,
+      "deals_ano": 70.8,
+      "densidade": 0.00015991631673213828
+    },
+    {
+      "div": "43",
+      "universo": 884439,
+      "n_aquisicoes": 41,
+      "deals_ano": 17.1,
+      "densidade": 0.000046357069283466697
+    },
+    {
+      "div": "96",
+      "universo": 870427,
+      "n_aquisicoes": 29,
+      "deals_ano": 12.1,
+      "densidade": 0.00003331698120577602
+    },
+    {
+      "div": "49",
+      "universo": 784485,
+      "n_aquisicoes": 78,
+      "deals_ano": 32.5,
+      "densidade": 0.00009942828734775044
+    },
+    {
+      "div": "94",
+      "universo": 738357,
+      "n_aquisicoes": 0,
+      "deals_ano": 0,
+      "densidade": 0
+    },
+    {
+      "div": "01",
+      "universo": 654957,
+      "n_aquisicoes": 59,
+      "deals_ano": 24.6,
+      "densidade": 0.0000900822496744061
+    },
+    {
+      "div": "45",
+      "universo": 636194,
+      "n_aquisicoes": 74,
+      "deals_ano": 30.8,
+      "densidade": 0.00011631672100019805
+    },
+    {
+      "div": "85",
+      "universo": 606270,
+      "n_aquisicoes": 97,
+      "deals_ano": 40.4,
+      "densidade": 0.00015999472182360994
+    },
+    {
+      "div": "73",
+      "universo": 586149,
+      "n_aquisicoes": 53,
+      "deals_ano": 22.1,
+      "densidade": 0.00009042069507923753
+    },
+    {
+      "div": "88",
+      "universo": 527231,
+      "n_aquisicoes": 0,
+      "deals_ano": 0,
+      "densidade": 0
+    },
+    {
+      "div": "46",
+      "universo": 433271,
+      "n_aquisicoes": 230,
+      "deals_ano": 95.8,
+      "densidade": 0.000530845590865763
+    },
+    {
+      "div": "53",
+      "universo": 373017,
+      "n_aquisicoes": 0,
+      "deals_ano": 0,
+      "densidade": 0
+    },
+    {
+      "div": "86",
+      "universo": 301131,
+      "n_aquisicoes": 264,
+      "deals_ano": 110,
+      "densidade": 0.000876694860376381
+    },
+    {
+      "div": "95",
+      "universo": 280373,
+      "n_aquisicoes": 10,
+      "deals_ano": 4.2,
+      "densidade": 0.000035666772478091686
+    },
+    {
+      "div": "52",
+      "universo": 268607,
+      "n_aquisicoes": 32,
+      "deals_ano": 13.3,
+      "densidade": 0.00011913315736373214
+    },
+    {
+      "div": "14",
+      "universo": 262089,
+      "n_aquisicoes": 17,
+      "deals_ano": 7.1,
+      "densidade": 0.00006486346241162354
+    },
+    {
+      "div": "62",
+      "universo": 224195,
+      "n_aquisicoes": 196,
+      "deals_ano": 81.7,
+      "densidade": 0.000874238943776623
+    },
+    {
+      "div": "81",
+      "universo": 206095,
+      "n_aquisicoes": 15,
+      "deals_ano": 6.3,
+      "densidade": 0.00007278196948009412
+    },
+    {
+      "div": "10",
+      "universo": 204757,
+      "n_aquisicoes": 45,
+      "deals_ano": 18.8,
+      "densidade": 0.0002197727061834272
+    },
+    {
+      "div": "74",
+      "universo": 189500,
+      "n_aquisicoes": 95,
+      "deals_ano": 39.6,
+      "densidade": 0.0005013192612137203
+    },
+    {
+      "div": "64",
+      "universo": 171858,
+      "n_aquisicoes": 441,
+      "deals_ano": 183.8,
+      "densidade": 0.002566071989665887
+    },
+    {
+      "div": "41",
+      "universo": 153904,
+      "n_aquisicoes": 417,
+      "deals_ano": 173.8,
+      "densidade": 0.002709481235055619
+    },
+    {
+      "div": "68",
+      "universo": 152393,
+      "n_aquisicoes": 415,
+      "deals_ano": 172.9,
+      "densidade": 0.0027232221952451885
+    },
+    {
+      "div": "33",
+      "universo": 151701,
+      "n_aquisicoes": 14,
+      "deals_ano": 5.8,
+      "densidade": 0.00009228680100988128
+    },
+    {
+      "div": "58",
+      "universo": 149197,
+      "n_aquisicoes": 16,
+      "deals_ano": 6.7,
+      "densidade": 0.00010724076221371743
+    },
+    {
+      "div": "97",
+      "universo": 149027,
+      "n_aquisicoes": 0,
+      "deals_ano": 0,
+      "densidade": 0
+    },
+    {
+      "div": "25",
+      "universo": 147279,
+      "n_aquisicoes": 27,
+      "deals_ano": 11.3,
+      "densidade": 0.00018332552502393416
+    },
+    {
+      "div": "87",
+      "universo": 134134,
+      "n_aquisicoes": 5,
+      "deals_ano": 2.1,
+      "densidade": 0.000037276156679141754
+    },
+    {
+      "div": "69",
+      "universo": 116934,
+      "n_aquisicoes": 36,
+      "deals_ano": 15,
+      "densidade": 0.00030786597567858794
+    },
+    {
+      "div": "71",
+      "universo": 113049,
+      "n_aquisicoes": 43,
+      "deals_ano": 17.9,
+      "densidade": 0.0003803660359667047
+    },
+    {
+      "div": "70",
+      "universo": 105126,
+      "n_aquisicoes": 103,
+      "deals_ano": 42.9,
+      "densidade": 0.0009797766489736126
+    },
+    {
+      "div": "59",
+      "universo": 102213,
+      "n_aquisicoes": 17,
+      "deals_ano": 7.1,
+      "densidade": 0.00016631935272421315
+    },
+    {
+      "div": "93",
+      "universo": 97293,
+      "n_aquisicoes": 22,
+      "deals_ano": 9.2,
+      "densidade": 0.00022612109812627834
+    },
+    {
+      "div": "32",
+      "universo": 95347,
+      "n_aquisicoes": 25,
+      "deals_ano": 10.4,
+      "densidade": 0.0002622001741009156
+    },
+    {
+      "div": "77",
+      "universo": 94978,
+      "n_aquisicoes": 67,
+      "deals_ano": 27.9,
+      "densidade": 0.0007054265198256438
+    },
+    {
+      "div": "90",
+      "universo": 89831,
+      "n_aquisicoes": 7,
+      "deals_ano": 2.9,
+      "densidade": 0.00007792410192472531
+    },
+    {
+      "div": "31",
+      "universo": 71102,
+      "n_aquisicoes": 5,
+      "deals_ano": 2.1,
+      "densidade": 0.0000703215099434615
+    },
+    {
+      "div": "63",
+      "universo": 69754,
+      "n_aquisicoes": 55,
+      "deals_ano": 22.9,
+      "densidade": 0.0007884852481578117
+    },
+    {
+      "div": "66",
+      "universo": 68088,
+      "n_aquisicoes": 147,
+      "deals_ano": 61.3,
+      "densidade": 0.0021589707437433907
+    },
+    {
+      "div": "13",
+      "universo": 66906,
+      "n_aquisicoes": 7,
+      "deals_ano": 2.9,
+      "densidade": 0.00010462439840970915
+    },
+    {
+      "div": "79",
+      "universo": 66196,
+      "n_aquisicoes": 17,
+      "deals_ano": 7.1,
+      "densidade": 0.00025681310048945557
+    },
+    {
+      "div": "18",
+      "universo": 58276,
+      "n_aquisicoes": 8,
+      "deals_ano": 3.3,
+      "densidade": 0.0001372777815910495
+    },
+    {
+      "div": "23",
+      "universo": 49859,
+      "n_aquisicoes": 13,
+      "deals_ano": 5.4,
+      "densidade": 0.00026073527347118873
+    },
+    {
+      "div": "15",
+      "universo": 40657,
+      "n_aquisicoes": 2,
+      "deals_ano": 0.8,
+      "densidade": 0.00004919202105418501
+    },
+    {
+      "div": "61",
+      "universo": 34864,
+      "n_aquisicoes": 24,
+      "deals_ano": 10,
+      "densidade": 0.0006883891693437356
+    },
+    {
+      "div": "16",
+      "universo": 31469,
+      "n_aquisicoes": 1,
+      "deals_ano": 0.4,
+      "densidade": 0.00003177730464901967
+    },
+    {
+      "div": "38",
+      "universo": 30635,
+      "n_aquisicoes": 10,
+      "deals_ano": 4.2,
+      "densidade": 0.0003264240248082259
+    },
+    {
+      "div": "55",
+      "universo": 30533,
+      "n_aquisicoes": 32,
+      "deals_ano": 13.3,
+      "densidade": 0.0010480463760521403
+    },
+    {
+      "div": "78",
+      "universo": 29631,
+      "n_aquisicoes": 17,
+      "deals_ano": 7.1,
+      "densidade": 0.0005737234652897303
+    },
+    {
+      "div": "22",
+      "universo": 27425,
+      "n_aquisicoes": 35,
+      "deals_ano": 14.6,
+      "densidade": 0.0012762078395624431
+    },
+    {
+      "div": "42",
+      "universo": 24111,
+      "n_aquisicoes": 24,
+      "deals_ano": 10,
+      "densidade": 0.0009953962921488118
+    },
+    {
+      "div": "80",
+      "universo": 22127,
+      "n_aquisicoes": 17,
+      "deals_ano": 7.1,
+      "densidade": 0.0007682921317846975
+    },
+    {
+      "div": "03",
+      "universo": 19341,
+      "n_aquisicoes": 1,
+      "deals_ano": 0.4,
+      "densidade": 0.000051703634765524014
+    },
+    {
+      "div": "17",
+      "universo": 18972,
+      "n_aquisicoes": 8,
+      "deals_ano": 3.3,
+      "densidade": 0.000421674045962471
+    },
+    {
+      "div": "75",
+      "universo": 17814,
+      "n_aquisicoes": 7,
+      "deals_ano": 2.9,
+      "densidade": 0.00039294936566745256
+    },
+    {
+      "div": "28",
+      "universo": 17190,
+      "n_aquisicoes": 41,
+      "deals_ano": 17.1,
+      "densidade": 0.002385107620709715
+    },
+    {
+      "div": "02",
+      "universo": 16682,
+      "n_aquisicoes": 5,
+      "deals_ano": 2.1,
+      "densidade": 0.0002997242536866083
+    },
+    {
+      "div": "20",
+      "universo": 14797,
+      "n_aquisicoes": 27,
+      "deals_ano": 11.3,
+      "densidade": 0.00182469419476921
+    },
+    {
+      "div": "29",
+      "universo": 9517,
+      "n_aquisicoes": 13,
+      "deals_ano": 5.4,
+      "densidade": 0.0013659766733214247
+    },
+    {
+      "div": "27",
+      "universo": 7693,
+      "n_aquisicoes": 13,
+      "deals_ano": 5.4,
+      "densidade": 0.0016898479136877682
+    },
+    {
+      "div": "84",
+      "universo": 6714,
+      "n_aquisicoes": 0,
+      "deals_ano": 0,
+      "densidade": 0
+    },
+    {
+      "div": "26",
+      "universo": 5565,
+      "n_aquisicoes": 7,
+      "deals_ano": 2.9,
+      "densidade": 0.0012578616352201257
+    },
+    {
+      "div": "08",
+      "universo": 5513,
+      "n_aquisicoes": 9,
+      "deals_ano": 3.8,
+      "densidade": 0.0016325049882096863
+    },
+    {
+      "div": "60",
+      "universo": 4740,
+      "n_aquisicoes": 14,
+      "deals_ano": 5.8,
+      "densidade": 0.002953586497890295
+    },
+    {
+      "div": "24",
+      "universo": 4519,
+      "n_aquisicoes": 8,
+      "deals_ano": 3.3,
+      "densidade": 0.0017703031644169065
+    },
+    {
+      "div": "50",
+      "universo": 4326,
+      "n_aquisicoes": 2,
+      "deals_ano": 0.8,
+      "densidade": 0.0004623208506703652
+    },
+    {
+      "div": "72",
+      "universo": 3838,
+      "n_aquisicoes": 11,
+      "deals_ano": 4.6,
+      "densidade": 0.0028660760812923396
+    },
+    {
+      "div": "92",
+      "universo": 3772,
+      "n_aquisicoes": 0,
+      "deals_ano": 0,
+      "densidade": 0
+    },
+    {
+      "div": "11",
+      "universo": 3115,
+      "n_aquisicoes": 9,
+      "deals_ano": 3.8,
+      "densidade": 0.0028892455858747996
+    },
+    {
+      "div": "65",
+      "universo": 3093,
+      "n_aquisicoes": 4,
+      "deals_ano": 1.7,
+      "densidade": 0.0012932428063368898
+    },
+    {
+      "div": "35",
+      "universo": 2686,
+      "n_aquisicoes": 11,
+      "deals_ano": 4.6,
+      "densidade": 0.004095309009679821
+    },
+    {
+      "div": "37",
+      "universo": 2613,
+      "n_aquisicoes": 4,
+      "deals_ano": 1.7,
+      "densidade": 0.0015308075009567547
+    },
+    {
+      "div": "91",
+      "universo": 1970,
+      "n_aquisicoes": 1,
+      "deals_ano": 0.4,
+      "densidade": 0.0005076142131979696
+    },
+    {
+      "div": "30",
+      "universo": 1577,
+      "n_aquisicoes": 3,
+      "deals_ano": 1.3,
+      "densidade": 0.0019023462270133164
+    },
+    {
+      "div": "36",
+      "universo": 1567,
+      "n_aquisicoes": 2,
+      "deals_ano": 0.8,
+      "densidade": 0.0012763241863433313
+    },
+    {
+      "div": "51",
+      "universo": 798,
+      "n_aquisicoes": 0,
+      "deals_ano": 0,
+      "densidade": 0
+    },
+    {
+      "div": "21",
+      "universo": 698,
+      "n_aquisicoes": 4,
+      "deals_ano": 1.7,
+      "densidade": 0.0057306590257879654
+    },
+    {
+      "div": "07",
+      "universo": 503,
+      "n_aquisicoes": 0,
+      "deals_ano": 0,
+      "densidade": 0
+    },
+    {
+      "div": "19",
+      "universo": 476,
+      "n_aquisicoes": 1,
+      "deals_ano": 0.4,
+      "densidade": 0.0021008403361344537
+    },
+    {
+      "div": "12",
+      "universo": 308,
+      "n_aquisicoes": 0,
+      "deals_ano": 0,
+      "densidade": 0
+    },
+    {
+      "div": "99",
+      "universo": 175,
+      "n_aquisicoes": 0,
+      "deals_ano": 0,
+      "densidade": 0
+    },
+    {
+      "div": "09",
+      "universo": 160,
+      "n_aquisicoes": 1,
+      "deals_ano": 0.4,
+      "densidade": 0.00625
+    },
+    {
+      "div": "39",
+      "universo": 101,
+      "n_aquisicoes": 0,
+      "deals_ano": 0,
+      "densidade": 0
+    }
+  ]
+}
