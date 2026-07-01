@@ -9,7 +9,7 @@ import raw from "./heatmap-setores.json";
 import { nomeDivisao, secaoDe, DIVISOES_VALIDADAS } from "./cnae";
 
 const PISO_N = 10; // abaixo disso a densidade é ruído estatístico → cor neutra (sem afirmar temperatura)
-const MIN_TILE = 5; // divisões com menos aquisições viram tiles ilegíveis — omitidas do treemap
+const MIN_TILE = 8; // abaixo disso o tile vira sliver ilegível — omitido (exceto setores validados)
 
 type DivRaw = { div: string; universo: number; n_aquisicoes: number; deals_ano: number; densidade: number };
 
@@ -79,7 +79,7 @@ export type GrupoSecao = {
 export function gruposPorSecao(): GrupoSecao[] {
   const porSecao = new Map<string, GrupoSecao>();
   for (const d of DIVISOES) {
-    if (d.n_aquisicoes < MIN_TILE) continue;
+    if (d.n_aquisicoes < MIN_TILE && !d.validado) continue; // mantém os 3 setores validados mesmo se pequenos
     let g = porSecao.get(d.secaoSigla);
     if (!g) {
       g = { secaoSigla: d.secaoSigla, secaoNome: d.secaoNome, value: 0, itens: [] };

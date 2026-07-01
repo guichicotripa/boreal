@@ -1081,4 +1081,12 @@ cliente; tooltip nativo via `title`). Tiles em % de um canvas lógico (responsiv
 **Verificação:** typecheck limpo; DOM confere 62 tiles, 5 validados com dot, cores corretas (varejo escuro,
 finanças claro). Screenshot travou no renderer headless — **review visual pendente com o Guilherme**.
 
+**Disposição full-viewport (v2.1):** o Guilherme gostou dos tiles mas quis o heatmap ocupando a tela
+inteira, sem scroll, como o TradingView. Refeito: página vira `flex-col` de `calc(100dvh - 65px)` (nav)
+com barra fina no topo (título + legenda + metodologia no tooltip ⓘ) e o treemap preenchendo o resto.
+O treemap virou **client component** (`Treemap.tsx`) que se mede (ResizeObserver + medição síncrona no
+mount) e faz o layout em px reais — aspect ratio fiel, re-layout no resize, sem distorção. `MIN_TILE=8`
+(exceto setores validados) corta os slivers ilegíveis. Verificado: 55 tiles, 0 slivers, sem scroll.
+Gotcha de dev: o Fast Refresh acumulado deixava o container vazio até um reload limpo (não ocorre em prod).
+
 **Status:** ✅ Implementado na branch. Substitui os cards (v1). Pendente review visual.
