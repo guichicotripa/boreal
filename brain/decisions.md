@@ -5,6 +5,60 @@
 
 ---
 
+## [2026-07-01] Heat-map: limpeza do sinal de M&A (SPE/holding + universo ativo + escala log)
+
+**Contexto:** o sinal cru "PJ entra + PF sai entre 2 snapshots do CNPJ" (14.486 candidatas) NÃO é M&A;
+mistura três coisas. Crítica dos dados a pedido do Guilherme, confirmada por diagnóstico de idade
+(`diag-spe.mjs`): os setores que apareciam mais "quentes" (Finanças, Imobiliária, Construção, Energia)
+tinham 40-48% das "aquisições" em empresas com <5 anos = **SPE/newco e reorganização de holding
+familiar**, não venda de empresa estabelecida. Um sócio da Setter derrubaria em 10s.
+
+**Três correções (build-heatmap-setores.mjs):**
+1. **Universo só ativo** — `situacao_cadastral='2'`. Antes contava as 30,2M matriz **baixadas** ('8')
+   contra 26,1M ativas ('2'); o denominador estava inflado >2x, afundando a densidade de todo mundo.
+2. **Idade ≥ 5 anos** na adquirida (no corte) — remove SPE/newco. Efeito **diferencial**: corta ~50% de
+   Energia/Finanças/Aux.fin (jovens) e só ~15% de metalmec (velhos). É o de-viés que importa.
+3. **Filtro de holding cirúrgico** — só em construção/imobiliária/energia (41/42/43/68/35), onde a SPE é a
+   forma legal dominante (patrimônio de afetação, SPE-por-usina). Exclui a candidata em que **só entraram
+   PJ de holding/participações/incorporadora** (reorganização, não venda). Imobiliária 0,317→0,093;
+   Energia 0,415→0,196; metalmec intacto.
+   - **Testado e REJEITADO como filtro global:** cortava 60-73% de TODOS os setores igualmente, inclusive
+     os validados (Máquinas 81→29), porque nome "Participações" não separa holding-da-família de
+     holding-do-adquirente (PE/estratégico entra via SPV). Efeito não-diferencial = não é filtro de
+     artefato. Só vale nos setores SPE-heavy. As flags `novos_op/novos_hold` ficam gravadas no ground
+     truth pra refino de precisão futuro.
+
+**Resultado:** 14.486 brutas → **7.877 limpas (54%)**. Ranking nacional de densidade agora honesto:
+topo = indústria/consolidação de empresa madura (Bebidas, Química, Equip.elétricos, **Máquinas 0,359**);
+Finanças caiu pro meio (0,220); Imobiliária/Construção foram pro fundo.
+
+**Escala de cor (heatmap.ts):** a densidade é fortemente assimétrica (mediana 0,04% vs cauda >0,5%).
+Linear jogava 90% no escuro e dava branco só pra cauda → **log min-max**. E **PISO_N 10→15** pra suprimir
+densidade de n pequeno (Farmacêutica n=11 tinha 1,43% e sequestrava a escala). **Cor:** monocromático
+quente (cinza→branco), mas a escala linear deixava o meio claro demais (parecia tudo branco). Corrigido
+com **gamma 1,6** (mantém o grosso escuro, só o topo acende) + faixa alargada (L 12%→94%). Luminância
+final 31→100(mediana)→240: o quente vira branco e salta. Testei uma rampa âmbar pra dar mais contraste,
+Guilherme vetou (feio) — fica monocromático. Sem verde/vermelho/ocre (semântica de risco é do score).
+
+**Timespace e cadência (respondido, não vira código agora):** janela = 2 snapshots (10/06/2023 →
+09/11/2025, ~2,42 anos), é foto, não fluxo (não vê timing, conta transição dupla como uma, `deals/ano`
+assume taxa constante). basedosdados atualiza ~mensal; M&A é lento → re-minerar **trimestral/semestral**,
+janela **deslizante** de ~2 anos (fixar o corte incha e envelhece).
+
+**Ground truth (`scripts/data/aquisicoes-br.json`):** agora guarda TODOS os campos crus por aquisição
+(idade, situação, natureza das PJ entrantes) → dá pra re-filtrar qualquer política **sem re-consultar o
+BigQuery** (`reaggregate-local.mjs` faz isso). Pra validar recall fora dos 3 setores, usar o subconjunto
+`limpa`, não as 14.486 brutas.
+
+**Resíduo assumido (honesto):** (a) Finanças 0,220 pode ter holding financeira legítima (CNAE 64/66 É
+holding) — não filtrei porque seria circular; (b) idade≥5 é piso, sobra SPE de 5-8 anos em energia/imob;
+(c) morte de sócio sem venda dispara o mesmo sinal. Rótulo do mapa diz "troca de controle observada",
+não "deal previsto"; o dot marca onde há recall validado.
+
+**Status:** ✅ Tomada e implementada. Verificado no browser (BR + regiões renderizam, gradiente legível).
+
+---
+
 ## [2026-05-26] Direção do produto: AI research agent pra deal sourcing PE/M&A
 
 **Contexto:** competição do Clube da Programação. Avaliados 2 caminhos — (A) research agent

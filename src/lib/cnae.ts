@@ -3,10 +3,10 @@
 
 export const NOME_DIVISAO: Record<string, string> = {
   "01": "Agricultura", "02": "Silvicultura", "03": "Pesca",
-  "05": "Carvão", "06": "Petróleo e gás", "07": "Minerais metálicos", "08": "Minerais não-met.", "09": "Apoio à extração",
+  "05": "Carvão", "06": "Petróleo e gás", "07": "Minerais metálicos", "08": "Extração não-met.", "09": "Apoio à extração",
   "10": "Alimentos", "11": "Bebidas", "12": "Fumo", "13": "Têxtil", "14": "Vestuário", "15": "Couro e calçados",
   "16": "Madeira", "17": "Papel e celulose", "18": "Impressão", "19": "Coque e petróleo", "20": "Química",
-  "21": "Farmacêutica", "22": "Borracha e plástico", "23": "Minerais não-met.", "24": "Metalurgia", "25": "Produtos de metal",
+  "21": "Farmacêutica", "22": "Borracha e plástico", "23": "Prod. minerais não-met.", "24": "Metalurgia", "25": "Produtos de metal",
   "26": "Informática e eletrônicos", "27": "Equip. elétricos", "28": "Máquinas e equip.", "29": "Veículos",
   "30": "Outros transportes", "31": "Móveis", "32": "Prod. diversos", "33": "Manut. e reparação",
   "35": "Eletricidade e gás", "36": "Água", "37": "Esgoto", "38": "Resíduos", "39": "Descontaminação",

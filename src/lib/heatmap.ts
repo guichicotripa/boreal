@@ -2,13 +2,14 @@
 // Os dados vêm por UF (heatmap-setores.json); aqui agregamos pra a região escolhida (ou Brasil) e
 // calculamos a cor MONOCROMÁTICA (escala de cinza) por intensidade, normalizada DENTRO da seleção.
 //
-// HONESTIDADE: mede atividade OBSERVADA de M&A (aquisições PJ-in/PF-out), consistente pra todos os
-// setores. A validação do score (recall) só existe nos 3 cobertos — marcados com `validado`.
+// HONESTIDADE: mede atividade OBSERVADA de troca de controle (PJ-in/PF-out), já LIMPA de artefatos no
+// build (só empresa ativa 5+ anos; e em construção/imobiliária/energia, sem reorganização de holding).
+// A validação do score (recall) só existe nos setores cobertos — marcados com `validado`.
 
 import raw from "./heatmap-setores.json";
 import { nomeDivisao, secaoDe, DIVISOES_VALIDADAS, UF_REGIAO } from "./cnae";
 
-const PISO_N = 10; // abaixo disso a densidade é ruído estatístico → cor neutra
+const PISO_N = 15; // abaixo disso a densidade é ruído estatístico (n pequeno) → cor neutra
 const MIN_TILE = 8; // abaixo disso o tile vira sliver ilegível — omitido (exceto setores validados)
 const ANOS = 2.4;
 
@@ -61,14 +62,19 @@ export function divisoesDaRegiao(regiao: string): DivisaoHeat[] {
   }));
 
   // Normaliza a densidade só entre as divisões com sinal (N>=piso) NESTA região.
-  const dens = base.filter((d) => d.n_aquisicoes >= PISO_N).map((d) => d.densidade);
-  const dMin = dens.length ? Math.min(...dens) : 0;
-  const dMax = dens.length ? Math.max(...dens) : 1;
+  // Escala LOG (não linear): a densidade é fortemente assimétrica à direita (mediana ~0,04% vs cauda
+  // >0,5%), então linear jogaria ~90% dos setores no escuro e daria branco só pra cauda. Log espalha o
+  // meio da tabela — onde estão os setores que importam — e dá contraste legível.
+  const dens = base.filter((d) => d.n_aquisicoes >= PISO_N && d.densidade > 0).map((d) => Math.log(d.densidade));
+  const lnMin = dens.length ? Math.min(...dens) : 0;
+  const lnMax = dens.length ? Math.max(...dens) : 1;
 
   return base.map((d) => {
     const sec = secaoDe(d.div);
     const intensidade =
-      d.n_aquisicoes < PISO_N || dMax <= dMin ? 0 : Math.max(0, Math.min(1, (d.densidade - dMin) / (dMax - dMin)));
+      d.n_aquisicoes < PISO_N || d.densidade <= 0 || lnMax <= lnMin
+        ? 0
+        : Math.max(0, Math.min(1, (Math.log(d.densidade) - lnMin) / (lnMax - lnMin)));
     return {
       div: d.div,
       nome: nomeDivisao(d.div),
@@ -107,15 +113,18 @@ export function totalAquisicoes(regiao: string): number {
   return divisoesDaRegiao(regiao).reduce((a, d) => a + d.n_aquisicoes, 0);
 }
 
-// Cor do tile — cinza levemente quente (combina com smoky/bone). Mais claro = mais denso/quente.
-// Sem verde/vermelho: cor de risco segue reservada a score (regra do brand).
+// Cor do tile — monocromático quente (cinza-quente → branco), sem verde/vermelho (risco é do score).
+// O defeito antigo era o meio da tabela ficar claro demais (parecia tudo branco). Gamma 1.6 mantém o
+// grosso escuro e só o TOPO acende; faixa alargada (12% quase-fundo → 94% quase-branco) dá o salto.
 export function corTile(intensidade: number): string {
-  const L = 19 + intensidade * 60; // 19%..79%
-  return `hsl(40 6% ${L}%)`;
+  const i = Math.pow(Math.max(0, Math.min(1, intensidade)), 1.6);
+  const L = 12 + i * 82; // 12%..94%
+  return `hsl(40 7% ${L}%)`;
 }
 
 export function corTextoTile(intensidade: number): string {
-  return intensidade > 0.52 ? "#1c1a17" : "#D8CFBC";
+  const i = Math.pow(Math.max(0, Math.min(1, intensidade)), 1.6);
+  return i > 0.5 ? "#1c1a17" : "#D8CFBC";
 }
 
 export const HEATMAP_JANELA = raw.janela;

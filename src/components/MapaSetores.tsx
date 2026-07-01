@@ -22,11 +22,12 @@ export function MapaSetores() {
   const janelaFim = new Date(HEATMAP_JANELA.ate).toLocaleDateString("pt-BR");
   const gerado = new Date(HEATMAP_GERADO_EM).toLocaleDateString("pt-BR");
   const nota =
-    `${total.toLocaleString("pt-BR")} aquisições detectadas em ${nomeRegiao} (janela até ${janelaFim}), ` +
-    `mineradas das transições do CNPJ (PJ entra + PF sai). Tamanho do bloco = volume de aquisições; ` +
-    `cor = densidade (aquisições ÷ empresas do setor), normalizada nesta seleção; divisões com <10 ` +
-    `aquisições ficam neutras. Dot = os 3 setores com recall do score validado; nos demais, atividade ` +
-    `observada, não previsão. Gerado em ${gerado}.`;
+    `${total.toLocaleString("pt-BR")} trocas de controle em ${nomeRegiao} (janela até ${janelaFim}), ` +
+    `mineradas das transições do CNPJ (PJ entra + PF sai). Limpeza: só empresa ativa com 5+ anos ` +
+    `(remove SPE/newco) e, em construção/imobiliária/energia, exclui a reorganização de holding da ` +
+    `família (não é venda). Tamanho do bloco = volume; cor = densidade (trocas ÷ empresas ativas do ` +
+    `setor), escala log normalizada nesta seleção; divisões com <15 ficam neutras. Dot = setores com recall do ` +
+    `score validado; nos demais, atividade observada, não previsão. Gerado em ${gerado}.`;
 
   return (
     <div className="flex flex-col" style={{ height: "calc(100dvh - 65px)" }}>

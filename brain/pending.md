@@ -8,15 +8,22 @@
 
 As 3 frentes que saíram da call do Henrique, em ordem de retorno:
 
-- [x] **1. Heat-map de setor** — **v3: treemap TradingView, Brasil + filtro por região** (`/heat-map`,
+- [x] **1. Heat-map de setor** — **v4: treemap TradingView, Brasil + região + DADOS LIMPOS** (`/heat-map`,
   `lib/{heatmap,treemap,cnae}.ts`, `components/{MapaSetores,Treemap}.tsx`, `build-heatmap-setores.mjs`).
-  Métrica de M&A pra TODOS os setores (divisão CNAE) e TODO o Brasil (por UF), filtro por região que
-  recomputa o mapa client-side. Tile = volume de aquisições, cor cinza = densidade (normalizada na
-  seleção), full-viewport sem scroll, 3 setores validados com dot. **Ground truth** (14.486 aquisições)
-  salvo em `scripts/data/aquisicoes-br.json` pra validação futura. **Falta: review visual do Guilherme**
-  (screenshot trava no headless; verifiquei via DOM). Único revisor de UI.
-  - [ ] **Validação futura (a fazer):** rodar o score nas aquisições do ground truth por setor/região →
-    medir recall fora dos 3 setores cobertos. É o próximo passo do data moat.
+  Métrica de M&A pra TODOS os setores e TODO o Brasil, filtro por região que recomputa client-side. Tile =
+  volume, cor cinza (escala LOG) = densidade normalizada na seleção, full-viewport, setores validados com dot.
+  - [x] **Limpeza do sinal (01/07, ver `decisions.md`):** o sinal cru misturava M&A com SPE/newco e
+    reorganização de holding. Corrigido: universo só ativo (era 2x inflado por baixadas), idade≥5 (remove
+    newco), filtro de holding cirúrgico em constr/imob/energia. 14.486 brutas → **7.877 limpas**. Ranking
+    honesto (indústria no topo, imob/constr no fundo). Escala de cor linear→log + PISO_N 10→15 (matava
+    outlier de n pequeno). Verificado no browser.
+  - [ ] **Review visual do Guilherme** (screenshot trava no headless; verifiquei via DOM). Único revisor de UI.
+    Ele tinha "coisinhas de design pra mudar" — pegar isso depois da validação dos dados.
+  - [ ] **Validação futura (a fazer):** rodar o score no subconjunto **`limpa`** do ground truth (NÃO as
+    14.486 brutas — têm SPE dentro) por setor/região → medir recall fora dos 3 setores. O ground truth
+    agora guarda idade/situação/natureza das PJ entrantes → re-filtrável sem BigQuery (`reaggregate-local.mjs`).
+  - [ ] **Re-mineração (cadência):** trimestral/semestral, janela deslizante de ~2 anos (hoje: corte
+    2023-06-10 → 2025-11-09 fixo no `build-heatmap-setores.mjs`).
 - [ ] **2. Selo de proveniência** (destrava o success fee) — carimbar empresa que entra no pipeline a
   partir de uma lista do Boreal: origem + data + score + check de que não estava no CRM deles. NÃO cobrar
   no piloto, só garantir o direito. Timestamp puro não basta (atribuição é o medo do Henrique).
