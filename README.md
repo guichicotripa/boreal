@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Boreal
 
-## Getting Started
+Deal sourcing de M&A por **risco sucessório**. Boreal encontra empresas familiares no middle market
+brasileiro cujo controle tende a mudar de mãos (dono envelhecendo, sem sucessor no quadro) e prioriza
+quem abordar, a partir de uma tese em linguagem natural. É o motor de originação do Relay.
 
-First, run the development server:
+## Por que é diferente
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+O moat não é a interface, é o **ativo de dado que compõe**:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Ground truth de M&A minerado de graça** — transições do quadro societário no CNPJ (PJ entra + PF sai
+  entre dois snapshots) dão milhares de aquisições reais rotuladas, sem comprar base. Ver `scripts/`.
+- **Score de sucessão validado por vertical, sem leakage** — heurística determinística (idade do sócio,
+  antiguidade, porte, quadro plural) calibrada contra as aquisições reais. Em metalmecânica, 67% das
+  aquisições caíram no top 10% do score. Ver `src/lib/scoring.ts`.
+- **Sensor forward** — a mudança societária é minerada continuamente, então dá pra ver o controle mudar,
+  não só a foto estática que os concorrentes vendem.
+- **Research + dossiê AI-native** — o agente lê a web e o site oficial da empresa e devolve perfil,
+  gatilho de timing, red flags e um rascunho de abordagem. Score qualitativo v0 → v1.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Next.js 16** (App Router, Turbopack) + React 19 + TypeScript + Tailwind v4.
+- **Supabase** (Postgres) — empresas, sócios e o pipeline de originação (`oportunidade`, `interacao`).
+- **BigQuery / Base dos Dados** (`br_me_cnpj`) — mineração de ground truth, universo e enriquecimento.
+- **Anthropic API** — parser de query, reasoner, research agent e dossiê. Cache gerado via assinatura
+  (custo zero) pros demos.
 
-## Learn More
+## Rodando local
 
-To learn more about Next.js, take a look at the following resources:
+1. `npm install`
+2. Copie `.env.example` para `.env.local` e preencha (Supabase, Anthropic, GCP/BigQuery).
+3. Aplique as migrations em `supabase/migrations/` no seu projeto Supabase.
+4. `npm run dev` → http://localhost:3000
+5. `npm test` roda os testes do score (runner nativo do Node).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Gate de acesso (piloto)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Setando `BOREAL_GATE_PASSWORD` (+ `BOREAL_GATE_SECRET`) o app fica privado: pede a senha em `/acesso` e
+libera por 30 dias. Sem a env, fica aberto (dev/local). Ver `src/middleware.ts`.
 
-## Deploy on Vercel
+## Mapa do código
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Caminho | O quê |
+|---|---|
+| `src/app/` | páginas (home, pipeline, empresa, heat-map, validação, mercado…) + rotas de API |
+| `src/lib/scoring.ts` | score de sucessão (IP determinístico) + testes em `scoring.test.ts` |
+| `src/lib/research.ts` · `dossier.ts` | research agent e memo (LLM) |
+| `src/lib/heatmap.ts` · `treemap.ts` | heat-map de atividade de M&A por setor/região |
+| `src/lib/proveniencia.ts` | selo de proveniência do lead (prova de origem pro success fee) |
+| `scripts/` | mineração, validação e build de caches (BigQuery). `sonda-*` e `valida-*` são análises pontuais |
+| `supabase/migrations/` | schema do Postgres |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> Domínio em português (dados brasileiros: `empresa`, `socio`, `oportunidade`). Código e commits em inglês.

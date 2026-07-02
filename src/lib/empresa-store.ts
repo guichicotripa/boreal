@@ -1,11 +1,10 @@
 // Ponte de navegação home/pipeline → /empresa/[id] (Fase 2).
 //
 // A home e o pipeline já têm o objeto Empresa completo em memória quando o usuário
-// clica num card. Em vez de re-buscar no servidor (não existe GET /api/empresa/[id]
-// ainda — handoff do Guilherme), guardamos o objeto em sessionStorage e a página da
-// empresa lê de lá. Quando o endpoint existir, troca-se `readEmpresa` por um fetch
-// sem mexer na página. Esta é a ÚNICA camada que conhece o mecanismo — por isso é
-// trivial de substituir.
+// clica num card. Guardamos em sessionStorage pro paint instantâneo na página de
+// destino. A página HIDRATA com os dados canônicos via GET /api/empresa/[id] quando o
+// que veio é parcial (pipeline) ou nulo (link direto/refresh) — ver empresa/[id]/page.
+// Esta camada é só a ponte de paint rápido; a fonte de verdade é o endpoint.
 
 import type { Empresa } from "./types";
 
