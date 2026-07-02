@@ -5,6 +5,71 @@
 
 ---
 
+## [2026-07-02] Revisão end-to-end + execução (Tier 1 do piloto + polish)
+
+**Contexto:** revisão completa do projeto amarrada ao objetivo (rodar o piloto Setter, provar conversão
+e atribuição). Achado central: como demo está forte; o gap é a passagem pra "parceiro roda deal flow e a
+gente prova que o lead foi nosso".
+
+**Executado nesta sessão:**
+- **Gate de acesso** (`src/middleware.ts` + `/acesso`): app fica privado quando `BOREAL_GATE_PASSWORD`
+  está setada (cookie HMAC, sem Supabase Auth). Fecha o buraco de "pipeline público". Ativar na Vercel.
+- **Selo de proveniência** (`migration 0005` + `lib/proveniencia` + `/api/proveniencia` + `/proveniencia/[id]`):
+  prova assinada de origem/data/score/"novo pro CRM deles". Destrava o success fee. **Falta aplicar a
+  0005 no banco + plugar o botão "selar" na entrega.**
+- **Teste do score** (`scoring.test.ts`, runner nativo do Node): trava o IP antes de evoluir.
+- **Feature saída-do-Simples VALIDADA** (`valida-simples-porte.mjs`): adiciona sinal DENTRO de cada banda
+  de porte (lift 1,8-4,6x), não é redundante com porte. **Decisão: entra no score, MAS só depois de
+  recalibrar o peso (decil hold-out) + ingest do campo em `empresa`.** Não meio-plugar (leria campo
+  inexistente e miscalibraria).
+- **Polish:** README real, comentário defasado da ponte de empresa, "1 Issue" do dev = não reproduz.
+
+**Não feito (precisa de decisão/infra):** fechar o loop de outcome (2a, precisa de dado do piloto),
+sensor forward vivo (2c, feature maior), integração da feature Simples (ingest + recalibração),
+estimativa de tamanho no memo (decisão de produto), créditos da API (billing), aplicar migrations.
+
+**Status:** ✅ Tier 1 entregue em código; ativação depende de aplicar migrations + envs na Vercel.
+
+---
+
+## [2026-07-02] Data lake / RAG de enriquecimento: NÃO construir agora (sonda matou a premissa)
+
+**Contexto:** Taylor lembrou o Guilherme da possibilidade de um "data lake" com várias bases (crédito,
+financeiro) + RAG pra melhorar scraping e análise de empresas. Ideia atraente, mas avaliada com a lente
+crítica antes de aceitar.
+
+**Crítica (3 reframes):** (1) O data lake já existe — a basedosdados É o maior data lake público do BR e o
+Boreal já roda em cima dela por CNPJ; falta ENRIQUECER a espinha, não construir infra (YAGNI). (2) RAG é
+ferramenta errada pra dado estruturado (crédito/dívida/financeiro): quer SQL/tool-use preciso por CNPJ, não
+busca vetorial por similaridade; RAG só serve pra texto (site raspado, notícia). (3) Crédito/financeiro é
+paywalled pro segmento (PME familiar de capital fechado): score é proprietário (Serasa/LGPD), financeiro
+real só de S.A. aberta (CVM). Mira certa = fontes públicas de porte/distress.
+
+**Sonda barata (uma tarde, `scripts/sonda-distress.mjs`) pra decidir antes de construir:**
+- **Feasibility:** RAIS/CAGED na basedosdados NÃO têm CNPJ (anonimizados por município+CNAE) → sinal de
+  tamanho não linka. PGFN dívida ativa existe (aberta, por CNPJ) mas fora do acesso BigQuery atual e sem
+  histórico pra testar "antecede". Os dois melhores sinais públicos estão fora de alcance barato.
+- **Teste de sinal (dado CNPJ-linkável em mãos, `br_me_cnpj`):** distress ANTECEDE o deal? Tratamento =
+  7.877 aquisições limpas vs controle = 9,2M matriz ativa idade>=5. Resultado CONTRARIA a hipótese:
+  saída do Simples pré-2023 = 22,0% vs 7,2% (**3,06x**), mas isso é TAMANHO (empresa estourou o teto de
+  R$4,8M), não distress; ex-MEI 0,16x e não-ativa@2023 0,27x (adquiridas eram MAIS saudáveis). Alvo é
+  empresa média sólida com dono envelhecendo, não empresa em aperto financeiro. Pressão é geracional, não
+  de balanço.
+
+**Decisão:** **não construir o enriquecimento/lake/RAG agora.** A premissa (cruzar crédito/financeiro pra
+achar pressão) não se sustenta nos dados; produto ainda sem modelo validado; gargalo real é relacional
+(confiança) e prazos duros são outros (piloto Setter, SAT). A sonda custou uma tarde e evitou construir uma
+camada inteira sobre premissa falsa.
+
+**Backlog (o único nugget acionável):** saída do Simples/MEI como **proxy de PORTE** está de graça na
+`br_me_cnpj.simples` (sem fonte nova). Vale testar como feature do score com lift/hold-out decente antes de
+confiar (o 3,06x é confundido com tamanho e cross-seccional, não é lift validado). É o "qualificar por
+tamanho" que parecia perdido quando a RAIS não linkou.
+
+**Status:** ✅ Decidida. Sonda em `scripts/sonda-distress.mjs` (reproduzível).
+
+---
+
 ## [2026-07-01] Heat-map: limpeza do sinal de M&A (SPE/holding + universo ativo + escala log)
 
 **Contexto:** o sinal cru "PJ entra + PF sai entre 2 snapshots do CNPJ" (14.486 candidatas) NÃO é M&A;

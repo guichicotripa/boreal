@@ -4,6 +4,28 @@
 
 ---
 
+## 🟡 Revisão end-to-end (02/07) — execução em fases
+
+**Feito e commitado (branch `feat/research-scrapling-hibrido`):**
+- [x] Gate de acesso (middleware + /acesso). Ativar: setar `BOREAL_GATE_PASSWORD` + `BOREAL_GATE_SECRET` na Vercel.
+- [x] Selo de proveniência (migration 0005 + API + página do certificado). Ver abaixo o que falta pra ativar.
+- [x] Teste do score (`npm test`). README real. Comentário da ponte de empresa.
+- [x] Feature saída-do-Simples validada (adiciona sinal além do porte).
+
+**Falta pra ATIVAR o que já está em código:**
+- [ ] **Aplicar `migration 0005`** no Supabase (cria `crm_incumbente` + colunas de selo). Sem isso a API de proveniência dá erro.
+- [ ] **Plugar o botão "selar proveniência"** na ação de entrega do pipeline (hoje só via POST /api/proveniencia).
+- [ ] **Importar a lista de CRM incumbente da Setter** em `crm_incumbente` (pra o "novo pro CRM deles" funcionar).
+
+**Próximas fases da revisão (maiores, precisam de decisão/dado):**
+- [ ] **Fechar o loop de outcome (2a):** realimentar o `resultado` (deal_fechado/perdido) no score. Precisa de dado do piloto.
+- [ ] **Integrar a feature Simples no score (2b):** ingest do campo em `empresa` + recalibrar peso (decil hold-out) + 5ª dimensão em `scoring.ts` (com teste). NÃO adicionar com peso chutado.
+- [ ] **Sensor forward vivo (2c):** transição societária das empresas salvas vira sinal no pipeline (o `monitor-transicoes.mjs` já minera).
+- [ ] **Decisão de produto:** estimativa de tamanho no memo (incorporar com metodologia vs manter abstenção). Depende do Guilherme.
+- [ ] **Créditos da API** (billing, Guilherme) — trava research/dossiê ao vivo fora do cache.
+
+---
+
 ## 🟡 Features pós-call Setter (28/06 · branch `feat/research-scrapling-hibrido`)
 
 As 3 frentes que saíram da call do Henrique, em ordem de retorno:
