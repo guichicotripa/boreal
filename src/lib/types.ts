@@ -126,6 +126,11 @@ export type Oportunidade = {
   proxima_acao_em: string | null; // YYYY-MM-DD
   score_no_save: number | null;   // "previsto" do loop de outcome
   created_at: string;
+  // Selo de proveniência (migration 0005) — prova de origem pro success fee.
+  origem?: string | null;
+  selado_em?: string | null;
+  proveniencia_hash?: string | null;
+  novo_para_setter?: boolean | null;
   /** Datas dos toques — para calcular último contato sem query extra. */
   interacoes?: { criado_em: string }[];
   empresa: Pick<
