@@ -18,7 +18,7 @@ type Row = {
 const SELECT =
   "id, origem, selado_em, proveniencia_hash, novo_para_setter, score_no_save, created_at, empresa:empresa_id (cnpj, razao_social)";
 
-async function certificadoDe(row: Row, novoOverride?: boolean): Promise<Certificado> {
+async function certificadoDe(row: Row, novoOverride?: boolean | null): Promise<Certificado> {
   const cnpj = normalizaCnpj(row.empresa?.cnpj ?? "");
   const novo = novoOverride ?? row.novo_para_setter;
   const hash = await selaHash(cnpj, row.created_at, row.score_no_save);
@@ -55,9 +55,14 @@ export async function POST(req: NextRequest) {
   const r = row as unknown as Row;
   const cnpj = normalizaCnpj(r.empresa?.cnpj ?? "");
 
-  // Novidade: o CNPJ NÃO está no CRM incumbente do parceiro.
-  const { data: incumbente } = await supabase.from("crm_incumbente").select("cnpj").eq("cnpj", cnpj).maybeSingle();
-  const novo = !incumbente;
+  // Novidade: o CNPJ NÃO está no CRM incumbente do parceiro. SÓ afirma se a lista foi carregada —
+  // com a tabela vazia não checamos nada, então novo = null ("não verificado") em vez de fingir "novo".
+  const { count } = await supabase.from("crm_incumbente").select("cnpj", { count: "exact", head: true });
+  let novo: boolean | null = null;
+  if ((count ?? 0) > 0) {
+    const { data: incumbente } = await supabase.from("crm_incumbente").select("cnpj").eq("cnpj", cnpj).maybeSingle();
+    novo = !incumbente;
+  }
 
   const hash = await selaHash(cnpj, r.created_at, r.score_no_save);
   const selado_em = new Date().toISOString();

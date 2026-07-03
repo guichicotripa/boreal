@@ -67,7 +67,7 @@ export default function ProvenienciaPage({ params }: { params: Promise<{ id: str
             <Campo rotulo="Score no momento" valor={cert.score_origem != null ? `${cert.score_origem}/100` : "—"} />
             <Campo
               rotulo="Situação no CRM do parceiro"
-              valor={cert.novo_para_setter == null ? "—" : cert.novo_para_setter ? "Novo (não estava)" : "Já constava"}
+              valor={cert.novo_para_setter == null ? "Não verificado" : cert.novo_para_setter ? "Novo (não estava)" : "Já constava"}
               destaque={cert.novo_para_setter === true}
             />
           </dl>

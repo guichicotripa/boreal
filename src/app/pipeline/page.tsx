@@ -1331,7 +1331,7 @@ function ProvenienciaBlock({ o }: { o: Oportunidade }) {
         <p className="font-data text-[10px] uppercase tracking-wider text-bone">Selo de proveniência</p>
         <p className="font-data text-[10px] text-bone/50">
           {selado
-            ? `selado${novo == null ? "" : novo ? " · novo pro CRM do parceiro" : " · já constava no CRM"}`
+            ? `selado${novo == null ? " · CRM não verificado" : novo ? " · novo pro CRM do parceiro" : " · já constava no CRM"}`
             : "prova de origem — carimba antes de entregar à boutique"}
         </p>
       </div>
