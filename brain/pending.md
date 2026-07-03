@@ -13,9 +13,10 @@
 - [x] Feature saída-do-Simples validada (adiciona sinal além do porte).
 
 **Falta pra ATIVAR o que já está em código:**
-- [ ] **Aplicar `migration 0005`** no Supabase (cria `crm_incumbente` + colunas de selo). Sem isso a API de proveniência dá erro.
-- [ ] **Plugar o botão "selar proveniência"** na ação de entrega do pipeline (hoje só via POST /api/proveniencia).
-- [ ] **Importar a lista de CRM incumbente da Setter** em `crm_incumbente` (pra o "novo pro CRM deles" funcionar).
+- [x] **Aplicar `migration 0005`** no Supabase (Guilherme aplicou 03/07).
+- [x] **Gate ativado** — senhas setadas na Vercel (03/07). Local segue aberto (sem env no `.env.local`).
+- [x] **Botão "emitir selo" plugado no pipeline** + testado ponta a ponta no banco real (selar → certificado assinado).
+- [ ] **Importar a lista de CRM incumbente da Setter** em `crm_incumbente` (hoje vazia → tudo marca "novo"). Depende do dado deles.
 
 **Próximas fases da revisão (maiores, precisam de decisão/dado):**
 - [ ] **Fechar o loop de outcome (2a):** realimentar o `resultado` (deal_fechado/perdido) no score. Precisa de dado do piloto.
