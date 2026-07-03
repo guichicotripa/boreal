@@ -1018,6 +1018,7 @@ function Row({
             rows={2}
             className="w-full resize-none rounded border border-hairline bg-surface px-1.5 py-1 text-[12px] text-floral outline-none placeholder:text-bone/45 focus:border-hairline-hover"
           />
+          <ProvenienciaBlock o={o} />
           {context === "agenda" && <LogAtividade oportunidadeId={o.id} />}
         </div>
       )}
@@ -1291,6 +1292,67 @@ function Dashboard({
         )}
       </div>
     </section>
+  );
+}
+
+// ── ProvenienciaBlock ─────────────────────────────────────────────────────────
+// Emite/mostra o selo de proveniência — a prova de origem que destrava o success fee.
+// Selar no momento da entrega carimba origem + data + score + "novo pro CRM do parceiro".
+
+function ProvenienciaBlock({ o }: { o: Oportunidade }) {
+  const [selado, setSelado] = useState(!!o.selado_em);
+  const [novo, setNovo] = useState<boolean | null>(o.novo_para_setter ?? null);
+  const [selando, setSelando] = useState(false);
+
+  async function selar() {
+    if (selando) return;
+    setSelando(true);
+    try {
+      const r = await fetch("/api/proveniencia", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: o.id }),
+      });
+      const d = await r.json();
+      if (r.ok && d.certificado) {
+        setSelado(true);
+        setNovo(d.certificado.novo_para_setter ?? null);
+      }
+    } catch {
+      /* falha silenciosa — o botão volta ao estado idle */
+    } finally {
+      setSelando(false);
+    }
+  }
+
+  return (
+    <div className="mt-2 flex items-center justify-between gap-3 rounded border border-hairline px-2.5 py-2">
+      <div className="min-w-0">
+        <p className="font-data text-[10px] uppercase tracking-wider text-bone">Selo de proveniência</p>
+        <p className="font-data text-[10px] text-bone/50">
+          {selado
+            ? `selado${novo == null ? "" : novo ? " · novo pro CRM do parceiro" : " · já constava no CRM"}`
+            : "prova de origem — carimba antes de entregar à boutique"}
+        </p>
+      </div>
+      {selado ? (
+        <Link
+          href={`/proveniencia/${o.id}`}
+          target="_blank"
+          className="shrink-0 rounded border border-hairline px-2 py-1 font-data text-[10px] uppercase tracking-wider text-floral transition-colors hover:border-hairline-hover"
+        >
+          Ver certificado
+        </Link>
+      ) : (
+        <button
+          onClick={selar}
+          disabled={selando}
+          className="shrink-0 rounded border border-hairline px-2 py-1 font-data text-[10px] uppercase tracking-wider text-bone transition-colors hover:border-hairline-hover hover:text-floral disabled:opacity-40"
+        >
+          {selando ? "Selando…" : "Emitir selo"}
+        </button>
+      )}
+    </div>
   );
 }
 

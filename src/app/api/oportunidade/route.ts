@@ -17,6 +17,7 @@ export async function GET() {
     .from("oportunidade")
     .select(
       `id, estagio, resultado, notas, dono, proxima_acao, proxima_acao_em, score_no_save, created_at,
+       origem, selado_em, proveniencia_hash, novo_para_setter,
        empresa:empresa_id (
          id, cnpj, razao_social, nome_fantasia, cnae_principal_desc,
          municipio, uf, capital_social, porte, telefone, email,
