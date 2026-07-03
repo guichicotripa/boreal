@@ -20,7 +20,7 @@
 
 **Próximas fases da revisão (maiores, precisam de decisão/dado):**
 - [ ] **Fechar o loop de outcome (2a):** realimentar o `resultado` (deal_fechado/perdido) no score. Precisa de dado do piloto.
-- [ ] **Integrar a feature Simples no score (2b):** ingest do campo em `empresa` + recalibrar peso (decil hold-out) + 5ª dimensão em `scoring.ts` (com teste). NÃO adicionar com peso chutado.
+- [x] ~~**Integrar a feature Simples no score (2b)**~~ — **DESCARTADO (03/07):** prevê aquisição mas não sucessão (é sinal de crescimento, off-thesis) + cobertura baixa no mid-market. Parqueada. Ver decisions.md.
 - [ ] **Sensor forward vivo (2c):** transição societária das empresas salvas vira sinal no pipeline (o `monitor-transicoes.mjs` já minera).
 - [ ] **Decisão de produto:** estimativa de tamanho no memo (incorporar com metodologia vs manter abstenção). Depende do Guilherme.
 - [ ] **Créditos da API** (billing, Guilherme) — trava research/dossiê ao vivo fora do cache.

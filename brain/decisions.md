@@ -18,10 +18,14 @@ gente prova que o lead foi nosso".
   prova assinada de origem/data/score/"novo pro CRM deles". Destrava o success fee. **Falta aplicar a
   0005 no banco + plugar o botão "selar" na entrega.**
 - **Teste do score** (`scoring.test.ts`, runner nativo do Node): trava o IP antes de evoluir.
-- **Feature saída-do-Simples VALIDADA** (`valida-simples-porte.mjs`): adiciona sinal DENTRO de cada banda
-  de porte (lift 1,8-4,6x), não é redundante com porte. **Decisão: entra no score, MAS só depois de
-  recalibrar o peso (decil hold-out) + ingest do campo em `empresa`.** Não meio-plugar (leria campo
-  inexistente e miscalibraria).
+- **Feature saída-do-Simples: VALIDADA como preditiva, mas PARQUEADA (revisão 03/07).** O
+  `valida-simples-porte.mjs` mostrou lift 1,8-4,6x dentro de cada banda de porte. MAS "prevê aquisição"
+  ≠ "mede risco sucessório": sair do Simples = a empresa CRESCEU (estourou o teto de R$4,8M), sinal de
+  crescimento, quase o oposto do perfil sucessório (dono desengajado/sem herdeiro). Enfiar no score de
+  sucessão borra o que diferencia o Boreal da Grata. Cobertura ainda é baixa no alvo (só ~12% das
+  adquiridas DEMAIS saíram do Simples; mid-market costuma ser Lucro Real). **Decisão: NÃO entra no score
+  de sucessão.** Se um dia servir, é na lente de consolidação ou como qualificador de porte ao lado do
+  score, nunca misturado. (Correção da 1ª leitura, que dizia "entra após recalibrar".)
 - **Polish:** README real, comentário defasado da ponte de empresa, "1 Issue" do dev = não reproduz.
 
 **Não feito (precisa de decisão/infra):** fechar o loop de outcome (2a, precisa de dado do piloto),
