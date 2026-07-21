@@ -444,7 +444,7 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
           </div>
           <Link
             href="/"
-            className="group flex items-center gap-2 rounded-sm font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+            className="group flex items-center gap-2 rounded-sm text-[12px] font-medium text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
           >
             <span className="transition-transform duration-200 group-hover:-translate-x-1">←</span>
             <span>Voltar à busca</span>
@@ -463,7 +463,7 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
             </p>
             <Link
               href="/"
-              className="mt-5 inline-block rounded-lg bg-floral px-4 py-2.5 font-data text-[11px] uppercase tracking-wider text-smoky transition-colors hover:bg-floral/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-floral/50"
+              className="mt-5 inline-block rounded-lg bg-floral px-4 py-2.5 text-[13px] font-medium text-smoky transition-colors hover:bg-floral/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-floral/50"
             >
               Ir pro Radar
             </Link>
@@ -550,7 +550,7 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
               <button
                 onClick={() => setSoAtrasadas((v) => !v)}
                 aria-pressed={soAtrasadas}
-                className={`rounded border px-2 py-1.5 font-data text-[11px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
+                className={`rounded border px-2 py-1.5 text-[11.5px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
                   soAtrasadas
                     ? "border-risk-high/50 text-risk-high"
                     : "border-hairline text-bone hover:text-floral"
@@ -561,7 +561,7 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
               {filtroAtivo && (
                 <button
                   onClick={() => { setBusca(""); setFiltroDono("todos"); setSoAtrasadas(false); }}
-                  className="rounded-sm font-data text-[11px] uppercase tracking-wider text-bone/60 transition-colors hover:text-bone focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+                  className="rounded-sm text-[11.5px] font-medium text-bone/60 transition-colors hover:text-bone focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
                 >
                   limpar
                 </button>
@@ -620,10 +620,10 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
       {/* Toast de feedback */}
       {toast && (
         <div className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-4 rounded-lg border border-hairline bg-overlay px-4 py-2.5 shadow-lg shadow-black/40">
-          <span className="whitespace-nowrap font-data text-[11px] text-bone">{toast}</span>
+          <span className="whitespace-nowrap text-[12px] text-bone">{toast}</span>
           <button
             onClick={performUndo}
-            className="shrink-0 font-data text-[10px] uppercase tracking-wider text-bone/60 transition-colors hover:text-floral focus-visible:outline-none"
+            className="shrink-0 text-[11px] font-medium text-bone/60 transition-colors hover:text-floral focus-visible:outline-none"
           >
             Desfazer
           </button>
@@ -653,7 +653,7 @@ function TabButton({
       role="tab"
       aria-selected={active}
       onClick={onClick}
-      className={`mr-2 flex shrink-0 items-center gap-1.5 border-b-2 pl-1.5 pr-0 pb-2.5 pt-1 font-data text-[11px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
+      className={`mr-2 flex shrink-0 items-center gap-1.5 border-b-2 pl-1.5 pr-0 pb-2.5 pt-1 text-[12.5px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
         active ? "border-floral text-floral" : "border-transparent text-bone hover:text-floral"
       }`}
     >
@@ -691,7 +691,7 @@ function ColHeader({
 }) {
   return (
     <div
-      className="mb-0.5 grid items-center gap-x-4 border-x border-x-transparent border-b border-b-hairline/40 px-3 pb-1.5 font-data text-[10px] uppercase tracking-wider text-bone/60"
+      className="mb-0.5 grid items-center gap-x-4 border-x border-x-transparent border-b border-b-hairline/40 px-3 pb-1.5 text-[11px] font-medium text-bone/50"
       style={{ gridTemplateColumns: COL }}
     >
       {/* grip placeholder */}
@@ -922,7 +922,7 @@ function Row({
             </Link>
             {o.selado_em && (
               <span
-                className={`shrink-0 rounded border px-1 font-data text-[9px] uppercase tracking-wide ${
+                className={`shrink-0 rounded border px-1 text-[10px] font-medium ${
                   o.novo_para_setter === true
                     ? "border-floral/40 text-floral"
                     : "border-hairline text-bone/60"
@@ -939,12 +939,12 @@ function Row({
               </span>
             )}
           </span>
-          <p className="truncate font-data text-[10px] text-bone/60">
+          <p className="truncate text-[11px] text-bone/60">
             {o.empresa.municipio}/{o.empresa.uf}
             {o.empresa.cnae_principal_desc ? ` · ${o.empresa.cnae_principal_desc}` : ""}
           </p>
           {socio && (
-            <p className="truncate font-data text-[10px] text-bone/60">{socio.nome}</p>
+            <p className="truncate text-[11px] text-bone/60">{socio.nome}</p>
           )}
         </div>
 
@@ -1006,7 +1006,7 @@ function Row({
             </a>
           ) : null}
           {!o.empresa.telefone && !o.empresa.email && (
-            <span className="font-data text-[11px] text-bone/60">sem contato</span>
+            <span className="text-[11px] text-bone/60">sem contato</span>
           )}
           {/* Indicador de último contato */}
           <p className={`font-data text-[10px] ${toqueAtrasado ? "text-risk-mid" : "text-bone/60"}`}>
@@ -1019,7 +1019,7 @@ function Row({
         {/* Col 6: Nota indicator */}
         <button
           onClick={(e) => { e.stopPropagation(); setExpanded((v) => !v); }}
-          className={`justify-self-start flex items-center gap-1.5 rounded border px-2 py-1 font-data text-[10px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
+          className={`justify-self-start flex items-center gap-1.5 rounded border px-2 py-1 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
             hasNota
               ? "border-hairline text-bone hover:border-hairline-hover hover:text-floral"
               : "border-hairline/60 text-bone/60 hover:border-hairline hover:text-bone"
@@ -1045,7 +1045,7 @@ function Row({
       {expanded && (
         <div className="border-t border-hairline px-3 pb-3 pt-2">
           {mudanca && (
-            <p className="mb-2 font-data text-[10px] uppercase tracking-wider text-risk-high">
+            <p className="mb-2 text-[11px] font-medium text-risk-high">
               ⚠ Mudança societária: {mudanca.descricao}
             </p>
           )}
@@ -1132,7 +1132,7 @@ function EstagioChip({
       value={o.estagio}
       onValueChange={(v) => onPatch(o.id, { estagio: v as EstagioOportunidade })}
     >
-      <SelectTrigger className="relative h-auto w-fit max-w-full justify-start border-0 bg-transparent pl-2.5 pr-5 py-0.5 font-data text-[10px] uppercase tracking-wider text-bone/60 transition-colors hover:text-bone focus:ring-0 focus-visible:ring-1 focus-visible:ring-floral/50 [&>svg]:absolute [&>svg]:right-1 [&>svg]:top-1/2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:-translate-y-1/2 [&>svg]:opacity-40">
+      <SelectTrigger className="relative h-auto w-fit max-w-full justify-start border-0 bg-transparent pl-2.5 pr-5 py-0.5 text-[11px] text-bone/60 transition-colors hover:text-bone focus:ring-0 focus-visible:ring-1 focus-visible:ring-floral/50 [&>svg]:absolute [&>svg]:right-1 [&>svg]:top-1/2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:-translate-y-1/2 [&>svg]:opacity-40">
         <SelectValue className="flex-none text-left">
           {ESTAGIOS.find((s) => s.id === o.estagio)?.label ?? o.estagio}
         </SelectValue>
@@ -1174,7 +1174,7 @@ function ResultadoChip({
       onValueChange={(v) => onPatch(o.id, { resultado: v as ResultadoOportunidade })}
     >
       <SelectTrigger
-        className={`relative h-auto w-fit max-w-full justify-start border-0 bg-transparent pl-2.5 pr-5 py-0.5 font-data text-[10px] uppercase tracking-wider transition-colors hover:text-bone focus:ring-0 focus-visible:ring-1 focus-visible:ring-floral/50 [&>svg]:absolute [&>svg]:right-1 [&>svg]:top-1/2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:-translate-y-1/2 [&>svg]:opacity-40 ${colorClass}`}
+        className={`relative h-auto w-fit max-w-full justify-start border-0 bg-transparent pl-2.5 pr-5 py-0.5 text-[11px] font-medium transition-colors hover:text-bone focus:ring-0 focus-visible:ring-1 focus-visible:ring-floral/50 [&>svg]:absolute [&>svg]:right-1 [&>svg]:top-1/2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:-translate-y-1/2 [&>svg]:opacity-40 ${colorClass}`}
       >
         <SelectValue className="flex-none text-left">
           {RESULTADOS.find((r) => r.id === o.resultado)?.label ?? o.resultado}
@@ -1213,7 +1213,7 @@ function Stat({ n, label }: { n: number | string; label: string }) {
   return (
     <div>
       <p className="font-display text-2xl tabular-nums text-floral">{n}</p>
-      <p className="font-data text-[10px] uppercase tracking-wider text-bone/60">{label}</p>
+      <p className="text-[11px] text-bone/60">{label}</p>
     </div>
   );
 }
@@ -1263,10 +1263,10 @@ function Dashboard({
         aria-label="Expandir estatísticas"
       >
         <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1 pointer-events-none">
-          <span className="font-data text-[10px] uppercase tracking-wider text-bone/60">
+          <span className="text-[11px] font-medium text-bone/60">
             Estatísticas
           </span>
-          <span className="font-data text-[11px] tabular-nums text-bone">
+          <span className="text-[11.5px] tabular-nums text-bone">
             {ops.length} no funil
             {deals > 0 ? ` · ${deals} deal${deals > 1 ? "s" : ""}` : ""}
             {hitReal != null ? ` · ${hitReal}% hit rate` : ""}
@@ -1304,7 +1304,7 @@ function Dashboard({
 
       {/* O loop: previsto x realizado */}
       <div className="mt-5 border-t border-hairline pt-4">
-        <p className="font-data text-[10px] uppercase tracking-wider text-bone/60">
+        <p className="text-[11px] font-medium text-bone/60">
           Loop de outcome · score previsto × desfecho real
         </p>
         {scorePos != null || scoreNeg != null ? (
@@ -1369,8 +1369,8 @@ function ProvenienciaBlock({ o }: { o: Oportunidade }) {
   return (
     <div className="mt-2 flex items-center justify-between gap-3 rounded border border-hairline px-2.5 py-2">
       <div className="min-w-0">
-        <p className="font-data text-[10px] uppercase tracking-wider text-bone">Selo de proveniência</p>
-        <p className="font-data text-[10px] text-bone/50">
+        <p className="text-[11px] font-medium text-bone">Selo de proveniência</p>
+        <p className="text-[11px] text-bone/50">
           {selado
             ? `selado${novo == null ? " · CRM não verificado" : novo ? " · novo pro CRM do parceiro" : " · já constava no CRM"}`
             : "prova de origem — carimba antes de entregar à boutique"}
@@ -1380,7 +1380,7 @@ function ProvenienciaBlock({ o }: { o: Oportunidade }) {
         <Link
           href={`/proveniencia/${o.id}`}
           target="_blank"
-          className="shrink-0 rounded border border-hairline px-2 py-1 font-data text-[10px] uppercase tracking-wider text-floral transition-colors hover:border-hairline-hover"
+          className="shrink-0 rounded border border-hairline px-2 py-1 text-[11px] font-medium text-floral transition-colors hover:border-hairline-hover"
         >
           Ver certificado
         </Link>
@@ -1388,7 +1388,7 @@ function ProvenienciaBlock({ o }: { o: Oportunidade }) {
         <button
           onClick={selar}
           disabled={selando}
-          className="shrink-0 rounded border border-hairline px-2 py-1 font-data text-[10px] uppercase tracking-wider text-bone transition-colors hover:border-hairline-hover hover:text-floral disabled:opacity-40"
+          className="shrink-0 rounded border border-hairline px-2 py-1 text-[11px] font-medium text-bone transition-colors hover:border-hairline-hover hover:text-floral disabled:opacity-40"
         >
           {selando ? "Selando…" : "Emitir selo"}
         </button>
@@ -1438,16 +1438,16 @@ function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
     <div className="mt-2 rounded border border-hairline px-2.5 py-2">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="font-data text-[10px] uppercase tracking-wider text-bone">
+          <span className="text-[11px] font-medium text-bone">
             {total > 0 ? `Contatos · ${total}` : "Contatos"}
           </span>
-          <span className="font-data text-[10px] text-bone/45">
+          <span className="text-[11px] text-bone/45">
             ligações, emails, reuniões…
           </span>
         </div>
         <button
           onClick={toggle}
-          className="flex h-5 items-center gap-1 rounded border border-hairline px-1.5 font-data text-[10px] text-bone transition-colors hover:border-hairline-hover hover:text-floral focus-visible:outline-none"
+          className="flex h-5 items-center gap-1 rounded border border-hairline px-1.5 text-[11px] text-bone transition-colors hover:border-hairline-hover hover:text-floral focus-visible:outline-none"
         >
           <span>{aberto ? "−" : "+"}</span>
           {!aberto && <span className="text-bone/60">registrar</span>}
@@ -1482,7 +1482,7 @@ function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
             />
             <button
               onClick={adicionar}
-              className="shrink-0 rounded border border-hairline px-2 font-data text-[11px] text-floral transition-colors hover:border-hairline-hover"
+              className="shrink-0 rounded border border-hairline px-2 text-[11px] font-medium text-floral transition-colors hover:border-hairline-hover"
             >
               +
             </button>
@@ -1493,7 +1493,7 @@ function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
               {itens.map((it) => (
                 <li key={it.id} className="text-[11px] leading-snug">
                   <span className="font-data text-bone/60">{dataCurta(it.criado_em)}</span>{" "}
-                  <span className="font-data uppercase tracking-wide text-bone/60">
+                  <span className="font-medium text-bone/60">
                     {TIPOS_INTERACAO.find((t) => t.id === it.tipo)?.label ?? it.tipo}
                   </span>
                   <span className="text-bone"> — {it.descricao}</span>

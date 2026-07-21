@@ -45,7 +45,7 @@ export function SalvarButton({
       <button
         onClick={salvar}
         disabled={estado !== "idle"}
-        className={`shrink-0 rounded-md px-3.5 py-2 font-data text-[11px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
+        className={`shrink-0 rounded-md px-3.5 py-2 text-[12.5px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
           estado === "salvo"
             ? "border border-hairline text-floral"
             : "bg-floral text-smoky hover:bg-floral/90 disabled:opacity-60"

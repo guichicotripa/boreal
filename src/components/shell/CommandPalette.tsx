@@ -130,9 +130,7 @@ export function CommandPalette({
                 >
                   <span className="text-[13px]">{item.label}</span>
                   <span className="flex items-center gap-2">
-                    <span className="font-data text-[10px] uppercase tracking-wider text-bone/40">
-                      {item.grupo}
-                    </span>
+                    <span className="text-[11px] text-bone/40">{item.grupo}</span>
                     {idx === ativo && (
                       <CornerDownLeft aria-hidden="true" className="h-3 w-3 text-bone/40" />
                     )}

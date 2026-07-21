@@ -20,6 +20,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { NavLogo } from "@/components/brand/NavLogo";
+import { Mark } from "@/components/brand/Mark";
 import { CommandPalette } from "./CommandPalette";
 
 /* ── Estrutura de navegação do workbench ─────────────────────────────────
@@ -149,7 +150,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <div className={`flex h-14 items-center border-b border-hairline ${colapsada ? "justify-center" : "px-4"}`}>
           {colapsada ? (
             <Link href="/" aria-label="Ir para o Radar" className="transition-opacity hover:opacity-70">
-              <span className="font-data text-sm font-medium text-floral">B</span>
+              <Mark className="h-5 w-5 text-floral" />
             </Link>
           ) : (
             <NavLogo />
@@ -167,7 +168,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                       type="button"
                       onClick={() => setProvaAberta((a) => !a)}
                       aria-expanded={provaAberta}
-                      className="mb-1 flex w-full items-center justify-between rounded px-2.5 font-data text-[10px] uppercase tracking-[0.18em] text-bone/50 transition-colors hover:text-bone/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+                      className="mb-1 flex w-full items-center justify-between rounded px-2.5 text-[11px] font-medium text-bone/50 transition-colors hover:text-bone/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
                     >
                       {grupo.label}
                       <ChevronDown
@@ -176,7 +177,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                       />
                     </button>
                   ) : (
-                    <p className="mb-1 px-2.5 font-data text-[10px] uppercase tracking-[0.18em] text-bone/50">
+                    <p className="mb-1 px-2.5 text-[11px] font-medium text-bone/50">
                       {grupo.label}
                     </p>
                   ))}
@@ -220,7 +221,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <span className="md:hidden">
               <NavLogo />
             </span>
-            <span className="hidden font-data text-[11px] uppercase tracking-[0.18em] text-bone/70 md:inline">
+            <span className="hidden text-[13px] font-medium text-bone md:inline">
               {tituloDaRota(pathname)}
             </span>
           </div>
@@ -228,11 +229,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <button
             type="button"
             onClick={() => setPaletteAberta(true)}
-            className="flex items-center gap-2 rounded-md border border-hairline px-2.5 py-1.5 font-data text-[11px] text-bone/70 transition-colors hover:border-hairline-hover hover:text-bone focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+            className="flex items-center gap-2 rounded-md border border-hairline px-2.5 py-1.5 text-[12px] text-bone/70 transition-colors hover:border-hairline-hover hover:text-bone focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
             aria-label="Abrir paleta de comandos"
           >
             <span className="hidden sm:inline">Ir para…</span>
-            <kbd className="rounded border border-hairline bg-surface px-1 py-0.5 text-[10px] text-bone">
+            <kbd className="rounded border border-hairline bg-surface px-1 py-0.5 font-data text-[10px] text-bone">
               Ctrl K
             </kbd>
           </button>
@@ -266,7 +267,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <nav className="flex-1 space-y-5 overflow-y-auto px-2 py-4">
               {NAV_GRUPOS.map((grupo) => (
                 <div key={grupo.label}>
-                  <p className="mb-1 px-2.5 font-data text-[10px] uppercase tracking-[0.18em] text-bone/50">
+                  <p className="mb-1 px-2.5 text-[11px] font-medium text-bone/50">
                     {grupo.label}
                   </p>
                   <div className="space-y-0.5">{linksDoGrupo(grupo, false, () => setDrawerAberto(false))}</div>

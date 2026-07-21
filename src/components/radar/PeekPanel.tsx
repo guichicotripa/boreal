@@ -76,7 +76,7 @@ export function PeekPanel({
             {formatCnpj(e.cnpj)} · {e.municipio}/{e.uf}
           </p>
           {delta != null && (
-            <p className="mt-0.5 font-data text-[10px] text-bone/60">
+            <p className="mt-0.5 text-[11px] text-bone/60">
               investigada com IA: {delta > 0 ? `↑${delta}` : delta < 0 ? `↓${Math.abs(delta)}` : "sem ajuste"}
             </p>
           )}
@@ -101,13 +101,11 @@ export function PeekPanel({
         {e.score?.breakdown && (
           <section>
             <div className="mb-2 flex items-center justify-between">
-              <h3 className="font-data text-[10px] uppercase tracking-[0.14em] text-bone/50">
+              <h3 className="text-[11px] font-medium text-bone/50">
                 Composição do score
               </h3>
               {e.score.perfil_sucessorio && (
-                <span className="font-data text-[10px] uppercase tracking-wider text-floral">
-                  ● perfil sucessório
-                </span>
+                <span className="text-[11px] font-medium text-floral">● Perfil sucessório</span>
               )}
             </div>
             <ul className="space-y-1.5">
@@ -132,7 +130,7 @@ export function PeekPanel({
         {/* Sinais */}
         {e.score?.sinais && e.score.sinais.length > 0 && (
           <section>
-            <h3 className="mb-2 font-data text-[10px] uppercase tracking-[0.14em] text-bone/50">
+            <h3 className="mb-2 text-[11px] font-medium text-bone/50">
               Sinais
             </h3>
             <ul className="space-y-1">
@@ -147,7 +145,7 @@ export function PeekPanel({
 
         {/* Dados */}
         <section>
-          <h3 className="mb-2 font-data text-[10px] uppercase tracking-[0.14em] text-bone/50">Dados</h3>
+          <h3 className="mb-2 text-[11px] font-medium text-bone/50">Dados</h3>
           <dl className="grid grid-cols-2 gap-x-4 gap-y-2">
             {[
               ["Porte", e.porte ?? "—"],
@@ -156,8 +154,8 @@ export function PeekPanel({
               ["Natureza", e.natureza_juridica ?? "—"],
             ].map(([k, v]) => (
               <div key={k}>
-                <dt className="font-data text-[9px] uppercase tracking-wider text-bone/50">{k}</dt>
-                <dd className="mt-0.5 font-data text-[12.5px] tabular-nums text-bone">{v}</dd>
+                <dt className="text-[10.5px] font-medium text-bone/50">{k}</dt>
+                <dd className="mt-0.5 text-[12.5px] tabular-nums text-bone">{v}</dd>
               </div>
             ))}
           </dl>
@@ -169,7 +167,7 @@ export function PeekPanel({
         {/* Sócios */}
         {socios.length > 0 && (
           <section>
-            <h3 className="mb-2 font-data text-[10px] uppercase tracking-[0.14em] text-bone/50">
+            <h3 className="mb-2 text-[11px] font-medium text-bone/50">
               Sócios ({socios.length})
             </h3>
             <ul className="space-y-1.5">
@@ -182,7 +180,7 @@ export function PeekPanel({
                 </li>
               ))}
               {socios.length > 6 && (
-                <li className="font-data text-[10.5px] text-bone/50">+{socios.length - 6} na página completa</li>
+                <li className="text-[11px] text-bone/50">+{socios.length - 6} na página completa</li>
               )}
             </ul>
           </section>
@@ -191,7 +189,7 @@ export function PeekPanel({
         {/* Contato */}
         {(e.telefone || e.email) && (
           <section>
-            <h3 className="mb-2 font-data text-[10px] uppercase tracking-[0.14em] text-bone/50">
+            <h3 className="mb-2 text-[11px] font-medium text-bone/50">
               Contato
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -227,7 +225,7 @@ export function PeekPanel({
             storeEmpresa(e);
             storeOrigin("busca");
           }}
-          className="inline-flex items-center gap-1.5 rounded-md border border-hairline px-3.5 py-2 font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:border-hairline-hover hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+          className="inline-flex items-center gap-1.5 rounded-md border border-hairline px-3.5 py-2 text-[12.5px] font-medium text-bone transition-colors hover:border-hairline-hover hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
         >
           Abrir empresa
           <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.75} />

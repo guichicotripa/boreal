@@ -131,7 +131,7 @@ export default function Radar() {
             O hero editorial de pitch mora na seção Prova (/validacao). */}
         <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
           <div>
-            <p className="mb-2 font-data text-[10px] uppercase tracking-[0.18em] text-bone/70">Setor</p>
+            <p className="mb-2 text-[11px] font-medium text-bone/50">Setor</p>
             <div className="inline-flex flex-wrap gap-1 rounded-lg border border-hairline p-1">
               {SETORES.map((s) => {
                 const ativo = (setorAtivo ?? "metalmec") === s.id;
@@ -141,7 +141,7 @@ export default function Radar() {
                     type="button"
                     onClick={() => trocarSetor(s.id)}
                     aria-pressed={ativo}
-                    className={`rounded-md px-3 py-1.5 font-data text-[11px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
+                    className={`rounded-md px-3 py-1.5 text-[12.5px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
                       ativo ? "bg-surface-hover text-floral" : "text-bone/70 hover:text-bone"
                     }`}
                   >
@@ -171,7 +171,7 @@ export default function Radar() {
           }}
           className="mt-6"
         >
-          <p className="mb-2 font-data text-[10px] uppercase tracking-[0.18em] text-bone/70">
+          <p className="mb-2 text-[11px] font-medium text-bone/50">
             Descreva uma tese em linguagem livre
           </p>
           <div className="flex items-center gap-3">
@@ -187,7 +187,7 @@ export default function Radar() {
             <button
               type="submit"
               disabled={loading}
-              className="shrink-0 rounded-lg bg-floral px-4 py-2.5 font-data text-[11px] uppercase tracking-wider text-smoky transition-colors hover:bg-floral/90 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-floral/50"
+              className="shrink-0 rounded-lg bg-floral px-4 py-2.5 text-[13px] font-medium text-smoky transition-colors hover:bg-floral/90 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-floral/50"
             >
               {loading ? "Buscando…" : "Buscar tese"}
             </button>
@@ -212,7 +212,7 @@ export default function Radar() {
         </div>
 
         {/* Strip de cobertura — o painel lateral antigo, compactado numa linha */}
-        <p className="mt-4 border-t border-hairline pt-3 font-data text-[10.5px] text-bone/60">
+        <p className="mt-4 border-t border-hairline pt-3 text-[11.5px] text-bone/60">
           <span className="text-bone">{setorCob.nome}</span>
           {" · "}CNAE {setorCob.cnaes.join("/")}
           {" · "}lente {setorCob.lente === "consolidacao" ? "consolidação" : "sucessão"}
@@ -240,13 +240,13 @@ export default function Radar() {
         {/* Erro */}
         {erro && (
           <div className="mt-10 py-10">
-            <p className="font-data text-[10px] uppercase tracking-wider text-olive">Erro na busca</p>
+            <p className="text-[11px] font-medium text-olive">Erro na busca</p>
             <p className="mt-2 text-[15px] leading-relaxed text-bone">
               Não foi possível realizar a busca. Verifique a conexão e tente de novo.
             </p>
             <button
               onClick={() => buscar(texto, setorAtivo ?? undefined)}
-              className="mt-3 inline-flex items-center gap-2 rounded border border-hairline px-3 py-2 font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:border-floral/40 hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+              className="mt-3 inline-flex items-center gap-2 rounded border border-hairline px-3 py-2 text-[12.5px] font-medium text-bone transition-colors hover:border-floral/40 hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
             >
               <span aria-hidden="true">↻</span> Tentar de novo
             </button>
@@ -262,24 +262,24 @@ export default function Radar() {
                   {res.count} empresa{res.count === 1 ? "" : "s"}
                 </span>
                 {res.reasoned && res.reasonedCount && (
-                  <span className="whitespace-nowrap font-data text-xs uppercase tracking-wide text-olive">
+                  <span className="whitespace-nowrap text-[12px] text-olive">
                     · top {res.reasonedCount} analisadas por IA
                   </span>
                 )}
               </span>
               <span className="flex flex-wrap gap-2">
                 {res.filters.cnaePrefixes.map((c) => (
-                  <span key={c} className="rounded bg-surface px-2 py-0.5 font-data text-xs uppercase tracking-wide text-bone">
+                  <span key={c} className="rounded bg-surface px-2 py-0.5 text-[11.5px] text-bone">
                     CNAE {c}
                   </span>
                 ))}
                 {res.filters.minFaixaEtaria != null && (
-                  <span className="rounded bg-surface px-2 py-0.5 font-data text-xs uppercase tracking-wide text-bone">
+                  <span className="rounded bg-surface px-2 py-0.5 text-[11.5px] text-bone">
                     sócios {FAIXA_LABEL[String(res.filters.minFaixaEtaria)]}+
                   </span>
                 )}
                 {res.filters.maxAnoFundacao != null && (
-                  <span className="rounded bg-surface px-2 py-0.5 font-data text-xs uppercase tracking-wide text-bone">
+                  <span className="rounded bg-surface px-2 py-0.5 text-[11.5px] text-bone">
                     até {res.filters.maxAnoFundacao}
                   </span>
                 )}

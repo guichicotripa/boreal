@@ -36,16 +36,20 @@ export function ResultsTable({
   peekId: string | null;
   onPeek: (e: Empresa) => void;
 }) {
+  // overflow-x só quando a tela é estreita: um scroll container mata o
+  // position:sticky do header (ele gruda no container, não na página — era o
+  // bug da 1ª linha coberta). Em xl+ o container fica visible e o header
+  // gruda logo abaixo do topbar (top-14).
   return (
-    <div className="overflow-x-auto rounded-lg border border-hairline">
+    <div className="overflow-x-auto rounded-lg border border-hairline xl:overflow-x-visible">
       <table className="w-full min-w-[820px] border-collapse text-left">
         <thead>
-          <tr className="border-b border-hairline">
+          <tr>
             {["Empresa", "Score", "Perfil", "Porte", "Fundada", "Capital", "Sócio +", ""].map(
               (h, i) => (
                 <th
                   key={i}
-                  className={`sticky top-14 z-10 bg-smoky px-3 py-2 font-data text-[10px] font-normal uppercase tracking-[0.14em] text-bone/50 ${
+                  className={`z-10 bg-smoky px-3 py-2 text-[11px] font-medium text-bone/50 shadow-[inset_0_-1px_0_rgba(255,251,244,0.07)] xl:sticky xl:top-14 ${
                     h === "Capital" ? "text-right" : ""
                   }`}
                 >
@@ -85,7 +89,7 @@ export function ResultsTable({
                   >
                     {e.razao_social}
                   </button>
-                  <p className="truncate font-data text-[10.5px] text-olive">
+                  <p className="truncate text-[11px] text-olive">
                     {e.municipio}/{e.uf}
                     {e.cnae_principal_desc ? ` · ${e.cnae_principal_desc}` : ""}
                   </p>
@@ -112,14 +116,14 @@ export function ResultsTable({
                 {/* Perfil sucessório — onde a lente vale (alta confiança) */}
                 <td className="px-3 py-2">
                   {e.score?.perfil_sucessorio ? (
-                    <span className="whitespace-nowrap font-data text-[10px] uppercase tracking-wider text-floral">
-                      ● sucessório
+                    <span className="whitespace-nowrap text-[11px] font-medium text-floral">
+                      ● Sucessório
                     </span>
                   ) : (
-                    <span className="font-data text-[10px] text-bone/40">—</span>
+                    <span className="text-[11px] text-bone/40">—</span>
                   )}
                 </td>
-                <td className="px-3 py-2 font-data text-[12px] text-bone">{e.porte ?? "—"}</td>
+                <td className="px-3 py-2 text-[12px] text-bone">{e.porte ?? "—"}</td>
                 <td className="whitespace-nowrap px-3 py-2 font-data text-[12px] tabular-nums text-bone">
                   {anoDe(e.data_inicio_atividade)}
                 </td>
@@ -151,7 +155,7 @@ export function ResultsTable({
           })}
         </tbody>
       </table>
-      <div className="border-t border-hairline px-3 py-1.5 font-data text-[10.5px] text-bone/50">
+      <div className="border-t border-hairline px-3 py-1.5 text-[11px] text-bone/50">
         {empresas.length} {empresas.length === 1 ? "empresa" : "empresas"}
       </div>
     </div>
