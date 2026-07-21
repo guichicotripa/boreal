@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import {
   Crosshair,
   Table2,
+  CalendarClock,
   Flame,
   LayoutGrid,
   BadgeCheck,
@@ -35,6 +36,7 @@ export const NAV_GRUPOS: NavGrupo[] = [
     items: [
       { href: "/", label: "Radar", icon: Crosshair },
       { href: "/pipeline", label: "Pipeline", icon: Table2 },
+      { href: "/agenda", label: "Agenda", icon: CalendarClock },
     ],
   },
   {
