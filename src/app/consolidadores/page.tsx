@@ -5,7 +5,7 @@ import backtest from "@/lib/backtest-consolidadores.json";
 import { createAdminClient } from "@/lib/supabase";
 
 export const metadata: Metadata = {
-  title: "Boreal · Consolidadores",
+  title: "Consolidadores",
   description:
     "A outra lente: detectar roll-ups em formação no registro e mapear o buy-box deles (descritivo).",
 };

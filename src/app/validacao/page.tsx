@@ -26,7 +26,7 @@ type Deal = {
 };
 
 export const metadata: Metadata = {
-  title: "Boreal · Validação",
+  title: "Validação",
   description:
     "Como sabemos que o score funciona: validação retroativa sem leakage contra aquisições reais.",
 };
