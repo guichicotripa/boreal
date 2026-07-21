@@ -168,7 +168,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                       type="button"
                       onClick={() => setProvaAberta((a) => !a)}
                       aria-expanded={provaAberta}
-                      className="mb-1 flex w-full items-center justify-between rounded px-2.5 text-[11px] font-medium text-bone/50 transition-colors hover:text-bone/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+                      className="mb-1 flex w-full items-center justify-between rounded px-2.5 text-[11px] font-medium text-bone/60 transition-colors hover:text-bone/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
                     >
                       {grupo.label}
                       <ChevronDown
@@ -177,7 +177,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                       />
                     </button>
                   ) : (
-                    <p className="mb-1 px-2.5 text-[11px] font-medium text-bone/50">
+                    <p className="mb-1 px-2.5 text-[11px] font-medium text-bone/60">
                       {grupo.label}
                     </p>
                   ))}
@@ -267,7 +267,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <nav className="flex-1 space-y-5 overflow-y-auto px-2 py-4">
               {NAV_GRUPOS.map((grupo) => (
                 <div key={grupo.label}>
-                  <p className="mb-1 px-2.5 text-[11px] font-medium text-bone/50">
+                  <p className="mb-1 px-2.5 text-[11px] font-medium text-bone/60">
                     {grupo.label}
                   </p>
                   <div className="space-y-0.5">{linksDoGrupo(grupo, false, () => setDrawerAberto(false))}</div>

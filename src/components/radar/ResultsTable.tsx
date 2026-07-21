@@ -49,7 +49,7 @@ export function ResultsTable({
               (h, i) => (
                 <th
                   key={i}
-                  className={`z-10 bg-smoky px-3 py-2 text-[11px] font-medium text-bone/50 shadow-[inset_0_-1px_0_rgba(255,251,244,0.07)] xl:sticky xl:top-14 ${
+                  className={`z-10 bg-smoky px-3 py-2 text-[11px] font-medium text-bone/60 shadow-[inset_0_-1px_0_rgba(255,251,244,0.07)] xl:sticky xl:top-14 ${
                     h === "Capital" ? "text-right" : ""
                   }`}
                 >
@@ -89,7 +89,7 @@ export function ResultsTable({
                   >
                     {e.razao_social}
                   </button>
-                  <p className="truncate text-[11px] text-olive">
+                  <p className="truncate text-[11px] text-bone/60">
                     {e.municipio}/{e.uf}
                     {e.cnae_principal_desc ? ` · ${e.cnae_principal_desc}` : ""}
                   </p>
@@ -155,8 +155,11 @@ export function ResultsTable({
           })}
         </tbody>
       </table>
-      <div className="border-t border-hairline px-3 py-1.5 text-[11px] text-bone/50">
-        {empresas.length} {empresas.length === 1 ? "empresa" : "empresas"}
+      <div className="flex items-center justify-between border-t border-hairline px-3 py-1.5 text-[11px] text-bone/60">
+        <span>{empresas.length} {empresas.length === 1 ? "empresa" : "empresas"}</span>
+        <span className="hidden font-data text-[10px] md:inline" aria-hidden="true">
+          j/k navega · ⏎ abre
+        </span>
       </div>
     </div>
   );

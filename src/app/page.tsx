@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { SearchResponse, Empresa } from "@/lib/types";
 import { FAIXA_LABEL } from "@/lib/format";
 import { setorPorId, SETORES } from "@/lib/setores";
-import { readScoresConhecidos, type ScoreConhecido } from "@/lib/empresa-store";
+import { readScoresConhecidos, storeEmpresa, storeOrigin, type ScoreConhecido } from "@/lib/empresa-store";
 import { ResultsTable } from "@/components/radar/ResultsTable";
 import { PeekPanel } from "@/components/radar/PeekPanel";
 
@@ -31,6 +32,7 @@ const EXEMPLOS_POR_SETOR: Record<string, string[]> = {
 const EXEMPLOS = EXEMPLOS_POR_SETOR.metalmec;
 
 export default function Radar() {
+  const router = useRouter();
   const [texto, setTexto] = useState("");
   const [loading, setLoading] = useState(false);
   const [res, setRes] = useState<SearchResponse | null>(null);
@@ -117,12 +119,46 @@ export default function Radar() {
   const setorCob = setorPorId(setorAtivo ?? "metalmec") ?? setorPorId("metalmec")!;
 
   // Score efetivo = score_v1 da investigação (se houve) ou o score_v0 da busca.
-  const scoreEfetivo = (e: Empresa) => scoreOverrides[e.id]?.score ?? e.score?.score ?? 0;
-  const empresasOrdenadas = res
-    ? [...res.empresas].sort((a, b) => scoreEfetivo(b) - scoreEfetivo(a))
-    : [];
+  // useMemo: a lista é dependência do efeito de teclado abaixo — sem memo, o
+  // efeito re-assinaria a cada render.
+  const empresasOrdenadas = useMemo(() => {
+    if (!res) return [];
+    const scoreEfetivo = (e: Empresa) => scoreOverrides[e.id]?.score ?? e.score?.score ?? 0;
+    return [...res.empresas].sort((a, b) => scoreEfetivo(b) - scoreEfetivo(a));
+  }, [res, scoreOverrides]);
 
   const peekEmpresa = peekId ? empresasOrdenadas.find((e) => e.id === peekId) ?? null : null;
+
+  // Teclado de triagem (padrão workbench): j/k percorre os resultados abrindo o
+  // peek; Enter abre a página da empresa selecionada. Ignora campos de texto e
+  // a paleta de comandos.
+  useEffect(() => {
+    if (empresasOrdenadas.length === 0) return;
+    function onKey(e: KeyboardEvent) {
+      const alvo = e.target as HTMLElement;
+      if (alvo.closest("input, textarea, select, [role=dialog]")) return;
+      if (e.key === "j" || e.key === "k") {
+        e.preventDefault();
+        const idx = peekId ? empresasOrdenadas.findIndex((x) => x.id === peekId) : -1;
+        const prox = e.key === "j"
+          ? empresasOrdenadas[Math.min(idx + 1, empresasOrdenadas.length - 1)]
+          : empresasOrdenadas[Math.max(idx - 1, 0)];
+        setPeekId(prox.id);
+        // A linha selecionada só existe no DOM após o re-render — agenda o scroll.
+        setTimeout(() => {
+          document.querySelector('tr[aria-selected="true"]')?.scrollIntoView({ block: "nearest" });
+        }, 0);
+      } else if (e.key === "Enter" && peekId) {
+        const emp = empresasOrdenadas.find((x) => x.id === peekId);
+        if (!emp) return;
+        storeEmpresa(emp);
+        storeOrigin("busca");
+        router.push(`/empresa/${emp.id}`);
+      }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [empresasOrdenadas, peekId, router]);
 
   return (
     <div className="min-h-screen bg-smoky text-floral">
@@ -131,7 +167,7 @@ export default function Radar() {
             O hero editorial de pitch mora na seção Prova (/validacao). */}
         <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
           <div>
-            <p className="mb-2 text-[11px] font-medium text-bone/50">Setor</p>
+            <p className="mb-2 text-[11px] font-medium text-bone/60">Setor</p>
             <div className="inline-flex flex-wrap gap-1 rounded-lg border border-hairline p-1">
               {SETORES.map((s) => {
                 const ativo = (setorAtivo ?? "metalmec") === s.id;
@@ -171,7 +207,7 @@ export default function Radar() {
           }}
           className="mt-6"
         >
-          <p className="mb-2 text-[11px] font-medium text-bone/50">
+          <p className="mb-2 text-[11px] font-medium text-bone/60">
             Descreva uma tese em linguagem livre
           </p>
           <div className="flex items-center gap-3">
@@ -240,7 +276,7 @@ export default function Radar() {
         {/* Erro */}
         {erro && (
           <div className="mt-10 py-10">
-            <p className="text-[11px] font-medium text-olive">Erro na busca</p>
+            <p className="text-[11px] font-medium text-bone/60">Erro na busca</p>
             <p className="mt-2 text-[15px] leading-relaxed text-bone">
               Não foi possível realizar a busca. Verifique a conexão e tente de novo.
             </p>

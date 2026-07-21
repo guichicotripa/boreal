@@ -196,7 +196,7 @@ export default function EmpresaPage() {
   if (carregado && !empresa && !empresaLoading) {
     return (
       <main className="mx-auto max-w-3xl px-6 py-20">
-        <p className="text-[11px] font-medium text-olive">Empresa não encontrada</p>
+        <p className="text-[11px] font-medium text-bone/60">Empresa não encontrada</p>
         <h1 className="mt-2 font-display text-2xl text-floral">Não localizamos esta empresa.</h1>
         <p className="mt-3 max-w-md text-[15px] leading-relaxed text-bone">
           O identificador pode estar incorreto ou a empresa não está na base indexada. Volte ao Radar para encontrar empresas-alvo.
@@ -283,7 +283,7 @@ export default function EmpresaPage() {
                   {research.delta > 0 ? `↑${research.delta}` : `↓${Math.abs(research.delta)}`}
                 </span>
               )}
-              <span className="font-data text-[11px] text-olive">/ 100</span>
+              <span className="font-data text-[11px] text-bone/60">/ 100</span>
             </div>
             <p className="mt-2 text-[12px] leading-snug text-bone">
               {perfilSuc
@@ -321,19 +321,19 @@ export default function EmpresaPage() {
 
           {/* Dados da Receita */}
           <section className="rounded-lg border border-hairline p-4">
-            <h2 className="mb-3 text-[11px] font-medium text-bone/50">Dados</h2>
+            <h2 className="mb-3 text-[11px] font-medium text-bone/60">Dados</h2>
             <dl className="space-y-2.5">
               <Campo k="Natureza jurídica" v={e.natureza_juridica} />
               <Campo k="Capital social" v={formatCapitalCompact(e.capital_social)} mono />
               <Campo k="CNAE principal" v={e.cnae_principal} sub={e.cnae_principal_desc} mono />
             </dl>
-            <p className="mt-3 text-[10.5px] text-olive">Dados públicos da Receita Federal.</p>
+            <p className="mt-3 text-[10.5px] text-bone/60">Dados públicos da Receita Federal.</p>
           </section>
 
           {/* Contato */}
           {(e.telefone || e.email) && (
             <section className="rounded-lg border border-hairline p-4">
-              <h2 className="mb-3 text-[11px] font-medium text-bone/50">Contato</h2>
+              <h2 className="mb-3 text-[11px] font-medium text-bone/60">Contato</h2>
               <div className="flex flex-col gap-2">
                 {e.telefone && (
                   <a
@@ -359,7 +359,7 @@ export default function EmpresaPage() {
 
           {/* Sócios — evidência do driver de maior peso do score */}
           <section className="rounded-lg border border-hairline p-4">
-            <h2 className="mb-3 text-[11px] font-medium text-bone/50">
+            <h2 className="mb-3 text-[11px] font-medium text-bone/60">
               Sócios{socios.length > 0 ? ` (${socios.length})` : ""}
             </h2>
             {socios.length > 0 ? (
@@ -438,7 +438,7 @@ export default function EmpresaPage() {
                         <div className="h-3 w-11/12 animate-pulse rounded bg-surface-hover" />
                         <div className="h-3 w-4/5 animate-pulse rounded bg-surface-hover" />
                       </div>
-                      <p className="mt-2 text-[11px] text-olive">
+                      <p className="mt-2 text-[11px] text-bone/60">
                         Descrição enriquecida pela IA · costuma levar de 30 a 60s
                       </p>
                     </div>
@@ -452,7 +452,7 @@ export default function EmpresaPage() {
                 {/* Sinais — evidência do score (IA + estruturais) */}
                 {research?.sinais && research.sinais.length > 0 && (
                   <div>
-                    <h3 className="mb-2 text-[11px] font-medium text-bone/50">Sinais — investigação com IA</h3>
+                    <h3 className="mb-2 text-[11px] font-medium text-bone/60">Sinais — investigação com IA</h3>
                     <div className="space-y-1">
                       {research.sinais.map((s, i) => (
                         <div key={i} className="flex items-start justify-between gap-4 py-1">
@@ -470,7 +470,7 @@ export default function EmpresaPage() {
 
                 {sinaisScore.length > 0 && (
                   <div>
-                    <h3 className="mb-2 text-[11px] font-medium text-bone/50">Sinais estruturais — da Receita</h3>
+                    <h3 className="mb-2 text-[11px] font-medium text-bone/60">Sinais estruturais — da Receita</h3>
                     <ul className="space-y-1.5">
                       {sinaisScore.map((s, i) => (
                         <li key={i} className="flex items-start gap-2 text-[13px] text-bone">
@@ -484,7 +484,7 @@ export default function EmpresaPage() {
 
                 {e.cnaes_secundarios && e.cnaes_secundarios.length > 0 && (
                   <div>
-                    <h3 className="mb-2 text-[11px] font-medium text-bone/50">Atividades secundárias</h3>
+                    <h3 className="mb-2 text-[11px] font-medium text-bone/60">Atividades secundárias</h3>
                     <ul className="space-y-1">
                       {e.cnaes_secundarios.map((c) => (
                         <li key={c.codigo} className="flex items-center gap-2 text-[12px] leading-relaxed text-bone/60">
@@ -499,7 +499,7 @@ export default function EmpresaPage() {
                 {/* Contexto do setor — leitura macro/competitiva antes da abordagem */}
                 {ctx && setor && (
                   <div className="border-t border-hairline pt-6">
-                    <h3 className="mb-1 text-[11px] font-medium text-bone/50">Contexto do setor</h3>
+                    <h3 className="mb-1 text-[11px] font-medium text-bone/60">Contexto do setor</h3>
                     <p className="mb-3 text-[12px] text-bone/60">
                       {setor.nome} · lente {setor.lente === "consolidacao" ? "consolidação" : "sucessão"}
                     </p>
@@ -554,7 +554,7 @@ export default function EmpresaPage() {
                   <Timeline empresa={e} />
                   {traj && traj.eventos.length > 0 && (
                     <div>
-                      <h3 className="mb-2 text-[11px] font-medium text-bone/50">
+                      <h3 className="mb-2 text-[11px] font-medium text-bone/60">
                         Movimentação societária (2022→2025)
                       </h3>
                       <TrajetoriaEventos trajetoria={traj} />
@@ -623,7 +623,7 @@ function Campo({ k, v, sub, mono }: { k: string; v: string | null | undefined; s
   if (!v) return null;
   return (
     <div className="min-w-0">
-      <dt className="text-[10.5px] font-medium text-bone/50">{k}</dt>
+      <dt className="text-[10.5px] font-medium text-bone/60">{k}</dt>
       <dd className={`mt-0.5 text-[12.5px] text-floral ${mono ? "font-data tabular-nums" : ""}`}>
         {v}
         {sub && <span className="block font-sans text-[11px] leading-snug text-bone/70">{sub}</span>}
@@ -649,7 +649,7 @@ function ResearchProgress() {
         <span className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-floral" />
         <span className="text-floral">{RESEARCH_FASES[fase]}</span>
       </p>
-      <p className="mt-1.5 text-[11px] text-olive">
+      <p className="mt-1.5 text-[11px] text-bone/60">
         Pesquisa em fontes públicas · costuma levar de 30 a 60s
       </p>
     </div>

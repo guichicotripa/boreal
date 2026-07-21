@@ -36,7 +36,7 @@ export function ProvenienciaBlock({ o }: { o: Oportunidade }) {
     <div className="mt-2 flex items-center justify-between gap-3 rounded border border-hairline px-2.5 py-2">
       <div className="min-w-0">
         <p className="text-[11px] font-medium text-bone">Selo de proveniência</p>
-        <p className="text-[11px] text-bone/50">
+        <p className="text-[11px] text-bone/60">
           {selado
             ? `selado${novo == null ? " · CRM não verificado" : novo ? " · novo pro CRM do parceiro" : " · já constava no CRM"}`
             : "prova de origem — carimba antes de entregar à boutique"}

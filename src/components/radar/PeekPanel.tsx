@@ -72,7 +72,7 @@ export function PeekPanel({
         </div>
         <div className="min-w-0 flex-1">
           <h2 className="font-display text-[17px] leading-tight text-floral">{e.razao_social}</h2>
-          <p className="mt-0.5 font-data text-[11px] text-olive">
+          <p className="mt-0.5 font-data text-[11px] text-bone/70">
             {formatCnpj(e.cnpj)} · {e.municipio}/{e.uf}
           </p>
           {delta != null && (
@@ -101,7 +101,7 @@ export function PeekPanel({
         {e.score?.breakdown && (
           <section>
             <div className="mb-2 flex items-center justify-between">
-              <h3 className="text-[11px] font-medium text-bone/50">
+              <h3 className="text-[11px] font-medium text-bone/60">
                 Composição do score
               </h3>
               {e.score.perfil_sucessorio && (
@@ -130,7 +130,7 @@ export function PeekPanel({
         {/* Sinais */}
         {e.score?.sinais && e.score.sinais.length > 0 && (
           <section>
-            <h3 className="mb-2 text-[11px] font-medium text-bone/50">
+            <h3 className="mb-2 text-[11px] font-medium text-bone/60">
               Sinais
             </h3>
             <ul className="space-y-1">
@@ -145,7 +145,7 @@ export function PeekPanel({
 
         {/* Dados */}
         <section>
-          <h3 className="mb-2 text-[11px] font-medium text-bone/50">Dados</h3>
+          <h3 className="mb-2 text-[11px] font-medium text-bone/60">Dados</h3>
           <dl className="grid grid-cols-2 gap-x-4 gap-y-2">
             {[
               ["Porte", e.porte ?? "—"],
@@ -154,7 +154,7 @@ export function PeekPanel({
               ["Natureza", e.natureza_juridica ?? "—"],
             ].map(([k, v]) => (
               <div key={k}>
-                <dt className="text-[10.5px] font-medium text-bone/50">{k}</dt>
+                <dt className="text-[10.5px] font-medium text-bone/60">{k}</dt>
                 <dd className="mt-0.5 text-[12.5px] tabular-nums text-bone">{v}</dd>
               </div>
             ))}
@@ -167,20 +167,20 @@ export function PeekPanel({
         {/* Sócios */}
         {socios.length > 0 && (
           <section>
-            <h3 className="mb-2 text-[11px] font-medium text-bone/50">
+            <h3 className="mb-2 text-[11px] font-medium text-bone/60">
               Sócios ({socios.length})
             </h3>
             <ul className="space-y-1.5">
               {socios.slice(0, 6).map((s) => (
                 <li key={s.id} className="flex items-baseline justify-between gap-2">
                   <span className="min-w-0 truncate text-[12.5px] text-bone">{s.nome}</span>
-                  <span className="shrink-0 font-data text-[11px] text-olive">
+                  <span className="shrink-0 font-data text-[11px] text-bone/70">
                     {s.faixa_etaria && FAIXA_LABEL[s.faixa_etaria] ? FAIXA_LABEL[s.faixa_etaria] : "—"}
                   </span>
                 </li>
               ))}
               {socios.length > 6 && (
-                <li className="text-[11px] text-bone/50">+{socios.length - 6} na página completa</li>
+                <li className="text-[11px] text-bone/60">+{socios.length - 6} na página completa</li>
               )}
             </ul>
           </section>
@@ -189,7 +189,7 @@ export function PeekPanel({
         {/* Contato */}
         {(e.telefone || e.email) && (
           <section>
-            <h3 className="mb-2 text-[11px] font-medium text-bone/50">
+            <h3 className="mb-2 text-[11px] font-medium text-bone/60">
               Contato
             </h3>
             <div className="flex flex-wrap gap-2">

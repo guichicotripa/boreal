@@ -23,7 +23,7 @@ export function ColHeader({
 }) {
   return (
     <div
-      className="mb-0.5 grid items-center gap-x-4 border-x border-x-transparent border-b border-b-hairline/40 px-3 pb-1.5 text-[11px] font-medium text-bone/50"
+      className="mb-0.5 grid items-center gap-x-4 border-x border-x-transparent border-b border-b-hairline/40 px-3 pb-1.5 text-[11px] font-medium text-bone/60"
       style={{ gridTemplateColumns: COL }}
     >
       {/* grip placeholder */}

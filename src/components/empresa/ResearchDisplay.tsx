@@ -8,20 +8,20 @@ export function ResearchDisplay({ research }: { research: ResearchResult }) {
   return (
     <div className="space-y-3 rounded-lg border border-hairline bg-surface p-3">
       <div className="flex items-center justify-between">
-        <span className="font-data text-[10px] uppercase tracking-wider text-bone/70">Investigação da IA</span>
-        <span className="font-data text-[10px] text-olive">{PRESENCA_LABEL[research.presenca_digital]}</span>
+        <span className="text-[11px] font-medium text-bone/60">Investigação da IA</span>
+        <span className="text-[10.5px] text-bone/60">{PRESENCA_LABEL[research.presenca_digital]}</span>
       </div>
       {research.resumo && (
         <p className="text-sm leading-relaxed text-floral">{research.resumo}</p>
       )}
       {research.gatilho ? (
         <div className="rounded-md border border-risk-high/30 bg-risk-high/10 p-2.5">
-          <p className="font-data text-[10px] uppercase tracking-wider text-risk-high">Por que agora</p>
+          <p className="text-[11px] font-medium text-risk-high">Por que agora</p>
           <p className="mt-1 text-sm leading-snug text-floral">{research.gatilho}</p>
         </div>
       ) : (
         <div className="rounded-md bg-surface-hover p-2.5">
-          <p className="font-data text-[10px] uppercase tracking-wider text-bone/70">
+          <p className="text-[11px] font-medium text-bone/60">
             Sem gatilho de timing · não é o momento
           </p>
           <p className="mt-1 text-sm leading-snug text-bone">
@@ -58,7 +58,7 @@ export function ResearchDisplay({ research }: { research: ResearchResult }) {
       )}
       {research.mensagem_abordagem && (
         <div className="rounded-md bg-surface-hover p-2.5">
-          <p className="font-data text-[10px] uppercase tracking-wider text-bone/70">
+          <p className="text-[11px] font-medium text-bone/60">
             Rascunho de abordagem · edite antes de enviar
           </p>
           <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-bone">

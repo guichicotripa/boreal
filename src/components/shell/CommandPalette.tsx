@@ -116,7 +116,7 @@ export function CommandPalette({
           />
           <ul role="listbox" aria-label="Destinos" className="max-h-[300px] overflow-y-auto p-1.5">
             {filtrados.length === 0 && (
-              <li className="px-3 py-6 text-center text-[13px] text-bone/50">Nada encontrado.</li>
+              <li className="px-3 py-6 text-center text-[13px] text-bone/60">Nada encontrado.</li>
             )}
             {filtrados.map((item, idx) => (
               <li key={item.id} role="option" aria-selected={idx === ativo}>
@@ -130,7 +130,7 @@ export function CommandPalette({
                 >
                   <span className="text-[13px]">{item.label}</span>
                   <span className="flex items-center gap-2">
-                    <span className="text-[11px] text-bone/40">{item.grupo}</span>
+                    <span className="text-[11px] text-bone/60">{item.grupo}</span>
                     {idx === ativo && (
                       <CornerDownLeft aria-hidden="true" className="h-3 w-3 text-bone/40" />
                     )}

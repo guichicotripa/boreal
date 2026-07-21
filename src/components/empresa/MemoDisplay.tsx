@@ -22,7 +22,7 @@ export function MemoDisplay({
   const dadosFechar = dadosParaFechar(empresa);
   return (
     <div className="space-y-5 rounded-lg border border-hairline bg-surface p-4 text-sm">
-      <span className="font-data text-[10px] uppercase tracking-wider text-bone/70">Dossiê</span>
+      <span className="text-[11px] font-medium text-bone/60">Dossiê</span>
       <p className="leading-relaxed text-floral">{analise.overview}</p>
       <Timeline empresa={empresa} />
 
@@ -30,14 +30,14 @@ export function MemoDisplay({
           saídas e envelhecimento de faixa, reconstruídos comparando snapshots do CNPJ. */}
       {trajetoria && trajetoria.eventos.length > 0 && (
         <div>
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
+          <h4 className="mb-1 text-[11px] font-medium text-bone/60">
             Movimentação societária (2022→2025)
           </h4>
           <TrajetoriaEventos trajetoria={trajetoria} />
         </div>
       )}
       <div>
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
+        <h4 className="mb-1 text-[11px] font-medium text-bone/60">
           Análise de risco sucessório
         </h4>
         <p className="leading-relaxed text-floral">{analise.analise_sucessoria}</p>
@@ -46,7 +46,7 @@ export function MemoDisplay({
       {/* Red flags a investigar — ordenado por severidade, max 5 · como_verificar em linha própria */}
       {analise.red_flags?.length ? (
         <div>
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
+          <h4 className="mb-1 text-[11px] font-medium text-bone/60">
             Red flags a investigar
           </h4>
           <ul className="space-y-2.5">
@@ -66,7 +66,7 @@ export function MemoDisplay({
                 return (
                   <li key={i}>
                     <div>
-                      <span className={`mr-2 rounded border px-1.5 py-0.5 font-data text-[10px] uppercase tracking-wider ${cor}`}>
+                      <span className={`mr-2 rounded border px-1.5 py-0.5 text-[10px] font-medium ${cor}`}>
                         {rf.severidade}
                       </span>
                       <span className="text-floral">{rf.risco}</span>
@@ -85,7 +85,7 @@ export function MemoDisplay({
 
       {analise.perguntas_abordagem.length > 0 && (
         <div>
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
+          <h4 className="mb-1 text-[11px] font-medium text-bone/60">
             Perguntas para o primeiro contato
           </h4>
           <ul className="list-decimal space-y-1 pl-5 text-floral">
@@ -99,7 +99,7 @@ export function MemoDisplay({
       {/* Quant #1 — Precedentes de M&A do setor (minerado do CNPJ, dado real) */}
       {precedentes && (
         <div>
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
+          <h4 className="mb-1 text-[11px] font-medium text-bone/60">
             Precedentes de M&amp;A no setor
           </h4>
           <p className="leading-relaxed text-floral">
@@ -120,13 +120,13 @@ export function MemoDisplay({
               Ex. adquiridas: {precedentes.exemplos.join(" · ")}
             </p>
           )}
-          <p className="mt-1 font-data text-[10px] text-olive">Minerado do CNPJ — transações reais, não estimativa.</p>
+          <p className="mt-1 text-[10.5px] text-bone/60">Minerado do CNPJ — transações reais, não estimativa.</p>
         </div>
       )}
 
       {/* Quant #2 — Cenário de retorno: faixas de referência (frame, não valuation) */}
       <div>
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
+        <h4 className="mb-1 text-[11px] font-medium text-bone/60">
           Cenário de retorno — referência (ilustrativo)
         </h4>
         <div className="grid grid-cols-2 gap-x-4 gap-y-1 font-data text-xs sm:grid-cols-4">
@@ -135,12 +135,12 @@ export function MemoDisplay({
           <div><span className="text-bone/70">Hold</span><br /><span className="text-floral">{cenario.hold}</span></div>
           <div><span className="text-bone/70">Alvo</span><br /><span className="text-floral">{cenario.retorno_alvo}</span></div>
         </div>
-        <p className="mt-1.5 text-[11px] leading-relaxed text-olive">{cenario.nota}</p>
+        <p className="mt-1.5 text-[11px] leading-relaxed text-bone/60">{cenario.nota}</p>
       </div>
 
       {/* Quant #3 — Para fechar o número: o que pedir ao dono (sourcing → IC) */}
       <div>
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
+        <h4 className="mb-1 text-[11px] font-medium text-bone/60">
           Para fechar o número — pedir ao dono
         </h4>
         <ul className="list-disc space-y-1 pl-5 text-[13px] leading-relaxed text-bone">
@@ -152,7 +152,7 @@ export function MemoDisplay({
 
       {/* Tese hairline (recuada, contexto) */}
       <div className="pl-3">
-        <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
+        <h4 className="mb-1 text-[11px] font-medium text-bone/60">
           Tese de aproximação
         </h4>
         <p className="leading-relaxed text-floral">{analise.tese_aproximacao}</p>
@@ -161,7 +161,7 @@ export function MemoDisplay({
       {/* Próximo passo surface-hover (mais destaque, CTA) */}
       {analise.proximo_passo && (
         <div className="rounded-md bg-surface-hover p-3">
-          <h4 className="mb-1 font-data text-[10px] uppercase tracking-wider text-bone/70">
+          <h4 className="mb-1 text-[11px] font-medium text-bone/60">
             Próximo passo
           </h4>
           <p className="leading-relaxed text-floral">→ {analise.proximo_passo}</p>
