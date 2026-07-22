@@ -30,7 +30,7 @@ export function Timeline({ empresa }: { empresa: Empresa }) {
 
   return (
     <div>
-      <h4 className="mb-2 font-data text-[10px] uppercase tracking-wider text-bone/70">
+      <h4 className="mb-2 text-[11px] font-medium text-bone/60">
         Linha do tempo societária
       </h4>
       {/* Altura explícita evita margin collapse (conteúdo é absoluto) */}
@@ -50,7 +50,7 @@ export function Timeline({ empresa }: { empresa: Empresa }) {
                   {ev.label}
                 </span>
                 <span className="mx-auto block h-2 w-2 rounded-full bg-risk-mid" />
-                <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-olive">
+                <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-bone/60">
                   {ev.ano}
                 </span>
               </div>
@@ -64,7 +64,7 @@ export function Timeline({ empresa }: { empresa: Empresa }) {
                   {ev.label}
                 </span>
                 <span className="mx-auto block h-2 w-2 rounded-full bg-risk-mid" />
-                <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-olive">
+                <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-bone/60">
                   {ev.ano}
                 </span>
               </div>
@@ -81,7 +81,7 @@ export function Timeline({ empresa }: { empresa: Empresa }) {
                 {ev.label}
               </span>
               <span className="h-2 w-2 rounded-full bg-risk-mid" />
-              <span className="absolute top-3 font-data text-[10px] tabular-nums text-olive">
+              <span className="absolute top-3 font-data text-[10px] tabular-nums text-bone/60">
                 {ev.ano}
               </span>
             </div>
@@ -90,11 +90,11 @@ export function Timeline({ empresa }: { empresa: Empresa }) {
 
         {/* Marcador "Hoje" — container fixo 28px, tudo centrado */}
         <div className="absolute right-0 -translate-y-1/2" style={{ width: 28 }}>
-          <span className="absolute -top-7 w-full text-center font-data text-[10px] uppercase tracking-wide text-olive">
+          <span className="absolute -top-7 w-full text-center font-data text-[10px] uppercase tracking-wide text-bone/60">
             Hoje
           </span>
           <span className="mx-auto block h-2 w-2 rounded-full border border-hairline-hover bg-transparent" />
-          <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-olive">
+          <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-bone/60">
             {anoAtual}
           </span>
         </div>

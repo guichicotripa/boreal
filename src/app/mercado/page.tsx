@@ -4,7 +4,7 @@ import tam from "@/lib/tam.json";
 import coorte from "@/lib/coorte-destino.json";
 
 export const metadata: Metadata = {
-  title: "Boreal · Mercado",
+  title: "Mercado",
   description: "Muita empresa em estágio de sucessão, quase nenhum negócio — e por quê.",
 };
 

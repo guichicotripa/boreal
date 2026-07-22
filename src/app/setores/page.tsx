@@ -5,7 +5,7 @@ import { contextoSetor } from "@/lib/setor-contexto";
 import { ContextoSetor } from "@/components/ContextoSetor";
 
 export const metadata: Metadata = {
-  title: "Boreal · Setores",
+  title: "Setores",
   description: "Score de sucessão validado por setor. A lente segue o perfil de M&A de cada vertical.",
 };
 

@@ -5,6 +5,57 @@
 
 ---
 
+## [2026-07-20] REESTRUTURAÇÃO: projeto vira BOREAL, Guilherme solo + revisão dos anti-drifts
+
+**Contexto:** Guilherme está solo — Taylor, Juliano e Fabiano saíram (viram contatos; equity
+25/25/25/25 nunca formalizado). O nome do projeto passa a ser Boreal (o "Relay" morre como marca
+de time). Pedido junto: revisar os anti-drifts acumulados — quais são princípio e quais eram
+circunstância da estrutura antiga.
+
+**Cascata da saída do time:**
+- Vertical educação-NE REABERTA (fator decisivo era a distribuição do Taylor). Curto prazo: os
+  setores do contrato Setter mandam; metalmec é a reserva de sinal (97-100% nas vendas de sucessão).
+- Advisory direto (Ano 2 do plano 06/07) ESFRIA — dependia de sênior fechando. Caminho realista:
+  camada de inteligência (retainer + success fee via selo). NewCo whitelabel segue viável a longo
+  prazo (foi desenhada justamente pra suprir licença/credibilidade que o Guilherme não tem).
+- Risco de continuidade ago/2027 (faculdade) vira O MAIOR risco estrutural (mitigador era o Taylor).
+  Mitigação real: o produto precisa rodar com pouca operação humana — alinhado com AI-native.
+- PJ: LTDA unipessoal (sem acordo de sócios). Confirmar TITULARIDADE da minuta Setter (o acordo de
+  cooperação original era Taylor PF).
+
+**REVISÃO DOS ANTI-DRIFTS (o que fica, o que flexibiliza):**
+
+MANTIDOS — são baseados em EVIDÊNCIA, não em estrutura:
+1. **Lente única: sucessão preditiva; consolidação descritiva.** Fundamento é dado (backtest de
+   consolidação 1,4x ≈ aleatório; sucessão 88-100%). Não mudou nada com a saída do time. Regra de
+   ampliação continua: só com (a) sinal validado E (b) mesmo cliente/objetivo.
+2. **Sem EBITDA/financeiro fabricado.** Validado por Illa (PwC) e pelo juiz de M&A. É identidade
+   de credibilidade ("o Grata chuta, nós não fingimos"). O meio-termo sancionado continua sendo
+   qualificação de porte honesta com faixas + confiança declarada.
+3. **Sem outreach automatizado.** O gargalo é relacional; spam mata a parceria (9 leads ruins de
+   10 mata a Setter). Mais verdadeiro ainda solo: a reputação é de uma pessoa só.
+4. **Disciplina de validação (Phase 0, leakage-free, gates).** Método, não estrutura.
+
+FLEXIBILIZADOS — eram circunstância da estrutura antiga:
+5. **"Não investir em features de SaaS standalone (multi-tenant, billing, auth por firma)".**
+   Premissa era "Boreal = protótipo do Relay com time". Agora o Boreal É o produto e o modelo
+   provável é camada de inteligência pra N boutiques → multi-tenant vira NECESSÁRIO em algum
+   momento. Nova regra: **construir multi-tenant quando o 2º parceiro pagante assinar** (YAGNI
+   continua valendo, a proibição categórica não).
+6. **"Não virar ferramenta-de-boutique" (sem memo de reunião, sem CRM de execução).** A linha foi
+   desenhada quando o Relay planejava originar com pontas humanas PRÓPRIAS e a boutique era só
+   destino. Se a boutique é o CLIENTE pagante, ferramentas do FLUXO DE ORIGINAÇÃO dela (pipeline,
+   agenda, caminho de indicação, dossiê de abordagem) são exatamente o produto que retém o retainer.
+   **Linha nova: fluxo de originação da boutique = fair game; execução de deal (negociação, VDR,
+   proposta/contrato, compliance) = fora.** O anti-escopo de execução continua.
+7. **"Educação-NE como vertical"** — não era anti-drift formal, mas era decisão travada pela
+   distribuição do Taylor. Reaberta (ver cascata).
+
+**Status:** ✅ Registrada. Segundo cérebro atualizado (boreal.md renomeado, people, business-context,
+pendências, deadlines). Plano 06/07 (`plano-produto-modelo.md`) atualizado pro modo solo.
+
+---
+
 ## [2026-07-02] Revisão end-to-end + execução (Tier 1 do piloto + polish)
 
 **Contexto:** revisão completa do projeto amarrada ao objetivo (rodar o piloto Setter, provar conversão

@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Newsreader, Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
-import { Nav } from "@/components/brand/Nav";
+import { AppShell } from "@/components/shell/AppShell";
 import "./globals.css";
 
 // Serif editorial — headlines, nomes de empresa, statements
@@ -83,8 +83,7 @@ export default function RootLayout({
       className={`dark ${newsreader.variable} ${plexSans.variable} ${archivo.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-smoky">
-        <Nav />
-        {children}
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );

@@ -16,23 +16,29 @@ import {
 } from "@/lib/format";
 import { ResearchDisplay } from "@/components/empresa/ResearchDisplay";
 import { MemoDisplay } from "@/components/empresa/MemoDisplay";
+import { Timeline } from "@/components/empresa/Timeline";
+import { TrajetoriaEventos } from "@/components/empresa/TrajetoriaEventos";
+import { Phone, Mail } from "lucide-react";
 
-// Seções na ordem de leitura do analista: identidade → evidência → score → ação → lateral.
-const SECOES = [
-  { id: "sobre", label: "Sobre" },
-  { id: "setor", label: "Setor" },
-  { id: "socios", label: "Sócios" },
-  { id: "score", label: "Score" },
-  { id: "investigar", label: "Investigar" },
-  { id: "dossie", label: "Dossiê" },
+/* Página da empresa — layout de registro (padrão Grata/Attio):
+   rail esquerda com os atributos fixos (score, dados da Receita, contato, sócios)
+   sempre visíveis; tabs à direita com o conteúdo profundo. Substitui o scroll
+   editorial de coluna única com scroll-spy (F4 do plano-ui-workbench). */
+
+const TABS = [
+  { id: "visao", label: "Visão geral" },
+  { id: "investigacao", label: "Investigação" },
+  { id: "memo", label: "Memo" },
+  { id: "trajetoria", label: "Trajetória" },
   { id: "similares", label: "Similares" },
 ] as const;
+type TabId = (typeof TABS)[number]["id"];
 
 // As 4 dimensões do score (scoring.ts). Barras na cor do tier de risco (TIER_STYLES.bar) —
 // reforçam a leitura de risco de relance. Decisão aprovada 2026-06-08 (ver brand guide #16).
 const DIMENSOES = [
   { key: "idade_socios", label: "Idade dos sócios", max: 30 },
-  { key: "antiguidade_empresa", label: "Antiguidade da empresa", max: 30 },
+  { key: "antiguidade_empresa", label: "Antiguidade", max: 30 },
   { key: "porte_relevancia", label: "Porte / relevância", max: 30 },
   { key: "quadro_plural", label: "Quadro plural", max: 10 },
 ] as const;
@@ -54,6 +60,7 @@ export default function EmpresaPage() {
   const [carregado, setCarregado] = useState(false);
   const [empresaLoading, setEmpresaLoading] = useState(false);
   const [origin, setOrigin] = useState<Origin>("busca");
+  const [tab, setTab] = useState<TabId>("visao");
 
   // Investigação — auto-disparada ao abrir (decisão de produto: overview rico imediato;
   // com cache, custo zero em re-visita. Pendência de alinhamento com Guilherme registrada).
@@ -61,7 +68,7 @@ export default function EmpresaPage() {
   const [researchLoading, setResearchLoading] = useState(false);
   const [researchErro, setResearchErro] = useState(false);
 
-  // Dossiê — sob demanda (LLM mais pesado).
+  // Memo — sob demanda (LLM mais pesado).
   const [memo, setMemo] = useState<DossierAnalise | null>(null);
   const [memoLoading, setMemoLoading] = useState(false);
   const [memoErro, setMemoErro] = useState(false);
@@ -70,10 +77,8 @@ export default function EmpresaPage() {
   const [similares, setSimilares] = useState<EmpresaSimilar[] | null>(null);
   const [similaresLoading, setSimilaresLoading] = useState(false);
 
-  // Trajetória societária — auto (cache-first; alimenta o bloco de movimentação no dossiê).
+  // Trajetória societária — auto (cache-first; alimenta a tab própria e o bloco no memo).
   const [traj, setTraj] = useState<TrajetoriaResult | null>(null);
-
-  const [secaoAtiva, setSecaoAtiva] = useState<string>("sobre");
 
   // Hidrata a empresa com os dados canônicos do servidor (sócios + breakdown completos).
   // Fonte de verdade independente da entrada — corrige o caminho pipeline (objeto parcial)
@@ -143,7 +148,7 @@ export default function EmpresaPage() {
       const data = await r.json();
       if (r.ok) setTraj({ pontos: data.pontos ?? [], eventos: data.eventos ?? [] });
     } catch {
-      // silencioso — o bloco no dossiê simplesmente não aparece se não vier nada
+      // silencioso — a tab Trajetória mostra o empty state se não vier nada
     }
   }, [id]);
 
@@ -187,43 +192,21 @@ export default function EmpresaPage() {
     fetchTrajetoria();
   }, [id, fetchEmpresa, fetchResearch, fetchSimilares, fetchTrajetoria]);
 
-  // Scroll-spy — destaca a seção que está no topo da viewport conforme rola.
-  useEffect(() => {
-    if (!empresa) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) setSecaoAtiva(e.target.id);
-        }
-      },
-      { rootMargin: "-30% 0px -65% 0px", threshold: 0 }
-    );
-    for (const s of SECOES) {
-      const el = document.getElementById(s.id);
-      if (el) obs.observe(el);
-    }
-    return () => obs.disconnect();
-  }, [empresa]);
-
-  function irPara(secaoId: string) {
-    document.getElementById(secaoId)?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
   // ── Estado: empresa não encontrada (GET falhou — id inexistente) ──
   if (carregado && !empresa && !empresaLoading) {
     return (
       <main className="mx-auto max-w-3xl px-6 py-20">
-        <p className="font-data text-[10px] uppercase tracking-wider text-olive">Empresa não encontrada</p>
+        <p className="text-[11px] font-medium text-bone/60">Empresa não encontrada</p>
         <h1 className="mt-2 font-display text-2xl text-floral">Não localizamos esta empresa.</h1>
         <p className="mt-3 max-w-md text-[15px] leading-relaxed text-bone">
-          O identificador pode estar incorreto ou a empresa não está na base indexada. Volte à busca para encontrar empresas-alvo.
+          O identificador pode estar incorreto ou a empresa não está na base indexada. Volte ao Radar para encontrar empresas-alvo.
         </p>
         <Link
           href="/"
-          className="group mt-5 inline-flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
+          className="group mt-5 inline-flex items-center gap-2 rounded-sm text-[12px] font-medium text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
         >
           <span className="transition-transform duration-200 group-hover:-translate-x-0.5">←</span>
-          Ir para a busca
+          Ir pro Radar
         </Link>
       </main>
     );
@@ -232,9 +215,13 @@ export default function EmpresaPage() {
   // ── Estado: ainda lendo o sessionStorage (primeiro paint) ──
   if (!empresa) {
     return (
-      <main className="mx-auto max-w-3xl px-6 py-20" aria-busy="true">
+      <main className="mx-auto max-w-6xl px-6 py-10" aria-busy="true">
         <div className="h-3 w-32 animate-pulse rounded bg-surface-hover" />
         <div className="mt-4 h-8 w-2/3 animate-pulse rounded bg-surface-hover" />
+        <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[300px_minmax(0,1fr)]">
+          <div className="h-64 animate-pulse rounded-lg bg-surface-hover" />
+          <div className="h-64 animate-pulse rounded-lg bg-surface-hover" />
+        </div>
       </main>
     );
   }
@@ -249,392 +236,397 @@ export default function EmpresaPage() {
   const t = TIER_STYLES[tier];
   const { ano: anoFund, anos: anosOp } = anosOperacao(e.data_inicio_atividade);
   const backHref = origin === "pipeline" ? "/pipeline" : "/";
-  const backLabel = origin === "pipeline" ? "Pipeline" : "Busca";
+  const backLabel = origin === "pipeline" ? "Pipeline" : "Radar";
+  const setor = setorPorCnae(e.cnae_principal);
+  const ctx = contextoSetor(setor?.id);
+  const temTrajetoria = (traj?.eventos.length ?? 0) > 0 || !!e.data_inicio_atividade;
 
   return (
     <div className="bg-smoky text-floral">
-      {/* ── HERO (rola embora) ── */}
-      <header className="mx-auto max-w-3xl px-6 pt-8 pb-6">
+      {/* ── Header do registro (compacto — a identidade, não um hero) ── */}
+      <header className="mx-auto max-w-6xl px-6 pb-5 pt-6">
         <Link
           href={backHref}
-          className="group inline-flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-bone/70 transition-colors hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
+          className="group inline-flex items-center gap-2 rounded-sm text-[12px] font-medium text-bone/70 transition-colors hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
         >
           <span className="transition-transform duration-200 group-hover:-translate-x-0.5">←</span>
           {backLabel}
         </Link>
 
-        <h1 className="mt-5 font-display text-3xl leading-[1.1] tracking-tight text-floral md:text-[40px]">
-          {e.razao_social}
-        </h1>
-        <p className="mt-2 font-data text-[12px] text-bone/70">
-          {formatCnpj(e.cnpj)}
-          <span className="text-olive"> · </span>{e.municipio}/{e.uf}
-          <span className="text-olive"> · </span>fundada {anoFund}{anosOp != null ? ` (${anosOp} anos)` : ""}
-          {e.porte && <><span className="text-olive"> · </span>{e.porte}</>}
-        </p>
-
-        {/* Resumo do score (número + tier + leitura) — breakdown completo fica na seção Score */}
-        <div className="mt-6 flex flex-col gap-3 rounded-lg border border-hairline bg-surface p-4 sm:flex-row sm:items-center sm:gap-5">
-          <div aria-live="polite" className={`flex shrink-0 items-baseline gap-2 rounded-md border ${t.badge} px-3 py-1.5`}>
-            <span className={`font-data text-[28px] leading-none tabular-nums ${t.text}`}>{score}</span>
-            <span className={`font-data text-[10px] uppercase tracking-wider ${t.text}`}>{t.label}</span>
-            {research?.delta != null && research.delta !== 0 && (
-              <span className={`font-data text-[10px] tabular-nums ${research.delta > 0 ? "text-risk-high" : "text-bone/60"}`}>
-                {research.delta > 0 ? `↑${research.delta}` : `↓${Math.abs(research.delta)}`}
-              </span>
-            )}
-          </div>
+        <div className="mt-3 flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
           <div className="min-w-0">
-            <p className="font-data text-[10px] uppercase tracking-wider text-bone/70">Risco sucessório</p>
-            <p className="mt-1 text-[13px] leading-snug text-bone">
+            <h1 className="font-display text-2xl leading-tight tracking-tight text-floral md:text-[28px]">
+              {e.razao_social}
+            </h1>
+            <p className="mt-1.5 font-data text-[12px] text-bone/70">
+              {formatCnpj(e.cnpj)}
+              <span className="text-olive"> · </span>{e.municipio}/{e.uf}
+              <span className="text-olive"> · </span>fundada {anoFund}{anosOp != null ? ` (${anosOp} anos)` : ""}
+              {e.porte && <><span className="text-olive"> · </span>{e.porte}</>}
+            </p>
+          </div>
+          <AcaoPrimaria empresa={e} />
+        </div>
+      </header>
+
+      {/* ── Registro: rail de atributos + tabs de conteúdo ── */}
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-x-8 gap-y-6 px-6 pb-24 lg:grid-cols-[300px_minmax(0,1fr)]">
+        {/* ── RAIL (atributos fixos — sempre visíveis, sem navegar) ── */}
+        <aside className="space-y-4 lg:sticky lg:top-[72px] lg:self-start">
+          {/* Score */}
+          <section className="rounded-lg border border-hairline bg-surface p-4">
+            <div aria-live="polite" className="flex items-baseline gap-2">
+              <span className={`font-data text-[32px] leading-none tabular-nums ${t.text}`}>{score}</span>
+              <span className={`text-[11px] font-medium ${t.text}`}>{t.label}</span>
+              {research?.delta != null && research.delta !== 0 && (
+                <span className={`font-data text-[11px] tabular-nums ${research.delta > 0 ? "text-risk-high" : "text-bone/60"}`}>
+                  {research.delta > 0 ? `↑${research.delta}` : `↓${Math.abs(research.delta)}`}
+                </span>
+              )}
+              <span className="font-data text-[11px] text-bone/60">/ 100</span>
+            </div>
+            <p className="mt-2 text-[12px] leading-snug text-bone">
               {perfilSuc
                 ? "Sócio 61+ e empresa com 25+ anos — lente de sucessão confiável."
                 : "Fora do perfil sucessório — score de menor confiança (provável consolidação)."}
             </p>
-          </div>
-        </div>
 
-        {e.insight?.one_liner && (
-          <p className="mt-4 font-display text-[17px] leading-relaxed text-floral">
-            {e.insight.one_liner}
-          </p>
-        )}
-      </header>
+            {breakdown && (
+              <ul className="mt-4 space-y-2">
+                {DIMENSOES.map((d) => {
+                  const pts = breakdown[d.key];
+                  return (
+                    <li key={d.key} className="flex items-center gap-2">
+                      <span className="w-[104px] shrink-0 text-[11.5px] text-bone">{d.label}</span>
+                      <span className="h-1 min-w-0 flex-1 overflow-hidden rounded-full bg-hairline">
+                        <span className={`block h-full ${t.bar}`} style={{ width: `${Math.round((pts / d.max) * 100)}%` }} />
+                      </span>
+                      <span className="w-10 shrink-0 text-right font-data text-[10.5px] tabular-nums text-bone/70">
+                        {pts}/{d.max}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
 
-      {/* ── SCROLL-SPY NAV (sticky, abaixo da navbar global) + ação primária + chip de score ── */}
-      <nav className="sticky top-[60px] z-30 border-y border-hairline bg-smoky/95 backdrop-blur supports-[backdrop-filter]:bg-smoky/80">
-        <div className="mx-auto flex max-w-3xl items-center gap-4 px-6 py-2.5">
-          <ul className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
-            {SECOES.map((s) => {
-              const ativo = secaoAtiva === s.id;
-              return (
-                <li key={s.id}>
-                  <button
-                    type="button"
-                    onClick={() => irPara(s.id)}
-                    aria-current={ativo ? "true" : undefined}
-                    className={`whitespace-nowrap rounded-md px-2.5 py-1 font-data text-[11px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
-                      ativo ? "bg-surface-hover text-floral" : "text-bone/70 hover:text-bone"
-                    }`}
+            <Link
+              href="/validacao"
+              className="group mt-4 inline-flex items-center gap-1.5 rounded-sm text-[11.5px] font-medium text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+            >
+              Como calculamos
+              <span className="inline-block transition-transform duration-200 group-hover:translate-x-0.5">→</span>
+            </Link>
+          </section>
+
+          {/* Dados da Receita */}
+          <section className="rounded-lg border border-hairline p-4">
+            <h2 className="mb-3 text-[11px] font-medium text-bone/60">Dados</h2>
+            <dl className="space-y-2.5">
+              <Campo k="Natureza jurídica" v={e.natureza_juridica} />
+              <Campo k="Capital social" v={formatCapitalCompact(e.capital_social)} mono />
+              <Campo k="CNAE principal" v={e.cnae_principal} sub={e.cnae_principal_desc} mono />
+            </dl>
+            <p className="mt-3 text-[10.5px] text-bone/60">Dados públicos da Receita Federal.</p>
+          </section>
+
+          {/* Contato */}
+          {(e.telefone || e.email) && (
+            <section className="rounded-lg border border-hairline p-4">
+              <h2 className="mb-3 text-[11px] font-medium text-bone/60">Contato</h2>
+              <div className="flex flex-col gap-2">
+                {e.telefone && (
+                  <a
+                    href={`tel:${e.telefone.replace(/\D/g, "")}`}
+                    className="inline-flex w-fit items-center gap-1.5 rounded-md border border-hairline px-2.5 py-1.5 font-data text-[11px] text-bone transition-colors hover:border-hairline-hover hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
                   >
-                    {s.label}
-                  </button>
-                </li>
+                    <Phone aria-hidden="true" className="h-3 w-3" strokeWidth={1.75} />
+                    {formatTelefone(e.telefone)}
+                  </a>
+                )}
+                {e.email && (
+                  <a
+                    href={`mailto:${e.email}`}
+                    className="inline-flex max-w-full items-center gap-1.5 truncate rounded-md border border-hairline px-2.5 py-1.5 font-data text-[11px] text-bone transition-colors hover:border-hairline-hover hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+                  >
+                    <Mail aria-hidden="true" className="h-3 w-3 shrink-0" strokeWidth={1.75} />
+                    <span className="truncate">{e.email.toLowerCase()}</span>
+                  </a>
+                )}
+              </div>
+            </section>
+          )}
+
+          {/* Sócios — evidência do driver de maior peso do score */}
+          <section className="rounded-lg border border-hairline p-4">
+            <h2 className="mb-3 text-[11px] font-medium text-bone/60">
+              Sócios{socios.length > 0 ? ` (${socios.length})` : ""}
+            </h2>
+            {socios.length > 0 ? (
+              <ul className="space-y-2.5">
+                {socios.map((s, i) => {
+                  const ent = s.data_entrada_sociedade?.slice(0, 4);
+                  return (
+                    <li key={s.id ?? `${s.nome}-${i}`} className="flex items-center justify-between gap-2">
+                      <div className="min-w-0">
+                        <p className="truncate text-[12.5px] text-floral">{s.nome}</p>
+                        {ent && <p className="text-[10.5px] text-bone/60">sócio desde {ent}</p>}
+                      </div>
+                      {s.faixa_etaria && FAIXA_LABEL[s.faixa_etaria] && (
+                        <span className={`shrink-0 rounded px-1.5 py-0.5 font-data text-[10.5px] tabular-nums ${FAIXA_COLOR[s.faixa_etaria] ?? "bg-surface text-bone"}`}>
+                          {FAIXA_LABEL[s.faixa_etaria]}
+                        </span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <p className="text-[12px] text-bone/60">Quadro societário não disponível.</p>
+            )}
+          </section>
+        </aside>
+
+        {/* ── CONTEÚDO (tabs) ── */}
+        <div className="min-w-0">
+          <nav aria-label="Seções da empresa" className="flex items-center overflow-x-auto border-b border-hairline">
+            {TABS.map(({ id: tabId, label }) => {
+              const ativo = tab === tabId;
+              return (
+                <button
+                  key={tabId}
+                  type="button"
+                  onClick={() => setTab(tabId)}
+                  aria-current={ativo ? "true" : undefined}
+                  className={`mr-1 flex shrink-0 items-center gap-1.5 whitespace-nowrap border-b-2 px-2.5 pb-2.5 pt-1 text-[12.5px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
+                    ativo ? "border-floral text-floral" : "border-transparent text-bone/70 hover:text-floral"
+                  }`}
+                >
+                  {label}
+                  {tabId === "investigacao" && researchLoading && (
+                    <span aria-hidden="true" className="h-1.5 w-1.5 animate-pulse rounded-full bg-floral" />
+                  )}
+                  {tabId === "similares" && similares && similares.length > 0 && (
+                    <span className="rounded-full border border-hairline px-1.5 py-px font-data text-[10px] tabular-nums text-bone/60">
+                      {similares.length}
+                    </span>
+                  )}
+                </button>
               );
             })}
-          </ul>
-          <span
-            className={`hidden shrink-0 items-baseline gap-1 rounded border ${t.badge} px-1.5 py-0.5 sm:inline-flex`}
-            title="Score de risco sucessório"
-          >
-            <span className={`font-data text-[13px] leading-none tabular-nums ${t.text}`}>{score}</span>
-            <span className={`font-data text-[9px] uppercase tracking-wide ${t.text}`}>{t.label}</span>
-          </span>
-          <AcaoPrimaria empresa={e} />
-        </div>
-      </nav>
+          </nav>
 
-      <main className="mx-auto max-w-3xl px-6 pb-24">
-        {/* ── SOBRE ── */}
-        <Secao id="sobre" titulo="Sobre">
-          {e.cnae_principal_desc && (
-            <p className="font-display text-[17px] leading-relaxed text-floral">{e.cnae_principal_desc}</p>
-          )}
+          <div className="pt-5">
+            {/* ── VISÃO GERAL ── */}
+            {tab === "visao" && (
+              <div className="space-y-7">
+                {e.insight?.one_liner && (
+                  <p className="font-display text-[17px] leading-relaxed text-floral">
+                    {e.insight.one_liner}
+                  </p>
+                )}
 
-          {/* Camada enriquecida — descrição da IA (skeleton enquanto investiga) */}
-          {researchLoading ? (
-            <div className="mt-3" aria-busy="true">
-              <div className="space-y-2">
-                <div className="h-3 w-full animate-pulse rounded bg-surface-hover" />
-                <div className="h-3 w-11/12 animate-pulse rounded bg-surface-hover" />
-                <div className="h-3 w-4/5 animate-pulse rounded bg-surface-hover" />
-              </div>
-              <p className="mt-2 font-data text-[11px] text-olive">
-                Descrição enriquecida pela IA · costuma levar de 30 a 60s
-              </p>
-            </div>
-          ) : research?.perfil_negocio || research?.resumo ? (
-            <p className="mt-3 text-[15px] leading-relaxed text-bone">
-              {research.perfil_negocio || research.resumo}
-            </p>
-          ) : null}
-
-          {/* Campos estruturados (instantâneos, da Receita) */}
-          <dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3">
-            <Campo k="Natureza jurídica" v={e.natureza_juridica} />
-            <Campo k="Capital social" v={formatCapitalCompact(e.capital_social)} />
-            <Campo k="Porte" v={e.porte} />
-            <Campo k="CNAE principal" v={e.cnae_principal} sub={e.cnae_principal_desc} />
-            <Campo k="Telefone" v={e.telefone ? formatTelefone(e.telefone) : null} />
-            <Campo k="E-mail" v={e.email} />
-          </dl>
-
-          {e.cnaes_secundarios && e.cnaes_secundarios.length > 0 && (
-            <div className="mt-4">
-              <p className="mb-1.5 font-data text-[10px] uppercase tracking-wider text-bone/70">Atividades secundárias</p>
-              <ul className="space-y-1">
-                {e.cnaes_secundarios.map((c) => (
-                  <li key={c.codigo} className="flex items-center gap-2 text-[12px] leading-relaxed text-bone/60">
-                    <span className="shrink-0 text-olive">·</span>
-                    {c.descricao ?? c.codigo}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          <p className="mt-4 font-data text-[10px] text-olive">Dados públicos da Receita Federal.</p>
-        </Secao>
-
-        {/* ── CONTEXTO DO SETOR ── (leitura macro/competitiva do mercado antes da abordagem) */}
-        {(() => {
-          const setor = setorPorCnae(e.cnae_principal);
-          const ctx = contextoSetor(setor?.id);
-          if (!ctx || !setor) return null;
-          return (
-            <Secao
-              id="setor"
-              titulo="Contexto do setor"
-              nota={`${setor.nome} · lente ${setor.lente === "consolidacao" ? "consolidação" : "sucessão"}`}
-            >
-              <ContextoSetor ctx={ctx} />
-            </Secao>
-          );
-        })()}
-
-        {/* ── SÓCIOS ── (evidência do score: idade é o driver de maior peso) */}
-        <Secao
-          id="socios"
-          titulo="Sócios"
-          nota={socios.length > 0 ? "Idade dos sócios é o principal driver do score." : undefined}
-        >
-          {socios.length > 0 ? (
-            <ul className="divide-y divide-hairline">
-              {socios.map((s, i) => {
-                const ent = s.data_entrada_sociedade?.slice(0, 4);
-                return (
-                  <li key={s.id ?? `${s.nome}-${i}`} className="flex items-center justify-between gap-3 py-2.5">
-                    <div className="min-w-0">
-                      <p className="text-[15px] text-floral">{s.nome}</p>
-                      {ent && (
-                        <p className="font-data text-[11px] text-bone/70">sócio desde {ent}</p>
-                      )}
+                <div>
+                  {e.cnae_principal_desc && (
+                    <p className="text-[15px] leading-relaxed text-floral">{e.cnae_principal_desc}</p>
+                  )}
+                  {/* Camada enriquecida — descrição da IA (skeleton enquanto investiga) */}
+                  {researchLoading ? (
+                    <div className="mt-3" aria-busy="true">
+                      <div className="space-y-2">
+                        <div className="h-3 w-full animate-pulse rounded bg-surface-hover" />
+                        <div className="h-3 w-11/12 animate-pulse rounded bg-surface-hover" />
+                        <div className="h-3 w-4/5 animate-pulse rounded bg-surface-hover" />
+                      </div>
+                      <p className="mt-2 text-[11px] text-bone/60">
+                        Descrição enriquecida pela IA · costuma levar de 30 a 60s
+                      </p>
                     </div>
-                    {s.faixa_etaria && FAIXA_LABEL[s.faixa_etaria] && (
-                      <span className={`shrink-0 rounded px-1.5 py-0.5 font-data text-[11px] tabular-nums ${FAIXA_COLOR[s.faixa_etaria] ?? "bg-surface text-bone"}`}>
-                        {FAIXA_LABEL[s.faixa_etaria]} anos
-                      </span>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          ) : (
-            <p className="text-[15px] text-bone">Quadro societário não disponível.</p>
-          )}
-        </Secao>
+                  ) : research?.perfil_negocio || research?.resumo ? (
+                    <p className="mt-3 text-[14px] leading-relaxed text-bone">
+                      {research?.perfil_negocio || research?.resumo}
+                    </p>
+                  ) : null}
+                </div>
 
-        {/* ── SCORE ── (breakdown completo — barras neutras) */}
-        <Secao id="score" titulo="Score">
-          <div className="flex items-baseline gap-3">
-            <span className={`font-data text-[40px] leading-none tabular-nums ${t.text}`}>{score}</span>
-            <span className={`font-data text-[11px] uppercase tracking-wider ${t.text}`}>{t.label}</span>
-            <span className="font-data text-[11px] text-olive">/ 100</span>
-          </div>
-
-          {breakdown && (
-            <ul className="mt-5 space-y-3">
-              {DIMENSOES.map((d) => {
-                const pts = breakdown[d.key];
-                const pct = Math.round((pts / d.max) * 100);
-                return (
-                  <li key={d.key}>
-                    <div className="flex items-baseline justify-between gap-2">
-                      <span className="text-[13px] text-bone">
-                        {d.label}
-                        {d.key === "idade_socios" && socios.length > 0 && (
-                          <button
-                            type="button"
-                            onClick={() => irPara("socios")}
-                            className="group ml-2 font-data text-[10px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
-                          >
-                            ver sócios{" "}
-                            <span className="inline-block transition-transform duration-200 group-hover:translate-x-0.5">→</span>
-                          </button>
-                        )}
-                      </span>
-                      <span className="font-data text-[11px] tabular-nums text-bone/70">{pts}/{d.max}</span>
+                {/* Sinais — evidência do score (IA + estruturais) */}
+                {research?.sinais && research.sinais.length > 0 && (
+                  <div>
+                    <h3 className="mb-2 text-[11px] font-medium text-bone/60">Sinais — investigação com IA</h3>
+                    <div className="space-y-1">
+                      {research.sinais.map((s, i) => (
+                        <div key={i} className="flex items-start justify-between gap-4 py-1">
+                          <span className="text-[13px] text-bone">{s.rotulo}</span>
+                          <span className={`shrink-0 rounded px-1.5 py-0.5 font-data text-[10px] tabular-nums ${
+                            s.peso > 0 ? "bg-risk-high/15 text-risk-high" : "bg-surface text-bone"
+                          }`}>
+                            {s.peso > 0 ? `+${s.peso}` : `−${Math.abs(s.peso)}`}
+                          </span>
+                        </div>
+                      ))}
                     </div>
-                    <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-surface">
-                      <div className={`h-full rounded-full ${t.bar}`} style={{ width: `${pct}%` }} />
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-
-          {research?.sinais && research.sinais.length > 0 && (
-            <div className="mt-5 border-t border-hairline pt-5">
-              <p className="mb-3 font-data text-[10px] uppercase tracking-wider text-bone/70">
-                Sinais — investigação com IA
-              </p>
-              <div className="space-y-1">
-                {research.sinais.map((s, i) => (
-                  <div key={i} className="flex items-start justify-between gap-4 py-1.5">
-                    <span className="text-[13px] text-bone">{s.rotulo}</span>
-                    <span className={`shrink-0 rounded px-1.5 py-0.5 font-data text-[10px] tabular-nums ${
-                      s.peso > 0 ? "bg-risk-high/15 text-risk-high" : "bg-surface text-bone"
-                    }`}>
-                      {s.peso > 0 ? `+${s.peso}` : `−${Math.abs(s.peso)}`}
-                    </span>
                   </div>
-                ))}
+                )}
+
+                {sinaisScore.length > 0 && (
+                  <div>
+                    <h3 className="mb-2 text-[11px] font-medium text-bone/60">Sinais estruturais — da Receita</h3>
+                    <ul className="space-y-1.5">
+                      {sinaisScore.map((s, i) => (
+                        <li key={i} className="flex items-start gap-2 text-[13px] text-bone">
+                          <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-olive" />
+                          {s}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {e.cnaes_secundarios && e.cnaes_secundarios.length > 0 && (
+                  <div>
+                    <h3 className="mb-2 text-[11px] font-medium text-bone/60">Atividades secundárias</h3>
+                    <ul className="space-y-1">
+                      {e.cnaes_secundarios.map((c) => (
+                        <li key={c.codigo} className="flex items-center gap-2 text-[12px] leading-relaxed text-bone/60">
+                          <span className="shrink-0 text-olive">·</span>
+                          {c.descricao ?? c.codigo}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Contexto do setor — leitura macro/competitiva antes da abordagem */}
+                {ctx && setor && (
+                  <div className="border-t border-hairline pt-6">
+                    <h3 className="mb-1 text-[11px] font-medium text-bone/60">Contexto do setor</h3>
+                    <p className="mb-3 text-[12px] text-bone/60">
+                      {setor.nome} · lente {setor.lente === "consolidacao" ? "consolidação" : "sucessão"}
+                    </p>
+                    <ContextoSetor ctx={ctx} />
+                  </div>
+                )}
               </div>
-            </div>
-          )}
+            )}
 
-          {sinaisScore.length > 0 && (
-            <div className="mt-5 border-t border-hairline pt-5">
-              <p className="mb-3 font-data text-[10px] uppercase tracking-wider text-bone/70">
-                Sinais estruturais — da Receita
-              </p>
-              <ul className="space-y-1.5">
-                {sinaisScore.map((s, i) => (
-                  <li key={i} className="flex items-start gap-2 text-[13px] text-bone">
-                    <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-olive" />
-                    {s}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+            {/* ── INVESTIGAÇÃO ── (auto-disparada ao abrir a página) */}
+            {tab === "investigacao" && (
+              researchLoading ? (
+                <ResearchProgress />
+              ) : research ? (
+                <ResearchDisplay research={research} />
+              ) : researchErro ? (
+                <EstadoErro msg="Não foi possível carregar a investigação." onRetry={fetchResearch} />
+              ) : null
+            )}
 
-          <Link
-            href="/validacao"
-            className="group mt-5 inline-flex items-center gap-1.5 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
-          >
-            Como calculamos o score
-            <span className="inline-block transition-transform duration-200 group-hover:translate-x-0.5">→</span>
-          </Link>
-        </Secao>
+            {/* ── MEMO ── (sob demanda; síntese a partir da investigação) */}
+            {tab === "memo" && (
+              memo ? (
+                <MemoDisplay empresa={e} analise={memo} trajetoria={traj} />
+              ) : memoLoading ? (
+                <p className="animate-pulse text-[13px] text-bone/70" role="status">
+                  Gerando memo…
+                </p>
+              ) : memoErro ? (
+                <EstadoErro msg="Não foi possível gerar o memo." onRetry={gerarMemo} />
+              ) : (
+                <div>
+                  <p className="max-w-md text-[13px] leading-relaxed text-bone/70">
+                    Síntese de investimento a partir dos sinais investigados: análise sucessória,
+                    red flags, perguntas de abordagem e precedentes do setor.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={gerarMemo}
+                    className="mt-4 inline-flex items-center gap-2 rounded-md bg-floral px-3.5 py-2 text-[12.5px] font-medium text-smoky transition-colors hover:bg-floral/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+                  >
+                    Gerar memo
+                  </button>
+                </div>
+              )
+            )}
 
-        {/* ── INVESTIGAR ── (auto-disparada) */}
-        <Secao id="investigar" titulo="Investigar">
-          {researchLoading ? (
-            <ResearchProgress />
-          ) : research ? (
-            <ResearchDisplay research={research} />
-          ) : researchErro ? (
-            <EstadoErro
-              msg="Não foi possível carregar a investigação."
-              onRetry={fetchResearch}
-            />
-          ) : null}
-        </Secao>
+            {/* ── TRAJETÓRIA ── (linha do tempo + movimentação real do quadro) */}
+            {tab === "trajetoria" && (
+              temTrajetoria ? (
+                <div className="space-y-8">
+                  <Timeline empresa={e} />
+                  {traj && traj.eventos.length > 0 && (
+                    <div>
+                      <h3 className="mb-2 text-[11px] font-medium text-bone/60">
+                        Movimentação societária (2022→2025)
+                      </h3>
+                      <TrajetoriaEventos trajetoria={traj} />
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <p className="text-[13px] text-bone/70">Sem histórico societário disponível.</p>
+              )
+            )}
 
-        {/* ── DOSSIÊ ── (sob demanda; síntese a partir da investigação) */}
-        <Secao
-          id="dossie"
-          titulo="Dossiê"
-          nota="Síntese a partir dos sinais investigados acima."
-        >
-          {memo ? (
-            <MemoDisplay empresa={e} analise={memo} trajetoria={traj} />
-          ) : memoLoading ? (
-            <p className="animate-pulse text-[13px] text-bone/70" role="status">
-              Gerando dossiê…
-            </p>
-          ) : memoErro ? (
-            <EstadoErro msg="Não foi possível gerar o memo." onRetry={gerarMemo} />
-          ) : (
-            <button
-              type="button"
-              onClick={gerarMemo}
-              className="inline-flex items-center gap-2 rounded border border-hairline px-3 py-2 font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:border-hairline-hover hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
-            >
-              Gerar dossiê
-            </button>
-          )}
-        </Secao>
-
-        {/* ── SIMILARES ── (auto; critério explícito) */}
-        <Secao
-          id="similares"
-          titulo="Similares"
-          nota="Critério: mesmo CNAE, praça e porte."
-        >
-          {similaresLoading ? (
-            <p className="animate-pulse text-[13px] text-bone/70" role="status">Buscando empresas parecidas…</p>
-          ) : similares && similares.length > 0 ? (
-            <ul className="divide-y divide-hairline">
-              {similares.map((s) => {
-                const sTier = scoreTier(s.score?.score ?? 0);
-                const sT = TIER_STYLES[sTier];
-                return (
-                  <li key={s.id}>
-                    <Link
-                      href={`/empresa/${s.id}`}
-                      onClick={() => storeEmpresa(s)}
-                      className="flex items-center justify-between gap-3 py-2.5 transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
-                    >
-                      <div className="min-w-0">
-                        <p className="truncate font-display text-[15px] text-floral">{s.razao_social}</p>
-                        <p className="font-data text-[11px] text-bone/60">
-                          {s.municipio}/{s.uf}
-                          {s.similaridade.motivos.length > 0 && ` · ${s.similaridade.motivos.join(", ")}`}
-                        </p>
-                      </div>
-                      <div className="flex shrink-0 items-center gap-2">
-                        <span className="font-data text-[11px] tabular-nums text-bone/60">
-                          {s.similaridade.pontos}% match
-                        </span>
-                        <span className={`rounded border ${sT.badge} px-1.5 font-data text-[11px] tabular-nums ${sT.text}`}>
-                          {s.score?.score ?? 0}
-                        </span>
-                      </div>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          ) : (
-            <p className="text-[13px] text-bone">Nenhuma empresa parecida no universo indexado.</p>
-          )}
-        </Secao>
-      </main>
+            {/* ── SIMILARES ── (auto; critério explícito) */}
+            {tab === "similares" && (
+              <div>
+                <p className="mb-3 text-[12px] text-bone/60">Critério: mesmo CNAE, praça e porte.</p>
+                {similaresLoading ? (
+                  <p className="animate-pulse text-[13px] text-bone/70" role="status">Buscando empresas parecidas…</p>
+                ) : similares && similares.length > 0 ? (
+                  <ul className="divide-y divide-hairline">
+                    {similares.map((s) => {
+                      const sTier = scoreTier(s.score?.score ?? 0);
+                      const sT = TIER_STYLES[sTier];
+                      return (
+                        <li key={s.id}>
+                          <Link
+                            href={`/empresa/${s.id}`}
+                            onClick={() => storeEmpresa(s)}
+                            className="flex items-center justify-between gap-3 rounded-sm py-2.5 transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+                          >
+                            <div className="min-w-0">
+                              <p className="truncate text-[13.5px] font-medium text-floral">{s.razao_social}</p>
+                              <p className="text-[11px] text-bone/60">
+                                {s.municipio}/{s.uf}
+                                {s.similaridade.motivos.length > 0 && ` · ${s.similaridade.motivos.join(", ")}`}
+                              </p>
+                            </div>
+                            <div className="flex shrink-0 items-center gap-2">
+                              <span className="font-data text-[11px] tabular-nums text-bone/60">
+                                {s.similaridade.pontos}% match
+                              </span>
+                              <span className={`rounded border ${sT.badge} px-1.5 font-data text-[11px] tabular-nums ${sT.text}`}>
+                                {s.score?.score ?? 0}
+                              </span>
+                            </div>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                ) : (
+                  <p className="text-[13px] text-bone">Nenhuma empresa parecida no universo indexado.</p>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
 // ── Sub-componentes ──────────────────────────────────────────────────────────
 
-// Seção com eyebrow (label estrutural Bone/70) + nota opcional. scroll-mt limpa as navs sticky.
-function Secao({
-  id, titulo, nota, children,
-}: {
-  id: string; titulo: string; nota?: string; children: React.ReactNode;
-}) {
-  return (
-    <section id={id} className="scroll-mt-28 border-t border-hairline py-8 first:border-t-0">
-      <div className="mb-4">
-        <h2 className="font-data text-[11px] uppercase tracking-wider text-bone/70">{titulo}</h2>
-        {nota && <p className="mt-1 text-[12px] text-bone/60">{nota}</p>}
-      </div>
-      {children}
-    </section>
-  );
-}
-
-// Campo de definição: rótulo mono + valor. Esconde quando vazio (não polui com "—" em massa).
-function Campo({ k, v, sub }: { k: string; v: string | null | undefined; sub?: string | null }) {
+// Campo do rail: rótulo + valor (mono opcional pra dados). Esconde quando vazio.
+function Campo({ k, v, sub, mono }: { k: string; v: string | null | undefined; sub?: string | null; mono?: boolean }) {
   if (!v) return null;
   return (
     <div className="min-w-0">
-      <dt className="font-data text-[10px] uppercase tracking-wider text-bone/70">{k}</dt>
-      <dd className="mt-0.5 text-[13px] text-floral">
+      <dt className="text-[10.5px] font-medium text-bone/60">{k}</dt>
+      <dd className={`mt-0.5 text-[12.5px] text-floral ${mono ? "font-data tabular-nums" : ""}`}>
         {v}
-        {sub && <span className="block text-[11px] leading-snug text-bone/70">{sub}</span>}
+        {sub && <span className="block font-sans text-[11px] leading-snug text-bone/70">{sub}</span>}
       </dd>
     </div>
   );
@@ -657,7 +649,7 @@ function ResearchProgress() {
         <span className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-floral" />
         <span className="text-floral">{RESEARCH_FASES[fase]}</span>
       </p>
-      <p className="mt-1.5 font-data text-[11px] text-olive">
+      <p className="mt-1.5 text-[11px] text-bone/60">
         Pesquisa em fontes públicas · costuma levar de 30 a 60s
       </p>
     </div>
@@ -672,7 +664,7 @@ function EstadoErro({ msg, onRetry }: { msg: string; onRetry: () => void }) {
       <button
         type="button"
         onClick={onRetry}
-        className="mt-2 inline-flex items-center gap-2 rounded border border-hairline px-3 py-1.5 font-data text-[11px] uppercase tracking-wider text-bone transition-colors hover:border-hairline-hover hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+        className="mt-2 inline-flex items-center gap-2 rounded border border-hairline px-3 py-1.5 text-[12px] font-medium text-bone transition-colors hover:border-hairline-hover hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
       >
         <span aria-hidden="true">↻</span> Tentar de novo
       </button>
@@ -680,8 +672,8 @@ function EstadoErro({ msg, onRetry }: { msg: string; onRetry: () => void }) {
   );
 }
 
-// Ação primária — salvar no pipeline (POST idempotente). Veredito stage-aware (avançar/
-// arquivar) lendo o estágio atual é o próximo incremento.
+// Ação primária do registro — salvar no pipeline (POST idempotente). Botão sólido:
+// é a única ação primária da tela (regra do workbench: um botão sólido por tela).
 function AcaoPrimaria({ empresa }: { empresa: Empresa }) {
   const [estado, setEstado] = useState<"idle" | "salvando" | "salvo">("idle");
 
@@ -708,10 +700,10 @@ function AcaoPrimaria({ empresa }: { empresa: Empresa }) {
       type="button"
       onClick={salvar}
       disabled={estado !== "idle"}
-      className={`shrink-0 rounded-md px-3 py-1.5 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
+      className={`shrink-0 rounded-md px-3.5 py-2 text-[12.5px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
         estado === "salvo"
-          ? "text-floral"
-          : "border border-hairline text-bone hover:border-hairline-hover hover:text-floral"
+          ? "border border-hairline text-floral"
+          : "bg-floral text-smoky hover:bg-floral/90 disabled:opacity-60"
       }`}
     >
       {estado === "salvo" ? "✓ no pipeline" : estado === "salvando" ? "Salvando…" : "Salvar no pipeline"}
