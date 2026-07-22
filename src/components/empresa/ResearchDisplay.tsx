@@ -8,8 +8,8 @@ export function ResearchDisplay({ research }: { research: ResearchResult }) {
   return (
     <div className="space-y-3 rounded-lg border border-hairline bg-surface p-3">
       <div className="flex items-center justify-between">
-        <span className="text-[11px] font-medium text-ink-soft/60">Investigação da IA</span>
-        <span className="text-[10.5px] text-ink-soft/60">{PRESENCA_LABEL[research.presenca_digital]}</span>
+        <span className="text-[11px] font-medium text-ink-muted">Investigação da IA</span>
+        <span className="text-[10.5px] text-ink-muted">{PRESENCA_LABEL[research.presenca_digital]}</span>
       </div>
       {research.resumo && (
         <p className="text-sm leading-relaxed text-ink">{research.resumo}</p>
@@ -21,7 +21,7 @@ export function ResearchDisplay({ research }: { research: ResearchResult }) {
         </div>
       ) : (
         <div className="rounded-md bg-surface-hover p-2.5">
-          <p className="text-[11px] font-medium text-ink-soft/60">
+          <p className="text-[11px] font-medium text-ink-muted">
             Sem gatilho de timing · não é o momento
           </p>
           <p className="mt-1 text-sm leading-snug text-ink-soft">
@@ -58,7 +58,7 @@ export function ResearchDisplay({ research }: { research: ResearchResult }) {
       )}
       {research.mensagem_abordagem && (
         <div className="rounded-md bg-surface-hover p-2.5">
-          <p className="text-[11px] font-medium text-ink-soft/60">
+          <p className="text-[11px] font-medium text-ink-muted">
             Rascunho de abordagem · edite antes de enviar
           </p>
           <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-ink-soft">

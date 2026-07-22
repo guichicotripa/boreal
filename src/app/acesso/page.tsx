@@ -38,7 +38,7 @@ export default function Acesso() {
         <div className="mb-6 flex justify-center">
           <Logo className="h-6 w-auto text-ink" />
         </div>
-        <label className="mb-1.5 block font-data text-[10px] uppercase tracking-wider text-ink-soft/55">
+        <label className="mb-1.5 block font-data text-[10px] uppercase tracking-wider text-ink-muted">
           Acesso restrito
         </label>
         <input
@@ -47,7 +47,7 @@ export default function Acesso() {
           onChange={(e) => setSenha(e.target.value)}
           autoFocus
           placeholder="senha"
-          className="w-full rounded-md border border-hairline bg-transparent px-3 py-2 font-data text-sm text-ink-soft outline-none placeholder:text-ink-soft/30 focus-visible:border-ink/50"
+          className="w-full rounded-md border border-hairline bg-transparent px-3 py-2 font-data text-sm text-ink-soft outline-none placeholder:text-ink-muted focus-visible:border-ink/50"
         />
         {erro && <p className="mt-2 font-data text-[11px] text-risk-high">Senha incorreta.</p>}
         <button

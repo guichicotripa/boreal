@@ -72,11 +72,11 @@ export function PeekPanel({
         </div>
         <div className="min-w-0 flex-1">
           <h2 className="font-display text-[17px] leading-tight text-ink">{e.razao_social}</h2>
-          <p className="mt-0.5 font-data text-[11px] text-ink-soft/70">
+          <p className="mt-0.5 font-data text-[11px] text-ink-muted">
             {formatCnpj(e.cnpj)} · {e.municipio}/{e.uf}
           </p>
           {delta != null && (
-            <p className="mt-0.5 text-[11px] text-ink-soft/60">
+            <p className="mt-0.5 text-[11px] text-ink-muted">
               investigada com IA: {delta > 0 ? `↑${delta}` : delta < 0 ? `↓${Math.abs(delta)}` : "sem ajuste"}
             </p>
           )}
@@ -101,7 +101,7 @@ export function PeekPanel({
         {e.score?.breakdown && (
           <section>
             <div className="mb-2 flex items-center justify-between">
-              <h3 className="text-[11px] font-medium text-ink-soft/60">
+              <h3 className="text-[11px] font-medium text-ink-muted">
                 Composição do score
               </h3>
               {e.score.perfil_sucessorio && (
@@ -130,7 +130,7 @@ export function PeekPanel({
         {/* Sinais */}
         {e.score?.sinais && e.score.sinais.length > 0 && (
           <section>
-            <h3 className="mb-2 text-[11px] font-medium text-ink-soft/60">
+            <h3 className="mb-2 text-[11px] font-medium text-ink-muted">
               Sinais
             </h3>
             <ul className="space-y-1">
@@ -145,7 +145,7 @@ export function PeekPanel({
 
         {/* Dados */}
         <section>
-          <h3 className="mb-2 text-[11px] font-medium text-ink-soft/60">Dados</h3>
+          <h3 className="mb-2 text-[11px] font-medium text-ink-muted">Dados</h3>
           <dl className="grid grid-cols-2 gap-x-4 gap-y-2">
             {[
               ["Porte", e.porte ?? "—"],
@@ -154,33 +154,33 @@ export function PeekPanel({
               ["Natureza", e.natureza_juridica ?? "—"],
             ].map(([k, v]) => (
               <div key={k}>
-                <dt className="text-[10.5px] font-medium text-ink-soft/60">{k}</dt>
+                <dt className="text-[10.5px] font-medium text-ink-muted">{k}</dt>
                 <dd className="mt-0.5 text-[12.5px] tabular-nums text-ink-soft">{v}</dd>
               </div>
             ))}
           </dl>
           {e.cnae_principal_desc && (
-            <p className="mt-2 text-[12px] leading-snug text-ink-soft/70">{e.cnae_principal_desc}</p>
+            <p className="mt-2 text-[12px] leading-snug text-ink-muted">{e.cnae_principal_desc}</p>
           )}
         </section>
 
         {/* Sócios */}
         {socios.length > 0 && (
           <section>
-            <h3 className="mb-2 text-[11px] font-medium text-ink-soft/60">
+            <h3 className="mb-2 text-[11px] font-medium text-ink-muted">
               Sócios ({socios.length})
             </h3>
             <ul className="space-y-1.5">
               {socios.slice(0, 6).map((s) => (
                 <li key={s.id} className="flex items-baseline justify-between gap-2">
                   <span className="min-w-0 truncate text-[12.5px] text-ink-soft">{s.nome}</span>
-                  <span className="shrink-0 font-data text-[11px] text-ink-soft/70">
+                  <span className="shrink-0 font-data text-[11px] text-ink-muted">
                     {s.faixa_etaria && FAIXA_LABEL[s.faixa_etaria] ? FAIXA_LABEL[s.faixa_etaria] : "—"}
                   </span>
                 </li>
               ))}
               {socios.length > 6 && (
-                <li className="text-[11px] text-ink-soft/60">+{socios.length - 6} na página completa</li>
+                <li className="text-[11px] text-ink-muted">+{socios.length - 6} na página completa</li>
               )}
             </ul>
           </section>
@@ -189,7 +189,7 @@ export function PeekPanel({
         {/* Contato */}
         {(e.telefone || e.email) && (
           <section>
-            <h3 className="mb-2 text-[11px] font-medium text-ink-soft/60">
+            <h3 className="mb-2 text-[11px] font-medium text-ink-muted">
               Contato
             </h3>
             <div className="flex flex-wrap gap-2">

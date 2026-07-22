@@ -90,7 +90,7 @@ export default function Mercado() {
 
         {/* Coorte — o que acontece com elas */}
         <section className="mt-10">
-          <h2 className="font-data text-[11px] uppercase tracking-wider text-ink-soft/70">
+          <h2 className="font-data text-[11px] uppercase tracking-wider text-ink-muted">
             O que acontece com elas em 2 anos?
           </h2>
           <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
@@ -128,7 +128,7 @@ export default function Mercado() {
 
         {/* Macro — o juro explica parte */}
         <section className="mt-10">
-          <h2 className="font-data text-[11px] uppercase tracking-wider text-ink-soft/70">
+          <h2 className="font-data text-[11px] uppercase tracking-wider text-ink-muted">
             E o juro explica parte disso
           </h2>
           <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
@@ -150,7 +150,7 @@ export default function Mercado() {
 
         {/* Funil por vertical */}
         <section className="mt-10">
-          <h2 className="font-data text-[11px] uppercase tracking-wider text-ink-soft/70">
+          <h2 className="font-data text-[11px] uppercase tracking-wider text-ink-muted">
             De onde sai a conta
           </h2>
           <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
@@ -181,7 +181,7 @@ export default function Mercado() {
 
         {/* Sensibilidade ilustrativa — honesta */}
         <section className="mt-10 rounded-xl border border-hairline bg-surface p-6">
-          <h2 className="font-data text-[11px] uppercase tracking-wider text-ink-soft/70">
+          <h2 className="font-data text-[11px] uppercase tracking-wider text-ink-muted">
             Quanto isso pode valer — conta ilustrativa
           </h2>
           <p className="mt-3 leading-relaxed text-ink-soft">

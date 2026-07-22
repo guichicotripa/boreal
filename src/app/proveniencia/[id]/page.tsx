@@ -35,10 +35,10 @@ export default function ProvenienciaPage({ params }: { params: Promise<{ id: str
         </Link>
       </div>
 
-      {estado === "carregando" && <p className="font-data text-sm text-ink-soft/50">Carregando…</p>}
+      {estado === "carregando" && <p className="font-data text-sm text-ink-muted">Carregando…</p>}
       {estado === "erro" && <p className="font-data text-sm text-risk-high">Oportunidade não encontrada.</p>}
       {estado === "nao_selado" && (
-        <p className="font-data text-sm text-ink-soft/60">
+        <p className="font-data text-sm text-ink-muted">
           Esta oportunidade ainda não foi selada. Emita o selo no momento da entrega ao parceiro.
         </p>
       )}
@@ -46,7 +46,7 @@ export default function ProvenienciaPage({ params }: { params: Promise<{ id: str
       {estado === "ok" && cert && (
         <div className="rounded-lg border border-hairline p-6">
           <div className="mb-5 flex items-center justify-between border-b border-hairline pb-4">
-            <span className="font-data text-[10px] uppercase tracking-[0.15em] text-ink-soft/50">
+            <span className="font-data text-[10px] uppercase tracking-[0.15em] text-ink-muted">
               Certificado de proveniência
             </span>
             <span
@@ -57,7 +57,7 @@ export default function ProvenienciaPage({ params }: { params: Promise<{ id: str
           </div>
 
           <h1 className="font-display text-xl text-ink">{cert.razao_social}</h1>
-          <p className="mt-0.5 font-data text-xs tracking-wide text-ink-soft/50">
+          <p className="mt-0.5 font-data text-xs tracking-wide text-ink-muted">
             CNPJ {cert.cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5")}
           </p>
 
@@ -73,9 +73,9 @@ export default function ProvenienciaPage({ params }: { params: Promise<{ id: str
           </dl>
 
           <div className="mt-6 border-t border-hairline pt-4">
-            <span className="font-data text-[9px] uppercase tracking-wider text-ink-soft/40">Assinatura (HMAC-SHA256)</span>
-            <p className="mt-1 break-all font-data text-[10px] leading-relaxed text-ink-soft/55">{cert.hash}</p>
-            <p className="mt-2 font-data text-[9px] text-ink-soft/40">
+            <span className="font-data text-[9px] uppercase tracking-wider text-ink-muted">Assinatura (HMAC-SHA256)</span>
+            <p className="mt-1 break-all font-data text-[10px] leading-relaxed text-ink-muted">{cert.hash}</p>
+            <p className="mt-2 font-data text-[9px] text-ink-muted">
               Selado em {new Date(cert.selado_em).toLocaleString("pt-BR")}. O hash é reproduzível a partir de
               CNPJ + data + score, e só o Boreal consegue emiti-lo, então prova origem e data sem poder ser retroagido.
             </p>
@@ -89,7 +89,7 @@ export default function ProvenienciaPage({ params }: { params: Promise<{ id: str
 function Campo({ rotulo, valor, destaque }: { rotulo: string; valor: string | null; destaque?: boolean }) {
   return (
     <div>
-      <dt className="font-data text-[9px] uppercase tracking-wider text-ink-soft/40">{rotulo}</dt>
+      <dt className="font-data text-[9px] uppercase tracking-wider text-ink-muted">{rotulo}</dt>
       <dd className={`mt-0.5 font-display text-sm ${destaque ? "text-ink" : "text-ink-soft"}`}>{valor ?? "—"}</dd>
     </div>
   );

@@ -169,7 +169,7 @@ export function Row({
               {score}
             </span>
           ) : (
-            <span className="rounded border border-hairline px-1.5 font-data text-[11px] text-ink-soft/45">
+            <span className="rounded border border-hairline px-1.5 font-data text-[11px] text-ink-muted">
               --
             </span>
           )}
@@ -190,7 +190,7 @@ export function Row({
                 className={`shrink-0 rounded border px-1 text-[10px] font-medium ${
                   o.novo_para_setter === true
                     ? "border-ink/40 text-ink"
-                    : "border-hairline text-ink-soft/60"
+                    : "border-hairline text-ink-muted"
                 }`}
                 title={
                   o.novo_para_setter == null
@@ -204,12 +204,12 @@ export function Row({
               </span>
             )}
           </span>
-          <p className="truncate text-[11px] text-ink-soft/60">
+          <p className="truncate text-[11px] text-ink-muted">
             {o.empresa.municipio}/{o.empresa.uf}
             {o.empresa.cnae_principal_desc ? ` · ${o.empresa.cnae_principal_desc}` : ""}
           </p>
           {socio && (
-            <p className="truncate text-[11px] text-ink-soft/60">{socio.nome}</p>
+            <p className="truncate text-[11px] text-ink-muted">{socio.nome}</p>
           )}
         </div>
 
@@ -221,7 +221,7 @@ export function Row({
               if (e.target.value !== (o.dono ?? "")) onPatch(o.id, { dono: e.target.value });
             }}
             placeholder="sem dono"
-            className="w-full bg-transparent pl-2.5 text-left text-[12px] text-ink-soft outline-none placeholder:text-ink-soft/45"
+            className="w-full bg-transparent pl-2.5 text-left text-[12px] text-ink-soft outline-none placeholder:text-ink-muted"
           />
           {isEntregue ? (
             <ResultadoChip o={o} onPatch={onPatch} />
@@ -241,7 +241,7 @@ export function Row({
                     onPatch(o.id, { proxima_acao: e.target.value });
                 }}
                 placeholder="próxima ação…"
-                className="w-full bg-transparent text-[12px] text-ink-soft outline-none placeholder:text-ink-soft/45"
+                className="w-full bg-transparent text-[12px] text-ink-soft outline-none placeholder:text-ink-muted"
               />
               <DateInput
                 defaultValue={o.proxima_acao_em ?? ""}
@@ -271,10 +271,10 @@ export function Row({
             </a>
           ) : null}
           {!o.empresa.telefone && !o.empresa.email && (
-            <span className="text-[11px] text-ink-soft/60">sem contato</span>
+            <span className="text-[11px] text-ink-muted">sem contato</span>
           )}
           {/* Indicador de último contato */}
-          <p className={`font-data text-[10px] ${toqueAtrasado ? "text-risk-mid" : "text-ink-soft/60"}`}>
+          <p className={`font-data text-[10px] ${toqueAtrasado ? "text-risk-mid" : "text-ink-muted"}`}>
             {ultimoToque
               ? `contato ${diasDesde(ultimoToque)}d atrás`
               : `sem contato · ${diasSemToque}d`}
@@ -287,7 +287,7 @@ export function Row({
           className={`justify-self-start flex items-center gap-1.5 rounded border px-2 py-1 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 ${
             hasNota
               ? "border-hairline text-ink-soft hover:border-hairline-hover hover:text-ink"
-              : "border-hairline/60 text-ink-soft/60 hover:border-hairline hover:text-ink-soft"
+              : "border-hairline/60 text-ink-muted hover:border-hairline hover:text-ink-soft"
           }`}
         >
           {hasNota && (
@@ -300,7 +300,7 @@ export function Row({
         <button
           onClick={(e) => { e.stopPropagation(); onRemove(o.id); }}
           title="remover do pipeline"
-          className="text-[12px] text-ink-soft/45 transition-colors hover:text-risk-high focus-visible:outline-none"
+          className="text-[12px] text-ink-muted transition-colors hover:text-risk-high focus-visible:outline-none"
         >
           ✕
         </button>
@@ -322,7 +322,7 @@ export function Row({
             }}
             placeholder="anotações…"
             rows={2}
-            className="w-full resize-none rounded border border-hairline bg-surface px-1.5 py-1 text-[12px] text-ink outline-none placeholder:text-ink-soft/45 focus:border-hairline-hover"
+            className="w-full resize-none rounded border border-hairline bg-surface px-1.5 py-1 text-[12px] text-ink outline-none placeholder:text-ink-muted focus:border-hairline-hover"
           />
           <ProvenienciaBlock o={o} />
           {context === "agenda" && <LogAtividade oportunidadeId={o.id} />}
@@ -359,7 +359,7 @@ function DateInput({
         onChange={(e) => onChange(e.target.value || null)}
         title={atrasada ? "ação atrasada" : "data da próxima ação"}
         className={`bg-transparent font-data text-[10px] outline-none [&::-webkit-calendar-picker-indicator]:hidden ${
-          atrasada ? "text-risk-high" : "text-ink-soft/60"
+          atrasada ? "text-risk-high" : "text-ink-muted"
         }`}
       />
       <button

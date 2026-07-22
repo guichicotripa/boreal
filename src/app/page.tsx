@@ -182,7 +182,7 @@ export default function Radar() {
             O hero editorial de pitch mora na seção Prova (/validacao). */}
         <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
           <div>
-            <p className="mb-2 text-[11px] font-medium text-ink-soft/60">Setor</p>
+            <p className="mb-2 text-[11px] font-medium text-ink-muted">Setor</p>
             <div className="inline-flex flex-wrap gap-1 rounded-lg border border-hairline p-1">
               {SETORES.map((s) => {
                 const ativo = (setorAtivo ?? "metalmec") === s.id;
@@ -193,7 +193,7 @@ export default function Radar() {
                     onClick={() => trocarSetor(s.id)}
                     aria-pressed={ativo}
                     className={`rounded-md px-3 py-1.5 text-[12.5px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 ${
-                      ativo ? "bg-surface-hover text-ink" : "text-ink-soft/70 hover:text-ink-soft"
+                      ativo ? "bg-surface-hover text-ink" : "text-ink-muted hover:text-ink-soft"
                     }`}
                   >
                     {s.nome}
@@ -202,7 +202,7 @@ export default function Radar() {
               })}
             </div>
           </div>
-          <p className="text-[12.5px] text-ink-soft/70">
+          <p className="text-[12.5px] text-ink-muted">
             <strong className="text-ink-soft">{setorPorId("metalmec")?.recall_sucessao ?? 97}% das vendas por sucessão</strong>{" "}
             no nosso top 10%, 12 meses antes.{" "}
             <Link
@@ -222,7 +222,7 @@ export default function Radar() {
           }}
           className="mt-6"
         >
-          <p className="mb-2 text-[11px] font-medium text-ink-soft/60">
+          <p className="mb-2 text-[11px] font-medium text-ink-muted">
             Descreva uma tese em linguagem livre
           </p>
           <div className="flex items-center gap-3">
@@ -263,7 +263,7 @@ export default function Radar() {
         </div>
 
         {/* Strip de cobertura — o painel lateral antigo, compactado numa linha */}
-        <p className="mt-4 border-t border-hairline pt-3 text-[11.5px] text-ink-soft/60">
+        <p className="mt-4 border-t border-hairline pt-3 text-[11.5px] text-ink-muted">
           <span className="text-ink-soft">{setorCob.nome}</span>
           {" · "}CNAE {setorCob.cnaes.join("/")}
           {" · "}lente {setorCob.lente === "consolidacao" ? "consolidação" : "sucessão"}
@@ -291,7 +291,7 @@ export default function Radar() {
         {/* Erro */}
         {erro && (
           <div className="mt-10 py-10">
-            <p className="text-[11px] font-medium text-ink-soft/60">Erro na busca</p>
+            <p className="text-[11px] font-medium text-ink-muted">Erro na busca</p>
             <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
               Não foi possível realizar a busca. Verifique a conexão e tente de novo.
             </p>
@@ -313,7 +313,7 @@ export default function Radar() {
                   {res.count} empresa{res.count === 1 ? "" : "s"}
                 </span>
                 {res.reasoned && res.reasonedCount && (
-                  <span className="whitespace-nowrap text-[12px] text-ink-faint">
+                  <span className="whitespace-nowrap text-[12px] text-ink-muted">
                     · top {res.reasonedCount} analisadas por IA
                   </span>
                 )}

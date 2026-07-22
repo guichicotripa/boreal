@@ -3,6 +3,7 @@
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { treemapAgrupado } from "@/lib/treemap";
 import { corTile, corTextoTile, type GrupoSecao } from "@/lib/heatmap";
+import { useTemaClaro } from "./shell/TemaToggle";
 import { SecaoIcon } from "./SecaoIcon";
 
 const HEADER = 15; // faixa pro rótulo da seção
@@ -12,7 +13,7 @@ const GAP = 2;
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="leading-tight">
-      <div className="font-data text-[8px] uppercase tracking-wider text-ink-soft/45">{label}</div>
+      <div className="font-data text-[8px] uppercase tracking-wider text-ink-muted">{label}</div>
       <div className="font-display text-[15px] tabular-nums text-ink-soft">{value}</div>
     </div>
   );
@@ -22,6 +23,7 @@ function Stat({ label, value }: { label: string; value: string }) {
 // sem esticar). Re-layout no resize. Preenche 100% do pai — o pai é quem define a altura.
 // `grupos` vem do pai (muda conforme a região selecionada).
 export function Treemap({ grupos }: { grupos: GrupoSecao[] }) {
+  const claro = useTemaClaro(); // a rampa de cor dos tiles inverte por tema
   const ref = useRef<HTMLDivElement>(null);
   const [dim, setDim] = useState({ w: 0, h: 0 });
 
@@ -88,8 +90,7 @@ export function Treemap({ grupos }: { grupos: GrupoSecao[] }) {
     <div
       ref={ref}
       onMouseLeave={() => setHover(null)}
-      className="relative h-full w-full overflow-hidden rounded-lg border border-hairline"
-      style={{ backgroundColor: "#141310" }}
+      className="relative h-full w-full overflow-hidden rounded-lg border border-hairline bg-surface"
     >
       {layout.map(({ grupo, tiles }) => (
         <div key={grupo.secaoSigla}>
@@ -100,7 +101,7 @@ export function Treemap({ grupos }: { grupos: GrupoSecao[] }) {
           >
             <span
               className={`truncate font-data text-[9px] uppercase tracking-[0.12em] transition-colors ${
-                hover?.id === grupo.secaoSigla ? "text-ink" : "text-ink-soft/55"
+                hover?.id === grupo.secaoSigla ? "text-ink" : "text-ink-muted"
               }`}
             >
               {grupo.secaoNome}
@@ -121,15 +122,16 @@ export function Treemap({ grupos }: { grupos: GrupoSecao[] }) {
                   top: t.y,
                   width: t.w,
                   height: t.h,
-                  backgroundColor: corTile(t.intensidade),
-                  color: corTextoTile(t.intensidade),
-                  outline: "1px solid rgba(20,19,16,0.55)",
+                  backgroundColor: corTile(t.intensidade, claro),
+                  color: corTextoTile(t.intensidade, claro),
+                  // Contorno na cor do fundo = lê como vão entre tiles nos dois temas.
+                  outline: "1px solid var(--color-canvas)",
                 }}
               >
                 {t.validado && (
                   <span
-                    className="absolute right-[3px] top-[3px] h-1.5 w-1.5 rounded-full"
-                    style={{ backgroundColor: "#FFFBF4" }}
+                    // currentColor = a cor de texto do tile, que já contrasta com ele
+                    className="absolute right-[3px] top-[3px] h-1.5 w-1.5 rounded-full bg-current"
                   />
                 )}
                 {showLabel && (
@@ -153,19 +155,18 @@ export function Treemap({ grupos }: { grupos: GrupoSecao[] }) {
       {badge && (
         <div className="pointer-events-none absolute bottom-3 left-1/2 z-20 -translate-x-1/2">
           <div
-            className="flex items-center gap-4 rounded-lg border border-hairline px-4 py-2.5 shadow-xl"
-            style={{ backgroundColor: "rgba(13,12,10,0.96)" }}
+            className="flex items-center gap-4 rounded-lg border border-hairline bg-overlay px-4 py-2.5 shadow-xl"
           >
             <div className="flex items-center gap-2.5">
               <span className="flex h-9 w-9 items-center justify-center rounded-md bg-surface-hover text-ink">
                 <SecaoIcon sigla={badge.iconSigla} className="h-[19px] w-[19px]" />
               </span>
               <div className="leading-tight">
-                <div className="flex items-center gap-1.5 font-data text-[8px] uppercase tracking-wider text-ink-soft/45">
+                <div className="flex items-center gap-1.5 font-data text-[8px] uppercase tracking-wider text-ink-muted">
                   <span className="max-w-[150px] truncate">{badge.kicker}</span>
                   {badge.validado && (
-                    <span className="inline-flex items-center gap-1 text-ink/80">
-                      <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "#FFFBF4" }} />
+                    <span className="inline-flex items-center gap-1 text-ink-muted">
+                      <span className="h-1.5 w-1.5 rounded-full bg-ink" />
                       validado
                     </span>
                   )}

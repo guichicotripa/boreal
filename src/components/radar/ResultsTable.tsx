@@ -49,7 +49,7 @@ export function ResultsTable({
               (h, i) => (
                 <th
                   key={i}
-                  className={`z-10 bg-canvas px-3 py-2 text-[11px] font-medium text-ink-soft/60 shadow-[inset_0_-1px_0_rgba(255,251,244,0.07)] xl:sticky xl:top-14 ${
+                  className={`z-10 bg-canvas px-3 py-2 text-[11px] font-medium text-ink-muted shadow-[inset_0_-1px_0_rgba(255,251,244,0.07)] xl:sticky xl:top-14 ${
                     h === "Capital" ? "text-right" : ""
                   }`}
                 >
@@ -89,7 +89,7 @@ export function ResultsTable({
                   >
                     {e.razao_social}
                   </button>
-                  <p className="truncate text-[11px] text-ink-soft/60">
+                  <p className="truncate text-[11px] text-ink-muted">
                     {e.municipio}/{e.uf}
                     {e.cnae_principal_desc ? ` · ${e.cnae_principal_desc}` : ""}
                   </p>
@@ -104,7 +104,7 @@ export function ResultsTable({
                     {delta != null && (
                       <span
                         className={`font-data text-[10px] tabular-nums ${
-                          delta > 0 ? "text-risk-high" : delta < 0 ? "text-ink-soft/60" : "text-ink-soft/50"
+                          delta > 0 ? "text-risk-high" : delta < 0 ? "text-ink-muted" : "text-ink-muted"
                         }`}
                         title="ajuste após investigação com IA"
                       >
@@ -120,7 +120,7 @@ export function ResultsTable({
                       ● Sucessório
                     </span>
                   ) : (
-                    <span className="text-[11px] text-ink-soft/40">—</span>
+                    <span className="text-[11px] text-ink-muted">—</span>
                   )}
                 </td>
                 <td className="px-3 py-2 text-[12px] text-ink-soft">{e.porte ?? "—"}</td>
@@ -155,7 +155,7 @@ export function ResultsTable({
           })}
         </tbody>
       </table>
-      <div className="flex items-center justify-between border-t border-hairline px-3 py-1.5 text-[11px] text-ink-soft/60">
+      <div className="flex items-center justify-between border-t border-hairline px-3 py-1.5 text-[11px] text-ink-muted">
         <span>{empresas.length} {empresas.length === 1 ? "empresa" : "empresas"}</span>
         <span className="hidden font-data text-[10px] md:inline" aria-hidden="true">
           j/k navega · ⏎ abre

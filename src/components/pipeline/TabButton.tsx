@@ -26,7 +26,7 @@ export function TabButton({
       {label}
       <span
         className={`rounded-full border px-1.5 py-px font-data text-[10px] tabular-nums ${
-          active ? "border-hairline-hover text-ink-soft" : "border-hairline text-ink-soft/60"
+          active ? "border-hairline-hover text-ink-soft" : "border-hairline text-ink-muted"
         }`}
       >
         {count}

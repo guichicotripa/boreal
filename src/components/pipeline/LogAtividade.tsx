@@ -53,7 +53,7 @@ export function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
           <span className="text-[11px] font-medium text-ink-soft">
             {total > 0 ? `Contatos · ${total}` : "Contatos"}
           </span>
-          <span className="text-[11px] text-ink-soft/45">
+          <span className="text-[11px] text-ink-muted">
             ligações, emails, reuniões…
           </span>
         </div>
@@ -62,7 +62,7 @@ export function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
           className="flex h-5 items-center gap-1 rounded border border-hairline px-1.5 text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none"
         >
           <span>{aberto ? "−" : "+"}</span>
-          {!aberto && <span className="text-ink-soft/60">registrar</span>}
+          {!aberto && <span className="text-ink-muted">registrar</span>}
         </button>
       </div>
 
@@ -90,7 +90,7 @@ export function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
               onChange={(e) => setTexto(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") adicionar(); }}
               placeholder="registrar contato…"
-              className="min-w-0 flex-1 rounded border border-hairline bg-surface px-1.5 py-1 text-[11px] text-ink outline-none placeholder:text-ink-soft/45 focus:border-hairline-hover"
+              className="min-w-0 flex-1 rounded border border-hairline bg-surface px-1.5 py-1 text-[11px] text-ink outline-none placeholder:text-ink-muted focus:border-hairline-hover"
             />
             <button
               onClick={adicionar}
@@ -104,8 +104,8 @@ export function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
             <ul className="space-y-1.5">
               {itens.map((it) => (
                 <li key={it.id} className="text-[11px] leading-snug">
-                  <span className="font-data text-ink-soft/60">{dataCurta(it.criado_em)}</span>{" "}
-                  <span className="font-medium text-ink-soft/60">
+                  <span className="font-data text-ink-muted">{dataCurta(it.criado_em)}</span>{" "}
+                  <span className="font-medium text-ink-muted">
                     {TIPOS_INTERACAO.find((t) => t.id === it.tipo)?.label ?? it.tipo}
                   </span>
                   <span className="text-ink-soft"> — {it.descricao}</span>
@@ -113,9 +113,9 @@ export function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
               ))}
             </ul>
           ) : itens ? (
-            <p className="text-[11px] text-ink-soft/60">Nenhum contato registrado.</p>
+            <p className="text-[11px] text-ink-muted">Nenhum contato registrado.</p>
           ) : (
-            <p className="text-[11px] text-ink-soft/60">Carregando…</p>
+            <p className="text-[11px] text-ink-muted">Carregando…</p>
           )}
         </div>
       )}

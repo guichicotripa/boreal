@@ -73,7 +73,7 @@ export default function Setores() {
                   </div>
                 </div>
 
-                <p className="mt-1 font-data text-[11px] uppercase tracking-wider text-ink-soft/70">
+                <p className="mt-1 font-data text-[11px] uppercase tracking-wider text-ink-muted">
                   Lente: {LENTE[s.lente]}
                 </p>
 
@@ -82,30 +82,30 @@ export default function Setores() {
                     <p className={`font-display text-2xl tabular-nums ${recallCor(s)}`}>
                       {s.recall_sucessao != null ? `${s.recall_sucessao}%` : "—"}
                     </p>
-                    <p className="font-data text-[10px] uppercase tracking-wider text-ink-soft/70">
+                    <p className="font-data text-[10px] uppercase tracking-wider text-ink-muted">
                       Acerto nas vendas de sucessão
                     </p>
                   </div>
                   <div>
                     <p className="font-display text-2xl tabular-nums text-ink-soft">{s.pct_sucessao}%</p>
-                    <p className="font-data text-[10px] uppercase tracking-wider text-ink-soft/70">
+                    <p className="font-data text-[10px] uppercase tracking-wider text-ink-muted">
                       Do M&amp;A é sucessão
                     </p>
                   </div>
                   <div>
                     <p className="font-display text-2xl tabular-nums text-ink">{fmt(s.quente)}</p>
-                    <p className="font-data text-[10px] uppercase tracking-wider text-ink-soft/70">Sinalizadas</p>
+                    <p className="font-data text-[10px] uppercase tracking-wider text-ink-muted">Sinalizadas</p>
                   </div>
                   <div>
                     <p className="font-display text-2xl tabular-nums text-ink-soft">{fmt(s.universo)}</p>
-                    <p className="font-data text-[10px] uppercase tracking-wider text-ink-soft/70">Universo (SP)</p>
+                    <p className="font-data text-[10px] uppercase tracking-wider text-ink-muted">Universo (SP)</p>
                   </div>
                 </div>
 
                 <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">{s.descricao}</p>
 
                 {s.nacional?.recall_sucessao != null && (
-                  <p className="mt-2 font-data text-[11px] text-ink-soft/60">
+                  <p className="mt-2 font-data text-[11px] text-ink-muted">
                     Testado fora de SP:{" "}
                     <strong>{s.nacional.recall_sucessao}%</strong> de acerto nas vendas de
                     sucessão (Brasil inteiro, N={s.nacional.n_aquisicoes_sucessao} aquisições).
@@ -114,7 +114,7 @@ export default function Setores() {
 
                 {ctx && (
                   <div className="mt-5 border-t border-hairline pt-5">
-                    <p className="mb-3 font-data text-[11px] uppercase tracking-wider text-ink-soft/70">
+                    <p className="mb-3 font-data text-[11px] uppercase tracking-wider text-ink-muted">
                       Contexto de mercado
                     </p>
                     <ContextoSetor ctx={ctx} />

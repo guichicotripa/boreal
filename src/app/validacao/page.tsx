@@ -74,7 +74,7 @@ export default function Validacao() {
 
         {/* Número-herói — a moldura de sucessão (onde a lente vale) */}
         <section className="rounded-xl border border-hairline bg-surface p-8">
-          <p className="mb-5 font-data text-[11px] uppercase tracking-[0.14em] text-ink-soft/70">
+          <p className="mb-5 font-data text-[11px] uppercase tracking-[0.14em] text-ink-muted">
             Recall · vendas por sucessão · metalmecânica
           </p>
 
@@ -94,7 +94,7 @@ export default function Validacao() {
                 <p className="font-data text-[22px] font-medium leading-none text-ink">
                   ~{Math.round((METALMEC.recall_sucessao ?? 0) / 10)}×
                 </p>
-                <p className="mt-1.5 font-data text-[11px] leading-snug text-ink-soft/70">
+                <p className="mt-1.5 font-data text-[11px] leading-snug text-ink-muted">
                   melhor que o acaso
                   <br />
                   (acaso = 10%)
@@ -104,14 +104,14 @@ export default function Validacao() {
                 <p className="font-data text-[22px] font-medium leading-none text-ink">
                   {METALMEC.nacional?.recall_sucessao}%
                 </p>
-                <p className="mt-1.5 font-data text-[11px] leading-snug text-ink-soft/70">
+                <p className="mt-1.5 font-data text-[11px] leading-snug text-ink-muted">
                   confirmado
                   <br />
                   Brasil inteiro
                 </p>
               </div>
             </div>
-            <p className="flex-1 text-[13px] leading-relaxed text-ink-soft/60">
+            <p className="flex-1 text-[13px] leading-relaxed text-ink-muted">
               Contando todas as aquisições, o recall cai para {METALMEC.recall_top10}%.
               Metade do M&amp;A do setor é consolidação, não sucessão. Um score de
               sucessão não deveria prever isso.
@@ -121,7 +121,7 @@ export default function Validacao() {
 
         {/* Hindcast nominal — o número feito concreto */}
         <section className="mt-10">
-          <h2 className="font-data text-[11px] uppercase tracking-wider text-ink-soft/70">
+          <h2 className="font-data text-[11px] uppercase tracking-wider text-ink-muted">
             Aquisições reais — comprovadas depois do corte
           </h2>
           <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
@@ -132,7 +132,7 @@ export default function Validacao() {
           <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-hairline bg-surface text-left font-data text-[11px] uppercase tracking-wider text-ink-soft/70">
+                <tr className="border-b border-hairline bg-surface text-left font-data text-[11px] uppercase tracking-wider text-ink-muted">
                   <th scope="col" className="px-4 py-3 font-medium">Empresa</th>
                   <th scope="col" className="px-4 py-3 font-medium">Município</th>
                   <th scope="col" className="px-4 py-3 text-right font-medium">Vendida</th>
@@ -155,7 +155,7 @@ export default function Validacao() {
               </tbody>
             </table>
           </div>
-          <p className="mt-3 text-xs leading-snug text-ink-soft/60">
+          <p className="mt-3 text-xs leading-snug text-ink-muted">
             {hindcast.no_top10} das {hindcast.total_aquisicoes} aquisições reais caíram no nosso top
             decil ({hindcast.recall_top10}%). Mostramos as de melhor rank acima, mas o número agrega
             todas, inclusive as que erramos. Sem cherry-pick.
@@ -164,7 +164,7 @@ export default function Validacao() {
 
         {/* Metodologia */}
         <section className="mt-10">
-          <h2 className="font-data text-[11px] uppercase tracking-wider text-ink-soft/70">
+          <h2 className="font-data text-[11px] uppercase tracking-wider text-ink-muted">
             A metodologia em 3 passos
           </h2>
           <ol className="mt-4 space-y-4">
@@ -198,7 +198,7 @@ export default function Validacao() {
 
         {/* Tabela por vertical — honestidade inclusa */}
         <section className="mt-10">
-          <h2 className="font-data text-[11px] uppercase tracking-wider text-ink-soft/70">
+          <h2 className="font-data text-[11px] uppercase tracking-wider text-ink-muted">
             Resultado por setor
           </h2>
           <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
@@ -210,7 +210,7 @@ export default function Validacao() {
           <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-hairline bg-surface text-left font-data text-[11px] uppercase tracking-wider text-ink-soft/70">
+                <tr className="border-b border-hairline bg-surface text-left font-data text-[11px] uppercase tracking-wider text-ink-muted">
                   <th scope="col" className="px-4 py-3 font-medium">Setor</th>
                   <th scope="col" className="px-4 py-3 text-right font-medium">Universo</th>
                   <th scope="col" className="px-4 py-3 text-right font-medium">Aquisições</th>
@@ -235,14 +235,14 @@ export default function Validacao() {
               </tbody>
             </table>
           </div>
-          <p className="mt-3 text-xs leading-snug text-ink-soft/60">
+          <p className="mt-3 text-xs leading-snug text-ink-muted">
             Sem cherry-pick: os números são crus, incluindo os setores onde o sinal é fraco.
           </p>
         </section>
 
         {/* O loop de calibração — os pesos são fit, não chutados */}
         <section className="mt-10">
-          <p className="font-data text-[10px] uppercase tracking-[0.15em] text-ink-soft/70">
+          <p className="font-data text-[10px] uppercase tracking-[0.15em] text-ink-muted">
             Calibração do score
           </p>
           <h2 className="mt-1.5 font-display text-[22px] leading-tight tracking-tight text-ink">
@@ -261,7 +261,7 @@ export default function Validacao() {
           <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-hairline bg-surface text-left font-data text-[11px] uppercase tracking-wider text-ink-soft/70">
+                <tr className="border-b border-hairline bg-surface text-left font-data text-[11px] uppercase tracking-wider text-ink-muted">
                   <th scope="col" className="px-4 py-3 font-medium">Sinal</th>
                   <th scope="col" className="px-4 py-3 text-right font-medium">No universo</th>
                   <th scope="col" className="px-4 py-3 text-right font-medium">Nas vendidas</th>
@@ -270,7 +270,7 @@ export default function Validacao() {
               </thead>
               <tbody className="font-data">
                 <tr className="border-b border-hairline bg-surface">
-                  <td colSpan={4} className="px-4 py-2 font-data text-[10px] uppercase tracking-wider text-ink-soft/70">
+                  <td colSpan={4} className="px-4 py-2 font-data text-[10px] uppercase tracking-wider text-ink-muted">
                     Sinais que pesam no score
                   </td>
                 </tr>
@@ -287,7 +287,7 @@ export default function Validacao() {
                     </tr>
                   ))}
                 <tr className="border-b border-hairline bg-surface">
-                  <td colSpan={4} className="px-4 py-2 font-data text-[10px] uppercase tracking-wider text-ink-soft/70">
+                  <td colSpan={4} className="px-4 py-2 font-data text-[10px] uppercase tracking-wider text-ink-muted">
                     Sinais descartados pelo dado
                   </td>
                 </tr>
@@ -295,10 +295,10 @@ export default function Validacao() {
                   .filter((f) => f.sinal === "negativo")
                   .map((f) => (
                     <tr key={f.nome} className="border-b border-hairline last:border-0">
-                      <td className="px-4 py-3 text-ink/70">{f.nome}</td>
-                      <td className="px-4 py-3 text-right tabular-nums text-ink-soft/70">{f.universo_pct}%</td>
-                      <td className="px-4 py-3 text-right tabular-nums text-ink-soft/70">{f.adquiridas_pct}%</td>
-                      <td className="px-4 py-3 text-right tabular-nums text-ink/70">
+                      <td className="px-4 py-3 text-ink-muted">{f.nome}</td>
+                      <td className="px-4 py-3 text-right tabular-nums text-ink-muted">{f.universo_pct}%</td>
+                      <td className="px-4 py-3 text-right tabular-nums text-ink-muted">{f.adquiridas_pct}%</td>
+                      <td className="px-4 py-3 text-right tabular-nums text-ink-muted">
                         {f.lift.toLocaleString("pt-BR")}×
                       </td>
                     </tr>
@@ -310,7 +310,7 @@ export default function Validacao() {
 
         {/* Metodologia detalhada + por que importa */}
         <section className="mt-10 rounded-xl border border-hairline bg-surface p-6">
-          <h2 className="font-data text-[11px] uppercase tracking-wider text-ink-soft/70">
+          <h2 className="font-data text-[11px] uppercase tracking-wider text-ink-muted">
             Por que isso importa
           </h2>
           <p className="mt-3 leading-relaxed text-ink-soft">

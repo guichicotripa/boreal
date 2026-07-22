@@ -78,7 +78,7 @@ export default async function Consolidadores() {
           </p>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             <div className="rounded-lg border border-hairline p-4">
-              <p className="font-data text-[11px] uppercase tracking-wider text-ink-soft/70">
+              <p className="font-data text-[11px] uppercase tracking-wider text-ink-muted">
                 Metalmecânica · sucessão
               </p>
               <p className="mt-2 text-sm leading-snug text-ink-soft">
@@ -87,7 +87,7 @@ export default async function Consolidadores() {
               </p>
             </div>
             <div className="rounded-lg border border-hairline p-4">
-              <p className="font-data text-[11px] uppercase tracking-wider text-ink-soft/70">
+              <p className="font-data text-[11px] uppercase tracking-wider text-ink-muted">
                 Saúde · consolidação
               </p>
               <p className="mt-2 text-sm leading-snug text-ink-soft">
@@ -95,7 +95,7 @@ export default async function Consolidadores() {
               </p>
             </div>
           </div>
-          <p className="mt-4 text-[13px] leading-relaxed text-ink-soft/60">
+          <p className="mt-4 text-[13px] leading-relaxed text-ink-muted">
             Mesma mina de dados (transições de sócios no CNPJ), invertida: em vez de detectar o sócio
             PJ <em>entrando</em> num alvo, agrupamos por <em>quem</em> entrou. Quem aparece em muitas
             empresas do mesmo setor é um consolidador — e dá pra mapear o <em>buy-box</em> dele (o perfil
@@ -105,7 +105,7 @@ export default async function Consolidadores() {
 
         {/* Honestidade: o backtest da previsão */}
         <section className="mt-6">
-          <p className="font-data text-[11px] uppercase tracking-wider text-ink-soft/70">
+          <p className="font-data text-[11px] uppercase tracking-wider text-ink-muted">
             E o próximo alvo? Backtestamos — e não vendemos como previsão
           </p>
           <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
@@ -132,7 +132,7 @@ export default async function Consolidadores() {
                   {c.n_adquiridas} já adquiridas
                 </span>
               </div>
-              <p className="mt-5 font-data text-[11px] uppercase tracking-wider text-ink-soft/70">
+              <p className="mt-5 font-data text-[11px] uppercase tracking-wider text-ink-muted">
                 Candidatos no padrão do comprador
               </p>
               <ul className="mt-2 divide-y divide-hairline">
@@ -151,7 +151,7 @@ export default async function Consolidadores() {
                       ) : (
                         <span className="text-sm text-ink">{titulo(a.nome)}</span>
                       )}
-                      <span className="shrink-0 font-data text-[11px] text-ink-soft/70">
+                      <span className="shrink-0 font-data text-[11px] text-ink-muted">
                         sócio {a.socio_faixa} · desde {a.desde}
                       </span>
                     </li>

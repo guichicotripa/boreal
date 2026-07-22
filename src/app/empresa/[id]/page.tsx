@@ -196,7 +196,7 @@ export default function EmpresaPage() {
   if (carregado && !empresa && !empresaLoading) {
     return (
       <main className="mx-auto max-w-3xl px-6 py-20">
-        <p className="text-[11px] font-medium text-ink-soft/60">Empresa não encontrada</p>
+        <p className="text-[11px] font-medium text-ink-muted">Empresa não encontrada</p>
         <h1 className="mt-2 font-display text-2xl text-ink">Não localizamos esta empresa.</h1>
         <p className="mt-3 max-w-md text-[15px] leading-relaxed text-ink-soft">
           O identificador pode estar incorreto ou a empresa não está na base indexada. Volte ao Radar para encontrar empresas-alvo.
@@ -250,7 +250,7 @@ export default function EmpresaPage() {
       <header className="mx-auto max-w-6xl px-6 pb-5 pt-6">
         <Link
           href={backHref}
-          className="group inline-flex items-center gap-2 rounded-sm text-[12px] font-medium text-ink-soft/70 transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+          className="group inline-flex items-center gap-2 rounded-sm text-[12px] font-medium text-ink-muted transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
         >
           <span className="transition-transform duration-200 group-hover:-translate-x-0.5">←</span>
           {backLabel}
@@ -261,7 +261,7 @@ export default function EmpresaPage() {
             <h1 className="font-display text-2xl leading-tight tracking-tight text-ink md:text-[28px]">
               {e.razao_social}
             </h1>
-            <p className="mt-1.5 font-data text-[12px] text-ink-soft/70">
+            <p className="mt-1.5 font-data text-[12px] text-ink-muted">
               {formatCnpj(e.cnpj)}
               <span className="text-ink-faint"> · </span>{e.municipio}/{e.uf}
               <span className="text-ink-faint"> · </span>fundada {anoFund}{anosOp != null ? ` (${anosOp} anos)` : ""}
@@ -283,13 +283,13 @@ export default function EmpresaPage() {
               <span className={`text-[11px] font-medium ${t.text}`}>{t.label}</span>
               {deltaV1 != null && deltaV1 !== 0 && (
                 <span
-                  className={`font-data text-[11px] tabular-nums ${deltaV1 > 0 ? "text-risk-high" : "text-ink-soft/60"}`}
+                  className={`font-data text-[11px] tabular-nums ${deltaV1 > 0 ? "text-risk-high" : "text-ink-muted"}`}
                   title="ajuste da investigação sobre o score determinístico"
                 >
                   {deltaV1 > 0 ? `↑${deltaV1}` : `↓${Math.abs(deltaV1)}`}
                 </span>
               )}
-              <span className="font-data text-[11px] text-ink-soft/60">/ 100</span>
+              <span className="font-data text-[11px] text-ink-muted">/ 100</span>
             </div>
             <p className="mt-2 text-[12px] leading-snug text-ink-soft">
               {perfilSuc
@@ -307,7 +307,7 @@ export default function EmpresaPage() {
                       <span className="h-1 min-w-0 flex-1 overflow-hidden rounded-full bg-hairline">
                         <span className={`block h-full ${t.bar}`} style={{ width: `${Math.round((pts / d.max) * 100)}%` }} />
                       </span>
-                      <span className="w-10 shrink-0 text-right font-data text-[10.5px] tabular-nums text-ink-soft/70">
+                      <span className="w-10 shrink-0 text-right font-data text-[10.5px] tabular-nums text-ink-muted">
                         {pts}/{d.max}
                       </span>
                     </li>
@@ -327,19 +327,19 @@ export default function EmpresaPage() {
 
           {/* Dados da Receita */}
           <section className="rounded-lg border border-hairline p-4">
-            <h2 className="mb-3 text-[11px] font-medium text-ink-soft/60">Dados</h2>
+            <h2 className="mb-3 text-[11px] font-medium text-ink-muted">Dados</h2>
             <dl className="space-y-2.5">
               <Campo k="Natureza jurídica" v={e.natureza_juridica} />
               <Campo k="Capital social" v={formatCapitalCompact(e.capital_social)} mono />
               <Campo k="CNAE principal" v={e.cnae_principal} sub={e.cnae_principal_desc} mono />
             </dl>
-            <p className="mt-3 text-[10.5px] text-ink-soft/60">Dados públicos da Receita Federal.</p>
+            <p className="mt-3 text-[10.5px] text-ink-muted">Dados públicos da Receita Federal.</p>
           </section>
 
           {/* Contato */}
           {(e.telefone || e.email) && (
             <section className="rounded-lg border border-hairline p-4">
-              <h2 className="mb-3 text-[11px] font-medium text-ink-soft/60">Contato</h2>
+              <h2 className="mb-3 text-[11px] font-medium text-ink-muted">Contato</h2>
               <div className="flex flex-col gap-2">
                 {e.telefone && (
                   <a
@@ -365,7 +365,7 @@ export default function EmpresaPage() {
 
           {/* Sócios — evidência do driver de maior peso do score */}
           <section className="rounded-lg border border-hairline p-4">
-            <h2 className="mb-3 text-[11px] font-medium text-ink-soft/60">
+            <h2 className="mb-3 text-[11px] font-medium text-ink-muted">
               Sócios{socios.length > 0 ? ` (${socios.length})` : ""}
             </h2>
             {socios.length > 0 ? (
@@ -376,7 +376,7 @@ export default function EmpresaPage() {
                     <li key={s.id ?? `${s.nome}-${i}`} className="flex items-center justify-between gap-2">
                       <div className="min-w-0">
                         <p className="truncate text-[12.5px] text-ink">{s.nome}</p>
-                        {ent && <p className="text-[10.5px] text-ink-soft/60">sócio desde {ent}</p>}
+                        {ent && <p className="text-[10.5px] text-ink-muted">sócio desde {ent}</p>}
                       </div>
                       {s.faixa_etaria && FAIXA_LABEL[s.faixa_etaria] && (
                         <span className={`shrink-0 rounded px-1.5 py-0.5 font-data text-[10.5px] tabular-nums ${FAIXA_COLOR[s.faixa_etaria] ?? "bg-surface text-ink-soft"}`}>
@@ -388,7 +388,7 @@ export default function EmpresaPage() {
                 })}
               </ul>
             ) : (
-              <p className="text-[12px] text-ink-soft/60">Quadro societário não disponível.</p>
+              <p className="text-[12px] text-ink-muted">Quadro societário não disponível.</p>
             )}
           </section>
         </aside>
@@ -405,7 +405,7 @@ export default function EmpresaPage() {
                   onClick={() => setTab(tabId)}
                   aria-current={ativo ? "true" : undefined}
                   className={`mr-1 flex shrink-0 items-center gap-1.5 whitespace-nowrap border-b-2 px-2.5 pb-2.5 pt-1 text-[12.5px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 ${
-                    ativo ? "border-ink text-ink" : "border-transparent text-ink-soft/70 hover:text-ink"
+                    ativo ? "border-ink text-ink" : "border-transparent text-ink-muted hover:text-ink"
                   }`}
                 >
                   {label}
@@ -413,7 +413,7 @@ export default function EmpresaPage() {
                     <span aria-hidden="true" className="h-1.5 w-1.5 animate-pulse rounded-full bg-ink" />
                   )}
                   {tabId === "similares" && similares && similares.length > 0 && (
-                    <span className="rounded-full border border-hairline px-1.5 py-px font-data text-[10px] tabular-nums text-ink-soft/60">
+                    <span className="rounded-full border border-hairline px-1.5 py-px font-data text-[10px] tabular-nums text-ink-muted">
                       {similares.length}
                     </span>
                   )}
@@ -444,7 +444,7 @@ export default function EmpresaPage() {
                         <div className="h-3 w-11/12 animate-pulse rounded bg-surface-hover" />
                         <div className="h-3 w-4/5 animate-pulse rounded bg-surface-hover" />
                       </div>
-                      <p className="mt-2 text-[11px] text-ink-soft/60">
+                      <p className="mt-2 text-[11px] text-ink-muted">
                         Descrição enriquecida pela IA · costuma levar de 30 a 60s
                       </p>
                     </div>
@@ -458,7 +458,7 @@ export default function EmpresaPage() {
                 {/* Sinais — evidência do score (IA + estruturais) */}
                 {research?.sinais && research.sinais.length > 0 && (
                   <div>
-                    <h3 className="mb-2 text-[11px] font-medium text-ink-soft/60">Sinais — investigação com IA</h3>
+                    <h3 className="mb-2 text-[11px] font-medium text-ink-muted">Sinais — investigação com IA</h3>
                     <div className="space-y-1">
                       {research.sinais.map((s, i) => (
                         <div key={i} className="flex items-start justify-between gap-4 py-1">
@@ -476,7 +476,7 @@ export default function EmpresaPage() {
 
                 {sinaisScore.length > 0 && (
                   <div>
-                    <h3 className="mb-2 text-[11px] font-medium text-ink-soft/60">Sinais estruturais — da Receita</h3>
+                    <h3 className="mb-2 text-[11px] font-medium text-ink-muted">Sinais estruturais — da Receita</h3>
                     <ul className="space-y-1.5">
                       {sinaisScore.map((s, i) => (
                         <li key={i} className="flex items-start gap-2 text-[13px] text-ink-soft">
@@ -490,10 +490,10 @@ export default function EmpresaPage() {
 
                 {e.cnaes_secundarios && e.cnaes_secundarios.length > 0 && (
                   <div>
-                    <h3 className="mb-2 text-[11px] font-medium text-ink-soft/60">Atividades secundárias</h3>
+                    <h3 className="mb-2 text-[11px] font-medium text-ink-muted">Atividades secundárias</h3>
                     <ul className="space-y-1">
                       {e.cnaes_secundarios.map((c) => (
-                        <li key={c.codigo} className="flex items-center gap-2 text-[12px] leading-relaxed text-ink-soft/60">
+                        <li key={c.codigo} className="flex items-center gap-2 text-[12px] leading-relaxed text-ink-muted">
                           <span className="shrink-0 text-ink-faint">·</span>
                           {c.descricao ?? c.codigo}
                         </li>
@@ -505,8 +505,8 @@ export default function EmpresaPage() {
                 {/* Contexto do setor — leitura macro/competitiva antes da abordagem */}
                 {ctx && setor && (
                   <div className="border-t border-hairline pt-6">
-                    <h3 className="mb-1 text-[11px] font-medium text-ink-soft/60">Contexto do setor</h3>
-                    <p className="mb-3 text-[12px] text-ink-soft/60">
+                    <h3 className="mb-1 text-[11px] font-medium text-ink-muted">Contexto do setor</h3>
+                    <p className="mb-3 text-[12px] text-ink-muted">
                       {setor.nome} · lente {setor.lente === "consolidacao" ? "consolidação" : "sucessão"}
                     </p>
                     <ContextoSetor ctx={ctx} />
@@ -531,14 +531,14 @@ export default function EmpresaPage() {
               memo ? (
                 <MemoDisplay empresa={e} analise={memo} trajetoria={traj} />
               ) : memoLoading ? (
-                <p className="animate-pulse text-[13px] text-ink-soft/70" role="status">
+                <p className="animate-pulse text-[13px] text-ink-muted" role="status">
                   Gerando memo…
                 </p>
               ) : memoErro ? (
                 <EstadoErro msg="Não foi possível gerar o memo." onRetry={gerarMemo} />
               ) : (
                 <div>
-                  <p className="max-w-md text-[13px] leading-relaxed text-ink-soft/70">
+                  <p className="max-w-md text-[13px] leading-relaxed text-ink-muted">
                     Síntese de investimento a partir dos sinais investigados: análise sucessória,
                     red flags, perguntas de abordagem e precedentes do setor.
                   </p>
@@ -560,7 +560,7 @@ export default function EmpresaPage() {
                   <Timeline empresa={e} />
                   {traj && traj.eventos.length > 0 && (
                     <div>
-                      <h3 className="mb-2 text-[11px] font-medium text-ink-soft/60">
+                      <h3 className="mb-2 text-[11px] font-medium text-ink-muted">
                         Movimentação societária (2022→2025)
                       </h3>
                       <TrajetoriaEventos trajetoria={traj} />
@@ -568,16 +568,16 @@ export default function EmpresaPage() {
                   )}
                 </div>
               ) : (
-                <p className="text-[13px] text-ink-soft/70">Sem histórico societário disponível.</p>
+                <p className="text-[13px] text-ink-muted">Sem histórico societário disponível.</p>
               )
             )}
 
             {/* ── SIMILARES ── (auto; critério explícito) */}
             {tab === "similares" && (
               <div>
-                <p className="mb-3 text-[12px] text-ink-soft/60">Critério: mesmo CNAE, praça e porte.</p>
+                <p className="mb-3 text-[12px] text-ink-muted">Critério: mesmo CNAE, praça e porte.</p>
                 {similaresLoading ? (
-                  <p className="animate-pulse text-[13px] text-ink-soft/70" role="status">Buscando empresas parecidas…</p>
+                  <p className="animate-pulse text-[13px] text-ink-muted" role="status">Buscando empresas parecidas…</p>
                 ) : similares && similares.length > 0 ? (
                   <ul className="divide-y divide-hairline">
                     {similares.map((s) => {
@@ -592,13 +592,13 @@ export default function EmpresaPage() {
                           >
                             <div className="min-w-0">
                               <p className="truncate text-[13.5px] font-medium text-ink">{s.razao_social}</p>
-                              <p className="text-[11px] text-ink-soft/60">
+                              <p className="text-[11px] text-ink-muted">
                                 {s.municipio}/{s.uf}
                                 {s.similaridade.motivos.length > 0 && ` · ${s.similaridade.motivos.join(", ")}`}
                               </p>
                             </div>
                             <div className="flex shrink-0 items-center gap-2">
-                              <span className="font-data text-[11px] tabular-nums text-ink-soft/60">
+                              <span className="font-data text-[11px] tabular-nums text-ink-muted">
                                 {s.similaridade.pontos}% match
                               </span>
                               <span className={`rounded border ${sT.badge} px-1.5 font-data text-[11px] tabular-nums ${sT.text}`}>
@@ -629,10 +629,10 @@ function Campo({ k, v, sub, mono }: { k: string; v: string | null | undefined; s
   if (!v) return null;
   return (
     <div className="min-w-0">
-      <dt className="text-[10.5px] font-medium text-ink-soft/60">{k}</dt>
+      <dt className="text-[10.5px] font-medium text-ink-muted">{k}</dt>
       <dd className={`mt-0.5 text-[12.5px] text-ink ${mono ? "font-data tabular-nums" : ""}`}>
         {v}
-        {sub && <span className="block font-sans text-[11px] leading-snug text-ink-soft/70">{sub}</span>}
+        {sub && <span className="block font-sans text-[11px] leading-snug text-ink-muted">{sub}</span>}
       </dd>
     </div>
   );
@@ -655,7 +655,7 @@ function ResearchProgress() {
         <span className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-ink" />
         <span className="text-ink">{RESEARCH_FASES[fase]}</span>
       </p>
-      <p className="mt-1.5 text-[11px] text-ink-soft/60">
+      <p className="mt-1.5 text-[11px] text-ink-muted">
         Pesquisa em fontes públicas · costuma levar de 30 a 60s
       </p>
     </div>
@@ -666,7 +666,7 @@ function ResearchProgress() {
 function EstadoErro({ msg, onRetry }: { msg: string; onRetry: () => void }) {
   return (
     <div>
-      <p className="text-[13px] text-ink-soft/70">{msg}</p>
+      <p className="text-[13px] text-ink-muted">{msg}</p>
       <button
         type="button"
         onClick={onRetry}

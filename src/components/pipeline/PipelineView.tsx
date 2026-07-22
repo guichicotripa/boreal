@@ -407,7 +407,7 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
                 value={busca}
                 onChange={(e) => setBusca(e.target.value)}
                 placeholder="buscar empresa, cidade, setor…"
-                className="w-56 rounded border border-hairline bg-surface px-2 py-1.5 text-xs text-ink outline-none placeholder:text-ink-soft/45 focus:border-hairline-hover"
+                className="w-56 rounded border border-hairline bg-surface px-2 py-1.5 text-xs text-ink outline-none placeholder:text-ink-muted focus:border-hairline-hover"
               />
               {/* Filtro dono — Radix Select para manter o dark theme */}
               <Select value={filtroDono} onValueChange={(v) => setFiltroDono(v ?? "todos")}>
@@ -441,7 +441,7 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
               {filtroAtivo && (
                 <button
                   onClick={() => { setBusca(""); setFiltroDono("todos"); setSoAtrasadas(false); }}
-                  className="rounded-sm text-[11.5px] font-medium text-ink-soft/60 transition-colors hover:text-ink-soft focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+                  className="rounded-sm text-[11.5px] font-medium text-ink-muted transition-colors hover:text-ink-soft focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
                 >
                   limpar
                 </button>
@@ -450,7 +450,7 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
 
             {/* Row list */}
             {currentList.length === 0 ? (
-              <p className="mt-2 rounded border border-dashed border-hairline px-3 py-6 text-center text-[11px] text-ink-soft/60">
+              <p className="mt-2 rounded border border-dashed border-hairline px-3 py-6 text-center text-[11px] text-ink-muted">
                 {filtroAtivo
                   ? "Nenhuma empresa neste filtro."
                   : isAgenda
@@ -503,7 +503,7 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
           <span className="whitespace-nowrap text-[12px] text-ink-soft">{toast}</span>
           <button
             onClick={performUndo}
-            className="shrink-0 text-[11px] font-medium text-ink-soft/60 transition-colors hover:text-ink focus-visible:outline-none"
+            className="shrink-0 text-[11px] font-medium text-ink-muted transition-colors hover:text-ink focus-visible:outline-none"
           >
             Desfazer
           </button>

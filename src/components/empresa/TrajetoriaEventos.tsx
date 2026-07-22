@@ -30,13 +30,13 @@ export function TrajetoriaEventos({ trajetoria }: { trajetoria: TrajetoriaResult
           const { nome, status } = partesEvento(ev);
           const statusColor =
             ev.tipo === "entrou"
-              ? "text-ink/60"
+              ? "text-ink-muted"
               : ev.tipo === "saiu"
                 ? "text-risk-high"
                 : "text-risk-mid";
           return (
             <li key={`${ev.ano}-${i}`} className="flex gap-2 text-[13px] leading-snug">
-              <span className="shrink-0 font-data tabular-nums text-ink-soft/60">{ev.ano}</span>
+              <span className="shrink-0 font-data tabular-nums text-ink-muted">{ev.ano}</span>
               <span className="min-w-0">
                 <span className="text-ink">{nome}</span>
                 {status && <span className={`ml-1.5 ${statusColor}`}>{status}</span>}
@@ -45,7 +45,7 @@ export function TrajetoriaEventos({ trajetoria }: { trajetoria: TrajetoriaResult
           );
         })}
       </ul>
-      <p className="mt-1 text-[11px] text-ink-soft/60">
+      <p className="mt-1 text-[11px] text-ink-muted">
         Reconstruído comparando snapshots anuais do CNPJ — o ano marca quando a mudança foi
         detectada, não quando o sócio entrou.
       </p>

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Newsreader, Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import Script from "next/script";
 import { AppShell } from "@/components/shell/AppShell";
 import "./globals.css";
 
@@ -68,9 +69,22 @@ export const metadata: Metadata = {
 
 // Smoky Black — pinta a barra do browser no mobile (Chrome Android, Safari iOS)
 // com o fundo primário, em vez do branco padrão que quebra a moldura escura.
+// No tema claro o TemaToggle reescreve esta meta para o creme.
 export const viewport: Viewport = {
   themeColor: "#11120d",
 };
+
+// Aplica o tema salvo ANTES do primeiro paint. Sem isto, quem escolheu claro
+// veria a página nascer escura e clarear na hidratação (flash). Escuro é o
+// default, então só precisamos agir quando a preferência gravada é "claro".
+const APLICA_TEMA = `
+try {
+  if (localStorage.getItem('boreal:tema') === 'claro') {
+    document.documentElement.classList.remove('dark');
+    document.documentElement.classList.add('light');
+  }
+} catch (e) {}
+`;
 
 export default function RootLayout({
   children,
@@ -81,8 +95,12 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       className={`dark ${newsreader.variable} ${plexSans.variable} ${archivo.variable} ${plexMono.variable} h-full antialiased`}
+      suppressHydrationWarning /* o script abaixo troca a classe antes do React hidratar */
     >
       <body className="min-h-full flex flex-col bg-canvas">
+        <Script id="tema-inicial" strategy="beforeInteractive">
+          {APLICA_TEMA}
+        </Script>
         <AppShell>{children}</AppShell>
       </body>
     </html>

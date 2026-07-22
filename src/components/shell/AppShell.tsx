@@ -22,6 +22,7 @@ import {
 import { NavLogo } from "@/components/brand/NavLogo";
 import { Mark } from "@/components/brand/Mark";
 import { CommandPalette } from "./CommandPalette";
+import { TemaToggle } from "./TemaToggle";
 
 /* ── Estrutura de navegação do workbench ─────────────────────────────────
    Três grupos: Trabalho (o dia a dia do analista), Inteligência (mapas de
@@ -116,7 +117,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     `group flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[13px] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 ${
       ativo
         ? "bg-surface-hover text-ink"
-        : "text-ink-soft/70 hover:bg-surface hover:text-ink-soft"
+        : "text-ink-muted hover:bg-surface hover:text-ink-soft"
     }`;
 
   // `compacta` = só ícones (sidebar colapsada). O drawer mobile SEMPRE mostra labels.
@@ -168,7 +169,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                       type="button"
                       onClick={() => setProvaAberta((a) => !a)}
                       aria-expanded={provaAberta}
-                      className="mb-1 flex w-full items-center justify-between rounded px-2.5 text-[11px] font-medium text-ink-soft/60 transition-colors hover:text-ink-soft/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+                      className="mb-1 flex w-full items-center justify-between rounded px-2.5 text-[11px] font-medium text-ink-muted transition-colors hover:text-ink-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
                     >
                       {grupo.label}
                       <ChevronDown
@@ -177,7 +178,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                       />
                     </button>
                   ) : (
-                    <p className="mb-1 px-2.5 text-[11px] font-medium text-ink-soft/60">
+                    <p className="mb-1 px-2.5 text-[11px] font-medium text-ink-muted">
                       {grupo.label}
                     </p>
                   ))}
@@ -187,11 +188,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           })}
         </nav>
 
-        <div className="border-t border-hairline p-2">
+        <div className="space-y-0.5 border-t border-hairline p-2">
+          <TemaToggle compacta={colapsada} />
           <button
             type="button"
             onClick={toggleColapsada}
-            className={`flex w-full items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[12px] text-ink-soft/50 transition-colors hover:bg-surface hover:text-ink-soft focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 ${colapsada ? "justify-center" : ""}`}
+            className={`flex w-full items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[12px] text-ink-muted transition-colors hover:bg-surface hover:text-ink-soft focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 ${colapsada ? "justify-center" : ""}`}
             aria-label={colapsada ? "Expandir sidebar" : "Colapsar sidebar"}
           >
             {colapsada ? (
@@ -229,7 +231,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <button
             type="button"
             onClick={() => setPaletteAberta(true)}
-            className="flex items-center gap-2 rounded-md border border-hairline px-2.5 py-1.5 text-[12px] text-ink-soft/70 transition-colors hover:border-hairline-hover hover:text-ink-soft focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+            className="flex items-center gap-2 rounded-md border border-hairline px-2.5 py-1.5 text-[12px] text-ink-muted transition-colors hover:border-hairline-hover hover:text-ink-soft focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
             aria-label="Abrir paleta de comandos"
           >
             <span className="hidden sm:inline">Ir para…</span>
@@ -267,7 +269,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <nav className="flex-1 space-y-5 overflow-y-auto px-2 py-4">
               {NAV_GRUPOS.map((grupo) => (
                 <div key={grupo.label}>
-                  <p className="mb-1 px-2.5 text-[11px] font-medium text-ink-soft/60">
+                  <p className="mb-1 px-2.5 text-[11px] font-medium text-ink-muted">
                     {grupo.label}
                   </p>
                   <div className="space-y-0.5">{linksDoGrupo(grupo, false, () => setDrawerAberto(false))}</div>

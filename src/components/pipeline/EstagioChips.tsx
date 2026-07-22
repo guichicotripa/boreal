@@ -22,7 +22,7 @@ export function EstagioChip({
       value={o.estagio}
       onValueChange={(v) => onPatch(o.id, { estagio: v as EstagioOportunidade })}
     >
-      <SelectTrigger className="relative h-auto w-fit max-w-full justify-start border-0 bg-transparent pl-2.5 pr-5 py-0.5 text-[11px] text-ink-soft/60 transition-colors hover:text-ink-soft focus:ring-0 focus-visible:ring-1 focus-visible:ring-ink/50 [&>svg]:absolute [&>svg]:right-1 [&>svg]:top-1/2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:-translate-y-1/2 [&>svg]:opacity-40">
+      <SelectTrigger className="relative h-auto w-fit max-w-full justify-start border-0 bg-transparent pl-2.5 pr-5 py-0.5 text-[11px] text-ink-muted transition-colors hover:text-ink-soft focus:ring-0 focus-visible:ring-1 focus-visible:ring-ink/50 [&>svg]:absolute [&>svg]:right-1 [&>svg]:top-1/2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:-translate-y-1/2 [&>svg]:opacity-40">
         <SelectValue className="flex-none text-left">
           {ESTAGIOS.find((s) => s.id === o.estagio)?.label ?? o.estagio}
         </SelectValue>
@@ -52,9 +52,9 @@ export function ResultadoChip({
   const colorClass =
     o.resultado === "deal_fechado"  ? "text-ink" :
     o.resultado === "receptivo"     ? "text-ink-soft"   :
-    o.resultado === "nao_receptivo" ? "text-ink-soft/60" :
-    o.resultado === "perdido"       ? "text-ink-soft/45" :
-    "text-ink-soft/70";
+    o.resultado === "nao_receptivo" ? "text-ink-muted" :
+    o.resultado === "perdido"       ? "text-ink-muted" :
+    "text-ink-muted";
 
   return (
     <Select
