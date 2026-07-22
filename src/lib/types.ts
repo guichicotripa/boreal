@@ -41,6 +41,16 @@ export type Empresa = {
     one_liner: string;
     flags: string[];
   };
+  // Investigação v1 já persistida (score_run). Presente só quando a empresa JÁ foi
+  // investigada — a busca usa isto pra reordenar e a linha pra mostrar o delta.
+  score_v1?: ScoreV1;
+};
+
+/** Resultado persistido da investigação — o que a busca precisa saber sem carregar o research inteiro. */
+export type ScoreV1 = {
+  score: number;
+  delta: number;
+  investigado_em: string; // ISO — quando a investigação rodou
 };
 
 // Research-agent — sinais qualitativos da web que elevam score v0 → v1.

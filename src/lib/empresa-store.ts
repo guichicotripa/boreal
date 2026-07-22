@@ -40,11 +40,14 @@ export function readEmpresa(id: string): Empresa | null {
 }
 
 // ── Overlay de score conhecido ───────────────────────────────────────────────
-// A investigação (score_v1) acontece na página da empresa, mas a home lista o
-// score_v0 da busca. Persistimos o melhor score conhecido por empresa (com o delta
-// vs v0) para que a home (e qualquer tela) reflita a investigação ao voltar e sinalize
-// que a empresa já foi investigada. Ponte client-side até existir um GET
-// /api/empresa/[id] que sirva o score canônico (handoff Guilherme).
+// A FONTE DE VERDADE do v1 é o servidor (tabela score_run, servida por /api/search e
+// /api/empresa/[id] no campo `score_v1`). Este overlay cobre só a janela em que o
+// servidor ainda não sabe do que acabou de acontecer: você investiga uma empresa e
+// volta pra uma lista JÁ carregada. Regra de merge: v1 do servidor vence sempre; o
+// overlay preenche apenas quem o servidor não trouxe.
+//
+// localStorage (não sessionStorage): antes o overlay morria ao fechar a aba, e a
+// empresa investigada voltava exibindo o v0 — o bug que originou a persistência.
 
 export type ScoreConhecido = { score: number; delta: number };
 
@@ -52,22 +55,22 @@ export type ScoreConhecido = { score: number; delta: number };
 export function storeScoreConhecido(empresaId: string, score: number, delta: number): void {
   if (!hasWindow()) return;
   try {
-    sessionStorage.setItem(SCORE_PREFIX + empresaId, JSON.stringify({ score, delta }));
+    localStorage.setItem(SCORE_PREFIX + empresaId, JSON.stringify({ score, delta }));
   } catch {
     // ignore
   }
 }
 
-/** Mapa { empresaId → {score, delta} } de tudo que já foi investigado nesta sessão. */
+/** Mapa { empresaId → {score, delta} } de tudo que já foi investigado neste browser. */
 export function readScoresConhecidos(): Record<string, ScoreConhecido> {
   if (!hasWindow()) return {};
   const out: Record<string, ScoreConhecido> = {};
   try {
-    for (let i = 0; i < sessionStorage.length; i++) {
-      const k = sessionStorage.key(i);
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
       if (k && k.startsWith(SCORE_PREFIX)) {
         try {
-          const parsed = JSON.parse(sessionStorage.getItem(k) ?? "");
+          const parsed = JSON.parse(localStorage.getItem(k) ?? "");
           if (parsed && typeof parsed.score === "number" && typeof parsed.delta === "number") {
             out[k.slice(SCORE_PREFIX.length)] = { score: parsed.score, delta: parsed.delta };
           }

@@ -228,7 +228,10 @@ export default function EmpresaPage() {
 
   const e = empresa;
   const socios = e.socio ?? [];
-  const score = research?.score_v1 ?? e.score?.score ?? 0;
+  // Precedência: investigação desta sessão > v1 já persistido (score_run, vem do GET) > v0.
+  // O v1 salvo faz a página abrir com o número apurado, sem esperar o research responder.
+  const score = research?.score_v1 ?? e.score_v1?.score ?? e.score?.score ?? 0;
+  const deltaV1 = research?.delta ?? e.score_v1?.delta ?? null;
   const breakdown = e.score?.breakdown;
   const sinaisScore = e.score?.sinais ?? [];
   const perfilSuc = e.score?.perfil_sucessorio ?? false;
@@ -278,9 +281,12 @@ export default function EmpresaPage() {
             <div aria-live="polite" className="flex items-baseline gap-2">
               <span className={`font-data text-[32px] leading-none tabular-nums ${t.text}`}>{score}</span>
               <span className={`text-[11px] font-medium ${t.text}`}>{t.label}</span>
-              {research?.delta != null && research.delta !== 0 && (
-                <span className={`font-data text-[11px] tabular-nums ${research.delta > 0 ? "text-risk-high" : "text-bone/60"}`}>
-                  {research.delta > 0 ? `↑${research.delta}` : `↓${Math.abs(research.delta)}`}
+              {deltaV1 != null && deltaV1 !== 0 && (
+                <span
+                  className={`font-data text-[11px] tabular-nums ${deltaV1 > 0 ? "text-risk-high" : "text-bone/60"}`}
+                  title="ajuste da investigação sobre o score determinístico"
+                >
+                  {deltaV1 > 0 ? `↑${deltaV1}` : `↓${Math.abs(deltaV1)}`}
                 </span>
               )}
               <span className="font-data text-[11px] text-bone/60">/ 100</span>
