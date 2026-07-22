@@ -5,6 +5,42 @@
 
 ---
 
+## [2026-07-21] REDESIGN: produto vira workbench (F1-F5) — merged em main
+
+**Contexto:** o produto tinha bom craft, mas a arquitetura de UI era centrada em pitch
+("construímos pra ganhar o clube da programação"). Objetivo: deixar de ser algo pitchável e
+virar ferramenta de trabalho densa, no padrão Linear/Attio/Grata. Guilherme foi o único revisor
+visual (screenshots do headless quebrados nesta máquina) — OK por fase.
+
+**Decisão — redesign em 5 fases, cada uma commitada e verificada:**
+- **F1 — App shell:** sidebar (Trabalho / Inteligência / Prova colapsável) + topbar + paleta
+  Ctrl+K (hand-rolled, filtro sem acento) + drawer mobile. Shell envolve sem alterar conteúdo;
+  proveniência e acesso ficam FORA do shell.
+- **F2 — Radar (ex-home):** tabela densa + peek panel (preview sem navegar, padrão Attio) +
+  strip de cobertura + botão primário sólido. Hero editorial aposentado.
+- **F3 — Pipeline + Agenda:** Agenda vira rota própria (`/agenda`), chip de selo na linha
+  (status de verificação de CRM), empty states com CTA.
+- **F4 — Empresa:** vira registro (rail de atributos sticky + tabs Visão/Investigação/Memo/
+  Trajetória/Similares). Scroll-spy de coluna única morto.
+- **F5 — Acabamento:** decomposição da PipelineView (1.471 linhas → 10 arquivos), teclado
+  j/k/Enter no Radar, contraste AA **medido** (bone/50 reprovava 3.86:1 → bone/60 4.98:1),
+  title duplicado corrigido, tipografia unificada (mono só em dados, labels em sans medium).
+
+**Regra tipográfica que saiu daqui (vale daqui pra frente):** Plex Mono é reservada a DADOS
+(scores, CNPJ, datas, capital, tel/email, contadores). Labels, botões, tabs e navegação em
+Plex Sans medium, caixa normal. Mono maiúscula com tracking largo dá cara de terminal — foi a
+causa real do "fonte sem polimento", não a família.
+
+**Fora de escopo (mantido):** páginas de prova (validação/mercado/consolidadores) ficam com a
+estética editorial — é a parte forte. Multi-tenant/auth por firma segue esperando o 2º parceiro
+(anti-drift #5). Tema claro e paridade mobile não entraram.
+
+**Status:** ✅ Merged em `main` (`--no-ff`, commit 34e8d07) e pushed. Build de produção +
+tsc + eslint limpos. Branch `feat/ui-workbench` apagada pós-merge. Pendente: a lista de ajustes
+finos do Guilherme ("tem alguns ajustes mas depois te passo") — a dobrar num F6 pontual quando vier.
+
+---
+
 ## [2026-07-20] REESTRUTURAÇÃO: projeto vira BOREAL, Guilherme solo + revisão dos anti-drifts
 
 **Contexto:** Guilherme está solo — Taylor, Juliano e Fabiano saíram (viram contatos; equity
