@@ -118,13 +118,28 @@ export default function Radar() {
 
   const setorCob = setorPorId(setorAtivo ?? "metalmec") ?? setorPorId("metalmec")!;
 
-  // Score efetivo = score_v1 da investigação (se houve) ou o score_v0 da busca.
+  // Score efetivo = v1 investigado (se houve) ou o v0 da busca.
+  // Precedência: `score_v1` do servidor (score_run, fonte de verdade) > overlay local
+  // (investigação feita depois desta lista carregar) > v0. A lista já vem ordenada do
+  // servidor; reordenamos aqui só pra absorver o overlay local.
   // useMemo: a lista é dependência do efeito de teclado abaixo — sem memo, o
   // efeito re-assinaria a cada render.
   const empresasOrdenadas = useMemo(() => {
     if (!res) return [];
-    const scoreEfetivo = (e: Empresa) => scoreOverrides[e.id]?.score ?? e.score?.score ?? 0;
+    const scoreEfetivo = (e: Empresa) =>
+      e.score_v1?.score ?? scoreOverrides[e.id]?.score ?? e.score?.score ?? 0;
     return [...res.empresas].sort((a, b) => scoreEfetivo(b) - scoreEfetivo(a));
+  }, [res, scoreOverrides]);
+
+  // Overrides efetivos entregues à tabela/peek: o v1 do servidor entra como se fosse
+  // um override, pra linha mostrar número e delta sem cada componente reimplementar a
+  // precedência. O overlay local só preenche quem o servidor não trouxe.
+  const overridesEfetivos = useMemo(() => {
+    const out = { ...scoreOverrides };
+    for (const e of res?.empresas ?? []) {
+      if (e.score_v1) out[e.id] = { score: e.score_v1.score, delta: e.score_v1.delta };
+    }
+    return out;
   }, [res, scoreOverrides]);
 
   const peekEmpresa = peekId ? empresasOrdenadas.find((e) => e.id === peekId) ?? null : null;
@@ -325,7 +340,7 @@ export default function Radar() {
             {res.count > 0 && (
               <ResultsTable
                 empresas={empresasOrdenadas}
-                scoreOverrides={scoreOverrides}
+                scoreOverrides={overridesEfetivos}
                 savedIds={savedIds}
                 peekId={peekId}
                 onPeek={(e) => setPeekId((cur) => (cur === e.id ? null : e.id))}
@@ -346,7 +361,7 @@ export default function Radar() {
 
         <PeekPanel
           empresa={peekEmpresa}
-          investigacao={peekEmpresa ? scoreOverrides[peekEmpresa.id] : undefined}
+          investigacao={peekEmpresa ? overridesEfetivos[peekEmpresa.id] : undefined}
           jaSalvo={peekEmpresa ? savedIds.has(peekEmpresa.id) : undefined}
           onClose={() => setPeekId(null)}
         />

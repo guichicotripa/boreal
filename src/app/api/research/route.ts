@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase";
 import { calcScore } from "@/lib/scoring";
 import { investigarEmpresa } from "@/lib/research";
+import { lerResearchSalvo } from "@/lib/research-store";
 import type { Empresa, ResearchResult } from "@/lib/types";
 import researchCache from "@/lib/research-cache.json";
 
@@ -32,6 +33,20 @@ export async function POST(req: NextRequest) {
   }
 
   const supabase = createAdminClient();
+
+  // Investigação já persistida (score_run) → devolve na hora, sem gastar o agente.
+  // É o que faz reabrir a mesma empresa ser instantâneo em vez de 30-60s + custo de API.
+  // `?fresh=1` ignora e reinvestiga (o v1 não expira sozinho — decisão de 21/07).
+  if (!skipCache) {
+    const salvo = await lerResearchSalvo(supabase, empresaId);
+    if (salvo) {
+      return NextResponse.json({
+        research: salvo.research,
+        cached: true,
+        investigadoEm: salvo.investigadoEm,
+      });
+    }
+  }
   const { data, error } = await supabase
     .from("empresa")
     .select(
@@ -52,22 +67,35 @@ export async function POST(req: NextRequest) {
   try {
     const research = await investigarEmpresa(empresa);
 
-    // Grava o resultado no score_run — histórico versionado do scoring (gravar-tudo, base do moat).
-    // Não bloqueia a resposta se falhar.
-    supabase
-      .from("score_run")
-      .insert({
-        empresa_id: empresaId,
-        score: research.score_v1,
-        breakdown: empresa.score?.breakdown ?? null,
-        sinais: research.sinais,
-        model: "research-agent/v1 (claude via API + web search)",
-      })
-      .then(({ error: e }) => {
-        if (e) console.error("score_run insert falhou:", e.message);
-      });
+    // Grava no score_run — histórico versionado do scoring (gravar-tudo, base do moat) E
+    // fonte de verdade do v1 daqui pra frente. AGUARDA de propósito: era fire-and-forget,
+    // mas a função serverless pode congelar após a resposta e perder a escrita — o que
+    // faria a empresa ser reinvestigada (e recobrada) toda vez.
+    const base = {
+      empresa_id: empresaId,
+      score: research.score_v1,
+      breakdown: empresa.score?.breakdown ?? null,
+      sinais: research.sinais,
+      model: "research-agent/v1 (claude via API + web search)",
+    };
 
-    return NextResponse.json({ research });
+    // `research` (payload completo) depende da migration 0006. Se a coluna ainda não
+    // existe, o insert INTEIRO falharia e o v1 nem o número seria salvo — pior que antes.
+    // Então: tenta completo; se a coluna faltar, regrava só o essencial.
+    let { error: insErr } = await supabase.from("score_run").insert({ ...base, research });
+    let payloadSalvo = !insErr;
+    if (insErr) {
+      console.warn("insert com `research` falhou (migration 0006 aplicada?):", insErr.message);
+      ({ error: insErr } = await supabase.from("score_run").insert(base));
+      payloadSalvo = false;
+    }
+    if (insErr) {
+      // Não derruba a resposta: o usuário vê a investigação, só não fica salva.
+      console.error("score_run insert falhou (investigação não persistida):", insErr.message);
+    }
+
+    // persistido = o score sobrevive (lista reordena). payloadSalvo = não precisa re-rodar o agente.
+    return NextResponse.json({ research, persistido: !insErr, payloadSalvo });
   } catch (err) {
     console.error("Research falhou:", (err as Error).message);
     return NextResponse.json({ error: "falha na investigação" }, { status: 500 });

@@ -4,6 +4,7 @@ import { parseQueryLLM } from "@/lib/llm";
 import { parseQueryHeuristic } from "@/lib/query-parser";
 import { calcScore } from "@/lib/scoring";
 import { reasonAboutEmpresas } from "@/lib/reasoner";
+import { lerScoresV1, aplicarV1 } from "@/lib/research-store";
 import type { Empresa, Socio, SearchResponse } from "@/lib/types";
 import demoCache from "@/lib/demo-cache.json";
 import setoresData from "@/lib/setores.json";
@@ -30,6 +31,24 @@ function normalizeQuery(q: string): string {
 // o type-check a cada mudança no schema do score.
 const CACHE = demoCache as unknown as Record<string, SearchResponse>;
 
+// Overlay do v1 investigado sobre uma resposta pronta (inclusive as de cache estático).
+// Sem isto, os chips de demo — que não tocam o banco — continuariam listando o v0 e as
+// empresas já investigadas nunca subiriam na lista. Uma query indexada por ids.
+async function comV1(resp: SearchResponse): Promise<SearchResponse> {
+  const empresas = resp.empresas ?? [];
+  if (empresas.length === 0) return resp;
+  try {
+    const supabase = createAdminClient();
+    const v1 = await lerScoresV1(supabase, empresas.map((e) => e.id));
+    if (Object.keys(v1).length === 0) return resp;
+    return { ...resp, empresas: aplicarV1(empresas, v1) };
+  } catch (err) {
+    // Falhou a leitura do v1: serve o v0 (degrada, não quebra a busca).
+    console.error("overlay de v1 falhou:", (err as Error).message);
+    return resp;
+  }
+}
+
 export async function POST(req: NextRequest) {
   let body: unknown;
   try {
@@ -53,20 +72,20 @@ export async function POST(req: NextRequest) {
   if (!skipCache && queryText && setorId) {
     const hit = CACHE[`${setorId}|${normalizeQuery(queryText)}`];
     if (hit) {
-      return NextResponse.json({ ...hit, cached: true });
+      return NextResponse.json({ ...(await comV1(hit)), cached: true });
     }
   }
   if (!skipCache && queryText && !setorCnaes) {
     const hit = CACHE[normalizeQuery(queryText)];
     if (hit) {
-      return NextResponse.json({ ...hit, cached: true });
+      return NextResponse.json({ ...(await comV1(hit)), cached: true });
     }
   }
   // Browse de setor sem texto: serve do cache (saúde/educação ficam instantâneos como o metalmec).
   if (!skipCache && setorId && !queryText) {
     const hit = (setorCache.porSetor as Record<string, SearchResponse>)[setorId];
     if (hit) {
-      return NextResponse.json({ ...hit, cached: true });
+      return NextResponse.json({ ...(await comV1(hit)), cached: true });
     }
   }
 
@@ -151,9 +170,19 @@ export async function POST(req: NextRequest) {
   }
 
   // ── 3. Score determinístico por empresa, ordenar desc ────────────────────────
-  const scored = empresas
+  let scored = empresas
     .map((e) => ({ ...e, score: calcScore(e) }))
     .sort((a, b) => (b.score?.score ?? 0) - (a.score?.score ?? 0));
+
+  // ── 3b. Overlay do v1 já investigado — reordena pelo score efetivo ───────────
+  // Empresa investigada mantém o score que a investigação apurou e assume a posição
+  // correspondente na lista, em vez de voltar pro v0 a cada busca nova.
+  try {
+    const v1 = await lerScoresV1(supabase, scored.map((e) => e.id));
+    if (Object.keys(v1).length > 0) scored = aplicarV1(scored, v1);
+  } catch (err) {
+    console.error("overlay de v1 falhou:", (err as Error).message);
+  }
 
   // ── 4. Reasoner LLM batched: one-liner + flags pro top 15 ────────────────────
   // Roda em paralelo com a resposta — se falhar, devolve sem insights (não quebra busca).
