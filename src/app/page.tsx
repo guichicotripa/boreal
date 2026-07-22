@@ -176,13 +176,13 @@ export default function Radar() {
   }, [empresasOrdenadas, peekId, router]);
 
   return (
-    <div className="min-h-screen bg-smoky text-floral">
+    <div className="min-h-screen bg-canvas text-ink">
       <main className="mx-auto max-w-6xl px-6 py-8 md:pb-20">
         {/* Cabeçalho da bancada: switcher de setor + credencial curta.
             O hero editorial de pitch mora na seção Prova (/validacao). */}
         <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
           <div>
-            <p className="mb-2 text-[11px] font-medium text-bone/60">Setor</p>
+            <p className="mb-2 text-[11px] font-medium text-ink-soft/60">Setor</p>
             <div className="inline-flex flex-wrap gap-1 rounded-lg border border-hairline p-1">
               {SETORES.map((s) => {
                 const ativo = (setorAtivo ?? "metalmec") === s.id;
@@ -192,8 +192,8 @@ export default function Radar() {
                     type="button"
                     onClick={() => trocarSetor(s.id)}
                     aria-pressed={ativo}
-                    className={`rounded-md px-3 py-1.5 text-[12.5px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
-                      ativo ? "bg-surface-hover text-floral" : "text-bone/70 hover:text-bone"
+                    className={`rounded-md px-3 py-1.5 text-[12.5px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 ${
+                      ativo ? "bg-surface-hover text-ink" : "text-ink-soft/70 hover:text-ink-soft"
                     }`}
                   >
                     {s.nome}
@@ -202,12 +202,12 @@ export default function Radar() {
               })}
             </div>
           </div>
-          <p className="text-[12.5px] text-bone/70">
-            <strong className="text-bone">{setorPorId("metalmec")?.recall_sucessao ?? 97}% das vendas por sucessão</strong>{" "}
+          <p className="text-[12.5px] text-ink-soft/70">
+            <strong className="text-ink-soft">{setorPorId("metalmec")?.recall_sucessao ?? 97}% das vendas por sucessão</strong>{" "}
             no nosso top 10%, 12 meses antes.{" "}
             <Link
               href="/validacao"
-              className="whitespace-nowrap text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
+              className="whitespace-nowrap text-ink transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 rounded-sm"
             >
               ver validação →
             </Link>
@@ -222,23 +222,23 @@ export default function Radar() {
           }}
           className="mt-6"
         >
-          <p className="mb-2 text-[11px] font-medium text-bone/60">
+          <p className="mb-2 text-[11px] font-medium text-ink-soft/60">
             Descreva uma tese em linguagem livre
           </p>
           <div className="flex items-center gap-3">
-            <div className="flex min-w-0 flex-1 items-center gap-2 rounded-lg border border-hairline bg-surface px-3 py-2.5 transition-colors focus-within:border-floral/30">
-              <span className="font-data text-sm text-olive">›</span>
+            <div className="flex min-w-0 flex-1 items-center gap-2 rounded-lg border border-hairline bg-surface px-3 py-2.5 transition-colors focus-within:border-ink/30">
+              <span className="font-data text-sm text-ink-faint">›</span>
               <input
                 value={texto}
                 onChange={(e) => setTexto(e.target.value)}
                 placeholder={(EXEMPLOS_POR_SETOR[setorAtivo ?? "metalmec"] ?? EXEMPLOS)[0]}
-                className="min-w-0 flex-1 bg-transparent text-sm text-floral outline-none placeholder:text-olive"
+                className="min-w-0 flex-1 bg-transparent text-sm text-ink outline-none placeholder:text-ink-faint"
               />
             </div>
             <button
               type="submit"
               disabled={loading}
-              className="shrink-0 rounded-lg bg-floral px-4 py-2.5 text-[13px] font-medium text-smoky transition-colors hover:bg-floral/90 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-floral/50"
+              className="shrink-0 rounded-lg bg-ink px-4 py-2.5 text-[13px] font-medium text-canvas transition-colors hover:bg-ink/90 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/50"
             >
               {loading ? "Buscando…" : "Buscar tese"}
             </button>
@@ -255,7 +255,7 @@ export default function Radar() {
                 setTexto(ex);
                 buscar(ex, setorAtivo ?? undefined);
               }}
-              className="rounded border border-hairline px-2 py-1 text-xs text-bone transition-colors hover:border-hairline-hover hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+              className="rounded border border-hairline px-2 py-1 text-xs text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
             >
               {ex}
             </button>
@@ -263,8 +263,8 @@ export default function Radar() {
         </div>
 
         {/* Strip de cobertura — o painel lateral antigo, compactado numa linha */}
-        <p className="mt-4 border-t border-hairline pt-3 text-[11.5px] text-bone/60">
-          <span className="text-bone">{setorCob.nome}</span>
+        <p className="mt-4 border-t border-hairline pt-3 text-[11.5px] text-ink-soft/60">
+          <span className="text-ink-soft">{setorCob.nome}</span>
           {" · "}CNAE {setorCob.cnaes.join("/")}
           {" · "}lente {setorCob.lente === "consolidacao" ? "consolidação" : "sucessão"}
           {setorCob.recall_sucessao != null && (
@@ -279,7 +279,7 @@ export default function Radar() {
           <span className="tabular-nums">2.000</span> empresas SP{" · "}
           <Link
             href="/setores"
-            className="text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
+            className="text-ink transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 rounded-sm"
           >
             ver setor →
           </Link>
@@ -291,13 +291,13 @@ export default function Radar() {
         {/* Erro */}
         {erro && (
           <div className="mt-10 py-10">
-            <p className="text-[11px] font-medium text-bone/60">Erro na busca</p>
-            <p className="mt-2 text-[15px] leading-relaxed text-bone">
+            <p className="text-[11px] font-medium text-ink-soft/60">Erro na busca</p>
+            <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
               Não foi possível realizar a busca. Verifique a conexão e tente de novo.
             </p>
             <button
               onClick={() => buscar(texto, setorAtivo ?? undefined)}
-              className="mt-3 inline-flex items-center gap-2 rounded border border-hairline px-3 py-2 text-[12.5px] font-medium text-bone transition-colors hover:border-floral/40 hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+              className="mt-3 inline-flex items-center gap-2 rounded border border-hairline px-3 py-2 text-[12.5px] font-medium text-ink-soft transition-colors hover:border-ink/40 hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
             >
               <span aria-hidden="true">↻</span> Tentar de novo
             </button>
@@ -307,30 +307,30 @@ export default function Radar() {
         {/* Resultados */}
         {res && !loading && (
           <section className="mt-6">
-            <div className="mb-3 flex flex-wrap items-center justify-between gap-y-2 text-sm text-bone">
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-y-2 text-sm text-ink-soft">
               <span className="flex flex-wrap items-center gap-x-1">
                 <span className="whitespace-nowrap">
                   {res.count} empresa{res.count === 1 ? "" : "s"}
                 </span>
                 {res.reasoned && res.reasonedCount && (
-                  <span className="whitespace-nowrap text-[12px] text-olive">
+                  <span className="whitespace-nowrap text-[12px] text-ink-faint">
                     · top {res.reasonedCount} analisadas por IA
                   </span>
                 )}
               </span>
               <span className="flex flex-wrap gap-2">
                 {res.filters.cnaePrefixes.map((c) => (
-                  <span key={c} className="rounded bg-surface px-2 py-0.5 text-[11.5px] text-bone">
+                  <span key={c} className="rounded bg-surface px-2 py-0.5 text-[11.5px] text-ink-soft">
                     CNAE {c}
                   </span>
                 ))}
                 {res.filters.minFaixaEtaria != null && (
-                  <span className="rounded bg-surface px-2 py-0.5 text-[11.5px] text-bone">
+                  <span className="rounded bg-surface px-2 py-0.5 text-[11.5px] text-ink-soft">
                     sócios {FAIXA_LABEL[String(res.filters.minFaixaEtaria)]}+
                   </span>
                 )}
                 {res.filters.maxAnoFundacao != null && (
-                  <span className="rounded bg-surface px-2 py-0.5 text-[11.5px] text-bone">
+                  <span className="rounded bg-surface px-2 py-0.5 text-[11.5px] text-ink-soft">
                     até {res.filters.maxAnoFundacao}
                   </span>
                 )}
@@ -349,8 +349,8 @@ export default function Radar() {
 
             {res.count === 0 && (
               <div className="rounded-lg border border-hairline py-12 text-center">
-                <p className="font-display text-lg text-floral">Nenhuma empresa encontrada.</p>
-                <p className="mx-auto mt-2 max-w-md text-sm text-bone">
+                <p className="font-display text-lg text-ink">Nenhuma empresa encontrada.</p>
+                <p className="mx-auto mt-2 max-w-md text-sm text-ink-soft">
                   A tese pode estar restrita demais. Tente ampliar a faixa etária,
                   remover um CNAE ou flexibilizar o ano de fundação.
                 </p>
@@ -397,9 +397,9 @@ function SearchSkeleton() {
   return (
     <section className="mt-6" role="status" aria-live="polite" aria-busy="true">
       <div className="mb-4 flex items-center gap-2 text-sm">
-        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-floral" />
-        <span className="text-floral">{LOADING_STEPS[step]}</span>
-        <span className="font-data text-[10px] uppercase tracking-wider text-olive">
+        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-ink" />
+        <span className="text-ink">{LOADING_STEPS[step]}</span>
+        <span className="font-data text-[10px] uppercase tracking-wider text-ink-faint">
           {step + 1}/{LOADING_STEPS.length}
         </span>
       </div>

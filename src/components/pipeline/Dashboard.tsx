@@ -17,8 +17,8 @@ function Chevron({ up }: { up: boolean }) {
 function Stat({ n, label }: { n: number | string; label: string }) {
   return (
     <div>
-      <p className="font-display text-2xl tabular-nums text-floral">{n}</p>
-      <p className="text-[11px] text-bone/60">{label}</p>
+      <p className="font-display text-2xl tabular-nums text-ink">{n}</p>
+      <p className="text-[11px] text-ink-soft/60">{label}</p>
     </div>
   );
 }
@@ -68,16 +68,16 @@ export function Dashboard({
         aria-label="Expandir estatísticas"
       >
         <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1 pointer-events-none">
-          <span className="text-[11px] font-medium text-bone/60">
+          <span className="text-[11px] font-medium text-ink-soft/60">
             Estatísticas
           </span>
-          <span className="text-[11.5px] tabular-nums text-bone">
+          <span className="text-[11.5px] tabular-nums text-ink-soft">
             {ops.length} no funil
             {deals > 0 ? ` · ${deals} deal${deals > 1 ? "s" : ""}` : ""}
             {hitReal != null ? ` · ${hitReal}% hit rate` : ""}
           </span>
         </div>
-        <div className="ml-4 shrink-0 text-olive pointer-events-none">
+        <div className="ml-4 shrink-0 text-ink-faint pointer-events-none">
           <Chevron up={false} />
         </div>
       </div>
@@ -102,36 +102,36 @@ export function Dashboard({
           <Stat n={deals} label="Deals" />
           <Stat n={hitReal != null ? `${hitReal}%` : "--"} label="Hit rate real" />
         </div>
-        <div className="shrink-0 text-olive pointer-events-none">
+        <div className="shrink-0 text-ink-faint pointer-events-none">
           <Chevron up={true} />
         </div>
       </div>
 
       {/* O loop: previsto x realizado */}
       <div className="mt-5 border-t border-hairline pt-4">
-        <p className="text-[11px] font-medium text-bone/60">
+        <p className="text-[11px] font-medium text-ink-soft/60">
           Loop de outcome · score previsto × desfecho real
         </p>
         {scorePos != null || scoreNeg != null ? (
           <>
-            <div className="mt-2 flex flex-wrap items-baseline gap-x-6 gap-y-1 text-sm text-bone">
+            <div className="mt-2 flex flex-wrap items-baseline gap-x-6 gap-y-1 text-sm text-ink-soft">
               <span>
                 <strong>Desfecho positivo</strong>: score médio{" "}
-                <span className="font-data text-floral">{scorePos ?? "--"}</span>
+                <span className="font-data text-ink">{scorePos ?? "--"}</span>
               </span>
               <span>
                 <strong>Desfecho negativo</strong>: score médio{" "}
-                <span className="font-data text-floral">{scoreNeg ?? "--"}</span>
+                <span className="font-data text-ink">{scoreNeg ?? "--"}</span>
               </span>
             </div>
-            <p className="mt-2 text-xs leading-snug text-bone/60">
+            <p className="mt-2 text-xs leading-snug text-ink-soft/60">
               {loopFecha
                 ? "As empresas que reagiram bem tinham score maior — o score prevê o desfecho real. É o ground truth que recalibra o modelo (o moat)."
                 : "Conforme os desfechos entram, comparamos previsto × real. Se o positivo superar o negativo, o score se confirma — e vira training data."}
             </p>
           </>
         ) : (
-          <p className="mt-2 text-xs leading-snug text-bone/60">
+          <p className="mt-2 text-xs leading-snug text-ink-soft/60">
             Ainda sem desfechos registrados. Mova oportunidades para &ldquo;Entregue&rdquo; e marque o
             resultado — o loop começa a medir previsto × real.
           </p>

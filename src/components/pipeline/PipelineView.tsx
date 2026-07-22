@@ -307,7 +307,7 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
   }
 
   return (
-    <div className="min-h-screen bg-smoky text-floral">
+    <div className="min-h-screen bg-canvas text-ink">
       <main className="mx-auto max-w-6xl px-6 py-8">
 
         {/* Header */}
@@ -316,7 +316,7 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
             <h1 className="font-display text-2xl tracking-tight">
               {modo === "agenda" ? "Agenda" : "Pipeline de originação"}
             </h1>
-            <p className="mt-1 text-sm text-bone">
+            <p className="mt-1 text-sm text-ink-soft">
               {modo === "agenda"
                 ? `${agendaList.length} ${agendaList.length === 1 ? "ação" : "ações"} na fila · atrasadas primeiro`
                 : `${filtroAtivo ? `${filtradas.length} de ${ops.length}` : ops.length} oportunidades no funil`}
@@ -324,7 +324,7 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
           </div>
           <Link
             href="/"
-            className="group flex items-center gap-2 rounded-sm text-[12px] font-medium text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+            className="group flex items-center gap-2 rounded-sm text-[12px] font-medium text-ink transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
           >
             <span className="transition-transform duration-200 group-hover:-translate-x-1">←</span>
             <span>Voltar à busca</span>
@@ -335,15 +335,15 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
           <PipelineSkeleton />
         ) : ops.length === 0 ? (
           <div className="rounded-lg border border-hairline py-14 text-center">
-            <p className="font-display text-lg text-floral">
+            <p className="font-display text-lg text-ink">
               {modo === "agenda" ? "Nada na fila ainda." : "Pipeline vazio."}
             </p>
-            <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-bone">
+            <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-ink-soft">
               Busque uma tese no Radar e salve as empresas boas — elas entram aqui como oportunidades.
             </p>
             <Link
               href="/"
-              className="mt-5 inline-block rounded-lg bg-floral px-4 py-2.5 text-[13px] font-medium text-smoky transition-colors hover:bg-floral/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-floral/50"
+              className="mt-5 inline-block rounded-lg bg-ink px-4 py-2.5 text-[13px] font-medium text-canvas transition-colors hover:bg-ink/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/50"
             >
               Ir pro Radar
             </Link>
@@ -407,21 +407,21 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
                 value={busca}
                 onChange={(e) => setBusca(e.target.value)}
                 placeholder="buscar empresa, cidade, setor…"
-                className="w-56 rounded border border-hairline bg-surface px-2 py-1.5 text-xs text-floral outline-none placeholder:text-bone/45 focus:border-hairline-hover"
+                className="w-56 rounded border border-hairline bg-surface px-2 py-1.5 text-xs text-ink outline-none placeholder:text-ink-soft/45 focus:border-hairline-hover"
               />
               {/* Filtro dono — Radix Select para manter o dark theme */}
               <Select value={filtroDono} onValueChange={(v) => setFiltroDono(v ?? "todos")}>
-                <SelectTrigger className="h-auto w-40 rounded border border-hairline bg-surface px-2 py-1.5 font-sans text-xs text-floral outline-none focus:ring-0 focus-visible:ring-1 focus-visible:ring-floral/50 focus:border-hairline-hover [&>svg]:opacity-40 [&>svg]:h-3 [&>svg]:w-3">
+                <SelectTrigger className="h-auto w-40 rounded border border-hairline bg-surface px-2 py-1.5 font-sans text-xs text-ink outline-none focus:ring-0 focus-visible:ring-1 focus-visible:ring-ink/50 focus:border-hairline-hover [&>svg]:opacity-40 [&>svg]:h-3 [&>svg]:w-3">
                   <SelectValue>
                     {filtroDono === "todos" ? "Todos os donos" : filtroDono}
                   </SelectValue>
                 </SelectTrigger>
-                <SelectContent sideOffset={4} className="border-hairline bg-overlay text-floral">
-                  <SelectItem value="todos" className="text-[11px] text-floral focus:bg-surface-hover focus:text-floral">
+                <SelectContent sideOffset={4} className="border-hairline bg-overlay text-ink">
+                  <SelectItem value="todos" className="text-[11px] text-ink focus:bg-surface-hover focus:text-ink">
                     Todos os donos
                   </SelectItem>
                   {donos.map((d) => (
-                    <SelectItem key={d} value={d} className="text-[11px] text-floral focus:bg-surface-hover focus:text-floral">
+                    <SelectItem key={d} value={d} className="text-[11px] text-ink focus:bg-surface-hover focus:text-ink">
                       {d}
                     </SelectItem>
                   ))}
@@ -430,10 +430,10 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
               <button
                 onClick={() => setSoAtrasadas((v) => !v)}
                 aria-pressed={soAtrasadas}
-                className={`rounded border px-2 py-1.5 text-[11.5px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
+                className={`rounded border px-2 py-1.5 text-[11.5px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 ${
                   soAtrasadas
                     ? "border-risk-high/50 text-risk-high"
-                    : "border-hairline text-bone hover:text-floral"
+                    : "border-hairline text-ink-soft hover:text-ink"
                 }`}
               >
                 Só atrasadas
@@ -441,7 +441,7 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
               {filtroAtivo && (
                 <button
                   onClick={() => { setBusca(""); setFiltroDono("todos"); setSoAtrasadas(false); }}
-                  className="rounded-sm text-[11.5px] font-medium text-bone/60 transition-colors hover:text-bone focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+                  className="rounded-sm text-[11.5px] font-medium text-ink-soft/60 transition-colors hover:text-ink-soft focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
                 >
                   limpar
                 </button>
@@ -450,7 +450,7 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
 
             {/* Row list */}
             {currentList.length === 0 ? (
-              <p className="mt-2 rounded border border-dashed border-hairline px-3 py-6 text-center text-[11px] text-bone/60">
+              <p className="mt-2 rounded border border-dashed border-hairline px-3 py-6 text-center text-[11px] text-ink-soft/60">
                 {filtroAtivo
                   ? "Nenhuma empresa neste filtro."
                   : isAgenda
@@ -500,10 +500,10 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
       {/* Toast de feedback */}
       {toast && (
         <div className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-4 rounded-lg border border-hairline bg-overlay px-4 py-2.5 shadow-lg shadow-black/40">
-          <span className="whitespace-nowrap text-[12px] text-bone">{toast}</span>
+          <span className="whitespace-nowrap text-[12px] text-ink-soft">{toast}</span>
           <button
             onClick={performUndo}
-            className="shrink-0 text-[11px] font-medium text-bone/60 transition-colors hover:text-floral focus-visible:outline-none"
+            className="shrink-0 text-[11px] font-medium text-ink-soft/60 transition-colors hover:text-ink focus-visible:outline-none"
           >
             Desfazer
           </button>

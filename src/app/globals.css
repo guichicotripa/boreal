@@ -5,28 +5,67 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ── Boreal — sistema de marca (fonte de verdade: /brand) ──────────────
-   Paleta quente. Sem azul/navy. Olive só decoração; texto legível em
-   Bone/Floral. Cores de risco quentes (terracota/ocre).               */
+   Paleta quente. Sem azul/navy. Cores de risco quentes (terracota/ocre).
+
+   DOIS NÍVEIS, de propósito:
+
+   1. PALETA FÍSICA (smoky/olive/bone/floral) — os pigmentos da marca. Valores
+      fixos, NÃO mudam com o tema. Servem aos assets que são sempre escuros
+      (favicon, imagem de compartilhamento) e como referência do brand guide.
+
+   2. PAPÉIS (canvas/ink/ink-soft/ink-faint + surface/hairline/overlay/risk-*)
+      — o que a interface usa. Trocam de valor conforme o tema. Um botão é
+      `bg-ink text-canvas` e inverte sozinho: creme sobre preto no escuro,
+      preto sobre creme no claro.
+
+   Por que não usar `bg-smoky` direto: no tema claro o fundo é creme, e uma
+   classe chamada "smoky" (preto quente) pintando creme mente pra sempre.   */
 @theme {
-  --color-smoky: #11120d; /* fundo primário — preto quente */
-  --color-olive: #565449; /* decoração, divisores, texto terciário */
-  --color-bone: #d8cfbc; /* texto secundário legível */
-  --color-floral: #fffbf4; /* headlines, texto primário, wordmark */
+  /* 1. Paleta física — imutável */
+  --color-smoky: #11120d; /* preto quente, subtom esverdeado */
+  --color-olive: #565449; /* neutro quente médio */
+  --color-bone: #d8cfbc; /* creme acinzentado */
+  --color-floral: #fffbf4; /* branco quente — nunca #fff puro */
 
-  --color-surface: rgba(255, 251, 244, 0.03); /* cards */
-  --color-surface-hover: rgba(255, 251, 244, 0.05);
-  --color-overlay: #1c1d17; /* popover/dropdown/toast — superfície elevada opaca (surface é alpha, transparente demais) */
-  --color-hairline: rgba(255, 251, 244, 0.07); /* bordas */
-  --color-hairline-hover: rgba(255, 251, 244, 0.12);
+  /* 2. Papéis — resolvidos por tema (ver blocos :root / :root.light abaixo) */
+  --color-canvas: var(--t-canvas); /* fundo primário */
+  --color-ink: var(--t-ink); /* texto primário, headlines, wordmark, fill de CTA */
+  --color-ink-soft: var(--t-ink-soft); /* texto secundário legível — metadados, CNPJ */
+  --color-ink-faint: var(--t-ink-faint); /* terciário: divisores, assinatura de rodapé */
 
-  --color-risk-high: #c8623e; /* terracota — alto risco sucessório */
-  --color-risk-mid: #c99b3d; /* ocre — risco moderado */
-  --color-risk-low: #d8cfbc; /* bone — risco baixo, neutro */
+  --color-surface: var(--t-surface); /* cards */
+  --color-surface-hover: var(--t-surface-hover);
+  --color-overlay: var(--t-overlay); /* popover/dropdown/toast — elevada OPACA (surface é alpha) */
+  --color-hairline: var(--t-hairline); /* bordas */
+  --color-hairline-hover: var(--t-hairline-hover);
+
+  --color-risk-high: var(--t-risk-high); /* terracota — alto risco sucessório */
+  --color-risk-mid: var(--t-risk-mid); /* ocre — risco moderado */
+  --color-risk-low: var(--t-risk-low); /* neutro — risco baixo, sem alarme */
 
   --font-sans: var(--font-plex-sans); /* interface: body, botões, inputs */
   --font-display: var(--font-newsreader); /* editorial: headlines, nomes, statements */
   --font-data: var(--font-plex-mono);     /* dados: scores, CNPJ, labels mono */
   /* --font-archivo: exclusivo ao lockup do logo, não usar como utility */
+}
+
+/* ── Tema escuro (default) ────────────────────────────────────────────────
+   Superfícies e bordas = Floral White em alpha: clareiam sem adicionar cor. */
+:root {
+  --t-canvas: #11120d;
+  --t-ink: #fffbf4;
+  --t-ink-soft: #d8cfbc;
+  --t-ink-faint: #565449;
+
+  --t-surface: rgba(255, 251, 244, 0.03);
+  --t-surface-hover: rgba(255, 251, 244, 0.05);
+  --t-overlay: #1c1d17;
+  --t-hairline: rgba(255, 251, 244, 0.07);
+  --t-hairline-hover: rgba(255, 251, 244, 0.12);
+
+  --t-risk-high: #c8623e;
+  --t-risk-mid: #c99b3d;
+  --t-risk-low: #d8cfbc;
 }
 
 @theme inline {

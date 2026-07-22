@@ -36,9 +36,9 @@ export default function Acesso() {
     <main className="flex min-h-[calc(100dvh-65px)] items-center justify-center px-6">
       <form onSubmit={submit} className="w-full max-w-xs">
         <div className="mb-6 flex justify-center">
-          <Logo className="h-6 w-auto text-floral" />
+          <Logo className="h-6 w-auto text-ink" />
         </div>
-        <label className="mb-1.5 block font-data text-[10px] uppercase tracking-wider text-bone/55">
+        <label className="mb-1.5 block font-data text-[10px] uppercase tracking-wider text-ink-soft/55">
           Acesso restrito
         </label>
         <input
@@ -47,13 +47,13 @@ export default function Acesso() {
           onChange={(e) => setSenha(e.target.value)}
           autoFocus
           placeholder="senha"
-          className="w-full rounded-md border border-hairline bg-transparent px-3 py-2 font-data text-sm text-bone outline-none placeholder:text-bone/30 focus-visible:border-floral/50"
+          className="w-full rounded-md border border-hairline bg-transparent px-3 py-2 font-data text-sm text-ink-soft outline-none placeholder:text-ink-soft/30 focus-visible:border-ink/50"
         />
         {erro && <p className="mt-2 font-data text-[11px] text-risk-high">Senha incorreta.</p>}
         <button
           type="submit"
           disabled={carregando || !senha}
-          className="mt-3 w-full rounded-md bg-floral px-3 py-2 font-data text-[11px] uppercase tracking-wider text-smoky transition-opacity hover:opacity-90 disabled:opacity-40"
+          className="mt-3 w-full rounded-md bg-ink px-3 py-2 font-data text-[11px] uppercase tracking-wider text-canvas transition-opacity hover:opacity-90 disabled:opacity-40"
         >
           {carregando ? "Entrando…" : "Entrar"}
         </button>

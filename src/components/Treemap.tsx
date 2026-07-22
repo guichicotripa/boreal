@@ -12,8 +12,8 @@ const GAP = 2;
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="leading-tight">
-      <div className="font-data text-[8px] uppercase tracking-wider text-bone/45">{label}</div>
-      <div className="font-display text-[15px] tabular-nums text-bone">{value}</div>
+      <div className="font-data text-[8px] uppercase tracking-wider text-ink-soft/45">{label}</div>
+      <div className="font-display text-[15px] tabular-nums text-ink-soft">{value}</div>
     </div>
   );
 }
@@ -100,7 +100,7 @@ export function Treemap({ grupos }: { grupos: GrupoSecao[] }) {
           >
             <span
               className={`truncate font-data text-[9px] uppercase tracking-[0.12em] transition-colors ${
-                hover?.id === grupo.secaoSigla ? "text-floral" : "text-bone/55"
+                hover?.id === grupo.secaoSigla ? "text-ink" : "text-ink-soft/55"
               }`}
             >
               {grupo.secaoNome}
@@ -157,20 +157,20 @@ export function Treemap({ grupos }: { grupos: GrupoSecao[] }) {
             style={{ backgroundColor: "rgba(13,12,10,0.96)" }}
           >
             <div className="flex items-center gap-2.5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-md bg-surface-hover text-floral">
+              <span className="flex h-9 w-9 items-center justify-center rounded-md bg-surface-hover text-ink">
                 <SecaoIcon sigla={badge.iconSigla} className="h-[19px] w-[19px]" />
               </span>
               <div className="leading-tight">
-                <div className="flex items-center gap-1.5 font-data text-[8px] uppercase tracking-wider text-bone/45">
+                <div className="flex items-center gap-1.5 font-data text-[8px] uppercase tracking-wider text-ink-soft/45">
                   <span className="max-w-[150px] truncate">{badge.kicker}</span>
                   {badge.validado && (
-                    <span className="inline-flex items-center gap-1 text-floral/80">
+                    <span className="inline-flex items-center gap-1 text-ink/80">
                       <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "#FFFBF4" }} />
                       validado
                     </span>
                   )}
                 </div>
-                <div className="max-w-[190px] truncate font-display text-sm text-floral">{badge.titulo}</div>
+                <div className="max-w-[190px] truncate font-display text-sm text-ink">{badge.titulo}</div>
               </div>
             </div>
             <div className="h-9 w-px bg-hairline" />

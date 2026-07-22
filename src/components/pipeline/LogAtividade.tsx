@@ -50,19 +50,19 @@ export function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
     <div className="mt-2 rounded border border-hairline px-2.5 py-2">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-medium text-bone">
+          <span className="text-[11px] font-medium text-ink-soft">
             {total > 0 ? `Contatos · ${total}` : "Contatos"}
           </span>
-          <span className="text-[11px] text-bone/45">
+          <span className="text-[11px] text-ink-soft/45">
             ligações, emails, reuniões…
           </span>
         </div>
         <button
           onClick={toggle}
-          className="flex h-5 items-center gap-1 rounded border border-hairline px-1.5 text-[11px] text-bone transition-colors hover:border-hairline-hover hover:text-floral focus-visible:outline-none"
+          className="flex h-5 items-center gap-1 rounded border border-hairline px-1.5 text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none"
         >
           <span>{aberto ? "−" : "+"}</span>
-          {!aberto && <span className="text-bone/60">registrar</span>}
+          {!aberto && <span className="text-ink-soft/60">registrar</span>}
         </button>
       </div>
 
@@ -70,15 +70,15 @@ export function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
         <div className="mt-2 space-y-2">
           <div className="flex gap-1">
             <Select value={tipo} onValueChange={(v) => setTipo(v as TipoInteracao)}>
-              <SelectTrigger className="h-auto w-24 shrink-0 border-hairline px-1.5 py-1 text-[11px] text-floral focus:ring-0 focus-visible:ring-1 focus-visible:ring-floral/50 focus:border-hairline-hover">
+              <SelectTrigger className="h-auto w-24 shrink-0 border-hairline px-1.5 py-1 text-[11px] text-ink focus:ring-0 focus-visible:ring-1 focus-visible:ring-ink/50 focus:border-hairline-hover">
                 <SelectValue>{TIPOS_INTERACAO.find((t) => t.id === tipo)?.label}</SelectValue>
               </SelectTrigger>
-              <SelectContent sideOffset={0} className="border-hairline bg-overlay text-floral">
+              <SelectContent sideOffset={0} className="border-hairline bg-overlay text-ink">
                 {TIPOS_INTERACAO.map((t) => (
                   <SelectItem
                     key={t.id}
                     value={t.id}
-                    className="text-[11px] text-floral focus:bg-surface-hover focus:text-floral"
+                    className="text-[11px] text-ink focus:bg-surface-hover focus:text-ink"
                   >
                     {t.label}
                   </SelectItem>
@@ -90,11 +90,11 @@ export function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
               onChange={(e) => setTexto(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") adicionar(); }}
               placeholder="registrar contato…"
-              className="min-w-0 flex-1 rounded border border-hairline bg-surface px-1.5 py-1 text-[11px] text-floral outline-none placeholder:text-bone/45 focus:border-hairline-hover"
+              className="min-w-0 flex-1 rounded border border-hairline bg-surface px-1.5 py-1 text-[11px] text-ink outline-none placeholder:text-ink-soft/45 focus:border-hairline-hover"
             />
             <button
               onClick={adicionar}
-              className="shrink-0 rounded border border-hairline px-2 text-[11px] font-medium text-floral transition-colors hover:border-hairline-hover"
+              className="shrink-0 rounded border border-hairline px-2 text-[11px] font-medium text-ink transition-colors hover:border-hairline-hover"
             >
               +
             </button>
@@ -104,18 +104,18 @@ export function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
             <ul className="space-y-1.5">
               {itens.map((it) => (
                 <li key={it.id} className="text-[11px] leading-snug">
-                  <span className="font-data text-bone/60">{dataCurta(it.criado_em)}</span>{" "}
-                  <span className="font-medium text-bone/60">
+                  <span className="font-data text-ink-soft/60">{dataCurta(it.criado_em)}</span>{" "}
+                  <span className="font-medium text-ink-soft/60">
                     {TIPOS_INTERACAO.find((t) => t.id === it.tipo)?.label ?? it.tipo}
                   </span>
-                  <span className="text-bone"> — {it.descricao}</span>
+                  <span className="text-ink-soft"> — {it.descricao}</span>
                 </li>
               ))}
             </ul>
           ) : itens ? (
-            <p className="text-[11px] text-bone/60">Nenhum contato registrado.</p>
+            <p className="text-[11px] text-ink-soft/60">Nenhum contato registrado.</p>
           ) : (
-            <p className="text-[11px] text-bone/60">Carregando…</p>
+            <p className="text-[11px] text-ink-soft/60">Carregando…</p>
           )}
         </div>
       )}

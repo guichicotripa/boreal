@@ -7,16 +7,16 @@ import { type SetorContexto, CONTEXTO_ATUALIZADO_EM } from "@/lib/setor-contexto
 export function ContextoSetor({ ctx }: { ctx: SetorContexto }) {
   return (
     <div>
-      <p className="text-[15px] leading-relaxed text-bone">{ctx.macro}</p>
-      <p className="mt-3 text-[15px] leading-relaxed text-bone">{ctx.dinamica}</p>
+      <p className="text-[15px] leading-relaxed text-ink-soft">{ctx.macro}</p>
+      <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">{ctx.dinamica}</p>
 
       {ctx.players.length > 0 && (
         <div className="mt-5">
-          <p className="mb-2 font-data text-[10px] uppercase tracking-wider text-bone/70">Principais consolidadores</p>
+          <p className="mb-2 font-data text-[10px] uppercase tracking-wider text-ink-soft/70">Principais consolidadores</p>
           <ul className="space-y-2">
             {ctx.players.map((p) => (
-              <li key={p.nome} className="text-[14px] leading-relaxed text-bone">
-                <span className="text-floral">{p.nome}</span> — {p.nota}
+              <li key={p.nome} className="text-[14px] leading-relaxed text-ink-soft">
+                <span className="text-ink">{p.nome}</span> — {p.nota}
               </li>
             ))}
           </ul>
@@ -24,11 +24,11 @@ export function ContextoSetor({ ctx }: { ctx: SetorContexto }) {
       )}
 
       <div className="mt-5">
-        <p className="mb-2 font-data text-[10px] uppercase tracking-wider text-bone/70">Tendências</p>
+        <p className="mb-2 font-data text-[10px] uppercase tracking-wider text-ink-soft/70">Tendências</p>
         <ul className="space-y-1.5">
           {ctx.tendencias.map((t) => (
-            <li key={t} className="flex gap-2 text-[14px] leading-relaxed text-bone">
-              <span className="shrink-0 text-olive">·</span>
+            <li key={t} className="flex gap-2 text-[14px] leading-relaxed text-ink-soft">
+              <span className="shrink-0 text-ink-faint">·</span>
               {t}
             </li>
           ))}
@@ -36,7 +36,7 @@ export function ContextoSetor({ ctx }: { ctx: SetorContexto }) {
       </div>
 
       <div className="mt-5">
-        <p className="mb-1.5 font-data text-[10px] uppercase tracking-wider text-bone/70">Fontes</p>
+        <p className="mb-1.5 font-data text-[10px] uppercase tracking-wider text-ink-soft/70">Fontes</p>
         <ul className="space-y-1">
           {ctx.fontes.map((f) => (
             <li key={f.url}>
@@ -44,14 +44,14 @@ export function ContextoSetor({ ctx }: { ctx: SetorContexto }) {
                 href={f.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12px] leading-relaxed text-floral underline-offset-2 hover:underline"
+                className="text-[12px] leading-relaxed text-ink underline-offset-2 hover:underline"
               >
                 {f.titulo}
               </a>
             </li>
           ))}
         </ul>
-        <p className="mt-2 font-data text-[10px] text-olive">
+        <p className="mt-2 font-data text-[10px] text-ink-faint">
           Contexto de mercado curado · atualizado em {CONTEXTO_ATUALIZADO_EM}.
         </p>
       </div>

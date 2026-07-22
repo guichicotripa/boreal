@@ -82,7 +82,7 @@ export default function RootLayout({
       lang="pt-BR"
       className={`dark ${newsreader.variable} ${plexSans.variable} ${archivo.variable} ${plexMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-smoky">
+      <body className="min-h-full flex flex-col bg-canvas">
         <AppShell>{children}</AppShell>
       </body>
     </html>
