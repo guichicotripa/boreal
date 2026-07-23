@@ -113,18 +113,24 @@ export function totalAquisicoes(regiao: string): number {
   return divisoesDaRegiao(regiao).reduce((a, d) => a + d.n_aquisicoes, 0);
 }
 
-// Cor do tile — monocromático quente (cinza-quente → branco), sem verde/vermelho (risco é do score).
+// Cor do tile — monocromático quente (cinza-quente), sem verde/vermelho (risco é do score).
 // O defeito antigo era o meio da tabela ficar claro demais (parecia tudo branco). Gamma 1.6 mantém o
-// grosso escuro e só o TOPO acende; faixa alargada (12% quase-fundo → 94% quase-branco) dá o salto.
-export function corTile(intensidade: number): string {
+// grosso apagado e só o TOPO acende; faixa alargada dá o salto.
+//
+// A rampa INVERTE por tema: no escuro vai de quase-fundo (12%) a quase-branco (94%) — mais M&A
+// "acende". No claro isso viraria buraco preto na página, então vai de quase-fundo claro (92%) a
+// escuro (18%) — mais M&A "adensa". Nos dois casos a intensidade lê como distância do fundo.
+export function corTile(intensidade: number, claro = false): string {
   const i = Math.pow(Math.max(0, Math.min(1, intensidade)), 1.6);
-  const L = 12 + i * 82; // 12%..94%
+  const L = claro ? 92 - i * 74 : 12 + i * 82;
   return `hsl(40 7% ${L}%)`;
 }
 
-export function corTextoTile(intensidade: number): string {
+// Texto sobre o tile: vira o oposto da luminosidade do próprio tile.
+export function corTextoTile(intensidade: number, claro = false): string {
   const i = Math.pow(Math.max(0, Math.min(1, intensidade)), 1.6);
-  return i > 0.5 ? "#1c1a17" : "#D8CFBC";
+  const tileClaro = claro ? i < 0.5 : i > 0.5;
+  return tileClaro ? "#1c1a17" : "#D8CFBC";
 }
 
 export const HEATMAP_JANELA = raw.janela;

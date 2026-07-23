@@ -10,10 +10,12 @@ import {
   HEATMAP_JANELA,
   HEATMAP_GERADO_EM,
 } from "@/lib/heatmap";
+import { useTemaClaro } from "./shell/TemaToggle";
 import { REGIOES } from "@/lib/cnae";
 
 // Página interativa do heat-map: seletor de região + treemap que recomputa. Full-viewport, sem scroll.
 export function MapaSetores() {
+  const claro = useTemaClaro(); // a legenda usa a mesma rampa dos tiles
   const [regiao, setRegiao] = useState("BR");
   const grupos = useMemo(() => gruposPorSecao(regiao), [regiao]);
   const total = useMemo(() => totalAquisicoes(regiao), [regiao]);
@@ -33,7 +35,7 @@ export function MapaSetores() {
     <div className="flex flex-col" style={{ height: "calc(100dvh - 65px)" }}>
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-6 py-2.5">
         <div className="flex items-center gap-3">
-          <h1 className="font-display text-lg tracking-tight text-floral">Heat-map</h1>
+          <h1 className="font-display text-lg tracking-tight text-ink">Heat-map</h1>
           <div className="flex items-center gap-0.5 rounded-md border border-hairline p-0.5">
             {REGIOES.map((r) => (
               <button
@@ -41,8 +43,8 @@ export function MapaSetores() {
                 type="button"
                 onClick={() => setRegiao(r.id)}
                 aria-pressed={regiao === r.id}
-                className={`rounded px-2 py-1 font-data text-[10px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 ${
-                  regiao === r.id ? "bg-surface-hover text-floral" : "text-bone/60 hover:text-bone"
+                className={`rounded px-2 py-1 font-data text-[10px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 ${
+                  regiao === r.id ? "bg-surface-hover text-ink" : "text-ink-muted hover:text-ink-soft"
                 }`}
               >
                 {r.nome}
@@ -53,27 +55,27 @@ export function MapaSetores() {
 
         <div className="flex items-center gap-4">
           <div className="hidden items-center gap-2 md:flex">
-            <span className="font-data text-[9px] uppercase tracking-wider text-bone/60">Menos</span>
+            <span className="font-data text-[9px] uppercase tracking-wider text-ink-muted">Menos</span>
             <div
               className="h-2 w-20 rounded-full"
-              style={{ background: `linear-gradient(90deg, ${corTile(0)}, ${corTile(0.5)}, ${corTile(1)})` }}
+              style={{ background: `linear-gradient(90deg, ${corTile(0, claro)}, ${corTile(0.5, claro)}, ${corTile(1, claro)})` }}
             />
-            <span className="font-data text-[9px] uppercase tracking-wider text-bone/60">Mais M&amp;A</span>
+            <span className="font-data text-[9px] uppercase tracking-wider text-ink-muted">Mais M&amp;A</span>
           </div>
           <div className="hidden items-center gap-1.5 lg:flex">
-            <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "#FFFBF4" }} />
-            <span className="font-data text-[9px] uppercase tracking-wider text-bone/60">Validado</span>
+            <span className="h-1.5 w-1.5 rounded-full bg-ink" />
+            <span className="font-data text-[9px] uppercase tracking-wider text-ink-muted">Validado</span>
           </div>
           <span
             title={nota}
             aria-label={nota}
-            className="cursor-help select-none font-data text-[13px] text-bone/50 transition-colors hover:text-bone"
+            className="cursor-help select-none font-data text-[13px] text-ink-muted transition-colors hover:text-ink-soft"
           >
             ⓘ
           </span>
           <Link
             href="/"
-            className="group flex items-center gap-1.5 rounded-sm font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+            className="group flex items-center gap-1.5 rounded-sm font-data text-[11px] uppercase tracking-wider text-ink transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
           >
             <span className="transition-transform duration-200 group-hover:-translate-x-1">←</span>
             <span>Voltar</span>

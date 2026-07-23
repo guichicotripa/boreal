@@ -30,7 +30,7 @@ export function Timeline({ empresa }: { empresa: Empresa }) {
 
   return (
     <div>
-      <h4 className="mb-2 text-[11px] font-medium text-bone/60">
+      <h4 className="mb-2 text-[11px] font-medium text-ink-muted">
         Linha do tempo societária
       </h4>
       {/* Altura explícita evita margin collapse (conteúdo é absoluto) */}
@@ -46,11 +46,11 @@ export function Timeline({ empresa }: { empresa: Empresa }) {
           if (isLeft) {
             return (
               <div key={i} className="absolute left-0 -translate-y-1/2" style={{ width: 28 }}>
-                <span className="absolute -top-7 left-0 max-w-[8rem] truncate whitespace-nowrap text-[10px] text-bone">
+                <span className="absolute -top-7 left-0 max-w-[8rem] truncate whitespace-nowrap text-[10px] text-ink-soft">
                   {ev.label}
                 </span>
                 <span className="mx-auto block h-2 w-2 rounded-full bg-risk-mid" />
-                <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-bone/60">
+                <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-ink-muted">
                   {ev.ano}
                 </span>
               </div>
@@ -60,11 +60,11 @@ export function Timeline({ empresa }: { empresa: Empresa }) {
           if (isRight) {
             return (
               <div key={i} className="absolute -translate-y-1/2 -translate-x-1/2" style={{ left: `${pct}%`, width: 28 }}>
-                <span className="absolute -top-7 w-full truncate whitespace-nowrap text-center text-[10px] text-bone">
+                <span className="absolute -top-7 w-full truncate whitespace-nowrap text-center text-[10px] text-ink-soft">
                   {ev.label}
                 </span>
                 <span className="mx-auto block h-2 w-2 rounded-full bg-risk-mid" />
-                <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-bone/60">
+                <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-ink-muted">
                   {ev.ano}
                 </span>
               </div>
@@ -77,11 +77,11 @@ export function Timeline({ empresa }: { empresa: Empresa }) {
               className="absolute flex flex-col -translate-y-1/2 -translate-x-1/2 items-center text-center"
               style={{ left: `${pct}%` }}
             >
-              <span className="absolute -top-7 max-w-[8rem] truncate whitespace-nowrap text-[10px] text-bone">
+              <span className="absolute -top-7 max-w-[8rem] truncate whitespace-nowrap text-[10px] text-ink-soft">
                 {ev.label}
               </span>
               <span className="h-2 w-2 rounded-full bg-risk-mid" />
-              <span className="absolute top-3 font-data text-[10px] tabular-nums text-bone/60">
+              <span className="absolute top-3 font-data text-[10px] tabular-nums text-ink-muted">
                 {ev.ano}
               </span>
             </div>
@@ -90,11 +90,11 @@ export function Timeline({ empresa }: { empresa: Empresa }) {
 
         {/* Marcador "Hoje" — container fixo 28px, tudo centrado */}
         <div className="absolute right-0 -translate-y-1/2" style={{ width: 28 }}>
-          <span className="absolute -top-7 w-full text-center font-data text-[10px] uppercase tracking-wide text-bone/60">
+          <span className="absolute -top-7 w-full text-center font-data text-[10px] uppercase tracking-wide text-ink-muted">
             Hoje
           </span>
           <span className="mx-auto block h-2 w-2 rounded-full border border-hairline-hover bg-transparent" />
-          <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-bone/60">
+          <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-ink-muted">
             {anoAtual}
           </span>
         </div>

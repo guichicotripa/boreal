@@ -14,9 +14,9 @@ function fmt(n: number) {
 }
 
 const STATUS: Record<string, { label: string; cls: string }> = {
-  validado: { label: "Validado", cls: "border-hairline text-bone" },
-  itera: { label: "Itera", cls: "border-hairline text-bone" },
-  consolidacao: { label: "Consolidação", cls: "border-hairline text-bone" },
+  validado: { label: "Validado", cls: "border-hairline text-ink-soft" },
+  itera: { label: "Itera", cls: "border-hairline text-ink-soft" },
+  consolidacao: { label: "Consolidação", cls: "border-hairline text-ink-soft" },
 };
 
 const LENTE: Record<string, string> = {
@@ -25,30 +25,30 @@ const LENTE: Record<string, string> = {
 };
 
 function recallCor(s: Setor) {
-  if (s.recall_sucessao == null) return "text-olive";
-  if (s.recall_sucessao >= 70) return "text-floral";
-  if (s.recall_sucessao >= 40) return "text-bone";
-  return "text-bone";
+  if (s.recall_sucessao == null) return "text-ink-faint";
+  if (s.recall_sucessao >= 70) return "text-ink";
+  if (s.recall_sucessao >= 40) return "text-ink-soft";
+  return "text-ink-soft";
 }
 
 export default function Setores() {
   return (
-    <div className="min-h-screen bg-smoky text-floral">
+    <div className="min-h-screen bg-canvas text-ink">
       <main className="mx-auto max-w-4xl px-6 py-12">
         <header className="mb-8 flex items-center justify-between">
           <div>
-            <p className="font-data text-[11px] uppercase tracking-wider text-olive">
+            <p className="font-data text-[11px] uppercase tracking-wider text-ink-faint">
               Cobertura setorial · uma lente por vertical
             </p>
             <h1 className="mt-2 font-display text-3xl tracking-tight md:text-4xl">Setores</h1>
           </div>
-          <Link href="/" className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
+          <Link href="/" className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-ink transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 rounded-sm">
             <span className="transition-transform duration-200 group-hover:-translate-x-1">←</span>
             <span>Voltar à busca</span>
           </Link>
         </header>
 
-        <p className="mb-8 max-w-2xl text-[15px] leading-relaxed text-bone">
+        <p className="mb-8 max-w-2xl text-[15px] leading-relaxed text-ink-soft">
           O score de sucessão acerta <strong>88–100% das vendas de sucessão em
           todos os setores</strong>. O que muda é a <strong>dinâmica</strong> do setor:
           em sucessão, identificamos quem vende; em consolidação, o foco é o próximo alvo dos
@@ -62,9 +62,9 @@ export default function Setores() {
             return (
               <section key={s.id} className="rounded-xl border border-hairline bg-surface p-6">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <h2 className="font-display text-xl tracking-tight text-floral">{s.nome}</h2>
+                  <h2 className="font-display text-xl tracking-tight text-ink">{s.nome}</h2>
                   <div className="flex items-center gap-2">
-                    <span className="rounded border border-hairline px-2 py-0.5 font-data text-[10px] uppercase tracking-wider text-olive">
+                    <span className="rounded border border-hairline px-2 py-0.5 font-data text-[10px] uppercase tracking-wider text-ink-faint">
                       CNAE {s.cnaes.join("/")}
                     </span>
                     <span className={`rounded border px-2 py-0.5 font-data text-[10px] uppercase tracking-wider ${st.cls}`}>
@@ -73,7 +73,7 @@ export default function Setores() {
                   </div>
                 </div>
 
-                <p className="mt-1 font-data text-[11px] uppercase tracking-wider text-bone/70">
+                <p className="mt-1 font-data text-[11px] uppercase tracking-wider text-ink-muted">
                   Lente: {LENTE[s.lente]}
                 </p>
 
@@ -82,30 +82,30 @@ export default function Setores() {
                     <p className={`font-display text-2xl tabular-nums ${recallCor(s)}`}>
                       {s.recall_sucessao != null ? `${s.recall_sucessao}%` : "—"}
                     </p>
-                    <p className="font-data text-[10px] uppercase tracking-wider text-bone/70">
+                    <p className="font-data text-[10px] uppercase tracking-wider text-ink-muted">
                       Acerto nas vendas de sucessão
                     </p>
                   </div>
                   <div>
-                    <p className="font-display text-2xl tabular-nums text-bone">{s.pct_sucessao}%</p>
-                    <p className="font-data text-[10px] uppercase tracking-wider text-bone/70">
+                    <p className="font-display text-2xl tabular-nums text-ink-soft">{s.pct_sucessao}%</p>
+                    <p className="font-data text-[10px] uppercase tracking-wider text-ink-muted">
                       Do M&amp;A é sucessão
                     </p>
                   </div>
                   <div>
-                    <p className="font-display text-2xl tabular-nums text-floral">{fmt(s.quente)}</p>
-                    <p className="font-data text-[10px] uppercase tracking-wider text-bone/70">Sinalizadas</p>
+                    <p className="font-display text-2xl tabular-nums text-ink">{fmt(s.quente)}</p>
+                    <p className="font-data text-[10px] uppercase tracking-wider text-ink-muted">Sinalizadas</p>
                   </div>
                   <div>
-                    <p className="font-display text-2xl tabular-nums text-bone">{fmt(s.universo)}</p>
-                    <p className="font-data text-[10px] uppercase tracking-wider text-bone/70">Universo (SP)</p>
+                    <p className="font-display text-2xl tabular-nums text-ink-soft">{fmt(s.universo)}</p>
+                    <p className="font-data text-[10px] uppercase tracking-wider text-ink-muted">Universo (SP)</p>
                   </div>
                 </div>
 
-                <p className="mt-4 text-[15px] leading-relaxed text-bone">{s.descricao}</p>
+                <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">{s.descricao}</p>
 
                 {s.nacional?.recall_sucessao != null && (
-                  <p className="mt-2 font-data text-[11px] text-bone/60">
+                  <p className="mt-2 font-data text-[11px] text-ink-muted">
                     Testado fora de SP:{" "}
                     <strong>{s.nacional.recall_sucessao}%</strong> de acerto nas vendas de
                     sucessão (Brasil inteiro, N={s.nacional.n_aquisicoes_sucessao} aquisições).
@@ -114,7 +114,7 @@ export default function Setores() {
 
                 {ctx && (
                   <div className="mt-5 border-t border-hairline pt-5">
-                    <p className="mb-3 font-data text-[11px] uppercase tracking-wider text-bone/70">
+                    <p className="mb-3 font-data text-[11px] uppercase tracking-wider text-ink-muted">
                       Contexto de mercado
                     </p>
                     <ContextoSetor ctx={ctx} />
@@ -123,14 +123,14 @@ export default function Setores() {
 
                 <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 font-data text-xs">
                   {s.lente === "consolidacao" && (
-                    <Link href="/consolidadores" className="text-bone transition-colors hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
+                    <Link href="/consolidadores" className="text-ink-soft transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 rounded-sm">
                       Ver consolidadores
                     </Link>
                   )}
-                  <Link href="/mercado" className="text-bone transition-colors hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
+                  <Link href="/mercado" className="text-ink-soft transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 rounded-sm">
                     Ver mercado
                   </Link>
-                  <Link href={`/?setor=${s.id}`} className="group flex items-center gap-1 text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
+                  <Link href={`/?setor=${s.id}`} className="group flex items-center gap-1 text-ink transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 rounded-sm">
                     Buscar neste setor <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
                   </Link>
                 </div>
@@ -139,7 +139,7 @@ export default function Setores() {
           })}
         </div>
 
-        <p className="mt-8 font-data text-xs text-olive">
+        <p className="mt-8 font-data text-xs text-ink-faint">
           &ldquo;Acerto nas vendas de sucessão&rdquo; = recall@top10% medido leakage-free, apenas nas aquisições
           de perfil sucessório, sócio 61+ e empresa 25+. Status pelo perfil de M&amp;A do setor: ≥40% do M&amp;A é
           sucessão = setor de sucessão · 20–40% misto · &lt;20% consolidação. Gerado em{" "}

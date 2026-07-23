@@ -112,11 +112,11 @@ export function CommandPalette({
             onKeyDown={onInputKey}
             placeholder="Ir para…"
             aria-label="Buscar destino"
-            className="w-full border-b border-hairline bg-transparent px-4 py-3 text-sm text-floral outline-none placeholder:text-olive"
+            className="w-full border-b border-hairline bg-transparent px-4 py-3 text-sm text-ink outline-none placeholder:text-ink-faint"
           />
           <ul role="listbox" aria-label="Destinos" className="max-h-[300px] overflow-y-auto p-1.5">
             {filtrados.length === 0 && (
-              <li className="px-3 py-6 text-center text-[13px] text-bone/60">Nada encontrado.</li>
+              <li className="px-3 py-6 text-center text-[13px] text-ink-muted">Nada encontrado.</li>
             )}
             {filtrados.map((item, idx) => (
               <li key={item.id} role="option" aria-selected={idx === ativo}>
@@ -125,14 +125,14 @@ export function CommandPalette({
                   onMouseEnter={() => setAtivo(idx)}
                   onClick={() => executar(item)}
                   className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left transition-colors ${
-                    idx === ativo ? "bg-surface-hover text-floral" : "text-bone"
+                    idx === ativo ? "bg-surface-hover text-ink" : "text-ink-soft"
                   }`}
                 >
                   <span className="text-[13px]">{item.label}</span>
                   <span className="flex items-center gap-2">
-                    <span className="text-[11px] text-bone/60">{item.grupo}</span>
+                    <span className="text-[11px] text-ink-muted">{item.grupo}</span>
                     {idx === ativo && (
-                      <CornerDownLeft aria-hidden="true" className="h-3 w-3 text-bone/40" />
+                      <CornerDownLeft aria-hidden="true" className="h-3 w-3 text-ink-muted" />
                     )}
                   </span>
                 </button>

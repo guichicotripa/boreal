@@ -53,18 +53,18 @@ export default async function Consolidadores() {
   }
 
   return (
-    <div className="min-h-screen bg-smoky text-floral">
+    <div className="min-h-screen bg-canvas text-ink">
       <main className="mx-auto max-w-3xl px-6 py-12">
         <header className="mb-10 flex items-start justify-between">
           <div>
-            <p className="font-data text-[11px] uppercase tracking-wider text-olive">
+            <p className="font-data text-[11px] uppercase tracking-wider text-ink-faint">
               A outra lente · quem compra
             </p>
             <h1 className="mt-2 font-display text-3xl tracking-tight md:text-4xl text-balance">
               Roll-ups se formando no registro
             </h1>
           </div>
-          <Link href="/" className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm">
+          <Link href="/" className="group flex items-center gap-2 font-data text-[11px] uppercase tracking-wider text-ink transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 rounded-sm">
             <span className="transition-transform duration-200 group-hover:-translate-x-1">←</span>
             <span>Voltar à busca</span>
           </Link>
@@ -72,30 +72,30 @@ export default async function Consolidadores() {
 
         {/* Tese das duas lentes */}
         <section className="rounded-xl border border-hairline bg-surface p-6">
-          <p className="text-[15px] leading-relaxed text-bone">
+          <p className="text-[15px] leading-relaxed text-ink-soft">
             O mercado tem <strong>dois jogos</strong>, e o registro revela
             qual setor joga qual.
           </p>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             <div className="rounded-lg border border-hairline p-4">
-              <p className="font-data text-[11px] uppercase tracking-wider text-bone/70">
+              <p className="font-data text-[11px] uppercase tracking-wider text-ink-muted">
                 Metalmecânica · sucessão
               </p>
-              <p className="mt-2 text-sm leading-snug text-bone">
+              <p className="mt-2 text-sm leading-snug text-ink-soft">
                 Donos envelhecendo, sem plano de sucessão. O modelo identifica quem tem{" "}
                 <strong>maior propensão a vender</strong>, com antecedência.
               </p>
             </div>
             <div className="rounded-lg border border-hairline p-4">
-              <p className="font-data text-[11px] uppercase tracking-wider text-bone/70">
+              <p className="font-data text-[11px] uppercase tracking-wider text-ink-muted">
                 Saúde · consolidação
               </p>
-              <p className="mt-2 text-sm leading-snug text-bone">
+              <p className="mt-2 text-sm leading-snug text-ink-soft">
                 Roll-ups em expansão, sem anunciar. O modelo detecta <strong>quem está comprando e com que padrão</strong>, em tempo real.
               </p>
             </div>
           </div>
-          <p className="mt-4 text-[13px] leading-relaxed text-bone/60">
+          <p className="mt-4 text-[13px] leading-relaxed text-ink-muted">
             Mesma mina de dados (transições de sócios no CNPJ), invertida: em vez de detectar o sócio
             PJ <em>entrando</em> num alvo, agrupamos por <em>quem</em> entrou. Quem aparece em muitas
             empresas do mesmo setor é um consolidador — e dá pra mapear o <em>buy-box</em> dele (o perfil
@@ -105,10 +105,10 @@ export default async function Consolidadores() {
 
         {/* Honestidade: o backtest da previsão */}
         <section className="mt-6">
-          <p className="font-data text-[11px] uppercase tracking-wider text-bone/70">
+          <p className="font-data text-[11px] uppercase tracking-wider text-ink-muted">
             E o próximo alvo? Backtestamos — e não vendemos como previsão
           </p>
-          <p className="mt-2 text-[15px] leading-relaxed text-bone">
+          <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
             Testamos se os candidatos listados pelo buy-box seriam de fato adquiridos:{" "}
             <strong>{Math.round((backtest.lift - 1) * 100)}% a mais de acerto</strong> que uma empresa aleatória do
             mesmo setor. O ganho é real. Mas o padrão de setor e cidade não captura as nuances que
@@ -125,14 +125,14 @@ export default async function Consolidadores() {
           {consolidadores.map((c) => (
             <section key={c.consolidador} className="rounded-xl border border-hairline bg-surface p-6">
               <div className="flex items-baseline justify-between gap-4">
-                <h2 className="font-display text-xl tracking-tight text-floral">
+                <h2 className="font-display text-xl tracking-tight text-ink">
                   {titulo(c.consolidador)}
                 </h2>
-                <span className="shrink-0 font-data text-sm text-floral">
+                <span className="shrink-0 font-data text-sm text-ink">
                   {c.n_adquiridas} já adquiridas
                 </span>
               </div>
-              <p className="mt-5 font-data text-[11px] uppercase tracking-wider text-bone/70">
+              <p className="mt-5 font-data text-[11px] uppercase tracking-wider text-ink-muted">
                 Candidatos no padrão do comprador
               </p>
               <ul className="mt-2 divide-y divide-hairline">
@@ -143,15 +143,15 @@ export default async function Consolidadores() {
                       {id ? (
                         <Link
                           href={`/empresa/${id}`}
-                          className="group flex items-center gap-1.5 text-sm text-floral transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
+                          className="group flex items-center gap-1.5 text-sm text-ink transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 rounded-sm"
                         >
                           {titulo(a.nome)}
-                          <span className="text-olive transition-transform duration-200 group-hover:translate-x-0.5">→</span>
+                          <span className="text-ink-faint transition-transform duration-200 group-hover:translate-x-0.5">→</span>
                         </Link>
                       ) : (
-                        <span className="text-sm text-floral">{titulo(a.nome)}</span>
+                        <span className="text-sm text-ink">{titulo(a.nome)}</span>
                       )}
-                      <span className="shrink-0 font-data text-[11px] text-bone/70">
+                      <span className="shrink-0 font-data text-[11px] text-ink-muted">
                         sócio {a.socio_faixa} · desde {a.desde}
                       </span>
                     </li>
@@ -162,7 +162,7 @@ export default async function Consolidadores() {
           ))}
         </div>
 
-        <p className="mt-8 font-data text-xs text-olive">
+        <p className="mt-8 font-data text-xs text-ink-faint">
           Candidatos = empresas ainda independentes (só sócios PF no quadro), dentro do buy-box do
           consolidador, com sócio 61+. Não é uma previsão validada
           (ver backtest acima) — é o universo que se encaixa no padrão. Gerado em{" "}

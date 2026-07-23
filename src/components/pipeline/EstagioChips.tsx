@@ -22,17 +22,17 @@ export function EstagioChip({
       value={o.estagio}
       onValueChange={(v) => onPatch(o.id, { estagio: v as EstagioOportunidade })}
     >
-      <SelectTrigger className="relative h-auto w-fit max-w-full justify-start border-0 bg-transparent pl-2.5 pr-5 py-0.5 text-[11px] text-bone/60 transition-colors hover:text-bone focus:ring-0 focus-visible:ring-1 focus-visible:ring-floral/50 [&>svg]:absolute [&>svg]:right-1 [&>svg]:top-1/2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:-translate-y-1/2 [&>svg]:opacity-40">
+      <SelectTrigger className="relative h-auto w-fit max-w-full justify-start border-0 bg-transparent pl-2.5 pr-5 py-0.5 text-[11px] text-ink-muted transition-colors hover:text-ink-soft focus:ring-0 focus-visible:ring-1 focus-visible:ring-ink/50 [&>svg]:absolute [&>svg]:right-1 [&>svg]:top-1/2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:-translate-y-1/2 [&>svg]:opacity-40">
         <SelectValue className="flex-none text-left">
           {ESTAGIOS.find((s) => s.id === o.estagio)?.label ?? o.estagio}
         </SelectValue>
       </SelectTrigger>
-      <SelectContent sideOffset={4} className="border-hairline bg-overlay text-floral">
+      <SelectContent sideOffset={4} className="border-hairline bg-overlay text-ink">
         {ESTAGIOS.map((s) => (
           <SelectItem
             key={s.id}
             value={s.id}
-            className="text-[11px] text-floral focus:bg-surface-hover focus:text-floral"
+            className="text-[11px] text-ink focus:bg-surface-hover focus:text-ink"
           >
             {s.label}
           </SelectItem>
@@ -50,11 +50,11 @@ export function ResultadoChip({
   onPatch: (id: string, campos: Partial<Oportunidade>) => void;
 }) {
   const colorClass =
-    o.resultado === "deal_fechado"  ? "text-floral" :
-    o.resultado === "receptivo"     ? "text-bone"   :
-    o.resultado === "nao_receptivo" ? "text-bone/60" :
-    o.resultado === "perdido"       ? "text-bone/45" :
-    "text-bone/70";
+    o.resultado === "deal_fechado"  ? "text-ink" :
+    o.resultado === "receptivo"     ? "text-ink-soft"   :
+    o.resultado === "nao_receptivo" ? "text-ink-muted" :
+    o.resultado === "perdido"       ? "text-ink-muted" :
+    "text-ink-muted";
 
   return (
     <Select
@@ -62,18 +62,18 @@ export function ResultadoChip({
       onValueChange={(v) => onPatch(o.id, { resultado: v as ResultadoOportunidade })}
     >
       <SelectTrigger
-        className={`relative h-auto w-fit max-w-full justify-start border-0 bg-transparent pl-2.5 pr-5 py-0.5 text-[11px] font-medium transition-colors hover:text-bone focus:ring-0 focus-visible:ring-1 focus-visible:ring-floral/50 [&>svg]:absolute [&>svg]:right-1 [&>svg]:top-1/2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:-translate-y-1/2 [&>svg]:opacity-40 ${colorClass}`}
+        className={`relative h-auto w-fit max-w-full justify-start border-0 bg-transparent pl-2.5 pr-5 py-0.5 text-[11px] font-medium transition-colors hover:text-ink-soft focus:ring-0 focus-visible:ring-1 focus-visible:ring-ink/50 [&>svg]:absolute [&>svg]:right-1 [&>svg]:top-1/2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:-translate-y-1/2 [&>svg]:opacity-40 ${colorClass}`}
       >
         <SelectValue className="flex-none text-left">
           {RESULTADOS.find((r) => r.id === o.resultado)?.label ?? o.resultado}
         </SelectValue>
       </SelectTrigger>
-      <SelectContent sideOffset={4} className="border-hairline bg-overlay text-floral">
+      <SelectContent sideOffset={4} className="border-hairline bg-overlay text-ink">
         {RESULTADOS.map((r) => (
           <SelectItem
             key={r.id}
             value={r.id}
-            className="text-[11px] text-floral focus:bg-surface-hover focus:text-floral"
+            className="text-[11px] text-ink focus:bg-surface-hover focus:text-ink"
           >
             {r.label}
           </SelectItem>

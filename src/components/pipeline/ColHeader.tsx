@@ -23,14 +23,14 @@ export function ColHeader({
 }) {
   return (
     <div
-      className="mb-0.5 grid items-center gap-x-4 border-x border-x-transparent border-b border-b-hairline/40 px-3 pb-1.5 text-[11px] font-medium text-bone/60"
+      className="mb-0.5 grid items-center gap-x-4 border-x border-x-transparent border-b border-b-hairline/40 px-3 pb-1.5 text-[11px] font-medium text-ink-muted"
       style={{ gridTemplateColumns: COL }}
     >
       {/* grip placeholder */}
       <span />
       <button
         onClick={onScoreSort}
-        className="flex items-center gap-1 transition-colors hover:text-bone focus-visible:outline-none"
+        className="flex items-center gap-1 transition-colors hover:text-ink-soft focus-visible:outline-none"
         title={
           scoreSort === "asc" ? "ordenar decrescente" :
           scoreSort === "desc" ? "remover ordenação" :
@@ -38,25 +38,25 @@ export function ColHeader({
         }
       >
         Score
-        {scoreSort === "asc" && <span className="text-floral">↑</span>}
-        {scoreSort === "desc" && <span className="text-floral">↓</span>}
+        {scoreSort === "asc" && <span className="text-ink">↑</span>}
+        {scoreSort === "desc" && <span className="text-ink">↓</span>}
       </button>
       <span>Empresa</span>
       {/* pl-[18px] = px-2 (8px) do container + pl-2.5 (10px) do input/chip — alinha o título com o texto "dono" abaixo */}
       <button
         onClick={onDonoSort}
-        className="flex items-center gap-1 pl-[18px] transition-colors hover:text-bone focus-visible:outline-none"
+        className="flex items-center gap-1 pl-[18px] transition-colors hover:text-ink-soft focus-visible:outline-none"
         title={donoSort ? "remover ordenação" : "ordenar por dono"}
       >
         {isEntregue ? "Dono · Resultado" : "Dono · Estágio"}
-        {donoSort && <span className="text-floral">↑</span>}
+        {donoSort && <span className="text-ink">↑</span>}
       </button>
       {isEntregue ? (
         <span />
       ) : (
         <button
           onClick={onAcaoSort}
-          className="flex items-center gap-1 transition-colors hover:text-bone focus-visible:outline-none"
+          className="flex items-center gap-1 transition-colors hover:text-ink-soft focus-visible:outline-none"
           title={
             acaoSort === "asc" ? "ordenar decrescente" :
             acaoSort === "desc" ? "remover ordenação" :
@@ -64,8 +64,8 @@ export function ColHeader({
           }
         >
           Próxima ação
-          {acaoSort === "asc" && <span className="text-floral">↑</span>}
-          {acaoSort === "desc" && <span className="text-floral">↓</span>}
+          {acaoSort === "asc" && <span className="text-ink">↑</span>}
+          {acaoSort === "desc" && <span className="text-ink">↓</span>}
         </button>
       )}
       <span>Contato</span>

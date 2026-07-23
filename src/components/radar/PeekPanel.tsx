@@ -60,7 +60,7 @@ export function PeekPanel({
       tabIndex={-1}
       role="complementary"
       aria-label={`Preview de ${e.razao_social}`}
-      className="fixed inset-y-0 right-0 z-50 flex w-full max-w-[440px] flex-col border-l border-hairline bg-smoky shadow-2xl shadow-black/60 outline-none"
+      className="fixed inset-y-0 right-0 z-50 flex w-full max-w-[440px] flex-col border-l border-hairline bg-overlay shadow-2xl shadow-black/60 outline-none"
     >
       {/* Header */}
       <div className="flex items-start gap-3 border-b border-hairline p-4">
@@ -71,12 +71,12 @@ export function PeekPanel({
           </div>
         </div>
         <div className="min-w-0 flex-1">
-          <h2 className="font-display text-[17px] leading-tight text-floral">{e.razao_social}</h2>
-          <p className="mt-0.5 font-data text-[11px] text-bone/70">
+          <h2 className="font-display text-[17px] leading-tight text-ink">{e.razao_social}</h2>
+          <p className="mt-0.5 font-data text-[11px] text-ink-muted">
             {formatCnpj(e.cnpj)} · {e.municipio}/{e.uf}
           </p>
           {delta != null && (
-            <p className="mt-0.5 text-[11px] text-bone/60">
+            <p className="mt-0.5 text-[11px] text-ink-muted">
               investigada com IA: {delta > 0 ? `↑${delta}` : delta < 0 ? `↓${Math.abs(delta)}` : "sem ajuste"}
             </p>
           )}
@@ -85,7 +85,7 @@ export function PeekPanel({
           type="button"
           onClick={onClose}
           aria-label="Fechar preview"
-          className="rounded-md p-1.5 text-bone transition-colors hover:bg-surface-hover hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+          className="rounded-md p-1.5 text-ink-soft transition-colors hover:bg-surface-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
         >
           <X aria-hidden="true" className="h-4 w-4" strokeWidth={1.75} />
         </button>
@@ -94,18 +94,18 @@ export function PeekPanel({
       {/* Corpo scrollável */}
       <div className="min-h-0 flex-1 space-y-5 overflow-y-auto p-4">
         {e.insight?.one_liner && (
-          <p className="font-display text-sm leading-relaxed text-floral">{e.insight.one_liner}</p>
+          <p className="font-display text-sm leading-relaxed text-ink">{e.insight.one_liner}</p>
         )}
 
         {/* Composição do score */}
         {e.score?.breakdown && (
           <section>
             <div className="mb-2 flex items-center justify-between">
-              <h3 className="text-[11px] font-medium text-bone/60">
+              <h3 className="text-[11px] font-medium text-ink-muted">
                 Composição do score
               </h3>
               {e.score.perfil_sucessorio && (
-                <span className="text-[11px] font-medium text-floral">● Perfil sucessório</span>
+                <span className="text-[11px] font-medium text-ink">● Perfil sucessório</span>
               )}
             </div>
             <ul className="space-y-1.5">
@@ -113,11 +113,11 @@ export function PeekPanel({
                 const v = e.score!.breakdown[key];
                 return (
                   <li key={key} className="flex items-center gap-2">
-                    <span className="w-32 shrink-0 text-[12px] text-bone">{label}</span>
+                    <span className="w-32 shrink-0 text-[12px] text-ink-soft">{label}</span>
                     <span className="h-1 flex-1 overflow-hidden rounded-full bg-hairline">
-                      <span className="block h-full bg-bone/60" style={{ width: `${(v / max) * 100}%` }} />
+                      <span className="block h-full bg-ink-soft/60" style={{ width: `${(v / max) * 100}%` }} />
                     </span>
-                    <span className="w-12 shrink-0 text-right font-data text-[11px] tabular-nums text-bone">
+                    <span className="w-12 shrink-0 text-right font-data text-[11px] tabular-nums text-ink-soft">
                       {v}/{max}
                     </span>
                   </li>
@@ -130,12 +130,12 @@ export function PeekPanel({
         {/* Sinais */}
         {e.score?.sinais && e.score.sinais.length > 0 && (
           <section>
-            <h3 className="mb-2 text-[11px] font-medium text-bone/60">
+            <h3 className="mb-2 text-[11px] font-medium text-ink-muted">
               Sinais
             </h3>
             <ul className="space-y-1">
               {e.score.sinais.slice(0, 5).map((s) => (
-                <li key={s} className="text-[12.5px] leading-relaxed text-bone">
+                <li key={s} className="text-[12.5px] leading-relaxed text-ink-soft">
                   · {s}
                 </li>
               ))}
@@ -145,7 +145,7 @@ export function PeekPanel({
 
         {/* Dados */}
         <section>
-          <h3 className="mb-2 text-[11px] font-medium text-bone/60">Dados</h3>
+          <h3 className="mb-2 text-[11px] font-medium text-ink-muted">Dados</h3>
           <dl className="grid grid-cols-2 gap-x-4 gap-y-2">
             {[
               ["Porte", e.porte ?? "—"],
@@ -154,33 +154,33 @@ export function PeekPanel({
               ["Natureza", e.natureza_juridica ?? "—"],
             ].map(([k, v]) => (
               <div key={k}>
-                <dt className="text-[10.5px] font-medium text-bone/60">{k}</dt>
-                <dd className="mt-0.5 text-[12.5px] tabular-nums text-bone">{v}</dd>
+                <dt className="text-[10.5px] font-medium text-ink-muted">{k}</dt>
+                <dd className="mt-0.5 text-[12.5px] tabular-nums text-ink-soft">{v}</dd>
               </div>
             ))}
           </dl>
           {e.cnae_principal_desc && (
-            <p className="mt-2 text-[12px] leading-snug text-bone/70">{e.cnae_principal_desc}</p>
+            <p className="mt-2 text-[12px] leading-snug text-ink-muted">{e.cnae_principal_desc}</p>
           )}
         </section>
 
         {/* Sócios */}
         {socios.length > 0 && (
           <section>
-            <h3 className="mb-2 text-[11px] font-medium text-bone/60">
+            <h3 className="mb-2 text-[11px] font-medium text-ink-muted">
               Sócios ({socios.length})
             </h3>
             <ul className="space-y-1.5">
               {socios.slice(0, 6).map((s) => (
                 <li key={s.id} className="flex items-baseline justify-between gap-2">
-                  <span className="min-w-0 truncate text-[12.5px] text-bone">{s.nome}</span>
-                  <span className="shrink-0 font-data text-[11px] text-bone/70">
+                  <span className="min-w-0 truncate text-[12.5px] text-ink-soft">{s.nome}</span>
+                  <span className="shrink-0 font-data text-[11px] text-ink-muted">
                     {s.faixa_etaria && FAIXA_LABEL[s.faixa_etaria] ? FAIXA_LABEL[s.faixa_etaria] : "—"}
                   </span>
                 </li>
               ))}
               {socios.length > 6 && (
-                <li className="text-[11px] text-bone/60">+{socios.length - 6} na página completa</li>
+                <li className="text-[11px] text-ink-muted">+{socios.length - 6} na página completa</li>
               )}
             </ul>
           </section>
@@ -189,14 +189,14 @@ export function PeekPanel({
         {/* Contato */}
         {(e.telefone || e.email) && (
           <section>
-            <h3 className="mb-2 text-[11px] font-medium text-bone/60">
+            <h3 className="mb-2 text-[11px] font-medium text-ink-muted">
               Contato
             </h3>
             <div className="flex flex-wrap gap-2">
               {e.telefone && (
                 <a
                   href={`tel:${e.telefone.replace(/\D/g, "")}`}
-                  className="inline-flex items-center gap-1.5 rounded-md border border-hairline px-2.5 py-1.5 font-data text-[11px] text-bone transition-colors hover:border-hairline-hover hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+                  className="inline-flex items-center gap-1.5 rounded-md border border-hairline px-2.5 py-1.5 font-data text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
                 >
                   <Phone aria-hidden="true" className="h-3 w-3" strokeWidth={1.75} />
                   {formatTelefone(e.telefone)}
@@ -205,7 +205,7 @@ export function PeekPanel({
               {e.email && (
                 <a
                   href={`mailto:${e.email}`}
-                  className="inline-flex max-w-full items-center gap-1.5 truncate rounded-md border border-hairline px-2.5 py-1.5 font-data text-[11px] text-bone transition-colors hover:border-hairline-hover hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+                  className="inline-flex max-w-full items-center gap-1.5 truncate rounded-md border border-hairline px-2.5 py-1.5 font-data text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
                 >
                   <Mail aria-hidden="true" className="h-3 w-3 shrink-0" strokeWidth={1.75} />
                   <span className="truncate">{e.email.toLowerCase()}</span>
@@ -225,7 +225,7 @@ export function PeekPanel({
             storeEmpresa(e);
             storeOrigin("busca");
           }}
-          className="inline-flex items-center gap-1.5 rounded-md border border-hairline px-3.5 py-2 text-[12.5px] font-medium text-bone transition-colors hover:border-hairline-hover hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+          className="inline-flex items-center gap-1.5 rounded-md border border-hairline px-3.5 py-2 text-[12.5px] font-medium text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
         >
           Abrir empresa
           <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.75} />

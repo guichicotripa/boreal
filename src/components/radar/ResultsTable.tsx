@@ -41,7 +41,7 @@ export function ResultsTable({
   // bug da 1ª linha coberta). Em xl+ o container fica visible e o header
   // gruda logo abaixo do topbar (top-14).
   return (
-    <div className="overflow-x-auto rounded-lg border border-hairline xl:overflow-x-visible">
+    <div className="overflow-x-auto rounded-lg border border-hairline bg-surface xl:overflow-x-visible">
       <table className="w-full min-w-[820px] border-collapse text-left">
         <thead>
           <tr>
@@ -49,7 +49,7 @@ export function ResultsTable({
               (h, i) => (
                 <th
                   key={i}
-                  className={`z-10 bg-smoky px-3 py-2 text-[11px] font-medium text-bone/60 shadow-[inset_0_-1px_0_rgba(255,251,244,0.07)] xl:sticky xl:top-14 ${
+                  className={`z-10 bg-canvas px-3 py-2 text-[11px] font-medium text-ink-muted shadow-[inset_0_-1px_0_var(--color-hairline)] xl:sticky xl:top-14 ${
                     h === "Capital" ? "text-right" : ""
                   }`}
                 >
@@ -85,11 +85,11 @@ export function ResultsTable({
                   <button
                     type="button"
                     onClick={() => onPeek(e)}
-                    className="block max-w-full truncate text-left text-[13px] font-medium text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50 rounded-sm"
+                    className="block max-w-full truncate text-left text-[13px] font-medium text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 rounded-sm"
                   >
                     {e.razao_social}
                   </button>
-                  <p className="truncate text-[11px] text-bone/60">
+                  <p className="truncate text-[11px] text-ink-muted">
                     {e.municipio}/{e.uf}
                     {e.cnae_principal_desc ? ` · ${e.cnae_principal_desc}` : ""}
                   </p>
@@ -104,7 +104,7 @@ export function ResultsTable({
                     {delta != null && (
                       <span
                         className={`font-data text-[10px] tabular-nums ${
-                          delta > 0 ? "text-risk-high" : delta < 0 ? "text-bone/60" : "text-bone/50"
+                          delta > 0 ? "text-risk-high" : delta < 0 ? "text-ink-muted" : "text-ink-muted"
                         }`}
                         title="ajuste após investigação com IA"
                       >
@@ -116,21 +116,21 @@ export function ResultsTable({
                 {/* Perfil sucessório — onde a lente vale (alta confiança) */}
                 <td className="px-3 py-2">
                   {e.score?.perfil_sucessorio ? (
-                    <span className="whitespace-nowrap text-[11px] font-medium text-floral">
+                    <span className="whitespace-nowrap text-[11px] font-medium text-ink">
                       ● Sucessório
                     </span>
                   ) : (
-                    <span className="text-[11px] text-bone/40">—</span>
+                    <span className="text-[11px] text-ink-muted">—</span>
                   )}
                 </td>
-                <td className="px-3 py-2 text-[12px] text-bone">{e.porte ?? "—"}</td>
-                <td className="whitespace-nowrap px-3 py-2 font-data text-[12px] tabular-nums text-bone">
+                <td className="px-3 py-2 text-[12px] text-ink-soft">{e.porte ?? "—"}</td>
+                <td className="whitespace-nowrap px-3 py-2 font-data text-[12px] tabular-nums text-ink-soft">
                   {anoDe(e.data_inicio_atividade)}
                 </td>
-                <td className="whitespace-nowrap px-3 py-2 text-right font-data text-[12px] tabular-nums text-bone">
+                <td className="whitespace-nowrap px-3 py-2 text-right font-data text-[12px] tabular-nums text-ink-soft">
                   {formatCapitalCompact(e.capital_social) ?? "—"}
                 </td>
-                <td className="whitespace-nowrap px-3 py-2 font-data text-[12px] text-bone">
+                <td className="whitespace-nowrap px-3 py-2 font-data text-[12px] text-ink-soft">
                   {socioTop ?? "—"}
                 </td>
                 {/* Ações — aparecem no hover (padrão quick actions) */}
@@ -144,7 +144,7 @@ export function ResultsTable({
                         storeOrigin("busca");
                       }}
                       aria-label={`Abrir página de ${e.razao_social}`}
-                      className="rounded-md border border-hairline p-1.5 text-bone transition-colors hover:border-hairline-hover hover:text-floral focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-floral/50"
+                      className="rounded-md border border-hairline p-1.5 text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
                     >
                       <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.75} />
                     </Link>
@@ -155,7 +155,7 @@ export function ResultsTable({
           })}
         </tbody>
       </table>
-      <div className="flex items-center justify-between border-t border-hairline px-3 py-1.5 text-[11px] text-bone/60">
+      <div className="flex items-center justify-between border-t border-hairline px-3 py-1.5 text-[11px] text-ink-muted">
         <span>{empresas.length} {empresas.length === 1 ? "empresa" : "empresas"}</span>
         <span className="hidden font-data text-[10px] md:inline" aria-hidden="true">
           j/k navega · ⏎ abre
