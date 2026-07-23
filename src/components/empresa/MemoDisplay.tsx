@@ -1,21 +1,17 @@
-import type { Empresa, DossierAnalise, TrajetoriaResult } from "@/lib/types";
+import type { Empresa, DossierAnalise } from "@/lib/types";
 import { precedentesParaEmpresa, cenarioIlustrativo, dadosParaFechar } from "@/lib/memo-extras";
-import { Timeline } from "./Timeline";
-import { TrajetoriaEventos } from "./TrajetoriaEventos";
 
 // Memo de investimento: narrativa LLM (overview, análise sucessória, red flags,
 // perguntas, tese, próximo passo) + três blocos quantitativos determinísticos
 // (precedentes, cenário, dados para fechar). Compartilhado entre home e página da empresa.
-// `trajetoria` é opcional: quando presente, mostra a movimentação societária real
-// (entrou/saiu/envelheceu) reconstruída do CNPJ — o que a Timeline (só entradas atuais) não vê.
+// A linha do tempo e a movimentação societária NÃO vivem aqui — são a aba Trajetória
+// (casa única). Ficavam duplicadas entre o memo e a aba.
 export function MemoDisplay({
   empresa,
   analise,
-  trajetoria,
 }: {
   empresa: Empresa;
   analise: DossierAnalise;
-  trajetoria?: TrajetoriaResult | null;
 }) {
   const precedentes = precedentesParaEmpresa(empresa);
   const cenario = cenarioIlustrativo(empresa);
@@ -24,18 +20,6 @@ export function MemoDisplay({
     <div className="space-y-5 rounded-lg border border-hairline bg-surface p-4 text-sm">
       <span className="text-[11px] font-medium text-ink-muted">Dossiê</span>
       <p className="leading-relaxed text-ink">{analise.overview}</p>
-      <Timeline empresa={empresa} />
-
-      {/* Movimentação societária real (2022→2025) — o que a Timeline não mostra:
-          saídas e envelhecimento de faixa, reconstruídos comparando snapshots do CNPJ. */}
-      {trajetoria && trajetoria.eventos.length > 0 && (
-        <div>
-          <h4 className="mb-1 text-[11px] font-medium text-ink-muted">
-            Movimentação societária (2022→2025)
-          </h4>
-          <TrajetoriaEventos trajetoria={trajetoria} />
-        </div>
-      )}
       <div>
         <h4 className="mb-1 text-[11px] font-medium text-ink-muted">
           Análise de risco sucessório

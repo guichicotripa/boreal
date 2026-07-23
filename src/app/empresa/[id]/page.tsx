@@ -533,7 +533,7 @@ export default function EmpresaPage() {
             {/* ── MEMO ── (sob demanda; síntese a partir da investigação) */}
             {tab === "memo" && (
               memo ? (
-                <MemoDisplay empresa={e} analise={memo} trajetoria={traj} />
+                <MemoDisplay empresa={e} analise={memo} />
               ) : memoLoading ? (
                 <p className="animate-pulse text-[13px] text-ink-muted" role="status">
                   Gerando memo…
