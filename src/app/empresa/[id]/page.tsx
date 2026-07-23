@@ -344,6 +344,8 @@ export default function EmpresaPage() {
                 {e.telefone && (
                   <a
                     href={`tel:${e.telefone.replace(/\D/g, "")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex w-fit items-center gap-1.5 rounded-md border border-hairline px-2.5 py-1.5 font-data text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
                   >
                     <Phone aria-hidden="true" className="h-3 w-3" strokeWidth={1.75} />
@@ -353,6 +355,8 @@ export default function EmpresaPage() {
                 {e.email && (
                   <a
                     href={`mailto:${e.email}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex max-w-full items-center gap-1.5 truncate rounded-md border border-hairline px-2.5 py-1.5 font-data text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
                   >
                     <Mail aria-hidden="true" className="h-3 w-3 shrink-0" strokeWidth={1.75} />
