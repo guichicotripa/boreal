@@ -15,6 +15,7 @@ import {
   Menu,
   X,
   ChevronDown,
+  EyeOff,
   PanelLeftClose,
   PanelLeft,
   type LucideIcon,
@@ -39,6 +40,10 @@ export const NAV_GRUPOS: NavGrupo[] = [
       { href: "/", label: "Radar", icon: Crosshair },
       { href: "/pipeline", label: "Pipeline", icon: Table2 },
       { href: "/agenda", label: "Agenda", icon: CalendarClock },
+      // Conceitualmente é um sub-estado do Radar, não um par de Pipeline/Agenda.
+      // Mora aqui mesmo assim: fora do menu a tela ficava inalcançável (o link
+      // contextual só surgia depois de buscar E com descarte já existente).
+      { href: "/descartadas", label: "Descartadas", icon: EyeOff },
     ],
   },
   {
@@ -72,7 +77,6 @@ function tituloDaRota(pathname: string): string {
     }
   }
   if (pathname.startsWith("/empresa")) return "Empresa";
-  if (pathname.startsWith("/descartadas")) return "Descartadas";
   return "Boreal";
 }
 
