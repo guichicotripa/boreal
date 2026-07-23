@@ -6,6 +6,7 @@ import { calcScore } from "@/lib/scoring";
 import { reasonAboutEmpresas } from "@/lib/reasoner";
 import { lerScoresV1, aplicarV1 } from "@/lib/research-store";
 import { lerDescartadas, filtrarDescartadas } from "@/lib/descarte-store";
+import { escopoAtual } from "@/lib/escopo";
 import type { Empresa, Socio, SearchResponse } from "@/lib/types";
 import demoCache from "@/lib/demo-cache.json";
 import setoresData from "@/lib/setores.json";
@@ -44,7 +45,7 @@ async function comOverlays(resp: SearchResponse): Promise<SearchResponse> {
   const supabase = createAdminClient();
 
   try {
-    const descartadas = await lerDescartadas(supabase, empresas.map((e) => e.id));
+    const descartadas = await lerDescartadas(supabase, await escopoAtual(), empresas.map((e) => e.id));
     empresas = filtrarDescartadas(empresas, descartadas);
   } catch (err) {
     // Falhou a leitura do descarte: mostra tudo (degrada, não quebra a busca).
@@ -191,7 +192,7 @@ export async function POST(req: NextRequest) {
   // Antes do reasoner: não faz sentido gastar chamada de LLM comentando empresa
   // que o operador já disse que não quer ver.
   try {
-    const descartadas = await lerDescartadas(supabase, scored.map((e) => e.id));
+    const descartadas = await lerDescartadas(supabase, await escopoAtual(), scored.map((e) => e.id));
     scored = filtrarDescartadas(scored, descartadas);
   } catch (err) {
     console.error("filtro de descartadas falhou:", (err as Error).message);
