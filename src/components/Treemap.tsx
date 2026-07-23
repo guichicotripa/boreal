@@ -13,7 +13,7 @@ const GAP = 2;
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="leading-tight">
-      <div className="font-data text-[8px] uppercase tracking-wider text-ink-muted">{label}</div>
+      <div className="text-[9.5px] text-ink-muted">{label}</div>
       <div className="font-display text-[15px] tabular-nums text-ink-soft">{value}</div>
     </div>
   );
@@ -100,7 +100,7 @@ export function Treemap({ grupos }: { grupos: GrupoSecao[] }) {
             style={{ left: grupo.x, top: grupo.y, width: grupo.w, height: HEADER }}
           >
             <span
-              className={`truncate font-data text-[9px] uppercase tracking-[0.12em] transition-colors ${
+              className={`truncate text-[10.5px] font-medium transition-colors ${
                 hover?.id === grupo.secaoSigla ? "text-ink" : "text-ink-muted"
               }`}
             >
@@ -136,7 +136,7 @@ export function Treemap({ grupos }: { grupos: GrupoSecao[] }) {
                 )}
                 {showLabel && (
                   <div className="p-1 leading-tight">
-                    <div className="truncate font-data text-[9px] font-medium">{t.nome}</div>
+                    <div className="truncate text-[10px] font-medium">{t.nome}</div>
                     {showNum && (
                       <div className="font-display text-[13px] tabular-nums">
                         {t.deals_ano}
@@ -162,7 +162,7 @@ export function Treemap({ grupos }: { grupos: GrupoSecao[] }) {
                 <SecaoIcon sigla={badge.iconSigla} className="h-[19px] w-[19px]" />
               </span>
               <div className="leading-tight">
-                <div className="flex items-center gap-1.5 font-data text-[8px] uppercase tracking-wider text-ink-muted">
+                <div className="flex items-center gap-1.5 text-[10px] text-ink-muted">
                   <span className="max-w-[150px] truncate">{badge.kicker}</span>
                   {badge.validado && (
                     <span className="inline-flex items-center gap-1 text-ink-muted">

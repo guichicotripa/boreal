@@ -44,7 +44,7 @@ export function MapaSetores() {
                 type="button"
                 onClick={() => setRegiao(r.id)}
                 aria-pressed={regiao === r.id}
-                className={`rounded px-2 py-1 font-data text-[10px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 ${
+                className={`rounded px-2 py-1 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 ${
                   regiao === r.id ? "bg-surface-hover text-ink" : "text-ink-muted hover:text-ink-soft"
                 }`}
               >
@@ -56,21 +56,21 @@ export function MapaSetores() {
 
         <div className="flex items-center gap-4">
           <div className="hidden items-center gap-2 md:flex">
-            <span className="font-data text-[9px] uppercase tracking-wider text-ink-muted">Menos</span>
+            <span className="text-[10.5px] text-ink-muted">Menos</span>
             <div
               className="h-2 w-20 rounded-full"
               style={{ background: `linear-gradient(90deg, ${corTile(0, claro)}, ${corTile(0.5, claro)}, ${corTile(1, claro)})` }}
             />
-            <span className="font-data text-[9px] uppercase tracking-wider text-ink-muted">Mais M&amp;A</span>
+            <span className="text-[10.5px] text-ink-muted">Mais M&amp;A</span>
           </div>
           <div className="hidden items-center gap-1.5 lg:flex">
             <span className="h-1.5 w-1.5 rounded-full bg-ink" />
-            <span className="font-data text-[9px] uppercase tracking-wider text-ink-muted">Validado</span>
+            <span className="text-[10.5px] text-ink-muted">Validado</span>
           </div>
           <NotaMetodologia nota={nota} />
           <Link
             href="/"
-            className="group flex items-center gap-1.5 rounded-sm font-data text-[11px] uppercase tracking-wider text-ink transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+            className="group flex items-center gap-1.5 rounded-sm text-[12px] font-medium text-ink transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
           >
             <span className="transition-transform duration-200 group-hover:-translate-x-1">←</span>
             <span>Voltar</span>

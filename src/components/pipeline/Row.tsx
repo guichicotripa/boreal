@@ -257,6 +257,8 @@ export function Row({
           {o.empresa.telefone ? (
             <a
               href={`tel:${o.empresa.telefone.replace(/\D/g, "")}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="block truncate rounded-sm font-data text-[11px] text-ink transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
             >
               {formatTelefone(o.empresa.telefone)}
@@ -265,6 +267,8 @@ export function Row({
           {o.empresa.email ? (
             <a
               href={`mailto:${o.empresa.email}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="block truncate rounded-sm font-data text-[11px] text-ink transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
             >
               {o.empresa.email}
@@ -274,7 +278,7 @@ export function Row({
             <span className="text-[11px] text-ink-muted">sem contato</span>
           )}
           {/* Indicador de último contato */}
-          <p className={`font-data text-[10px] ${toqueAtrasado ? "text-risk-mid" : "text-ink-muted"}`}>
+          <p className={`text-[10.5px] ${toqueAtrasado ? "text-risk-mid" : "text-ink-muted"}`}>
             {ultimoToque
               ? `contato ${diasDesde(ultimoToque)}d atrás`
               : `sem contato · ${diasSemToque}d`}

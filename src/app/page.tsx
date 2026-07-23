@@ -399,7 +399,7 @@ function SearchSkeleton() {
       <div className="mb-4 flex items-center gap-2 text-sm">
         <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-ink" />
         <span className="text-ink">{LOADING_STEPS[step]}</span>
-        <span className="font-data text-[10px] uppercase tracking-wider text-ink-faint">
+        <span className="font-data text-[10px] tabular-nums text-ink-faint">
           {step + 1}/{LOADING_STEPS.length}
         </span>
       </div>

@@ -66,7 +66,7 @@ export function PeekPanel({
       <div className="flex items-start gap-3 border-b border-hairline p-4">
         <div className={`shrink-0 rounded border ${t.badge} px-2 py-1 text-center`}>
           <div className={`font-data text-lg tabular-nums leading-none ${t.text}`}>{score}</div>
-          <div className={`font-data text-[9px] uppercase tracking-wide ${t.text} opacity-70`}>
+          <div className={`text-[10px] font-medium ${t.text} opacity-70`}>
             {t.label}
           </div>
         </div>
