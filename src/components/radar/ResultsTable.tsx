@@ -75,6 +75,14 @@ export function ResultsTable({
                   if ((window.getSelection()?.toString().trim().length ?? 0) > 0) return;
                   onPeek(e);
                 }}
+                onDoubleClick={(ev) => {
+                  if ((ev.target as HTMLElement).closest("a, button")) return;
+                  // O duplo-clique seleciona a palavra sob o cursor — limpa o ruído.
+                  window.getSelection()?.removeAllRanges();
+                  // Aba nova mantém o Boreal aberto. Com noopener o sessionStorage NÃO
+                  // é herdado, mas a página da empresa se hidrata sozinha por /api/empresa/[id].
+                  window.open(`/empresa/${e.id}`, "_blank", "noopener,noreferrer");
+                }}
                 aria-selected={aberta}
                 className={`group cursor-pointer border-b border-hairline last:border-b-0 transition-colors ${
                   aberta ? "bg-surface-hover" : "hover:bg-surface"
@@ -157,8 +165,8 @@ export function ResultsTable({
       </table>
       <div className="flex items-center justify-between border-t border-hairline px-3 py-1.5 text-[11px] text-ink-muted">
         <span>{empresas.length} {empresas.length === 1 ? "empresa" : "empresas"}</span>
-        <span className="hidden font-data text-[10px] md:inline" aria-hidden="true">
-          j/k navega · ⏎ abre
+        <span className="hidden text-[10.5px] md:inline" aria-hidden="true">
+          j/k navega · ⏎ abre · clique pré-visualiza · duplo-clique abre em nova aba
         </span>
       </div>
     </div>
