@@ -72,6 +72,7 @@ function tituloDaRota(pathname: string): string {
     }
   }
   if (pathname.startsWith("/empresa")) return "Empresa";
+  if (pathname.startsWith("/descartadas")) return "Descartadas";
   return "Boreal";
 }
 

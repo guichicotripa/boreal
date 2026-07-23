@@ -48,6 +48,8 @@ export default function Radar() {
   // linha sumir sem refazer a query — então guardamos os ids descartados na sessão.
   const [descartadasIds, setDescartadasIds] = useState<Set<string>>(new Set());
   const [desfazer, setDesfazer] = useState<{ empresa: Empresa; timer: number } | null>(null);
+  // Total de descartadas no escopo — só pra oferecer o caminho de volta (/descartadas).
+  const [totalDescartadas, setTotalDescartadas] = useState(0);
 
   useEffect(() => {
     const refresh = () => setScoreOverrides(readScoresConhecidos());
@@ -77,6 +79,25 @@ export default function Radar() {
     return () => {
       window.removeEventListener("pageshow", refreshSaved);
       window.removeEventListener("focus", refreshSaved);
+    };
+  }, []);
+
+  // Contagem de descartadas — atualiza ao montar e ao voltar de /descartadas
+  // (onde o usuário pode ter restaurado alguma).
+  useEffect(() => {
+    async function refreshDescartadas() {
+      try {
+        const r = await fetch("/api/descarte");
+        const d = await r.json();
+        setTotalDescartadas(d.total ?? 0);
+      } catch { /* silencioso: o link some, a busca segue */ }
+    }
+    refreshDescartadas();
+    window.addEventListener("pageshow", refreshDescartadas);
+    window.addEventListener("focus", refreshDescartadas);
+    return () => {
+      window.removeEventListener("pageshow", refreshDescartadas);
+      window.removeEventListener("focus", refreshDescartadas);
     };
   }, []);
 
@@ -152,6 +173,7 @@ export default function Radar() {
   // falhar, devolve a linha — melhor reaparecer do que mentir que sumiu.
   async function descartar(e: Empresa) {
     setDescartadasIds((s) => new Set(s).add(e.id));
+    setTotalDescartadas((n) => n + 1);
     if (peekId === e.id) setPeekId(null);
     if (desfazer) window.clearTimeout(desfazer.timer);
     const timer = window.setTimeout(() => setDesfazer(null), 8000);
@@ -169,6 +191,7 @@ export default function Radar() {
         n.delete(e.id);
         return n;
       });
+      setTotalDescartadas((n) => Math.max(0, n - 1));
       window.clearTimeout(timer);
       setDesfazer(null);
     }
@@ -182,6 +205,7 @@ export default function Radar() {
       n.delete(e.id);
       return n;
     });
+    setTotalDescartadas((n) => Math.max(0, n - 1));
     try {
       await fetch("/api/descarte", {
         method: "DELETE",
@@ -367,6 +391,14 @@ export default function Radar() {
                   <span className="whitespace-nowrap text-[12px] text-ink-muted">
                     · top {res.reasonedCount} analisadas por IA
                   </span>
+                )}
+                {totalDescartadas > 0 && (
+                  <Link
+                    href="/descartadas"
+                    className="whitespace-nowrap rounded-sm text-[12px] text-ink-muted underline-offset-2 transition-colors hover:text-ink-soft hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+                  >
+                    · {totalDescartadas} descartada{totalDescartadas === 1 ? "" : "s"}
+                  </Link>
                 )}
               </span>
               <span className="flex flex-wrap gap-2">

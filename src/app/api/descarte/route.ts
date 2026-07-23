@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase";
 import { escopoAtual } from "@/lib/escopo";
-import { descartar, restaurar, listarDescartadas } from "@/lib/descarte-store";
+import { descartar, restaurar, listarDescartadasDetalhado } from "@/lib/descarte-store";
 
 /* Descarte de empresa no Radar.
    POST   { empresaId, motivo? } → descarta (idempotente)
@@ -56,8 +56,8 @@ export async function DELETE(req: NextRequest) {
 
 export async function GET() {
   try {
-    const descartadas = await listarDescartadas(createAdminClient(), await escopoAtual());
-    return NextResponse.json({ descartadas });
+    const descartadas = await listarDescartadasDetalhado(createAdminClient(), await escopoAtual());
+    return NextResponse.json({ descartadas, total: descartadas.length });
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 500 });
   }

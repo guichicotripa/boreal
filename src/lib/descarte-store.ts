@@ -1,4 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Empresa } from "@/lib/types";
+import { calcScore } from "@/lib/scoring";
 
 /* Descarte de empresa no Radar — leitura/escrita da tabela `empresa_descartada`.
    Mesmo formato do research-store: funções puras de acesso, usadas pela API e
@@ -25,7 +27,7 @@ export async function lerDescartadas(
   return new Set((data ?? []).map((d: { empresa_id: string }) => d.empresa_id));
 }
 
-/** Todas as descartadas do escopo, mais recentes primeiro. */
+/** Todas as descartadas do escopo, mais recentes primeiro. Só os ids. */
 export async function listarDescartadas(
   supabase: SupabaseClient,
   escopoId: string
@@ -37,6 +39,44 @@ export async function listarDescartadas(
     .order("created_at", { ascending: false });
   if (error) throw new Error(error.message);
   return data ?? [];
+}
+
+export type DescartadaDetalhe = {
+  empresa_id: string;
+  motivo: string | null;
+  created_at: string;
+  empresa: Empresa | null;
+};
+
+/** Descartadas com a empresa hidratada e o score recalculado — alimenta a tela
+ *  /descartadas. Duas queries em vez de embed: não depende do nome que o
+ *  PostgREST dá à relação, e a lista é pequena por natureza.
+ *  O score é recalculado (não é guardado em lugar nenhum) porque a pergunta que
+ *  esta tela responde é "descartei algo valioso?". */
+export async function listarDescartadasDetalhado(
+  supabase: SupabaseClient,
+  escopoId: string
+): Promise<DescartadaDetalhe[]> {
+  const base = await listarDescartadas(supabase, escopoId);
+  if (base.length === 0) return [];
+
+  const { data, error } = await supabase
+    .from("empresa")
+    .select(
+      `id, cnpj, razao_social, nome_fantasia, cnae_principal, cnae_principal_desc,
+       natureza_juridica, municipio, uf, data_inicio_atividade, capital_social,
+       porte, telefone, email,
+       socio(id, nome, qualificacao, faixa_etaria, data_entrada_sociedade)`
+    )
+    .in("id", base.map((d) => d.empresa_id));
+  if (error) throw new Error(error.message);
+
+  const porId = new Map<string, Empresa>();
+  for (const e of (data ?? []) as Empresa[]) {
+    porId.set(e.id, { ...e, score: calcScore(e) });
+  }
+  // Mantém a ordem do descarte (mais recente primeiro), não a do banco.
+  return base.map((d) => ({ ...d, empresa: porId.get(d.empresa_id) ?? null }));
 }
 
 /** Descarta (idempotente: descartar de novo só atualiza o motivo). */
