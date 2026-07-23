@@ -1,8 +1,13 @@
 import type { Empresa } from "@/lib/types";
 
-// Timeline horizontal: fundação → entrada de cada sócio. Mostra "quadro travado"
-// visualmente. CSS puro, sem lib de chart. Agrupa eventos do mesmo ano e alinha
-// os labels conforme a posição (evita corte nas bordas).
+// Timeline horizontal: fundação → entrada de cada sócio → hoje. Mostra "quadro
+// travado" visualmente. CSS puro, sem lib de chart.
+//
+// Dois ajustes de legibilidade: (1) labels de marcos próximos escalonam em duas
+// alturas — evita a sobreposição de um sócio recente com "Hoje"; (2) a posição
+// horizontal é mapeada pra faixa 3–97% pra o dot da borda não ser cortado.
+type Marco = { pct: number; ano: number; label: string; hoje?: boolean };
+
 export function Timeline({ empresa }: { empresa: Empresa }) {
   const anoFund = empresa.data_inicio_atividade
     ? Number(empresa.data_inicio_atividade.slice(0, 4))
@@ -24,80 +29,57 @@ export function Timeline({ empresa }: { empresa: Empresa }) {
     else porAno.set(ano, [nome]);
   }
 
-  const eventos = [...porAno.entries()]
-    .map(([ano, labels]) => ({ ano, label: labels.join(" · ") }))
-    .sort((a, b) => a.ano - b.ano);
+  const marcos: Marco[] = [...porAno.entries()]
+    .map(([ano, labels]) => ({
+      ano,
+      label: labels.join(" · "),
+      pct: Math.min(100, Math.max(0, ((ano - anoFund) / span) * 100)),
+    }))
+    .sort((a, b) => a.pct - b.pct);
+  marcos.push({ pct: 100, ano: anoAtual, label: "Hoje", hoje: true });
+
+  // Escalona a altura quando dois marcos ficam a menos de GAP% um do outro:
+  // alterna nível 0/1 pra o label e o ano não sobreporem os do vizinho.
+  const GAP = 14;
+  let nivelAnterior = 0;
+  let pctAnterior = -Infinity;
+  const comNivel = marcos.map((m) => {
+    const nivel = m.pct - pctAnterior < GAP && nivelAnterior === 0 ? 1 : 0;
+    nivelAnterior = nivel;
+    pctAnterior = m.pct;
+    return { ...m, nivel };
+  });
 
   return (
     <div>
-      <h4 className="mb-2 text-[11px] font-medium text-ink-muted">
-        Linha do tempo societária
-      </h4>
-      {/* Altura explícita evita margin collapse (conteúdo é absoluto) */}
-      <div className="relative mt-10 h-8 mb-4">
-        {/* Linha separada, insetada pelo raio do dot em cada lado */}
-        <div className="absolute inset-x-[18px] top-0 border-b border-hairline" />
-
-        {eventos.map((ev, i) => {
-          const pct = ((ev.ano - anoFund) / span) * 100;
-          const isLeft  = pct === 0;
-          const isRight = pct >= 92;
-
-          if (isLeft) {
-            return (
-              <div key={i} className="absolute left-0 -translate-y-1/2" style={{ width: 28 }}>
-                <span className="absolute -top-7 left-0 max-w-[8rem] truncate whitespace-nowrap text-[10px] text-ink-soft">
-                  {ev.label}
-                </span>
-                <span className="mx-auto block h-2 w-2 rounded-full bg-risk-mid" />
-                <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-ink-muted">
-                  {ev.ano}
-                </span>
-              </div>
-            );
-          }
-
-          if (isRight) {
-            return (
-              <div key={i} className="absolute -translate-y-1/2 -translate-x-1/2" style={{ left: `${pct}%`, width: 28 }}>
-                <span className="absolute -top-7 w-full truncate whitespace-nowrap text-center text-[10px] text-ink-soft">
-                  {ev.label}
-                </span>
-                <span className="mx-auto block h-2 w-2 rounded-full bg-risk-mid" />
-                <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-ink-muted">
-                  {ev.ano}
-                </span>
-              </div>
-            );
-          }
-
+      <h4 className="mb-2 text-[11px] font-medium text-ink-muted">Linha do tempo societária</h4>
+      {/* Margens folgadas acomodam os dois níveis de label (acima) e de ano (abaixo) */}
+      <div className="relative mt-14 mb-11 h-2">
+        <div className="absolute inset-x-[4px] top-1/2 border-b border-hairline" />
+        {comNivel.map((m, i) => {
+          // Mapeia 0–100% → 3–97% pra o dot da borda não encostar/cortar.
+          const left = 3 + (m.pct / 100) * 94;
+          // Ancoragem horizontal do texto conforme a posição (evita corte nas bordas).
+          const anchor =
+            m.pct <= 2 ? "left-0" : m.pct >= 98 ? "right-0" : "left-0 -translate-x-1/2";
+          const topLabel = m.nivel === 1 ? "-top-11" : "-top-6";
+          const topAno = m.nivel === 1 ? "top-7" : "top-2.5";
           return (
-            <div
-              key={i}
-              className="absolute flex flex-col -translate-y-1/2 -translate-x-1/2 items-center text-center"
-              style={{ left: `${pct}%` }}
-            >
-              <span className="absolute -top-7 max-w-[8rem] truncate whitespace-nowrap text-[10px] text-ink-soft">
-                {ev.label}
+            <div key={i} className="absolute top-1/2" style={{ left: `${left}%` }}>
+              <span
+                className={`absolute left-0 top-0 block h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full ${
+                  m.hoje ? "border border-hairline-hover bg-transparent" : "bg-risk-mid"
+                }`}
+              />
+              <span className={`absolute ${anchor} ${topLabel} max-w-[7rem] truncate whitespace-nowrap text-[10px] ${m.hoje ? "text-ink-muted" : "text-ink-soft"}`}>
+                {m.label}
               </span>
-              <span className="h-2 w-2 rounded-full bg-risk-mid" />
-              <span className="absolute top-3 font-data text-[10px] tabular-nums text-ink-muted">
-                {ev.ano}
+              <span className={`absolute ${anchor} ${topAno} font-data text-[10px] tabular-nums text-ink-muted`}>
+                {m.ano}
               </span>
             </div>
           );
         })}
-
-        {/* Marcador "Hoje" — container fixo 28px, tudo centrado */}
-        <div className="absolute right-0 -translate-y-1/2" style={{ width: 28 }}>
-          <span className="absolute -top-7 w-full text-center font-data text-[10px] uppercase tracking-wide text-ink-muted">
-            Hoje
-          </span>
-          <span className="mx-auto block h-2 w-2 rounded-full border border-hairline-hover bg-transparent" />
-          <span className="absolute top-3 w-full text-center font-data text-[10px] tabular-nums text-ink-muted">
-            {anoAtual}
-          </span>
-        </div>
       </div>
     </div>
   );
