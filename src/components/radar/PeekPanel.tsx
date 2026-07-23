@@ -7,7 +7,7 @@ import { scoreTier } from "@/lib/scoring";
 import { TIER_STYLES, FAIXA_LABEL, formatCnpj, formatTelefone, formatCapitalCompact } from "@/lib/format";
 import { storeEmpresa, storeOrigin, type ScoreConhecido } from "@/lib/empresa-store";
 import { SalvarButton } from "./SalvarButton";
-import { X, ArrowUpRight, Phone, Mail } from "lucide-react";
+import { X, ArrowUpRight, Phone, Mail, EyeOff } from "lucide-react";
 
 /* Peek panel — preview da empresa SEM sair da lista (padrão Attio).
    Clique na linha abre; Esc/X fecha; "Abrir empresa" navega pra página completa.
@@ -25,11 +25,13 @@ export function PeekPanel({
   investigacao,
   jaSalvo,
   onClose,
+  onDescartar,
 }: {
   empresa: Empresa | null;
   investigacao?: ScoreConhecido;
   jaSalvo?: boolean;
   onClose: () => void;
+  onDescartar: (e: Empresa) => void;
 }) {
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -230,6 +232,15 @@ export function PeekPanel({
           Abrir empresa
           <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.75} />
         </Link>
+        <button
+          type="button"
+          onClick={() => onDescartar(e)}
+          title="Descartar — some do Radar"
+          className="ml-auto inline-flex items-center gap-1.5 rounded-md border border-hairline px-2.5 py-2 text-[12.5px] font-medium text-ink-muted transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+        >
+          <EyeOff aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.75} />
+          Descartar
+        </button>
       </div>
     </aside>
   );

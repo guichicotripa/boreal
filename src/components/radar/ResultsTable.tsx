@@ -6,7 +6,7 @@ import { scoreTier } from "@/lib/scoring";
 import { TIER_STYLES, FAIXA_LABEL, formatCapitalCompact } from "@/lib/format";
 import { storeEmpresa, storeOrigin, type ScoreConhecido } from "@/lib/empresa-store";
 import { SalvarButton } from "./SalvarButton";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, EyeOff } from "lucide-react";
 
 /* Tabela densa de resultados — a superfície padrão de triagem do Radar.
    Padrão Attio: linha ~40px, header sticky, hover com quick actions, clique
@@ -29,12 +29,14 @@ export function ResultsTable({
   savedIds,
   peekId,
   onPeek,
+  onDescartar,
 }: {
   empresas: Empresa[];
   scoreOverrides: Record<string, ScoreConhecido>;
   savedIds: Set<string>;
   peekId: string | null;
   onPeek: (e: Empresa) => void;
+  onDescartar: (e: Empresa) => void;
 }) {
   // overflow-x só quando a tela é estreita: um scroll container mata o
   // position:sticky do header (ele gruda no container, não na página — era o
@@ -145,6 +147,15 @@ export function ResultsTable({
                 <td className="whitespace-nowrap px-3 py-2 text-right">
                   <span className="inline-flex items-center gap-1.5 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
                     <SalvarButton empresaId={e.id} jaSalvo={savedIds.has(e.id)} />
+                    <button
+                      type="button"
+                      onClick={() => onDescartar(e)}
+                      aria-label={`Descartar ${e.razao_social}`}
+                      title="Descartar — some do Radar"
+                      className="rounded-md border border-hairline p-1.5 text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+                    >
+                      <EyeOff aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.75} />
+                    </button>
                     <Link
                       href={`/empresa/${e.id}`}
                       onClick={() => {

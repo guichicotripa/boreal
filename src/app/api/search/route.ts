@@ -5,6 +5,7 @@ import { parseQueryHeuristic } from "@/lib/query-parser";
 import { calcScore } from "@/lib/scoring";
 import { reasonAboutEmpresas } from "@/lib/reasoner";
 import { lerScoresV1, aplicarV1 } from "@/lib/research-store";
+import { lerDescartadas, filtrarDescartadas } from "@/lib/descarte-store";
 import type { Empresa, Socio, SearchResponse } from "@/lib/types";
 import demoCache from "@/lib/demo-cache.json";
 import setoresData from "@/lib/setores.json";
@@ -31,22 +32,34 @@ function normalizeQuery(q: string): string {
 // o type-check a cada mudança no schema do score.
 const CACHE = demoCache as unknown as Record<string, SearchResponse>;
 
-// Overlay do v1 investigado sobre uma resposta pronta (inclusive as de cache estático).
-// Sem isto, os chips de demo — que não tocam o banco — continuariam listando o v0 e as
-// empresas já investigadas nunca subiriam na lista. Uma query indexada por ids.
-async function comV1(resp: SearchResponse): Promise<SearchResponse> {
-  const empresas = resp.empresas ?? [];
+// Pós-processo de uma resposta pronta (inclusive as de cache estático):
+//   1. remove as empresas descartadas no Radar;
+//   2. aplica o overlay do v1 investigado e reordena.
+// Sem isto, os chips de demo — que não tocam o banco — continuariam listando o v0,
+// as investigadas nunca subiriam e as descartadas voltariam a aparecer. Duas queries
+// indexadas por ids. `count` é recontado: a UI mostra esse número.
+async function comOverlays(resp: SearchResponse): Promise<SearchResponse> {
+  let empresas = resp.empresas ?? [];
   if (empresas.length === 0) return resp;
+  const supabase = createAdminClient();
+
   try {
-    const supabase = createAdminClient();
+    const descartadas = await lerDescartadas(supabase, empresas.map((e) => e.id));
+    empresas = filtrarDescartadas(empresas, descartadas);
+  } catch (err) {
+    // Falhou a leitura do descarte: mostra tudo (degrada, não quebra a busca).
+    console.error("filtro de descartadas falhou:", (err as Error).message);
+  }
+
+  try {
     const v1 = await lerScoresV1(supabase, empresas.map((e) => e.id));
-    if (Object.keys(v1).length === 0) return resp;
-    return { ...resp, empresas: aplicarV1(empresas, v1) };
+    if (Object.keys(v1).length > 0) empresas = aplicarV1(empresas, v1);
   } catch (err) {
     // Falhou a leitura do v1: serve o v0 (degrada, não quebra a busca).
     console.error("overlay de v1 falhou:", (err as Error).message);
-    return resp;
   }
+
+  return { ...resp, empresas, count: empresas.length };
 }
 
 export async function POST(req: NextRequest) {
@@ -72,20 +85,20 @@ export async function POST(req: NextRequest) {
   if (!skipCache && queryText && setorId) {
     const hit = CACHE[`${setorId}|${normalizeQuery(queryText)}`];
     if (hit) {
-      return NextResponse.json({ ...(await comV1(hit)), cached: true });
+      return NextResponse.json({ ...(await comOverlays(hit)), cached: true });
     }
   }
   if (!skipCache && queryText && !setorCnaes) {
     const hit = CACHE[normalizeQuery(queryText)];
     if (hit) {
-      return NextResponse.json({ ...(await comV1(hit)), cached: true });
+      return NextResponse.json({ ...(await comOverlays(hit)), cached: true });
     }
   }
   // Browse de setor sem texto: serve do cache (saúde/educação ficam instantâneos como o metalmec).
   if (!skipCache && setorId && !queryText) {
     const hit = (setorCache.porSetor as Record<string, SearchResponse>)[setorId];
     if (hit) {
-      return NextResponse.json({ ...(await comV1(hit)), cached: true });
+      return NextResponse.json({ ...(await comOverlays(hit)), cached: true });
     }
   }
 
@@ -173,6 +186,16 @@ export async function POST(req: NextRequest) {
   let scored = empresas
     .map((e) => ({ ...e, score: calcScore(e) }))
     .sort((a, b) => (b.score?.score ?? 0) - (a.score?.score ?? 0));
+
+  // ── 3a. Tira as descartadas no Radar ─────────────────────────────────────────
+  // Antes do reasoner: não faz sentido gastar chamada de LLM comentando empresa
+  // que o operador já disse que não quer ver.
+  try {
+    const descartadas = await lerDescartadas(supabase, scored.map((e) => e.id));
+    scored = filtrarDescartadas(scored, descartadas);
+  } catch (err) {
+    console.error("filtro de descartadas falhou:", (err as Error).message);
+  }
 
   // ── 3b. Overlay do v1 já investigado — reordena pelo score efetivo ───────────
   // Empresa investigada mantém o score que a investigação apurou e assume a posição

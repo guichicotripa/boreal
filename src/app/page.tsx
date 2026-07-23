@@ -44,6 +44,10 @@ export default function Radar() {
   const [scoreOverrides, setScoreOverrides] = useState<Record<string, ScoreConhecido>>({});
   // IDs de empresas já salvas no pipeline — inicializa e atualiza ao voltar de qualquer rota.
   const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
+  // Descarte: o servidor filtra na busca, mas quem descarta AGORA precisa ver a
+  // linha sumir sem refazer a query — então guardamos os ids descartados na sessão.
+  const [descartadasIds, setDescartadasIds] = useState<Set<string>>(new Set());
+  const [desfazer, setDesfazer] = useState<{ empresa: Empresa; timer: number } | null>(null);
 
   useEffect(() => {
     const refresh = () => setScoreOverrides(readScoresConhecidos());
@@ -128,8 +132,10 @@ export default function Radar() {
     if (!res) return [];
     const scoreEfetivo = (e: Empresa) =>
       e.score_v1?.score ?? scoreOverrides[e.id]?.score ?? e.score?.score ?? 0;
-    return [...res.empresas].sort((a, b) => scoreEfetivo(b) - scoreEfetivo(a));
-  }, [res, scoreOverrides]);
+    return res.empresas
+      .filter((e) => !descartadasIds.has(e.id))
+      .sort((a, b) => scoreEfetivo(b) - scoreEfetivo(a));
+  }, [res, scoreOverrides, descartadasIds]);
 
   // Overrides efetivos entregues à tabela/peek: o v1 do servidor entra como se fosse
   // um override, pra linha mostrar número e delta sem cada componente reimplementar a
@@ -141,6 +147,51 @@ export default function Radar() {
     }
     return out;
   }, [res, scoreOverrides]);
+
+  // Descarta otimista: some da lista na hora, persiste em background. Se o POST
+  // falhar, devolve a linha — melhor reaparecer do que mentir que sumiu.
+  async function descartar(e: Empresa) {
+    setDescartadasIds((s) => new Set(s).add(e.id));
+    if (peekId === e.id) setPeekId(null);
+    if (desfazer) window.clearTimeout(desfazer.timer);
+    const timer = window.setTimeout(() => setDesfazer(null), 8000);
+    setDesfazer({ empresa: e, timer });
+    try {
+      const r = await fetch("/api/descarte", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ empresaId: e.id }),
+      });
+      if (!r.ok) throw new Error();
+    } catch {
+      setDescartadasIds((s) => {
+        const n = new Set(s);
+        n.delete(e.id);
+        return n;
+      });
+      window.clearTimeout(timer);
+      setDesfazer(null);
+    }
+  }
+
+  async function restaurar(e: Empresa) {
+    if (desfazer) window.clearTimeout(desfazer.timer);
+    setDesfazer(null);
+    setDescartadasIds((s) => {
+      const n = new Set(s);
+      n.delete(e.id);
+      return n;
+    });
+    try {
+      await fetch("/api/descarte", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ empresaId: e.id }),
+      });
+    } catch {
+      // a linha já voltou na UI; o servidor reconcilia na próxima busca
+    }
+  }
 
   const peekEmpresa = peekId ? empresasOrdenadas.find((e) => e.id === peekId) ?? null : null;
 
@@ -310,7 +361,7 @@ export default function Radar() {
             <div className="mb-3 flex flex-wrap items-center justify-between gap-y-2 text-sm text-ink-soft">
               <span className="flex flex-wrap items-center gap-x-1">
                 <span className="whitespace-nowrap">
-                  {res.count} empresa{res.count === 1 ? "" : "s"}
+                  {empresasOrdenadas.length} empresa{empresasOrdenadas.length === 1 ? "" : "s"}
                 </span>
                 {res.reasoned && res.reasonedCount && (
                   <span className="whitespace-nowrap text-[12px] text-ink-muted">
@@ -337,14 +388,24 @@ export default function Radar() {
               </span>
             </div>
 
-            {res.count > 0 && (
+            {empresasOrdenadas.length > 0 && (
               <ResultsTable
                 empresas={empresasOrdenadas}
                 scoreOverrides={overridesEfetivos}
                 savedIds={savedIds}
                 peekId={peekId}
                 onPeek={(e) => setPeekId((cur) => (cur === e.id ? null : e.id))}
+                onDescartar={descartar}
               />
+            )}
+
+            {res.count > 0 && empresasOrdenadas.length === 0 && (
+              <div className="rounded-lg border border-hairline py-12 text-center">
+                <p className="font-display text-lg text-ink">Você descartou todas.</p>
+                <p className="mx-auto mt-2 max-w-md text-sm text-ink-soft">
+                  Todas as empresas desta busca foram descartadas do Radar.
+                </p>
+              </div>
             )}
 
             {res.count === 0 && (
@@ -364,7 +425,28 @@ export default function Radar() {
           investigacao={peekEmpresa ? overridesEfetivos[peekEmpresa.id] : undefined}
           jaSalvo={peekEmpresa ? savedIds.has(peekEmpresa.id) : undefined}
           onClose={() => setPeekId(null)}
+          onDescartar={descartar}
         />
+
+        {/* Desfazer o descarte — 8s. Descarte é reversível, então avisa em vez de perguntar. */}
+        {desfazer && (
+          <div
+            role="status"
+            aria-live="polite"
+            className="fixed bottom-5 left-1/2 z-[55] flex -translate-x-1/2 items-center gap-3 rounded-lg border border-hairline bg-overlay px-4 py-2.5 shadow-xl shadow-black/40"
+          >
+            <span className="max-w-[260px] truncate text-[12.5px] text-ink-soft">
+              <span className="text-ink">{desfazer.empresa.razao_social}</span> descartada
+            </span>
+            <button
+              type="button"
+              onClick={() => restaurar(desfazer.empresa)}
+              className="shrink-0 rounded-md border border-hairline px-2.5 py-1 text-[12px] font-medium text-ink transition-colors hover:border-hairline-hover focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+            >
+              Desfazer
+            </button>
+          </div>
+        )}
       </main>
     </div>
   );
