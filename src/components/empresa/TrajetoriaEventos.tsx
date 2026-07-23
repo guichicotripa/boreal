@@ -36,7 +36,7 @@ export function TrajetoriaEventos({ trajetoria }: { trajetoria: TrajetoriaResult
                 : "text-risk-mid";
           return (
             <li key={`${ev.ano}-${i}`} className="flex gap-2 text-[13px] leading-snug">
-              <span className="shrink-0 font-data tabular-nums text-ink-muted">{ev.ano}</span>
+              <span className="shrink-0 tabular-nums text-ink-muted">{ev.ano}</span>
               <span className="min-w-0">
                 <span className="text-ink">{nome}</span>
                 {status && <span className={`ml-1.5 ${statusColor}`}>{status}</span>}

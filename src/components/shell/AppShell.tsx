@@ -235,7 +235,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             aria-label="Abrir paleta de comandos"
           >
             <span className="hidden sm:inline">Ir para…</span>
-            <kbd className="rounded border border-hairline bg-fill px-1 py-0.5 font-data text-[10px] text-ink-soft">
+            <kbd className="rounded border border-hairline bg-fill px-1 py-0.5 text-[10px] text-ink-soft">
               Ctrl K
             </kbd>
           </button>

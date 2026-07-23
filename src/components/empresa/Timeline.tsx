@@ -124,7 +124,7 @@ export function Timeline({ empresa }: { empresa: Empresa }) {
                 {m.label}
               </span>
               <span
-                className={`absolute ${anchor} font-data text-[10px] tabular-nums text-ink-muted`}
+                className={`absolute ${anchor} text-[10px] tabular-nums text-ink-muted`}
                 style={{ top: 10 + nivel * ALTURA_NIVEL }}
               >
                 {m.ano}

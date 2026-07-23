@@ -64,7 +64,7 @@ export default function Setores() {
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <h2 className="font-display text-xl tracking-tight text-ink">{s.nome}</h2>
                   <div className="flex items-center gap-2">
-                    <span className="rounded border border-hairline px-2 py-0.5 font-data text-[10px] tabular-nums text-ink-faint">
+                    <span className="rounded border border-hairline px-2 py-0.5 text-[10px] tabular-nums text-ink-faint">
                       CNAE {s.cnaes.join("/")}
                     </span>
                     <span className={`rounded border px-2 py-0.5 text-[10.5px] font-medium ${st.cls}`}>

@@ -117,11 +117,11 @@ export function Dashboard({
             <div className="mt-2 flex flex-wrap items-baseline gap-x-6 gap-y-1 text-sm text-ink-soft">
               <span>
                 <strong>Desfecho positivo</strong>: score médio{" "}
-                <span className="font-data text-ink">{scorePos ?? "--"}</span>
+                <span className="tabular-nums text-ink">{scorePos ?? "--"}</span>
               </span>
               <span>
                 <strong>Desfecho negativo</strong>: score médio{" "}
-                <span className="font-data text-ink">{scoreNeg ?? "--"}</span>
+                <span className="tabular-nums text-ink">{scoreNeg ?? "--"}</span>
               </span>
             </div>
             <p className="mt-2 text-xs leading-snug text-ink-muted">

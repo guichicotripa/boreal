@@ -65,14 +65,14 @@ export function PeekPanel({
       {/* Header */}
       <div className="flex items-start gap-3 border-b border-hairline p-4">
         <div className={`shrink-0 rounded border ${t.badge} px-2 py-1 text-center`}>
-          <div className={`font-data text-lg tabular-nums leading-none ${t.text}`}>{score}</div>
+          <div className={`text-lg tabular-nums leading-none ${t.text}`}>{score}</div>
           <div className={`text-[10px] font-medium ${t.text} opacity-70`}>
             {t.label}
           </div>
         </div>
         <div className="min-w-0 flex-1">
           <h2 className="font-display text-[17px] leading-tight text-ink">{e.razao_social}</h2>
-          <p className="mt-0.5 font-data text-[11px] text-ink-muted">
+          <p className="mt-0.5 text-[11px] tabular-nums text-ink-muted">
             {formatCnpj(e.cnpj)} · {e.municipio}/{e.uf}
           </p>
           {delta != null && (
@@ -117,7 +117,7 @@ export function PeekPanel({
                     <span className="h-1 flex-1 overflow-hidden rounded-full bg-hairline">
                       <span className="block h-full bg-ink-soft/60" style={{ width: `${(v / max) * 100}%` }} />
                     </span>
-                    <span className="w-12 shrink-0 text-right font-data text-[11px] tabular-nums text-ink-soft">
+                    <span className="w-12 shrink-0 text-right text-[11px] tabular-nums text-ink-soft">
                       {v}/{max}
                     </span>
                   </li>
@@ -174,7 +174,7 @@ export function PeekPanel({
               {socios.slice(0, 6).map((s) => (
                 <li key={s.id} className="flex items-baseline justify-between gap-2">
                   <span className="min-w-0 truncate text-[12.5px] text-ink-soft">{s.nome}</span>
-                  <span className="shrink-0 font-data text-[11px] text-ink-muted">
+                  <span className="shrink-0 text-[11px] text-ink-muted">
                     {s.faixa_etaria && FAIXA_LABEL[s.faixa_etaria] ? FAIXA_LABEL[s.faixa_etaria] : "—"}
                   </span>
                 </li>
@@ -196,7 +196,7 @@ export function PeekPanel({
               {e.telefone && (
                 <a
                   href={`tel:${e.telefone.replace(/\D/g, "")}`}
-                  className="inline-flex items-center gap-1.5 rounded-md border border-hairline px-2.5 py-1.5 font-data text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+                  className="inline-flex items-center gap-1.5 rounded-md border border-hairline px-2.5 py-1.5 text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
                 >
                   <Phone aria-hidden="true" className="h-3 w-3" strokeWidth={1.75} />
                   {formatTelefone(e.telefone)}
@@ -205,7 +205,7 @@ export function PeekPanel({
               {e.email && (
                 <a
                   href={`mailto:${e.email}`}
-                  className="inline-flex max-w-full items-center gap-1.5 truncate rounded-md border border-hairline px-2.5 py-1.5 font-data text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+                  className="inline-flex max-w-full items-center gap-1.5 truncate rounded-md border border-hairline px-2.5 py-1.5 text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
                 >
                   <Mail aria-hidden="true" className="h-3 w-3 shrink-0" strokeWidth={1.75} />
                   <span className="truncate">{e.email.toLowerCase()}</span>

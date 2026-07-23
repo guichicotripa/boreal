@@ -105,13 +105,13 @@ export function ResultsTable({
                 {/* Score — número mono + mini-barra + delta de investigação */}
                 <td className="px-3 py-2">
                   <div className="flex items-center gap-2">
-                    <span className={`font-data text-[13px] tabular-nums ${t.text}`}>{score}</span>
+                    <span className={`text-[13px] tabular-nums ${t.text}`}>{score}</span>
                     <span className="h-1 w-9 overflow-hidden rounded-full bg-hairline">
                       <span className={`block h-full ${t.bar}`} style={{ width: `${score}%` }} />
                     </span>
                     {delta != null && (
                       <span
-                        className={`font-data text-[10px] tabular-nums ${
+                        className={`text-[10px] tabular-nums ${
                           delta > 0 ? "text-risk-high" : delta < 0 ? "text-ink-muted" : "text-ink-muted"
                         }`}
                         title="ajuste após investigação com IA"
@@ -132,13 +132,13 @@ export function ResultsTable({
                   )}
                 </td>
                 <td className="px-3 py-2 text-[12px] text-ink-soft">{e.porte ?? "—"}</td>
-                <td className="whitespace-nowrap px-3 py-2 font-data text-[12px] tabular-nums text-ink-soft">
+                <td className="whitespace-nowrap px-3 py-2 text-[12px] tabular-nums text-ink-soft">
                   {anoDe(e.data_inicio_atividade)}
                 </td>
-                <td className="whitespace-nowrap px-3 py-2 text-right font-data text-[12px] tabular-nums text-ink-soft">
+                <td className="whitespace-nowrap px-3 py-2 text-right text-[12px] tabular-nums text-ink-soft">
                   {formatCapitalCompact(e.capital_social) ?? "—"}
                 </td>
-                <td className="whitespace-nowrap px-3 py-2 font-data text-[12px] text-ink-soft">
+                <td className="whitespace-nowrap px-3 py-2 text-[12px] tabular-nums text-ink-soft">
                   {socioTop ?? "—"}
                 </td>
                 {/* Ações — aparecem no hover (padrão quick actions) */}

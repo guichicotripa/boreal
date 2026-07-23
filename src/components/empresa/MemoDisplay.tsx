@@ -113,7 +113,7 @@ export function MemoDisplay({
         <h4 className="mb-1 text-[11px] font-medium text-ink-muted">
           Cenário de retorno — referência (ilustrativo)
         </h4>
-        <div className="grid grid-cols-2 gap-x-4 gap-y-1 font-data text-xs sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs sm:grid-cols-4">
           <div><span className="text-ink-muted">Entrada</span><br /><span className="text-ink">{cenario.multiplo_entrada}</span></div>
           <div><span className="text-ink-muted">Saída</span><br /><span className="text-ink">{cenario.multiplo_saida}</span></div>
           <div><span className="text-ink-muted">Hold</span><br /><span className="text-ink">{cenario.hold}</span></div>

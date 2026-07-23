@@ -25,7 +25,7 @@ export function TabButton({
       {icon}
       {label}
       <span
-        className={`rounded-full border px-1.5 py-px font-data text-[10px] tabular-nums ${
+        className={`rounded-full border px-1.5 py-px text-[10px] tabular-nums ${
           active ? "border-hairline-hover text-ink-soft" : "border-hairline text-ink-muted"
         }`}
       >

@@ -38,7 +38,7 @@ export function ResearchDisplay({ research }: { research: ResearchResult }) {
           <ul className="flex flex-col gap-4">
             {research.sinais.map((s, i) => (
               <li key={i} className="flex items-start gap-2.5 text-[13px]">
-                <span className={`mt-0.5 shrink-0 rounded px-1.5 py-0.5 font-data text-[10px] tabular-nums ${
+                <span className={`mt-0.5 shrink-0 rounded px-1.5 py-0.5 text-[10px] tabular-nums ${
                   s.peso > 0 ? "bg-risk-high/15 text-risk-high" : "bg-fill text-ink-soft"
                 }`}>
                   {s.peso > 0 ? `+${s.peso}` : s.peso}
