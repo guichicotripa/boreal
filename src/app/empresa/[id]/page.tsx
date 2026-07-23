@@ -326,7 +326,7 @@ export default function EmpresaPage() {
           </section>
 
           {/* Dados da Receita */}
-          <section className="rounded-lg border border-hairline p-4">
+          <section className="rounded-lg border border-hairline bg-surface p-4">
             <h2 className="mb-3 text-[11px] font-medium text-ink-muted">Dados</h2>
             <dl className="space-y-2.5">
               <Campo k="Natureza jurídica" v={e.natureza_juridica} />
@@ -338,7 +338,7 @@ export default function EmpresaPage() {
 
           {/* Contato */}
           {(e.telefone || e.email) && (
-            <section className="rounded-lg border border-hairline p-4">
+            <section className="rounded-lg border border-hairline bg-surface p-4">
               <h2 className="mb-3 text-[11px] font-medium text-ink-muted">Contato</h2>
               <div className="flex flex-col gap-2">
                 {e.telefone && (
@@ -364,7 +364,7 @@ export default function EmpresaPage() {
           )}
 
           {/* Sócios — evidência do driver de maior peso do score */}
-          <section className="rounded-lg border border-hairline p-4">
+          <section className="rounded-lg border border-hairline bg-surface p-4">
             <h2 className="mb-3 text-[11px] font-medium text-ink-muted">
               Sócios{socios.length > 0 ? ` (${socios.length})` : ""}
             </h2>
@@ -379,7 +379,7 @@ export default function EmpresaPage() {
                         {ent && <p className="text-[10.5px] text-ink-muted">sócio desde {ent}</p>}
                       </div>
                       {s.faixa_etaria && FAIXA_LABEL[s.faixa_etaria] && (
-                        <span className={`shrink-0 rounded px-1.5 py-0.5 font-data text-[10.5px] tabular-nums ${FAIXA_COLOR[s.faixa_etaria] ?? "bg-surface text-ink-soft"}`}>
+                        <span className={`shrink-0 rounded px-1.5 py-0.5 font-data text-[10.5px] tabular-nums ${FAIXA_COLOR[s.faixa_etaria] ?? "bg-fill text-ink-soft"}`}>
                           {FAIXA_LABEL[s.faixa_etaria]}
                         </span>
                       )}
@@ -464,7 +464,7 @@ export default function EmpresaPage() {
                         <div key={i} className="flex items-start justify-between gap-4 py-1">
                           <span className="text-[13px] text-ink-soft">{s.rotulo}</span>
                           <span className={`shrink-0 rounded px-1.5 py-0.5 font-data text-[10px] tabular-nums ${
-                            s.peso > 0 ? "bg-risk-high/15 text-risk-high" : "bg-surface text-ink-soft"
+                            s.peso > 0 ? "bg-risk-high/15 text-risk-high" : "bg-fill text-ink-soft"
                           }`}>
                             {s.peso > 0 ? `+${s.peso}` : `−${Math.abs(s.peso)}`}
                           </span>

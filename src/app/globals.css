@@ -39,8 +39,9 @@
   --color-ink-muted: var(--t-ink-muted); /* texto atenuado — labels, captions. SÓLIDO, ver nota */
   --color-ink-faint: var(--t-ink-faint); /* terciário: divisores, assinatura de rodapé */
 
-  --color-surface: var(--t-surface); /* cards */
+  --color-surface: var(--t-surface); /* card/objeto elevado — sobe em relação à página */
   --color-surface-hover: var(--t-surface-hover);
+  --color-fill: var(--t-fill); /* tinta sutil DENTRO de um objeto — chips, wells, trilhos */
   --color-overlay: var(--t-overlay); /* popover/dropdown/toast — elevada OPACA (surface é alpha) */
   --color-hairline: var(--t-hairline); /* bordas */
   --color-hairline-hover: var(--t-hairline-hover);
@@ -65,7 +66,8 @@
   --t-ink-faint: #565449;
 
   --t-surface: rgba(255, 251, 244, 0.03);
-  --t-surface-hover: rgba(255, 251, 244, 0.05);
+  --t-surface-hover: rgba(255, 251, 244, 0.07); /* > fill: interação vence tinta estática */
+  --t-fill: rgba(255, 251, 244, 0.05);
   --t-overlay: #1c1d17;
   --t-hairline: rgba(255, 251, 244, 0.07);
   --t-hairline-hover: rgba(255, 251, 244, 0.12);
@@ -78,30 +80,38 @@
 /* ── Tema claro ───────────────────────────────────────────────────────────
    Não é o escuro invertido: cada papel foi medido sobre o creme da marca.
 
-   - Fundo = Floral White. Texto primário = Smoky (18,2:1).
-   - Secundário vira OLIVE (7,4:1). Simetria feliz: Olive é proibido como
+   ELEVAÇÃO — a diferença estrutural em relação ao escuro:
+   no escuro, o fundo é o mais escuro e o que sobe CLAREIA (Floral em alpha).
+   No claro isso não funciona: se o fundo já é o branco da marca, card e página
+   ficam no mesmo tom (medido: 1,06:1 — invisível, "tudo branco").
+   Então a página vira PAPEL quente (#efe8da) e os objetos sobem para o Floral
+   White. Elevação continua sendo "vir na direção da luz", e o Floral segue
+   presente como a cor do que se lê. Separação medida: 1,18:1.
+
+   - Texto primário = Smoky (15,4:1 no papel / 18,2:1 no card).
+   - Secundário vira OLIVE (6,2 / 7,4). Simetria feliz: Olive é proibido como
      texto no escuro (2,5:1) e é justamente o que funciona no claro.
    - Bone NÃO serve de texto aqui (1,5:1 — invisível); volta a ser só pigmento.
-   - Superfícies/bordas invertem a lógica: Smoky em alpha (escurecem) no lugar
-     de Floral em alpha (clareiam). Alpha um pouco maior porque borda escura
-     sobre claro lê mais fraca que o inverso.
    - Risco: terracota/ocre originais REPROVAM AA sobre creme (3,86:1 e 2,47:1).
      Escurecidos mantendo o matiz quente que o brand exige (nada de vermelho frio). */
 :root.light {
-  --t-canvas: #fffbf4;
+  --t-canvas: #efe8da; /* papel quente — página, sidebar, topbar (o "chrome") */
   --t-ink: #11120d;
-  --t-ink-soft: #565449; /* Olive — 7,4:1 */
-  --t-ink-muted: #6b6759; /* 5,5:1 */
-  --t-ink-faint: #6f6b5b; /* 5,2:1 — passa AA mesmo sendo terciário */
+  --t-ink-soft: #565449; /* Olive — 6,2:1 no papel */
+  --t-ink-muted: #6b6759; /* 4,6:1 no papel */
+  --t-ink-faint: #66624f; /* escurecido p/ passar AA sobre o papel */
 
-  --t-surface: rgba(17, 18, 13, 0.03);
-  --t-surface-hover: rgba(17, 18, 13, 0.06);
-  --t-overlay: #fffefb; /* elevada: acima do canvas, sem chegar em #fff puro */
-  --t-hairline: rgba(17, 18, 13, 0.1);
-  --t-hairline-hover: rgba(17, 18, 13, 0.18);
+  --t-surface: #fffbf4; /* Floral White — cards, linhas, tabelas: SOBEM do papel */
+  --t-surface-hover: rgba(17, 18, 13, 0.075); /* alpha: funciona sobre papel E sobre card */
+  /* `fill` é alpha nos DOIS temas de propósito: um chip dentro de um card branco
+     precisa escurecer pra existir. Se fosse sólido igual ao card, sumiria. */
+  --t-fill: rgba(17, 18, 13, 0.05);
+  --t-overlay: #fffefb; /* popover/drawer/toast — acima do card, separado por sombra */
+  --t-hairline: rgba(17, 18, 13, 0.13); /* borda escura sobre claro lê mais fraca: alpha maior */
+  --t-hairline-hover: rgba(17, 18, 13, 0.22);
 
-  --t-risk-high: #9c4526; /* terracota escurecida — 6,2:1 */
-  --t-risk-mid: #7a5c15; /* ocre escurecido — 6,0:1 */
+  --t-risk-high: #9c4526; /* terracota escurecida — 5,2:1 no papel */
+  --t-risk-mid: #7a5c15; /* ocre escurecido — 5,1:1 no papel */
   --t-risk-low: #565449; /* neutro, sem alarme */
 }
 

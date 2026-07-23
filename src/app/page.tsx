@@ -320,17 +320,17 @@ export default function Radar() {
               </span>
               <span className="flex flex-wrap gap-2">
                 {res.filters.cnaePrefixes.map((c) => (
-                  <span key={c} className="rounded bg-surface px-2 py-0.5 text-[11.5px] text-ink-soft">
+                  <span key={c} className="rounded bg-fill px-2 py-0.5 text-[11.5px] text-ink-soft">
                     CNAE {c}
                   </span>
                 ))}
                 {res.filters.minFaixaEtaria != null && (
-                  <span className="rounded bg-surface px-2 py-0.5 text-[11.5px] text-ink-soft">
+                  <span className="rounded bg-fill px-2 py-0.5 text-[11.5px] text-ink-soft">
                     sócios {FAIXA_LABEL[String(res.filters.minFaixaEtaria)]}+
                   </span>
                 )}
                 {res.filters.maxAnoFundacao != null && (
-                  <span className="rounded bg-surface px-2 py-0.5 text-[11.5px] text-ink-soft">
+                  <span className="rounded bg-fill px-2 py-0.5 text-[11.5px] text-ink-soft">
                     até {res.filters.maxAnoFundacao}
                   </span>
                 )}

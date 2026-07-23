@@ -109,7 +109,7 @@ export default function Mercado() {
                   >
                     {p < 1 ? "<1" : p}%
                   </span>
-                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-surface">
+                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-fill">
                     <div
                       className={`h-full rounded-full ${d.forte ? "bg-ink/60" : "bg-ink-soft/30"}`}
                       style={{ width: `${Math.max(p, 1)}%` }}
@@ -156,7 +156,7 @@ export default function Mercado() {
           <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-hairline bg-surface text-left font-data text-[11px] uppercase tracking-wider text-ink-faint">
+                <tr className="border-b border-hairline bg-fill text-left font-data text-[11px] uppercase tracking-wider text-ink-faint">
                   <th scope="col" className="px-4 py-3 font-medium">Setor</th>
                   <th scope="col" className="px-4 py-3 text-right font-medium">Todas</th>
                   <th scope="col" className="px-4 py-3 text-right font-medium">Da família</th>

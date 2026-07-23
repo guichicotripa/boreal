@@ -132,7 +132,7 @@ export default function Validacao() {
           <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-hairline bg-surface text-left font-data text-[11px] uppercase tracking-wider text-ink-muted">
+                <tr className="border-b border-hairline bg-fill text-left font-data text-[11px] uppercase tracking-wider text-ink-muted">
                   <th scope="col" className="px-4 py-3 font-medium">Empresa</th>
                   <th scope="col" className="px-4 py-3 font-medium">Município</th>
                   <th scope="col" className="px-4 py-3 text-right font-medium">Vendida</th>
@@ -210,7 +210,7 @@ export default function Validacao() {
           <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-hairline bg-surface text-left font-data text-[11px] uppercase tracking-wider text-ink-muted">
+                <tr className="border-b border-hairline bg-fill text-left font-data text-[11px] uppercase tracking-wider text-ink-muted">
                   <th scope="col" className="px-4 py-3 font-medium">Setor</th>
                   <th scope="col" className="px-4 py-3 text-right font-medium">Universo</th>
                   <th scope="col" className="px-4 py-3 text-right font-medium">Aquisições</th>
@@ -261,7 +261,7 @@ export default function Validacao() {
           <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-hairline bg-surface text-left font-data text-[11px] uppercase tracking-wider text-ink-muted">
+                <tr className="border-b border-hairline bg-fill text-left font-data text-[11px] uppercase tracking-wider text-ink-muted">
                   <th scope="col" className="px-4 py-3 font-medium">Sinal</th>
                   <th scope="col" className="px-4 py-3 text-right font-medium">No universo</th>
                   <th scope="col" className="px-4 py-3 text-right font-medium">Nas vendidas</th>
@@ -269,7 +269,7 @@ export default function Validacao() {
                 </tr>
               </thead>
               <tbody className="font-data">
-                <tr className="border-b border-hairline bg-surface">
+                <tr className="border-b border-hairline bg-fill">
                   <td colSpan={4} className="px-4 py-2 font-data text-[10px] uppercase tracking-wider text-ink-muted">
                     Sinais que pesam no score
                   </td>
@@ -286,7 +286,7 @@ export default function Validacao() {
                       </td>
                     </tr>
                   ))}
-                <tr className="border-b border-hairline bg-surface">
+                <tr className="border-b border-hairline bg-fill">
                   <td colSpan={4} className="px-4 py-2 font-data text-[10px] uppercase tracking-wider text-ink-muted">
                     Sinais descartados pelo dado
                   </td>

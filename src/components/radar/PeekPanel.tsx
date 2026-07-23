@@ -60,7 +60,7 @@ export function PeekPanel({
       tabIndex={-1}
       role="complementary"
       aria-label={`Preview de ${e.razao_social}`}
-      className="fixed inset-y-0 right-0 z-50 flex w-full max-w-[440px] flex-col border-l border-hairline bg-canvas shadow-2xl shadow-black/60 outline-none"
+      className="fixed inset-y-0 right-0 z-50 flex w-full max-w-[440px] flex-col border-l border-hairline bg-overlay shadow-2xl shadow-black/60 outline-none"
     >
       {/* Header */}
       <div className="flex items-start gap-3 border-b border-hairline p-4">

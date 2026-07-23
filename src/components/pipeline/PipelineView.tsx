@@ -334,7 +334,7 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
         {loading ? (
           <PipelineSkeleton />
         ) : ops.length === 0 ? (
-          <div className="rounded-lg border border-hairline py-14 text-center">
+          <div className="rounded-lg border border-hairline bg-surface py-14 text-center">
             <p className="font-display text-lg text-ink">
               {modo === "agenda" ? "Nada na fila ainda." : "Pipeline vazio."}
             </p>

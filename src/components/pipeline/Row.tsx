@@ -322,7 +322,7 @@ export function Row({
             }}
             placeholder="anotações…"
             rows={2}
-            className="w-full resize-none rounded border border-hairline bg-surface px-1.5 py-1 text-[12px] text-ink outline-none placeholder:text-ink-muted focus:border-hairline-hover"
+            className="w-full resize-none rounded border border-hairline bg-fill px-1.5 py-1 text-[12px] text-ink outline-none placeholder:text-ink-muted focus:border-hairline-hover"
           />
           <ProvenienciaBlock o={o} />
           {context === "agenda" && <LogAtividade oportunidadeId={o.id} />}

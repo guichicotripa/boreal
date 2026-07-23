@@ -90,7 +90,7 @@ export function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
               onChange={(e) => setTexto(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") adicionar(); }}
               placeholder="registrar contato…"
-              className="min-w-0 flex-1 rounded border border-hairline bg-surface px-1.5 py-1 text-[11px] text-ink outline-none placeholder:text-ink-muted focus:border-hairline-hover"
+              className="min-w-0 flex-1 rounded border border-hairline bg-fill px-1.5 py-1 text-[11px] text-ink outline-none placeholder:text-ink-muted focus:border-hairline-hover"
             />
             <button
               onClick={adicionar}

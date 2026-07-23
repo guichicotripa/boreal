@@ -36,7 +36,7 @@ export function ResearchDisplay({ research }: { research: ResearchResult }) {
           {research.sinais.map((s, i) => (
             <li key={i} className="flex items-start gap-2 text-xs">
               <span className={`mt-0.5 shrink-0 rounded px-1.5 py-0.5 font-data text-[10px] tabular-nums ${
-                s.peso > 0 ? "bg-risk-high/15 text-risk-high" : "bg-surface text-ink-soft"
+                s.peso > 0 ? "bg-risk-high/15 text-risk-high" : "bg-fill text-ink-soft"
               }`}>
                 {s.peso > 0 ? `+${s.peso}` : s.peso}
               </span>

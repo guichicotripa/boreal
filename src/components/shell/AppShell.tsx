@@ -117,7 +117,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     `group flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[13px] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 ${
       ativo
         ? "bg-surface-hover text-ink"
-        : "text-ink-muted hover:bg-surface hover:text-ink-soft"
+        : "text-ink-muted hover:bg-fill hover:text-ink-soft"
     }`;
 
   // `compacta` = só ícones (sidebar colapsada). O drawer mobile SEMPRE mostra labels.
@@ -169,7 +169,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                       type="button"
                       onClick={() => setProvaAberta((a) => !a)}
                       aria-expanded={provaAberta}
-                      className="mb-1 flex w-full items-center justify-between rounded px-2.5 text-[11px] font-medium text-ink-muted transition-colors hover:text-ink-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+                      className="mb-1 flex w-full items-center justify-between rounded px-2.5 text-[11px] font-medium text-ink-muted transition-colors hover:text-ink-soft focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
                     >
                       {grupo.label}
                       <ChevronDown
@@ -193,7 +193,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <button
             type="button"
             onClick={toggleColapsada}
-            className={`flex w-full items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[12px] text-ink-muted transition-colors hover:bg-surface hover:text-ink-soft focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 ${colapsada ? "justify-center" : ""}`}
+            className={`flex w-full items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[12px] text-ink-muted transition-colors hover:bg-fill hover:text-ink-soft focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 ${colapsada ? "justify-center" : ""}`}
             aria-label={colapsada ? "Expandir sidebar" : "Colapsar sidebar"}
           >
             {colapsada ? (
@@ -235,7 +235,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             aria-label="Abrir paleta de comandos"
           >
             <span className="hidden sm:inline">Ir para…</span>
-            <kbd className="rounded border border-hairline bg-surface px-1 py-0.5 font-data text-[10px] text-ink-soft">
+            <kbd className="rounded border border-hairline bg-fill px-1 py-0.5 font-data text-[10px] text-ink-soft">
               Ctrl K
             </kbd>
           </button>
@@ -254,7 +254,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             onClick={() => setDrawerAberto(false)}
             className="absolute inset-0 bg-black/60"
           />
-          <div className="absolute inset-y-0 left-0 flex w-[260px] flex-col border-r border-hairline bg-canvas">
+          <div className="absolute inset-y-0 left-0 flex w-[260px] flex-col border-r border-hairline bg-overlay">
             <div className="flex h-14 items-center justify-between border-b border-hairline px-4">
               <NavLogo />
               <button

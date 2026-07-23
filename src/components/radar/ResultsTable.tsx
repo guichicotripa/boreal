@@ -41,7 +41,7 @@ export function ResultsTable({
   // bug da 1ª linha coberta). Em xl+ o container fica visible e o header
   // gruda logo abaixo do topbar (top-14).
   return (
-    <div className="overflow-x-auto rounded-lg border border-hairline xl:overflow-x-visible">
+    <div className="overflow-x-auto rounded-lg border border-hairline bg-surface xl:overflow-x-visible">
       <table className="w-full min-w-[820px] border-collapse text-left">
         <thead>
           <tr>
@@ -49,7 +49,7 @@ export function ResultsTable({
               (h, i) => (
                 <th
                   key={i}
-                  className={`z-10 bg-canvas px-3 py-2 text-[11px] font-medium text-ink-muted shadow-[inset_0_-1px_0_rgba(255,251,244,0.07)] xl:sticky xl:top-14 ${
+                  className={`z-10 bg-canvas px-3 py-2 text-[11px] font-medium text-ink-muted shadow-[inset_0_-1px_0_var(--color-hairline)] xl:sticky xl:top-14 ${
                     h === "Capital" ? "text-right" : ""
                   }`}
                 >
