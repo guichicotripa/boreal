@@ -117,12 +117,29 @@ export async function POST(req: NextRequest) {
     }
   } else {
     // Browse de setor sem texto: só o setor, ordenado por score.
-    filters = { cnaePrefixes: [], minFaixaEtaria: null, maxAnoFundacao: null, limit: 50 };
+    filters = { cnaePrefixes: [], minFaixaEtaria: null, maxAnoFundacao: null, ufs: null, setorForaDaBase: null, limit: 50 };
     parsedBy = "heuristic";
   }
 
   // Setor escolhido sobrepõe os CNAEs inferidos (a praça/idade do NL seguem valendo).
-  if (setorCnaes) filters.cnaePrefixes = setorCnaes;
+  if (setorCnaes) {
+    filters.cnaePrefixes = setorCnaes;
+    filters.setorForaDaBase = null; // o seletor manda: o setor está indexado
+  }
+
+  // Pediu setor que a base não cobre: devolve zero AGORA, com o motivo. Antes o
+  // parser trocava calado por metalmecânica e entregava 50 empresas erradas.
+  // Curto-circuito também evita gastar reasoner num resultado que não existe.
+  if (filters.setorForaDaBase && filters.cnaePrefixes.length === 0) {
+    return NextResponse.json({
+      filters,
+      parsedBy,
+      count: 0,
+      empresas: [],
+      reasoned: false,
+      reasonedCount: 0,
+    });
+  }
 
   // ── 2. Monta e roda a query no Supabase ──────────────────────────────────────
   const supabase = createAdminClient();
@@ -152,6 +169,12 @@ export async function POST(req: NextRequest) {
 
   if (filters.maxAnoFundacao != null) {
     q = q.lte("data_inicio_atividade", `${filters.maxAnoFundacao}-12-31`);
+  }
+
+  // Praça. Sem isto a UF da tese era ignorada e a busca devolvia outra região
+  // em silêncio — pior que devolver nada, porque parece resposta.
+  if (filters.ufs?.length) {
+    q = q.in("uf", filters.ufs);
   }
 
   q = q.limit(filters.limit);
