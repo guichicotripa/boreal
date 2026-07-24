@@ -6,6 +6,7 @@ import type { Empresa } from "@/lib/types";
 import { scoreTier } from "@/lib/scoring";
 import { TIER_STYLES, FAIXA_LABEL, formatCnpj, formatTelefone, formatCapitalCompact } from "@/lib/format";
 import { storeEmpresa, storeOrigin, type ScoreConhecido } from "@/lib/empresa-store";
+import { ProcedenciaChip } from "@/components/ProcedenciaChip";
 import { SalvarButton } from "./SalvarButton";
 import { X, ArrowUpRight, Phone, Mail, EyeOff } from "lucide-react";
 
@@ -198,6 +199,8 @@ export function PeekPanel({
               {e.telefone && (
                 <a
                   href={`tel:${e.telefone.replace(/\D/g, "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 rounded-md border border-hairline px-2.5 py-1.5 text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
                 >
                   <Phone aria-hidden="true" className="h-3 w-3" strokeWidth={1.75} />
@@ -205,13 +208,18 @@ export function PeekPanel({
                 </a>
               )}
               {e.email && (
-                <a
-                  href={`mailto:${e.email}`}
-                  className="inline-flex max-w-full items-center gap-1.5 truncate rounded-md border border-hairline px-2.5 py-1.5 text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
-                >
-                  <Mail aria-hidden="true" className="h-3 w-3 shrink-0" strokeWidth={1.75} />
-                  <span className="truncate">{e.email.toLowerCase()}</span>
-                </a>
+                <div className="flex flex-col items-start gap-1">
+                  <a
+                    href={`mailto:${e.email}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex max-w-full items-center gap-1.5 truncate rounded-md border border-hairline px-2.5 py-1.5 text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+                  >
+                    <Mail aria-hidden="true" className="h-3 w-3 shrink-0" strokeWidth={1.75} />
+                    <span className="truncate">{e.email.toLowerCase()}</span>
+                  </a>
+                  <ProcedenciaChip email={e.email} />
+                </div>
               )}
             </div>
           </section>
