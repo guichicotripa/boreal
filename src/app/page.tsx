@@ -468,14 +468,28 @@ export default function Radar() {
 
             {res.count === 0 && (
               <div className="rounded-lg border border-hairline px-6 py-12 text-center">
-                <p className="font-display text-lg text-ink">Nenhuma empresa encontrada.</p>
-                {/* Duas causas MUITO diferentes: tese restrita demais, ou o setor/praça
-                    simplesmente não estar na base. Antes a tela culpava sempre a tese,
-                    o que é enganoso quando o limite é nosso. */}
-                <p className="mx-auto mt-2 max-w-md text-sm text-ink-soft">
-                  Pode ser a tese restrita demais (tente ampliar a faixa etária ou o ano
-                  de fundação), ou o setor e a praça ainda não estarem indexados.
-                </p>
+                {/* Três causas MUITO diferentes: setor fora da base (sabemos o nome),
+                    praça/tese restrita, ou nada bateu. Antes a tela culpava sempre a
+                    tese, o que é enganoso quando o limite é nosso. */}
+                {res.filters.setorForaDaBase ? (
+                  <>
+                    <p className="font-display text-lg text-ink">
+                      {res.filters.setorForaDaBase} não está na base indexada.
+                    </p>
+                    <p className="mx-auto mt-2 max-w-md text-sm text-ink-soft">
+                      Preferimos não devolver empresas de outro setor: seria resposta
+                      errada com cara de resposta certa.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p className="font-display text-lg text-ink">Nenhuma empresa encontrada.</p>
+                    <p className="mx-auto mt-2 max-w-md text-sm text-ink-soft">
+                      Pode ser a tese restrita demais (tente ampliar a faixa etária ou o ano
+                      de fundação), ou a praça ainda não estar indexada.
+                    </p>
+                  </>
+                )}
                 {cobertura && (
                   <div className="mx-auto mt-4 max-w-lg rounded-md bg-fill px-4 py-3 text-left">
                     <p className="text-[11px] font-medium text-ink-muted">

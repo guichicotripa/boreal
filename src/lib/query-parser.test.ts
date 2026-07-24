@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { ufsDaConsulta } from "./query-parser.ts";
+import { ufsDaConsulta, resolverSetor } from "./query-parser.ts";
 
 /* Extração de praça. Antes de existir, a UF da tese era ignorada e a busca
    devolvia outra região em silêncio ("construtoras no RS" → metalmecânicas de SP).
@@ -33,5 +33,39 @@ for (const [consulta, esperado] of CASOS) {
       (obtido ?? []).slice().sort(),
       (esperado ?? []).slice().sort()
     );
+  });
+}
+
+/* Resolução de setor. O defeito original: quando nada era reconhecido, o parser
+   virava metalmecânica em silêncio — "clínicas com sócios idosos" devolvia
+   metalúrgicas, e "construtoras" também. Três comportamentos distintos agora:
+     · setor indexado      → filtra por ele
+     · setor não indexado  → zero + nome do setor (nunca troca por outro)
+     · setor não citado    → busca ampla (sem recorte) */
+const CASOS_SETOR: [string, { ids: string[]; foraDaBase: string | null }][] = [
+  ["clínicas com sócios acima de 60 anos", { ids: ["saude"], foraDaBase: null }],
+  ["laboratórios de diagnóstico em SP", { ids: ["saude"], foraDaBase: null }],
+  ["escolas familiares com donos idosos", { ids: ["educacao"], foraDaBase: null }],
+  ["colégios fundados antes de 1990", { ids: ["educacao"], foraDaBase: null }],
+  ["metalmecânica no interior de SP", { ids: ["metalmec"], foraDaBase: null }],
+  ["serralherias e caldeirarias", { ids: ["metalmec"], foraDaBase: null }],
+  ["fabricantes de máquinas", { ids: ["metalmec"], foraDaBase: null }],
+  // Fora da base: nunca pode cair em metalmec
+  ["construtoras de edifícios no RS", { ids: [], foraDaBase: "construção" }],
+  ["transportadoras com sócios idosos", { ids: [], foraDaBase: "transporte e logística" }],
+  ["empresas de tecnologia em SP", { ids: [], foraDaBase: "tecnologia" }],
+  ["frigoríficos tradicionais", { ids: [], foraDaBase: "alimentos" }],
+  // Sem setor citado: busca ampla, sem recorte e sem alarme falso
+  ["empresas com sócios acima de 70 anos", { ids: [], foraDaBase: null }],
+  ["negócios familiares fundados antes de 1980", { ids: [], foraDaBase: null }],
+];
+
+for (const [consulta, esperado] of CASOS_SETOR) {
+  test(`resolverSetor: ${consulta}`, () => {
+    const r = resolverSetor(consulta);
+    assert.deepEqual(r.ids.slice().sort(), esperado.ids.slice().sort());
+    assert.equal(r.foraDaBase, esperado.foraDaBase);
+    // Invariante que o bug violava: setor fora da base nunca vira CNAE de outro.
+    if (esperado.foraDaBase) assert.deepEqual(r.cnaes, []);
   });
 }

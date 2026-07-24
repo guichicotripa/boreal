@@ -1,17 +1,13 @@
 // Parser heurístico (por palavra-chave) — fallback quando o LLM não responde.
 // Determinístico, sem dependência externa. Garante que a demo nunca quebra.
 import type { SearchFilters } from "./types";
+// Com extensão: o `node --test` nativo (usado pelo npm test) não resolve
+// import sem extensão, embora o bundler do Next resolva.
+import { SETORES } from "./setores.ts";
 
 export function parseQueryHeuristic(texto: string): SearchFilters {
   const t = texto.toLowerCase();
-
-  // ── CNAE ──────────────────────────────────────────────────────────────────
-  let cnaePrefixes: string[] = [];
-  if (/metalurgia|metal[úu]rgic/.test(t)) cnaePrefixes.push("24");
-  if (/esquadria|estrutura|serralh|caldeiraria|produto.*metal/.test(t)) cnaePrefixes.push("25");
-  if (/m[áa]quina|equipamento/.test(t)) cnaePrefixes.push("28");
-  // "metalmecânica" genérico ou nada reconhecido → os três grupos
-  if (cnaePrefixes.length === 0 || /metalmec[âa]nic/.test(t)) cnaePrefixes = ["24", "25", "28"];
+  const setor = resolverSetor(texto);
 
   // ── Idade dos sócios → faixa_etaria (1=0-12 … 6=51-60, 7=61-70, 8=71-80, 9=80+) ──
   let minFaixaEtaria: number | null = null;
@@ -39,7 +35,86 @@ export function parseQueryHeuristic(texto: string): SearchFilters {
     maxAnoFundacao = new Date().getFullYear() - 25;
   }
 
-  return { cnaePrefixes, minFaixaEtaria, maxAnoFundacao, ufs: ufsDaConsulta(texto), limit: 50 };
+  return {
+    cnaePrefixes: setor.cnaes,
+    minFaixaEtaria,
+    maxAnoFundacao,
+    ufs: ufsDaConsulta(texto),
+    setorForaDaBase: setor.foraDaBase,
+    limit: 50,
+  };
+}
+
+// ── Setor ───────────────────────────────────────────────────────────────────
+// Antes: quando nada era reconhecido, o parser SILENCIOSAMENTE virava
+// metalmecânica ("cnaePrefixes = ['24','25','28']"). Consequência: "clínicas com
+// sócios idosos" devolvia metalúrgicas, e "construtoras" também. Igual ao bug da
+// praça — responder outra coisa calado é pior que não responder.
+//
+// Agora o vocabulário sai do registry (setores.json), então setor novo ingerido
+// passa a ser buscável sem tocar aqui, e o que NÃO está na base é dito na cara.
+
+/** Termos que apontam pra um setor indexado. Chave = id no registry. */
+const TERMOS_POR_SETOR: Record<string, RegExp> = {
+  metalmec:
+    /metalmec[âa]nic|metalurgia|metal[úu]rgic|esquadria|serralh|caldeiraria|usinagem|fundi[çc][ãa]o|produto.*metal|m[áa]quina|equipamento/,
+  saude:
+    /sa[úu]de|cl[íi]nic|hospital|laborat[óo]ri|diagn[óo]stic|odontol[óo]gic|dentist|m[ée]dic|fisioterap|imagem/,
+  educacao:
+    /educa[çc][ãa]o|escola|col[ée]gio|creche|ensino|educandári|infantil|pr[ée]-escola|curso/,
+};
+
+/* Setores que o usuário pode pedir e que NÃO estão indexados. Não é uma lista
+   fechada do mundo — é o suficiente pra distinguir "pediu algo que não temos"
+   de "não citou setor nenhum". Falso negativo aqui degrada pro comportamento
+   antigo de buscar amplo, que é aceitável; falso positivo seria pior. */
+const TERMOS_FORA_DA_BASE: [RegExp, string][] = [
+  [/constru[çc][ãa]o|construtor|empreiteir|incorporador/, "construção"],
+  [/imobili[áa]ri|corretor/, "imobiliário"],
+  [/transporte|log[íi]stic|transportador|frete/, "transporte e logística"],
+  [/varejo|com[ée]rcio varejista|loja|supermercad|mercearia/, "varejo"],
+  [/alimento|aliment[íi]ci|frigor[íi]fic|latic[íi]ni|padaria/, "alimentos"],
+  [/tecnologia|software|ti\b|startup|sistemas|desenvolvimento de software/, "tecnologia"],
+  [/agro|agr[íi]col|fazenda|pecu[áa]ri|agroneg[óo]ci/, "agronegócio"],
+  [/t[êe]xtil|confec[çc][ãa]o|vestu[áa]ri|roupa/, "têxtil e confecção"],
+  [/qu[íi]mic|farmac[êe]utic|cosm[ée]tic/, "química e farmacêutica"],
+  [/hotel|turismo|pousada|restaurante|bar\b/, "hotelaria e alimentação fora do lar"],
+  [/contabil|advocaci|jur[íi]dic|consultori/, "serviços profissionais"],
+  [/energia|el[ée]tric|solar|petr[óo]le/, "energia"],
+];
+
+export type SetorResolvido = {
+  /** Prefixos CNAE a filtrar. Vazio = sem recorte de setor. */
+  cnaes: string[];
+  /** Setores do registry que casaram. */
+  ids: string[];
+  /** Termo que o usuário pediu e a base não cobre, ou null. */
+  foraDaBase: string | null;
+};
+
+export function resolverSetor(texto: string): SetorResolvido {
+  const t = texto
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "");
+
+  const ids: string[] = [];
+  const cnaes = new Set<string>();
+  for (const setor of SETORES) {
+    const re = TERMOS_POR_SETOR[setor.id];
+    if (re && re.test(t)) {
+      ids.push(setor.id);
+      for (const c of setor.cnaes) cnaes.add(c);
+    }
+  }
+  if (ids.length > 0) return { cnaes: [...cnaes], ids, foraDaBase: null };
+
+  // Nenhum setor coberto casou. Pediu algo que não temos, ou não citou setor?
+  for (const [re, rotulo] of TERMOS_FORA_DA_BASE) {
+    if (re.test(t)) return { cnaes: [], ids: [], foraDaBase: rotulo };
+  }
+  // Não citou setor: busca ampla em tudo que está indexado (sem recorte de CNAE).
+  return { cnaes: [], ids: [], foraDaBase: null };
 }
 
 // ── Praça ───────────────────────────────────────────────────────────────────

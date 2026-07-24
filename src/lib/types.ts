@@ -8,6 +8,10 @@ export type SearchFilters = {
   // Praça: siglas de UF, ou null se a tese não restringir. Opcional porque os
   // caches estáticos foram gerados antes deste campo existir.
   ufs?: string[] | null;
+  // Setor que a consulta pediu e a base NÃO cobre (ex: "construção"). Quando
+  // preenchido, a busca devolve zero de propósito — melhor que entregar outro
+  // setor calado, que era o comportamento antigo.
+  setorForaDaBase?: string | null;
   limit: number;
 };
 

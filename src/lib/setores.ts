@@ -4,7 +4,9 @@
 // STATUS derivado do recall vs o gate do Relay (≥40 valida, 25–40 itera, <25 o jogo é outro).
 // Aumentar cobertura = adicionar setor aqui + rodar a validação. Nunca knob de peso manual.
 
-import setoresData from "./setores.json";
+// `with { type: "json" }`: exigido pelo runner nativo do Node (npm test), que
+// importa este módulo pela cadeia do query-parser. O bundler do Next aceita.
+import setoresData from "./setores.json" with { type: "json" };
 
 export type Lente = "sucessao" | "consolidacao";
 export type StatusSetor = "validado" | "itera" | "consolidacao";
