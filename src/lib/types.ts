@@ -5,6 +5,9 @@ export type SearchFilters = {
   cnaePrefixes: string[];        // prefixos CNAE, ex: ["24","25","28"]
   minFaixaEtaria: number | null; // faixa etária mínima dos sócios (código 1–9)
   maxAnoFundacao: number | null; // empresa fundada ATÉ este ano (= empresa antiga)
+  // Praça: siglas de UF, ou null se a tese não restringir. Opcional porque os
+  // caches estáticos foram gerados antes deste campo existir.
+  ufs?: string[] | null;
   limit: number;
 };
 

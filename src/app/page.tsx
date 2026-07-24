@@ -50,6 +50,13 @@ export default function Radar() {
   const [desfazer, setDesfazer] = useState<{ empresa: Empresa; timer: number } | null>(null);
   // Total de descartadas no escopo — só pra oferecer o caminho de volta (/descartadas).
   const [totalDescartadas, setTotalDescartadas] = useState(0);
+  // Cobertura da base — buscada SÓ quando a busca dá zero, pra explicar o vazio
+  // com honestidade em vez de culpar a tese do usuário.
+  const [cobertura, setCobertura] = useState<{
+    total: number;
+    ufs: { uf: string }[];
+    divisoes: { nome: string }[];
+  } | null>(null);
 
   useEffect(() => {
     const refresh = () => setScoreOverrides(readScoresConhecidos());
@@ -216,6 +223,20 @@ export default function Radar() {
       // a linha já voltou na UI; o servidor reconcilia na próxima busca
     }
   }
+
+  // Busca vazia → carrega a cobertura pra explicar o porquê. Lazy: a esmagadora
+  // maioria das buscas retorna algo e nunca paga essa consulta.
+  useEffect(() => {
+    if (!res || res.count > 0 || cobertura) return;
+    let vivo = true;
+    fetch("/api/cobertura")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (vivo && d && !d.error) setCobertura(d);
+      })
+      .catch(() => { /* silencioso: o estado vazio genérico ainda serve */ });
+    return () => { vivo = false; };
+  }, [res, cobertura]);
 
   const peekEmpresa = peekId ? empresasOrdenadas.find((e) => e.id === peekId) ?? null : null;
 
@@ -417,6 +438,11 @@ export default function Radar() {
                     até {res.filters.maxAnoFundacao}
                   </span>
                 )}
+                {res.filters.ufs?.length ? (
+                  <span className="rounded bg-fill px-2 py-0.5 text-[11.5px] text-ink-soft">
+                    {res.filters.ufs.join(", ")}
+                  </span>
+                ) : null}
               </span>
             </div>
 
@@ -441,12 +467,33 @@ export default function Radar() {
             )}
 
             {res.count === 0 && (
-              <div className="rounded-lg border border-hairline py-12 text-center">
+              <div className="rounded-lg border border-hairline px-6 py-12 text-center">
                 <p className="font-display text-lg text-ink">Nenhuma empresa encontrada.</p>
+                {/* Duas causas MUITO diferentes: tese restrita demais, ou o setor/praça
+                    simplesmente não estar na base. Antes a tela culpava sempre a tese,
+                    o que é enganoso quando o limite é nosso. */}
                 <p className="mx-auto mt-2 max-w-md text-sm text-ink-soft">
-                  A tese pode estar restrita demais. Tente ampliar a faixa etária,
-                  remover um CNAE ou flexibilizar o ano de fundação.
+                  Pode ser a tese restrita demais (tente ampliar a faixa etária ou o ano
+                  de fundação), ou o setor e a praça ainda não estarem indexados.
                 </p>
+                {cobertura && (
+                  <div className="mx-auto mt-4 max-w-lg rounded-md bg-fill px-4 py-3 text-left">
+                    <p className="text-[11px] font-medium text-ink-muted">
+                      O que está indexado hoje
+                    </p>
+                    <p className="mt-1.5 text-[12.5px] leading-relaxed text-ink-soft">
+                      <span className="text-ink">
+                        {cobertura.total.toLocaleString("pt-BR")} empresas
+                      </span>{" "}
+                      em {cobertura.ufs.map((u) => u.uf).join(", ")} ·{" "}
+                      {cobertura.divisoes.map((d) => d.nome).join(", ")}.
+                    </p>
+                    <p className="mt-1.5 text-[11px] leading-relaxed text-ink-muted">
+                      Fora disso a busca não retorna, mesmo que o heat-map mostre
+                      atividade — ele cobre o Brasil inteiro, a base indexada não.
+                    </p>
+                  </div>
+                )}
               </div>
             )}
           </section>

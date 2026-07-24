@@ -117,7 +117,7 @@ export async function POST(req: NextRequest) {
     }
   } else {
     // Browse de setor sem texto: só o setor, ordenado por score.
-    filters = { cnaePrefixes: [], minFaixaEtaria: null, maxAnoFundacao: null, limit: 50 };
+    filters = { cnaePrefixes: [], minFaixaEtaria: null, maxAnoFundacao: null, ufs: null, limit: 50 };
     parsedBy = "heuristic";
   }
 
@@ -152,6 +152,12 @@ export async function POST(req: NextRequest) {
 
   if (filters.maxAnoFundacao != null) {
     q = q.lte("data_inicio_atividade", `${filters.maxAnoFundacao}-12-31`);
+  }
+
+  // Praça. Sem isto a UF da tese era ignorada e a busca devolvia outra região
+  // em silêncio — pior que devolver nada, porque parece resposta.
+  if (filters.ufs?.length) {
+    q = q.in("uf", filters.ufs);
   }
 
   q = q.limit(filters.limit);
