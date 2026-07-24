@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { Empresa } from "@/lib/types";
 import { scoreTier } from "@/lib/scoring";
@@ -18,6 +18,94 @@ type Descartada = {
   created_at: string;
   empresa: Empresa | null;
 };
+
+/* Nota do descarte, editável inline.
+   Mora AQUI e não no momento do descarte de propósito: pedir o motivo no clique
+   mataria a triagem de um toque, que é o ponto do descarte. Aqui é revisão, com
+   tempo — e é o único sinal rotulado de NEGATIVO que o sistema coleta (o score
+   hoje só aprende com o que é salvo).
+
+   Salva no blur e no Enter. Reusa o POST /api/descarte, que é upsert idempotente:
+   reescrever um descarte existente só atualiza o motivo. */
+function CampoNota({
+  empresaId,
+  inicial,
+  onSalvo,
+}: {
+  empresaId: string;
+  inicial: string | null;
+  onSalvo: (v: string | null) => void;
+}) {
+  const [valor, setValor] = useState(inicial ?? "");
+  const [estado, setEstado] = useState<"idle" | "salvando" | "salvo" | "erro">("idle");
+  // Último valor confirmado pelo servidor — evita salvar quando nada mudou.
+  const confirmado = useRef(inicial ?? "");
+
+  async function salvar() {
+    const limpo = valor.trim();
+    if (limpo === confirmado.current) {
+      setEstado("idle");
+      return;
+    }
+    setEstado("salvando");
+    try {
+      const r = await fetch("/api/descarte", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ empresaId, motivo: limpo || null }),
+      });
+      if (!r.ok) throw new Error();
+      confirmado.current = limpo;
+      onSalvo(limpo || null);
+      setEstado("salvo");
+      window.setTimeout(() => setEstado((e) => (e === "salvo" ? "idle" : e)), 1600);
+    } catch {
+      setEstado("erro");
+    }
+  }
+
+  return (
+    <div className="flex items-center gap-1.5">
+      <input
+        value={valor}
+        onChange={(e) => {
+          setValor(e.target.value);
+          if (estado !== "idle") setEstado("idle");
+        }}
+        onBlur={salvar}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") e.currentTarget.blur();
+          if (e.key === "Escape") {
+            setValor(confirmado.current);
+            e.currentTarget.blur();
+          }
+        }}
+        placeholder="Por quê?"
+        aria-label="Nota do descarte"
+        className={`min-w-0 flex-1 rounded border bg-transparent px-1.5 py-1 text-[12px] text-ink-soft outline-none transition-colors placeholder:text-ink-faint focus:border-ink/30 focus:text-ink ${
+          estado === "erro" ? "border-risk-high/50" : "border-transparent hover:border-hairline"
+        }`}
+      />
+      {estado === "salvando" && (
+        <span className="shrink-0 text-[10px] text-ink-faint">…</span>
+      )}
+      {estado === "salvo" && (
+        <span className="shrink-0 text-[10px] text-ink-muted" role="status">
+          salvo
+        </span>
+      )}
+      {estado === "erro" && (
+        <button
+          type="button"
+          onClick={salvar}
+          className="shrink-0 rounded text-[10px] text-risk-high underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+        >
+          repetir
+        </button>
+      )}
+    </div>
+  );
+}
 
 function quando(iso: string): string {
   const dias = Math.floor((Date.now() - new Date(iso).getTime()) / 86_400_000);
@@ -178,14 +266,18 @@ export default function Descartadas() {
                       <td className="whitespace-nowrap px-3 py-2.5 text-[12px] tabular-nums text-ink-soft">
                         {quando(d.created_at)}
                       </td>
-                      <td className="max-w-[200px] px-3 py-2.5">
-                        {d.motivo ? (
-                          <span className="block truncate text-[12px] text-ink-soft" title={d.motivo}>
-                            {d.motivo}
-                          </span>
-                        ) : (
-                          <span className="text-[12px] text-ink-faint">—</span>
-                        )}
+                      <td className="max-w-[220px] px-3 py-2.5">
+                        <CampoNota
+                          empresaId={d.empresa_id}
+                          inicial={d.motivo}
+                          onSalvo={(v) =>
+                            setItens((cur) =>
+                              (cur ?? []).map((i) =>
+                                i.empresa_id === d.empresa_id ? { ...i, motivo: v } : i
+                              )
+                            )
+                          }
+                        />
                       </td>
                       <td className="whitespace-nowrap px-3 py-2.5 text-right">
                         <span className="inline-flex items-center gap-1.5">
