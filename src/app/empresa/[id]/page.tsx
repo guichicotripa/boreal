@@ -261,7 +261,7 @@ export default function EmpresaPage() {
             <h1 className="font-display text-2xl leading-tight tracking-tight text-ink md:text-[28px]">
               {e.razao_social}
             </h1>
-            <p className="mt-1.5 font-data text-[12px] text-ink-muted">
+            <p className="mt-1.5 text-[12px] tabular-nums text-ink-muted">
               {formatCnpj(e.cnpj)}
               <span className="text-ink-faint"> · </span>{e.municipio}/{e.uf}
               <span className="text-ink-faint"> · </span>fundada {anoFund}{anosOp != null ? ` (${anosOp} anos)` : ""}
@@ -279,17 +279,17 @@ export default function EmpresaPage() {
           {/* Score */}
           <section className="rounded-lg border border-hairline bg-surface p-4">
             <div aria-live="polite" className="flex items-baseline gap-2">
-              <span className={`font-data text-[32px] leading-none tabular-nums ${t.text}`}>{score}</span>
+              <span className={`text-[32px] leading-none tabular-nums ${t.text}`}>{score}</span>
               <span className={`text-[11px] font-medium ${t.text}`}>{t.label}</span>
               {deltaV1 != null && deltaV1 !== 0 && (
                 <span
-                  className={`font-data text-[11px] tabular-nums ${deltaV1 > 0 ? "text-risk-high" : "text-ink-muted"}`}
+                  className={`text-[11px] tabular-nums ${deltaV1 > 0 ? "text-risk-high" : "text-ink-muted"}`}
                   title="ajuste da investigação sobre o score determinístico"
                 >
                   {deltaV1 > 0 ? `↑${deltaV1}` : `↓${Math.abs(deltaV1)}`}
                 </span>
               )}
-              <span className="font-data text-[11px] text-ink-muted">/ 100</span>
+              <span className="text-[11px] text-ink-muted">/ 100</span>
             </div>
             <p className="mt-2 text-[12px] leading-snug text-ink-soft">
               {perfilSuc
@@ -307,7 +307,7 @@ export default function EmpresaPage() {
                       <span className="h-1 min-w-0 flex-1 overflow-hidden rounded-full bg-hairline">
                         <span className={`block h-full ${t.bar}`} style={{ width: `${Math.round((pts / d.max) * 100)}%` }} />
                       </span>
-                      <span className="w-10 shrink-0 text-right font-data text-[10.5px] tabular-nums text-ink-muted">
+                      <span className="w-10 shrink-0 text-right text-[10.5px] tabular-nums text-ink-muted">
                         {pts}/{d.max}
                       </span>
                     </li>
@@ -344,7 +344,9 @@ export default function EmpresaPage() {
                 {e.telefone && (
                   <a
                     href={`tel:${e.telefone.replace(/\D/g, "")}`}
-                    className="inline-flex w-fit items-center gap-1.5 rounded-md border border-hairline px-2.5 py-1.5 font-data text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex w-fit items-center gap-1.5 rounded-md border border-hairline px-2.5 py-1.5 text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
                   >
                     <Phone aria-hidden="true" className="h-3 w-3" strokeWidth={1.75} />
                     {formatTelefone(e.telefone)}
@@ -353,7 +355,9 @@ export default function EmpresaPage() {
                 {e.email && (
                   <a
                     href={`mailto:${e.email}`}
-                    className="inline-flex max-w-full items-center gap-1.5 truncate rounded-md border border-hairline px-2.5 py-1.5 font-data text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex max-w-full items-center gap-1.5 truncate rounded-md border border-hairline px-2.5 py-1.5 text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
                   >
                     <Mail aria-hidden="true" className="h-3 w-3 shrink-0" strokeWidth={1.75} />
                     <span className="truncate">{e.email.toLowerCase()}</span>
@@ -379,7 +383,7 @@ export default function EmpresaPage() {
                         {ent && <p className="text-[10.5px] text-ink-muted">sócio desde {ent}</p>}
                       </div>
                       {s.faixa_etaria && FAIXA_LABEL[s.faixa_etaria] && (
-                        <span className={`shrink-0 rounded px-1.5 py-0.5 font-data text-[10.5px] tabular-nums ${FAIXA_COLOR[s.faixa_etaria] ?? "bg-fill text-ink-soft"}`}>
+                        <span className={`shrink-0 rounded px-1.5 py-0.5 text-[10.5px] tabular-nums ${FAIXA_COLOR[s.faixa_etaria] ?? "bg-fill text-ink-soft"}`}>
                           {FAIXA_LABEL[s.faixa_etaria]}
                         </span>
                       )}
@@ -413,7 +417,7 @@ export default function EmpresaPage() {
                     <span aria-hidden="true" className="h-1.5 w-1.5 animate-pulse rounded-full bg-ink" />
                   )}
                   {tabId === "similares" && similares && similares.length > 0 && (
-                    <span className="rounded-full border border-hairline px-1.5 py-px font-data text-[10px] tabular-nums text-ink-muted">
+                    <span className="rounded-full border border-hairline px-1.5 py-px text-[10px] tabular-nums text-ink-muted">
                       {similares.length}
                     </span>
                   )}
@@ -463,7 +467,7 @@ export default function EmpresaPage() {
                       {research.sinais.map((s, i) => (
                         <div key={i} className="flex items-start justify-between gap-4 py-1">
                           <span className="text-[13px] text-ink-soft">{s.rotulo}</span>
-                          <span className={`shrink-0 rounded px-1.5 py-0.5 font-data text-[10px] tabular-nums ${
+                          <span className={`shrink-0 rounded px-1.5 py-0.5 text-[10px] tabular-nums ${
                             s.peso > 0 ? "bg-risk-high/15 text-risk-high" : "bg-fill text-ink-soft"
                           }`}>
                             {s.peso > 0 ? `+${s.peso}` : `−${Math.abs(s.peso)}`}
@@ -529,7 +533,7 @@ export default function EmpresaPage() {
             {/* ── MEMO ── (sob demanda; síntese a partir da investigação) */}
             {tab === "memo" && (
               memo ? (
-                <MemoDisplay empresa={e} analise={memo} trajetoria={traj} />
+                <MemoDisplay empresa={e} analise={memo} />
               ) : memoLoading ? (
                 <p className="animate-pulse text-[13px] text-ink-muted" role="status">
                   Gerando memo…
@@ -598,10 +602,10 @@ export default function EmpresaPage() {
                               </p>
                             </div>
                             <div className="flex shrink-0 items-center gap-2">
-                              <span className="font-data text-[11px] tabular-nums text-ink-muted">
+                              <span className="text-[11px] tabular-nums text-ink-muted">
                                 {s.similaridade.pontos}% match
                               </span>
-                              <span className={`rounded border ${sT.badge} px-1.5 font-data text-[11px] tabular-nums ${sT.text}`}>
+                              <span className={`rounded border ${sT.badge} px-1.5 text-[11px] tabular-nums ${sT.text}`}>
                                 {s.score?.score ?? 0}
                               </span>
                             </div>
@@ -630,7 +634,7 @@ function Campo({ k, v, sub, mono }: { k: string; v: string | null | undefined; s
   return (
     <div className="min-w-0">
       <dt className="text-[10.5px] font-medium text-ink-muted">{k}</dt>
-      <dd className={`mt-0.5 text-[12.5px] text-ink ${mono ? "font-data tabular-nums" : ""}`}>
+      <dd className={`mt-0.5 text-[12.5px] text-ink ${mono ? "tabular-nums" : ""}`}>
         {v}
         {sub && <span className="block font-sans text-[11px] leading-snug text-ink-muted">{sub}</span>}
       </dd>

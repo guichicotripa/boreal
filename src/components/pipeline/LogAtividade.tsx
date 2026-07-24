@@ -104,7 +104,7 @@ export function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
             <ul className="space-y-1.5">
               {itens.map((it) => (
                 <li key={it.id} className="text-[11px] leading-snug">
-                  <span className="font-data text-ink-muted">{dataCurta(it.criado_em)}</span>{" "}
+                  <span className="tabular-nums text-ink-muted">{dataCurta(it.criado_em)}</span>{" "}
                   <span className="font-medium text-ink-muted">
                     {TIPOS_INTERACAO.find((t) => t.id === it.tipo)?.label ?? it.tipo}
                   </span>

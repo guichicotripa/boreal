@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { Info } from "lucide-react";
 import { Treemap } from "./Treemap";
 import {
   gruposPorSecao,
@@ -43,7 +44,7 @@ export function MapaSetores() {
                 type="button"
                 onClick={() => setRegiao(r.id)}
                 aria-pressed={regiao === r.id}
-                className={`rounded px-2 py-1 font-data text-[10px] uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 ${
+                className={`rounded px-2 py-1 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 ${
                   regiao === r.id ? "bg-surface-hover text-ink" : "text-ink-muted hover:text-ink-soft"
                 }`}
               >
@@ -55,27 +56,21 @@ export function MapaSetores() {
 
         <div className="flex items-center gap-4">
           <div className="hidden items-center gap-2 md:flex">
-            <span className="font-data text-[9px] uppercase tracking-wider text-ink-muted">Menos</span>
+            <span className="text-[10.5px] text-ink-muted">Menos</span>
             <div
               className="h-2 w-20 rounded-full"
               style={{ background: `linear-gradient(90deg, ${corTile(0, claro)}, ${corTile(0.5, claro)}, ${corTile(1, claro)})` }}
             />
-            <span className="font-data text-[9px] uppercase tracking-wider text-ink-muted">Mais M&amp;A</span>
+            <span className="text-[10.5px] text-ink-muted">Mais M&amp;A</span>
           </div>
           <div className="hidden items-center gap-1.5 lg:flex">
             <span className="h-1.5 w-1.5 rounded-full bg-ink" />
-            <span className="font-data text-[9px] uppercase tracking-wider text-ink-muted">Validado</span>
+            <span className="text-[10.5px] text-ink-muted">Validado</span>
           </div>
-          <span
-            title={nota}
-            aria-label={nota}
-            className="cursor-help select-none font-data text-[13px] text-ink-muted transition-colors hover:text-ink-soft"
-          >
-            ⓘ
-          </span>
+          <NotaMetodologia nota={nota} />
           <Link
             href="/"
-            className="group flex items-center gap-1.5 rounded-sm font-data text-[11px] uppercase tracking-wider text-ink transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+            className="group flex items-center gap-1.5 rounded-sm text-[12px] font-medium text-ink transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
           >
             <span className="transition-transform duration-200 group-hover:-translate-x-1">←</span>
             <span>Voltar</span>
@@ -86,6 +81,54 @@ export function MapaSetores() {
       <div className="min-h-0 flex-1 px-6 pb-4">
         <Treemap grupos={grupos} />
       </div>
+    </div>
+  );
+}
+
+// Nota metodológica: o ⓘ antigo era só um title nativo (hover, delay, morto em
+// clique/touch). Vira botão de verdade com popover — fecha em clique-fora e Esc.
+function NotaMetodologia({ nota }: { nota: string }) {
+  const [aberto, setAberto] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!aberto) return;
+    function onDoc(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setAberto(false);
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setAberto(false);
+    }
+    document.addEventListener("mousedown", onDoc);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDoc);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [aberto]);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setAberto((a) => !a)}
+        aria-expanded={aberto}
+        aria-label="Como este mapa é calculado"
+        className={`flex h-6 w-6 items-center justify-center rounded-md transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 ${
+          aberto ? "bg-surface-hover text-ink" : "text-ink-muted hover:text-ink-soft"
+        }`}
+      >
+        <Info aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.75} />
+      </button>
+      {aberto && (
+        <div
+          role="dialog"
+          aria-label="Metodologia do heat-map"
+          className="absolute right-0 top-8 z-50 w-80 rounded-lg border border-hairline bg-overlay p-3.5 text-[12px] leading-relaxed text-ink-soft shadow-xl shadow-black/30"
+        >
+          {nota}
+        </div>
+      )}
     </div>
   );
 }

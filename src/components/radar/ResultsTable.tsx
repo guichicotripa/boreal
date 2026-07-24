@@ -6,7 +6,7 @@ import { scoreTier } from "@/lib/scoring";
 import { TIER_STYLES, FAIXA_LABEL, formatCapitalCompact } from "@/lib/format";
 import { storeEmpresa, storeOrigin, type ScoreConhecido } from "@/lib/empresa-store";
 import { SalvarButton } from "./SalvarButton";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, EyeOff } from "lucide-react";
 
 /* Tabela densa de resultados — a superfície padrão de triagem do Radar.
    Padrão Attio: linha ~40px, header sticky, hover com quick actions, clique
@@ -29,12 +29,14 @@ export function ResultsTable({
   savedIds,
   peekId,
   onPeek,
+  onDescartar,
 }: {
   empresas: Empresa[];
   scoreOverrides: Record<string, ScoreConhecido>;
   savedIds: Set<string>;
   peekId: string | null;
   onPeek: (e: Empresa) => void;
+  onDescartar: (e: Empresa) => void;
 }) {
   // overflow-x só quando a tela é estreita: um scroll container mata o
   // position:sticky do header (ele gruda no container, não na página — era o
@@ -75,6 +77,14 @@ export function ResultsTable({
                   if ((window.getSelection()?.toString().trim().length ?? 0) > 0) return;
                   onPeek(e);
                 }}
+                onDoubleClick={(ev) => {
+                  if ((ev.target as HTMLElement).closest("a, button")) return;
+                  // O duplo-clique seleciona a palavra sob o cursor — limpa o ruído.
+                  window.getSelection()?.removeAllRanges();
+                  // Aba nova mantém o Boreal aberto. Com noopener o sessionStorage NÃO
+                  // é herdado, mas a página da empresa se hidrata sozinha por /api/empresa/[id].
+                  window.open(`/empresa/${e.id}`, "_blank", "noopener,noreferrer");
+                }}
                 aria-selected={aberta}
                 className={`group cursor-pointer border-b border-hairline last:border-b-0 transition-colors ${
                   aberta ? "bg-surface-hover" : "hover:bg-surface"
@@ -97,13 +107,13 @@ export function ResultsTable({
                 {/* Score — número mono + mini-barra + delta de investigação */}
                 <td className="px-3 py-2">
                   <div className="flex items-center gap-2">
-                    <span className={`font-data text-[13px] tabular-nums ${t.text}`}>{score}</span>
+                    <span className={`text-[13px] tabular-nums ${t.text}`}>{score}</span>
                     <span className="h-1 w-9 overflow-hidden rounded-full bg-hairline">
                       <span className={`block h-full ${t.bar}`} style={{ width: `${score}%` }} />
                     </span>
                     {delta != null && (
                       <span
-                        className={`font-data text-[10px] tabular-nums ${
+                        className={`text-[10px] tabular-nums ${
                           delta > 0 ? "text-risk-high" : delta < 0 ? "text-ink-muted" : "text-ink-muted"
                         }`}
                         title="ajuste após investigação com IA"
@@ -124,19 +134,28 @@ export function ResultsTable({
                   )}
                 </td>
                 <td className="px-3 py-2 text-[12px] text-ink-soft">{e.porte ?? "—"}</td>
-                <td className="whitespace-nowrap px-3 py-2 font-data text-[12px] tabular-nums text-ink-soft">
+                <td className="whitespace-nowrap px-3 py-2 text-[12px] tabular-nums text-ink-soft">
                   {anoDe(e.data_inicio_atividade)}
                 </td>
-                <td className="whitespace-nowrap px-3 py-2 text-right font-data text-[12px] tabular-nums text-ink-soft">
+                <td className="whitespace-nowrap px-3 py-2 text-right text-[12px] tabular-nums text-ink-soft">
                   {formatCapitalCompact(e.capital_social) ?? "—"}
                 </td>
-                <td className="whitespace-nowrap px-3 py-2 font-data text-[12px] text-ink-soft">
+                <td className="whitespace-nowrap px-3 py-2 text-[12px] tabular-nums text-ink-soft">
                   {socioTop ?? "—"}
                 </td>
                 {/* Ações — aparecem no hover (padrão quick actions) */}
                 <td className="whitespace-nowrap px-3 py-2 text-right">
                   <span className="inline-flex items-center gap-1.5 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
                     <SalvarButton empresaId={e.id} jaSalvo={savedIds.has(e.id)} />
+                    <button
+                      type="button"
+                      onClick={() => onDescartar(e)}
+                      aria-label={`Descartar ${e.razao_social}`}
+                      title="Descartar — some do Radar"
+                      className="rounded-md border border-hairline p-1.5 text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+                    >
+                      <EyeOff aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.75} />
+                    </button>
                     <Link
                       href={`/empresa/${e.id}`}
                       onClick={() => {
@@ -157,8 +176,8 @@ export function ResultsTable({
       </table>
       <div className="flex items-center justify-between border-t border-hairline px-3 py-1.5 text-[11px] text-ink-muted">
         <span>{empresas.length} {empresas.length === 1 ? "empresa" : "empresas"}</span>
-        <span className="hidden font-data text-[10px] md:inline" aria-hidden="true">
-          j/k navega · ⏎ abre
+        <span className="hidden text-[10.5px] md:inline" aria-hidden="true">
+          j/k navega · ⏎ abre · clique pré-visualiza · duplo-clique abre em nova aba
         </span>
       </div>
     </div>

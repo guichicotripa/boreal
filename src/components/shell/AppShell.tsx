@@ -15,6 +15,7 @@ import {
   Menu,
   X,
   ChevronDown,
+  EyeOff,
   PanelLeftClose,
   PanelLeft,
   type LucideIcon,
@@ -39,6 +40,10 @@ export const NAV_GRUPOS: NavGrupo[] = [
       { href: "/", label: "Radar", icon: Crosshair },
       { href: "/pipeline", label: "Pipeline", icon: Table2 },
       { href: "/agenda", label: "Agenda", icon: CalendarClock },
+      // Conceitualmente é um sub-estado do Radar, não um par de Pipeline/Agenda.
+      // Mora aqui mesmo assim: fora do menu a tela ficava inalcançável (o link
+      // contextual só surgia depois de buscar E com descarte já existente).
+      { href: "/descartadas", label: "Descartadas", icon: EyeOff },
     ],
   },
   {
@@ -235,7 +240,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             aria-label="Abrir paleta de comandos"
           >
             <span className="hidden sm:inline">Ir para…</span>
-            <kbd className="rounded border border-hairline bg-fill px-1 py-0.5 font-data text-[10px] text-ink-soft">
+            {/* font-sans explícito: o preflight do Tailwind força mono em <kbd> */}
+            <kbd className="rounded border border-hairline bg-fill px-1 py-0.5 font-sans text-[10px] text-ink-soft">
               Ctrl K
             </kbd>
           </button>

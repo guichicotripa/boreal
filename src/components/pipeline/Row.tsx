@@ -157,7 +157,7 @@ export function Row({
           )}
           {score != null ? (
             <span
-              className={`rounded border px-1.5 font-data text-[11px] tabular-nums font-medium ${
+              className={`rounded border px-1.5 text-[11px] tabular-nums font-medium ${
                 score >= 80
                   ? "border-risk-high/40 text-risk-high"
                   : score >= 60
@@ -169,7 +169,7 @@ export function Row({
               {score}
             </span>
           ) : (
-            <span className="rounded border border-hairline px-1.5 font-data text-[11px] text-ink-muted">
+            <span className="rounded border border-hairline px-1.5 text-[11px] text-ink-muted">
               --
             </span>
           )}
@@ -257,7 +257,9 @@ export function Row({
           {o.empresa.telefone ? (
             <a
               href={`tel:${o.empresa.telefone.replace(/\D/g, "")}`}
-              className="block truncate rounded-sm font-data text-[11px] text-ink transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block truncate rounded-sm text-[11px] text-ink transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
             >
               {formatTelefone(o.empresa.telefone)}
             </a>
@@ -265,7 +267,9 @@ export function Row({
           {o.empresa.email ? (
             <a
               href={`mailto:${o.empresa.email}`}
-              className="block truncate rounded-sm font-data text-[11px] text-ink transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block truncate rounded-sm text-[11px] text-ink transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
             >
               {o.empresa.email}
             </a>
@@ -274,7 +278,7 @@ export function Row({
             <span className="text-[11px] text-ink-muted">sem contato</span>
           )}
           {/* Indicador de último contato */}
-          <p className={`font-data text-[10px] ${toqueAtrasado ? "text-risk-mid" : "text-ink-muted"}`}>
+          <p className={`text-[10.5px] ${toqueAtrasado ? "text-risk-mid" : "text-ink-muted"}`}>
             {ultimoToque
               ? `contato ${diasDesde(ultimoToque)}d atrás`
               : `sem contato · ${diasSemToque}d`}
@@ -358,7 +362,7 @@ function DateInput({
         defaultValue={defaultValue}
         onChange={(e) => onChange(e.target.value || null)}
         title={atrasada ? "ação atrasada" : "data da próxima ação"}
-        className={`bg-transparent font-data text-[10px] outline-none [&::-webkit-calendar-picker-indicator]:hidden ${
+        className={`bg-transparent text-[10px] outline-none [&::-webkit-calendar-picker-indicator]:hidden ${
           atrasada ? "text-risk-high" : "text-ink-muted"
         }`}
       />

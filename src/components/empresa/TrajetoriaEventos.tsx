@@ -20,8 +20,8 @@ function partesEvento(ev: TrajetoriaEvento): { nome: string; status: string } {
 }
 
 // Lista de movimentação societária real (entrou/saiu/envelheceu), reconstruída
-// comparando snapshots anuais do CNPJ. Sem título próprio — cada consumidor
-// (MemoDisplay, tab Trajetória) põe o heading no seu estilo.
+// comparando snapshots anuais do CNPJ. Sem título próprio — quem consome
+// (hoje só a aba Trajetória) põe o heading no seu estilo.
 export function TrajetoriaEventos({ trajetoria }: { trajetoria: TrajetoriaResult }) {
   return (
     <>
@@ -36,7 +36,7 @@ export function TrajetoriaEventos({ trajetoria }: { trajetoria: TrajetoriaResult
                 : "text-risk-mid";
           return (
             <li key={`${ev.ano}-${i}`} className="flex gap-2 text-[13px] leading-snug">
-              <span className="shrink-0 font-data tabular-nums text-ink-muted">{ev.ano}</span>
+              <span className="shrink-0 tabular-nums text-ink-muted">{ev.ano}</span>
               <span className="min-w-0">
                 <span className="text-ink">{nome}</span>
                 {status && <span className={`ml-1.5 ${statusColor}`}>{status}</span>}
