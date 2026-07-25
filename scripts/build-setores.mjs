@@ -4,7 +4,7 @@
 // sucessão (o score prevê quem vende); recall baixo = o jogo é outro (consolidação).
 //   node --env-file=.env.local scripts/build-setores.mjs
 import { BigQuery } from "@google-cloud/bigquery";
-import { writeFileSync } from "fs";
+import { writeFileSync, readFileSync, existsSync } from "fs";
 import path from "path";
 
 const bq = new BigQuery({
@@ -20,7 +20,20 @@ const SETORES = [
   { id: "metalmec", nome: "Metalmecânica", cnaes: ["24", "25", "28"] },
   { id: "saude", nome: "Saúde", cnaes: ["86"] },
   { id: "educacao", nome: "Educação básica", cnaes: ["851", "852"] },
+  // Agro: vertical que a Setter sinalizou querer (wiki/entities/setter-investimentos).
+  // 01 agricultura/pecuária · 02 produção florestal · 03 pesca e aquicultura.
+  { id: "agro", nome: "Agropecuária", cnaes: ["01", "02", "03"] },
 ];
+
+/* O bloco `nacional` de cada setor NÃO é produzido aqui — quem escreve é
+   validacao-nacional.mjs, depois. Sem este merge, rodar build-setores pra
+   acrescentar um setor apagaria em silêncio a validação nacional dos outros
+   (e a página /validacao passaria a mostrar só o recorte de SP sem avisar). */
+const DESTINO = path.resolve("src/lib/setores.json");
+const anterior = existsSync(DESTINO) ? JSON.parse(readFileSync(DESTINO, "utf8")) : { setores: [] };
+const nacionalPorId = Object.fromEntries(
+  (anterior.setores ?? []).filter((s) => s.nacional).map((s) => [s.id, s.nacional])
+);
 
 function likeClause(prefixes, col = "e.cnae_fiscal_principal") {
   return "(" + prefixes.map((p) => `${col} LIKE '${p}%'`).join(" OR ") + ")";
@@ -92,13 +105,25 @@ async function umSetor(s) {
 const setores = [];
 for (const s of SETORES) {
   const r = await umSetor(s);
+  if (nacionalPorId[r.id]) r.nacional = nacionalPorId[r.id];
   setores.push(r);
   console.log(`[${r.id}] universo ${r.universo} · quente ${r.quente} · recall geral ${r.recall_top10}% (N=${r.n_aquisicoes}) · recall sucessão ${r.recall_sucessao}% (N=${r.n_aquisicoes_sucessao}) · ~${r.deals_ano}/ano`);
 }
 
+const semNacional = setores.filter((s) => !s.nacional).map((s) => s.id);
+if (semNacional.length) {
+  console.log(`\n⚠ sem validação nacional: ${semNacional.join(", ")} — rode validacao-nacional.mjs`);
+}
+
 writeFileSync(
-  path.resolve("src/lib/setores.json"),
-  JSON.stringify({ gerado_em: new Date().toISOString().slice(0, 10), janela: { de: CORTE, ate: NOVO }, uf: "SP", setores }, null, 2) + "\n",
+  DESTINO,
+  JSON.stringify({
+    gerado_em: new Date().toISOString().slice(0, 10),
+    janela: { de: CORTE, ate: NOVO },
+    uf: "SP",
+    ...(anterior.nacional_gerado_em ? { nacional_gerado_em: anterior.nacional_gerado_em } : {}),
+    setores,
+  }, null, 2) + "\n",
   "utf8"
 );
 console.log("\n✓ src/lib/setores.json");

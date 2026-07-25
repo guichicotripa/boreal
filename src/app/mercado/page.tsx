@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import tam from "@/lib/tam.json";
 import coorte from "@/lib/coorte-destino.json";
+import { SETORES } from "@/lib/setores";
 
 export const metadata: Metadata = {
   title: "Mercado",
@@ -194,7 +195,7 @@ export default function Mercado() {
           </p>
           <p className="mt-3 text-xs leading-snug text-ink-faint">
             Conta ilustrativa, com premissas à mostra. Não estimamos R$ por empresa (seria dado
-            inventado). São <strong>3 setores em 1 estado</strong>: empresa
+            inventado). São <strong>{SETORES.length} setores em 1 estado</strong>: empresa
             familiar é ~90% das empresas do Brasil.
           </p>
         </section>

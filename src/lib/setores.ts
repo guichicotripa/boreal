@@ -58,6 +58,16 @@ const CONFIG: Record<string, { lente: Lente; descricao: string }> = {
       "Misto: ~30% do M&A é venda de escola familiar, com 88% de acerto do score nessas vendas; o restante é consolidação, " +
       "grupos como SEB e Inspira. Aplicamos a lente de sucessão no perfil familiar. Dados de SP; expansão para outras regiões em andamento.",
   },
+  agro: {
+    lente: "consolidacao",
+    descricao:
+      "Cobertura parcial e a mais frágil das quatro. Duas ressalvas que valem mais que o número: " +
+      "(1) N=12 vendas de sucessão medidas é pequeno demais para tratar 100% como validado — leia como indício, não prova; " +
+      "(2) a data de abertura do CNPJ não mede a idade do negócio no agro. Entre 2006 e 2010 houve formalização em massa de " +
+      "produtor rural, e a curva mostra o degrau: 51.874 empresas com sócio 61+ têm 15+ anos de CNPJ, mas só 1.948 têm 20+. " +
+      "Como antiguidade vale 30 dos ~100 pontos do score, ele mede outra coisa nessa coorte. Por isso indexamos só o corte " +
+      "pré-formalização (20+ anos), que é onde a data significa o que o score assume.",
+  },
 };
 
 // O score de sucessão valida em TODOS os setores (88–100% nas vendas de sucessão). O que muda é o

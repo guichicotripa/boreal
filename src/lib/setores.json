@@ -1,10 +1,11 @@
 {
-  "gerado_em": "2026-06-04",
+  "gerado_em": "2026-07-25",
   "janela": {
     "de": "2023-06-10",
     "ate": "2025-11-09"
   },
   "uf": "SP",
+  "nacional_gerado_em": "2026-06-04",
   "setores": [
     {
       "id": "metalmec",
@@ -17,7 +18,7 @@
       "universo": 140726,
       "quente": 12957,
       "n_aquisicoes": 76,
-      "recall_top10": 67,
+      "recall_top10": 66,
       "n_aquisicoes_sucessao": 37,
       "recall_sucessao": 97,
       "deals_ano": 32,
@@ -71,7 +72,22 @@
         "n_aquisicoes_sucessao": 24,
         "recall_sucessao": 83
       }
+    },
+    {
+      "id": "agro",
+      "nome": "Agropecuária",
+      "cnaes": [
+        "01",
+        "02",
+        "03"
+      ],
+      "universo": 631582,
+      "quente": 3338,
+      "n_aquisicoes": 65,
+      "recall_top10": 37,
+      "n_aquisicoes_sucessao": 12,
+      "recall_sucessao": 100,
+      "deals_ano": 27
     }
-  ],
-  "nacional_gerado_em": "2026-06-04"
+  ]
 }
