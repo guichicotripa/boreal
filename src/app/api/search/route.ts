@@ -177,7 +177,16 @@ export async function POST(req: NextRequest) {
     q = q.in("uf", filters.ufs);
   }
 
-  q = q.limit(filters.limit);
+  /* ORDENAR ANTES DE CORTAR. Sem este order, o `.limit()` abaixo devolvia 50
+     linhas arbitrárias do setor e o passo 3 as ordenava entre si — ranking de
+     uma amostra, apresentado como shortlist priorizada. Medido em 25/07/2026,
+     depois de a cobertura de saúde ir de 2.000 pra 34.599 empresas: ZERO das 50
+     devolvidas estavam no top-50 real do setor (score médio 50,6 contra 100).
+     Antes disso o defeito ficava escondido porque o ingest só carregava a cauda
+     de faixa etária mais alta, e qualquer 50 daquelas linhas pareciam boas.
+     score_v0 é materializado por scripts/backfill-score-v0.ts (migration 0008);
+     `nulls last` joga empresa ainda não pontuada pro fim em vez de pro topo. */
+  q = q.order("score_v0", { ascending: false, nullsFirst: false }).limit(filters.limit);
 
   const { data, error } = await q;
   if (error) {
