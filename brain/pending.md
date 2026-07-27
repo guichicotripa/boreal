@@ -4,6 +4,35 @@
 
 ---
 
+## 🔴 BLOQUEIA O PILOTO — crédito da API + demo-cache defasado (25/07)
+
+- [ ] **Recarregar crédito da `ANTHROPIC_API_KEY`.** Acabou no meio da sessão de 25/07
+  (`400 credit balance is too low`). O que quebra: insights do reasoner, research/dossiê e o
+  parser LLM da busca. A busca **não** quebra — cai no parser heurístico, que hoje resolve
+  setor/praça/idade corretamente. Sintoma na tela: resultado certo, sem comentário.
+
+- [ ] **Reconstruir o `demo-cache` DEPOIS de recarregar** (uma linha):
+  ```
+  BOREAL_URL=http://localhost:3001 node scripts/build-demo-cache.mjs
+  ```
+  Por quê: as 9 consultas cacheadas foram geradas contra a base de 2.000 empresas e são
+  servidas com `cached: true`, sem validade. Medido em 25/07, score médio das cacheadas de
+  **65,9 a 87,1 (mínimo 35)** contra **100** do que a busca devolve hoje ao vivo. Ou seja: a
+  consulta cacheada entrega shortlist pior que a consulta digitada, e nada na tela indica isso.
+  Não foi reconstruído na hora porque sem crédito perderia os 15 insights por consulta que já
+  foram pagos, trocando um problema por outro.
+
+- [ ] **Refazer `build-setor-cache` também** — educação e agro ficaram com 0 insights porque o
+  crédito acabou no meio da execução (metalmec 15 e saúde 14 passaram antes). O ranking desses
+  dois já está correto; falta só o comentário.
+
+**ACOPLAMENTO PERMANENTE:** todo ingest exige, nesta ordem —
+`backfill-score-v0.ts` → `check-ranking.ts` (tem que dar 50/50) → `build-setor-cache` +
+`build-demo-cache`. Pular o backfill deixa a empresa nova com `score_v0` NULL e ela some do
+topo da busca; pular os caches serve o ranking da base antiga sem sintoma nenhum.
+
+---
+
 ## 🟡 Revisão end-to-end (02/07) — execução em fases
 
 **Feito e commitado (branch `feat/research-scrapling-hibrido`):**

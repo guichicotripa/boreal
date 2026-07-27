@@ -1,7 +1,12 @@
 // Pré-computa o browse de cada setor (com reasoner) e salva em src/lib/setor-cache.json.
 // Assim "buscar neste setor" é instantâneo no demo (saúde/educação ficam como o metalmec, que já
 // é cacheado). Mesmo padrão do build-research-cache: bate no dev server local.
-// Pré-requisito: dev server em localhost:3000. Roda: node scripts/build-setor-cache.mjs
+// Pré-requisito: dev server rodando. Roda: node scripts/build-setor-cache.mjs
+// Porta diferente de 3000: BOREAL_URL=http://localhost:3001 node scripts/build-setor-cache.mjs
+//
+// RODAR DEPOIS DE TODO INGEST. O cache é servido com `cached: true` e sem data de
+// validade — depois de um ingest ele devolve, instantaneamente e sem sintoma, o
+// ranking da base antiga.
 import { readFileSync, writeFileSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -9,11 +14,12 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const reg = JSON.parse(readFileSync(path.resolve(ROOT, "src/lib/setores.json"), "utf8"));
+const BASE = process.env.BOREAL_URL || "http://localhost:3000";
 
 const porSetor = {};
 for (const s of reg.setores) {
   process.stdout.write(`  ${s.id}… `);
-  const r = await fetch("http://localhost:3000/api/search?fresh=1", {
+  const r = await fetch(`${BASE}/api/search?fresh=1`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ setor: s.id }),
