@@ -54,10 +54,16 @@ function dadosParaPrompt(e: Empresa) {
   };
 }
 
-export async function gerarDossierAnalise(empresa: Empresa): Promise<DossierAnalise> {
-  const dados = dadosParaPrompt(empresa);
+/* O prompt e o parse são exportados separados da chamada porque o memo é gerado
+   por dois caminhos: a rota (API, sob demanda) e o lote (assinatura, custo zero).
+   Se cada caminho tivesse a própria cópia do prompt, os memos do lote e os do uso
+   real divergiriam sem ninguém notar — é o mesmo motivo de calcScore ser importada
+   em vez de replicada nos scripts. */
+export const DOSSIER_SYSTEM = SYSTEM;
 
-  const prompt = `Gere a análise do dossiê desta empresa. Use SÓ os dados fornecidos —
+export function promptDossier(empresa: Empresa): string {
+  const dados = dadosParaPrompt(empresa);
+  return `Gere a análise do dossiê desta empresa. Use SÓ os dados fornecidos —
 não invente faturamento, número de funcionários ou fatos que não estão aqui.
 
 REGRAS CRÍTICAS:
@@ -82,6 +88,10 @@ Responda APENAS com este JSON:
 
 Dados da empresa:
 ${JSON.stringify(dados, null, 2)}`;
+}
+
+export async function gerarDossierAnalise(empresa: Empresa): Promise<DossierAnalise> {
+  const prompt = promptDossier(empresa);
 
   const message = await getClient().messages.create({
     model: "claude-sonnet-4-6",
@@ -96,7 +106,11 @@ ${JSON.stringify(dados, null, 2)}`;
     ` ($${((usage.input_tokens * 3 + usage.output_tokens * 15) / 1_000_000).toFixed(4)})`
   );
 
-  const raw = message.content[0].type === "text" ? message.content[0].text : "";
+  return parseDossier(message.content[0].type === "text" ? message.content[0].text : "");
+}
+
+/** Normaliza a resposta do modelo em DossierAnalise. Compartilhado pelos dois caminhos. */
+export function parseDossier(raw: string): DossierAnalise {
   const match = raw.match(/\{[\s\S]*\}/);
   if (!match) throw new Error("Dossier: resposta sem JSON: " + raw.slice(0, 200));
 

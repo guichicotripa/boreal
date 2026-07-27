@@ -4,6 +4,7 @@ import { calcScore } from "@/lib/scoring";
 import { gerarDossierAnalise } from "@/lib/dossier";
 import type { Empresa, DossierAnalise } from "@/lib/types";
 import dossierCache from "@/lib/dossier-cache.json";
+import { lerMemoSalvo, salvarMemo } from "@/lib/memo-store";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -24,14 +25,24 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "empresaId vazio" }, { status: 400 });
   }
 
-  // Cache hit → memo instantâneo (a UI só usa `analise`; a empresa ela já tem da busca).
   const skipCache = req.nextUrl.searchParams.get("fresh") === "1";
-  if (!skipCache && CACHE[empresaId]) {
-    return NextResponse.json({ analise: CACHE[empresaId], cached: true });
+  const supabase = createAdminClient();
+
+  /* Ordem: BANCO → arquivo → gerar.
+     O banco vem primeiro porque é o que cresce (migration 0009). O arquivo é o
+     legado das 51 empresas dos demos, mantido só até elas migrarem — ver
+     scripts/importar-memos-arquivo.ts. */
+  if (!skipCache) {
+    const salvo = await lerMemoSalvo(supabase, empresaId);
+    if (salvo) {
+      return NextResponse.json({ analise: salvo.analise, cached: true, geradoEm: salvo.geradoEm });
+    }
+    if (CACHE[empresaId]) {
+      return NextResponse.json({ analise: CACHE[empresaId], cached: true });
+    }
   }
 
   // Busca a empresa completa (com sócios) — fonte da verdade, não confia no client.
-  const supabase = createAdminClient();
   const { data, error } = await supabase
     .from("empresa")
     .select(
@@ -52,6 +63,11 @@ export async function POST(req: NextRequest) {
 
   try {
     const analise = await gerarDossierAnalise(empresa);
+    /* Persiste o que acabou de ser gerado. Antes o memo era descartado, então
+       abrir a mesma empresa de novo pagava o LLM de novo e nada do uso real
+       ficava acumulado. Falha ao gravar não impede a resposta — o usuário já tem
+       o memo; o pior caso é gerar outra vez depois. */
+    await salvarMemo(supabase, empresaId, analise, "api/dossier");
     return NextResponse.json({ empresa, analise });
   } catch (err) {
     console.error("Dossier falhou:", (err as Error).message);
