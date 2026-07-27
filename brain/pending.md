@@ -4,23 +4,29 @@
 
 ---
 
-## 🟠 Falta só os insights do cache (25/07)
+## ✅ Cache pronto (25/07)
 
-Os **rankings** dos caches já estão certos: 4 setores + 12 teses, todos com score médio 100
-(o topo real do setor). Antes as teses cacheadas serviam 65,9 a 87,1. Falta o comentário de
-uma linha por empresa, que depende do LLM.
+4 setores + 15 chaves de tese, **todos com score médio 100** (o topo real) e **15 insights
+cada**. Antes as teses cacheadas serviam 65,9 a 87,1 sem ordenação correta. Verificado no
+browser: os 4 caminhos (browse e tese, com e sem setor) servem do cache em 0,5–1,4s, e 285
+insights passaram pelo filtro de linguagem com zero violações.
 
-- [ ] **Logar na assinatura e rodar o builder.** O token OAuth do Agent SDK está expirado
-  (`Not logged in · Please run /login`). Abrir `claude` num terminal, `/login`, e depois:
-  ```
-  node --experimental-strip-types --env-file=.env.local scripts/cache-sub.ts
-  ```
-  Custo zero (assinatura, não API). Sem dev server. ~15 chamadas ao reasoner.
+Rebuild depois de um ingest (custo zero, assinatura, sem dev server):
+```
+node --experimental-strip-types --env-file=.env.local scripts/cache-sub.ts
+```
+Reaproveita insight já escrito sobre a mesma empresa — só chama o LLM para empresa nova.
+Use `--refazer-insights` quando o prompt ou a regra de linguagem mudar.
 
 - [ ] *(opcional)* **Recarregar crédito da `ANTHROPIC_API_KEY`.** Acabou em 25/07. Não bloqueia
-  o cache (que agora roda por assinatura), mas bloqueia o que é feito ao vivo pelo servidor:
+  o cache (que roda por assinatura), mas bloqueia o que é feito ao vivo pelo servidor:
   research/dossiê e o parser LLM da busca. A busca **não** quebra sem ele — cai no parser
   heurístico, que hoje resolve setor, praça e idade corretamente.
+
+> **Limite de sessão da assinatura:** uma execução cheia consome bastante. Se estourar no meio
+> (`You've hit your session limit`), o script degrada sem insight em vez de abortar — e como
+> agora ele reaproveita antes de chamar o LLM, rodar de novo depois do reset continua de onde
+> parou em vez de recomeçar.
 
 **ACOPLAMENTO PERMANENTE:** todo ingest exige, nesta ordem —
 `backfill-score-v0.ts` → `check-ranking.ts` (tem que dar 50/50) → `cache-sub.ts`.
