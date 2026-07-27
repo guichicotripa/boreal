@@ -4,32 +4,32 @@
 
 ---
 
-## 🔴 BLOQUEIA O PILOTO — crédito da API + demo-cache defasado (25/07)
+## 🟠 Falta só os insights do cache (25/07)
 
-- [ ] **Recarregar crédito da `ANTHROPIC_API_KEY`.** Acabou no meio da sessão de 25/07
-  (`400 credit balance is too low`). O que quebra: insights do reasoner, research/dossiê e o
-  parser LLM da busca. A busca **não** quebra — cai no parser heurístico, que hoje resolve
-  setor/praça/idade corretamente. Sintoma na tela: resultado certo, sem comentário.
+Os **rankings** dos caches já estão certos: 4 setores + 12 teses, todos com score médio 100
+(o topo real do setor). Antes as teses cacheadas serviam 65,9 a 87,1. Falta o comentário de
+uma linha por empresa, que depende do LLM.
 
-- [ ] **Reconstruir o `demo-cache` DEPOIS de recarregar** (uma linha):
+- [ ] **Logar na assinatura e rodar o builder.** O token OAuth do Agent SDK está expirado
+  (`Not logged in · Please run /login`). Abrir `claude` num terminal, `/login`, e depois:
   ```
-  BOREAL_URL=http://localhost:3001 node scripts/build-demo-cache.mjs
+  node --experimental-strip-types --env-file=.env.local scripts/cache-sub.ts
   ```
-  Por quê: as 9 consultas cacheadas foram geradas contra a base de 2.000 empresas e são
-  servidas com `cached: true`, sem validade. Medido em 25/07, score médio das cacheadas de
-  **65,9 a 87,1 (mínimo 35)** contra **100** do que a busca devolve hoje ao vivo. Ou seja: a
-  consulta cacheada entrega shortlist pior que a consulta digitada, e nada na tela indica isso.
-  Não foi reconstruído na hora porque sem crédito perderia os 15 insights por consulta que já
-  foram pagos, trocando um problema por outro.
+  Custo zero (assinatura, não API). Sem dev server. ~15 chamadas ao reasoner.
 
-- [ ] **Refazer `build-setor-cache` também** — educação e agro ficaram com 0 insights porque o
-  crédito acabou no meio da execução (metalmec 15 e saúde 14 passaram antes). O ranking desses
-  dois já está correto; falta só o comentário.
+- [ ] *(opcional)* **Recarregar crédito da `ANTHROPIC_API_KEY`.** Acabou em 25/07. Não bloqueia
+  o cache (que agora roda por assinatura), mas bloqueia o que é feito ao vivo pelo servidor:
+  research/dossiê e o parser LLM da busca. A busca **não** quebra sem ele — cai no parser
+  heurístico, que hoje resolve setor, praça e idade corretamente.
 
 **ACOPLAMENTO PERMANENTE:** todo ingest exige, nesta ordem —
-`backfill-score-v0.ts` → `check-ranking.ts` (tem que dar 50/50) → `build-setor-cache` +
-`build-demo-cache`. Pular o backfill deixa a empresa nova com `score_v0` NULL e ela some do
-topo da busca; pular os caches serve o ranking da base antiga sem sintoma nenhum.
+`backfill-score-v0.ts` → `check-ranking.ts` (tem que dar 50/50) → `cache-sub.ts`.
+Pular o backfill deixa a empresa nova com `score_v0` NULL e ela some do topo da busca;
+pular o cache serve o ranking da base antiga sem sintoma nenhum na tela.
+
+**Não usar `cache-demo-sub.mjs` nem `build-demo-cache.mjs`/`build-setor-cache.mjs`** —
+o primeiro tem `.limit()` sem `order by` (reintroduz o defeito da 0008 dentro do cache); os
+outros dependem de API key e dev server. `cache-sub.ts` substitui os três.
 
 ---
 
