@@ -43,13 +43,17 @@ universo AS (
     ON est.cnpj_basico=e.cnpj_basico AND est.data='${CORTE}' AND est.identificador_matriz_filial='1'
   JOIN \`basedosdados.br_me_cnpj.empresas\` e2 ON e2.cnpj_basico=e.cnpj_basico AND e2.data='${CORTE}'
   LEFT JOIN sc ON sc.cnpj_basico=e.cnpj_basico
+  -- ATIVA no corte: mesma correção do build-setores/validacao-snapshot. Sem ela
+  -- este artefato mostrava 67% na página de prova enquanto o registry dizia 71%
+  -- para o mesmo setor e a mesma janela.
   WHERE e.data='${CORTE}' AND e.sigla_uf='SP' AND e.identificador_matriz_filial='1'
+    AND e.situacao_cadastral='2'
     AND (e.cnae_fiscal_principal LIKE '24%' OR e.cnae_fiscal_principal LIKE '25%'
          OR e.cnae_fiscal_principal LIKE '28%')
 ),
 ranked AS (
   SELECT cnpj_basico, razao_social, mun, cnae, ano_fund, score,
-    NTILE(10) OVER (ORDER BY score DESC) AS decil,
+    NTILE(10) OVER (ORDER BY score DESC, cnpj_basico) AS decil,
     ROUND(PERCENT_RANK() OVER (ORDER BY score DESC)*100, 1) AS pct_rank
   FROM universo
 ),

@@ -4,7 +4,7 @@
 //   entrou, sem PJ) > socio_saiu (PF saiu, sem PJ) > inalterada (ativa, mesma estrutura).
 //   node --env-file=.env.local scripts/coorte-destino.mjs
 import { BigQuery } from "@google-cloud/bigquery";
-import { writeFileSync } from "fs";
+import { writeFileSync, readFileSync } from "fs";
 import path from "path";
 
 const bq = new BigQuery({
@@ -14,6 +14,15 @@ const bq = new BigQuery({
 const T0 = "2023-06-10";
 const T2 = "2025-11-09";
 
+/* Setores do registry. Era um CASE com três verticais escritas à mão e um ELSE
+   que jogava todo o resto em 'metalmec' — com um setor novo no registry, o agro
+   entraria na coorte rotulado como metalmecânica. */
+const reg = JSON.parse(readFileSync(path.resolve("src/lib/setores.json"), "utf8"));
+const likeDe = (s) => "(" + s.cnaes.map((p) => `e.cnae_fiscal_principal LIKE '${p}%'`).join(" OR ") + ")";
+const caseVertical =
+  "CASE " + reg.setores.map((s) => `WHEN ${likeDe(s)} THEN '${s.id}'`).join(" ") + " END";
+const filtroCnae = "(" + reg.setores.map(likeDe).join(" OR ") + ")";
+
 const sql = `
 WITH soc0 AS (
   SELECT cnpj_basico, MAX(SAFE_CAST(faixa_etaria AS INT64)) AS mf, COUNTIF(tipo='1') pj, COUNTIF(tipo='2') pf
@@ -22,17 +31,13 @@ WITH soc0 AS (
 -- coorte quente em 2023
 coorte AS (
   SELECT e.cnpj_basico,
-    CASE WHEN e.cnae_fiscal_principal LIKE '86%' THEN 'saude'
-         WHEN e.cnae_fiscal_principal LIKE '851%' OR e.cnae_fiscal_principal LIKE '852%' THEN 'educacao'
-         ELSE 'metalmec' END AS vertical,
+    ${caseVertical} AS vertical,
     s.pj AS pj0, s.pf AS pf0
   FROM \`basedosdados.br_me_cnpj.estabelecimentos\` e
   JOIN soc0 s ON s.cnpj_basico=e.cnpj_basico
   WHERE e.data='${T0}' AND e.sigla_uf='SP' AND e.identificador_matriz_filial='1'
     AND e.situacao_cadastral='2'  -- ATIVA em 2023 (senão "baixada em 2025" pode ser de antes da janela)
-    AND (e.cnae_fiscal_principal LIKE '24%' OR e.cnae_fiscal_principal LIKE '25%'
-         OR e.cnae_fiscal_principal LIKE '28%' OR e.cnae_fiscal_principal LIKE '86%'
-         OR e.cnae_fiscal_principal LIKE '851%' OR e.cnae_fiscal_principal LIKE '852%')
+    AND ${filtroCnae}
     AND s.pj=0 AND s.pf>=1 AND s.mf>=7 AND (2023 - EXTRACT(YEAR FROM e.data_inicio_atividade)) >= 25
 ),
 -- estado em 2025

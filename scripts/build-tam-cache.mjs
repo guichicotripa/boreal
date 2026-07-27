@@ -5,7 +5,7 @@
 // explícita na página, não como número fabricado aqui.
 //   node --env-file=.env.local scripts/build-tam-cache.mjs
 import { BigQuery } from "@google-cloud/bigquery";
-import { writeFileSync } from "fs";
+import { writeFileSync, readFileSync } from "fs";
 import path from "path";
 
 const bq = new BigQuery({
@@ -16,11 +16,14 @@ const T0 = "2023-06-10";
 const NOVO = "2025-11-09";
 const ANOS = 2.4;
 
-const VERTICAIS = [
-  { id: "metalmec", nome: "Metalmecânica · SP", like: "(e.cnae_fiscal_principal LIKE '24%' OR e.cnae_fiscal_principal LIKE '25%' OR e.cnae_fiscal_principal LIKE '28%')" },
-  { id: "saude", nome: "Saúde · SP", like: "e.cnae_fiscal_principal LIKE '86%'" },
-  { id: "educacao", nome: "Educação básica · SP", like: "(e.cnae_fiscal_principal LIKE '851%' OR e.cnae_fiscal_principal LIKE '852%')" },
-];
+/* Verticais derivadas do registry, não copiadas à mão: esta lista já tinha ficado
+   pra trás (sem agro), e o TAM é a base da conta de receita mostrada ao cliente. */
+const reg = JSON.parse(readFileSync(path.resolve("src/lib/setores.json"), "utf8"));
+const VERTICAIS = reg.setores.map((s) => ({
+  id: s.id,
+  nome: `${s.nome} · SP`,
+  like: "(" + s.cnaes.map((p) => `e.cnae_fiscal_principal LIKE '${p}%'`).join(" OR ") + ")",
+}));
 
 async function funil(v) {
   const sql = `
@@ -33,7 +36,11 @@ async function funil(v) {
     SELECT e.cnpj_basico, EXTRACT(YEAR FROM e.data_inicio_atividade) AS ano, s.mf, s.pj, s.pf
     FROM \`basedosdados.br_me_cnpj.estabelecimentos\` e
     LEFT JOIN soc s ON s.cnpj_basico=e.cnpj_basico
-    WHERE e.data='${NOVO}' AND e.sigla_uf='SP' AND e.identificador_matriz_filial='1' AND ${v.like}
+    -- ATIVA: sem isto o funil contava empresa baixada/inapta como alvo, e o
+    -- "quente" (que vira quente_total → deals potenciais → R$/ano no /mercado)
+    -- saía 2-3x maior do que o mercado endereçável de verdade.
+    WHERE e.data='${NOVO}' AND e.sigla_uf='SP' AND e.identificador_matriz_filial='1'
+      AND e.situacao_cadastral='2' AND ${v.like}
   ),
   -- aquisições no periodo (da mina)
   a AS (SELECT cnpj_basico, COUNTIF(tipo='1') pj, COUNTIF(tipo='2') pf FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${T0}' GROUP BY 1),

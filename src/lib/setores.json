@@ -5,7 +5,7 @@
     "ate": "2025-11-09"
   },
   "uf": "SP",
-  "nacional_gerado_em": "2026-06-04",
+  "nacional_gerado_em": "2026-07-25",
   "setores": [
     {
       "id": "metalmec",
@@ -15,18 +15,18 @@
         "25",
         "28"
       ],
-      "universo": 140726,
-      "quente": 12957,
-      "n_aquisicoes": 76,
-      "recall_top10": 66,
-      "n_aquisicoes_sucessao": 37,
+      "universo": 67464,
+      "quente": 5108,
+      "n_aquisicoes": 73,
+      "recall_top10": 71,
+      "n_aquisicoes_sucessao": 36,
       "recall_sucessao": 97,
-      "deals_ano": 32,
+      "deals_ano": 30,
       "nacional": {
-        "universo": 526259,
-        "n_aquisicoes": 215,
-        "recall_top10": 63,
-        "n_aquisicoes_sucessao": 79,
+        "universo": 250845,
+        "n_aquisicoes": 211,
+        "recall_top10": 77,
+        "n_aquisicoes_sucessao": 77,
         "recall_sucessao": 100
       }
     },
@@ -36,19 +36,19 @@
       "cnaes": [
         "86"
       ],
-      "universo": 210159,
-      "quente": 17775,
-      "n_aquisicoes": 264,
-      "recall_top10": 19,
-      "n_aquisicoes_sucessao": 22,
+      "universo": 157110,
+      "quente": 8661,
+      "n_aquisicoes": 258,
+      "recall_top10": 24,
+      "n_aquisicoes_sucessao": 21,
       "recall_sucessao": 100,
-      "deals_ano": 110,
+      "deals_ano": 108,
       "nacional": {
-        "universo": 753634,
-        "n_aquisicoes": 906,
-        "recall_top10": 30,
-        "n_aquisicoes_sucessao": 137,
-        "recall_sucessao": 99
+        "universo": 531119,
+        "n_aquisicoes": 894,
+        "recall_top10": 33,
+        "n_aquisicoes_sucessao": 133,
+        "recall_sucessao": 100
       }
     },
     {
@@ -58,19 +58,19 @@
         "851",
         "852"
       ],
-      "universo": 30596,
-      "quente": 7050,
+      "universo": 13311,
+      "quente": 2441,
       "n_aquisicoes": 27,
-      "recall_top10": 26,
+      "recall_top10": 30,
       "n_aquisicoes_sucessao": 8,
-      "recall_sucessao": 88,
+      "recall_sucessao": 100,
       "deals_ano": 11,
       "nacional": {
-        "universo": 150190,
-        "n_aquisicoes": 62,
-        "recall_top10": 37,
+        "universo": 64914,
+        "n_aquisicoes": 59,
+        "recall_top10": 46,
         "n_aquisicoes_sucessao": 24,
-        "recall_sucessao": 83
+        "recall_sucessao": 96
       }
     },
     {
@@ -81,13 +81,20 @@
         "02",
         "03"
       ],
-      "universo": 631582,
-      "quente": 3338,
-      "n_aquisicoes": 65,
-      "recall_top10": 37,
+      "universo": 507499,
+      "quente": 1224,
+      "n_aquisicoes": 64,
+      "recall_top10": 38,
       "n_aquisicoes_sucessao": 12,
       "recall_sucessao": 100,
-      "deals_ano": 27
+      "deals_ano": 27,
+      "nacional": {
+        "universo": 618787,
+        "n_aquisicoes": 446,
+        "recall_top10": 33,
+        "n_aquisicoes_sucessao": 83,
+        "recall_sucessao": 87
+      }
     }
   ]
 }

@@ -2,6 +2,7 @@
 // cada característica no universo vs nas empresas adquiridas. Lift = prevalência_adquiridas /
 // prevalência_universo. Lift > 1 = a feature tem sinal positivo. Guia a recalibração do score.
 // Roda: node --env-file=.env.local scripts/validacao-lift.mjs
+import { writeFileSync } from "fs";
 import { BigQuery } from "@google-cloud/bigquery";
 import path from "path";
 
@@ -35,7 +36,10 @@ feat AS (
   FROM \`basedosdados.br_me_cnpj.estabelecimentos\` e
   JOIN \`basedosdados.br_me_cnpj.empresas\` emp ON emp.cnpj_basico=e.cnpj_basico AND emp.data='${CORTE}'
   LEFT JOIN socios_corte sc ON sc.cnpj_basico=e.cnpj_basico
+  -- ATIVA no corte: mesma correção do resto da validação. Empresa já baixada no
+  -- universo dilui a frequência-base de cada sinal e distorce o lift medido.
   WHERE e.data='${CORTE}' AND e.sigla_uf='SP' AND e.identificador_matriz_filial='1'
+    AND e.situacao_cadastral='2'
     AND (e.cnae_fiscal_principal LIKE '86%' OR e.cnae_fiscal_principal LIKE '24%'
          OR e.cnae_fiscal_principal LIKE '25%' OR e.cnae_fiscal_principal LIKE '28%')
 ),
@@ -63,10 +67,13 @@ const [rows] = await bq.query({ query: sql, location: "US" });
 const u = rows.find(r => r.grupo === "universo");
 const adq = rows.find(r => r.grupo === "adquiridas");
 
+/* Rótulos como aparecem na página (/validacao lê src/lib/lift.json). Antes este
+   script só imprimia no terminal e o JSON era transcrito à mão — ou seja, os
+   números da página só mudavam se alguém lembrasse de copiá-los de novo. */
 const feats = [
-  ["sócio 61+", "p_idade61"], ["sócio 71+", "p_idade71"], ["empresa 40+ anos", "p_antiga40"],
-  ["quadro estagnado 10+", "p_estagnado"], ["velho s/ renovação", "p_sem_renov"],
-  ["único sócio PF", "p_unico"], ["porte DEMAIS", "p_demais"],
+  ["Sócio 61+", "p_idade61"], ["Sócio 71+", "p_idade71"], ["Empresa 40+ anos", "p_antiga40"],
+  ["Quadro estagnado 10+ anos", "p_estagnado"], ["Sócio velho sem renovação", "p_sem_renov"],
+  ["Único sócio PF", "p_unico"], ["Porte (médio/grande)", "p_demais"],
 ];
 console.log(`Lift das features — universo (${u.n}) vs adquiridas (${adq.n})\n`);
 console.log(`  feature                universo   adquiridas   LIFT`);
@@ -77,3 +84,29 @@ for (const [label, key] of feats) {
   console.log(`  ${label.padEnd(22)} ${String(pu).padStart(5)}%    ${String(pa).padStart(6)}%    ${lift.toFixed(2)}x${flag}`);
 }
 console.log(`\n★ = sinal forte (lift ≥ 1,3) · ↓ = sinal negativo (feature reduz chance)`);
+
+const features = feats
+  .map(([nome, key]) => {
+    const pu = Number(u[key]), pa = Number(adq[key]);
+    const lift = pu > 0 ? Number((pa / pu).toFixed(2)) : 0;
+    return {
+      nome, universo_pct: pu, adquiridas_pct: pa, lift,
+      sinal: lift >= 1.3 ? "forte" : lift < 0.9 ? "negativo" : "fraco",
+    };
+  })
+  .sort((a, b) => b.lift - a.lift);
+
+const artefato = {
+  gerado_em: new Date().toISOString().slice(0, 10),
+  fonte: `scripts/validacao-lift.mjs — lift de cada feature no universo (${Number(u.n).toLocaleString("pt-BR")}) vs aquisições reais (${adq.n})`,
+  n_universo: Number(u.n),
+  n_adquiridas: Number(adq.n),
+  nota:
+    "Os pesos do score não são chutados: cada feature foi medida contra aquisições reais " +
+    "(lift = quanto ela aparece mais nas adquiridas do que no universo). O dado corrigiu a " +
+    "intuição: 'quadro estagnado' e 'sócio único' não sustentaram sinal e saíram. Universo " +
+    "restrito a empresa ATIVA no corte — contar baixada dilui a frequência-base e distorce o lift.",
+  features,
+};
+writeFileSync(path.resolve("src/lib/lift.json"), JSON.stringify(artefato, null, 2) + "\n", "utf8");
+console.log(`\n✓ src/lib/lift.json`);

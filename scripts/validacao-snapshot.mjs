@@ -10,7 +10,7 @@
 // rodar este script regenera o JSON com a data da medição.
 //   node --env-file=.env.local scripts/validacao-snapshot.mjs
 import { BigQuery } from "@google-cloud/bigquery";
-import { writeFileSync } from "fs";
+import { writeFileSync, readFileSync } from "fs";
 import path from "path";
 
 const bq = new BigQuery({
@@ -20,6 +20,16 @@ const bq = new BigQuery({
 const CORTE = "2023-06-10"; // score pré-deal (sem leakage)
 const NOVO = "2025-11-09"; // snapshot atual (detecta o que mudou)
 
+/* Verticais e CNAEs vêm do registry. Antes eram dois setores escritos à mão num
+   CASE, então a página de prova ficou mostrando 2 de 4 setores — e um recall que
+   discordava do setores.json para os mesmos setores. */
+const reg = JSON.parse(readFileSync(path.resolve("src/lib/setores.json"), "utf8"));
+const likeDe = (s, col = "e.cnae_fiscal_principal") =>
+  "(" + s.cnaes.map((p) => `${col} LIKE '${p}%'`).join(" OR ") + ")";
+const caseVertical =
+  "CASE " + reg.setores.map((s) => `WHEN ${likeDe(s)} THEN '${s.id}'`).join(" ") + " END";
+const filtroCnae = "(" + reg.setores.map((s) => likeDe(s)).join(" OR ") + ")";
+
 const sql = `
 WITH sc AS (
   SELECT cnpj_basico, MAX(SAFE_CAST(faixa_etaria AS INT64)) AS mf, COUNTIF(tipo='2') AS n_pf
@@ -27,7 +37,7 @@ WITH sc AS (
 ),
 universo AS (
   SELECT e.cnpj_basico,
-    CASE WHEN e.cnae_fiscal_principal LIKE '86%' THEN 'saude' ELSE 'metalmec' END AS vertical,
+    ${caseVertical} AS vertical,
     (CASE sc.mf WHEN 9 THEN 30 WHEN 8 THEN 26 WHEN 7 THEN 20 WHEN 6 THEN 10 ELSE 0 END)
     + (CASE WHEN 2023-EXTRACT(YEAR FROM e.data_inicio_atividade) >= 40 THEN 30
             WHEN 2023-EXTRACT(YEAR FROM e.data_inicio_atividade) >= 25 THEN 22
@@ -39,13 +49,14 @@ universo AS (
   FROM \`basedosdados.br_me_cnpj.estabelecimentos\` e
   JOIN \`basedosdados.br_me_cnpj.empresas\` emp ON emp.cnpj_basico=e.cnpj_basico AND emp.data='${CORTE}'
   LEFT JOIN sc ON sc.cnpj_basico=e.cnpj_basico
+  -- ATIVA no corte + desempate no NTILE: as mesmas correções do build-setores,
+  -- para este artefato e o registry pararem de discordar sobre o mesmo setor.
   WHERE e.data='${CORTE}' AND e.sigla_uf='SP' AND e.identificador_matriz_filial='1'
-    AND (e.cnae_fiscal_principal LIKE '86%' OR e.cnae_fiscal_principal LIKE '24%'
-         OR e.cnae_fiscal_principal LIKE '25%' OR e.cnae_fiscal_principal LIKE '28%')
+    AND e.situacao_cadastral='2' AND ${filtroCnae}
 ),
 ranked AS (
   SELECT cnpj_basico, vertical,
-    NTILE(10) OVER (PARTITION BY vertical ORDER BY score DESC) AS decil
+    NTILE(10) OVER (PARTITION BY vertical ORDER BY score DESC, cnpj_basico) AS decil
   FROM universo
 ),
 univ AS (SELECT vertical, COUNT(*) AS n_univ FROM universo GROUP BY 1),

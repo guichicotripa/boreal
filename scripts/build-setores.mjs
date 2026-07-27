@@ -65,17 +65,27 @@ async function umSetor(s) {
     FROM \`basedosdados.br_me_cnpj.estabelecimentos\` e
     JOIN \`basedosdados.br_me_cnpj.empresas\` emp ON emp.cnpj_basico=e.cnpj_basico AND emp.data='${CORTE}'
     LEFT JOIN sc ON sc.cnpj_basico=e.cnpj_basico
-    WHERE e.data='${CORTE}' AND e.sigla_uf='SP' AND e.identificador_matriz_filial='1' AND ${cnaeFiltro}
+    -- situacao_cadastral='2' (ATIVA): empresa já baixada ou inapta no corte nunca
+    -- foi prospect, e contá-la infla o universo e desloca as fronteiras do decil.
+    -- O build-heatmap já tinha feito esta correção no denominador dele; aqui não
+    -- tinha sido feita, então /setores e o TAM publicavam número 2-3x maior.
+    WHERE e.data='${CORTE}' AND e.sigla_uf='SP' AND e.identificador_matriz_filial='1'
+      AND e.situacao_cadastral='2' AND ${cnaeFiltro}
   ),
-  ranked AS (SELECT cnpj_basico, mf, idade, NTILE(10) OVER (ORDER BY score DESC) AS decil FROM universo),
+  -- Desempate por cnpj_basico: NTILE sobre score com empate distribui as empresas
+  -- empatadas de forma arbitrária, e a mesma execução dava recall diferente entre
+  -- rodadas (metalmec oscilou 67%/66%). Um número de validação tem que ser
+  -- reproduzível, senão não dá pra saber se mudou porque o dado mudou.
+  ranked AS (SELECT cnpj_basico, mf, idade, NTILE(10) OVER (ORDER BY score DESC, cnpj_basico) AS decil FROM universo),
   a AS (SELECT cnpj_basico, COUNTIF(tipo='1') pj, COUNTIF(tipo='2') pf FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${CORTE}' GROUP BY 1),
   b AS (SELECT cnpj_basico, COUNTIF(tipo='1') pj, COUNTIF(tipo='2') pf FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${NOVO}' GROUP BY 1),
   adq AS (SELECT a.cnpj_basico FROM a JOIN b USING(cnpj_basico) WHERE b.pj>a.pj AND b.pf<a.pf),
-  -- quente: ainda independente (só PF) em ${NOVO}, sócio 61+, 25+ anos
+  -- quente: ATIVA e ainda independente (só PF) em ${NOVO}, sócio 61+, 25+ anos
   quente AS (
     SELECT COUNT(*) n FROM \`basedosdados.br_me_cnpj.estabelecimentos\` e2
     JOIN socN s2 ON s2.cnpj_basico=e2.cnpj_basico
-    WHERE e2.data='${NOVO}' AND e2.sigla_uf='SP' AND e2.identificador_matriz_filial='1' AND ${likeClause(s.cnaes, "e2.cnae_fiscal_principal")}
+    WHERE e2.data='${NOVO}' AND e2.sigla_uf='SP' AND e2.identificador_matriz_filial='1'
+      AND e2.situacao_cadastral='2' AND ${likeClause(s.cnaes, "e2.cnae_fiscal_principal")}
       AND s2.pj=0 AND s2.pf>=1 AND s2.mf>=7 AND (2025-EXTRACT(YEAR FROM e2.data_inicio_atividade))>=25
   ),
   adqRank AS (SELECT r.* FROM adq JOIN ranked r USING(cnpj_basico))

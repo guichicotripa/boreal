@@ -1,14 +1,58 @@
 {
-  "gerado_em": "2026-06-03",
-  "fonte": "scripts/validacao-lift.mjs — lift de cada feature no universo (350.885) vs aquisições reais (340)",
-  "nota": "Os pesos do score não são chutados: cada feature foi medida contra aquisições reais (lift = quanto ela aparece mais nas adquiridas do que no universo). O dado corrigiu a intuição: 'quadro estagnado' e 'sócio único' tinham lift baixo/negativo e saíram.",
+  "gerado_em": "2026-07-27",
+  "fonte": "scripts/validacao-lift.mjs — lift de cada feature no universo (224.574) vs aquisições reais (331)",
+  "n_universo": 224574,
+  "n_adquiridas": 331,
+  "nota": "Os pesos do score não são chutados: cada feature foi medida contra aquisições reais (lift = quanto ela aparece mais nas adquiridas do que no universo). O dado corrigiu a intuição: 'quadro estagnado' e 'sócio único' não sustentaram sinal e saíram. Universo restrito a empresa ATIVA no corte — contar baixada dilui a frequência-base e distorce o lift.",
   "features": [
-    { "nome": "Empresa 40+ anos", "universo_pct": 3.2, "adquiridas_pct": 8.2, "lift": 2.56, "sinal": "forte" },
-    { "nome": "Porte (médio/grande)", "universo_pct": 20.8, "adquiridas_pct": 49.4, "lift": 2.38, "sinal": "forte" },
-    { "nome": "Sócio 61+", "universo_pct": 18.7, "adquiridas_pct": 44.1, "lift": 2.36, "sinal": "forte" },
-    { "nome": "Sócio 71+", "universo_pct": 8.4, "adquiridas_pct": 18.5, "lift": 2.20, "sinal": "forte" },
-    { "nome": "Sócio velho sem renovação", "universo_pct": 11.2, "adquiridas_pct": 14.1, "lift": 1.26, "sinal": "fraco" },
-    { "nome": "Quadro estagnado 10+ anos", "universo_pct": 19.7, "adquiridas_pct": 15.9, "lift": 0.81, "sinal": "negativo" },
-    { "nome": "Único sócio PF", "universo_pct": 23.6, "adquiridas_pct": 0.0, "lift": 0.0, "sinal": "negativo" }
+    {
+      "nome": "Empresa 40+ anos",
+      "universo_pct": 1.8,
+      "adquiridas_pct": 7.9,
+      "lift": 4.39,
+      "sinal": "forte"
+    },
+    {
+      "nome": "Porte (médio/grande)",
+      "universo_pct": 16,
+      "adquiridas_pct": 49.2,
+      "lift": 3.08,
+      "sinal": "forte"
+    },
+    {
+      "nome": "Sócio 71+",
+      "universo_pct": 6.5,
+      "adquiridas_pct": 18.4,
+      "lift": 2.83,
+      "sinal": "forte"
+    },
+    {
+      "nome": "Sócio 61+",
+      "universo_pct": 16.8,
+      "adquiridas_pct": 44.4,
+      "lift": 2.64,
+      "sinal": "forte"
+    },
+    {
+      "nome": "Sócio velho sem renovação",
+      "universo_pct": 8.9,
+      "adquiridas_pct": 13.6,
+      "lift": 1.53,
+      "sinal": "forte"
+    },
+    {
+      "nome": "Quadro estagnado 10+ anos",
+      "universo_pct": 14.1,
+      "adquiridas_pct": 14.5,
+      "lift": 1.03,
+      "sinal": "fraco"
+    },
+    {
+      "nome": "Único sócio PF",
+      "universo_pct": 31.8,
+      "adquiridas_pct": 0,
+      "lift": 0,
+      "sinal": "negativo"
+    }
   ]
 }
