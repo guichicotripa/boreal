@@ -52,7 +52,9 @@ for (const setor of SETORES) {
   // (b) O setor inteiro, pontuado na mão — a referência.
   const todas: Linha[] = [];
   for (let from = 0; ; from += 1000) {
-    const { data, error } = await supabase.from("empresa").select(SELECT).or(orClause).range(from, from + 999);
+    // `.order("id")`: sem ordenação explícita o `.range()` repete e pula linha
+    // entre páginas, e a referência do teste sairia errada.
+    const { data, error } = await supabase.from("empresa").select(SELECT).or(orClause).order("id").range(from, from + 999);
     if (error) { console.error(`${setor.id}: ${error.message}`); falhou = true; break; }
     if (!data?.length) break;
     todas.push(...(data as unknown as Linha[]));

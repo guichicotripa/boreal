@@ -37,9 +37,14 @@ console.log(`Backfill de score_v0${soNulos ? " (só linhas sem score)" : " (toda
 
 const linhas: Linha[] = [];
 for (let from = 0; ; from += PAGINA) {
+  /* `.order("id")` não é enfeite: sem ordenação explícita o Postgres não garante
+     ordem estável entre páginas, então `.range()` repete linha numa página e pula
+     linha em outra. Foi exatamente o que aconteceu na 1ª execução deste script —
+     leu "51.033" com repetição e deixou 18.386 empresas sem score. */
   let q = supabase
     .from("empresa")
     .select("id, data_inicio_atividade, porte, score_v0, socio(faixa_etaria)")
+    .order("id")
     .range(from, from + PAGINA - 1);
   if (soNulos) q = q.is("score_v0", null);
 
