@@ -77,6 +77,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Ubirajara Rodrigues (80+) comanda a Prensa Jundiaí desde a fundação em 1973; Lucas Cremonese Rodrigues (31-40) entrou em 2015 como único outro sócio.",
+          "flags": [
+            "fundador 80+ ativo",
+            "sócio jovem único",
+            "53 anos operação"
+          ]
         }
       },
       {
@@ -126,6 +134,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966, a Maclem registra a entrada de Yara Clemente Zurlini (80+) apenas em 2023, com Marcus Clemente Mussa (51-60) como único outro sócio desde 2008.",
+          "flags": [
+            "sócio 80+ recente",
+            "60 anos operação",
+            "quadro enxuto"
+          ]
         }
       },
       {
@@ -180,6 +196,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Caldeiraria pesada em Cotia fundada em 1981, com os dois únicos sócios — Therezinha e Annario Quintino — ambos na faixa 80+ e capital declarado zero.",
+          "flags": [
+            "dois sócios 80+",
+            "capital zero",
+            "sem geração jovem"
+          ]
         }
       },
       {
@@ -229,6 +253,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Ricardo Naschold Neto (80+) está no quadro desde a fundação em 1980; Rolando Naschold (51-60), também sócio desde o início, é o único outro nome na sociedade.",
+          "flags": [
+            "fundador 80+ ativo",
+            "quadro familiar",
+            "46 anos operação"
+          ]
         }
       },
       {
@@ -292,6 +324,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966 e em recuperação judicial, tem Paschoal Thomeu e Annunciato Thomeu Jr. (ambos 80+) no quadro desde 1994, ao lado de pessoa jurídica estrangeira.",
+          "flags": [
+            "recuperação judicial",
+            "dois fundadores 80+",
+            "PJ estrangeira"
+          ]
         }
       },
       {
@@ -341,6 +381,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Gino Dalpiaz (80+) está na empresa desde a fundação em 1983; Riccardo Germani (71-80) entrou em 1999, formando um quadro inteiramente em faixas etárias avançadas.",
+          "flags": [
+            "dois sócios idosos",
+            "sem geração jovem",
+            "capital zero"
+          ]
         }
       },
       {
@@ -423,6 +471,14 @@
             "Quadro com 6 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1969 e em recuperação judicial, a Roll For tem 5 dos 6 sócios na faixa 80+, com três deles — incluindo Ekaterini Koutsantonis — ingressando em 2024.",
+          "flags": [
+            "5 sócios 80+",
+            "recuperação judicial",
+            "entradas 2024"
+          ]
         }
       },
       {
@@ -514,6 +570,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Em recuperação judicial desde Cubatão, a Engebasa foi fundada em 1972 e tem todos os 5 sócios na faixa 80+, com capital declarado de R$50,4 milhões.",
+          "flags": [
+            "5 sócios 80+",
+            "recuperação judicial",
+            "capital R$50M"
+          ]
         }
       },
       {
@@ -591,6 +655,14 @@
             "Quadro com 6 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Dois fundadores Abrantes (80+) desde 1972; em 2025 ingressaram três membros da família Kucera, incluindo Maria Izabella (13-20 anos), sinalizando reestruturação societária recente.",
+          "flags": [
+            "fundadores 80+",
+            "sucessão em curso",
+            "sócio menor de idade"
+          ]
         }
       },
       {
@@ -640,6 +712,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Masaru Ikegami (80+) e Haruyoshi Takaki (71-80) estão juntos na Mashit desde 1996, numa empresa fundada em 1978 sem qualquer sócio de geração mais jovem.",
+          "flags": [
+            "dois sócios idosos",
+            "sem geração jovem",
+            "capital mínimo"
+          ]
         }
       },
       {
@@ -689,6 +769,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Milton Antonio Bogus (80+) consta no quadro desde 1965 — antes da fundação formal em 1966 — com Gilberto Chede (71-80) como único parceiro, sem sucessores identificados.",
+          "flags": [
+            "fundador pré-1966",
+            "dois sócios idosos",
+            "sem geração jovem"
+          ]
         }
       },
       {
@@ -759,6 +847,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Três fundadores Rossi (todos 80+) desde 1966; Reinaldo (71-80) e Renato (61-70) ingressaram em 2008, mas a segunda geração já avança para sua própria transição.",
+          "flags": [
+            "3 fundadores 80+",
+            "2ª geração idosa",
+            "capital simbólico"
+          ]
         }
       },
       {
@@ -946,6 +1042,14 @@
             "Quadro com 21 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966 em Araraquara, a Nigro Alumínio tem 21 sócios de múltiplas gerações da família Nigro, com 3 membros na faixa 80+ e jovens (31-40) entrando entre 2013 e 2023.",
+          "flags": [
+            "21 sócios família",
+            "governança complexa",
+            "3 sócios 80+"
+          ]
         }
       },
       {
@@ -1026,6 +1130,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Angelino Barbosa (80+) fundou a IMAB em 1965 e permanece no quadro; três filhos — Cecília (61-70), Luís e Elenice (51-60) — integram a sociedade desde os anos 1989-1994.",
+          "flags": [
+            "fundador 80+ ativo",
+            "filhos 2ª geração",
+            "61 anos operação"
+          ]
         }
       },
       {
@@ -1087,6 +1199,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "João Marques Castelhano (80+) fundou a Jomarca em 1972; com capital de R$80 milhões, Ricardo (51-60) e Angélica (41-50) já participam, mas o fundador permanece ativo.",
+          "flags": [
+            "fundador 80+ ativo",
+            "capital R$80M",
+            "dois filhos no quadro"
+          ]
         }
       },
       {
@@ -3525,8 +3645,8 @@
         }
       }
     ],
-    "reasoned": false,
-    "reasonedCount": 0
+    "reasoned": true,
+    "reasonedCount": 15
   },
   "metalmec|metalmecanica no interior de sp com socios acima de 60 anos": {
     "filters": {
@@ -3606,6 +3726,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Ubirajara Rodrigues (80+) comanda a Prensa Jundiaí desde a fundação em 1973; Lucas Cremonese Rodrigues (31-40) entrou em 2015 como único outro sócio.",
+          "flags": [
+            "fundador 80+ ativo",
+            "sócio jovem único",
+            "53 anos operação"
+          ]
         }
       },
       {
@@ -3655,6 +3783,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966, a Maclem registra a entrada de Yara Clemente Zurlini (80+) apenas em 2023, com Marcus Clemente Mussa (51-60) como único outro sócio desde 2008.",
+          "flags": [
+            "sócio 80+ recente",
+            "60 anos operação",
+            "quadro enxuto"
+          ]
         }
       },
       {
@@ -3709,6 +3845,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Caldeiraria pesada em Cotia fundada em 1981, com os dois únicos sócios — Therezinha e Annario Quintino — ambos na faixa 80+ e capital declarado zero.",
+          "flags": [
+            "dois sócios 80+",
+            "capital zero",
+            "sem geração jovem"
+          ]
         }
       },
       {
@@ -3758,6 +3902,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Ricardo Naschold Neto (80+) está no quadro desde a fundação em 1980; Rolando Naschold (51-60), também sócio desde o início, é o único outro nome na sociedade.",
+          "flags": [
+            "fundador 80+ ativo",
+            "quadro familiar",
+            "46 anos operação"
+          ]
         }
       },
       {
@@ -3821,6 +3973,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966 e em recuperação judicial, tem Paschoal Thomeu e Annunciato Thomeu Jr. (ambos 80+) no quadro desde 1994, ao lado de pessoa jurídica estrangeira.",
+          "flags": [
+            "recuperação judicial",
+            "dois fundadores 80+",
+            "PJ estrangeira"
+          ]
         }
       },
       {
@@ -3870,6 +4030,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Gino Dalpiaz (80+) está na empresa desde a fundação em 1983; Riccardo Germani (71-80) entrou em 1999, formando um quadro inteiramente em faixas etárias avançadas.",
+          "flags": [
+            "dois sócios idosos",
+            "sem geração jovem",
+            "capital zero"
+          ]
         }
       },
       {
@@ -3952,6 +4120,14 @@
             "Quadro com 6 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1969 e em recuperação judicial, a Roll For tem 5 dos 6 sócios na faixa 80+, com três deles — incluindo Ekaterini Koutsantonis — ingressando em 2024.",
+          "flags": [
+            "5 sócios 80+",
+            "recuperação judicial",
+            "entradas 2024"
+          ]
         }
       },
       {
@@ -4043,6 +4219,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Em recuperação judicial desde Cubatão, a Engebasa foi fundada em 1972 e tem todos os 5 sócios na faixa 80+, com capital declarado de R$50,4 milhões.",
+          "flags": [
+            "5 sócios 80+",
+            "recuperação judicial",
+            "capital R$50M"
+          ]
         }
       },
       {
@@ -4120,6 +4304,14 @@
             "Quadro com 6 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Dois fundadores Abrantes (80+) desde 1972; em 2025 ingressaram três membros da família Kucera, incluindo Maria Izabella (13-20 anos), sinalizando reestruturação societária recente.",
+          "flags": [
+            "fundadores 80+",
+            "sucessão em curso",
+            "sócio menor de idade"
+          ]
         }
       },
       {
@@ -4169,6 +4361,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Masaru Ikegami (80+) e Haruyoshi Takaki (71-80) estão juntos na Mashit desde 1996, numa empresa fundada em 1978 sem qualquer sócio de geração mais jovem.",
+          "flags": [
+            "dois sócios idosos",
+            "sem geração jovem",
+            "capital mínimo"
+          ]
         }
       },
       {
@@ -4218,6 +4418,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Milton Antonio Bogus (80+) consta no quadro desde 1965 — antes da fundação formal em 1966 — com Gilberto Chede (71-80) como único parceiro, sem sucessores identificados.",
+          "flags": [
+            "fundador pré-1966",
+            "dois sócios idosos",
+            "sem geração jovem"
+          ]
         }
       },
       {
@@ -4288,6 +4496,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Três fundadores Rossi (todos 80+) desde 1966; Reinaldo (71-80) e Renato (61-70) ingressaram em 2008, mas a segunda geração já avança para sua própria transição.",
+          "flags": [
+            "3 fundadores 80+",
+            "2ª geração idosa",
+            "capital simbólico"
+          ]
         }
       },
       {
@@ -4475,6 +4691,14 @@
             "Quadro com 21 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966 em Araraquara, a Nigro Alumínio tem 21 sócios de múltiplas gerações da família Nigro, com 3 membros na faixa 80+ e jovens (31-40) entrando entre 2013 e 2023.",
+          "flags": [
+            "21 sócios família",
+            "governança complexa",
+            "3 sócios 80+"
+          ]
         }
       },
       {
@@ -4555,6 +4779,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Angelino Barbosa (80+) fundou a IMAB em 1965 e permanece no quadro; três filhos — Cecília (61-70), Luís e Elenice (51-60) — integram a sociedade desde os anos 1989-1994.",
+          "flags": [
+            "fundador 80+ ativo",
+            "filhos 2ª geração",
+            "61 anos operação"
+          ]
         }
       },
       {
@@ -4616,6 +4848,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "João Marques Castelhano (80+) fundou a Jomarca em 1972; com capital de R$80 milhões, Ricardo (51-60) e Angélica (41-50) já participam, mas o fundador permanece ativo.",
+          "flags": [
+            "fundador 80+ ativo",
+            "capital R$80M",
+            "dois filhos no quadro"
+          ]
         }
       },
       {
@@ -7054,8 +7294,8 @@
         }
       }
     ],
-    "reasoned": false,
-    "reasonedCount": 0
+    "reasoned": true,
+    "reasonedCount": 15
   },
   "fabricantes de maquinas e equipamentos fundados antes de 1990": {
     "filters": {
@@ -7133,6 +7373,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Ubirajara Rodrigues (80+) comanda a Prensa Jundiaí desde a fundação em 1973; Lucas Cremonese Rodrigues (31-40) entrou em 2015 como único outro sócio.",
+          "flags": [
+            "fundador 80+ ativo",
+            "sócio jovem único",
+            "53 anos operação"
+          ]
         }
       },
       {
@@ -7182,6 +7430,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966, a Maclem registra a entrada de Yara Clemente Zurlini (80+) apenas em 2023, com Marcus Clemente Mussa (51-60) como único outro sócio desde 2008.",
+          "flags": [
+            "sócio 80+ recente",
+            "60 anos operação",
+            "quadro enxuto"
+          ]
         }
       },
       {
@@ -7236,6 +7492,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Caldeiraria pesada em Cotia fundada em 1981, com os dois únicos sócios — Therezinha e Annario Quintino — ambos na faixa 80+ e capital declarado zero.",
+          "flags": [
+            "dois sócios 80+",
+            "capital zero",
+            "sem geração jovem"
+          ]
         }
       },
       {
@@ -7285,6 +7549,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Ricardo Naschold Neto (80+) está no quadro desde a fundação em 1980; Rolando Naschold (51-60), também sócio desde o início, é o único outro nome na sociedade.",
+          "flags": [
+            "fundador 80+ ativo",
+            "quadro familiar",
+            "46 anos operação"
+          ]
         }
       },
       {
@@ -7348,6 +7620,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966 e em recuperação judicial, tem Paschoal Thomeu e Annunciato Thomeu Jr. (ambos 80+) no quadro desde 1994, ao lado de pessoa jurídica estrangeira.",
+          "flags": [
+            "recuperação judicial",
+            "dois fundadores 80+",
+            "PJ estrangeira"
+          ]
         }
       },
       {
@@ -7397,6 +7677,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Gino Dalpiaz (80+) está na empresa desde a fundação em 1983; Riccardo Germani (71-80) entrou em 1999, formando um quadro inteiramente em faixas etárias avançadas.",
+          "flags": [
+            "dois sócios idosos",
+            "sem geração jovem",
+            "capital zero"
+          ]
         }
       },
       {
@@ -7479,6 +7767,14 @@
             "Quadro com 6 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1969 e em recuperação judicial, a Roll For tem 5 dos 6 sócios na faixa 80+, com três deles — incluindo Ekaterini Koutsantonis — ingressando em 2024.",
+          "flags": [
+            "5 sócios 80+",
+            "recuperação judicial",
+            "entradas 2024"
+          ]
         }
       },
       {
@@ -7570,6 +7866,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Em recuperação judicial desde Cubatão, a Engebasa foi fundada em 1972 e tem todos os 5 sócios na faixa 80+, com capital declarado de R$50,4 milhões.",
+          "flags": [
+            "5 sócios 80+",
+            "recuperação judicial",
+            "capital R$50M"
+          ]
         }
       },
       {
@@ -7647,6 +7951,14 @@
             "Quadro com 6 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Dois fundadores Abrantes (80+) desde 1972; em 2025 ingressaram três membros da família Kucera, incluindo Maria Izabella (13-20 anos), sinalizando reestruturação societária recente.",
+          "flags": [
+            "fundadores 80+",
+            "sucessão em curso",
+            "sócio menor de idade"
+          ]
         }
       },
       {
@@ -7696,6 +8008,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Masaru Ikegami (80+) e Haruyoshi Takaki (71-80) estão juntos na Mashit desde 1996, numa empresa fundada em 1978 sem qualquer sócio de geração mais jovem.",
+          "flags": [
+            "dois sócios idosos",
+            "sem geração jovem",
+            "capital mínimo"
+          ]
         }
       },
       {
@@ -7745,6 +8065,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Milton Antonio Bogus (80+) consta no quadro desde 1965 — antes da fundação formal em 1966 — com Gilberto Chede (71-80) como único parceiro, sem sucessores identificados.",
+          "flags": [
+            "fundador pré-1966",
+            "dois sócios idosos",
+            "sem geração jovem"
+          ]
         }
       },
       {
@@ -7815,6 +8143,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Três fundadores Rossi (todos 80+) desde 1966; Reinaldo (71-80) e Renato (61-70) ingressaram em 2008, mas a segunda geração já avança para sua própria transição.",
+          "flags": [
+            "3 fundadores 80+",
+            "2ª geração idosa",
+            "capital simbólico"
+          ]
         }
       },
       {
@@ -8002,6 +8338,14 @@
             "Quadro com 21 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966 em Araraquara, a Nigro Alumínio tem 21 sócios de múltiplas gerações da família Nigro, com 3 membros na faixa 80+ e jovens (31-40) entrando entre 2013 e 2023.",
+          "flags": [
+            "21 sócios família",
+            "governança complexa",
+            "3 sócios 80+"
+          ]
         }
       },
       {
@@ -8082,6 +8426,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Angelino Barbosa (80+) fundou a IMAB em 1965 e permanece no quadro; três filhos — Cecília (61-70), Luís e Elenice (51-60) — integram a sociedade desde os anos 1989-1994.",
+          "flags": [
+            "fundador 80+ ativo",
+            "filhos 2ª geração",
+            "61 anos operação"
+          ]
         }
       },
       {
@@ -8143,6 +8495,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "João Marques Castelhano (80+) fundou a Jomarca em 1972; com capital de R$80 milhões, Ricardo (51-60) e Angélica (41-50) já participam, mas o fundador permanece ativo.",
+          "flags": [
+            "fundador 80+ ativo",
+            "capital R$80M",
+            "dois filhos no quadro"
+          ]
         }
       },
       {
@@ -10581,8 +10941,8 @@
         }
       }
     ],
-    "reasoned": false,
-    "reasonedCount": 0
+    "reasoned": true,
+    "reasonedCount": 15
   },
   "metalmec|fabricantes de maquinas e equipamentos fundados antes de 1990": {
     "filters": {
@@ -10660,6 +11020,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Ubirajara Rodrigues (80+) comanda a Prensa Jundiaí desde a fundação em 1973; Lucas Cremonese Rodrigues (31-40) entrou em 2015 como único outro sócio.",
+          "flags": [
+            "fundador 80+ ativo",
+            "sócio jovem único",
+            "53 anos operação"
+          ]
         }
       },
       {
@@ -10709,6 +11077,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966, a Maclem registra a entrada de Yara Clemente Zurlini (80+) apenas em 2023, com Marcus Clemente Mussa (51-60) como único outro sócio desde 2008.",
+          "flags": [
+            "sócio 80+ recente",
+            "60 anos operação",
+            "quadro enxuto"
+          ]
         }
       },
       {
@@ -10763,6 +11139,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Caldeiraria pesada em Cotia fundada em 1981, com os dois únicos sócios — Therezinha e Annario Quintino — ambos na faixa 80+ e capital declarado zero.",
+          "flags": [
+            "dois sócios 80+",
+            "capital zero",
+            "sem geração jovem"
+          ]
         }
       },
       {
@@ -10812,6 +11196,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Ricardo Naschold Neto (80+) está no quadro desde a fundação em 1980; Rolando Naschold (51-60), também sócio desde o início, é o único outro nome na sociedade.",
+          "flags": [
+            "fundador 80+ ativo",
+            "quadro familiar",
+            "46 anos operação"
+          ]
         }
       },
       {
@@ -10875,6 +11267,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966 e em recuperação judicial, tem Paschoal Thomeu e Annunciato Thomeu Jr. (ambos 80+) no quadro desde 1994, ao lado de pessoa jurídica estrangeira.",
+          "flags": [
+            "recuperação judicial",
+            "dois fundadores 80+",
+            "PJ estrangeira"
+          ]
         }
       },
       {
@@ -10924,6 +11324,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Gino Dalpiaz (80+) está na empresa desde a fundação em 1983; Riccardo Germani (71-80) entrou em 1999, formando um quadro inteiramente em faixas etárias avançadas.",
+          "flags": [
+            "dois sócios idosos",
+            "sem geração jovem",
+            "capital zero"
+          ]
         }
       },
       {
@@ -11006,6 +11414,14 @@
             "Quadro com 6 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1969 e em recuperação judicial, a Roll For tem 5 dos 6 sócios na faixa 80+, com três deles — incluindo Ekaterini Koutsantonis — ingressando em 2024.",
+          "flags": [
+            "5 sócios 80+",
+            "recuperação judicial",
+            "entradas 2024"
+          ]
         }
       },
       {
@@ -11097,6 +11513,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Em recuperação judicial desde Cubatão, a Engebasa foi fundada em 1972 e tem todos os 5 sócios na faixa 80+, com capital declarado de R$50,4 milhões.",
+          "flags": [
+            "5 sócios 80+",
+            "recuperação judicial",
+            "capital R$50M"
+          ]
         }
       },
       {
@@ -11174,6 +11598,14 @@
             "Quadro com 6 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Dois fundadores Abrantes (80+) desde 1972; em 2025 ingressaram três membros da família Kucera, incluindo Maria Izabella (13-20 anos), sinalizando reestruturação societária recente.",
+          "flags": [
+            "fundadores 80+",
+            "sucessão em curso",
+            "sócio menor de idade"
+          ]
         }
       },
       {
@@ -11223,6 +11655,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Masaru Ikegami (80+) e Haruyoshi Takaki (71-80) estão juntos na Mashit desde 1996, numa empresa fundada em 1978 sem qualquer sócio de geração mais jovem.",
+          "flags": [
+            "dois sócios idosos",
+            "sem geração jovem",
+            "capital mínimo"
+          ]
         }
       },
       {
@@ -11272,6 +11712,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Milton Antonio Bogus (80+) consta no quadro desde 1965 — antes da fundação formal em 1966 — com Gilberto Chede (71-80) como único parceiro, sem sucessores identificados.",
+          "flags": [
+            "fundador pré-1966",
+            "dois sócios idosos",
+            "sem geração jovem"
+          ]
         }
       },
       {
@@ -11342,6 +11790,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Três fundadores Rossi (todos 80+) desde 1966; Reinaldo (71-80) e Renato (61-70) ingressaram em 2008, mas a segunda geração já avança para sua própria transição.",
+          "flags": [
+            "3 fundadores 80+",
+            "2ª geração idosa",
+            "capital simbólico"
+          ]
         }
       },
       {
@@ -11529,6 +11985,14 @@
             "Quadro com 21 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966 em Araraquara, a Nigro Alumínio tem 21 sócios de múltiplas gerações da família Nigro, com 3 membros na faixa 80+ e jovens (31-40) entrando entre 2013 e 2023.",
+          "flags": [
+            "21 sócios família",
+            "governança complexa",
+            "3 sócios 80+"
+          ]
         }
       },
       {
@@ -11609,6 +12073,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Angelino Barbosa (80+) fundou a IMAB em 1965 e permanece no quadro; três filhos — Cecília (61-70), Luís e Elenice (51-60) — integram a sociedade desde os anos 1989-1994.",
+          "flags": [
+            "fundador 80+ ativo",
+            "filhos 2ª geração",
+            "61 anos operação"
+          ]
         }
       },
       {
@@ -11670,6 +12142,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "João Marques Castelhano (80+) fundou a Jomarca em 1972; com capital de R$80 milhões, Ricardo (51-60) e Angélica (41-50) já participam, mas o fundador permanece ativo.",
+          "flags": [
+            "fundador 80+ ativo",
+            "capital R$80M",
+            "dois filhos no quadro"
+          ]
         }
       },
       {
@@ -14108,8 +14588,8 @@
         }
       }
     ],
-    "reasoned": false,
-    "reasonedCount": 0
+    "reasoned": true,
+    "reasonedCount": 15
   },
   "fabricantes de maquinas no interior de sp": {
     "filters": {
@@ -14189,6 +14669,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Ubirajara Rodrigues (80+) comanda a Prensa Jundiaí desde a fundação em 1973; Lucas Cremonese Rodrigues (31-40) entrou em 2015 como único outro sócio.",
+          "flags": [
+            "fundador 80+ ativo",
+            "sócio jovem único",
+            "53 anos operação"
+          ]
         }
       },
       {
@@ -14238,6 +14726,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966, a Maclem registra a entrada de Yara Clemente Zurlini (80+) apenas em 2023, com Marcus Clemente Mussa (51-60) como único outro sócio desde 2008.",
+          "flags": [
+            "sócio 80+ recente",
+            "60 anos operação",
+            "quadro enxuto"
+          ]
         }
       },
       {
@@ -14292,6 +14788,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Caldeiraria pesada em Cotia fundada em 1981, com os dois únicos sócios — Therezinha e Annario Quintino — ambos na faixa 80+ e capital declarado zero.",
+          "flags": [
+            "dois sócios 80+",
+            "capital zero",
+            "sem geração jovem"
+          ]
         }
       },
       {
@@ -14341,6 +14845,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Ricardo Naschold Neto (80+) está no quadro desde a fundação em 1980; Rolando Naschold (51-60), também sócio desde o início, é o único outro nome na sociedade.",
+          "flags": [
+            "fundador 80+ ativo",
+            "quadro familiar",
+            "46 anos operação"
+          ]
         }
       },
       {
@@ -14404,6 +14916,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966 e em recuperação judicial, tem Paschoal Thomeu e Annunciato Thomeu Jr. (ambos 80+) no quadro desde 1994, ao lado de pessoa jurídica estrangeira.",
+          "flags": [
+            "recuperação judicial",
+            "dois fundadores 80+",
+            "PJ estrangeira"
+          ]
         }
       },
       {
@@ -14453,6 +14973,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Gino Dalpiaz (80+) está na empresa desde a fundação em 1983; Riccardo Germani (71-80) entrou em 1999, formando um quadro inteiramente em faixas etárias avançadas.",
+          "flags": [
+            "dois sócios idosos",
+            "sem geração jovem",
+            "capital zero"
+          ]
         }
       },
       {
@@ -14535,6 +15063,14 @@
             "Quadro com 6 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1969 e em recuperação judicial, a Roll For tem 5 dos 6 sócios na faixa 80+, com três deles — incluindo Ekaterini Koutsantonis — ingressando em 2024.",
+          "flags": [
+            "5 sócios 80+",
+            "recuperação judicial",
+            "entradas 2024"
+          ]
         }
       },
       {
@@ -14626,6 +15162,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Em recuperação judicial desde Cubatão, a Engebasa foi fundada em 1972 e tem todos os 5 sócios na faixa 80+, com capital declarado de R$50,4 milhões.",
+          "flags": [
+            "5 sócios 80+",
+            "recuperação judicial",
+            "capital R$50M"
+          ]
         }
       },
       {
@@ -14703,6 +15247,14 @@
             "Quadro com 6 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Dois fundadores Abrantes (80+) desde 1972; em 2025 ingressaram três membros da família Kucera, incluindo Maria Izabella (13-20 anos), sinalizando reestruturação societária recente.",
+          "flags": [
+            "fundadores 80+",
+            "sucessão em curso",
+            "sócio menor de idade"
+          ]
         }
       },
       {
@@ -14752,6 +15304,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Masaru Ikegami (80+) e Haruyoshi Takaki (71-80) estão juntos na Mashit desde 1996, numa empresa fundada em 1978 sem qualquer sócio de geração mais jovem.",
+          "flags": [
+            "dois sócios idosos",
+            "sem geração jovem",
+            "capital mínimo"
+          ]
         }
       },
       {
@@ -14801,6 +15361,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Milton Antonio Bogus (80+) consta no quadro desde 1965 — antes da fundação formal em 1966 — com Gilberto Chede (71-80) como único parceiro, sem sucessores identificados.",
+          "flags": [
+            "fundador pré-1966",
+            "dois sócios idosos",
+            "sem geração jovem"
+          ]
         }
       },
       {
@@ -14871,6 +15439,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Três fundadores Rossi (todos 80+) desde 1966; Reinaldo (71-80) e Renato (61-70) ingressaram em 2008, mas a segunda geração já avança para sua própria transição.",
+          "flags": [
+            "3 fundadores 80+",
+            "2ª geração idosa",
+            "capital simbólico"
+          ]
         }
       },
       {
@@ -15058,6 +15634,14 @@
             "Quadro com 21 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966 em Araraquara, a Nigro Alumínio tem 21 sócios de múltiplas gerações da família Nigro, com 3 membros na faixa 80+ e jovens (31-40) entrando entre 2013 e 2023.",
+          "flags": [
+            "21 sócios família",
+            "governança complexa",
+            "3 sócios 80+"
+          ]
         }
       },
       {
@@ -15138,6 +15722,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Angelino Barbosa (80+) fundou a IMAB em 1965 e permanece no quadro; três filhos — Cecília (61-70), Luís e Elenice (51-60) — integram a sociedade desde os anos 1989-1994.",
+          "flags": [
+            "fundador 80+ ativo",
+            "filhos 2ª geração",
+            "61 anos operação"
+          ]
         }
       },
       {
@@ -15199,6 +15791,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "João Marques Castelhano (80+) fundou a Jomarca em 1972; com capital de R$80 milhões, Ricardo (51-60) e Angélica (41-50) já participam, mas o fundador permanece ativo.",
+          "flags": [
+            "fundador 80+ ativo",
+            "capital R$80M",
+            "dois filhos no quadro"
+          ]
         }
       },
       {
@@ -17637,8 +18237,8 @@
         }
       }
     ],
-    "reasoned": false,
-    "reasonedCount": 0
+    "reasoned": true,
+    "reasonedCount": 15
   },
   "metalmec|fabricantes de maquinas no interior de sp": {
     "filters": {
@@ -17718,6 +18318,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Ubirajara Rodrigues (80+) comanda a Prensa Jundiaí desde a fundação em 1973; Lucas Cremonese Rodrigues (31-40) entrou em 2015 como único outro sócio.",
+          "flags": [
+            "fundador 80+ ativo",
+            "sócio jovem único",
+            "53 anos operação"
+          ]
         }
       },
       {
@@ -17767,6 +18375,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966, a Maclem registra a entrada de Yara Clemente Zurlini (80+) apenas em 2023, com Marcus Clemente Mussa (51-60) como único outro sócio desde 2008.",
+          "flags": [
+            "sócio 80+ recente",
+            "60 anos operação",
+            "quadro enxuto"
+          ]
         }
       },
       {
@@ -17821,6 +18437,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Caldeiraria pesada em Cotia fundada em 1981, com os dois únicos sócios — Therezinha e Annario Quintino — ambos na faixa 80+ e capital declarado zero.",
+          "flags": [
+            "dois sócios 80+",
+            "capital zero",
+            "sem geração jovem"
+          ]
         }
       },
       {
@@ -17870,6 +18494,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Ricardo Naschold Neto (80+) está no quadro desde a fundação em 1980; Rolando Naschold (51-60), também sócio desde o início, é o único outro nome na sociedade.",
+          "flags": [
+            "fundador 80+ ativo",
+            "quadro familiar",
+            "46 anos operação"
+          ]
         }
       },
       {
@@ -17933,6 +18565,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966 e em recuperação judicial, tem Paschoal Thomeu e Annunciato Thomeu Jr. (ambos 80+) no quadro desde 1994, ao lado de pessoa jurídica estrangeira.",
+          "flags": [
+            "recuperação judicial",
+            "dois fundadores 80+",
+            "PJ estrangeira"
+          ]
         }
       },
       {
@@ -17982,6 +18622,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Gino Dalpiaz (80+) está na empresa desde a fundação em 1983; Riccardo Germani (71-80) entrou em 1999, formando um quadro inteiramente em faixas etárias avançadas.",
+          "flags": [
+            "dois sócios idosos",
+            "sem geração jovem",
+            "capital zero"
+          ]
         }
       },
       {
@@ -18064,6 +18712,14 @@
             "Quadro com 6 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1969 e em recuperação judicial, a Roll For tem 5 dos 6 sócios na faixa 80+, com três deles — incluindo Ekaterini Koutsantonis — ingressando em 2024.",
+          "flags": [
+            "5 sócios 80+",
+            "recuperação judicial",
+            "entradas 2024"
+          ]
         }
       },
       {
@@ -18155,6 +18811,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Em recuperação judicial desde Cubatão, a Engebasa foi fundada em 1972 e tem todos os 5 sócios na faixa 80+, com capital declarado de R$50,4 milhões.",
+          "flags": [
+            "5 sócios 80+",
+            "recuperação judicial",
+            "capital R$50M"
+          ]
         }
       },
       {
@@ -18232,6 +18896,14 @@
             "Quadro com 6 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Dois fundadores Abrantes (80+) desde 1972; em 2025 ingressaram três membros da família Kucera, incluindo Maria Izabella (13-20 anos), sinalizando reestruturação societária recente.",
+          "flags": [
+            "fundadores 80+",
+            "sucessão em curso",
+            "sócio menor de idade"
+          ]
         }
       },
       {
@@ -18281,6 +18953,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Masaru Ikegami (80+) e Haruyoshi Takaki (71-80) estão juntos na Mashit desde 1996, numa empresa fundada em 1978 sem qualquer sócio de geração mais jovem.",
+          "flags": [
+            "dois sócios idosos",
+            "sem geração jovem",
+            "capital mínimo"
+          ]
         }
       },
       {
@@ -18330,6 +19010,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Milton Antonio Bogus (80+) consta no quadro desde 1965 — antes da fundação formal em 1966 — com Gilberto Chede (71-80) como único parceiro, sem sucessores identificados.",
+          "flags": [
+            "fundador pré-1966",
+            "dois sócios idosos",
+            "sem geração jovem"
+          ]
         }
       },
       {
@@ -18400,6 +19088,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Três fundadores Rossi (todos 80+) desde 1966; Reinaldo (71-80) e Renato (61-70) ingressaram em 2008, mas a segunda geração já avança para sua própria transição.",
+          "flags": [
+            "3 fundadores 80+",
+            "2ª geração idosa",
+            "capital simbólico"
+          ]
         }
       },
       {
@@ -18587,6 +19283,14 @@
             "Quadro com 21 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966 em Araraquara, a Nigro Alumínio tem 21 sócios de múltiplas gerações da família Nigro, com 3 membros na faixa 80+ e jovens (31-40) entrando entre 2013 e 2023.",
+          "flags": [
+            "21 sócios família",
+            "governança complexa",
+            "3 sócios 80+"
+          ]
         }
       },
       {
@@ -18667,6 +19371,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Angelino Barbosa (80+) fundou a IMAB em 1965 e permanece no quadro; três filhos — Cecília (61-70), Luís e Elenice (51-60) — integram a sociedade desde os anos 1989-1994.",
+          "flags": [
+            "fundador 80+ ativo",
+            "filhos 2ª geração",
+            "61 anos operação"
+          ]
         }
       },
       {
@@ -18728,6 +19440,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "João Marques Castelhano (80+) fundou a Jomarca em 1972; com capital de R$80 milhões, Ricardo (51-60) e Angélica (41-50) já participam, mas o fundador permanece ativo.",
+          "flags": [
+            "fundador 80+ ativo",
+            "capital R$80M",
+            "dois filhos no quadro"
+          ]
         }
       },
       {
@@ -21166,8 +21886,8 @@
         }
       }
     ],
-    "reasoned": false,
-    "reasonedCount": 0
+    "reasoned": true,
+    "reasonedCount": 15
   },
   "saude|clinicas com socios acima de 70 anos": {
     "filters": {
@@ -21356,6 +22076,14 @@
             "Quadro com 20 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966, reúne 20 sócios no quadro, sendo 10 na faixa 80+ — maioria presente desde os anos 1960.",
+          "flags": [
+            "10 sócios 80+",
+            "quadro 20 sócios",
+            "60 anos ativa"
+          ]
         }
       },
       {
@@ -21419,6 +22147,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundador Raul de Camargo Vianna, 80+, na clínica desde 1974; filho e outros herdeiros Vianna compõem o quadro desde 1993.",
+          "flags": [
+            "fundador 80+",
+            "herdeiros no quadro",
+            "52 anos ativa"
+          ]
         }
       },
       {
@@ -21505,6 +22241,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundador Ruy Barata, 80+, sócio desde 1981; em 2017 duas holdings e novos sócios pessoas físicas ingressaram simultaneamente.",
+          "flags": [
+            "fundador 80+",
+            "holdings em 2017",
+            "reestruturação societária"
+          ]
         }
       },
       {
@@ -21561,6 +22305,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Hospital de 1967 com quadro inteiramente renovado entre 2022 e 2024; único sócio na faixa 80+ entrou em 2024.",
+          "flags": [
+            "quadro renovado 2022",
+            "sócio 80+ recente",
+            "59 anos ativa"
+          ]
         }
       },
       {
@@ -21610,6 +22362,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Dois únicos sócios, ambos 80+, presentes desde a fundação em 1985 — quadro sem qualquer renovação em 41 anos.",
+          "flags": [
+            "2 fundadores 80+",
+            "sem sucessor visível",
+            "41 anos ativa"
+          ]
         }
       },
       {
@@ -21672,6 +22432,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Associação de 1967 com apenas dois membros no quadro, ambos 80+; o mais recente ingressou em 2022.",
+          "flags": [
+            "2 membros 80+",
+            "quadro mínimo",
+            "59 anos ativa"
+          ]
         }
       },
       {
@@ -21903,6 +22671,14 @@
             "Quadro com 28 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Clínica ortopédica de 1984 com 28 sócios, maioria incorporada em bloco em 2022; uma sócia isolada na faixa 80+.",
+          "flags": [
+            "28 sócios",
+            "renovação bloco 2022",
+            "sócia 80+ isolada"
+          ]
         }
       },
       {
@@ -21971,6 +22747,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundadora Mirtes Sarvasi, 80+, na empresa desde 1977; três novas sócias ingressaram em 2018, a mais nova na faixa dos 40 anos.",
+          "flags": [
+            "fundadora 80+",
+            "renovação 2018",
+            "49 anos ativa"
+          ]
         }
       },
       {
@@ -22027,6 +22811,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundação privada de 1966; Victorio de Marchi, 80+, no conselho desde 2006, e Edson de Marchi (61-70) ingressou em 2015.",
+          "flags": [
+            "membro 80+",
+            "possível continuidade familiar",
+            "fundação 60 anos"
+          ]
         }
       },
       {
@@ -22090,6 +22882,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundador Moacyr Largman, 80+, desde 1969; herdeiras Liza e Marcia Largman no quadro desde 1997 e holding holandesa incorporada em 2008.",
+          "flags": [
+            "fundador 80+",
+            "holding estrangeira 2008",
+            "herdeiras no quadro"
+          ]
         }
       },
       {
@@ -22146,6 +22946,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Três sócios fundadores, todos 80+, no quadro sem alteração desde 1983 — nenhuma renovação societária em 43 anos.",
+          "flags": [
+            "3 fundadores 80+",
+            "quadro imóvel",
+            "43 anos ativa"
+          ]
         }
       },
       {
@@ -22202,6 +23010,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Clínica batizada com o nome do fundador Flávio Menezes Sanches, 80+, desde 1985; dois herdeiros Sanches ingressaram em 2019.",
+          "flags": [
+            "fundador epônimo 80+",
+            "herdeiros em 2019",
+            "41 anos ativa"
+          ]
         }
       },
       {
@@ -22265,6 +23081,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundador Nelson Gushi, 80+, sócio desde 1974; três herdeiros Gushi incorporados simultaneamente em 2014, quarenta anos após a fundação.",
+          "flags": [
+            "fundador 80+",
+            "3 herdeiros 2014",
+            "52 anos ativa"
+          ]
         }
       },
       {
@@ -22321,6 +23145,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundador João Perez Filho, 80+, desde 1980; herdeiros Renata (1994) e Rodrigo (2012) já no quadro, mas fundador permanece ativo.",
+          "flags": [
+            "fundador 80+ ativo",
+            "2 herdeiros",
+            "46 anos ativa"
+          ]
         }
       },
       {
@@ -22417,6 +23249,14 @@
             "Quadro com 8 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "S.A. fechada fundada em 1967 com capital de R$1,64M; dois sócios 80+ ativos desde 2004 e três novos entrantes em 2023.",
+          "flags": [
+            "2 sócios 80+",
+            "S.A. porte médio",
+            "novos entrantes 2023"
+          ]
         }
       },
       {
@@ -25731,8 +26571,8 @@
         }
       }
     ],
-    "reasoned": false,
-    "reasonedCount": 0
+    "reasoned": true,
+    "reasonedCount": 15
   },
   "saude|laboratorios fundados antes de 1990": {
     "filters": {
@@ -25921,6 +26761,14 @@
             "Quadro com 20 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966, reúne 20 sócios no quadro, sendo 10 na faixa 80+ — maioria presente desde os anos 1960.",
+          "flags": [
+            "10 sócios 80+",
+            "quadro 20 sócios",
+            "60 anos ativa"
+          ]
         }
       },
       {
@@ -25984,6 +26832,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundador Raul de Camargo Vianna, 80+, na clínica desde 1974; filho e outros herdeiros Vianna compõem o quadro desde 1993.",
+          "flags": [
+            "fundador 80+",
+            "herdeiros no quadro",
+            "52 anos ativa"
+          ]
         }
       },
       {
@@ -26070,6 +26926,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundador Ruy Barata, 80+, sócio desde 1981; em 2017 duas holdings e novos sócios pessoas físicas ingressaram simultaneamente.",
+          "flags": [
+            "fundador 80+",
+            "holdings em 2017",
+            "reestruturação societária"
+          ]
         }
       },
       {
@@ -26126,6 +26990,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Hospital de 1967 com quadro inteiramente renovado entre 2022 e 2024; único sócio na faixa 80+ entrou em 2024.",
+          "flags": [
+            "quadro renovado 2022",
+            "sócio 80+ recente",
+            "59 anos ativa"
+          ]
         }
       },
       {
@@ -26175,6 +27047,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Dois únicos sócios, ambos 80+, presentes desde a fundação em 1985 — quadro sem qualquer renovação em 41 anos.",
+          "flags": [
+            "2 fundadores 80+",
+            "sem sucessor visível",
+            "41 anos ativa"
+          ]
         }
       },
       {
@@ -26237,6 +27117,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Associação de 1967 com apenas dois membros no quadro, ambos 80+; o mais recente ingressou em 2022.",
+          "flags": [
+            "2 membros 80+",
+            "quadro mínimo",
+            "59 anos ativa"
+          ]
         }
       },
       {
@@ -26468,6 +27356,14 @@
             "Quadro com 28 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Clínica ortopédica de 1984 com 28 sócios, maioria incorporada em bloco em 2022; uma sócia isolada na faixa 80+.",
+          "flags": [
+            "28 sócios",
+            "renovação bloco 2022",
+            "sócia 80+ isolada"
+          ]
         }
       },
       {
@@ -26536,6 +27432,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundadora Mirtes Sarvasi, 80+, na empresa desde 1977; três novas sócias ingressaram em 2018, a mais nova na faixa dos 40 anos.",
+          "flags": [
+            "fundadora 80+",
+            "renovação 2018",
+            "49 anos ativa"
+          ]
         }
       },
       {
@@ -26592,6 +27496,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundação privada de 1966; Victorio de Marchi, 80+, no conselho desde 2006, e Edson de Marchi (61-70) ingressou em 2015.",
+          "flags": [
+            "membro 80+",
+            "possível continuidade familiar",
+            "fundação 60 anos"
+          ]
         }
       },
       {
@@ -26655,6 +27567,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundador Moacyr Largman, 80+, desde 1969; herdeiras Liza e Marcia Largman no quadro desde 1997 e holding holandesa incorporada em 2008.",
+          "flags": [
+            "fundador 80+",
+            "holding estrangeira 2008",
+            "herdeiras no quadro"
+          ]
         }
       },
       {
@@ -26711,6 +27631,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Três sócios fundadores, todos 80+, no quadro sem alteração desde 1983 — nenhuma renovação societária em 43 anos.",
+          "flags": [
+            "3 fundadores 80+",
+            "quadro imóvel",
+            "43 anos ativa"
+          ]
         }
       },
       {
@@ -26767,6 +27695,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Clínica batizada com o nome do fundador Flávio Menezes Sanches, 80+, desde 1985; dois herdeiros Sanches ingressaram em 2019.",
+          "flags": [
+            "fundador epônimo 80+",
+            "herdeiros em 2019",
+            "41 anos ativa"
+          ]
         }
       },
       {
@@ -26830,6 +27766,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundador Nelson Gushi, 80+, sócio desde 1974; três herdeiros Gushi incorporados simultaneamente em 2014, quarenta anos após a fundação.",
+          "flags": [
+            "fundador 80+",
+            "3 herdeiros 2014",
+            "52 anos ativa"
+          ]
         }
       },
       {
@@ -26886,6 +27830,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundador João Perez Filho, 80+, desde 1980; herdeiros Renata (1994) e Rodrigo (2012) já no quadro, mas fundador permanece ativo.",
+          "flags": [
+            "fundador 80+ ativo",
+            "2 herdeiros",
+            "46 anos ativa"
+          ]
         }
       },
       {
@@ -26982,6 +27934,14 @@
             "Quadro com 8 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "S.A. fechada fundada em 1967 com capital de R$1,64M; dois sócios 80+ ativos desde 2004 e três novos entrantes em 2023.",
+          "flags": [
+            "2 sócios 80+",
+            "S.A. porte médio",
+            "novos entrantes 2023"
+          ]
         }
       },
       {
@@ -30296,8 +31256,8 @@
         }
       }
     ],
-    "reasoned": false,
-    "reasonedCount": 0
+    "reasoned": true,
+    "reasonedCount": 15
   },
   "saude|clinicas odontologicas com socios acima de 60 anos": {
     "filters": {
@@ -30486,6 +31446,14 @@
             "Quadro com 20 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966, reúne 20 sócios no quadro, sendo 10 na faixa 80+ — maioria presente desde os anos 1960.",
+          "flags": [
+            "10 sócios 80+",
+            "quadro 20 sócios",
+            "60 anos ativa"
+          ]
         }
       },
       {
@@ -30549,6 +31517,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundador Raul de Camargo Vianna, 80+, na clínica desde 1974; filho e outros herdeiros Vianna compõem o quadro desde 1993.",
+          "flags": [
+            "fundador 80+",
+            "herdeiros no quadro",
+            "52 anos ativa"
+          ]
         }
       },
       {
@@ -30635,6 +31611,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundador Ruy Barata, 80+, sócio desde 1981; em 2017 duas holdings e novos sócios pessoas físicas ingressaram simultaneamente.",
+          "flags": [
+            "fundador 80+",
+            "holdings em 2017",
+            "reestruturação societária"
+          ]
         }
       },
       {
@@ -30691,6 +31675,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Hospital de 1967 com quadro inteiramente renovado entre 2022 e 2024; único sócio na faixa 80+ entrou em 2024.",
+          "flags": [
+            "quadro renovado 2022",
+            "sócio 80+ recente",
+            "59 anos ativa"
+          ]
         }
       },
       {
@@ -30740,6 +31732,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Dois únicos sócios, ambos 80+, presentes desde a fundação em 1985 — quadro sem qualquer renovação em 41 anos.",
+          "flags": [
+            "2 fundadores 80+",
+            "sem sucessor visível",
+            "41 anos ativa"
+          ]
         }
       },
       {
@@ -30802,6 +31802,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Associação de 1967 com apenas dois membros no quadro, ambos 80+; o mais recente ingressou em 2022.",
+          "flags": [
+            "2 membros 80+",
+            "quadro mínimo",
+            "59 anos ativa"
+          ]
         }
       },
       {
@@ -31033,6 +32041,14 @@
             "Quadro com 28 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Clínica ortopédica de 1984 com 28 sócios, maioria incorporada em bloco em 2022; uma sócia isolada na faixa 80+.",
+          "flags": [
+            "28 sócios",
+            "renovação bloco 2022",
+            "sócia 80+ isolada"
+          ]
         }
       },
       {
@@ -31101,6 +32117,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundadora Mirtes Sarvasi, 80+, na empresa desde 1977; três novas sócias ingressaram em 2018, a mais nova na faixa dos 40 anos.",
+          "flags": [
+            "fundadora 80+",
+            "renovação 2018",
+            "49 anos ativa"
+          ]
         }
       },
       {
@@ -31157,6 +32181,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundação privada de 1966; Victorio de Marchi, 80+, no conselho desde 2006, e Edson de Marchi (61-70) ingressou em 2015.",
+          "flags": [
+            "membro 80+",
+            "possível continuidade familiar",
+            "fundação 60 anos"
+          ]
         }
       },
       {
@@ -31220,6 +32252,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundador Moacyr Largman, 80+, desde 1969; herdeiras Liza e Marcia Largman no quadro desde 1997 e holding holandesa incorporada em 2008.",
+          "flags": [
+            "fundador 80+",
+            "holding estrangeira 2008",
+            "herdeiras no quadro"
+          ]
         }
       },
       {
@@ -31276,6 +32316,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Três sócios fundadores, todos 80+, no quadro sem alteração desde 1983 — nenhuma renovação societária em 43 anos.",
+          "flags": [
+            "3 fundadores 80+",
+            "quadro imóvel",
+            "43 anos ativa"
+          ]
         }
       },
       {
@@ -31332,6 +32380,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Clínica batizada com o nome do fundador Flávio Menezes Sanches, 80+, desde 1985; dois herdeiros Sanches ingressaram em 2019.",
+          "flags": [
+            "fundador epônimo 80+",
+            "herdeiros em 2019",
+            "41 anos ativa"
+          ]
         }
       },
       {
@@ -31395,6 +32451,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundador Nelson Gushi, 80+, sócio desde 1974; três herdeiros Gushi incorporados simultaneamente em 2014, quarenta anos após a fundação.",
+          "flags": [
+            "fundador 80+",
+            "3 herdeiros 2014",
+            "52 anos ativa"
+          ]
         }
       },
       {
@@ -31451,6 +32515,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundador João Perez Filho, 80+, desde 1980; herdeiros Renata (1994) e Rodrigo (2012) já no quadro, mas fundador permanece ativo.",
+          "flags": [
+            "fundador 80+ ativo",
+            "2 herdeiros",
+            "46 anos ativa"
+          ]
         }
       },
       {
@@ -31547,6 +32619,14 @@
             "Quadro com 8 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "S.A. fechada fundada em 1967 com capital de R$1,64M; dois sócios 80+ ativos desde 2004 e três novos entrantes em 2023.",
+          "flags": [
+            "2 sócios 80+",
+            "S.A. porte médio",
+            "novos entrantes 2023"
+          ]
         }
       },
       {
@@ -34861,8 +35941,8 @@
         }
       }
     ],
-    "reasoned": false,
-    "reasonedCount": 0
+    "reasoned": true,
+    "reasonedCount": 15
   },
   "educacao|escolas familiares com socios acima de 70 anos": {
     "filters": {
@@ -34939,6 +36019,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Associação fundada em 1971 com sócia na faixa 80+ desde 2005 e quadro de apenas dois membros.",
+          "flags": [
+            "sócia 80+",
+            "quadro mínimo",
+            "55 anos ativa"
+          ]
         }
       },
       {
@@ -35004,6 +36092,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Colégio familiar fundado em 1984 com sócio na faixa 80+ ingressado em 2023 e duas sócias de mesmo sobrenome Moura de Abreu no quadro.",
+          "flags": [
+            "sócio 80+ recente",
+            "negócio familiar",
+            "42 anos operando"
+          ]
         }
       },
       {
@@ -35109,6 +36205,14 @@
             "Quadro com 7 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundação com 60 anos de operação e 4 dos 7 gestores na faixa 80+, todos com entradas registradas entre 2013 e 2022.",
+          "flags": [
+            "4 sócios 80+",
+            "60 anos operando",
+            "quadro envelhecido"
+          ]
         }
       },
       {
@@ -35234,6 +36338,14 @@
             "Quadro com 11 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Instituto do interior paulista fundado em 1966 com 5 dos 11 sócios na faixa 80+ e nenhuma entrada no quadro após 2005.",
+          "flags": [
+            "5 sócios 80+",
+            "60 anos operando",
+            "renovação estagnada"
+          ]
         }
       },
       {
@@ -35377,6 +36489,14 @@
             "Quadro com 13 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundação corporativa do Bradesco fundada em 1970 com 13 gestores, maioria na faixa 51-70 e um membro na faixa 80+ desde 2009.",
+          "flags": [
+            "instituição corporativa",
+            "13 gestores",
+            "56 anos ativa"
+          ]
         }
       },
       {
@@ -35433,6 +36553,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Colégio fundado em 1967 com dois fundadores Augusto Laranja na faixa 80+ desde 1966 e terceiro sócio de mesmo sobrenome ingressado em 2024.",
+          "flags": [
+            "fundadores 80+",
+            "herdeiro entrada 2024",
+            "capital R$6,8M"
+          ]
         }
       },
       {
@@ -35482,6 +36610,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Associação de pais fundada em 1983 em São Miguel Arcanjo com sócio na faixa 80+ desde 2005 e apenas um segundo membro, incorporado em 2020.",
+          "flags": [
+            "sócio 80+",
+            "quadro enxuto",
+            "43 anos ativa"
+          ]
         }
       },
       {
@@ -35596,6 +36732,14 @@
             "Quadro com 9 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Sistema fundado em 1980 com sócio original na faixa 80+ e dois na 71-80 desde a origem, mais holding AGATHOS no quadro desde 2010.",
+          "flags": [
+            "fundadores ainda ativos",
+            "holding no quadro",
+            "46 anos operando"
+          ]
         }
       },
       {
@@ -35652,6 +36796,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Sociedade de ensino fundada em 1980 com dois sócios na faixa 80+ desde 1986 e terceira sócia incorporada apenas em 2015.",
+          "flags": [
+            "2 sócios 80+",
+            "quadro travado 40 anos",
+            "renovação tardia"
+          ]
         }
       },
       {
@@ -35701,6 +36853,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Escola fundada em 1979 com dois sócios de mesmo sobrenome Fiorin — um na faixa 80+ e outro na 71-80 — sem renovação desde a fundação.",
+          "flags": [
+            "casal fundador",
+            "sócio 80+",
+            "quadro inalterado"
+          ]
         }
       },
       {
@@ -35757,6 +36917,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Escola fundada em 1983 com dois sócios na faixa 80+ desde a origem e uma na 71-80, quadro sem renovação em 43 anos de operação.",
+          "flags": [
+            "2 sócias 80+",
+            "quadro original intacto",
+            "43 anos ativa"
+          ]
         }
       },
       {
@@ -35842,6 +37010,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Escola fundada em 1970 com casal fundador Tricate na faixa 80+ desde a origem e provável herdeira de mesmo sobrenome ingressada em 2025.",
+          "flags": [
+            "fundadores 80+",
+            "herdeira entrada 2025",
+            "transição em curso"
+          ]
         }
       },
       {
@@ -35891,6 +37067,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Centro nomeado após a fundadora Alaise Velloso, com dois sócios Velloso na faixa 80+ desde 1980 e quadro sem renovação em 46 anos.",
+          "flags": [
+            "casal fundador 80+",
+            "quadro inalterado",
+            "nome fundadora no CNPJ"
+          ]
         }
       },
       {
@@ -35952,6 +37136,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Instituto fundado em 1968 em Agudos com sócio na faixa 80+ e filho (faixa 51-60) no quadro desde 2011, sugerindo sucessão em estruturação.",
+          "flags": [
+            "pai e filho",
+            "fundador 80+",
+            "58 anos operando"
+          ]
         }
       },
       {
@@ -36029,6 +37221,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Externato fundado em 1983 com sócio na faixa 80+ e dois na 61-70, todos ingressados entre 2005 e 2009, sem renovação posterior.",
+          "flags": [
+            "sócio 80+",
+            "2 sócios 61-70",
+            "sem renovação recente"
+          ]
         }
       },
       {
@@ -39077,8 +40277,8 @@
         }
       }
     ],
-    "reasoned": false,
-    "reasonedCount": 0
+    "reasoned": true,
+    "reasonedCount": 15
   },
   "educacao|colegios fundados antes de 1990": {
     "filters": {
@@ -39155,6 +40355,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Associação fundada em 1971 com sócia na faixa 80+ desde 2005 e quadro de apenas dois membros.",
+          "flags": [
+            "sócia 80+",
+            "quadro mínimo",
+            "55 anos ativa"
+          ]
         }
       },
       {
@@ -39220,6 +40428,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Colégio familiar fundado em 1984 com sócio na faixa 80+ ingressado em 2023 e duas sócias de mesmo sobrenome Moura de Abreu no quadro.",
+          "flags": [
+            "sócio 80+ recente",
+            "negócio familiar",
+            "42 anos operando"
+          ]
         }
       },
       {
@@ -39325,6 +40541,14 @@
             "Quadro com 7 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundação com 60 anos de operação e 4 dos 7 gestores na faixa 80+, todos com entradas registradas entre 2013 e 2022.",
+          "flags": [
+            "4 sócios 80+",
+            "60 anos operando",
+            "quadro envelhecido"
+          ]
         }
       },
       {
@@ -39450,6 +40674,14 @@
             "Quadro com 11 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Instituto do interior paulista fundado em 1966 com 5 dos 11 sócios na faixa 80+ e nenhuma entrada no quadro após 2005.",
+          "flags": [
+            "5 sócios 80+",
+            "60 anos operando",
+            "renovação estagnada"
+          ]
         }
       },
       {
@@ -39593,6 +40825,14 @@
             "Quadro com 13 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundação corporativa do Bradesco fundada em 1970 com 13 gestores, maioria na faixa 51-70 e um membro na faixa 80+ desde 2009.",
+          "flags": [
+            "instituição corporativa",
+            "13 gestores",
+            "56 anos ativa"
+          ]
         }
       },
       {
@@ -39649,6 +40889,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Colégio fundado em 1967 com dois fundadores Augusto Laranja na faixa 80+ desde 1966 e terceiro sócio de mesmo sobrenome ingressado em 2024.",
+          "flags": [
+            "fundadores 80+",
+            "herdeiro entrada 2024",
+            "capital R$6,8M"
+          ]
         }
       },
       {
@@ -39698,6 +40946,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Associação de pais fundada em 1983 em São Miguel Arcanjo com sócio na faixa 80+ desde 2005 e apenas um segundo membro, incorporado em 2020.",
+          "flags": [
+            "sócio 80+",
+            "quadro enxuto",
+            "43 anos ativa"
+          ]
         }
       },
       {
@@ -39812,6 +41068,14 @@
             "Quadro com 9 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Sistema fundado em 1980 com sócio original na faixa 80+ e dois na 71-80 desde a origem, mais holding AGATHOS no quadro desde 2010.",
+          "flags": [
+            "fundadores ainda ativos",
+            "holding no quadro",
+            "46 anos operando"
+          ]
         }
       },
       {
@@ -39868,6 +41132,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Sociedade de ensino fundada em 1980 com dois sócios na faixa 80+ desde 1986 e terceira sócia incorporada apenas em 2015.",
+          "flags": [
+            "2 sócios 80+",
+            "quadro travado 40 anos",
+            "renovação tardia"
+          ]
         }
       },
       {
@@ -39917,6 +41189,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Escola fundada em 1979 com dois sócios de mesmo sobrenome Fiorin — um na faixa 80+ e outro na 71-80 — sem renovação desde a fundação.",
+          "flags": [
+            "casal fundador",
+            "sócio 80+",
+            "quadro inalterado"
+          ]
         }
       },
       {
@@ -39973,6 +41253,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Escola fundada em 1983 com dois sócios na faixa 80+ desde a origem e uma na 71-80, quadro sem renovação em 43 anos de operação.",
+          "flags": [
+            "2 sócias 80+",
+            "quadro original intacto",
+            "43 anos ativa"
+          ]
         }
       },
       {
@@ -40058,6 +41346,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Escola fundada em 1970 com casal fundador Tricate na faixa 80+ desde a origem e provável herdeira de mesmo sobrenome ingressada em 2025.",
+          "flags": [
+            "fundadores 80+",
+            "herdeira entrada 2025",
+            "transição em curso"
+          ]
         }
       },
       {
@@ -40107,6 +41403,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Centro nomeado após a fundadora Alaise Velloso, com dois sócios Velloso na faixa 80+ desde 1980 e quadro sem renovação em 46 anos.",
+          "flags": [
+            "casal fundador 80+",
+            "quadro inalterado",
+            "nome fundadora no CNPJ"
+          ]
         }
       },
       {
@@ -40168,6 +41472,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Instituto fundado em 1968 em Agudos com sócio na faixa 80+ e filho (faixa 51-60) no quadro desde 2011, sugerindo sucessão em estruturação.",
+          "flags": [
+            "pai e filho",
+            "fundador 80+",
+            "58 anos operando"
+          ]
         }
       },
       {
@@ -40245,6 +41557,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Externato fundado em 1983 com sócio na faixa 80+ e dois na 61-70, todos ingressados entre 2005 e 2009, sem renovação posterior.",
+          "flags": [
+            "sócio 80+",
+            "2 sócios 61-70",
+            "sem renovação recente"
+          ]
         }
       },
       {
@@ -43293,8 +44613,8 @@
         }
       }
     ],
-    "reasoned": false,
-    "reasonedCount": 0
+    "reasoned": true,
+    "reasonedCount": 15
   },
   "educacao|creches e educacao infantil de dono idoso": {
     "filters": {
@@ -43371,6 +44691,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Associação fundada em 1971 com sócia na faixa 80+ desde 2005 e quadro de apenas dois membros.",
+          "flags": [
+            "sócia 80+",
+            "quadro mínimo",
+            "55 anos ativa"
+          ]
         }
       },
       {
@@ -43436,6 +44764,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Colégio familiar fundado em 1984 com sócio na faixa 80+ ingressado em 2023 e duas sócias de mesmo sobrenome Moura de Abreu no quadro.",
+          "flags": [
+            "sócio 80+ recente",
+            "negócio familiar",
+            "42 anos operando"
+          ]
         }
       },
       {
@@ -43541,6 +44877,14 @@
             "Quadro com 7 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundação com 60 anos de operação e 4 dos 7 gestores na faixa 80+, todos com entradas registradas entre 2013 e 2022.",
+          "flags": [
+            "4 sócios 80+",
+            "60 anos operando",
+            "quadro envelhecido"
+          ]
         }
       },
       {
@@ -43666,6 +45010,14 @@
             "Quadro com 11 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Instituto do interior paulista fundado em 1966 com 5 dos 11 sócios na faixa 80+ e nenhuma entrada no quadro após 2005.",
+          "flags": [
+            "5 sócios 80+",
+            "60 anos operando",
+            "renovação estagnada"
+          ]
         }
       },
       {
@@ -43809,6 +45161,14 @@
             "Quadro com 13 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundação corporativa do Bradesco fundada em 1970 com 13 gestores, maioria na faixa 51-70 e um membro na faixa 80+ desde 2009.",
+          "flags": [
+            "instituição corporativa",
+            "13 gestores",
+            "56 anos ativa"
+          ]
         }
       },
       {
@@ -43865,6 +45225,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Colégio fundado em 1967 com dois fundadores Augusto Laranja na faixa 80+ desde 1966 e terceiro sócio de mesmo sobrenome ingressado em 2024.",
+          "flags": [
+            "fundadores 80+",
+            "herdeiro entrada 2024",
+            "capital R$6,8M"
+          ]
         }
       },
       {
@@ -43914,6 +45282,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Associação de pais fundada em 1983 em São Miguel Arcanjo com sócio na faixa 80+ desde 2005 e apenas um segundo membro, incorporado em 2020.",
+          "flags": [
+            "sócio 80+",
+            "quadro enxuto",
+            "43 anos ativa"
+          ]
         }
       },
       {
@@ -44028,6 +45404,14 @@
             "Quadro com 9 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Sistema fundado em 1980 com sócio original na faixa 80+ e dois na 71-80 desde a origem, mais holding AGATHOS no quadro desde 2010.",
+          "flags": [
+            "fundadores ainda ativos",
+            "holding no quadro",
+            "46 anos operando"
+          ]
         }
       },
       {
@@ -44084,6 +45468,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Sociedade de ensino fundada em 1980 com dois sócios na faixa 80+ desde 1986 e terceira sócia incorporada apenas em 2015.",
+          "flags": [
+            "2 sócios 80+",
+            "quadro travado 40 anos",
+            "renovação tardia"
+          ]
         }
       },
       {
@@ -44133,6 +45525,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Escola fundada em 1979 com dois sócios de mesmo sobrenome Fiorin — um na faixa 80+ e outro na 71-80 — sem renovação desde a fundação.",
+          "flags": [
+            "casal fundador",
+            "sócio 80+",
+            "quadro inalterado"
+          ]
         }
       },
       {
@@ -44189,6 +45589,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Escola fundada em 1983 com dois sócios na faixa 80+ desde a origem e uma na 71-80, quadro sem renovação em 43 anos de operação.",
+          "flags": [
+            "2 sócias 80+",
+            "quadro original intacto",
+            "43 anos ativa"
+          ]
         }
       },
       {
@@ -44274,6 +45682,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Escola fundada em 1970 com casal fundador Tricate na faixa 80+ desde a origem e provável herdeira de mesmo sobrenome ingressada em 2025.",
+          "flags": [
+            "fundadores 80+",
+            "herdeira entrada 2025",
+            "transição em curso"
+          ]
         }
       },
       {
@@ -44323,6 +45739,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Centro nomeado após a fundadora Alaise Velloso, com dois sócios Velloso na faixa 80+ desde 1980 e quadro sem renovação em 46 anos.",
+          "flags": [
+            "casal fundador 80+",
+            "quadro inalterado",
+            "nome fundadora no CNPJ"
+          ]
         }
       },
       {
@@ -44384,6 +45808,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Instituto fundado em 1968 em Agudos com sócio na faixa 80+ e filho (faixa 51-60) no quadro desde 2011, sugerindo sucessão em estruturação.",
+          "flags": [
+            "pai e filho",
+            "fundador 80+",
+            "58 anos operando"
+          ]
         }
       },
       {
@@ -44461,6 +45893,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Externato fundado em 1983 com sócio na faixa 80+ e dois na 61-70, todos ingressados entre 2005 e 2009, sem renovação posterior.",
+          "flags": [
+            "sócio 80+",
+            "2 sócios 61-70",
+            "sem renovação recente"
+          ]
         }
       },
       {
@@ -47509,8 +48949,8 @@
         }
       }
     ],
-    "reasoned": false,
-    "reasonedCount": 0
+    "reasoned": true,
+    "reasonedCount": 15
   },
   "agro|fazendas com socios acima de 70 anos": {
     "filters": {
@@ -47605,6 +49045,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1985, Aurea Amorim (80+) é sócia desde a fundação; quatro familiares ingressaram juntos em 2016, sugerindo reorganização societária.",
+          "flags": [
+            "fundadora 80+",
+            "entrada coletiva 2016",
+            "família numerosa"
+          ]
         }
       },
       {
@@ -47661,6 +49109,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Graziela Lafer Galvão (80+) conduz a empresa desde 1984; holding GL Investimentos integrou o quadro em 2002, com capital superior a R$ 24 milhões.",
+          "flags": [
+            "fundadora 80+",
+            "holding no quadro",
+            "capital R$24M"
+          ]
         }
       },
       {
@@ -47717,6 +49173,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Olídio Megiani (80+) no quadro desde a fundação em 1984, ao lado de Suzete (71-80, desde 1995) e da holding Mercantil Santa Elisa.",
+          "flags": [
+            "fundador 80+",
+            "sócia 71-80",
+            "holding estrutural"
+          ]
         }
       },
       {
@@ -47780,6 +49244,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "SA fechada de 60 anos com Pedro Paula Leite de Barros (80+) no quadro desde 1983; Ricardo Vidigal entrou em 2025, sinalizando movimento recente.",
+          "flags": [
+            "sócio 80+ histórico",
+            "SA 60 anos",
+            "entrada 2025"
+          ]
         }
       },
       {
@@ -47829,6 +49301,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Ludwig Paraschin (80+, desde 2004) e Elvira Paraschin (80+, ingressante em 2025) controlam empresa de 41 anos com capital de R$ 30 mil.",
+          "flags": [
+            "dois sócios 80+",
+            "entrada 80+ em 2025",
+            "capital simbólico"
+          ]
         }
       },
       {
@@ -47890,6 +49370,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Warner e Heder Bambozzi (ambos 80+) e Bruno (71-80) ingressaram simultaneamente em 2019 numa SA fundada em 1978 em Matão.",
+          "flags": [
+            "dois sócios 80+",
+            "reorganização 2019",
+            "48 anos operação"
+          ]
         }
       },
       {
@@ -47946,6 +49434,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "José de Sousa Machado (80+) figura no quadro desde 1982, antes da fundação formal em 1983, com holding Macprado Oftalmicos presente desde o início.",
+          "flags": [
+            "fundador 80+",
+            "holding controladora",
+            "capital simbólico"
+          ]
         }
       },
       {
@@ -48016,6 +49512,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Cinco sócios entraram juntos em 2010 — dois na faixa 80+ (Padilha e Maisonnave) e três na 71-80 — sem nenhum sócio abaixo de 70 anos.",
+          "flags": [
+            "dois sócios 80+",
+            "quadro 71+ unânime",
+            "entrada coletiva 2010"
+          ]
         }
       },
       {
@@ -48081,6 +49585,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Antonio Campanelli (80+) está no quadro desde a fundação em 1982 com capital de R$ 69 milhões; Victor (41-50) entrou em 2018.",
+          "flags": [
+            "fundador 80+ ativo",
+            "capital R$69M",
+            "sucessor 41-50"
+          ]
         }
       },
       {
@@ -48135,6 +49647,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "João de Castro Branco e Antonio Feierabend (ambos 80+) controlam empresa de 43 anos sem qualquer sócio abaixo dos 70 no quadro atual.",
+          "flags": [
+            "dois sócios 80+",
+            "sem sucessor jovem",
+            "43 anos operação"
+          ]
         }
       },
       {
@@ -48210,6 +49730,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Família Camolesi com cinco sócios no quadro desde 1998: Maria (80+) e quatro familiares nas faixas 71-80 e 41-50, cobrindo três gerações.",
+          "flags": [
+            "matriarca 80+",
+            "três gerações ativas",
+            "quadro estável 1998"
+          ]
         }
       },
       {
@@ -48314,6 +49842,14 @@
             "Quadro com 8 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Darly Gomide Arruda e Hernani Bulle Arruda (ambos 80+, desde 1984) lideram SA de Cajobi fundada há 42 anos com oito sócios no quadro.",
+          "flags": [
+            "dois fundadores 80+",
+            "8 sócios",
+            "SA complexa"
+          ]
         }
       },
       {
@@ -48375,6 +49911,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966, a própria razão social integra o quadro como sócia desde 2018; Ignez Bassinello (80+) ingressou em 2019 ao lado de Maurício (61-70).",
+          "flags": [
+            "60 anos operação",
+            "sócia 80+ recente",
+            "holding cruzada"
+          ]
         }
       },
       {
@@ -48447,6 +49991,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "SA de 56 anos com R$ 52 milhões de capital; Marcos Catani (80+) e dois sócios na faixa 71-80 ingressaram entre 2020 e 2022.",
+          "flags": [
+            "sócio 80+ desde 2022",
+            "reestruturação recente",
+            "capital R$52M"
+          ]
         }
       },
       {
@@ -48515,6 +50067,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Roque e João Luiz Quagliato (ambos 80+, desde 2002) em SA de R$ 184 milhões fundada em 1966; terceira geração já representada no quadro.",
+          "flags": [
+            "capital R$184M",
+            "dois sócios 80+",
+            "terceira geração presente"
+          ]
         }
       },
       {
@@ -51241,8 +52801,8 @@
         }
       }
     ],
-    "reasoned": false,
-    "reasonedCount": 0
+    "reasoned": true,
+    "reasonedCount": 15
   },
   "agro|produtores de cana e cafe com socios idosos": {
     "filters": {
@@ -51337,6 +52897,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1985, Aurea Amorim (80+) é sócia desde a fundação; quatro familiares ingressaram juntos em 2016, sugerindo reorganização societária.",
+          "flags": [
+            "fundadora 80+",
+            "entrada coletiva 2016",
+            "família numerosa"
+          ]
         }
       },
       {
@@ -51393,6 +52961,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Graziela Lafer Galvão (80+) conduz a empresa desde 1984; holding GL Investimentos integrou o quadro em 2002, com capital superior a R$ 24 milhões.",
+          "flags": [
+            "fundadora 80+",
+            "holding no quadro",
+            "capital R$24M"
+          ]
         }
       },
       {
@@ -51449,6 +53025,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Olídio Megiani (80+) no quadro desde a fundação em 1984, ao lado de Suzete (71-80, desde 1995) e da holding Mercantil Santa Elisa.",
+          "flags": [
+            "fundador 80+",
+            "sócia 71-80",
+            "holding estrutural"
+          ]
         }
       },
       {
@@ -51512,6 +53096,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "SA fechada de 60 anos com Pedro Paula Leite de Barros (80+) no quadro desde 1983; Ricardo Vidigal entrou em 2025, sinalizando movimento recente.",
+          "flags": [
+            "sócio 80+ histórico",
+            "SA 60 anos",
+            "entrada 2025"
+          ]
         }
       },
       {
@@ -51561,6 +53153,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Ludwig Paraschin (80+, desde 2004) e Elvira Paraschin (80+, ingressante em 2025) controlam empresa de 41 anos com capital de R$ 30 mil.",
+          "flags": [
+            "dois sócios 80+",
+            "entrada 80+ em 2025",
+            "capital simbólico"
+          ]
         }
       },
       {
@@ -51622,6 +53222,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Warner e Heder Bambozzi (ambos 80+) e Bruno (71-80) ingressaram simultaneamente em 2019 numa SA fundada em 1978 em Matão.",
+          "flags": [
+            "dois sócios 80+",
+            "reorganização 2019",
+            "48 anos operação"
+          ]
         }
       },
       {
@@ -51678,6 +53286,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "José de Sousa Machado (80+) figura no quadro desde 1982, antes da fundação formal em 1983, com holding Macprado Oftalmicos presente desde o início.",
+          "flags": [
+            "fundador 80+",
+            "holding controladora",
+            "capital simbólico"
+          ]
         }
       },
       {
@@ -51748,6 +53364,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Cinco sócios entraram juntos em 2010 — dois na faixa 80+ (Padilha e Maisonnave) e três na 71-80 — sem nenhum sócio abaixo de 70 anos.",
+          "flags": [
+            "dois sócios 80+",
+            "quadro 71+ unânime",
+            "entrada coletiva 2010"
+          ]
         }
       },
       {
@@ -51813,6 +53437,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Antonio Campanelli (80+) está no quadro desde a fundação em 1982 com capital de R$ 69 milhões; Victor (41-50) entrou em 2018.",
+          "flags": [
+            "fundador 80+ ativo",
+            "capital R$69M",
+            "sucessor 41-50"
+          ]
         }
       },
       {
@@ -51867,6 +53499,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "João de Castro Branco e Antonio Feierabend (ambos 80+) controlam empresa de 43 anos sem qualquer sócio abaixo dos 70 no quadro atual.",
+          "flags": [
+            "dois sócios 80+",
+            "sem sucessor jovem",
+            "43 anos operação"
+          ]
         }
       },
       {
@@ -51942,6 +53582,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Família Camolesi com cinco sócios no quadro desde 1998: Maria (80+) e quatro familiares nas faixas 71-80 e 41-50, cobrindo três gerações.",
+          "flags": [
+            "matriarca 80+",
+            "três gerações ativas",
+            "quadro estável 1998"
+          ]
         }
       },
       {
@@ -52046,6 +53694,14 @@
             "Quadro com 8 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Darly Gomide Arruda e Hernani Bulle Arruda (ambos 80+, desde 1984) lideram SA de Cajobi fundada há 42 anos com oito sócios no quadro.",
+          "flags": [
+            "dois fundadores 80+",
+            "8 sócios",
+            "SA complexa"
+          ]
         }
       },
       {
@@ -52107,6 +53763,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966, a própria razão social integra o quadro como sócia desde 2018; Ignez Bassinello (80+) ingressou em 2019 ao lado de Maurício (61-70).",
+          "flags": [
+            "60 anos operação",
+            "sócia 80+ recente",
+            "holding cruzada"
+          ]
         }
       },
       {
@@ -52179,6 +53843,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "SA de 56 anos com R$ 52 milhões de capital; Marcos Catani (80+) e dois sócios na faixa 71-80 ingressaram entre 2020 e 2022.",
+          "flags": [
+            "sócio 80+ desde 2022",
+            "reestruturação recente",
+            "capital R$52M"
+          ]
         }
       },
       {
@@ -52247,6 +53919,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Roque e João Luiz Quagliato (ambos 80+, desde 2002) em SA de R$ 184 milhões fundada em 1966; terceira geração já representada no quadro.",
+          "flags": [
+            "capital R$184M",
+            "dois sócios 80+",
+            "terceira geração presente"
+          ]
         }
       },
       {
@@ -54973,8 +56653,8 @@
         }
       }
     ],
-    "reasoned": false,
-    "reasonedCount": 0
+    "reasoned": true,
+    "reasonedCount": 15
   },
   "agro|pecuaria com socios acima de 60 anos": {
     "filters": {
@@ -55069,6 +56749,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1985, Aurea Amorim (80+) é sócia desde a fundação; quatro familiares ingressaram juntos em 2016, sugerindo reorganização societária.",
+          "flags": [
+            "fundadora 80+",
+            "entrada coletiva 2016",
+            "família numerosa"
+          ]
         }
       },
       {
@@ -55125,6 +56813,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Graziela Lafer Galvão (80+) conduz a empresa desde 1984; holding GL Investimentos integrou o quadro em 2002, com capital superior a R$ 24 milhões.",
+          "flags": [
+            "fundadora 80+",
+            "holding no quadro",
+            "capital R$24M"
+          ]
         }
       },
       {
@@ -55181,6 +56877,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Olídio Megiani (80+) no quadro desde a fundação em 1984, ao lado de Suzete (71-80, desde 1995) e da holding Mercantil Santa Elisa.",
+          "flags": [
+            "fundador 80+",
+            "sócia 71-80",
+            "holding estrutural"
+          ]
         }
       },
       {
@@ -55244,6 +56948,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "SA fechada de 60 anos com Pedro Paula Leite de Barros (80+) no quadro desde 1983; Ricardo Vidigal entrou em 2025, sinalizando movimento recente.",
+          "flags": [
+            "sócio 80+ histórico",
+            "SA 60 anos",
+            "entrada 2025"
+          ]
         }
       },
       {
@@ -55293,6 +57005,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Ludwig Paraschin (80+, desde 2004) e Elvira Paraschin (80+, ingressante em 2025) controlam empresa de 41 anos com capital de R$ 30 mil.",
+          "flags": [
+            "dois sócios 80+",
+            "entrada 80+ em 2025",
+            "capital simbólico"
+          ]
         }
       },
       {
@@ -55354,6 +57074,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Warner e Heder Bambozzi (ambos 80+) e Bruno (71-80) ingressaram simultaneamente em 2019 numa SA fundada em 1978 em Matão.",
+          "flags": [
+            "dois sócios 80+",
+            "reorganização 2019",
+            "48 anos operação"
+          ]
         }
       },
       {
@@ -55410,6 +57138,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "José de Sousa Machado (80+) figura no quadro desde 1982, antes da fundação formal em 1983, com holding Macprado Oftalmicos presente desde o início.",
+          "flags": [
+            "fundador 80+",
+            "holding controladora",
+            "capital simbólico"
+          ]
         }
       },
       {
@@ -55480,6 +57216,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Cinco sócios entraram juntos em 2010 — dois na faixa 80+ (Padilha e Maisonnave) e três na 71-80 — sem nenhum sócio abaixo de 70 anos.",
+          "flags": [
+            "dois sócios 80+",
+            "quadro 71+ unânime",
+            "entrada coletiva 2010"
+          ]
         }
       },
       {
@@ -55545,6 +57289,14 @@
             "Quadro com 3 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Antonio Campanelli (80+) está no quadro desde a fundação em 1982 com capital de R$ 69 milhões; Victor (41-50) entrou em 2018.",
+          "flags": [
+            "fundador 80+ ativo",
+            "capital R$69M",
+            "sucessor 41-50"
+          ]
         }
       },
       {
@@ -55599,6 +57351,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "João de Castro Branco e Antonio Feierabend (ambos 80+) controlam empresa de 43 anos sem qualquer sócio abaixo dos 70 no quadro atual.",
+          "flags": [
+            "dois sócios 80+",
+            "sem sucessor jovem",
+            "43 anos operação"
+          ]
         }
       },
       {
@@ -55674,6 +57434,14 @@
             "Quadro com 5 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Família Camolesi com cinco sócios no quadro desde 1998: Maria (80+) e quatro familiares nas faixas 71-80 e 41-50, cobrindo três gerações.",
+          "flags": [
+            "matriarca 80+",
+            "três gerações ativas",
+            "quadro estável 1998"
+          ]
         }
       },
       {
@@ -55778,6 +57546,14 @@
             "Quadro com 8 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Darly Gomide Arruda e Hernani Bulle Arruda (ambos 80+, desde 1984) lideram SA de Cajobi fundada há 42 anos com oito sócios no quadro.",
+          "flags": [
+            "dois fundadores 80+",
+            "8 sócios",
+            "SA complexa"
+          ]
         }
       },
       {
@@ -55839,6 +57615,14 @@
             "Quadro com 2 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Fundada em 1966, a própria razão social integra o quadro como sócia desde 2018; Ignez Bassinello (80+) ingressou em 2019 ao lado de Maurício (61-70).",
+          "flags": [
+            "60 anos operação",
+            "sócia 80+ recente",
+            "holding cruzada"
+          ]
         }
       },
       {
@@ -55911,6 +57695,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "SA de 56 anos com R$ 52 milhões de capital; Marcos Catani (80+) e dois sócios na faixa 71-80 ingressaram entre 2020 e 2022.",
+          "flags": [
+            "sócio 80+ desde 2022",
+            "reestruturação recente",
+            "capital R$52M"
+          ]
         }
       },
       {
@@ -55979,6 +57771,14 @@
             "Quadro com 4 sócios"
           ],
           "perfil_sucessorio": true
+        },
+        "insight": {
+          "one_liner": "Roque e João Luiz Quagliato (ambos 80+, desde 2002) em SA de R$ 184 milhões fundada em 1966; terceira geração já representada no quadro.",
+          "flags": [
+            "capital R$184M",
+            "dois sócios 80+",
+            "terceira geração presente"
+          ]
         }
       },
       {
@@ -58705,7 +60505,7 @@
         }
       }
     ],
-    "reasoned": false,
-    "reasonedCount": 0
+    "reasoned": true,
+    "reasonedCount": 15
   }
 }

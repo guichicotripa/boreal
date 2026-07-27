@@ -4,6 +4,12 @@
  *   node --experimental-strip-types --env-file=.env.local scripts/cache-sub.ts
  *   node --experimental-strip-types --env-file=.env.local scripts/cache-sub.ts --so=setor
  *   node --experimental-strip-types --env-file=.env.local scripts/cache-sub.ts --sem-reasoner
+ *   node --experimental-strip-types --env-file=.env.local scripts/cache-sub.ts --refazer-insights
+ *
+ * REAPROVEITA insight já escrito sobre a mesma empresa, porque o texto descreve a
+ * EMPRESA e não a consulta. Na prática o browse de setor cobre o topo de todas as
+ * teses, então a 2ª execução em diante quase não chama o LLM. Use
+ * `--refazer-insights` quando o prompt ou a regra de linguagem mudar.
  *
  * Não usa ANTHROPIC_API_KEY e não precisa de dev server: o reasoner roda pelo
  * Agent SDK na assinatura do Claude Code (custo zero). Se o token OAuth estiver
@@ -33,6 +39,7 @@ import type { Empresa, Socio, SearchFilters } from "../src/lib/types.ts";
 const args = process.argv.slice(2);
 const so = (args.find((a) => a.startsWith("--so=")) ?? "").slice(5); // "setor" | "demo" | ""
 const semReasoner = args.includes("--sem-reasoner");
+const ROOT = path.resolve(".");
 const LIMIT = 50;
 const TOP_INSIGHT = 15;
 
@@ -123,6 +130,40 @@ function compact(e: Empresa) {
 type Insight = { empresa_id: string; one_liner: string; flags: string[] };
 
 let descartadosPorLinguagem = 0;
+let reaproveitados = 0;
+
+/* Índice de insights já escritos, por empresa.
+   O insight descreve a EMPRESA (ano de fundação, quadro societário, capital), não
+   a consulta que a encontrou — então serve a qualquer tese que traga a mesma
+   empresa. Medido em 25/07/2026: as 225 empresas do top-15 das 15 teses já
+   estavam TODAS descritas no browse de setor. Reescrever era pagar de novo pelo
+   mesmo texto, e foi o que estourou o limite de sessão no meio da execução.
+
+   Passa pelo filtro de linguagem na releitura, não só na geração: o cache antigo
+   foi escrito antes da regra existir e contém texto que hoje não pode sair. É
+   justamente por isso que a guarda é filtro de publicação, e não só instrução. */
+function indexarInsightsExistentes(): Map<string, { one_liner: string; flags: string[] }> {
+  const idx = new Map<string, { one_liner: string; flags: string[] }>();
+  const arquivos = ["src/lib/setor-cache.json", "src/lib/demo-cache.json"];
+  for (const arq of arquivos) {
+    let dados: unknown;
+    try { dados = JSON.parse(readFileSync(path.resolve(ROOT, arq), "utf8")); } catch { continue; }
+    const entradas = arq.includes("setor-cache")
+      ? Object.values((dados as { porSetor: Record<string, { empresas: Empresa[] }> }).porSetor ?? {})
+      : Object.values((dados ?? {}) as Record<string, { empresas: Empresa[] }>);
+    for (const entrada of entradas) {
+      for (const e of entrada?.empresas ?? []) {
+        if (!e.insight || idx.has(e.id)) continue;
+        const limpo = filtrarInsight(
+          { empresa_id: e.id, one_liner: e.insight.one_liner, flags: e.insight.flags },
+          e.razao_social
+        );
+        if (limpo) idx.set(e.id, { one_liner: limpo.one_liner, flags: limpo.flags });
+      }
+    }
+  }
+  return idx;
+}
 
 async function reason(empresas: Empresa[]): Promise<Insight[]> {
   const sample = empresas.slice(0, TOP_INSIGHT).map(compact);
@@ -182,25 +223,45 @@ async function montar(filters: SearchFilters, rotulo: string) {
     .sort((a, b) => (b.score?.score ?? 0) - (a.score?.score ?? 0));
 
   let reasonedCount = 0;
+  let doIndice = 0;
   if (!semReasoner) {
-    try {
-      const insights = await reason(scored);
-      const byId = new Map(insights.map((i) => [i.empresa_id, i]));
-      for (const e of scored) {
-        const ins = byId.get(e.id);
-        if (ins) { e.insight = { one_liner: ins.one_liner, flags: ins.flags }; reasonedCount++; }
+    const topo = scored.slice(0, TOP_INSIGHT);
+
+    // 1. Reaproveita o que já foi escrito sobre estas empresas.
+    for (const e of topo) {
+      const ja = INDICE_INSIGHTS.get(e.id);
+      if (ja) { e.insight = { ...ja }; reasonedCount++; doIndice++; reaproveitados++; }
+    }
+
+    // 2. Só chama o LLM para as que ninguém descreveu ainda.
+    const faltando = topo.filter((e) => !e.insight);
+    if (faltando.length) {
+      try {
+        const insights = await reason(faltando);
+        const byId = new Map(insights.map((i) => [i.empresa_id, i]));
+        for (const e of faltando) {
+          const ins = byId.get(e.id);
+          if (ins) {
+            e.insight = { one_liner: ins.one_liner, flags: ins.flags };
+            INDICE_INSIGHTS.set(e.id, { one_liner: ins.one_liner, flags: ins.flags });
+            reasonedCount++;
+          }
+        }
+      } catch (err) {
+        /* Falha de reasoner não derruba o cache: o ranking, que é o que importa,
+           já está correto. O que ela NÃO pode fazer é apagar insight que já existe —
+           por isso o reaproveitamento acontece ANTES da chamada. Uma execução que
+           estourou o limite de sessão no meio já zerou o demo-cache inteiro assim. */
+        console.log(`\n    ⚠ reasoner falhou (${faltando.length} sem descrição): ${(err as Error).message}`);
       }
-    } catch (err) {
-      // Falha de reasoner não pode derrubar o cache: o ranking (que é o que importa)
-      // já está correto. Melhor cache certo sem comentário que cache velho com comentário.
-      console.log(`\n    ⚠ reasoner falhou: ${(err as Error).message}`);
     }
   }
 
   const medio = scored.length
     ? (scored.reduce((a, e) => a + (e.score?.score ?? 0), 0) / scored.length).toFixed(1)
     : "0";
-  console.log(`${rotulo.padEnd(52)} ${scored.length} empresas · score médio ${medio} · ${reasonedCount} insights`);
+  const origem = doIndice ? ` (${doIndice} reaproveitados)` : "";
+  console.log(`${rotulo.padEnd(52)} ${scored.length} empresas · score médio ${medio} · ${reasonedCount} insights${origem}`);
 
   return {
     filters,
@@ -212,8 +273,15 @@ async function montar(filters: SearchFilters, rotulo: string) {
   };
 }
 
-const ROOT = path.resolve(".");
 const semTeto = { minFaixaEtaria: null, maxAnoFundacao: null, ufs: null, setorForaDaBase: null };
+
+/* Lido ANTES de qualquer escrita: os arquivos de cache são a fonte do índice, e
+   este script os sobrescreve. `--refazer-insights` ignora o que existe e manda
+   tudo de volta pro LLM (usar quando o prompt ou a regra de linguagem mudar). */
+const INDICE_INSIGHTS = args.includes("--refazer-insights")
+  ? new Map<string, { one_liner: string; flags: string[] }>()
+  : indexarInsightsExistentes();
+console.log(`Insights já escritos disponíveis para reaproveitar: ${INDICE_INSIGHTS.size}`);
 
 // ── 1. Browse por setor ──────────────────────────────────────────────────────
 if (so !== "demo") {
