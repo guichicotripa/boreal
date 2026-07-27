@@ -3,20 +3,82 @@
   "porSetor": {
     "metalmec": {
       "filters": {
+        "minFaixaEtaria": null,
+        "maxAnoFundacao": null,
+        "ufs": null,
+        "setorForaDaBase": null,
         "cnaePrefixes": [
           "24",
           "25",
           "28"
         ],
-        "minFaixaEtaria": null,
-        "maxAnoFundacao": null,
-        "ufs": null,
-        "setorForaDaBase": null,
         "limit": 50
       },
       "parsedBy": "heuristic",
       "count": 50,
       "empresas": [
+        {
+          "id": "6849dfd9-a629-4b41-b0c5-447dea74f9ec",
+          "cnpj": "50925890000110",
+          "razao_social": "PRENSA JUNDIAI S/A",
+          "nome_fantasia": "PRENSAJUNDIAI",
+          "cnae_principal": "2840200",
+          "cnae_principal_desc": "Fabricação de máquinas-ferramenta, peças e acessórios",
+          "cnaes_secundarios": [
+            {
+              "codigo": "3314710",
+              "descricao": "Manutenção e reparação de máquinas e equipamentos para uso geral não especificados anteriormente"
+            },
+            {
+              "codigo": "3321000",
+              "descricao": "Instalação de máquinas e equipamentos industriais"
+            },
+            {
+              "codigo": "4614100",
+              "descricao": "Representantes comerciais e agentes do comércio de máquinas, equipamentos, embarcações e aeronaves"
+            }
+          ],
+          "natureza_juridica": "Sociedade Anônima Fechada",
+          "municipio": "Campo Limpo Paulista",
+          "uf": "SP",
+          "data_inicio_atividade": "1973-07-13",
+          "capital_social": 52500000,
+          "porte": "DEMAIS",
+          "telefone": "1140398240",
+          "email": "cesar.santos@prensajundiai.com",
+          "socio": [
+            {
+              "id": "c8b4c3ed-832c-4a2f-9794-961f293b5e13",
+              "nome": "LUCAS CREMONESE RODRIGUES",
+              "faixa_etaria": "4",
+              "qualificacao": "16",
+              "data_entrada_sociedade": "2015-05-06"
+            },
+            {
+              "id": "1b876018-22ab-4055-8cc4-f2e341687500",
+              "nome": "UBIRAJARA RODRIGUES",
+              "faixa_etaria": "9",
+              "qualificacao": "10",
+              "data_entrada_sociedade": "1973-07-13"
+            }
+          ],
+          "score": {
+            "score": 100,
+            "breakdown": {
+              "idade_socios": 30,
+              "antiguidade_empresa": 30,
+              "porte_relevancia": 30,
+              "quadro_plural": 10
+            },
+            "sinais": [
+              "Sócio mais velho na faixa 80+ anos",
+              "Fundada em 1973 (53 anos de operação)",
+              "Porte relevante (não-ME/EPP)",
+              "Quadro com 2 sócios"
+            ],
+            "perfil_sucessorio": true
+          }
+        },
         {
           "id": "348e7971-40a9-4d14-99fe-fb3dbdbc8b99",
           "cnpj": "61153391000179",
@@ -64,19 +126,60 @@
               "Quadro com 2 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "score_v1": {
+          }
+        },
+        {
+          "id": "a4379107-47b5-48ec-a641-960e7fdd861c",
+          "cnpj": "75626556000197",
+          "razao_social": "SATHEL USINAS TERMO E HIDRO ELETRICAS S/A",
+          "nome_fantasia": null,
+          "cnae_principal": "2513600",
+          "cnae_principal_desc": "Fabricação de obras de caldeiraria pesada",
+          "cnaes_secundarios": [
+            {
+              "codigo": "3321000",
+              "descricao": "Instalação de máquinas e equipamentos industriais"
+            }
+          ],
+          "natureza_juridica": "Sociedade Anônima Fechada",
+          "municipio": "Cotia",
+          "uf": "SP",
+          "data_inicio_atividade": "1981-05-27",
+          "capital_social": 0,
+          "porte": "DEMAIS",
+          "telefone": "1146122613",
+          "email": "daysi.quintino@sathel.com.br",
+          "socio": [
+            {
+              "id": "50ce2134-de20-4d30-a379-7ae649e5e9df",
+              "nome": "THEREZINHA CALDERAN QUINTINO",
+              "faixa_etaria": "9",
+              "qualificacao": "10",
+              "data_entrada_sociedade": "2009-07-27"
+            },
+            {
+              "id": "62c1bb54-2fb1-4358-a700-46b9a6d93baa",
+              "nome": "ANNARIO ROCHA QUINTINO",
+              "faixa_etaria": "9",
+              "qualificacao": "16",
+              "data_entrada_sociedade": "2009-07-27"
+            }
+          ],
+          "score": {
             "score": 100,
-            "delta": 0,
-            "investigado_em": "2026-06-03T14:44:09.607941+00:00"
-          },
-          "insight": {
-            "one_liner": "Fundida em 1966 em Jandira, tem sócia Yara (80+) que entrou apenas em 2023, sinalizando reorganização societária tardia.",
-            "flags": [
-              "sócio 80+ recente",
-              "60 anos operação",
-              "quadro enxuto"
-            ]
+            "breakdown": {
+              "idade_socios": 30,
+              "antiguidade_empresa": 30,
+              "porte_relevancia": 30,
+              "quadro_plural": 10
+            },
+            "sinais": [
+              "2 sócios na faixa 80+ anos",
+              "Fundada em 1981 (45 anos de operação)",
+              "Porte relevante (não-ME/EPP)",
+              "Quadro com 2 sócios"
+            ],
+            "perfil_sucessorio": true
           }
         },
         {
@@ -126,14 +229,6 @@
               "Quadro com 2 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Ricardo Naschold Neto (80+) é sócio fundador desde 1980 em Capela do Alto, com capital social de R$1,35M e sem renovação geracional visível.",
-            "flags": [
-              "fundador 80+",
-              "sócio desde 1980",
-              "dupla etária"
-            ]
           }
         },
         {
@@ -197,14 +292,6 @@
               "Quadro com 3 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Fundida em 1966 em Guarulhos, Paschoal Thomeu e Annunciato (ambos 80+) lideram empresa hoje em recuperação judicial com capital zerado.",
-            "flags": [
-              "recuperação judicial",
-              "dois fundadores 80+",
-              "60 anos operação"
-            ]
           }
         },
         {
@@ -254,14 +341,6 @@
               "Quadro com 2 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Gino Dalpiaz (80+) é sócio fundador da Cogi Industrial desde 1983 em Capivari, empresa de arames com capital social zerado.",
-            "flags": [
-              "fundador 80+",
-              "capital zerado",
-              "sócio desde 1983"
-            ]
           }
         },
         {
@@ -344,14 +423,6 @@
               "Quadro com 6 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Fundida em 1969, a Roll For tem 5 dos 6 sócios na faixa 80+, três deles desde 1968, hoje em recuperação judicial em Guarulhos.",
-            "flags": [
-              "5 sócios 80+",
-              "recuperação judicial",
-              "quadro envelhecido"
-            ]
           }
         },
         {
@@ -443,14 +514,6 @@
               "Quadro com 5 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Engebasa de Cubatão, fundada em 1972 com capital de R$50,4M, tem todos os 5 sócios na faixa 80+ e está em recuperação judicial.",
-            "flags": [
-              "100% sócios 80+",
-              "recuperação judicial",
-              "capital expressivo"
-            ]
           }
         },
         {
@@ -528,14 +591,6 @@
               "Quadro com 6 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Fundida em 1972 em Guarulhos, a Luxalum acaba de incluir sócia Maria Izabella (13-20 anos) em 2025, enquanto dois fundadores permanecem 80+.",
-            "flags": [
-              "sócio menor idade",
-              "fundadores 80+",
-              "entrada familiar 2025"
-            ]
           }
         },
         {
@@ -585,14 +640,6 @@
               "Quadro com 2 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Masaru Ikegami (80+) e Haruyoshi Takaki (71-80) tocam a Mashit em Pindamonhangaba desde 1996 com capital social de apenas R$60 mil.",
-            "flags": [
-              "dupla envelhecida",
-              "capital mínimo",
-              "sem renovação"
-            ]
           }
         },
         {
@@ -642,19 +689,6 @@
               "Quadro com 2 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "score_v1": {
-            "score": 100,
-            "delta": 0,
-            "investigado_em": "2026-07-23T20:27:45.508307+00:00"
-          },
-          "insight": {
-            "one_liner": "Milton Bogus (80+) está na Metalúrgica Fundex desde 1965, empresa de Diadema com 60 anos de operação e apenas dois sócios no quadro.",
-            "flags": [
-              "fundador 80+",
-              "60 anos operação",
-              "quadro enxuto"
-            ]
           }
         },
         {
@@ -725,14 +759,6 @@
               "Quadro com 5 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Estamparia Rossi de Limeira tem três sócios 80+ fundadores desde 1966, capital social de R$1 e quadro ainda dominado pela geração original.",
-            "flags": [
-              "3 fundadores 80+",
-              "capital simbólico",
-              "60 anos operação"
-            ]
           }
         },
         {
@@ -920,14 +946,6 @@
               "Quadro com 21 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Nigro Alumínio de Araraquara, fundada em 1966, tem 21 sócios com três na faixa 80+ e quarta geração (31-40) já inserida desde 2013.",
-            "flags": [
-              "21 sócios",
-              "multigenracional",
-              "governança complexa"
-            ]
           }
         },
         {
@@ -1008,14 +1026,6 @@
               "Quadro com 4 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Angelino Barbosa (80+) fundou a IMAB em Embu-Guaçu em 1965 e permanece no quadro ao lado de filhos na faixa 51-60 e 61-70.",
-            "flags": [
-              "fundador 80+",
-              "61 anos operação",
-              "transição em curso"
-            ]
           }
         },
         {
@@ -1077,14 +1087,6 @@
               "Quadro com 3 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "João Marques Castelhano (80+) fundou a Jomarca em 1972 em Guarulhos; com capital de R$80M, é a maior da lista com risco concentrado no fundador.",
-            "flags": [
-              "fundador 80+",
-              "maior capital lista",
-              "transição iniciada"
-            ]
           }
         },
         {
@@ -1139,14 +1141,6 @@
               "Quadro com 2 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Ljubomir Pjevac (80+) é sócio da Eletro-Liga H-5 desde sua fundação em 1972 em Guarulhos, com Mauro Pjevac (51-60) como único par.",
-            "flags": [
-              "fundador 80+",
-              "dupla familiar",
-              "54 anos operação"
-            ]
           }
         },
         {
@@ -1210,14 +1204,6 @@
               "Quadro com 4 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Hiroko Hayashida (80+) está na Signa Matic desde 1977 em Osasco; os três demais sócios são filhos, todos no quadro desde 2008.",
-            "flags": [
-              "matriarca 80+",
-              "filhos 2ª geração",
-              "52 anos operação"
-            ]
           }
         },
         {
@@ -3537,146 +3523,20 @@
             ],
             "perfil_sucessorio": true
           }
-        },
-        {
-          "id": "6849dfd9-a629-4b41-b0c5-447dea74f9ec",
-          "cnpj": "50925890000110",
-          "razao_social": "PRENSA JUNDIAI S/A",
-          "nome_fantasia": "PRENSAJUNDIAI",
-          "cnae_principal": "2840200",
-          "cnae_principal_desc": "Fabricação de máquinas-ferramenta, peças e acessórios",
-          "cnaes_secundarios": [
-            {
-              "codigo": "3314710",
-              "descricao": "Manutenção e reparação de máquinas e equipamentos para uso geral não especificados anteriormente"
-            },
-            {
-              "codigo": "3321000",
-              "descricao": "Instalação de máquinas e equipamentos industriais"
-            },
-            {
-              "codigo": "4614100",
-              "descricao": "Representantes comerciais e agentes do comércio de máquinas, equipamentos, embarcações e aeronaves"
-            }
-          ],
-          "natureza_juridica": "Sociedade Anônima Fechada",
-          "municipio": "Campo Limpo Paulista",
-          "uf": "SP",
-          "data_inicio_atividade": "1973-07-13",
-          "capital_social": 52500000,
-          "porte": "DEMAIS",
-          "telefone": "1140398240",
-          "email": "cesar.santos@prensajundiai.com",
-          "socio": [
-            {
-              "id": "c8b4c3ed-832c-4a2f-9794-961f293b5e13",
-              "nome": "LUCAS CREMONESE RODRIGUES",
-              "faixa_etaria": "4",
-              "qualificacao": "16",
-              "data_entrada_sociedade": "2015-05-06"
-            },
-            {
-              "id": "1b876018-22ab-4055-8cc4-f2e341687500",
-              "nome": "UBIRAJARA RODRIGUES",
-              "faixa_etaria": "9",
-              "qualificacao": "10",
-              "data_entrada_sociedade": "1973-07-13"
-            }
-          ],
-          "score": {
-            "score": 100,
-            "breakdown": {
-              "idade_socios": 30,
-              "antiguidade_empresa": 30,
-              "porte_relevancia": 30,
-              "quadro_plural": 10
-            },
-            "sinais": [
-              "Sócio mais velho na faixa 80+ anos",
-              "Fundada em 1973 (53 anos de operação)",
-              "Porte relevante (não-ME/EPP)",
-              "Quadro com 2 sócios"
-            ],
-            "perfil_sucessorio": true
-          },
-          "score_v1": {
-            "score": 81,
-            "delta": -19,
-            "investigado_em": "2026-06-03T14:41:04.964106+00:00"
-          }
-        },
-        {
-          "id": "a4379107-47b5-48ec-a641-960e7fdd861c",
-          "cnpj": "75626556000197",
-          "razao_social": "SATHEL USINAS TERMO E HIDRO ELETRICAS S/A",
-          "nome_fantasia": null,
-          "cnae_principal": "2513600",
-          "cnae_principal_desc": "Fabricação de obras de caldeiraria pesada",
-          "cnaes_secundarios": [
-            {
-              "codigo": "3321000",
-              "descricao": "Instalação de máquinas e equipamentos industriais"
-            }
-          ],
-          "natureza_juridica": "Sociedade Anônima Fechada",
-          "municipio": "Cotia",
-          "uf": "SP",
-          "data_inicio_atividade": "1981-05-27",
-          "capital_social": 0,
-          "porte": "DEMAIS",
-          "telefone": "1146122613",
-          "email": "daysi.quintino@sathel.com.br",
-          "socio": [
-            {
-              "id": "50ce2134-de20-4d30-a379-7ae649e5e9df",
-              "nome": "THEREZINHA CALDERAN QUINTINO",
-              "faixa_etaria": "9",
-              "qualificacao": "10",
-              "data_entrada_sociedade": "2009-07-27"
-            },
-            {
-              "id": "62c1bb54-2fb1-4358-a700-46b9a6d93baa",
-              "nome": "ANNARIO ROCHA QUINTINO",
-              "faixa_etaria": "9",
-              "qualificacao": "16",
-              "data_entrada_sociedade": "2009-07-27"
-            }
-          ],
-          "score": {
-            "score": 100,
-            "breakdown": {
-              "idade_socios": 30,
-              "antiguidade_empresa": 30,
-              "porte_relevancia": 30,
-              "quadro_plural": 10
-            },
-            "sinais": [
-              "2 sócios na faixa 80+ anos",
-              "Fundada em 1981 (45 anos de operação)",
-              "Porte relevante (não-ME/EPP)",
-              "Quadro com 2 sócios"
-            ],
-            "perfil_sucessorio": true
-          },
-          "score_v1": {
-            "score": 75,
-            "delta": -25,
-            "investigado_em": "2026-05-30T19:40:41.232854+00:00"
-          }
         }
       ],
-      "reasoned": true,
-      "reasonedCount": 15
+      "reasoned": false,
+      "reasonedCount": 0
     },
     "saude": {
       "filters": {
-        "cnaePrefixes": [
-          "86"
-        ],
         "minFaixaEtaria": null,
         "maxAnoFundacao": null,
         "ufs": null,
         "setorForaDaBase": null,
+        "cnaePrefixes": [
+          "86"
+        ],
         "limit": 50
       },
       "parsedBy": "heuristic",
@@ -3855,14 +3715,6 @@
               "Quadro com 20 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Instituto fundado em 1966 em Campinas acumula 10 sócios na faixa 80+, vários no quadro desde 1969.",
-            "flags": [
-              "10 sócios 80+",
-              "quadro travado 55 anos",
-              "20 sócios ativos"
-            ]
           }
         },
         {
@@ -3926,14 +3778,6 @@
               "Quadro com 4 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Raul de Camargo Vianna, fundador 80+ desde 1974, opera clínica de olhos em SJC com filhos já sócios.",
-            "flags": [
-              "fundador 80+ ativo",
-              "sucessão parcial",
-              "clínica epônima"
-            ]
           }
         },
         {
@@ -4020,14 +3864,6 @@
               "Quadro com 4 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Ruy Barata, sócio fundador 80+ desde 1981, divide nefrologia paulistana com holding familiar e sócios recém-admitidos em 2017.",
-            "flags": [
-              "fundador 80+ ativo",
-              "holding familiar",
-              "sócios 2017 gap"
-            ]
           }
         },
         {
@@ -4084,14 +3920,6 @@
               "Quadro com 3 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Hospital e Maternidade de Rancharia, fundado em 1967, tem sócio 80+ admitido apenas em 2024 em associação com três membros.",
-            "flags": [
-              "sócio 80+ recente",
-              "associação privada",
-              "59 anos operação"
-            ]
           }
         },
         {
@@ -4141,14 +3969,6 @@
               "Quadro com 2 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Dupla de médicos 80+ fundou a B&T em 1985 e segue como únicos sócios após 41 anos, sem sucessores no quadro.",
-            "flags": [
-              "dupla fundadora 80+",
-              "zero sucessores",
-              "quadro travado 41 anos"
-            ]
           }
         },
         {
@@ -4211,14 +4031,6 @@
               "Quadro com 2 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Associação fundada em 1967 tem apenas dois sócios, ambos 80+, um deles admitido tão tarde quanto 2022.",
-            "flags": [
-              "dois sócios 80+",
-              "sem geração seguinte",
-              "associação privada"
-            ]
           }
         },
         {
@@ -4450,14 +4262,6 @@
               "Quadro com 28 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "SEMO, fundada em 1984, renovou quadro em 2022 com 28 sócios, mas ainda carrega sócia 80+ e múltiplos membros da família Fernandes Lopes.",
-            "flags": [
-              "renovação 2022",
-              "família Fernandes Lopes",
-              "sócia 80+ remanescente"
-            ]
           }
         },
         {
@@ -4582,14 +4386,6 @@
               "Quadro com 3 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Fundação Zerrenner, criada em 1966, tem Victorio de Marchi 80+ no conselho desde 2006 ladeado por dois gestores 61-70.",
-            "flags": [
-              "fundação 60 anos",
-              "conselheiro 80+",
-              "governança envelhecida"
-            ]
           }
         },
         {
@@ -4653,14 +4449,6 @@
               "Quadro com 3 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Moacyr Largman, fundador 80+ do Hospital Castelo Branco desde 1969, divide capital com filhas e fundo holandês desde 2008.",
-            "flags": [
-              "fundador 80+ ativo",
-              "sócio estrangeiro",
-              "57 anos operação"
-            ]
           }
         },
         {
@@ -4717,14 +4505,6 @@
               "Quadro com 3 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Três sócios fundadores de 1983 em Ribeirão Preto, todos na faixa 80+, sem nenhum sucessor identificado no quadro.",
-            "flags": [
-              "trio fundador 80+",
-              "zero sucessores",
-              "quadro travado 43 anos"
-            ]
           }
         },
         {
@@ -4781,14 +4561,6 @@
               "Quadro com 3 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Flávio Menezes Sanches, 80+, fundou clínica epônima em 1985 em SBC; filho e filha entraram como sócios apenas em 2019.",
-            "flags": [
-              "fundador epônimo 80+",
-              "sucessão tardia 2019",
-              "clínica familiar"
-            ]
           }
         },
         {
@@ -4852,14 +4624,6 @@
               "Quadro com 4 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Nelson Gushi, fundador 80+ do IDR desde 1974, tem três filhos Chinen Gushi admitidos juntos em 2014 como sucessores.",
-            "flags": [
-              "fundador 80+ ativo",
-              "três herdeiros 2014",
-              "52 anos operação"
-            ]
           }
         },
         {
@@ -4916,14 +4680,6 @@
               "Quadro com 3 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "João Perez Filho, 80+, fundou o Centro Odontológico Perez em 1980; filhos entraram em 1994 e 2012, mas patriarca segue no quadro.",
-            "flags": [
-              "fundador epônimo 80+",
-              "sucessão gradual",
-              "46 anos operação"
-            ]
           }
         },
         {
@@ -5020,14 +4776,6 @@
               "Quadro com 8 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "insight": {
-            "one_liner": "Hospital de Assis S.A., fundado em 1967, tem dois sócios 80+ entre os oito acionistas, com capital social de R$ 1,64 milhão.",
-            "flags": [
-              "dois sócios 80+",
-              "S.A. fechada",
-              "59 anos operação"
-            ]
           }
         },
         {
@@ -8342,19 +8090,19 @@
           }
         }
       ],
-      "reasoned": true,
-      "reasonedCount": 14
+      "reasoned": false,
+      "reasonedCount": 0
     },
     "educacao": {
       "filters": {
-        "cnaePrefixes": [
-          "851",
-          "852"
-        ],
         "minFaixaEtaria": null,
         "maxAnoFundacao": null,
         "ufs": null,
         "setorForaDaBase": null,
+        "cnaePrefixes": [
+          "851",
+          "852"
+        ],
         "limit": 50
       },
       "parsedBy": "heuristic",
@@ -12555,11 +12303,6 @@
               "Quadro com 5 sócios"
             ],
             "perfil_sucessorio": true
-          },
-          "score_v1": {
-            "score": 100,
-            "delta": 0,
-            "investigado_em": "2026-06-13T03:47:30.9966+00:00"
           }
         }
       ],
@@ -12568,15 +12311,15 @@
     },
     "agro": {
       "filters": {
+        "minFaixaEtaria": null,
+        "maxAnoFundacao": null,
+        "ufs": null,
+        "setorForaDaBase": null,
         "cnaePrefixes": [
           "01",
           "02",
           "03"
         ],
-        "minFaixaEtaria": null,
-        "maxAnoFundacao": null,
-        "ufs": null,
-        "setorForaDaBase": null,
         "limit": 50
       },
       "parsedBy": "heuristic",

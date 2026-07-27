@@ -7,6 +7,7 @@ import { reasonAboutEmpresas } from "@/lib/reasoner";
 import { lerScoresV1, aplicarV1 } from "@/lib/research-store";
 import { lerDescartadas, filtrarDescartadas } from "@/lib/descarte-store";
 import { escopoAtual } from "@/lib/escopo";
+import { normalizeQuery } from "@/lib/teses";
 import type { Empresa, Socio, SearchResponse } from "@/lib/types";
 import demoCache from "@/lib/demo-cache.json";
 import setoresData from "@/lib/setores.json";
@@ -19,15 +20,9 @@ function cnaesDoSetor(id: string): string[] | null {
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
-// Normaliza a query pra casar com o cache: lowercase, sem acento, espaços colapsados.
-function normalizeQuery(q: string): string {
-  return q
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
-}
+// normalizeQuery vem de lib/teses: o builder do cache grava a chave com ela, e a
+// rota lê com ela. Eram duas cópias — se divergirem, o cache existe e nunca é
+// encontrado, o que não dá erro nenhum, só fica lento em silêncio.
 
 // cast via unknown: o JSON é gerado pelo próprio pipeline (confiável); evita quebrar
 // o type-check a cada mudança no schema do score.
