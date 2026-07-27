@@ -7,6 +7,7 @@
 
 import Anthropic from "@anthropic-ai/sdk";
 import type { Empresa } from "./types";
+import { REGRA_LINGUAGEM, filtrarInsight } from "./reasoner-guarda";
 
 let _client: Anthropic | null = null;
 function getClient() {
@@ -24,7 +25,8 @@ const SYSTEM =
   "Você é um analista sênior de PE/M&A no Brasil, especializado em empresas " +
   "familiares com risco sucessório. Recebe dados estruturados de empresas e " +
   "escreve análises curtas e específicas. Responde SEMPRE e APENAS com JSON " +
-  "válido (array), sem texto antes/depois, sem markdown.";
+  "válido (array), sem texto antes/depois, sem markdown.\n\n" +
+  REGRA_LINGUAGEM;
 
 const FAIXA_LABEL: Record<string, string> = {
   "1": "0-12", "2": "13-20", "3": "21-30", "4": "31-40", "5": "41-50",
@@ -101,6 +103,7 @@ ${JSON.stringify(sample, null, 2)}`;
   if (!Array.isArray(parsed)) throw new Error("Reasoner: resposta não é array");
 
   // Normaliza — descarta entradas malformadas em vez de quebrar
+  const nomePorId = new Map(empresas.map((e) => [e.id, e.razao_social]));
   return parsed
     .filter((x): x is Record<string, unknown> => x !== null && typeof x === "object")
     .map((x) => ({
@@ -110,5 +113,9 @@ ${JSON.stringify(sample, null, 2)}`;
         ? x.flags.map((f) => String(f).trim()).filter(Boolean).slice(0, 3)
         : [],
     }))
-    .filter((x) => x.empresa_id && x.one_liner);
+    .filter((x) => x.empresa_id && x.one_liner)
+    // Rede de segurança sobre a regra de linguagem: o prompt evita gerar, isto
+    // evita publicar. Ver reasoner-guarda.ts para o que motivou.
+    .map((x) => filtrarInsight(x, nomePorId.get(x.empresa_id)))
+    .filter((x): x is NonNullable<typeof x> => x !== null);
 }

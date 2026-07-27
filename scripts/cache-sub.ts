@@ -27,6 +27,7 @@ import { calcScore } from "../src/lib/scoring.ts";
 import { parseQueryHeuristic } from "../src/lib/query-parser.ts";
 import { SETORES } from "../src/lib/setores.ts";
 import { TESES_POR_SETOR, chaveDemoCache } from "../src/lib/teses.ts";
+import { REGRA_LINGUAGEM, filtrarInsight } from "../src/lib/reasoner-guarda.ts";
 import type { Empresa, Socio, SearchFilters } from "../src/lib/types.ts";
 
 const args = process.argv.slice(2);
@@ -96,7 +97,8 @@ const FAIXA_LABEL: Record<string, string> = {
 const REASONER_SYSTEM =
   "Você é um analista sênior de PE/M&A no Brasil, especializado em empresas familiares com risco " +
   "sucessório. Recebe dados estruturados de empresas e escreve análises curtas e específicas. " +
-  "Responde SEMPRE e APENAS com JSON válido (array), sem texto antes/depois, sem markdown.";
+  "Responde SEMPRE e APENAS com JSON válido (array), sem texto antes/depois, sem markdown.\n\n" +
+  REGRA_LINGUAGEM;
 
 function compact(e: Empresa) {
   return {
@@ -119,6 +121,8 @@ function compact(e: Empresa) {
 }
 
 type Insight = { empresa_id: string; one_liner: string; flags: string[] };
+
+let descartadosPorLinguagem = 0;
 
 async function reason(empresas: Empresa[]): Promise<Insight[]> {
   const sample = empresas.slice(0, TOP_INSIGHT).map(compact);
@@ -151,6 +155,7 @@ ${JSON.stringify(sample, null, 2)}`;
   if (!raw) throw new Error("reasoner sem resultado");
   const match = raw.match(/\[[\s\S]*\]/);
   if (!match) throw new Error("reasoner sem array JSON: " + raw.slice(0, 120));
+  const nomePorId = new Map(empresas.map((e) => [e.id, e.razao_social]));
   return (JSON.parse(match[0]) as unknown[])
     .filter((x): x is Record<string, unknown> => !!x && typeof x === "object")
     .map((x) => ({
@@ -158,7 +163,15 @@ ${JSON.stringify(sample, null, 2)}`;
       one_liner: String(x.one_liner ?? "").trim(),
       flags: Array.isArray(x.flags) ? x.flags.map((f) => String(f).trim()).filter(Boolean).slice(0, 3) : [],
     }))
-    .filter((x) => x.empresa_id && x.one_liner);
+    .filter((x) => x.empresa_id && x.one_liner)
+    // Mesma rede do reasoner ao vivo: prompt evita gerar, filtro evita publicar.
+    .map((x) => {
+      const ok = filtrarInsight(x, nomePorId.get(x.empresa_id));
+      if (!ok) { descartadosPorLinguagem++; return null; }
+      if (ok.flags.length !== x.flags.length) descartadosPorLinguagem++;
+      return ok;
+    })
+    .filter((x): x is Insight => x !== null);
 }
 
 /** Monta a resposta cacheada — mesmo formato que /api/search devolve. */
@@ -254,4 +267,11 @@ if (so !== "setor") {
 
   writeFileSync(destino, JSON.stringify(cache, null, 2) + "\n", "utf8");
   console.log(`\n✓ src/lib/demo-cache.json — ${Object.keys(cache).length} chaves`);
+}
+
+if (descartadosPorLinguagem > 0) {
+  console.log(
+    `\n⚠ ${descartadosPorLinguagem} insight(s)/flag(s) barrados pela regra de linguagem.` +
+    `\n  Se o número for alto, o prompt está deixando passar — ver src/lib/reasoner-guarda.ts.`
+  );
 }
