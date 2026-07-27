@@ -4,6 +4,15 @@ import tam from "@/lib/tam.json";
 import coorte from "@/lib/coorte-destino.json";
 import { SETORES } from "@/lib/setores";
 
+/* "em metalmecânica, saúde e educação" estava escrito à mão e não incluiu o agro
+   quando ele entrou — a tabela logo abaixo mostrava 4 setores e a frase, 3. */
+const LISTA_SETORES = (() => {
+  const nomes = SETORES.map((s) => s.nome.toLowerCase());
+  return nomes.length > 1
+    ? `${nomes.slice(0, -1).join(", ")} e ${nomes[nomes.length - 1]}`
+    : (nomes[0] ?? "");
+})();
+
 export const metadata: Metadata = {
   title: "Mercado",
   description: "Muita empresa em estágio de sucessão, quase nenhum negócio — e por quê.",
@@ -75,7 +84,7 @@ export default function Mercado() {
             </p>
             <p className="mt-3 text-sm leading-snug text-ink-soft">
               empresas com <strong>sócio com 61+ anos, 25+ anos de operação e
-              ainda sob controle familiar</strong> — em metalmecânica, saúde e educação, só em SP.
+              ainda sob controle familiar</strong> — em {LISTA_SETORES}, só em SP.
             </p>
           </div>
           <div className="rounded-xl border border-hairline bg-surface p-6">

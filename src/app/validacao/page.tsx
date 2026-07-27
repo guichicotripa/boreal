@@ -42,17 +42,31 @@ type Vertical = {
   lift_top10: number;
 };
 
-const NOME_VERTICAL: Record<string, string> = {
-  metalmec: "Metalmecânica · interior SP",
-  saude: "Saúde · SP",
-};
+/* Nome do setor vem do registry. Era um mapa com dois setores escritos à mão, e
+   a validação passou a cobrir os quatro — os que faltavam cairiam no fallback e
+   apareceriam na tabela com o id cru ("agro"). */
+const NOME_VERTICAL: Record<string, string> = Object.fromEntries(
+  (setoresData.setores as { id: string; nome: string }[]).map((s) => [s.id, `${s.nome} · SP`])
+);
 
 function fmt(n: number) {
   return n.toLocaleString("pt-BR");
 }
 
+/** Lift de uma feature, formatado. Citado no texto e na tabela — tem que sair da
+ *  mesma fonte, senão o parágrafo envelhece enquanto a tabela atualiza. */
+function liftDe(nome: string) {
+  const f = (lift.features as Feature[]).find((x) => x.nome === nome);
+  return f ? `${f.lift.toLocaleString("pt-BR")}×` : "—";
+}
+
 export default function Validacao() {
   const verticais = validacao.verticais as Vertical[];
+  // Os dois setores citados no texto saem do mesmo artefato da tabela. Antes o
+  // recall da metalmecânica estava escrito à mão e ficou defasado quando a
+  // validação passou a excluir empresa baixada do universo (67% → 71%).
+  const mm = verticais.find((v) => v.vertical === "metalmec");
+  const sa = verticais.find((v) => v.vertical === "saude");
 
   return (
     <div className="min-h-screen bg-canvas text-ink">
@@ -203,9 +217,10 @@ export default function Validacao() {
           </h2>
           <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
             O score é mais forte onde sucessão é o driver estrutural de liquidez.
-            Em <strong>metalmecânica</strong>, recall de 67% com{" "}
-            <strong>lift de 6,7×</strong>. Em <strong>saúde</strong> — onde metade do M&A
-            é consolidação, não sucessão — o sinal cai para 1,8×. Mostramos os dois, sem filtrar.
+            Em <strong>metalmecânica</strong>, recall de {mm?.recall_top10}% com{" "}
+            <strong>lift de {mm?.lift_top10.toLocaleString("pt-BR")}×</strong>. Em{" "}
+            <strong>saúde</strong> — onde a maior parte do M&A é consolidação, não sucessão — o
+            sinal cai para {sa?.lift_top10.toLocaleString("pt-BR")}×. Mostramos todos, sem filtrar.
           </p>
           <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
             <table className="w-full text-sm">
@@ -249,14 +264,15 @@ export default function Validacao() {
             O score não é chutado — ele se calibra contra o que aconteceu
           </h2>
           <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
-            Cada feature foi medida contra 340 aquisições reais. O <strong>lift</strong> é
+            Cada feature foi medida contra {fmt(lift.n_adquiridas)} aquisições reais. O <strong>lift</strong> é
             quanto ela aparece mais nas empresas vendidas do que no universo. É isso que define o peso,
             e o dado <strong>corrigiu a nossa intuição</strong> duas vezes.
           </p>
           <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">
-            &ldquo;Quadro estagnado&rdquo; (0,81×) e &ldquo;sócio único&rdquo; (0×) tinham lift baixo/negativo —
-            a hipótese era que indicavam risco, mas as vendidas dizem o contrário. Saíram. Esse é o
-            loop: minerar o resultado real → medir o lift → recalibrar. Sem leakage, reproduzível.
+            &ldquo;Quadro estagnado&rdquo; ({liftDe("Quadro estagnado 10+ anos")}) e{" "}
+            &ldquo;sócio único&rdquo; ({liftDe("Único sócio PF")}) não sustentaram sinal — a hipótese
+            era que indicavam risco, mas as vendidas dizem o contrário. Saíram. Esse é o loop:
+            minerar o resultado real → medir o lift → recalibrar. Sem leakage, reproduzível.
           </p>
           <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
             <table className="w-full text-sm">

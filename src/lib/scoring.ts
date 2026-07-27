@@ -1,18 +1,21 @@
 // Boreal — succession risk scoring (heurística determinística, sem LLM).
 //
-// PESOS v0.1 — CALIBRADOS POR VALIDAÇÃO RETROATIVA contra 340 aquisições reais (mineração de
+// PESOS v0.1 — CALIBRADOS POR VALIDAÇÃO RETROATIVA contra aquisições reais (mineração de
 // transições do CNPJ; ver segundo-cerebro/wiki/synthesis/relay-data-moat.md). A análise de lift
 // mostrou que:
-//   - porte e antiguidade são tão preditivos de aquisição quanto idade (lift ~2,4-2,6x);
-//   - "estabilidade/estagnação" tinha lift NEGATIVO (0,81x) — REMOVIDA (o v0 premiava errado);
+//   - porte e antiguidade são tão preditivos de aquisição quanto idade;
+//   - "estabilidade/estagnação" não sustentou sinal — REMOVIDA (o v0 premiava errado);
 //   - empresa de sócio único quase nunca é adquirida → quadro plural ganha bônus.
 //
-// RESULTADO MEDIDO (02/06/2026, sem leakage — score em 2023-06 vs aquisições até 2025-11), com o
-// decil calculado DENTRO de cada vertical (ver scripts/validacao-snapshot.mjs → src/lib/validacao.json):
-//   - METALMECÂNICA: 67% das 76 aquisições reais no top 10% (6,7x vs. acaso, decil médio 1,66).
-//   - SAÚDE: só 18% — porque ~metade do M&A de saúde é CONSOLIDAÇÃO (roll-up), que um score de
-//     sucessão não deve prever. Esse jogo é capturado pela outra lente (scripts/proximo-alvo.mjs).
-// (A nota antiga "17%→28%" não se reproduz na medição em escala; o número honesto é por vertical.)
+// Os NÚMEROS não moram neste comentário: src/lib/lift.json (pesos) e src/lib/validacao.json
+// (recall por setor) são as fontes, geradas por scripts/validacao-lift.mjs e validacao-snapshot.mjs.
+// Ficavam transcritos aqui e envelheceram na revisão de 25/07/2026, quando o universo passou a
+// excluir empresa baixada — os lifts subiram (antiguidade 2,56x → 4,39x) e o recall de
+// metalmecânica foi de 67% para 71%. Comentário que repete número vira comentário que mente.
+//
+// O que NÃO muda: o decil é calculado DENTRO de cada vertical, e em saúde o recall geral é baixo
+// de propósito — a maior parte do M&A de saúde é CONSOLIDAÇÃO (roll-up), que um score de sucessão
+// não deve prever. Esse jogo é capturado pela outra lente (scripts/proximo-alvo.mjs).
 
 import type { Empresa, Socio } from "./types";
 
@@ -27,7 +30,7 @@ export type ScoreResult = {
   score: number;            // 0–100
   breakdown: ScoreBreakdown;
   sinais: string[];         // bullets human-readable, ordenados por força
-  // Score por lentes: o score de sucessão SÓ valida (88–100%) quando a empresa está no perfil
+  // Score por lentes: o score de sucessão SÓ valida quando a empresa está no perfil
   // sucessório (sócio 61+ E empresa 25+). Fora dele, o deal provável é consolidação — baixa confiança.
   perfil_sucessorio: boolean;
 };
@@ -64,7 +67,7 @@ function scoreIdadeSocios(socios: Socio[]): { pts: number; sinal: string | null 
   return { pts, sinal };
 }
 
-// ── 2. Antiguidade da empresa (max 30) — lift 2,56x (o mais forte) ───────────
+// ── 2. Antiguidade da empresa (max 30) — o lift mais forte (ver lift.json) ───
 function scoreAntiguidade(dataInicio: string | null): { pts: number; sinal: string | null } {
   if (!dataInicio) return { pts: 0, sinal: null };
   const ano = Number(dataInicio.slice(0, 4));
@@ -76,7 +79,7 @@ function scoreAntiguidade(dataInicio: string | null): { pts: number; sinal: stri
   return { pts: 0, sinal: null };
 }
 
-// ── 3. Porte / relevância (max 30) — lift 2,38x; era subaproveitado no v0 ─────
+// ── 3. Porte / relevância (max 30) — lift alto; era subaproveitado no v0 ─────
 function scorePorte(porte: string | null): { pts: number; sinal: string | null } {
   if (!porte) return { pts: 0, sinal: null };
   const p = porte.toUpperCase();

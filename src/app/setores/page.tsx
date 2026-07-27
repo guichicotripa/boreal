@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SETORES, SETORES_GERADO_EM, type Setor } from "@/lib/setores";
+import { SETORES, SETORES_GERADO_EM, FAIXA_RECALL_SUCESSAO, type Setor } from "@/lib/setores";
 import { contextoSetor } from "@/lib/setor-contexto";
 import { ContextoSetor } from "@/components/ContextoSetor";
 
@@ -49,7 +49,7 @@ export default function Setores() {
         </header>
 
         <p className="mb-8 max-w-2xl text-[15px] leading-relaxed text-ink-soft">
-          O score de sucessão acerta <strong>88–100% das vendas de sucessão em
+          O score de sucessão acerta <strong>{FAIXA_RECALL_SUCESSAO} das vendas de sucessão em
           todos os setores</strong>. O que muda é a <strong>dinâmica</strong> do setor:
           em sucessão, identificamos quem vende; em consolidação, o foco é o próximo alvo dos
           roll-ups. A lente segue essa dinâmica, não o contrário.
