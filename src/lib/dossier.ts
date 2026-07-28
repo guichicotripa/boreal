@@ -6,7 +6,7 @@
 
 import Anthropic from "@anthropic-ai/sdk";
 import type { Empresa, DossierAnalise, RedFlag, ResearchResult } from "./types";
-import { MODELO_ANALISE } from "./modelos";
+import { MODELO_ANALISE } from "./modelos.ts";
 
 let _client: Anthropic | null = null;
 function getClient() {

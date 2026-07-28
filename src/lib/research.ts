@@ -7,7 +7,7 @@
 //   - Ajuste é BIDIRECIONAL: pode confirmar/subir o risco OU rebaixá-lo (ex: achou sucessor).
 //
 // Usa a Anthropic API direta (ANTHROPIC_API_KEY do .env.local) + a web search tool
-import { MODELO_ANALISE } from "./modelos";
+import { MODELO_ANALISE } from "./modelos.ts";
 // server-side (`web_search_20250305`): o modelo busca na web sozinho e devolve o texto final.
 // Funciona local E no Vercel. Custo ~$0.04-0.22/empresa (até 4 buscas + tokens).
 // Substituiu o Agent SDK + WebSearch na assinatura (que só rodava com o Claude Code logado

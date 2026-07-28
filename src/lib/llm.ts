@@ -6,7 +6,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import type { SearchFilters } from "./types";
 import { SETORES } from "./setores";
 import { ROTULOS_FORA_DA_BASE } from "./query-parser";
-import { MODELO_EXTRACAO } from "./modelos";
+import { MODELO_EXTRACAO } from "./modelos.ts";
 
 // Lazy: cria o cliente na primeira chamada, não no load do módulo.
 // Garante que ANTHROPIC_API_KEY já está no process.env quando o cliente é criado.

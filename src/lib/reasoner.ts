@@ -8,7 +8,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import type { Empresa } from "./types";
 import { REGRA_LINGUAGEM, filtrarInsight } from "./reasoner-guarda";
-import { MODELO_INSIGHT } from "./modelos";
+import { MODELO_INSIGHT } from "./modelos.ts";
 
 let _client: Anthropic | null = null;
 function getClient() {
