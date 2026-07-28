@@ -26,6 +26,13 @@ create table if not exists empresa_memo (
   empresa_id  uuid primary key references empresa(id) on delete cascade,
   analise     jsonb not null,          -- DossierAnalise (overview, red_flags, ...)
   modelo      text,                    -- de onde veio (assinatura/API, versão)
+  -- A investigação da web (v1) entrou na geração deste memo?
+  -- Memo escrito sem v1 conhece só o registro do CNPJ: é cego para assessor/banco
+  -- contratado, menção pública a venda, herdeiro fora da carreira e sucessor já
+  -- atuando — exatamente os fatos que definem o ângulo e a urgência da abordagem.
+  -- Continua útil, mas é inferior, e deve ser refeito quando o v1 daquela empresa
+  -- existir. Sem esta coluna não há como saber quais refazer.
+  com_v1      boolean not null default false,
   created_at  timestamptz not null default now(),
   updated_at  timestamptz not null default now()
 );
@@ -37,6 +44,9 @@ comment on table empresa_memo is
 
 -- Para o lote saber o que falta sem varrer a tabela inteira de empresas.
 create index if not exists idx_empresa_memo_criado on empresa_memo (created_at desc);
+
+-- Fila de refação: memo escrito antes de a empresa ter investigação.
+create index if not exists idx_empresa_memo_sem_v1 on empresa_memo (com_v1) where com_v1 = false;
 
 -- Mesmo padrão das outras tabelas: RLS ligada sem policy — acesso só via
 -- service role no servidor. Ver 0001_init_schema.sql.

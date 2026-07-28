@@ -14,7 +14,13 @@
  * perdeu tudo por não ser resumível. Aqui cada memo é gravado assim que sai, e a
  * próxima execução pula quem já tem. Interromper com Ctrl-C não perde nada.
  *
- * Ordem: score_v0 desc — descreve primeiro quem o originador vai ver primeiro.
+ * ORDEM IMPORTA: quem já tem investigação (v1) vem primeiro, e o memo é gerado COM
+ * ela. Memo escrito sem v1 conhece só o registro do CNPJ — é cego para assessor
+ * contratado, menção pública a venda e sucessor já atuando, que são os fatos que
+ * definem o ângulo da abordagem. Gerar memo antes do v1 é produzir material que
+ * vai precisar ser refeito; a coluna `com_v1` marca quais.
+ * Dentro de cada grupo, score_v0 desc — descreve primeiro quem o originador vê primeiro.
+ *
  * Usa o MESMO promptDossier/parseDossier da rota, para o memo do lote e o do uso
  * real não divergirem.
  */
@@ -22,9 +28,10 @@ import { createClient } from "@supabase/supabase-js";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { calcScore } from "../src/lib/scoring.ts";
 import { promptDossier, parseDossier, DOSSIER_SYSTEM } from "../src/lib/dossier.ts";
-import { salvarMemo, idsComMemo } from "../src/lib/memo-store.ts";
+import { salvarMemo } from "../src/lib/memo-store.ts";
+import { lerResearchSalvo } from "../src/lib/research-store.ts";
 import { setorPorId } from "../src/lib/setores.ts";
-import type { Empresa } from "../src/lib/types.ts";
+import type { Empresa, ResearchResult } from "../src/lib/types.ts";
 
 const args = process.argv.slice(2);
 const flag = (n: string, p: string | null = null) => {
@@ -50,16 +57,42 @@ const SELECT = `id, cnpj, razao_social, nome_fantasia, cnae_principal, cnae_prin
   capital_social, porte, telefone, email,
   socio(id, nome, qualificacao, faixa_etaria, data_entrada_sociedade)`;
 
-/* Busca um bloco de candidatas já sem memo. Pagina com `.order` explícito: sem
-   ordenação estável o `.range()` repete linha numa página e pula em outra — foi
-   assim que o backfill de score_v0 deixou 18.386 empresas de fora. */
-async function candidatas(precisa: number): Promise<Empresa[]> {
-  const escolhidas: Empresa[] = [];
+/** Empresas que já têm investigação (v1) — são a fila prioritária. */
+async function idsComV1(): Promise<Set<string>> {
+  const ids = new Set<string>();
+  for (let from = 0; ; from += 1000) {
+    const { data, error } = await supabase
+      .from("score_run")
+      .select("empresa_id")
+      .not("research", "is", null)
+      .order("empresa_id")
+      .range(from, from + 999);
+    if (error || !data?.length) break;
+    for (const r of data as { empresa_id: string }[]) ids.add(r.empresa_id);
+    if (data.length < 1000) break;
+  }
+  return ids;
+}
+
+/* Busca candidatas. Pagina com `.order` explícito: sem ordenação estável o
+   `.range()` repete linha numa página e pula em outra — foi assim que o backfill
+   de score_v0 deixou 18.386 empresas de fora.
+
+   Elegível = sem memo, OU com memo escrito sem v1 numa empresa que hoje TEM v1
+   (esse memo é inferior ao que dá pra escrever agora e precisa ser refeito).
+   Prioridade: quem tem v1 primeiro, para não gerar material que já nasce para
+   ser refeito. */
+async function candidatas(precisa: number): Promise<{ lista: Empresa[]; refacoes: number }> {
+  const comV1 = await idsComV1();
+  const prioritarias: Empresa[] = [];
+  const resto: Empresa[] = [];
+  let refacoes = 0;
   const BLOCO = 200;
-  for (let from = 0; escolhidas.length < precisa; from += BLOCO) {
+
+  for (let from = 0; prioritarias.length < precisa; from += BLOCO) {
     let q = supabase
       .from("empresa")
-      .select(SELECT)
+      .select(`${SELECT}, empresa_memo(com_v1)`)
       .order("score_v0", { ascending: false, nullsFirst: false })
       .order("id")
       .range(from, from + BLOCO - 1);
@@ -69,22 +102,25 @@ async function candidatas(precisa: number): Promise<Empresa[]> {
     if (error) { console.error("FAIL leitura:", error.message); process.exit(1); }
     if (!data?.length) break;
 
-    const bloco = data as unknown as Empresa[];
-    const jaTem = await idsComMemo(supabase, bloco.map((e) => e.id));
-    for (const e of bloco) {
-      if (jaTem.has(e.id)) continue;
-      escolhidas.push(e);
-      if (escolhidas.length >= precisa) break;
+    for (const row of data as unknown as (Empresa & { empresa_memo?: { com_v1: boolean }[] })[]) {
+      const memo = row.empresa_memo?.[0];
+      const temV1 = comV1.has(row.id);
+      if (memo && (memo.com_v1 || !temV1)) continue; // já está tão bom quanto dá
+      if (memo) refacoes++;
+      (temV1 ? prioritarias : resto).push(row);
     }
     if (data.length < BLOCO) break;
   }
-  return escolhidas;
+
+  // Completa com quem não tem v1 só se a fila prioritária não encheu o alvo.
+  const lista = [...prioritarias, ...resto].slice(0, precisa);
+  return { lista, refacoes };
 }
 
-async function gerarPorAssinatura(empresa: Empresa) {
+async function gerarPorAssinatura(empresa: Empresa, research: ResearchResult | null) {
   let raw: string | null = null;
   for await (const m of query({
-    prompt: promptDossier(empresa),
+    prompt: promptDossier(empresa, research),
     options: {
       systemPrompt: DOSSIER_SYSTEM,
       allowedTools: [],
@@ -102,9 +138,9 @@ async function gerarPorAssinatura(empresa: Empresa) {
 const alvo = setor ? `${setor.nome}` : "todos os setores";
 console.log(`Memos em lote · ${alvo} · alvo ${N} empresas sem memo · ordem score_v0 desc\n`);
 
-const lista = await candidatas(N);
-if (!lista.length) { console.log("Nada a fazer: todas as candidatas já têm memo."); process.exit(0); }
-console.log(`${lista.length} empresas selecionadas.\n`);
+const { lista, refacoes } = await candidatas(N);
+if (!lista.length) { console.log("Nada a fazer: todas as candidatas já têm memo tão bom quanto dá."); process.exit(0); }
+console.log(`${lista.length} empresas selecionadas${refacoes ? ` (${refacoes} são refação: memo antigo sem v1)` : ""}.\n`);
 
 if (dry) {
   for (const e of lista.slice(0, 20)) {
@@ -115,18 +151,20 @@ if (dry) {
   process.exit(0);
 }
 
-let ok = 0, falhas = 0;
+let ok = 0, falhas = 0, comV1 = 0;
 const t0 = Date.now();
 for (const [i, empresa] of lista.entries()) {
   empresa.score = calcScore(empresa);
-  const rotulo = `[${i + 1}/${lista.length}] ${empresa.razao_social.slice(0, 40)}`;
+  const rotulo = `[${i + 1}/${lista.length}] ${empresa.razao_social.slice(0, 38)}`;
   try {
-    const analise = await gerarDossierComRetry(empresa);
+    const v1 = await lerResearchSalvo(supabase, empresa.id);
+    const analise = await gerarDossierComRetry(empresa, v1?.research ?? null);
     // Grava IMEDIATAMENTE: se a próxima estourar o limite de sessão, esta já ficou.
-    const gravou = await salvarMemo(supabase, empresa.id, analise, "assinatura/precompute");
+    const gravou = await salvarMemo(supabase, empresa.id, analise, "assinatura/precompute", !!v1);
     if (!gravou) { console.log(`${rotulo} — gerado mas NÃO gravado (migration 0009?)`); falhas++; continue; }
     ok++;
-    console.log(`${rotulo} ✓ ${analise.red_flags.length} red flags`);
+    if (v1) comV1++;
+    console.log(`${rotulo} ✓ ${analise.red_flags.length} red flags ${v1 ? "· com v1" : "· sem v1"}`);
   } catch (err) {
     const msg = (err as Error).message;
     falhas++;
@@ -140,10 +178,10 @@ for (const [i, empresa] of lista.entries()) {
   }
 }
 
-async function gerarDossierComRetry(empresa: Empresa, tentativas = 2) {
+async function gerarDossierComRetry(empresa: Empresa, research: ResearchResult | null, tentativas = 2) {
   let ultimo: Error | null = null;
   for (let i = 0; i < tentativas; i++) {
-    try { return await gerarPorAssinatura(empresa); } catch (err) {
+    try { return await gerarPorAssinatura(empresa, research); } catch (err) {
       ultimo = err as Error;
       if (/session limit|rate.?limit/i.test(ultimo.message)) throw ultimo; // não insiste
       await new Promise((r) => setTimeout(r, 1500));
@@ -154,5 +192,9 @@ async function gerarDossierComRetry(empresa: Empresa, tentativas = 2) {
 
 const mins = ((Date.now() - t0) / 60000).toFixed(1);
 const { count: total } = await supabase.from("empresa_memo").select("*", { count: "exact", head: true });
-console.log(`\n✓ ${ok} memos gravados, ${falhas} falhas, em ${mins} min.`);
+console.log(`\n✓ ${ok} memos gravados (${comV1} com investigação), ${falhas} falhas, em ${mins} min.`);
+if (ok > comV1) {
+  console.log(`  ⚠ ${ok - comV1} escritos SEM v1 — inferiores, e marcados com_v1=false.`);
+  console.log(`    Quando essas empresas forem investigadas, rode este lote de novo: ele refaz.`);
+}
 console.log(`  empresas com memo no banco: ${total}`);

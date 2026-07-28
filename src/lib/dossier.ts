@@ -5,7 +5,7 @@
 // Aqui só geramos a análise — economiza tokens e mantém os dados 100% precisos.
 
 import Anthropic from "@anthropic-ai/sdk";
-import type { Empresa, DossierAnalise, RedFlag } from "./types";
+import type { Empresa, DossierAnalise, RedFlag, ResearchResult } from "./types";
 
 let _client: Anthropic | null = null;
 function getClient() {
@@ -26,6 +26,28 @@ const FAIXA_LABEL: Record<string, string> = {
   "1": "0-12", "2": "13-20", "3": "21-30", "4": "31-40", "5": "41-50",
   "6": "51-60", "7": "61-70", "8": "71-80", "9": "80+",
 };
+
+/* O que a investigação (v1) achou na web, reduzido ao que muda a análise.
+   Sem isto o memo escrevia tese de aproximação, red flags e próximo passo
+   conhecendo só o registro do CNPJ — cego para "tem banco de investimento
+   contratado", "o herdeiro seguiu outra carreira", "há menção pública a venda".
+   São justamente os fatos que decidem o ângulo e a urgência da abordagem. */
+function researchParaPrompt(r: ResearchResult) {
+  return {
+    resumo_do_que_foi_achado: r.resumo,
+    perfil_do_negocio: r.perfil_negocio ?? null,
+    presenca_digital: r.presenca_digital,
+    gatilho_de_timing: r.gatilho,
+    score_apos_investigacao: r.score_v1,
+    delta_vs_score_de_registro: r.delta,
+    sinais_encontrados: (r.sinais ?? []).map((s) => ({
+      sinal: s.rotulo,
+      descricao: s.descricao,
+      peso_no_score: s.peso,
+      fonte: s.fonte_url,
+    })),
+  };
+}
 
 function dadosParaPrompt(e: Empresa) {
   const socios = (e.socio ?? []).map((s) => ({
@@ -61,8 +83,9 @@ function dadosParaPrompt(e: Empresa) {
    em vez de replicada nos scripts. */
 export const DOSSIER_SYSTEM = SYSTEM;
 
-export function promptDossier(empresa: Empresa): string {
+export function promptDossier(empresa: Empresa, research?: ResearchResult | null): string {
   const dados = dadosParaPrompt(empresa);
+  const investigacao = research ? researchParaPrompt(research) : null;
   return `Gere a análise do dossiê desta empresa. Use SÓ os dados fornecidos —
 não invente faturamento, número de funcionários ou fatos que não estão aqui.
 
@@ -86,12 +109,34 @@ Responda APENAS com este JSON:
   "proximo_passo": "1 frase concreta: qual o próximo passo de origination — canal sugerido (usar telefone/email se houver no dado de contato; senão LinkedIn do sócio mais jovem, contador via QSA, ou associação setorial) + ação"
 }
 
-Dados da empresa:
-${JSON.stringify(dados, null, 2)}`;
+Dados da empresa (registro público do CNPJ):
+${JSON.stringify(dados, null, 2)}
+${investigacao ? `
+INVESTIGAÇÃO NA WEB (v1) — já feita para esta empresa. Use estes achados; eles valem
+mais que o perfil de registro para decidir o ângulo e a urgência:
+${JSON.stringify(investigacao, null, 2)}
+
+Como usar a investigação:
+- "tese_aproximacao" e "proximo_passo" devem partir dos sinais encontrados e do gatilho de
+  timing, não só do perfil societário. Se há banco de investimento contratado ou menção
+  pública a venda, isso MUDA o ângulo e precisa aparecer.
+- "analise_sucessoria" deve reconciliar registro e web: se a investigação achou sucessor
+  familiar já atuando, diga que o risco sucessório é menor do que o quadro sugere.
+- "perguntas_abordagem" devem incorporar o que já se sabe — não pergunte o que a
+  investigação já respondeu.
+- "red_flags": só o que o perfil ou os achados sustentam. A investigação NÃO autoriza
+  afirmar passivo; segue valendo listar risco provável e como verificar.
+- Cite o achado, nunca a fonte crua como se fosse fato consumado. Se um sinal tem
+  fonte null, trate como indício fraco.` : `
+SEM investigação na web para esta empresa: escreva a partir do registro apenas, e não
+finja saber de fatos externos (assessores, intenção de venda, sucessores).`}`;
 }
 
-export async function gerarDossierAnalise(empresa: Empresa): Promise<DossierAnalise> {
-  const prompt = promptDossier(empresa);
+export async function gerarDossierAnalise(
+  empresa: Empresa,
+  research?: ResearchResult | null
+): Promise<DossierAnalise> {
+  const prompt = promptDossier(empresa, research);
 
   const message = await getClient().messages.create({
     model: "claude-sonnet-4-6",

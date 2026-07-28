@@ -17,18 +17,18 @@ import type { DossierAnalise } from "./types";
 export async function lerMemoSalvo(
   supabase: SupabaseClient,
   empresaId: string
-): Promise<{ analise: DossierAnalise; geradoEm: string } | null> {
+): Promise<{ analise: DossierAnalise; geradoEm: string; comV1: boolean } | null> {
   const { data, error } = await supabase
     .from("empresa_memo")
-    .select("analise, updated_at")
+    .select("analise, updated_at, com_v1")
     .eq("empresa_id", empresaId)
     .limit(1);
 
   // error inclui "relação empresa_memo não existe" (migration não aplicada).
   if (error || !data?.length) return null;
-  const row = data[0] as { analise: DossierAnalise | null; updated_at: string };
+  const row = data[0] as { analise: DossierAnalise | null; updated_at: string; com_v1: boolean | null };
   if (!row.analise) return null;
-  return { analise: row.analise, geradoEm: row.updated_at };
+  return { analise: row.analise, geradoEm: row.updated_at, comV1: !!row.com_v1 };
 }
 
 /**
@@ -42,13 +42,18 @@ export async function salvarMemo(
   supabase: SupabaseClient,
   empresaId: string,
   analise: DossierAnalise,
-  modelo?: string
+  modelo?: string,
+  comV1 = false
 ): Promise<boolean> {
   const { error } = await supabase.from("empresa_memo").upsert(
     {
       empresa_id: empresaId,
       analise,
       modelo: modelo ?? null,
+      // Registra se a investigação da web entrou na geração. Memo escrito sem v1
+      // é bom, mas cego para assessor contratado, intenção de venda e sucessor
+      // ativo — e precisa ser refeito quando o v1 daquela empresa chegar.
+      com_v1: comV1,
       updated_at: new Date().toISOString(),
     },
     { onConflict: "empresa_id" }
