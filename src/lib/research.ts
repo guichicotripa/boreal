@@ -7,6 +7,7 @@
 //   - Ajuste é BIDIRECIONAL: pode confirmar/subir o risco OU rebaixá-lo (ex: achou sucessor).
 //
 // Usa a Anthropic API direta (ANTHROPIC_API_KEY do .env.local) + a web search tool
+import { MODELO_ANALISE } from "./modelos";
 // server-side (`web_search_20250305`): o modelo busca na web sozinho e devolve o texto final.
 // Funciona local E no Vercel. Custo ~$0.04-0.22/empresa (até 4 buscas + tokens).
 // Substituiu o Agent SDK + WebSearch na assinatura (que só rodava com o Claude Code logado
@@ -118,7 +119,7 @@ EFICIÊNCIA: faça no máximo 4 buscas na web, depois conclua com o JSON. Não e
   // API direta + web search tool server-side: o modelo faz as buscas sozinho (até max_uses)
   // e devolve a resposta final. max_uses=4 espelha o "máximo 4 buscas" do prompt.
   const message = await getClient().messages.create({
-    model: "claude-sonnet-4-6",
+    model: MODELO_ANALISE,
     max_tokens: 4096, // folga pra raciocínio das buscas + o JSON final
     system: SYSTEM,
     messages: [{ role: "user", content: prompt }],

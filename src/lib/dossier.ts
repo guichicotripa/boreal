@@ -6,6 +6,7 @@
 
 import Anthropic from "@anthropic-ai/sdk";
 import type { Empresa, DossierAnalise, RedFlag, ResearchResult } from "./types";
+import { MODELO_ANALISE } from "./modelos";
 
 let _client: Anthropic | null = null;
 function getClient() {
@@ -147,7 +148,7 @@ export async function gerarDossierAnalise(
   const prompt = promptDossier(empresa, research);
 
   const message = await getClient().messages.create({
-    model: "claude-sonnet-4-6",
+    model: MODELO_ANALISE,
     max_tokens: 1500,
     system: SYSTEM,
     messages: [{ role: "user", content: prompt }],

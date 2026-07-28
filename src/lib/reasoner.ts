@@ -8,6 +8,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import type { Empresa } from "./types";
 import { REGRA_LINGUAGEM, filtrarInsight } from "./reasoner-guarda";
+import { MODELO_INSIGHT } from "./modelos";
 
 let _client: Anthropic | null = null;
 function getClient() {
@@ -79,7 +80,7 @@ Dados:
 ${JSON.stringify(sample, null, 2)}`;
 
   const message = await getClient().messages.create({
-    model: "claude-sonnet-4-6",
+    model: MODELO_INSIGHT,
     max_tokens: 4096,
     system: SYSTEM,
     messages: [{ role: "user", content: prompt }],

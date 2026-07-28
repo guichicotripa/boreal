@@ -31,6 +31,7 @@ import { promptDossier, parseDossier, DOSSIER_SYSTEM } from "../src/lib/dossier.
 import { salvarMemo } from "../src/lib/memo-store.ts";
 import { lerResearchSalvo } from "../src/lib/research-store.ts";
 import { setorPorId } from "../src/lib/setores.ts";
+import { MODELO_ANALISE } from "../src/lib/modelos.ts";
 import type { Empresa, ResearchResult } from "../src/lib/types.ts";
 
 const args = process.argv.slice(2);
@@ -41,12 +42,15 @@ const flag = (n: string, p: string | null = null) => {
 const N = Number(flag("n", "50"));
 const setorId = flag("setor");
 const dry = args.includes("--dry");
-/* Modelo FIXO, não o default do CLI. O default varia entre execuções (vi
-   claude-sonnet-4-6 numa e claude-opus-4-7 na seguinte, no mesmo dia), e um
-   corpus de memos metade escrito por um modelo e metade por outro tem estilo e
-   profundidade desiguais sem nada na tela indicando por quê. Fica gravado em
-   empresa_memo.modelo para dar pra saber depois de onde veio cada um. */
-const MODELO = flag("modelo", "claude-sonnet-4-6")!;
+/* Modelo FIXO, não o default do CLI — que variou entre duas execuções no mesmo
+   dia. Corpus metade escrito por um modelo e metade por outro tem profundidade
+   desigual sem nada na tela indicando por quê. Fica gravado em
+   empresa_memo.modelo, então dá pra saber depois de onde veio cada memo.
+
+   Padrão é o Sonnet 5 (MODELO_ANALISE). Para o topo da lista vale
+   `--modelo=claude-opus-5`: medido, o Opus 5 lê campos que o Sonnet ignora (ver
+   src/lib/modelos.ts), ao custo de ~4x o tempo por memo. */
+const MODELO = flag("modelo", MODELO_ANALISE)!;
 
 if (!Number.isFinite(N) || N <= 0) { console.error(`--n inválido: ${flag("n")}`); process.exit(1); }
 const setor = setorId ? setorPorId(setorId) : null;

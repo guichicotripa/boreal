@@ -6,6 +6,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import type { SearchFilters } from "./types";
 import { SETORES } from "./setores";
 import { ROTULOS_FORA_DA_BASE } from "./query-parser";
+import { MODELO_EXTRACAO } from "./modelos";
 
 // Lazy: cria o cliente na primeira chamada, não no load do módulo.
 // Garante que ANTHROPIC_API_KEY já está no process.env quando o cliente é criado.
@@ -48,7 +49,7 @@ Regras:
 - limit: número de resultados desejado. Padrão 50, máximo 100.`;
 
   const message = await getClient().messages.create({
-    model: "claude-haiku-4-5", // tarefa trivial (JSON de filtros) → Haiku: 3-4x mais rápido, 6x mais barato
+    model: MODELO_EXTRACAO, // tarefa trivial (JSON de filtros) → Haiku: mais rápido e barato
     max_tokens: 256,
     system: SYSTEM,
     messages: [{ role: "user", content: prompt }],
