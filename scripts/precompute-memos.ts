@@ -92,39 +92,82 @@ async function idsComV1(): Promise<Set<string>> {
    (esse memo é inferior ao que dá pra escrever agora e precisa ser refeito).
    Prioridade: quem tem v1 primeiro, para não gerar material que já nasce para
    ser refeito. */
+type LinhaComMemo = Empresa & { empresa_memo?: { com_v1: boolean } | { com_v1: boolean }[] | null };
+
+/* O memo embutido vem como OBJETO, não array: empresa_id é chave primária em
+   empresa_memo, então o PostgREST trata a relação como um-para-um. Ler com
+   `[0]` devolvia undefined SEMPRE — e o script achava que ninguém tinha memo,
+   regerando quem já estava pronto e queimando sessão à toa. Aceita as duas
+   formas porque a decisão é do PostgREST, não nossa. */
+function memoDa(row: LinhaComMemo): { com_v1: boolean } | undefined {
+  const rel = row.empresa_memo;
+  if (!rel) return undefined;
+  return Array.isArray(rel) ? rel[0] : rel;
+}
+
+/** Elegível = sem memo, OU com memo cego numa empresa que hoje TEM investigação. */
+function elegivel(row: LinhaComMemo, temV1: boolean): "novo" | "refacao" | null {
+  const memo = memoDa(row);
+  if (!memo) return "novo";
+  return !memo.com_v1 && temV1 ? "refacao" : null;
+}
+
 async function candidatas(precisa: number): Promise<{ lista: Empresa[]; refacoes: number }> {
   const comV1 = await idsComV1();
   const prioritarias: Empresa[] = [];
   const resto: Empresa[] = [];
   let refacoes = 0;
   const BLOCO = 200;
+  const cnaeFiltro = setor ? setor.cnaes.map((p) => `cnae_principal.like.${p}*`).join(",") : null;
 
-  for (let from = 0; prioritarias.length < precisa; from += BLOCO) {
+  /* Passo 1 — quem tem v1, consultado por id em vez de varrendo a base. Antes o
+     laço só parava quando a fila prioritária enchia, o que nunca acontecia com
+     poucas empresas investigadas: varria as 51 mil linhas toda execução. */
+  const idsV1 = [...comV1];
+  for (let i = 0; i < idsV1.length && prioritarias.length < precisa; i += BLOCO) {
+    let q = supabase
+      .from("empresa")
+      .select(`${SELECT}, empresa_memo(com_v1)`)
+      .in("id", idsV1.slice(i, i + BLOCO))
+      .order("score_v0", { ascending: false, nullsFirst: false })
+      .order("id");
+    if (cnaeFiltro) q = q.or(cnaeFiltro);
+
+    const { data, error } = await q;
+    if (error) { console.error("FAIL leitura (v1):", error.message); process.exit(1); }
+    for (const row of (data ?? []) as unknown as LinhaComMemo[]) {
+      const tipo = elegivel(row, true);
+      if (!tipo) continue;
+      if (tipo === "refacao") refacoes++;
+      prioritarias.push(row);
+      if (prioritarias.length >= precisa) break;
+    }
+  }
+
+  // Passo 2 — completa por score só se a fila prioritária não encheu o alvo.
+  for (let from = 0; prioritarias.length + resto.length < precisa; from += BLOCO) {
     let q = supabase
       .from("empresa")
       .select(`${SELECT}, empresa_memo(com_v1)`)
       .order("score_v0", { ascending: false, nullsFirst: false })
       .order("id")
       .range(from, from + BLOCO - 1);
-    if (setor) q = q.or(setor.cnaes.map((p) => `cnae_principal.like.${p}*`).join(","));
+    if (cnaeFiltro) q = q.or(cnaeFiltro);
 
     const { data, error } = await q;
     if (error) { console.error("FAIL leitura:", error.message); process.exit(1); }
     if (!data?.length) break;
 
-    for (const row of data as unknown as (Empresa & { empresa_memo?: { com_v1: boolean }[] })[]) {
-      const memo = row.empresa_memo?.[0];
-      const temV1 = comV1.has(row.id);
-      if (memo && (memo.com_v1 || !temV1)) continue; // já está tão bom quanto dá
-      if (memo) refacoes++;
-      (temV1 ? prioritarias : resto).push(row);
+    for (const row of data as unknown as LinhaComMemo[]) {
+      if (comV1.has(row.id)) continue; // já tratado no passo 1
+      if (elegivel(row, false) !== "novo") continue;
+      resto.push(row);
+      if (prioritarias.length + resto.length >= precisa) break;
     }
     if (data.length < BLOCO) break;
   }
 
-  // Completa com quem não tem v1 só se a fila prioritária não encheu o alvo.
-  const lista = [...prioritarias, ...resto].slice(0, precisa);
-  return { lista, refacoes };
+  return { lista: [...prioritarias, ...resto].slice(0, precisa), refacoes };
 }
 
 async function gerarPorAssinatura(empresa: Empresa, research: ResearchResult | null) {
