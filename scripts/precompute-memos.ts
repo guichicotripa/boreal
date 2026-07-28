@@ -41,6 +41,12 @@ const flag = (n: string, p: string | null = null) => {
 const N = Number(flag("n", "50"));
 const setorId = flag("setor");
 const dry = args.includes("--dry");
+/* Modelo FIXO, não o default do CLI. O default varia entre execuções (vi
+   claude-sonnet-4-6 numa e claude-opus-4-7 na seguinte, no mesmo dia), e um
+   corpus de memos metade escrito por um modelo e metade por outro tem estilo e
+   profundidade desiguais sem nada na tela indicando por quê. Fica gravado em
+   empresa_memo.modelo para dar pra saber depois de onde veio cada um. */
+const MODELO = flag("modelo", "claude-sonnet-4-6")!;
 
 if (!Number.isFinite(N) || N <= 0) { console.error(`--n inválido: ${flag("n")}`); process.exit(1); }
 const setor = setorId ? setorPorId(setorId) : null;
@@ -125,6 +131,7 @@ async function gerarPorAssinatura(empresa: Empresa, research: ResearchResult | n
       systemPrompt: DOSSIER_SYSTEM,
       allowedTools: [],
       maxTurns: 4,
+      model: MODELO,
       // Zerar a key força autenticação pela assinatura em vez de cobrar da API.
       env: { ...process.env, ANTHROPIC_API_KEY: undefined } as NodeJS.ProcessEnv,
     },
@@ -160,7 +167,7 @@ for (const [i, empresa] of lista.entries()) {
     const v1 = await lerResearchSalvo(supabase, empresa.id);
     const analise = await gerarDossierComRetry(empresa, v1?.research ?? null);
     // Grava IMEDIATAMENTE: se a próxima estourar o limite de sessão, esta já ficou.
-    const gravou = await salvarMemo(supabase, empresa.id, analise, "assinatura/precompute", !!v1);
+    const gravou = await salvarMemo(supabase, empresa.id, analise, `assinatura/${MODELO}`, !!v1);
     if (!gravou) { console.log(`${rotulo} — gerado mas NÃO gravado (migration 0009?)`); falhas++; continue; }
     ok++;
     if (v1) comV1++;

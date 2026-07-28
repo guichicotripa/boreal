@@ -94,6 +94,14 @@ REGRAS CRÍTICAS:
   pode estar defasado décadas. Se mencionar, deixe claro que não indica receita nem valor.
 - Não invente número financeiro. Se não há base para estimar faturamento/EBITDA, diga "não estimável
   sem dados adicionais" — não chute.
+- Não invente ESTATÍSTICA nem base de comparação. Nada de "empresas nesse perfil vendem em 3-5 anos",
+  "X% dos casos", "estatisticamente antecede". Nenhum número desses foi medido; escrever isso é
+  inventar prova. Descreva o padrão em palavras ("quadro parado há 29 anos, sem geração seguinte
+  visível") e pare aí.
+- Não invente CREDENCIAL nossa. Você não sabe em que setor a boutique atua, quem ela conhece nem que
+  deals já fez. O "por que nós" de tese_aproximacao deve sair do que os DADOS sustentam (ex: "chegar
+  antes de virar processo competitivo", "o ângulo é continuidade, não venda") — nunca de experiência
+  ou especialização afirmada sobre nós mesmos.
 - red_flags: liste os riscos PROVÁVEIS dado o perfil (setor, idade da empresa, estrutura) — não afirme
   que o passivo existe; classifique a severidade e diga COMO verificar. Para indústria antiga, considere:
   passivo fiscal (checar PGFN/CARF/TJSP — grátis), NR-12 (segurança de máquinas), passivo ambiental,
