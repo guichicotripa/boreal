@@ -1,0 +1,98 @@
+{
+  "gerado_em": "2026-07-29",
+  "fonte": "scripts/validacao-lift-coorte.mjs — lift dentro da coorte score_v0 >= 80",
+  "piso_coorte": 80,
+  "n_coorte": 28570,
+  "n_adquiridas": 239,
+  "metodologia": "Lift marginal (src/lib/lift.json) responde \"esta feature aparece mais nas adquiridas do que no universo?\" e foi o que escolheu os 4 eixos do v0. Este artefato responde outra pergunta: DENTRO da coorte que o score já elegeu (v0 >= 80, onde as empresas empatam), sobra sinal de registro que o score não olha? Feature que só era proxy dos eixos existentes perde o lift aqui. Universo nacional, empresa ativa no corte, features medidas em 2023-06-10 e aquisições detectadas até 2025-11-09 — zero lookahead. Cada feature traz o z da diferença de proporções: lift sem z >= 2 é ruído amostral e não vira eixo.",
+  "features": [
+    {
+      "nome": "Capital social acima da mediana da coorte",
+      "universo_pct": 17.2,
+      "adquiridas_pct": 65.3,
+      "lift": 3.8,
+      "z": 15.58,
+      "sinal": "forte"
+    },
+    {
+      "nome": "Tem sócio PJ no quadro",
+      "universo_pct": 6.5,
+      "adquiridas_pct": 20.5,
+      "lift": 3.15,
+      "z": 5.35,
+      "sinal": "forte"
+    },
+    {
+      "nome": "Quadro com 5+ sócios PF",
+      "universo_pct": 19.6,
+      "adquiridas_pct": 48.1,
+      "lift": 2.45,
+      "z": 8.8,
+      "sinal": "forte"
+    },
+    {
+      "nome": "Quadro mexeu nos últimos 5 anos",
+      "universo_pct": 17.5,
+      "adquiridas_pct": 38.9,
+      "lift": 2.22,
+      "z": 6.77,
+      "sinal": "forte"
+    },
+    {
+      "nome": "Tem sócio até 50 anos (sucessor aparente)",
+      "universo_pct": 26.8,
+      "adquiridas_pct": 57.3,
+      "lift": 2.14,
+      "z": 9.5,
+      "sinal": "forte"
+    },
+    {
+      "nome": "Tem filial (2+ estabelecimentos)",
+      "universo_pct": 32.1,
+      "adquiridas_pct": 63.2,
+      "lift": 1.97,
+      "z": 9.93,
+      "sinal": "forte"
+    },
+    {
+      "nome": "Quadro parado 20+ anos",
+      "universo_pct": 14.7,
+      "adquiridas_pct": 18,
+      "lift": 1.22,
+      "z": 1.32,
+      "sinal": "ruído"
+    },
+    {
+      "nome": "Sociedade anônima",
+      "universo_pct": 5,
+      "adquiridas_pct": 3.3,
+      "lift": 0.66,
+      "z": 1.46,
+      "sinal": "ruído"
+    },
+    {
+      "nome": "Quadro parado 10+ anos",
+      "universo_pct": 71.8,
+      "adquiridas_pct": 43.1,
+      "lift": 0.6,
+      "z": 8.93,
+      "sinal": "negativo"
+    },
+    {
+      "nome": "Sem sócio até 50 anos (sem sucessor aparente)",
+      "universo_pct": 73.2,
+      "adquiridas_pct": 42.7,
+      "lift": 0.58,
+      "z": 9.5,
+      "sinal": "negativo"
+    },
+    {
+      "nome": "2+ sócios na faixa 80+",
+      "universo_pct": 19.1,
+      "adquiridas_pct": 9.6,
+      "lift": 0.5,
+      "z": 4.95,
+      "sinal": "negativo"
+    }
+  ]
+}

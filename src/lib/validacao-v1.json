@@ -1,0 +1,61 @@
+{
+  "gerado_em": "2026-07-29",
+  "fonte": "scripts/validacao-score-v1.mjs",
+  "janela": {
+    "corte": "2023-06-10",
+    "novo": "2025-11-09"
+  },
+  "metodologia": "Troca do score v0 pelo v1, medida contra aquisições reais mineradas do próprio CNPJ (sócio PJ entra + sócio PF sai) entre os dois snapshots. Features lidas em 2023-06-10, aquisições detectadas até 2025-11-09: zero lookahead. Metade das empresas (hash do CNPJ) é holdout e é dela que sai o número reportado. O recorte 'perfil' rankeia só quem passa na tese (sócio 61+ e empresa 25+), que é o universo do produto.",
+  "holdout_universo": {
+    "n": 838,
+    "v0": 42,
+    "v1": 72.4
+  },
+  "holdout_perfil": {
+    "n": 167,
+    "v0": 32.9,
+    "v1": 38.3
+  },
+  "saturacao": [
+    {
+      "vertical": "agro",
+      "universo": 618787,
+      "valores_distintos_v0": 44,
+      "valores_distintos_v1": 84,
+      "no_teto_v0": 452,
+      "no_teto_v1": 323,
+      "maior_empate_v0": 209008,
+      "maior_empate_v1": 367194
+    },
+    {
+      "vertical": "educacao",
+      "universo": 64914,
+      "valores_distintos_v0": 44,
+      "valores_distintos_v1": 83,
+      "no_teto_v0": 121,
+      "no_teto_v1": 10,
+      "maior_empate_v0": 9446,
+      "maior_empate_v1": 7572
+    },
+    {
+      "vertical": "metalmec",
+      "universo": 250845,
+      "valores_distintos_v0": 44,
+      "valores_distintos_v1": 84,
+      "no_teto_v0": 336,
+      "no_teto_v1": 39,
+      "maior_empate_v0": 182037,
+      "maior_empate_v1": 120259
+    },
+    {
+      "vertical": "saude",
+      "universo": 531119,
+      "valores_distintos_v0": 44,
+      "valores_distintos_v1": 84,
+      "no_teto_v0": 372,
+      "no_teto_v1": 157,
+      "maior_empate_v0": 211497,
+      "maior_empate_v1": 91298
+    }
+  ]
+}
