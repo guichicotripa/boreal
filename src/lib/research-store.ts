@@ -18,6 +18,45 @@ type ScoreRunRow = {
   created_at: string;
 };
 
+/**
+ * Persiste uma investigação no score_run. Um caminho só para a rota (sob demanda,
+ * API) e o lote (assinatura) — a escrita tem duas sutilezas que não podem divergir
+ * entre eles:
+ *
+ * 1. O payload `research` depende da migration 0006. Se a coluna não existir, o
+ *    insert INTEIRO falha e nem o número do v1 fica salvo — pior que antes. Então
+ *    tenta completo e, se a coluna faltar, regrava só o essencial.
+ * 2. `persistido` e `payloadSalvo` são coisas diferentes: sem persistido a lista
+ *    não reordena; sem payloadSalvo o agente precisa rodar de novo na próxima
+ *    abertura (o número sobreviveu, a investigação não).
+ */
+export async function salvarResearch(
+  supabase: SupabaseClient,
+  empresaId: string,
+  research: ResearchResult,
+  breakdown: unknown,
+  modelo: string
+): Promise<{ persistido: boolean; payloadSalvo: boolean }> {
+  const base = {
+    empresa_id: empresaId,
+    score: research.score_v1,
+    breakdown: breakdown ?? null,
+    sinais: research.sinais,
+    model: modelo,
+  };
+
+  let { error } = await supabase.from("score_run").insert({ ...base, research });
+  let payloadSalvo = !error;
+  if (error) {
+    console.warn("insert com `research` falhou (migration 0006 aplicada?):", error.message);
+    ({ error } = await supabase.from("score_run").insert(base));
+    payloadSalvo = false;
+  }
+  if (error) console.error("score_run insert falhou (investigação não persistida):", error.message);
+
+  return { persistido: !error, payloadSalvo };
+}
+
 /** Investigação completa já salva desta empresa, ou null se nunca foi investigada. */
 export async function lerResearchSalvo(
   supabase: SupabaseClient,
@@ -69,6 +108,29 @@ export async function lerScoresV1(
     out[row.empresa_id] = { score: row.score, investigado_em: row.created_at };
   }
   return out;
+}
+
+/**
+ * Ids de todas as empresas que já têm investigação salva. É o "já feito" dos dois
+ * lotes: o de research pula quem está aqui, o de memo prioriza quem está aqui.
+ * Pagina com `.order` explícito — sem ordenação estável o `.range()` repete linha
+ * numa página e pula em outra (foi assim que o backfill de score_v0 deixou 18.386
+ * empresas de fora).
+ */
+export async function idsComResearch(supabase: SupabaseClient): Promise<Set<string>> {
+  const ids = new Set<string>();
+  for (let from = 0; ; from += 1000) {
+    const { data, error } = await supabase
+      .from("score_run")
+      .select("empresa_id")
+      .not("research", "is", null)
+      .order("empresa_id")
+      .range(from, from + 999);
+    if (error || !data?.length) break;
+    for (const r of data as { empresa_id: string }[]) ids.add(r.empresa_id);
+    if (data.length < 1000) break;
+  }
+  return ids;
 }
 
 type ComScore = { id: string; score?: { score: number } | null; score_v1?: ScoreV1 };

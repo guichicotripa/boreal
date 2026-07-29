@@ -47,11 +47,16 @@ const TIPOS = Object.keys(PESOS).join(", ");
 
 function clamp(n: number) { return Math.max(0, Math.min(100, n)); }
 
-export async function investigarEmpresa(
-  empresa: Empresa,
-  opts?: { contextoSite?: string },
-): Promise<ResearchResult> {
-  const scoreV0 = empresa.score?.score ?? 0;
+/* Prompt e parse ficam separados da chamada porque a investigação roda por DOIS
+   caminhos: a rota (API + web search server-side, sob demanda) e o lote
+   (assinatura + Agent SDK, custo zero). Enquanto cada caminho carregava a própria
+   cópia do prompt — scripts/cache-research-sub.mjs tinha uma —, os v1 do lote e os
+   do uso real divergiam sem ninguém ver: a cópia do .mjs nunca ganhou `gatilho`,
+   `mensagem_abordagem` nem `perfil_negocio`, que hoje o memo lê. Mesmo motivo de
+   DOSSIER_SYSTEM/promptDossier estarem exportados em dossier.ts. */
+export const RESEARCH_SYSTEM = SYSTEM;
+
+export function promptResearch(empresa: Empresa, opts?: { contextoSite?: string }): string {
   const socios = (empresa.socio ?? []).map((s) => s.nome).join(", ");
 
   // Contexto pré-coletado do site oficial (lido via Scrapling na geração de cache). Quando presente,
@@ -64,7 +69,7 @@ export async function investigarEmpresa(
       `sucessão/venda que o site não traz):\n"""\n${opts.contextoSite.trim().slice(0, 12000)}\n"""\n`
     : "";
 
-  const prompt = `Investigue esta empresa na web e procure sinais de risco/propensão sucessória.
+  return `Investigue esta empresa na web e procure sinais de risco/propensão sucessória.
 
 Empresa: ${empresa.razao_social}${empresa.nome_fantasia ? ` (${empresa.nome_fantasia})` : ""}
 Setor: ${empresa.cnae_principal_desc ?? empresa.cnae_principal}
@@ -115,6 +120,13 @@ Ao final, responda APENAS com este JSON (sem markdown), exemplo do formato exato
 Valores válidos de "tipo": ${TIPOS}. Se não achar nada conclusivo, retorne "sinais": [] e explique no resumo.
 
 EFICIÊNCIA: faça no máximo 4 buscas na web, depois conclua com o JSON. Não exaustivo — foque nos sinais mais prováveis.`;
+}
+
+export async function investigarEmpresa(
+  empresa: Empresa,
+  opts?: { contextoSite?: string },
+): Promise<ResearchResult> {
+  const scoreV0 = empresa.score?.score ?? 0;
 
   // API direta + web search tool server-side: o modelo faz as buscas sozinho (até max_uses)
   // e devolve a resposta final. max_uses=4 espelha o "máximo 4 buscas" do prompt.
@@ -122,7 +134,7 @@ EFICIÊNCIA: faça no máximo 4 buscas na web, depois conclua com o JSON. Não e
     model: MODELO_ANALISE,
     max_tokens: 4096, // folga pra raciocínio das buscas + o JSON final
     system: SYSTEM,
-    messages: [{ role: "user", content: prompt }],
+    messages: [{ role: "user", content: promptResearch(empresa, opts) }],
     // Com o site já mastigado, 3 buscas bastam (foco em sucessão); sem contexto, 4.
     tools: [{ type: "web_search_20250305", name: "web_search", max_uses: opts?.contextoSite ? 3 : 4 }],
   });
@@ -136,6 +148,16 @@ EFICIÊNCIA: faça no máximo 4 buscas na web, depois conclua com o JSON. Não e
 
   if (!raw) throw new Error("Research: API não retornou texto");
 
+  const res = parseResearch(raw, scoreV0);
+  console.log(
+    `[research] ${empresa.razao_social.slice(0, 30)} — v0:${res.score_v0}→v1:${res.score_v1} ` +
+    `(${res.sinais.length} sinais, via API + web search)`
+  );
+  return res;
+}
+
+/** Normaliza a resposta do modelo em ResearchResult. Compartilhado pelos dois caminhos. */
+export function parseResearch(raw: string, scoreV0: number): ResearchResult {
   const match = raw.match(/\{[\s\S]*\}/);
   if (!match) throw new Error("Research: resposta sem JSON: " + raw.slice(0, 200));
   const parsed = JSON.parse(match[0]);
@@ -158,11 +180,6 @@ EFICIÊNCIA: faça no máximo 4 buscas na web, depois conclua com o JSON. Não e
 
   const ajuste = sinais.reduce((acc, s) => acc + s.peso, 0);
   const scoreV1 = clamp(scoreV0 + ajuste);
-
-  console.log(
-    `[research] ${empresa.razao_social.slice(0, 30)} — v0:${scoreV0}→v1:${scoreV1} ` +
-    `(${sinais.length} sinais, via API + web search)`
-  );
 
   const gatilho =
     typeof parsed.gatilho === "string" && parsed.gatilho.trim() ? parsed.gatilho.trim() : null;

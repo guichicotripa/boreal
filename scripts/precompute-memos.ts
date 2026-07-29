@@ -29,7 +29,7 @@ import { query } from "@anthropic-ai/claude-agent-sdk";
 import { calcScore } from "../src/lib/scoring.ts";
 import { promptDossier, parseDossier, DOSSIER_SYSTEM } from "../src/lib/dossier.ts";
 import { salvarMemo } from "../src/lib/memo-store.ts";
-import { lerResearchSalvo } from "../src/lib/research-store.ts";
+import { lerResearchSalvo, idsComResearch } from "../src/lib/research-store.ts";
 import { setorPorId } from "../src/lib/setores.ts";
 import { MODELO_ANALISE } from "../src/lib/modelos.ts";
 import type { Empresa, ResearchResult } from "../src/lib/types.ts";
@@ -67,23 +67,6 @@ const SELECT = `id, cnpj, razao_social, nome_fantasia, cnae_principal, cnae_prin
   capital_social, porte, telefone, email,
   socio(id, nome, qualificacao, faixa_etaria, data_entrada_sociedade)`;
 
-/** Empresas que já têm investigação (v1) — são a fila prioritária. */
-async function idsComV1(): Promise<Set<string>> {
-  const ids = new Set<string>();
-  for (let from = 0; ; from += 1000) {
-    const { data, error } = await supabase
-      .from("score_run")
-      .select("empresa_id")
-      .not("research", "is", null)
-      .order("empresa_id")
-      .range(from, from + 999);
-    if (error || !data?.length) break;
-    for (const r of data as { empresa_id: string }[]) ids.add(r.empresa_id);
-    if (data.length < 1000) break;
-  }
-  return ids;
-}
-
 /* Busca candidatas. Pagina com `.order` explícito: sem ordenação estável o
    `.range()` repete linha numa página e pula em outra — foi assim que o backfill
    de score_v0 deixou 18.386 empresas de fora.
@@ -113,7 +96,7 @@ function elegivel(row: LinhaComMemo, temV1: boolean): "novo" | "refacao" | null 
 }
 
 async function candidatas(precisa: number): Promise<{ lista: Empresa[]; refacoes: number }> {
-  const comV1 = await idsComV1();
+  const comV1 = await idsComResearch(supabase);
   const prioritarias: Empresa[] = [];
   const resto: Empresa[] = [];
   let refacoes = 0;
