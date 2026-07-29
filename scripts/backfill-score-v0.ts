@@ -28,8 +28,12 @@ const supabase = createClient(
 const PAGINA = 1000;
 const LOTE_UPDATE = 200; // ids vão na querystring do PATCH; 200 uuids ≈ 7,6 KB
 
-type Linha = Pick<Empresa, "id" | "data_inicio_atividade" | "porte"> & {
-  socio: Pick<Socio, "faixa_etaria">[] | null;
+/* As colunas lidas são exatamente as que calcScore toca. Quando o score virou v1 esta
+   lista ficou para trás por uma execução: o backfill gravou capital 0 e quadro sem
+   data de entrada pra base inteira, e a busca passou a ordenar por um score que a tela
+   não mostrava. Mexeu em scoring.ts, confira esta linha. */
+type Linha = Pick<Empresa, "id" | "cnae_principal" | "capital_social" | "data_inicio_atividade"> & {
+  socio: Pick<Socio, "faixa_etaria" | "data_entrada_sociedade">[] | null;
   score_v0?: number | null;
 };
 
@@ -43,7 +47,10 @@ for (let from = 0; ; from += PAGINA) {
      leu "51.033" com repetição e deixou 18.386 empresas sem score. */
   let q = supabase
     .from("empresa")
-    .select("id, data_inicio_atividade, porte, score_v0, socio(faixa_etaria)")
+    .select(
+      "id, cnae_principal, capital_social, data_inicio_atividade, score_v0, " +
+        "socio(faixa_etaria, data_entrada_sociedade)"
+    )
     .order("id")
     .range(from, from + PAGINA - 1);
   if (soNulos) q = q.is("score_v0", null);
@@ -57,14 +64,18 @@ for (let from = 0; ; from += PAGINA) {
 }
 console.log(`\n  ${linhas.length} empresas a pontuar`);
 
-/* calcScore espera Empresa completa, mas só toca data_inicio_atividade, porte e
-   os sócios. O cast evita carregar colunas que não entram na conta (razão social,
-   cnaes secundários, raw) — em 51 mil linhas isso é a diferença entre segundos e
-   dezenas de MB trafegados. */
+/* calcScore espera Empresa completa, mas só toca cnae_principal (pra achar o corte de
+   capital do setor), capital_social e os sócios. O cast evita carregar colunas que não
+   entram na conta (razão social, cnaes secundários, raw) — em 51 mil linhas isso é a
+   diferença entre segundos e dezenas de MB trafegados. */
 const atualizacoes = linhas.map((l) => ({
   id: l.id,
   score_v0: calcScore(
-    { data_inicio_atividade: l.data_inicio_atividade, porte: l.porte } as Empresa,
+    {
+      cnae_principal: l.cnae_principal,
+      capital_social: l.capital_social,
+      data_inicio_atividade: l.data_inicio_atividade,
+    } as Empresa,
     (l.socio ?? []) as Socio[]
   ).score,
 }));

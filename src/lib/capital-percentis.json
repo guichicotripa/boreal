@@ -1,0 +1,42 @@
+{
+  "gerado_em": "2026-07-29",
+  "fonte": "scripts/build-capital-percentis.mjs — cortes de capital social da base indexada",
+  "nota": "Cortes por vertical porque capital é nominal e a escala muda por setor. Regerar sempre que o ingest crescer de forma relevante: os cortes se deslocam e a ordenação muda junto.",
+  "geral": {
+    "n": 51033,
+    "p50": 10000,
+    "p70": 25000,
+    "p85": 100000,
+    "p95": 600000
+  },
+  "verticais": {
+    "agro": {
+      "n": 2564,
+      "p50": 84000,
+      "p70": 710000,
+      "p85": 4450000,
+      "p95": 26042572
+    },
+    "saude": {
+      "n": 32849,
+      "p50": 5000,
+      "p70": 10000,
+      "p85": 50000,
+      "p95": 108091
+    },
+    "educacao": {
+      "n": 5864,
+      "p50": 5500,
+      "p70": 20000,
+      "p85": 70000,
+      "p95": 150000
+    },
+    "metalmec": {
+      "n": 9756,
+      "p50": 48000,
+      "p70": 100000,
+      "p85": 360000,
+      "p95": 3000000
+    }
+  }
+}
