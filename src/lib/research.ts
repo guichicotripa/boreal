@@ -178,7 +178,20 @@ export function parseResearch(raw: string, scoreV0: number): ResearchResult {
     })
     .filter((s: SinalQualitativo | null): s is SinalQualitativo => s !== null);
 
-  const ajuste = sinais.reduce((acc, s) => acc + s.peso, 0);
+  /* Peso conta UMA VEZ POR TIPO, não por ocorrência. Os pesos foram desenhados
+     como "este sinal existe" → tanto; duas menções ao mesmo fato não são dois
+     fatos. Sem isto, uma empresa levou `sucessor_familiar_ativo` duas vezes e
+     caiu 50 pontos em vez de 25, e o -25 é o maior peso do sistema.
+
+     Os sinais repetidos FICAM na lista de propósito: cada um tem fonte própria, e
+     duas fontes para o mesmo achado é evidência mais forte para quem lê. O que
+     não pode dobrar é o número. */
+  const tiposContados = new Set<string>();
+  const ajuste = sinais.reduce((acc, s) => {
+    if (tiposContados.has(s.tipo)) return acc;
+    tiposContados.add(s.tipo);
+    return acc + s.peso;
+  }, 0);
   const scoreV1 = clamp(scoreV0 + ajuste);
 
   const gatilho =
