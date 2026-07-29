@@ -25,6 +25,7 @@ import { NavLogo } from "@/components/brand/NavLogo";
 import { Mark } from "@/components/brand/Mark";
 import { CommandPalette } from "./CommandPalette";
 import { TemaToggle } from "./TemaToggle";
+import { VERSAO_COMPLETA } from "@/lib/versao";
 
 /* ── Estrutura de navegação do workbench ─────────────────────────────────
    Três grupos: Trabalho (o dia a dia do analista), Inteligência (mapas de
@@ -285,6 +286,12 @@ export function AppShell({
 
         {/* div, não <main> — cada página já traz o seu <main> (evita landmark duplicado) */}
         <div className="min-w-0 flex-1">{children}</div>
+
+        {/* Versão do build. Responde "isso já subiu?" olhando a tela, que é como
+            a Vercel ficou dias com o build de 24/07 sem ninguém perceber. */}
+        <footer className="border-t border-hairline px-6 py-3">
+          <p className="font-data text-[10px] text-ink-muted">Boreal {VERSAO_COMPLETA}</p>
+        </footer>
       </div>
 
       {/* ── Drawer (mobile) ───────────────────────────────────────────── */}

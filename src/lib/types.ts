@@ -150,6 +150,10 @@ export type Oportunidade = {
   novo_para_setter?: boolean | null;
   /** Datas dos toques — para calcular último contato sem query extra. */
   interacoes?: { criado_em: string }[];
+  /* Firma dona. Só interessa a quem é staff, que lê através das orgs: para o
+     originador esta lista tem uma firma só, sempre a dele. */
+  escopo_id?: string;
+  firma?: { nome: string } | null;
   empresa: Pick<
     Empresa,
     "id" | "cnpj" | "razao_social" | "nome_fantasia" | "cnae_principal_desc"

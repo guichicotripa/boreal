@@ -45,6 +45,13 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
   const [dashboardCollapsed, setDashboardCollapsed] = useState(false);
   const [busca, setBusca] = useState("");
   const [filtroDono, setFiltroDono] = useState("todos");
+  /* Staff lê através das firmas, então esta lista pode vir misturada. O filtro
+     nasce na PRÓPRIA firma e não em "todas": o pipeline é ferramenta de trabalho,
+     e abrir com oportunidade de testador no meio da do cliente faria alguém achar
+     que um analista salvou o que na verdade foi teste. Cruzar tudo continua a um
+     clique, e a visão realmente cross-firma é a /metricas. */
+  const [escopoProprio, setEscopoProprio] = useState<string | null>(null);
+  const [filtroFirma, setFiltroFirma] = useState<string>("propria");
   const [soAtrasadas, setSoAtrasadas] = useState(false);
   const [scoreOverrides, setScoreOverrides] = useState<Record<string, ScoreConhecido>>({});
 
@@ -84,6 +91,7 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
       const d = await r.json();
       if (!ativo) return;
       setOps(d.oportunidades ?? []);
+      if (d.escopoProprio) setEscopoProprio(d.escopoProprio);
       setLoading(false);
     })();
     return () => { ativo = false; };
@@ -170,12 +178,35 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
     else undoRemove(action.oportunidade);
   }
 
+  /* Firmas presentes na resposta. Para o originador isto tem exatamente um item
+     (a dele), então o seletor nem aparece — quem não é staff não deve nem saber
+     que existem outras firmas. */
+  const firmas = Array.from(
+    new Map(
+      ops.filter((o) => o.escopo_id).map((o) => [o.escopo_id!, o.firma?.nome ?? "sem nome"])
+    ).entries()
+  ).sort((a, b) => a[1].localeCompare(b[1]));
+  const multiFirma = firmas.length > 1;
+
+  /* A firma não é um filtro como os outros: ela define o UNIVERSO de trabalho, e
+     dono/busca/atrasadas filtram dentro dele. Por isso é aplicada antes, e todo
+     contador da tela conta a partir daqui. Se fosse tratada como filtro comum, o
+     cabeçalho diria "12 oportunidades" com 11 na lista, porque uma é de outra
+     firma — foi exatamente o que apareceu no teste. Para quem não é staff,
+     `opsDaFirma` é igual a `ops`. */
+  const opsDaFirma = ops.filter((o) => {
+    if (!multiFirma || filtroFirma === "todas") return true;
+    const alvo = filtroFirma === "propria" ? escopoProprio : filtroFirma;
+    return !alvo || o.escopo_id === alvo;
+  });
+
+  // Depois de `opsDaFirma`: a lista de donos é a da firma em foco, não a de todas.
   const donos = Array.from(
-    new Set(ops.map((o) => o.dono).filter((d): d is string => !!d))
+    new Set(opsDaFirma.map((o) => o.dono).filter((d): d is string => !!d))
   ).sort();
 
   const q = busca.trim().toLowerCase();
-  const filtradas = ops.filter((o) => {
+  const filtradas = opsDaFirma.filter((o) => {
     if (soAtrasadas && !atrasou(o)) return false;
     if (filtroDono !== "todos" && (o.dono ?? "") !== filtroDono) return false;
     if (q) {
@@ -319,7 +350,7 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
             <p className="mt-1 text-sm text-ink-soft">
               {modo === "agenda"
                 ? `${agendaList.length} ${agendaList.length === 1 ? "ação" : "ações"} na fila · atrasadas primeiro`
-                : `${filtroAtivo ? `${filtradas.length} de ${ops.length}` : ops.length} oportunidades no funil`}
+                : `${filtroAtivo ? `${filtradas.length} de ${opsDaFirma.length}` : opsDaFirma.length} oportunidades no funil`}
             </p>
           </div>
           <Link
@@ -333,7 +364,7 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
 
         {loading ? (
           <PipelineSkeleton />
-        ) : ops.length === 0 ? (
+        ) : opsDaFirma.length === 0 ? (
           <div className="rounded-lg border border-hairline bg-surface py-14 text-center">
             <p className="font-display text-lg text-ink">
               {modo === "agenda" ? "Nada na fila ainda." : "Pipeline vazio."}
@@ -353,7 +384,7 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
             {/* Dashboard — collapsível (só no funil; a agenda é fila de execução) */}
             {modo !== "agenda" && (
             <Dashboard
-              ops={ops}
+              ops={opsDaFirma}
               collapsed={dashboardCollapsed}
               onToggle={() => setDashboardCollapsed((v) => !v)}
             />
@@ -409,6 +440,36 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
                 placeholder="buscar empresa, cidade, setor…"
                 className="w-56 rounded border border-hairline bg-surface px-2 py-1.5 text-xs text-ink outline-none placeholder:text-ink-muted focus:border-hairline-hover"
               />
+              {/* Filtro de firma — só existe pra staff, que lê através das orgs.
+                  O originador vê uma firma só e nem sabe que o seletor existe. */}
+              {multiFirma && (
+                <Select value={filtroFirma} onValueChange={(v) => setFiltroFirma(v ?? "propria")}>
+                  <SelectTrigger className="h-auto w-44 rounded border border-hairline bg-surface px-2 py-1.5 font-sans text-xs text-ink outline-none focus:ring-0 focus-visible:ring-1 focus-visible:ring-ink/50 focus:border-hairline-hover [&>svg]:opacity-40 [&>svg]:h-3 [&>svg]:w-3">
+                    <SelectValue>
+                      {filtroFirma === "todas"
+                        ? "Todas as firmas"
+                        : filtroFirma === "propria"
+                          ? firmas.find(([id]) => id === escopoProprio)?.[1] ?? "Minha firma"
+                          : firmas.find(([id]) => id === filtroFirma)?.[1] ?? "Firma"}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent sideOffset={4} className="border-hairline bg-overlay text-ink">
+                    <SelectItem value="propria" className="text-[11px] text-ink focus:bg-surface-hover focus:text-ink">
+                      {firmas.find(([id]) => id === escopoProprio)?.[1] ?? "Minha firma"}
+                    </SelectItem>
+                    <SelectItem value="todas" className="text-[11px] text-ink focus:bg-surface-hover focus:text-ink">
+                      Todas as firmas
+                    </SelectItem>
+                    {firmas
+                      .filter(([id]) => id !== escopoProprio)
+                      .map(([id, nome]) => (
+                        <SelectItem key={id} value={id} className="text-[11px] text-ink focus:bg-surface-hover focus:text-ink">
+                          {nome}
+                        </SelectItem>
+                      ))}
+                  </SelectContent>
+                </Select>
+              )}
               {/* Filtro dono — Radix Select para manter o dark theme */}
               <Select value={filtroDono} onValueChange={(v) => setFiltroDono(v ?? "todos")}>
                 <SelectTrigger className="h-auto w-40 rounded border border-hairline bg-surface px-2 py-1.5 font-sans text-xs text-ink outline-none focus:ring-0 focus-visible:ring-1 focus-visible:ring-ink/50 focus:border-hairline-hover [&>svg]:opacity-40 [&>svg]:h-3 [&>svg]:w-3">

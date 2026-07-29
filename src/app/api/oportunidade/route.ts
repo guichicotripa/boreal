@@ -19,7 +19,8 @@ export async function GET() {
     .from("oportunidade")
     .select(
       `id, estagio, resultado, notas, dono, proxima_acao, proxima_acao_em, score_no_save, created_at,
-       origem, selado_em, proveniencia_hash, novo_para_setter,
+       origem, selado_em, proveniencia_hash, novo_para_setter, escopo_id,
+       firma:escopo_id (nome),
        empresa:empresa_id (
          id, cnpj, razao_social, nome_fantasia, cnae_principal_desc,
          municipio, uf, capital_social, porte, telefone, email,
@@ -30,7 +31,15 @@ export async function GET() {
     .order("created_at", { ascending: false });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json({ oportunidades: data ?? [] });
+
+  /* `escopoProprio` vai junto porque staff lê através das firmas (policy da 0013)
+     e a lista chega misturada. Sem saber qual é a própria org, a tela não teria
+     como escolher o padrão do filtro, e o pipeline abriria com oportunidade de
+     testador no meio da do cliente, sem nada indicando de quem é. */
+  return NextResponse.json({
+    oportunidades: data ?? [],
+    escopoProprio: await escopoAtual(),
+  });
 }
 
 // POST — salva uma empresa na watchlist (idempotente por empresa_id).
