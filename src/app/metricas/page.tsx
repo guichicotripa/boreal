@@ -89,11 +89,23 @@ export default async function Metricas() {
      pra recalibrar o score. Sai da interseção entre `busca` (a lista exibida) e
      `salvou` (a escolha) — por isso o evento de busca guarda o top ranqueado. */
   const escolhidos = new Set(salvou.map((e) => String(e.empresa_id ?? "")).filter(Boolean));
-  const posicoes: number[] = [];
+
+  /* UMA observação por empresa escolhida, não uma por busca em que ela apareceu.
+     Sem isto, um analista que refaz a mesma busca oito vezes antes de decidir
+     conta como oito escolhas, e a mediana passa a refletir quem busca muito em
+     vez de quem escolhe o quê. Vale a busca MAIS RECENTE que continha a empresa:
+     é a lista que ele tinha na frente quando decidiu (`buscas` já vem ordenada
+     por criado_em desc). */
+  const posicaoPorEmpresa = new Map<string, number>();
   for (const b of buscas) {
     const top = (b.payload as { top?: { id: string; posicao: number }[] })?.top ?? [];
-    for (const item of top) if (escolhidos.has(item.id)) posicoes.push(item.posicao);
+    for (const item of top) {
+      if (escolhidos.has(item.id) && !posicaoPorEmpresa.has(item.id)) {
+        posicaoPorEmpresa.set(item.id, item.posicao);
+      }
+    }
   }
+  const posicoes = [...posicaoPorEmpresa.values()];
   const medianaPos = posicoes.length
     ? [...posicoes].sort((a, b) => a - b)[Math.floor(posicoes.length / 2)]
     : null;
@@ -147,7 +159,7 @@ export default async function Metricas() {
             <Cartao
               rotulo="Posição escolhida (mediana)"
               valor={`#${medianaPos}`}
-              nota={`${posicoes.length} escolhas casadas com a lista exibida`}
+              nota={`${posicoes.length} ${posicoes.length === 1 ? "empresa escolhida" : "empresas escolhidas"} casadas com a lista exibida`}
             />
           )}
           <Cartao rotulo="Empresas com v1" valor={String(comV1)} nota="investigação na web feita" />
