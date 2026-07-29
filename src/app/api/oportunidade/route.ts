@@ -136,14 +136,23 @@ export async function PATCH(req: NextRequest) {
   const { data: antes } = await supabase
     .from("oportunidade").select("estagio, empresa_id").eq("id", id).maybeSingle();
 
+  /* maybeSingle, não single: com RLS, oportunidade de outra firma simplesmente
+     não existe pra esta sessão, e o `single()` estourava com "Cannot coerce the
+     result to a single JSON object" — 500 com mensagem crua do PostgREST pra uma
+     situação que é 404. Medido: testador de outra org tentando mover o estágio de
+     uma oportunidade da Setter. O dado ficou intacto (a policy recusou), só a
+     resposta estava errada. */
   const { data, error } = await supabase
     .from("oportunidade")
     .update(patch)
     .eq("id", id)
     .select("id, estagio, resultado, notas")
-    .single();
+    .maybeSingle();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (!data) {
+    return NextResponse.json({ error: "oportunidade não encontrada" }, { status: 404 });
+  }
 
   // Só quando o estágio de fato mudou: editar uma nota não é movimento de funil.
   if (patch.estagio && antes && antes.estagio !== patch.estagio) {
@@ -158,8 +167,22 @@ export async function DELETE(req: NextRequest) {
   const id = req.nextUrl.searchParams.get("id");
   if (!id) return NextResponse.json({ error: "id vazio" }, { status: 400 });
 
+  /* `.select()` pra saber QUANTAS linhas saíram. Sem isto, DELETE que não apagou
+     nada devolvia `200 {ok:true}` — a API afirmando sucesso sobre um no-op.
+     Medido: testador de outra firma pedindo o delete de uma oportunidade da
+     Setter. A policy recusou (o dado ficou intacto, que é o que importa), mas a
+     resposta dizia que deu certo. Numa UI otimista a linha desapareceria da tela
+     e voltaria no refresh, e o mesmo silêncio esconderia falha de verdade. */
   const supabase = await createUserClient();
-  const { error } = await supabase.from("oportunidade").delete().eq("id", id);
+  const { data, error } = await supabase
+    .from("oportunidade")
+    .delete()
+    .eq("id", id)
+    .select("id");
+
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (!data?.length) {
+    return NextResponse.json({ error: "oportunidade não encontrada" }, { status: 404 });
+  }
   return NextResponse.json({ ok: true });
 }
