@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase";
+import { createUserClient } from "@/lib/supabase-server";
 import { selaHash, normalizaCnpj, type Certificado } from "@/lib/proveniencia";
 
 export const runtime = "nodejs";
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
   const id = String((body as { id?: string })?.id ?? "").trim();
   if (!id) return NextResponse.json({ error: "id vazio" }, { status: 400 });
 
-  const supabase = createAdminClient();
+  const supabase = await createUserClient();
   const { data: row, error } = await supabase.from("oportunidade").select(SELECT).eq("id", id).single();
   if (error || !row) return NextResponse.json({ error: error?.message ?? "não encontrada" }, { status: 404 });
 
@@ -80,7 +80,7 @@ export async function GET(req: NextRequest) {
   const id = req.nextUrl.searchParams.get("id");
   if (!id) return NextResponse.json({ error: "id vazio" }, { status: 400 });
 
-  const supabase = createAdminClient();
+  const supabase = await createUserClient();
   const { data: row, error } = await supabase.from("oportunidade").select(SELECT).eq("id", id).single();
   if (error || !row) return NextResponse.json({ error: error?.message ?? "não encontrada" }, { status: 404 });
 

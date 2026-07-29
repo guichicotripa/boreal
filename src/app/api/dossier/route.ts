@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase";
+import { createUserClient } from "@/lib/supabase-server";
 import { calcScore } from "@/lib/scoring";
 import { gerarDossierAnalise } from "@/lib/dossier";
 import type { Empresa, DossierAnalise } from "@/lib/types";
@@ -27,7 +28,16 @@ export async function POST(req: NextRequest) {
   }
 
   const skipCache = req.nextUrl.searchParams.get("fresh") === "1";
-  const supabase = createAdminClient();
+
+  /* Dois clientes nesta rota, de propósito.
+     LEITURA pelo usuário: as policies valem, e uma firma nunca lê fora do escopo.
+     ESCRITA do memo pela service_role: `empresa_memo` é corpus COMPARTILHADO
+     entre clientes (deriva só de CNPJ público, e é onde está a economia de escala
+     entre eles), então não tem policy de insert — ninguém escreve nele pela
+     sessão. Quem escreve é o pipeline, e esta rota escrevendo é o pipeline
+     aproveitando um memo que o uso real acabou de pagar. */
+  const supabase = await createUserClient();
+  const pipeline = createAdminClient();
 
   /* Ordem: BANCO → arquivo → gerar.
      O banco vem primeiro porque é o que cresce (migration 0009). O arquivo é o
@@ -76,7 +86,7 @@ export async function POST(req: NextRequest) {
        abrir a mesma empresa de novo pagava o LLM de novo e nada do uso real
        ficava acumulado. Falha ao gravar não impede a resposta — o usuário já tem
        o memo; o pior caso é gerar outra vez depois. */
-    await salvarMemo(supabase, empresaId, analise, "api/dossier", !!salvoV1);
+    await salvarMemo(pipeline, empresaId, analise, "api/dossier", !!salvoV1);
     return NextResponse.json({ empresa, analise });
   } catch (err) {
     console.error("Dossier falhou:", (err as Error).message);

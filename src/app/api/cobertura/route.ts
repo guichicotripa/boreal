@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase";
+import { createUserClient } from "@/lib/supabase-server";
 import { nomeDivisao } from "@/lib/cnae";
 
 /* Cobertura real da base indexada: quais UFs e quais divisões CNAE existem.
@@ -31,7 +31,7 @@ export async function GET() {
     return NextResponse.json({ ...cache.dados, cached: true });
   }
   try {
-    const supabase = createAdminClient();
+    const supabase = await createUserClient();
     const { count, error: erroCount } = await supabase
       .from("empresa")
       .select("*", { count: "exact", head: true });

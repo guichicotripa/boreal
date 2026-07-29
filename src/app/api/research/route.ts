@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase";
+import { createUserClient } from "@/lib/supabase-server";
 import { calcScore } from "@/lib/scoring";
 import { investigarEmpresa } from "@/lib/research";
 import { lerResearchSalvo, salvarResearch } from "@/lib/research-store";
@@ -32,7 +33,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ research: CACHE[empresaId], cached: true });
   }
 
-  const supabase = createAdminClient();
+  /* Mesma divisão da /api/dossier: leitura pela sessão (policies valem), escrita
+     pela service_role. `score_run` é corpus compartilhado, derivado de CNPJ
+     público, e não tem policy de insert — quem grava é o pipeline. */
+  const supabase = await createUserClient();
+  const pipeline = createAdminClient();
 
   // Investigação já persistida (score_run) → devolve na hora, sem gastar o agente.
   // É o que faz reabrir a mesma empresa ser instantâneo em vez de 30-60s + custo de API.
@@ -73,7 +78,7 @@ export async function POST(req: NextRequest) {
     // faria a empresa ser reinvestigada (e recobrada) toda vez.
     // Falha de escrita não derruba a resposta: o usuário vê a investigação, só não fica salva.
     const { persistido, payloadSalvo } = await salvarResearch(
-      supabase,
+      pipeline,
       empresaId,
       research,
       empresa.score?.breakdown,

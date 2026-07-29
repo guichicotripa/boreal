@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase";
+import { createUserClient } from "@/lib/supabase-server";
 import { parseQueryLLM } from "@/lib/llm";
 import { parseQueryHeuristic } from "@/lib/query-parser";
 import { calcScore } from "@/lib/scoring";
@@ -37,7 +37,7 @@ const CACHE = demoCache as unknown as Record<string, SearchResponse>;
 async function comOverlays(resp: SearchResponse): Promise<SearchResponse> {
   let empresas = resp.empresas ?? [];
   if (empresas.length === 0) return resp;
-  const supabase = createAdminClient();
+  const supabase = await createUserClient();
 
   try {
     const descartadas = await lerDescartadas(supabase, await escopoAtual(), empresas.map((e) => e.id));
@@ -137,7 +137,7 @@ export async function POST(req: NextRequest) {
   }
 
   // ── 2. Monta e roda a query no Supabase ──────────────────────────────────────
-  const supabase = createAdminClient();
+  const supabase = await createUserClient();
 
   // Se filtra por idade do sócio, usa inner join (só empresas COM sócio que bate).
   const socioEmbed = filters.minFaixaEtaria != null ? "socio!inner" : "socio";

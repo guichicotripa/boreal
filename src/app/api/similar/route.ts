@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase";
+import { createUserClient } from "@/lib/supabase-server";
 import { calcScore } from "@/lib/scoring";
 import { similaridade, divisaoCnae } from "@/lib/similar";
 import type { Empresa } from "@/lib/types";
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
   const empresaId = String((body as { empresaId?: string })?.empresaId ?? "").trim();
   if (!empresaId) return NextResponse.json({ error: "empresaId vazio" }, { status: 400 });
 
-  const supabase = createAdminClient();
+  const supabase = await createUserClient();
 
   // 1. Empresa-semente (só o perfil que importa pra similaridade).
   const { data: seed, error: seedErr } = await supabase
