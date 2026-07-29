@@ -18,6 +18,7 @@ import {
   EyeOff,
   PanelLeftClose,
   PanelLeft,
+  Activity,
   type LucideIcon,
 } from "lucide-react";
 import { NavLogo } from "@/components/brand/NavLogo";
@@ -57,6 +58,11 @@ export const NAV_GRUPOS: NavGrupo[] = [
     ],
   },
   {
+    // Só staff. Não é módulo vendável: é o painel de quem OPERA o Boreal.
+    label: "Boreal",
+    items: [{ href: "/metricas", label: "Métricas", icon: Activity, modulo: "staff" }],
+  },
+  {
     label: "Prova",
     colapsavel: true,
     items: [
@@ -88,11 +94,17 @@ const SIDEBAR_KEY = "boreal:sidebar-colapsada";
 export function AppShell({
   children,
   modulos = [],
+  staff = false,
 }: {
   children: React.ReactNode;
   /* Vem do layout, que é Server Component e consegue ler a sessão. AppShell é
      client (usa pathname e localStorage), então não tem como buscar sozinho. */
   modulos?: string[];
+  /* Staff enxerga toda superfície. Vem separado em vez de eu injetar nomes
+     falsos dentro de `modulos`: uma lista de nomes precisaria ser atualizada a
+     cada item novo de menu, e esquecer disso esconderia a página de quem devia
+     estar vendo. */
+  staff?: boolean;
 }) {
   const pathname = usePathname();
 
@@ -103,9 +115,9 @@ export function AppShell({
     () =>
       NAV_GRUPOS.map((g) => ({
         ...g,
-        items: g.items.filter((i) => !i.modulo || modulos.includes(i.modulo)),
+        items: g.items.filter((i) => !i.modulo || staff || modulos.includes(i.modulo)),
       })).filter((g) => g.items.length > 0),
-    [modulos]
+    [modulos, staff]
   );
 
   const [drawerAberto, setDrawerAberto] = useState(false);

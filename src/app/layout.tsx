@@ -2,7 +2,13 @@ import type { Metadata, Viewport } from "next";
 import { Newsreader, Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import Script from "next/script";
 import { AppShell } from "@/components/shell/AppShell";
-import { permissoesAtuais } from "@/lib/permissoes";
+import { permissoesAtuais, type Permissoes } from "@/lib/permissoes";
+
+/** Só o que o shell precisa saber pra montar o menu. Nada de despejar as
+ *  permissões inteiras num componente client. */
+function pickShell(p: Permissoes) {
+  return { modulos: p.modulos, staff: p.staff };
+}
 import "./globals.css";
 
 // Serif editorial — headlines, nomes de empresa, statements
@@ -105,7 +111,7 @@ export default async function RootLayout({
         {/* O layout é Server Component, então é o único ponto que consegue ler o
             contrato da firma e passar pro shell, que é client. Deslogado devolve
             lista vazia sem estourar (a tela de acesso vive fora do shell). */}
-        <AppShell modulos={(await permissoesAtuais()).modulos}>{children}</AppShell>
+        <AppShell {...pickShell(await permissoesAtuais())}>{children}</AppShell>
       </body>
     </html>
   );

@@ -10,6 +10,7 @@ import { escopoAtual } from "@/lib/escopo";
 import { normalizeQuery } from "@/lib/teses";
 import { SETORES } from "@/lib/setores";
 import { permissoesAtuais, setorPermitido, ufPermitida } from "@/lib/permissoes";
+import { registrarBusca } from "@/lib/evento";
 import type { Empresa, Socio, SearchResponse } from "@/lib/types";
 import demoCache from "@/lib/demo-cache.json";
 import setoresData from "@/lib/setores.json";
@@ -289,6 +290,13 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     console.error("Reasoner falhou (seguindo sem insights):", (err as Error).message);
   }
+
+  /* A lista ranqueada que o analista vai ver. Gravada AQUI, depois do v1 e da
+     ordenação final, porque o que ensina o modelo é o que foi EXIBIDO — não o que
+     o banco devolveu antes de reordenar. `await` de propósito: em serverless, o
+     que fica pendente depois da resposta pode simplesmente não acontecer, e este
+     é o único dado do sistema que não dá pra recomputar depois. */
+  await registrarBusca(supabase, queryText, filters, scored);
 
   return NextResponse.json({
     filters,

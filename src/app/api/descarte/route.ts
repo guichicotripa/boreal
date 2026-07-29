@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createUserClient } from "@/lib/supabase-server";
 import { escopoAtual } from "@/lib/escopo";
 import { descartar, restaurar, listarDescartadasDetalhado } from "@/lib/descarte-store";
+import { registrarDescartou } from "@/lib/evento";
 
 /* Descarte de empresa no Radar.
    POST   { empresaId, motivo? } → descarta (idempotente)
@@ -36,7 +37,12 @@ export async function POST(req: NextRequest) {
   const lido = await lerEmpresaId(req);
   if (!lido.ok) return lido.resp;
   try {
-    await descartar(await createUserClient(), await escopoAtual(), lido.empresaId, lido.motivo);
+    const supabase = await createUserClient();
+    await descartar(supabase, await escopoAtual(), lido.empresaId, lido.motivo);
+    /* Rotulo NEGATIVO, o mais escasso e o mais informativo: o motivo escrito a
+       mao diz o que a heuristica nao enxerga. Uma lista com muito descarte pelo
+       mesmo motivo e um eixo faltando no score. */
+    await registrarDescartou(supabase, lido.empresaId, lido.motivo);
     return NextResponse.json({ descartada: true, empresaId: lido.empresaId });
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 500 });

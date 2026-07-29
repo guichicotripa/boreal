@@ -16,13 +16,19 @@ export type Permissoes = {
   setores: string[];  // ids do registry. [] = todos
   ufs: string[];      // siglas. [] = todas
   modulos: string[];  // superfícies liberadas, ex: "heatmap"
+  /* Gente da casa (papel = 'boreal'). Ignora as três dimensões do contrato e lê
+     através das orgs. A regra REAL vive em `eh_staff()` no Postgres (migration
+     0013), não aqui: isto é a cópia que a UI usa pra decidir o que desenhar. Um
+     bug nesta linha some com um menu; a proteção continua sendo do banco. */
+  staff: boolean;
 };
 
-const SEM_ACESSO: Permissoes = { setores: [], ufs: [], modulos: [] };
+const SEM_ACESSO: Permissoes = { setores: [], ufs: [], modulos: [], staff: false };
 
 export const permissoesAtuais = cache(async (): Promise<Permissoes> => {
   const membro = await membroAtual();
   if (!membro) return SEM_ACESSO;
+  const staff = membro.papel === "boreal";
 
   const supabase = await createUserClient();
   /* As três em paralelo: são independentes e a soma das latências apareceria em
@@ -38,22 +44,23 @@ export const permissoesAtuais = cache(async (): Promise<Permissoes> => {
     setores: (setores.data ?? []).map((r) => r.setor_id as string),
     ufs: (ufs.data ?? []).map((r) => r.uf as string),
     modulos: (modulos.data ?? []).map((r) => r.modulo as string),
+    staff,
   };
 });
 
 /** Setor está no contrato? Lista vazia = contrato sem restrição de setor. */
 export function setorPermitido(p: Permissoes, setorId: string): boolean {
-  return p.setores.length === 0 || p.setores.includes(setorId);
+  return p.staff || p.setores.length === 0 || p.setores.includes(setorId);
 }
 
 /** UF está na praça contratada? Lista vazia = sem restrição de praça. */
 export function ufPermitida(p: Permissoes, uf: string): boolean {
-  return p.ufs.length === 0 || p.ufs.includes(uf.toUpperCase());
+  return p.staff || p.ufs.length === 0 || p.ufs.includes(uf.toUpperCase());
 }
 
 /* Módulo é o oposto das outras duas: lista vazia significa NENHUM módulo, não
    todos. Setor e praça delimitam um universo que existe por padrão; módulo é
    superfície vendida à parte, e o default de algo vendido à parte é desligado. */
 export function temModulo(p: Permissoes, modulo: string): boolean {
-  return p.modulos.includes(modulo);
+  return p.staff || p.modulos.includes(modulo);
 }
