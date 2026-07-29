@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createUserClient } from "@/lib/supabase-server";
+import { escopoAtual } from "@/lib/escopo";
 import { calcScore } from "@/lib/scoring";
 import type { Empresa } from "@/lib/types";
 
@@ -54,11 +55,21 @@ export async function POST(req: NextRequest) {
     .single();
   const scoreNoSave = emp ? calcScore(emp as unknown as Empresa).score : null;
 
+  /* escopo_id explícito, não pelo default da coluna. O default é a org Setter, o
+     que fazia isto "funcionar" pra ela e falhar pra qualquer outra firma: a
+     policy da 0011 recusa gravar com escopo que não é o seu.
+
+     E o onConflict acompanha o unique, que a 0010 trocou de `empresa_id` pra
+     `(escopo_id, empresa_id)` — com dois clientes, "uma empresa entra na
+     watchlist uma vez só" não pode ser global. Ficou apontando pro antigo e
+     salvar oportunidade passou a devolver 500 pra todo mundo. */
+  const escopoId = await escopoAtual();
+
   const { data, error } = await supabase
     .from("oportunidade")
     .upsert(
-      { empresa_id: empresaId, score_no_save: scoreNoSave, updated_at: new Date().toISOString() },
-      { onConflict: "empresa_id", ignoreDuplicates: false }
+      { empresa_id: empresaId, escopo_id: escopoId, score_no_save: scoreNoSave, updated_at: new Date().toISOString() },
+      { onConflict: "escopo_id,empresa_id", ignoreDuplicates: false }
     )
     .select("id, estagio, score_no_save")
     .single();
