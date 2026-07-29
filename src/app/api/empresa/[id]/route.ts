@@ -28,8 +28,17 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
     .eq("id", id)
     .single();
 
+  /* Não repassa `error.message`: com RLS, empresa fora do contrato faz o
+     `.single()` falhar e o PostgREST devolve "Cannot coerce the result to a
+     single JSON object", que vazava direto pro cliente. Além de incompreensível,
+     descrevia o mecanismo interno em vez do fato. Id inexistente e id fora do
+     contrato dão a MESMA resposta de propósito: distinguir os dois contaria a
+     quem não contratou um setor que aquela empresa existe. */
   if (error || !data) {
-    return NextResponse.json({ error: error?.message ?? "empresa não encontrada" }, { status: 404 });
+    return NextResponse.json(
+      { error: "empresa não encontrada ou fora do seu contrato" },
+      { status: 404 }
+    );
   }
 
   const empresa = data as Empresa;

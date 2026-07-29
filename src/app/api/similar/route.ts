@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     .eq("id", empresaId)
     .single();
   if (seedErr || !seed) {
-    return NextResponse.json({ error: seedErr?.message ?? "empresa não encontrada" }, { status: 404 });
+    return NextResponse.json({ error: "empresa não encontrada ou fora do seu contrato" }, { status: 404 });
   }
 
   const div = divisaoCnae(seed);

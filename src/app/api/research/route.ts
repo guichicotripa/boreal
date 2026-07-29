@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
     .single();
 
   if (error || !data) {
-    return NextResponse.json({ error: error?.message ?? "empresa não encontrada" }, { status: 404 });
+    return NextResponse.json({ error: "empresa não encontrada ou fora do seu contrato" }, { status: 404 });
   }
 
   const empresa = data as Empresa;
