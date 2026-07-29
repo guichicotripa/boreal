@@ -4,6 +4,7 @@
 // sucessão (o score prevê quem vende); recall baixo = o jogo é outro (consolidação).
 //   node --env-file=.env.local scripts/build-setores.mjs
 import { BigQuery } from "@google-cloud/bigquery";
+import { SCORE_V1, ctesSocios, CAP_PCT } from "./lib/score-sql.mjs";
 import { writeFileSync, readFileSync, existsSync } from "fs";
 import path from "path";
 
@@ -43,25 +44,20 @@ async function umSetor(s) {
   const cnaeFiltro = likeClause(s.cnaes);
   // universo + score (mesmos pesos da validação) + decil dentro do setor; recall vs aquisições; quente
   const sql = `
-  WITH sc AS (
-    SELECT cnpj_basico, MAX(SAFE_CAST(faixa_etaria AS INT64)) AS mf, COUNTIF(tipo='2') AS n_pf
-    FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${CORTE}' GROUP BY 1
-  ),
+  WITH sc AS (${ctesSocios(CORTE)}),
   socN AS (
     SELECT cnpj_basico, MAX(SAFE_CAST(faixa_etaria AS INT64)) AS mf, COUNTIF(tipo='1') AS pj, COUNTIF(tipo='2') AS pf
     FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${NOVO}' GROUP BY 1
   ),
-  universo AS (
+  bruto AS (
     SELECT e.cnpj_basico,
-      sc.mf AS mf, (2023-EXTRACT(YEAR FROM e.data_inicio_atividade)) AS idade,
-      (CASE sc.mf WHEN 9 THEN 30 WHEN 8 THEN 26 WHEN 7 THEN 20 WHEN 6 THEN 10 ELSE 0 END)
-      + (CASE WHEN 2023-EXTRACT(YEAR FROM e.data_inicio_atividade) >= 40 THEN 30
-              WHEN 2023-EXTRACT(YEAR FROM e.data_inicio_atividade) >= 25 THEN 22
-              WHEN 2023-EXTRACT(YEAR FROM e.data_inicio_atividade) >= 15 THEN 10 ELSE 0 END)
-      + (CASE WHEN REGEXP_REPLACE(emp.porte,'^0','')='5' THEN 30
-              WHEN REGEXP_REPLACE(emp.porte,'^0','')='3' THEN 15
-              WHEN REGEXP_REPLACE(emp.porte,'^0','')='1' THEN 5 ELSE 0 END)
-      + (CASE WHEN sc.n_pf >= 2 THEN 10 ELSE 0 END) AS score
+      sc.mf AS mf, sc.menor, sc.n_pf,
+      DATE_DIFF(DATE('${CORTE}'), sc.ult, YEAR) AS anos_ult,
+      SAFE_CAST(emp.capital_social AS FLOAT64) AS capital,
+      -- vertical constante: esta query roda um setor por vez, e o PARTITION BY do
+      -- CAP_PCT (compartilhado) precisa de uma coluna com esse nome.
+      '${s.id}' AS vertical,
+      (2023-EXTRACT(YEAR FROM e.data_inicio_atividade)) AS idade
     FROM \`basedosdados.br_me_cnpj.estabelecimentos\` e
     JOIN \`basedosdados.br_me_cnpj.empresas\` emp ON emp.cnpj_basico=e.cnpj_basico AND emp.data='${CORTE}'
     LEFT JOIN sc ON sc.cnpj_basico=e.cnpj_basico
@@ -71,6 +67,9 @@ async function umSetor(s) {
     -- tinha sido feita, então /setores e o TAM publicavam número 2-3x maior.
     WHERE e.data='${CORTE}' AND e.sigla_uf='SP' AND e.identificador_matriz_filial='1'
       AND e.situacao_cadastral='2' AND ${cnaeFiltro}
+  ),
+  universo AS (
+    SELECT *, ${SCORE_V1} AS score FROM (SELECT *, ${CAP_PCT} AS cap_pct FROM bruto)
   ),
   -- Desempate por cnpj_basico: NTILE sobre score com empate distribui as empresas
   -- empatadas de forma arbitrária, e a mesma execução dava recall diferente entre

@@ -42,6 +42,15 @@ async function comOverlays(resp: SearchResponse): Promise<SearchResponse> {
   if (empresas.length === 0) return resp;
   const supabase = await createUserClient();
 
+  /* O score NUNCA vem do cache: é recalculado aqui e a lista é reordenada por ele.
+     Os caches guardam o que é caro (parse da query, insight do LLM, ida ao banco) e
+     o score custa microssegundos. Quando o v0 virou v1 os caches passaram a servir
+     números da fórmula antiga, e pior que número velho seria a lista ORDENADA pela
+     fórmula antiga com os números da nova — um 45 acima de um 88 na tela. */
+  empresas = empresas
+    .map((e) => ({ ...e, score: calcScore(e) }))
+    .sort((a, b) => (b.score?.score ?? 0) - (a.score?.score ?? 0));
+
   try {
     const descartadas = await lerDescartadas(supabase, await escopoAtual(), empresas.map((e) => e.id));
     empresas = filtrarDescartadas(empresas, descartadas);
@@ -110,7 +119,10 @@ export async function POST(req: NextRequest) {
   }
   // Browse de setor sem texto: serve do cache (saúde/educação ficam instantâneos como o metalmec).
   if (!skipCache && setorId && !queryText) {
-    const hit = (setorCache.porSetor as Record<string, SearchResponse>)[setorId];
+    /* `unknown` no meio porque o `score` gravado no JSON é da fórmula antiga e não
+       casa mais com ScoreBreakdown. Não é dívida: comOverlays recalcula o score de
+       toda linha servida do cache, então o campo do arquivo é ignorado de propósito. */
+    const hit = (setorCache.porSetor as unknown as Record<string, SearchResponse>)[setorId];
     if (hit) {
       return NextResponse.json({ ...(await comOverlays(hit)), cached: true });
     }

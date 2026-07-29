@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import validacao from "@/lib/validacao.json";
 import hindcast from "@/lib/hindcast.json";
-import lift from "@/lib/lift.json";
+import lift from "@/lib/lift-coorte.json";
 import setoresData from "@/lib/setores.json";
 
 // Fonte única do número de sucessão (mesmo do /setores), pra não divergir.
@@ -13,6 +13,7 @@ type Feature = {
   universo_pct: number;
   adquiridas_pct: number;
   lift: number;
+  z: number;
   sinal: string;
 };
 
@@ -264,15 +265,20 @@ export default function Validacao() {
             O score não é chutado — ele se calibra contra o que aconteceu
           </h2>
           <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
-            Cada feature foi medida contra {fmt(lift.n_adquiridas)} aquisições reais. O <strong>lift</strong> é
-            quanto ela aparece mais nas empresas vendidas do que no universo. É isso que define o peso,
-            e o dado <strong>corrigiu a nossa intuição</strong> duas vezes.
+            Cada feature foi medida contra {fmt(lift.n_adquiridas)} aquisições reais, e não no universo
+            inteiro: <strong>dentro da coorte que o score já elegeu</strong>. É a pergunta que decide um
+            peso — entre empresas que já passam no perfil, o que ainda separa quem vende de quem fica? O{" "}
+            <strong>lift</strong> é quanto o sinal aparece mais nas vendidas. Sinal sem significância
+            estatística não vira peso, por mais convincente que pareça.
           </p>
           <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">
-            &ldquo;Quadro estagnado&rdquo; ({liftDe("Quadro estagnado 10+ anos")}) e{" "}
-            &ldquo;sócio único&rdquo; ({liftDe("Único sócio PF")}) não sustentaram sinal — a hipótese
-            era que indicavam risco, mas as vendidas dizem o contrário. Saíram. Esse é o loop:
-            minerar o resultado real → medir o lift → recalibrar. Sem leakage, reproduzível.
+            O dado <strong>inverteu a nossa tese</strong>. A intuição do mercado é dono velho, sem herdeiro,
+            quadro congelado. As aquisições reais dizem o oposto: herdeiro no quadro é{" "}
+            {liftDe("Tem sócio até 50 anos (sucessor aparente)")}, quadro que se mexeu é{" "}
+            {liftDe("Quadro mexeu nos últimos 5 anos")}, e quadro parado há dez anos é{" "}
+            {liftDe("Quadro parado 10+ anos")} — sinal <strong>negativo</strong>. Faz sentido depois de
+            visto: o octogenário sozinho num quadro parado há vinte anos não vende, ele fica. Quem
+            transaciona é quem já está conduzindo uma transição, e tem escala que a justifique.
           </p>
           <div className="mt-4 overflow-hidden rounded-xl border border-hairline">
             <table className="w-full text-sm">
@@ -291,7 +297,7 @@ export default function Validacao() {
                   </td>
                 </tr>
                 {(lift.features as Feature[])
-                  .filter((f) => f.sinal !== "negativo")
+                  .filter((f) => f.sinal === "forte")
                   .map((f) => (
                     <tr key={f.nome} className="border-b border-hairline">
                       <td className="px-4 py-3 text-ink">{f.nome}</td>
@@ -304,11 +310,11 @@ export default function Validacao() {
                   ))}
                 <tr className="border-b border-hairline bg-fill">
                   <td colSpan={4} className="px-4 py-2 font-data text-[10px] uppercase tracking-wider text-ink-muted">
-                    Sinais descartados pelo dado
+                    Sinais que o dado inverteu ou descartou
                   </td>
                 </tr>
                 {(lift.features as Feature[])
-                  .filter((f) => f.sinal === "negativo")
+                  .filter((f) => f.sinal !== "forte")
                   .map((f) => (
                     <tr key={f.nome} className="border-b border-hairline last:border-0">
                       <td className="px-4 py-3 text-ink-muted">{f.nome}</td>

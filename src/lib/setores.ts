@@ -67,14 +67,15 @@ const CONFIG: Record<string, { lente: Lente; descricao: (m: SetorMetricas & { pc
   agro: {
     lente: "consolidacao",
     descricao: (m) =>
-      `Cobertura parcial, e a mais frágil da base. Duas ressalvas que valem mais que o número: ` +
-      `(1) em SP são só N=${m.n_aquisicoes_sucessao} vendas de sucessão, pequeno demais para tratar os ` +
-      `${m.recall_sucessao}% como validado — no Brasil inteiro, com N=${m.nacional?.n_aquisicoes_sucessao}, o acerto ` +
-      `cai para ${m.nacional?.recall_sucessao}%, e é esse o número a citar; ` +
-      "(2) a data de abertura do CNPJ não mede a idade do negócio no agro. Entre 2006 e 2010 houve formalização em massa de " +
-      "produtor rural, e a curva mostra o degrau: 51.874 empresas com sócio 61+ têm 15+ anos de CNPJ, mas só 1.948 têm 20+. " +
-      "Como antiguidade vale 30 dos ~100 pontos do score, ele mede outra coisa nessa coorte. Por isso indexamos só o corte " +
-      "pré-formalização (20+ anos), que é onde a data significa o que o score assume.",
+      `Cobertura parcial. O acerto medido é alto, e a ressalva vale mais que o número: em SP são só ` +
+      `N=${m.n_aquisicoes_sucessao} vendas de sucessão, pequeno demais para tratar ${m.recall_sucessao}% ` +
+      `como validado — no Brasil inteiro, com N=${m.nacional?.n_aquisicoes_sucessao}, o acerto é ` +
+      `${m.nacional?.recall_sucessao}%, e é esse o número a citar. ` +
+      "O problema antigo do setor deixou de existir com o score v1: a data de abertura do CNPJ não mede a idade do " +
+      "negócio no agro (entre 2006 e 2010 houve formalização em massa de produtor rural, e a curva mostra o degrau), " +
+      "e antiguidade valia 30 dos 100 pontos do v0. O v1 não pontua antiguidade — capital social em percentil do setor " +
+      "faz o trabalho, e é justamente no agro que a troca rende mais, porque separa agronegócio de CNPJ de produtor. " +
+      "Continuamos indexando só o corte pré-formalização (20+ anos) por conservadorismo do universo.",
   },
 };
 

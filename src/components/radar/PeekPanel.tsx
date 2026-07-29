@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import type { Empresa } from "@/lib/types";
-import { scoreTier } from "@/lib/scoring";
+import { scoreTier, EIXOS } from "@/lib/scoring";
 import { TIER_STYLES, FAIXA_LABEL, formatCnpj, formatTelefone, formatCapitalCompact } from "@/lib/format";
 import { storeEmpresa, storeOrigin, type ScoreConhecido } from "@/lib/empresa-store";
 import { ProcedenciaChip } from "@/components/ProcedenciaChip";
@@ -14,12 +14,8 @@ import { X, ArrowUpRight, Phone, Mail, EyeOff } from "lucide-react";
    Clique na linha abre; Esc/X fecha; "Abrir empresa" navega pra página completa.
    Corta o ida-e-volta de navegação de quem tria dezenas de empresas. */
 
-const BREAKDOWN_META: { key: "idade_socios" | "antiguidade_empresa" | "porte_relevancia" | "quadro_plural"; label: string; max: number }[] = [
-  { key: "idade_socios", label: "Idade dos sócios", max: 30 },
-  { key: "antiguidade_empresa", label: "Antiguidade", max: 30 },
-  { key: "porte_relevancia", label: "Porte", max: 30 },
-  { key: "quadro_plural", label: "Quadro plural", max: 10 },
-];
+// Eixos e tetos vêm de scoring.ts — esta lista era uma cópia e divergia do score real.
+const BREAKDOWN_META = EIXOS;
 
 export function PeekPanel({
   empresa: e,

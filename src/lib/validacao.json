@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-07-25",
+  "gerado_em": "2026-07-29",
   "janela": {
     "corte": "2023-06-10",
     "novo": "2025-11-09",
@@ -11,41 +11,41 @@
       "vertical": "agro",
       "universo": 507499,
       "n_aquisicoes": 64,
-      "recall_top10": 38,
-      "recall_top20": 78,
-      "recall_top30": 81,
-      "decil_medio": 2.59,
-      "lift_top10": 3.8
+      "recall_top10": 100,
+      "recall_top20": 100,
+      "recall_top30": 100,
+      "decil_medio": 1,
+      "lift_top10": 10
     },
     {
       "vertical": "educacao",
       "universo": 13311,
       "n_aquisicoes": 27,
-      "recall_top10": 30,
-      "recall_top20": 44,
-      "recall_top30": 52,
-      "decil_medio": 3.96,
-      "lift_top10": 3
+      "recall_top10": 37,
+      "recall_top20": 63,
+      "recall_top30": 74,
+      "decil_medio": 2.41,
+      "lift_top10": 3.7
     },
     {
       "vertical": "metalmec",
       "universo": 67464,
       "n_aquisicoes": 73,
-      "recall_top10": 71,
-      "recall_top20": 95,
-      "recall_top30": 99,
-      "decil_medio": 1.36,
-      "lift_top10": 7.1
+      "recall_top10": 79,
+      "recall_top20": 92,
+      "recall_top30": 100,
+      "decil_medio": 1.29,
+      "lift_top10": 7.9
     },
     {
       "vertical": "saude",
       "universo": 157110,
       "n_aquisicoes": 258,
-      "recall_top10": 24,
-      "recall_top20": 44,
-      "recall_top30": 60,
-      "decil_medio": 3.01,
-      "lift_top10": 2.4
+      "recall_top10": 59,
+      "recall_top20": 83,
+      "recall_top30": 86,
+      "decil_medio": 1.81,
+      "lift_top10": 5.9
     }
   ]
 }

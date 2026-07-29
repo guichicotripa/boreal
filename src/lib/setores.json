@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-07-25",
+  "gerado_em": "2026-07-29",
   "janela": {
     "de": "2023-06-10",
     "ate": "2025-11-09"
@@ -18,9 +18,9 @@
       "universo": 67464,
       "quente": 5108,
       "n_aquisicoes": 73,
-      "recall_top10": 71,
+      "recall_top10": 79,
       "n_aquisicoes_sucessao": 36,
-      "recall_sucessao": 97,
+      "recall_sucessao": 86,
       "deals_ano": 30,
       "nacional": {
         "universo": 250845,
@@ -39,9 +39,9 @@
       "universo": 157110,
       "quente": 8661,
       "n_aquisicoes": 258,
-      "recall_top10": 24,
+      "recall_top10": 59,
       "n_aquisicoes_sucessao": 21,
-      "recall_sucessao": 100,
+      "recall_sucessao": 81,
       "deals_ano": 108,
       "nacional": {
         "universo": 531119,
@@ -61,9 +61,9 @@
       "universo": 13311,
       "quente": 2441,
       "n_aquisicoes": 27,
-      "recall_top10": 30,
+      "recall_top10": 37,
       "n_aquisicoes_sucessao": 8,
-      "recall_sucessao": 100,
+      "recall_sucessao": 50,
       "deals_ano": 11,
       "nacional": {
         "universo": 64914,
@@ -84,7 +84,7 @@
       "universo": 507499,
       "quente": 1224,
       "n_aquisicoes": 64,
-      "recall_top10": 38,
+      "recall_top10": 100,
       "n_aquisicoes_sucessao": 12,
       "recall_sucessao": 100,
       "deals_ano": 27,

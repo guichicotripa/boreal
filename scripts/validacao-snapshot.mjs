@@ -10,6 +10,7 @@
 // rodar este script regenera o JSON com a data da medição.
 //   node --env-file=.env.local scripts/validacao-snapshot.mjs
 import { BigQuery } from "@google-cloud/bigquery";
+import { SCORE_V1, ctesSocios, CAP_PCT } from "./lib/score-sql.mjs";
 import { writeFileSync, readFileSync } from "fs";
 import path from "path";
 
@@ -31,35 +32,27 @@ const caseVertical =
 const filtroCnae = "(" + reg.setores.map((s) => likeDe(s)).join(" OR ") + ")";
 
 const sql = `
-WITH sc AS (
-  SELECT cnpj_basico, MAX(SAFE_CAST(faixa_etaria AS INT64)) AS mf, COUNTIF(tipo='2') AS n_pf
-  FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${CORTE}' GROUP BY 1
-),
+WITH sc AS (${ctesSocios(CORTE)}),
 universo AS (
-  SELECT e.cnpj_basico,
-    ${caseVertical} AS vertical,
-    (CASE sc.mf WHEN 9 THEN 30 WHEN 8 THEN 26 WHEN 7 THEN 20 WHEN 6 THEN 10 ELSE 0 END)
-    + (CASE WHEN 2023-EXTRACT(YEAR FROM e.data_inicio_atividade) >= 40 THEN 30
-            WHEN 2023-EXTRACT(YEAR FROM e.data_inicio_atividade) >= 25 THEN 22
-            WHEN 2023-EXTRACT(YEAR FROM e.data_inicio_atividade) >= 15 THEN 10 ELSE 0 END)
-    + (CASE WHEN REGEXP_REPLACE(emp.porte,'^0','')='5' THEN 30
-            WHEN REGEXP_REPLACE(emp.porte,'^0','')='3' THEN 15
-            WHEN REGEXP_REPLACE(emp.porte,'^0','')='1' THEN 5 ELSE 0 END)
-    + (CASE WHEN sc.n_pf >= 2 THEN 10 ELSE 0 END) AS score
+  SELECT e.cnpj_basico, ${caseVertical} AS vertical,
+    sc.mf, sc.menor, sc.n_pf,
+    DATE_DIFF(DATE('${CORTE}'), sc.ult, YEAR) AS anos_ult,
+    SAFE_CAST(emp.capital_social AS FLOAT64) AS capital
   FROM \`basedosdados.br_me_cnpj.estabelecimentos\` e
   JOIN \`basedosdados.br_me_cnpj.empresas\` emp ON emp.cnpj_basico=e.cnpj_basico AND emp.data='${CORTE}'
   LEFT JOIN sc ON sc.cnpj_basico=e.cnpj_basico
-  -- ATIVA no corte + desempate no NTILE: as mesmas correções do build-setores,
+  -- ATIVA no corte + desempate no NTILE: as mesmas correcoes do build-setores,
   -- para este artefato e o registry pararem de discordar sobre o mesmo setor.
   WHERE e.data='${CORTE}' AND e.sigla_uf='SP' AND e.identificador_matriz_filial='1'
     AND e.situacao_cadastral='2' AND ${filtroCnae}
 ),
+scored AS (SELECT *, ${SCORE_V1} AS score FROM (SELECT *, ${CAP_PCT} AS cap_pct FROM universo)),
 ranked AS (
   SELECT cnpj_basico, vertical,
     NTILE(10) OVER (PARTITION BY vertical ORDER BY score DESC, cnpj_basico) AS decil
-  FROM universo
+  FROM scored
 ),
-univ AS (SELECT vertical, COUNT(*) AS n_univ FROM universo GROUP BY 1),
+univ AS (SELECT vertical, COUNT(*) AS n_univ FROM scored GROUP BY 1),
 a AS (SELECT cnpj_basico, COUNTIF(tipo='1') pj, COUNTIF(tipo='2') pf FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${CORTE}' GROUP BY 1),
 b AS (SELECT cnpj_basico, COUNTIF(tipo='1') pj, COUNTIF(tipo='2') pf FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${NOVO}' GROUP BY 1),
 adq AS (SELECT a.cnpj_basico FROM a JOIN b USING(cnpj_basico) WHERE b.pj>a.pj AND b.pf<a.pf)

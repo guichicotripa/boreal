@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import type { Empresa, ResearchResult, DossierAnalise, TrajetoriaResult } from "@/lib/types";
 import type { EmpresaSimilar } from "@/lib/similar";
-import { scoreTier } from "@/lib/scoring";
+import { scoreTier, EIXOS } from "@/lib/scoring";
 import { setorPorCnae } from "@/lib/setores";
 import { contextoSetor } from "@/lib/setor-contexto";
 import { ContextoSetor } from "@/components/ContextoSetor";
@@ -35,14 +35,10 @@ const TABS = [
 ] as const;
 type TabId = (typeof TABS)[number]["id"];
 
-// As 4 dimensões do score (scoring.ts). Barras na cor do tier de risco (TIER_STYLES.bar) —
-// reforçam a leitura de risco de relance. Decisão aprovada 2026-06-08 (ver brand guide #16).
-const DIMENSOES = [
-  { key: "idade_socios", label: "Idade dos sócios", max: 30 },
-  { key: "antiguidade_empresa", label: "Antiguidade", max: 30 },
-  { key: "porte_relevancia", label: "Porte / relevância", max: 30 },
-  { key: "quadro_plural", label: "Quadro plural", max: 10 },
-] as const;
+// As dimensões do score vêm de scoring.ts (EIXOS). Ficavam duplicadas aqui e em PeekPanel, e
+// as duas listas envelheceram junto — cada troca de eixo exigia lembrar de três arquivos.
+// Barras na cor do tier de risco (TIER_STYLES.bar). Decisão aprovada 2026-06-08 (brand guide #16).
+const DIMENSOES = EIXOS;
 
 // Fases da investigação ao vivo — dão sinal de progresso (não travou) em vez de um
 // texto estático. Espelham o que o research-agent faz em fontes públicas.
