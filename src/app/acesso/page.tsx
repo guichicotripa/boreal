@@ -25,15 +25,22 @@ export default function Acesso() {
     setEstado("enviando");
     setErro(null);
     try {
-      const params = new URLSearchParams(window.location.search);
-      const destino = params.get("next") || "/";
+      /* SEM query string no emailRedirectTo, de propósito. A allowlist de Redirect
+         URLs do Supabase casa a URL INTEIRA: com `?next=/` anexado, o destino
+         cadastrado deixa de casar e o Supabase troca silenciosamente pelo Site URL.
+         Medido em produção — o link do email apontava pra http://localhost:3000, e
+         nenhum testador conseguiria entrar. Só o allowlist com wildcard salvaria,
+         o que é dependência invisível de painel.
+
+         O preço é perder o "volta pra página que você tentou abrir": quem clica no
+         link cai no Radar. Barato, e o Radar é onde se começa mesmo. */
       const { error } = await supabaseNoBrowser().auth.signInWithOtp({
         email: email.trim(),
         options: {
           // shouldCreateUser false: só entra quem já foi cadastrado. Sem isto,
           // qualquer email do mundo cria conta (e trava depois em `membro`).
           shouldCreateUser: false,
-          emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(destino)}`,
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
       });
       if (error) throw error;
