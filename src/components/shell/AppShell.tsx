@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -30,7 +30,10 @@ import { TemaToggle } from "./TemaToggle";
    mercado) e Prova (as páginas de metodologia/credibilidade — servem ao
    pitch, ficam colapsadas por default). Agenda vira rota própria na F3. */
 
-export type NavItem = { href: string; label: string; icon: LucideIcon };
+/* `modulo` marca item que só existe pra quem contratou aquele produto à parte.
+   Sem a marca, o item aparece pra todo mundo. A ocultação aqui é cosmética: quem
+   digitar a URL na mão bate no gate da própria página. */
+export type NavItem = { href: string; label: string; icon: LucideIcon; modulo?: string };
 export type NavGrupo = { label: string; items: NavItem[]; colapsavel?: boolean };
 
 export const NAV_GRUPOS: NavGrupo[] = [
@@ -49,7 +52,7 @@ export const NAV_GRUPOS: NavGrupo[] = [
   {
     label: "Inteligência",
     items: [
-      { href: "/heat-map", label: "Heat-map", icon: Flame },
+      { href: "/heat-map", label: "Heat-map", icon: Flame, modulo: "heatmap" },
       { href: "/setores", label: "Setores", icon: LayoutGrid },
     ],
   },
@@ -82,8 +85,29 @@ function tituloDaRota(pathname: string): string {
 
 const SIDEBAR_KEY = "boreal:sidebar-colapsada";
 
-export function AppShell({ children }: { children: React.ReactNode }) {
+export function AppShell({
+  children,
+  modulos = [],
+}: {
+  children: React.ReactNode;
+  /* Vem do layout, que é Server Component e consegue ler a sessão. AppShell é
+     client (usa pathname e localStorage), então não tem como buscar sozinho. */
+  modulos?: string[];
+}) {
   const pathname = usePathname();
+
+  /* Menu do contrato desta firma: item marcado com `modulo` só aparece pra quem
+     comprou, e grupo que fica sem item nenhum some junto (senão sobra um título
+     "Inteligência" com nada embaixo). */
+  const grupos = useMemo(
+    () =>
+      NAV_GRUPOS.map((g) => ({
+        ...g,
+        items: g.items.filter((i) => !i.modulo || modulos.includes(i.modulo)),
+      })).filter((g) => g.items.length > 0),
+    [modulos]
+  );
+
   const [drawerAberto, setDrawerAberto] = useState(false);
   const [provaAberta, setProvaAberta] = useState(false);
   const [colapsada, setColapsada] = useState(false);
@@ -164,7 +188,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
 
         <nav className="flex-1 space-y-5 overflow-y-auto px-2 py-4">
-          {NAV_GRUPOS.map((grupo) => {
+          {grupos.map((grupo) => {
             const aberto = !grupo.colapsavel || provaAberta || colapsada;
             return (
               <div key={grupo.label}>
@@ -273,7 +297,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </button>
             </div>
             <nav className="flex-1 space-y-5 overflow-y-auto px-2 py-4">
-              {NAV_GRUPOS.map((grupo) => (
+              {grupos.map((grupo) => (
                 <div key={grupo.label}>
                   <p className="mb-1 px-2.5 text-[11px] font-medium text-ink-muted">
                     {grupo.label}
@@ -286,7 +310,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       )}
 
-      <CommandPalette aberta={paletteAberta} onOpenChange={setPaletteAberta} />
+      <CommandPalette aberta={paletteAberta} onOpenChange={setPaletteAberta} grupos={grupos} />
     </div>
   );
 }

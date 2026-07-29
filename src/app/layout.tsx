@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Newsreader, Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import Script from "next/script";
 import { AppShell } from "@/components/shell/AppShell";
+import { permissoesAtuais } from "@/lib/permissoes";
 import "./globals.css";
 
 // Serif editorial — headlines, nomes de empresa, statements
@@ -86,7 +87,7 @@ try {
 } catch (e) {}
 `;
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -101,7 +102,10 @@ export default function RootLayout({
         <Script id="tema-inicial" strategy="beforeInteractive">
           {APLICA_TEMA}
         </Script>
-        <AppShell>{children}</AppShell>
+        {/* O layout é Server Component, então é o único ponto que consegue ler o
+            contrato da firma e passar pro shell, que é client. Deslogado devolve
+            lista vazia sem estourar (a tela de acesso vive fora do shell). */}
+        <AppShell modulos={(await permissoesAtuais()).modulos}>{children}</AppShell>
       </body>
     </html>
   );

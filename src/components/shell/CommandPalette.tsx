@@ -20,9 +20,14 @@ function normaliza(s: string): string {
 export function CommandPalette({
   aberta,
   onOpenChange,
+  grupos = NAV_GRUPOS,
 }: {
   aberta: boolean;
   onOpenChange: (v: boolean) => void;
+  /* Os mesmos grupos já filtrados pelo contrato que a sidebar mostra. Sem isto a
+     paleta continuaria oferecendo o heat-map por Ctrl+K pra quem não comprou:
+     bateria no gate da página, mas oferecer o que não existe é ruído. */
+  grupos?: typeof NAV_GRUPOS;
 }) {
   const router = useRouter();
   const [query, setQuery] = useState("");
@@ -31,7 +36,7 @@ export function CommandPalette({
 
   const itens: Item[] = useMemo(
     () =>
-      NAV_GRUPOS.flatMap((g) =>
+      grupos.flatMap((g) =>
         g.items.map((i) => ({
           id: i.href,
           label: i.label,
@@ -39,7 +44,7 @@ export function CommandPalette({
           run: () => router.push(i.href),
         }))
       ),
-    [router]
+    [router, grupos]
   );
 
   const filtrados = useMemo(() => {

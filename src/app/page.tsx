@@ -458,7 +458,19 @@ export default function Radar() {
                 {/* Três causas MUITO diferentes: setor fora da base (sabemos o nome),
                     praça/tese restrita, ou nada bateu. Antes a tela culpava sempre a
                     tese, o que é enganoso quando o limite é nosso. */}
-                {res.filters.setorForaDaBase ? (
+                {res.foraDoContrato ? (
+                  /* Caso diferente do "fora da base": o dado EXISTE, esta firma é
+                     que não contratou. Dizer isso evita o originador achar que a
+                     ferramenta quebrou, e deixa claro que há mais lá dentro. */
+                  <>
+                    <p className="font-display text-lg text-ink">
+                      {res.foraDoContrato} não está no seu contrato.
+                    </p>
+                    <p className="mx-auto mt-2 max-w-md text-sm text-ink-soft">
+                      Fale com o Boreal para incluir.
+                    </p>
+                  </>
+                ) : res.filters.setorForaDaBase ? (
                   <>
                     <p className="font-display text-lg text-ink">
                       {res.filters.setorForaDaBase} não está na base indexada.

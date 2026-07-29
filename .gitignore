@@ -51,3 +51,7 @@ next-env.d.ts
 # obsidian — vault local, não vai pro repo
 .obsidian/
 .env*.local
+
+# Python (scripts auxiliares)
+__pycache__/
+*.pyc

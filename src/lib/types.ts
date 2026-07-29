@@ -168,4 +168,9 @@ export type SearchResponse = {
   reasoned: boolean;          // se o reasoner LLM rodou e enriqueceu o top N
   reasonedCount?: number;     // quantas empresas receberam insight
   cached?: boolean;           // true quando servido do cache de demos (instantâneo)
+  /* Fora do CONTRATO ≠ fora da base: o dado existe, esta firma não comprou.
+     `foraDoContrato` = nada do que foi pedido está liberado (count = 0).
+     `foraDoContratoParcial` = veio lista, mas menor que a pergunta. */
+  foraDoContrato?: string | null;
+  foraDoContratoParcial?: string | null;
 };
