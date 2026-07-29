@@ -55,10 +55,14 @@ create table if not exists org_modulo (
    chamadas de dentro de policies e leem tabelas que também têm policy. Sem isso,
    recursão. search_path fixo porque SECURITY DEFINER sem ele é escalação de
    privilégio esperando acontecer. */
-create or replace function prefixos_da_org() returns text[]
+/* Devolve REGEX, não array de prefixos, e isso é decisão de performance, não
+   estilo. Como o padrão é o mesmo pra todas as linhas, o Postgres avalia a função
+   uma vez (InitPlan) e aplica `~` linha a linha — em vez de percorrer um array
+   dentro de um EXISTS 51 mil vezes. NULL = sem restrição de setor. */
+create or replace function regex_setores_da_org() returns text
   language sql stable security definer set search_path = public
 as $$
-  select coalesce(array_agg(p), '{}')
+  select case when count(*) = 0 then null else '^(' || string_agg(p, '|') || ')' end
   from org_setor os
   join setor s on s.id = os.setor_id
   cross join unnest(s.prefixos) as p
@@ -83,28 +87,36 @@ as $$ select exists (select 1 from org_modulo where org_id = org_do_usuario() an
 
    `(select fn())` em vez de `fn()`: assim o Postgres avalia como InitPlan, UMA
    vez por query, em vez de uma vez por linha em 51 mil linhas. */
-drop policy if exists "leitura autenticada" on empresa;
+/* `@>` (array contém array) em vez de `uf = any(...)`: com a subquery escalar,
+   o Postgres lê `= any((select ...))` como a forma ANY(SUBQUERY) e tenta comparar
+   text com text[] — erro 42883, que foi como esta migration falhou na primeira
+   tentativa. `@>` não tem essa ambiguidade. */
+drop policy if exists "leitura autenticada"        on empresa;
+drop policy if exists "setor e praca do contrato"  on empresa;
 create policy "setor e praca do contrato" on empresa
   for select to authenticated
   using (
-    (cardinality((select prefixos_da_org())) = 0
-      or exists (select 1 from unnest((select prefixos_da_org())) p
-                 where empresa.cnae_principal like p || '%'))
+    ((select regex_setores_da_org()) is null
+      or empresa.cnae_principal ~ (select regex_setores_da_org()))
     and
-    (cardinality((select ufs_da_org())) = 0 or empresa.uf = any((select ufs_da_org())))
+    (cardinality((select ufs_da_org())) = 0
+      or (select ufs_da_org()) @> array[empresa.uf::text])
   );
 
-drop policy if exists "leitura autenticada" on socio;
+drop policy if exists "leitura autenticada"   on socio;
+drop policy if exists "so de empresa visivel" on socio;
 create policy "so de empresa visivel" on socio
   for select to authenticated
   using (exists (select 1 from empresa e where e.id = socio.empresa_id));
 
-drop policy if exists "leitura autenticada" on empresa_memo;
+drop policy if exists "leitura autenticada"   on empresa_memo;
+drop policy if exists "so de empresa visivel" on empresa_memo;
 create policy "so de empresa visivel" on empresa_memo
   for select to authenticated
   using (exists (select 1 from empresa e where e.id = empresa_memo.empresa_id));
 
-drop policy if exists "leitura autenticada" on score_run;
+drop policy if exists "leitura autenticada"   on score_run;
+drop policy if exists "so de empresa visivel" on score_run;
 create policy "so de empresa visivel" on score_run
   for select to authenticated
   using (exists (select 1 from empresa e where e.id = score_run.empresa_id));
@@ -117,11 +129,21 @@ alter table org_setor  enable row level security;
 alter table org_uf     enable row level security;
 alter table org_modulo enable row level security;
 
+/* `drop ... if exists` antes de cada create: `create policy` não é idempotente, e
+   uma migration que falha no meio deixaria as policies já criadas bloqueando a
+   re-execução. Foi o que aconteceu na primeira tentativa desta. */
+drop policy if exists "leitura autenticada" on setor;
 create policy "leitura autenticada" on setor for select to authenticated using (true);
+
+drop policy if exists "o proprio contrato" on org_setor;
 create policy "o proprio contrato" on org_setor
   for select to authenticated using (org_id = org_do_usuario());
+
+drop policy if exists "o proprio contrato" on org_uf;
 create policy "o proprio contrato" on org_uf
   for select to authenticated using (org_id = org_do_usuario());
+
+drop policy if exists "o proprio contrato" on org_modulo;
 create policy "o proprio contrato" on org_modulo
   for select to authenticated using (org_id = org_do_usuario());
 
