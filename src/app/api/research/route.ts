@@ -4,6 +4,7 @@ import { createUserClient } from "@/lib/supabase-server";
 import { calcScore } from "@/lib/scoring";
 import { investigarEmpresa } from "@/lib/research";
 import { lerResearchSalvo, salvarResearch } from "@/lib/research-store";
+import { registrarInvestigacao } from "@/lib/evento";
 import type { Empresa, ResearchResult } from "@/lib/types";
 import researchCache from "@/lib/research-cache.json";
 
@@ -63,7 +64,7 @@ export async function POST(req: NextRequest) {
     .single();
 
   if (error || !data) {
-    return NextResponse.json({ error: error?.message ?? "empresa não encontrada" }, { status: 404 });
+    return NextResponse.json({ error: "empresa não encontrada ou fora do seu contrato" }, { status: 404 });
   }
 
   const empresa = data as Empresa;
@@ -84,6 +85,10 @@ export async function POST(req: NextRequest) {
       empresa.score?.breakdown,
       "research-agent/v1 (claude via API + web search)"
     );
+
+    /* Sinal FORTE de interesse: mandar investigar gasta tempo de maquina, entao
+       o analista escolheu esta e nao as outras 49 da lista. */
+    await registrarInvestigacao(supabase, empresaId, research.score_v0, research.score_v1);
 
     // persistido = o score sobrevive (lista reordena). payloadSalvo = não precisa re-rodar o agente.
     return NextResponse.json({ research, persistido, payloadSalvo });

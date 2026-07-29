@@ -8,6 +8,9 @@ import { lerScoresV1, aplicarV1 } from "@/lib/research-store";
 import { lerDescartadas, filtrarDescartadas } from "@/lib/descarte-store";
 import { escopoAtual } from "@/lib/escopo";
 import { normalizeQuery } from "@/lib/teses";
+import { SETORES } from "@/lib/setores";
+import { permissoesAtuais, setorPermitido, ufPermitida } from "@/lib/permissoes";
+import { registrarBusca } from "@/lib/evento";
 import type { Empresa, Socio, SearchResponse } from "@/lib/types";
 import demoCache from "@/lib/demo-cache.json";
 import setoresData from "@/lib/setores.json";
@@ -136,6 +139,40 @@ export async function POST(req: NextRequest) {
     });
   }
 
+  /* Pediu algo fora do CONTRATO (≠ fora da base: o dado existe, esta firma é que
+     não comprou). As policies da 0012 já devolveriam zero linha sozinhas — isto
+     não é a proteção, é a explicação. Sem a mensagem o originador vê lista vazia
+     num setor que ele sabe que existe e conclui que a ferramenta quebrou. */
+  const perm = await permissoesAtuais();
+  const pedidos = SETORES.filter((s) =>
+    filters.cnaePrefixes.some((p) => s.cnaes.some((c) => c.startsWith(p) || p.startsWith(c)))
+  );
+  const bloqueados = pedidos.filter((s) => !setorPermitido(perm, s.id));
+  const ufsBloqueadas = (filters.ufs ?? []).filter((uf) => !ufPermitida(perm, uf));
+
+  // Só corta quando NADA do que foi pedido está no contrato. Se parte está, a
+  // busca segue e a RLS entrega o que pode — avisar o que ficou de fora basta.
+  const tudoBloqueado =
+    (pedidos.length > 0 && bloqueados.length === pedidos.length) ||
+    ((filters.ufs?.length ?? 0) > 0 && ufsBloqueadas.length === filters.ufs!.length);
+
+  if (tudoBloqueado) {
+    const oque = bloqueados.length ? bloqueados.map((s) => s.nome).join(" e ") : ufsBloqueadas.join(" e ");
+    return NextResponse.json({
+      filters,
+      parsedBy,
+      count: 0,
+      empresas: [],
+      reasoned: false,
+      reasonedCount: 0,
+      foraDoContrato: oque,
+    });
+  }
+
+  const aviso = bloqueados.length || ufsBloqueadas.length
+    ? [...bloqueados.map((s) => s.nome), ...ufsBloqueadas].join(" e ")
+    : null;
+
   // ── 2. Monta e roda a query no Supabase ──────────────────────────────────────
   const supabase = await createUserClient();
 
@@ -254,6 +291,13 @@ export async function POST(req: NextRequest) {
     console.error("Reasoner falhou (seguindo sem insights):", (err as Error).message);
   }
 
+  /* A lista ranqueada que o analista vai ver. Gravada AQUI, depois do v1 e da
+     ordenação final, porque o que ensina o modelo é o que foi EXIBIDO — não o que
+     o banco devolveu antes de reordenar. `await` de propósito: em serverless, o
+     que fica pendente depois da resposta pode simplesmente não acontecer, e este
+     é o único dado do sistema que não dá pra recomputar depois. */
+  await registrarBusca(supabase, queryText, filters, scored);
+
   return NextResponse.json({
     filters,
     parsedBy,
@@ -261,5 +305,8 @@ export async function POST(req: NextRequest) {
     empresas: scored,
     reasoned,
     reasonedCount,
+    // Parte do pedido ficou fora do contrato: a lista veio, mas incompleta em
+    // relação ao que foi perguntado. Dizer é melhor que entregar menos calado.
+    foraDoContratoParcial: aviso,
   });
 }

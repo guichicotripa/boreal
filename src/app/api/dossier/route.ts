@@ -7,6 +7,7 @@ import type { Empresa, DossierAnalise } from "@/lib/types";
 import dossierCache from "@/lib/dossier-cache.json";
 import { lerMemoSalvo, salvarMemo } from "@/lib/memo-store";
 import { lerResearchSalvo } from "@/lib/research-store";
+import { registrarDossie } from "@/lib/evento";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -53,6 +54,7 @@ export async function POST(req: NextRequest) {
     const salvo = await lerMemoSalvo(supabase, empresaId);
     // Só serve se não for pior do que dá para escrever agora.
     if (salvo && (salvo.comV1 || !salvoV1)) {
+      await registrarDossie(supabase, empresaId, true);
       return NextResponse.json({ analise: salvo.analise, cached: true, geradoEm: salvo.geradoEm });
     }
     // O arquivo legado não tem v1 em nenhum caso — mesma regra.
@@ -74,7 +76,7 @@ export async function POST(req: NextRequest) {
     .single();
 
   if (error || !data) {
-    return NextResponse.json({ error: error?.message ?? "empresa não encontrada" }, { status: 404 });
+    return NextResponse.json({ error: "empresa não encontrada ou fora do seu contrato" }, { status: 404 });
   }
 
   const empresa = data as Empresa;
@@ -87,6 +89,7 @@ export async function POST(req: NextRequest) {
        ficava acumulado. Falha ao gravar não impede a resposta — o usuário já tem
        o memo; o pior caso é gerar outra vez depois. */
     await salvarMemo(pipeline, empresaId, analise, "api/dossier", !!salvoV1);
+    await registrarDossie(supabase, empresaId, false);
     return NextResponse.json({ empresa, analise });
   } catch (err) {
     console.error("Dossier falhou:", (err as Error).message);

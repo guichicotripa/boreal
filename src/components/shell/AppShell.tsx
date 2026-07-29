@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -18,19 +18,24 @@ import {
   EyeOff,
   PanelLeftClose,
   PanelLeft,
+  Activity,
   type LucideIcon,
 } from "lucide-react";
 import { NavLogo } from "@/components/brand/NavLogo";
 import { Mark } from "@/components/brand/Mark";
 import { CommandPalette } from "./CommandPalette";
 import { TemaToggle } from "./TemaToggle";
+import { VERSAO_COMPLETA } from "@/lib/versao";
 
 /* ── Estrutura de navegação do workbench ─────────────────────────────────
    Três grupos: Trabalho (o dia a dia do analista), Inteligência (mapas de
    mercado) e Prova (as páginas de metodologia/credibilidade — servem ao
    pitch, ficam colapsadas por default). Agenda vira rota própria na F3. */
 
-export type NavItem = { href: string; label: string; icon: LucideIcon };
+/* `modulo` marca item que só existe pra quem contratou aquele produto à parte.
+   Sem a marca, o item aparece pra todo mundo. A ocultação aqui é cosmética: quem
+   digitar a URL na mão bate no gate da própria página. */
+export type NavItem = { href: string; label: string; icon: LucideIcon; modulo?: string };
 export type NavGrupo = { label: string; items: NavItem[]; colapsavel?: boolean };
 
 export const NAV_GRUPOS: NavGrupo[] = [
@@ -49,9 +54,14 @@ export const NAV_GRUPOS: NavGrupo[] = [
   {
     label: "Inteligência",
     items: [
-      { href: "/heat-map", label: "Heat-map", icon: Flame },
+      { href: "/heat-map", label: "Heat-map", icon: Flame, modulo: "heatmap" },
       { href: "/setores", label: "Setores", icon: LayoutGrid },
     ],
+  },
+  {
+    // Só staff. Não é módulo vendável: é o painel de quem OPERA o Boreal.
+    label: "Boreal",
+    items: [{ href: "/metricas", label: "Métricas", icon: Activity, modulo: "staff" }],
   },
   {
     label: "Prova",
@@ -82,8 +92,35 @@ function tituloDaRota(pathname: string): string {
 
 const SIDEBAR_KEY = "boreal:sidebar-colapsada";
 
-export function AppShell({ children }: { children: React.ReactNode }) {
+export function AppShell({
+  children,
+  modulos = [],
+  staff = false,
+}: {
+  children: React.ReactNode;
+  /* Vem do layout, que é Server Component e consegue ler a sessão. AppShell é
+     client (usa pathname e localStorage), então não tem como buscar sozinho. */
+  modulos?: string[];
+  /* Staff enxerga toda superfície. Vem separado em vez de eu injetar nomes
+     falsos dentro de `modulos`: uma lista de nomes precisaria ser atualizada a
+     cada item novo de menu, e esquecer disso esconderia a página de quem devia
+     estar vendo. */
+  staff?: boolean;
+}) {
   const pathname = usePathname();
+
+  /* Menu do contrato desta firma: item marcado com `modulo` só aparece pra quem
+     comprou, e grupo que fica sem item nenhum some junto (senão sobra um título
+     "Inteligência" com nada embaixo). */
+  const grupos = useMemo(
+    () =>
+      NAV_GRUPOS.map((g) => ({
+        ...g,
+        items: g.items.filter((i) => !i.modulo || staff || modulos.includes(i.modulo)),
+      })).filter((g) => g.items.length > 0),
+    [modulos, staff]
+  );
+
   const [drawerAberto, setDrawerAberto] = useState(false);
   const [provaAberta, setProvaAberta] = useState(false);
   const [colapsada, setColapsada] = useState(false);
@@ -164,7 +201,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
 
         <nav className="flex-1 space-y-5 overflow-y-auto px-2 py-4">
-          {NAV_GRUPOS.map((grupo) => {
+          {grupos.map((grupo) => {
             const aberto = !grupo.colapsavel || provaAberta || colapsada;
             return (
               <div key={grupo.label}>
@@ -249,6 +286,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         {/* div, não <main> — cada página já traz o seu <main> (evita landmark duplicado) */}
         <div className="min-w-0 flex-1">{children}</div>
+
+        {/* Versão do build. Responde "isso já subiu?" olhando a tela, que é como
+            a Vercel ficou dias com o build de 24/07 sem ninguém perceber. */}
+        <footer className="border-t border-hairline px-6 py-3">
+          <p className="font-data text-[10px] text-ink-muted">Boreal {VERSAO_COMPLETA}</p>
+        </footer>
       </div>
 
       {/* ── Drawer (mobile) ───────────────────────────────────────────── */}
@@ -273,7 +316,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </button>
             </div>
             <nav className="flex-1 space-y-5 overflow-y-auto px-2 py-4">
-              {NAV_GRUPOS.map((grupo) => (
+              {grupos.map((grupo) => (
                 <div key={grupo.label}>
                   <p className="mb-1 px-2.5 text-[11px] font-medium text-ink-muted">
                     {grupo.label}
@@ -286,7 +329,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       )}
 
-      <CommandPalette aberta={paletteAberta} onOpenChange={setPaletteAberta} />
+      <CommandPalette aberta={paletteAberta} onOpenChange={setPaletteAberta} grupos={grupos} />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createUserClient } from "@/lib/supabase-server";
 import { escopoAtual } from "@/lib/escopo";
+import { registrarSalvou, registrarEstagio } from "@/lib/evento";
 import { calcScore } from "@/lib/scoring";
 import type { Empresa } from "@/lib/types";
 
@@ -18,7 +19,8 @@ export async function GET() {
     .from("oportunidade")
     .select(
       `id, estagio, resultado, notas, dono, proxima_acao, proxima_acao_em, score_no_save, created_at,
-       origem, selado_em, proveniencia_hash, novo_para_setter,
+       origem, selado_em, proveniencia_hash, novo_para_setter, escopo_id,
+       firma:escopo_id (nome),
        empresa:empresa_id (
          id, cnpj, razao_social, nome_fantasia, cnae_principal_desc,
          municipio, uf, capital_social, porte, telefone, email,
@@ -29,7 +31,15 @@ export async function GET() {
     .order("created_at", { ascending: false });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json({ oportunidades: data ?? [] });
+
+  /* `escopoProprio` vai junto porque staff lê através das firmas (policy da 0013)
+     e a lista chega misturada. Sem saber qual é a própria org, a tela não teria
+     como escolher o padrão do filtro, e o pipeline abriria com oportunidade de
+     testador no meio da do cliente, sem nada indicando de quem é. */
+  return NextResponse.json({
+    oportunidades: data ?? [],
+    escopoProprio: await escopoAtual(),
+  });
 }
 
 // POST — salva uma empresa na watchlist (idempotente por empresa_id).
@@ -75,6 +85,12 @@ export async function POST(req: NextRequest) {
     .single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  /* Rótulo positivo do loop: esta empresa, com ESTE score, foi escolhida. Vale
+     junto com o evento de busca — lá está a lista inteira que ele viu e não
+     escolheu, que é a metade cara de conseguir. */
+  await registrarSalvou(supabase, empresaId, scoreNoSave);
+
   return NextResponse.json({ oportunidade: data });
 }
 
@@ -114,6 +130,12 @@ export async function PATCH(req: NextRequest) {
   }
 
   const supabase = await createUserClient();
+  /* Lê o estágio ANTES de escrever pra o evento guardar de-onde→pra-onde. Só o
+     destino não conta a história: "voltou de qualificada pra a_analisar" é sinal
+     de score errado, e "avançou" é o contrário. */
+  const { data: antes } = await supabase
+    .from("oportunidade").select("estagio, empresa_id").eq("id", id).maybeSingle();
+
   const { data, error } = await supabase
     .from("oportunidade")
     .update(patch)
@@ -122,6 +144,12 @@ export async function PATCH(req: NextRequest) {
     .single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  // Só quando o estágio de fato mudou: editar uma nota não é movimento de funil.
+  if (patch.estagio && antes && antes.estagio !== patch.estagio) {
+    await registrarEstagio(supabase, antes.empresa_id as string, antes.estagio as string, String(patch.estagio));
+  }
+
   return NextResponse.json({ oportunidade: data });
 }
 

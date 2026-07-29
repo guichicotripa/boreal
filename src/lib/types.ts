@@ -150,6 +150,10 @@ export type Oportunidade = {
   novo_para_setter?: boolean | null;
   /** Datas dos toques — para calcular último contato sem query extra. */
   interacoes?: { criado_em: string }[];
+  /* Firma dona. Só interessa a quem é staff, que lê através das orgs: para o
+     originador esta lista tem uma firma só, sempre a dele. */
+  escopo_id?: string;
+  firma?: { nome: string } | null;
   empresa: Pick<
     Empresa,
     "id" | "cnpj" | "razao_social" | "nome_fantasia" | "cnae_principal_desc"
@@ -168,4 +172,9 @@ export type SearchResponse = {
   reasoned: boolean;          // se o reasoner LLM rodou e enriqueceu o top N
   reasonedCount?: number;     // quantas empresas receberam insight
   cached?: boolean;           // true quando servido do cache de demos (instantâneo)
+  /* Fora do CONTRATO ≠ fora da base: o dado existe, esta firma não comprou.
+     `foraDoContrato` = nada do que foi pedido está liberado (count = 0).
+     `foraDoContratoParcial` = veio lista, mas menor que a pergunta. */
+  foraDoContrato?: string | null;
+  foraDoContratoParcial?: string | null;
 };
