@@ -1,7 +1,13 @@
 // Selo de proveniência — prova assinada de que um lead veio do Boreal (destrava o success fee).
 // O hash é um HMAC-SHA256 sobre (cnpj | data_origem | score) com o secret do servidor: só o Boreal
 // consegue emitir um selo válido, então o selo prova a origem e a data, e não pode ser forjado nem
-// retroagido pelo parceiro. Reusa BOREAL_GATE_SECRET (segredo estável do servidor).
+// retroagido pelo parceiro.
+//
+// BOREAL_GATE_SECRET tem nome de um gate que não existe mais (a senha única virou
+// Supabase Auth em 28/07/2026), e MESMO ASSIM continua com esse nome. Renomear a
+// variável trocaria o segredo na prática, e todo selo já emitido viraria
+// inverificável — o valor do selo é justamente não poder ser reemitido. O nome
+// ruim é o preço de manter os selos antigos válidos. NÃO remover do ambiente.
 
 const SECRET = process.env.BOREAL_GATE_SECRET ?? "boreal-dev-secret-troque-em-prod";
 
