@@ -29,11 +29,13 @@ function normalizeQuery(q) {
     .trim();
 }
 
+const BASE = process.env.BOREAL_URL || "http://localhost:3000";
+
 const cache = {};
 for (const q of QUERIES) {
   process.stdout.write(`Computando: "${q}" … `);
   const start = Date.now();
-  const r = await fetch("http://localhost:3000/api/search?fresh=1", {
+  const r = await fetch(`${BASE}/api/search?fresh=1`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query: q }),

@@ -4,6 +4,41 @@
 
 ---
 
+## ✅ Cache pronto (25/07)
+
+4 setores + 15 chaves de tese, **todos com score médio 100** (o topo real) e **15 insights
+cada**. Antes as teses cacheadas serviam 65,9 a 87,1 sem ordenação correta. Verificado no
+browser: os 4 caminhos (browse e tese, com e sem setor) servem do cache em 0,5–1,4s, e 285
+insights passaram pelo filtro de linguagem com zero violações.
+
+Rebuild depois de um ingest (custo zero, assinatura, sem dev server):
+```
+node --experimental-strip-types --env-file=.env.local scripts/cache-sub.ts
+```
+Reaproveita insight já escrito sobre a mesma empresa — só chama o LLM para empresa nova.
+Use `--refazer-insights` quando o prompt ou a regra de linguagem mudar.
+
+- [ ] *(opcional)* **Recarregar crédito da `ANTHROPIC_API_KEY`.** Acabou em 25/07. Não bloqueia
+  o cache (que roda por assinatura), mas bloqueia o que é feito ao vivo pelo servidor:
+  research/dossiê e o parser LLM da busca. A busca **não** quebra sem ele — cai no parser
+  heurístico, que hoje resolve setor, praça e idade corretamente.
+
+> **Limite de sessão da assinatura:** uma execução cheia consome bastante. Se estourar no meio
+> (`You've hit your session limit`), o script degrada sem insight em vez de abortar — e como
+> agora ele reaproveita antes de chamar o LLM, rodar de novo depois do reset continua de onde
+> parou em vez de recomeçar.
+
+**ACOPLAMENTO PERMANENTE:** todo ingest exige, nesta ordem —
+`backfill-score-v0.ts` → `check-ranking.ts` (tem que dar 50/50) → `cache-sub.ts`.
+Pular o backfill deixa a empresa nova com `score_v0` NULL e ela some do topo da busca;
+pular o cache serve o ranking da base antiga sem sintoma nenhum na tela.
+
+**Não usar `cache-demo-sub.mjs` nem `build-demo-cache.mjs`/`build-setor-cache.mjs`** —
+o primeiro tem `.limit()` sem `order by` (reintroduz o defeito da 0008 dentro do cache); os
+outros dependem de API key e dev server. `cache-sub.ts` substitui os três.
+
+---
+
 ## 🟡 Revisão end-to-end (02/07) — execução em fases
 
 **Feito e commitado (branch `feat/research-scrapling-hibrido`):**

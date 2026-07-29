@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import dados from "@/lib/consolidadores.json";
 import backtest from "@/lib/backtest-consolidadores.json";
-import { createAdminClient } from "@/lib/supabase";
+import { createUserClient } from "@/lib/supabase-server";
 
 export const metadata: Metadata = {
   title: "Consolidadores",
@@ -41,7 +41,8 @@ export default async function Consolidadores() {
   const nomes = consolidadores.flatMap((c) => c.proximos_alvos.map((a) => a.nome));
   const idPorNome = new Map<string, string>();
   try {
-    const { data } = await createAdminClient()
+    const supabase = await createUserClient();
+    const { data } = await supabase
       .from("empresa")
       .select("id, razao_social")
       .in("razao_social", nomes);

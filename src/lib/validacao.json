@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-06-02",
+  "gerado_em": "2026-07-25",
   "janela": {
     "corte": "2023-06-10",
     "novo": "2025-11-09",
@@ -8,24 +8,44 @@
   "metodologia": "Ground truth minerado das transições do próprio CNPJ (sócio PJ entra + sócio PF sai = assinatura de aquisição) entre dois snapshots da Receita Federal. O score é calculado com os dados de 2023-06, ANTES das aquisições — zero lookahead bias. Mede-se quantas das aquisições reais o ranking colocou no top 10% do seu vertical. Aleatório = 10%.",
   "verticais": [
     {
+      "vertical": "agro",
+      "universo": 507499,
+      "n_aquisicoes": 64,
+      "recall_top10": 38,
+      "recall_top20": 78,
+      "recall_top30": 81,
+      "decil_medio": 2.59,
+      "lift_top10": 3.8
+    },
+    {
+      "vertical": "educacao",
+      "universo": 13311,
+      "n_aquisicoes": 27,
+      "recall_top10": 30,
+      "recall_top20": 44,
+      "recall_top30": 52,
+      "decil_medio": 3.96,
+      "lift_top10": 3
+    },
+    {
       "vertical": "metalmec",
-      "universo": 140726,
-      "n_aquisicoes": 76,
-      "recall_top10": 67,
-      "recall_top20": 74,
-      "recall_top30": 95,
-      "decil_medio": 1.66,
-      "lift_top10": 6.7
+      "universo": 67464,
+      "n_aquisicoes": 73,
+      "recall_top10": 71,
+      "recall_top20": 95,
+      "recall_top30": 99,
+      "decil_medio": 1.36,
+      "lift_top10": 7.1
     },
     {
       "vertical": "saude",
-      "universo": 210159,
-      "n_aquisicoes": 264,
-      "recall_top10": 18,
-      "recall_top20": 32,
-      "recall_top30": 55,
-      "decil_medio": 3.41,
-      "lift_top10": 1.8
+      "universo": 157110,
+      "n_aquisicoes": 258,
+      "recall_top10": 24,
+      "recall_top20": 44,
+      "recall_top30": 60,
+      "decil_medio": 3.01,
+      "lift_top10": 2.4
     }
   ]
 }

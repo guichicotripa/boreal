@@ -6,29 +6,16 @@ import { useRouter } from "next/navigation";
 import type { SearchResponse, Empresa } from "@/lib/types";
 import { FAIXA_LABEL } from "@/lib/format";
 import { setorPorId, SETORES } from "@/lib/setores";
+import { TESES_POR_SETOR } from "@/lib/teses";
 import { readScoresConhecidos, storeEmpresa, storeOrigin, type ScoreConhecido } from "@/lib/empresa-store";
 import { ResultsTable } from "@/components/radar/ResultsTable";
 import { PeekPanel } from "@/components/radar/PeekPanel";
 
-// Teses de exemplo POR SETOR — quando um setor está ativo, os atalhos se adaptam a ele
-// (o CNAE vem do setor; o exemplo foca no perfil sucessório: idade do sócio, fundação).
-const EXEMPLOS_POR_SETOR: Record<string, string[]> = {
-  metalmec: [
-    "metalmecânica no interior de SP com sócios acima de 60 anos",
-    "fabricantes de máquinas e equipamentos fundados antes de 1990",
-    "fabricantes de máquinas no interior de SP",
-  ],
-  saude: [
-    "clínicas com sócios acima de 70 anos",
-    "laboratórios fundados antes de 1990",
-    "consultórios com sócio único idoso",
-  ],
-  educacao: [
-    "escolas familiares com sócios acima de 70 anos",
-    "colégios fundados antes de 1990",
-    "creches e educação infantil de dono idoso",
-  ],
-};
+// Teses de exemplo POR SETOR — quando um setor está ativo, os atalhos se adaptam a ele.
+// A lista mora em lib/teses porque o builder do cache precisa exatamente das mesmas
+// frases: o cache é indexado por texto normalizado, e uma palavra diferente aqui
+// faz o atalho da home deixar de bater no cache sem sinal nenhum na tela.
+const EXEMPLOS_POR_SETOR = TESES_POR_SETOR;
 const EXEMPLOS = EXEMPLOS_POR_SETOR.metalmec;
 
 export default function Radar() {

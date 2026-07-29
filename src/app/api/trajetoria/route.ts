@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { BigQuery } from "@google-cloud/bigquery";
-import { createAdminClient } from "@/lib/supabase";
+import { createUserClient } from "@/lib/supabase-server";
 import trajetoriaCache from "@/lib/trajetoria-cache.json";
 import path from "path";
 
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ...CACHE[empresaId], cached: true });
   }
 
-  const sb = createAdminClient();
+  const sb = await createUserClient();
   const { data: emp } = await sb.from("empresa").select("cnpj").eq("id", empresaId).single();
   if (!emp?.cnpj) return NextResponse.json({ error: "empresa não encontrada" }, { status: 404 });
   const basico = String(emp.cnpj).slice(0, 8);

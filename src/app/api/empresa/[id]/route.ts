@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase";
+import { createUserClient } from "@/lib/supabase-server";
 import { calcScore } from "@/lib/scoring";
 import { lerScoresV1 } from "@/lib/research-store";
 import type { Empresa } from "@/lib/types";
@@ -16,7 +16,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
     return NextResponse.json({ error: "id vazio" }, { status: 400 });
   }
 
-  const supabase = createAdminClient();
+  const supabase = await createUserClient();
   const { data, error } = await supabase
     .from("empresa")
     .select(

@@ -36,9 +36,13 @@ async function umSetor(s) {
     FROM \`basedosdados.br_me_cnpj.estabelecimentos\` e
     JOIN \`basedosdados.br_me_cnpj.empresas\` emp ON emp.cnpj_basico=e.cnpj_basico AND emp.data='${CORTE}'
     LEFT JOIN sc ON sc.cnpj_basico=e.cnpj_basico
-    WHERE e.data='${CORTE}' AND e.identificador_matriz_filial='1' AND ${cnaeFiltro}
+    -- ATIVA no corte e desempate no NTILE: as mesmas duas correções do
+    -- build-setores. Sem elas o número nacional não é comparável com o de SP,
+    -- que é justamente o papel deste script.
+    WHERE e.data='${CORTE}' AND e.identificador_matriz_filial='1'
+      AND e.situacao_cadastral='2' AND ${cnaeFiltro}
   ),
-  ranked AS (SELECT cnpj_basico, mf, idade, NTILE(10) OVER (ORDER BY score DESC) AS decil FROM universo),
+  ranked AS (SELECT cnpj_basico, mf, idade, NTILE(10) OVER (ORDER BY score DESC, cnpj_basico) AS decil FROM universo),
   a AS (SELECT cnpj_basico, COUNTIF(tipo='1') pj, COUNTIF(tipo='2') pf FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${CORTE}' GROUP BY 1),
   b AS (SELECT cnpj_basico, COUNTIF(tipo='1') pj, COUNTIF(tipo='2') pf FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${NOVO}' GROUP BY 1),
   adq AS (SELECT a.cnpj_basico FROM a JOIN b USING(cnpj_basico) WHERE b.pj>a.pj AND b.pf<a.pf),

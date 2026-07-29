@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase";
+import { createUserClient } from "@/lib/supabase-server";
 import { parseQueryLLM } from "@/lib/llm";
 import { parseQueryHeuristic } from "@/lib/query-parser";
 import { calcScore } from "@/lib/scoring";
@@ -7,6 +7,7 @@ import { reasonAboutEmpresas } from "@/lib/reasoner";
 import { lerScoresV1, aplicarV1 } from "@/lib/research-store";
 import { lerDescartadas, filtrarDescartadas } from "@/lib/descarte-store";
 import { escopoAtual } from "@/lib/escopo";
+import { normalizeQuery } from "@/lib/teses";
 import type { Empresa, Socio, SearchResponse } from "@/lib/types";
 import demoCache from "@/lib/demo-cache.json";
 import setoresData from "@/lib/setores.json";
@@ -19,15 +20,9 @@ function cnaesDoSetor(id: string): string[] | null {
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
-// Normaliza a query pra casar com o cache: lowercase, sem acento, espaços colapsados.
-function normalizeQuery(q: string): string {
-  return q
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
-}
+// normalizeQuery vem de lib/teses: o builder do cache grava a chave com ela, e a
+// rota lê com ela. Eram duas cópias — se divergirem, o cache existe e nunca é
+// encontrado, o que não dá erro nenhum, só fica lento em silêncio.
 
 // cast via unknown: o JSON é gerado pelo próprio pipeline (confiável); evita quebrar
 // o type-check a cada mudança no schema do score.
@@ -42,7 +37,7 @@ const CACHE = demoCache as unknown as Record<string, SearchResponse>;
 async function comOverlays(resp: SearchResponse): Promise<SearchResponse> {
   let empresas = resp.empresas ?? [];
   if (empresas.length === 0) return resp;
-  const supabase = createAdminClient();
+  const supabase = await createUserClient();
 
   try {
     const descartadas = await lerDescartadas(supabase, await escopoAtual(), empresas.map((e) => e.id));
@@ -142,7 +137,7 @@ export async function POST(req: NextRequest) {
   }
 
   // ── 2. Monta e roda a query no Supabase ──────────────────────────────────────
-  const supabase = createAdminClient();
+  const supabase = await createUserClient();
 
   // Se filtra por idade do sócio, usa inner join (só empresas COM sócio que bate).
   const socioEmbed = filters.minFaixaEtaria != null ? "socio!inner" : "socio";
@@ -177,7 +172,16 @@ export async function POST(req: NextRequest) {
     q = q.in("uf", filters.ufs);
   }
 
-  q = q.limit(filters.limit);
+  /* ORDENAR ANTES DE CORTAR. Sem este order, o `.limit()` abaixo devolvia 50
+     linhas arbitrárias do setor e o passo 3 as ordenava entre si — ranking de
+     uma amostra, apresentado como shortlist priorizada. Medido em 25/07/2026,
+     depois de a cobertura de saúde ir de 2.000 pra 34.599 empresas: ZERO das 50
+     devolvidas estavam no top-50 real do setor (score médio 50,6 contra 100).
+     Antes disso o defeito ficava escondido porque o ingest só carregava a cauda
+     de faixa etária mais alta, e qualquer 50 daquelas linhas pareciam boas.
+     score_v0 é materializado por scripts/backfill-score-v0.ts (migration 0008);
+     `nulls last` joga empresa ainda não pontuada pro fim em vez de pro topo. */
+  q = q.order("score_v0", { ascending: false, nullsFirst: false }).limit(filters.limit);
 
   const { data, error } = await q;
   if (error) {

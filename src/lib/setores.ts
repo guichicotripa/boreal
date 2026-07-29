@@ -39,29 +39,47 @@ export type Setor = SetorMetricas & {
   pct_sucessao: number;              // % do M&A do setor que é sucessão (o resto é consolidação)
 };
 
-// Config por setor (hand-set, baseado no que o dado mostrou — não é knob de peso).
-const CONFIG: Record<string, { lente: Lente; descricao: string }> = {
+/* Config por setor (hand-set, baseado no que o dado mostrou — não é knob de peso).
+   `descricao` recebe as métricas do setor em vez de repetir os números em texto:
+   a de educação dizia "88% de acerto" e ficou mentindo quando a validação passou
+   a excluir empresa baixada do universo e o número virou 100%. Número que aparece
+   em dois lugares é número que vai divergir. */
+const CONFIG: Record<string, { lente: Lente; descricao: (m: SetorMetricas & { pct: number }) => string }> = {
   metalmec: {
     lente: "sucessao",
-    descricao:
-      "Setor de sucessão: ~metade do M&A é venda por sucessão, e o score acerta 97% dessas. Sinal mais forte da cobertura atual.",
+    descricao: (m) =>
+      `Setor de sucessão: ~${m.pct}% do M&A é venda por sucessão, e o score acerta ${m.recall_sucessao}% dessas. ` +
+      `Sinal mais forte da cobertura atual.`,
   },
   saude: {
     lente: "consolidacao",
-    descricao:
-      "Setor de consolidação: só ~8% do M&A é sucessão; o restante é roll-up de clínicas. Nessas poucas, o " +
-      "score acerta 100%, mas a dinâmica do setor é identificar o próximo alvo dos consolidadores, não quem vende.",
+    descricao: (m) =>
+      `Setor de consolidação: só ~${m.pct}% do M&A é sucessão; o restante é roll-up de clínicas. Nessas poucas, o ` +
+      `score acerta ${m.recall_sucessao}%, mas a dinâmica do setor é identificar o próximo alvo dos consolidadores, não quem vende.`,
   },
   educacao: {
     lente: "sucessao",
-    descricao:
-      "Misto: ~30% do M&A é venda de escola familiar, com 88% de acerto do score nessas vendas; o restante é consolidação, " +
-      "grupos como SEB e Inspira. Aplicamos a lente de sucessão no perfil familiar. Dados de SP; expansão para outras regiões em andamento.",
+    descricao: (m) =>
+      `Misto: ~${m.pct}% do M&A é venda de escola familiar, com ${m.recall_sucessao}% de acerto do score nessas vendas; ` +
+      `o restante é consolidação, grupos como SEB e Inspira. Aplicamos a lente de sucessão no perfil familiar. ` +
+      `Dados de SP; expansão para outras regiões em andamento.`,
+  },
+  agro: {
+    lente: "consolidacao",
+    descricao: (m) =>
+      `Cobertura parcial, e a mais frágil da base. Duas ressalvas que valem mais que o número: ` +
+      `(1) em SP são só N=${m.n_aquisicoes_sucessao} vendas de sucessão, pequeno demais para tratar os ` +
+      `${m.recall_sucessao}% como validado — no Brasil inteiro, com N=${m.nacional?.n_aquisicoes_sucessao}, o acerto ` +
+      `cai para ${m.nacional?.recall_sucessao}%, e é esse o número a citar; ` +
+      "(2) a data de abertura do CNPJ não mede a idade do negócio no agro. Entre 2006 e 2010 houve formalização em massa de " +
+      "produtor rural, e a curva mostra o degrau: 51.874 empresas com sócio 61+ têm 15+ anos de CNPJ, mas só 1.948 têm 20+. " +
+      "Como antiguidade vale 30 dos ~100 pontos do score, ele mede outra coisa nessa coorte. Por isso indexamos só o corte " +
+      "pré-formalização (20+ anos), que é onde a data significa o que o score assume.",
   },
 };
 
-// O score de sucessão valida em TODOS os setores (88–100% nas vendas de sucessão). O que muda é o
-// JOGO do setor: quanto do M&A é sucessão (onde prevemos) vs consolidação (onde não — e nem fingimos).
+// O score de sucessão valida em TODOS os setores. O que muda é o JOGO do setor: quanto do M&A é
+// sucessão (onde prevemos) vs consolidação (onde não — e nem fingimos).
 // Status reflete o jogo, não o score: muita sucessão = setor de sucessão; pouca = consolidação.
 function statusDe(pctSucessao: number): StatusSetor {
   if (pctSucessao >= 40) return "validado"; // setor majoritariamente de sucessão
@@ -69,16 +87,26 @@ function statusDe(pctSucessao: number): StatusSetor {
   return "consolidacao"; // M&A é quase todo consolidação
 }
 
-export const SETORES: Setor[] = (setoresData.setores as SetorMetricas[]).map((m) => {
+const METRICAS = setoresData.setores as SetorMetricas[];
+
+export const SETORES: Setor[] = METRICAS.map((m) => {
   const pct = m.n_aquisicoes > 0 ? Math.round((m.n_aquisicoes_sucessao / m.n_aquisicoes) * 100) : 0;
   return {
     ...m,
     lente: CONFIG[m.id]?.lente ?? "sucessao",
-    descricao: CONFIG[m.id]?.descricao ?? "",
+    descricao: CONFIG[m.id]?.descricao({ ...m, pct }) ?? "",
     pct_sucessao: pct,
     status: statusDe(pct),
   };
 });
+
+/** Faixa de acerto nas vendas de sucessão entre os setores cobertos, ex "97–100%". */
+export const FAIXA_RECALL_SUCESSAO = (() => {
+  const rs = METRICAS.map((m) => m.recall_sucessao).filter((r): r is number => r != null);
+  if (!rs.length) return "—";
+  const min = Math.min(...rs), max = Math.max(...rs);
+  return min === max ? `${min}%` : `${min}–${max}%`;
+})();
 
 export function setorPorId(id: string): Setor | null {
   return SETORES.find((s) => s.id === id) ?? null;

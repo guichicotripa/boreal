@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase";
+import { createUserClient } from "@/lib/supabase-server";
 import { escopoAtual } from "@/lib/escopo";
 import { descartar, restaurar, listarDescartadasDetalhado } from "@/lib/descarte-store";
 
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
   const lido = await lerEmpresaId(req);
   if (!lido.ok) return lido.resp;
   try {
-    await descartar(createAdminClient(), await escopoAtual(), lido.empresaId, lido.motivo);
+    await descartar(await createUserClient(), await escopoAtual(), lido.empresaId, lido.motivo);
     return NextResponse.json({ descartada: true, empresaId: lido.empresaId });
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 500 });
@@ -47,7 +47,7 @@ export async function DELETE(req: NextRequest) {
   const lido = await lerEmpresaId(req);
   if (!lido.ok) return lido.resp;
   try {
-    await restaurar(createAdminClient(), await escopoAtual(), lido.empresaId);
+    await restaurar(await createUserClient(), await escopoAtual(), lido.empresaId);
     return NextResponse.json({ restaurada: true, empresaId: lido.empresaId });
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 500 });
@@ -56,7 +56,7 @@ export async function DELETE(req: NextRequest) {
 
 export async function GET() {
   try {
-    const descartadas = await listarDescartadasDetalhado(createAdminClient(), await escopoAtual());
+    const descartadas = await listarDescartadasDetalhado(await createUserClient(), await escopoAtual());
     return NextResponse.json({ descartadas, total: descartadas.length });
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 500 });

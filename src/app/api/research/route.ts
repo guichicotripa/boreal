@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase";
+import { createUserClient } from "@/lib/supabase-server";
 import { calcScore } from "@/lib/scoring";
 import { investigarEmpresa } from "@/lib/research";
-import { lerResearchSalvo } from "@/lib/research-store";
+import { lerResearchSalvo, salvarResearch } from "@/lib/research-store";
 import type { Empresa, ResearchResult } from "@/lib/types";
 import researchCache from "@/lib/research-cache.json";
 
@@ -32,7 +33,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ research: CACHE[empresaId], cached: true });
   }
 
-  const supabase = createAdminClient();
+  /* Mesma divisão da /api/dossier: leitura pela sessão (policies valem), escrita
+     pela service_role. `score_run` é corpus compartilhado, derivado de CNPJ
+     público, e não tem policy de insert — quem grava é o pipeline. */
+  const supabase = await createUserClient();
+  const pipeline = createAdminClient();
 
   // Investigação já persistida (score_run) → devolve na hora, sem gastar o agente.
   // É o que faz reabrir a mesma empresa ser instantâneo em vez de 30-60s + custo de API.
@@ -71,31 +76,17 @@ export async function POST(req: NextRequest) {
     // fonte de verdade do v1 daqui pra frente. AGUARDA de propósito: era fire-and-forget,
     // mas a função serverless pode congelar após a resposta e perder a escrita — o que
     // faria a empresa ser reinvestigada (e recobrada) toda vez.
-    const base = {
-      empresa_id: empresaId,
-      score: research.score_v1,
-      breakdown: empresa.score?.breakdown ?? null,
-      sinais: research.sinais,
-      model: "research-agent/v1 (claude via API + web search)",
-    };
-
-    // `research` (payload completo) depende da migration 0006. Se a coluna ainda não
-    // existe, o insert INTEIRO falharia e o v1 nem o número seria salvo — pior que antes.
-    // Então: tenta completo; se a coluna faltar, regrava só o essencial.
-    let { error: insErr } = await supabase.from("score_run").insert({ ...base, research });
-    let payloadSalvo = !insErr;
-    if (insErr) {
-      console.warn("insert com `research` falhou (migration 0006 aplicada?):", insErr.message);
-      ({ error: insErr } = await supabase.from("score_run").insert(base));
-      payloadSalvo = false;
-    }
-    if (insErr) {
-      // Não derruba a resposta: o usuário vê a investigação, só não fica salva.
-      console.error("score_run insert falhou (investigação não persistida):", insErr.message);
-    }
+    // Falha de escrita não derruba a resposta: o usuário vê a investigação, só não fica salva.
+    const { persistido, payloadSalvo } = await salvarResearch(
+      pipeline,
+      empresaId,
+      research,
+      empresa.score?.breakdown,
+      "research-agent/v1 (claude via API + web search)"
+    );
 
     // persistido = o score sobrevive (lista reordena). payloadSalvo = não precisa re-rodar o agente.
-    return NextResponse.json({ research, persistido: !insErr, payloadSalvo });
+    return NextResponse.json({ research, persistido, payloadSalvo });
   } catch (err) {
     console.error("Research falhou:", (err as Error).message);
     return NextResponse.json({ error: "falha na investigação" }, { status: 500 });

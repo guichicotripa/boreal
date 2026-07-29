@@ -62,12 +62,24 @@ const TERMOS_POR_SETOR: Record<string, RegExp> = {
     /sa[úu]de|cl[íi]nic|hospital|laborat[óo]ri|diagn[óo]stic|odontol[óo]gic|dentist|m[ée]dic|fisioterap|imagem/,
   educacao:
     /educa[çc][ãa]o|escola|col[ée]gio|creche|ensino|educandári|infantil|pr[ée]-escola|curso/,
+  agro:
+    /agro|agroneg[óo]ci|agr[íi]col|agropecu[áa]ri|fazenda|pecu[áa]ri|lavoura|cultivo|planta[çc][ãa]o|gado|rebanho|safra|gr[ãa]os|soja|milho|cana-de-a[çc][úu]car|caf[ée]|citricultur|silvicultur|florestal|reflorestamen|aquicultur|piscicultur|pesca/,
 };
+
+/* Setor no registry sem termos aqui é buscável por CNAE mas INVISÍVEL pra
+   consulta em texto livre — falha silenciosa que só aparece quando o cliente
+   digita o nome do setor e recebe zero. O teste `query-parser.test.ts` trava
+   esse esquecimento; esta constante existe pra ele poder checar. */
+export const IDS_COM_TERMOS = Object.keys(TERMOS_POR_SETOR);
 
 /* Setores que o usuário pode pedir e que NÃO estão indexados. Não é uma lista
    fechada do mundo — é o suficiente pra distinguir "pediu algo que não temos"
    de "não citou setor nenhum". Falso negativo aqui degrada pro comportamento
-   antigo de buscar amplo, que é aceitável; falso positivo seria pior. */
+   antigo de buscar amplo, que é aceitável; falso positivo seria pior.
+
+   Ao INGERIR um setor que está aqui, a entrada tem que sair desta lista no mesmo
+   commit — senão a busca passa a negar um setor que a base já cobre. Foi o que
+   aconteceu com agro: entrou no registry e saiu daqui junto. */
 const TERMOS_FORA_DA_BASE: [RegExp, string][] = [
   [/constru[çc][ãa]o|construtor|empreiteir|incorporador/, "construção"],
   [/imobili[áa]ri|corretor/, "imobiliário"],
@@ -75,13 +87,15 @@ const TERMOS_FORA_DA_BASE: [RegExp, string][] = [
   [/varejo|com[ée]rcio varejista|loja|supermercad|mercearia/, "varejo"],
   [/alimento|aliment[íi]ci|frigor[íi]fic|latic[íi]ni|padaria/, "alimentos"],
   [/tecnologia|software|ti\b|startup|sistemas|desenvolvimento de software/, "tecnologia"],
-  [/agro|agr[íi]col|fazenda|pecu[áa]ri|agroneg[óo]ci/, "agronegócio"],
   [/t[êe]xtil|confec[çc][ãa]o|vestu[áa]ri|roupa/, "têxtil e confecção"],
   [/qu[íi]mic|farmac[êe]utic|cosm[ée]tic/, "química e farmacêutica"],
   [/hotel|turismo|pousada|restaurante|bar\b/, "hotelaria e alimentação fora do lar"],
   [/contabil|advocaci|jur[íi]dic|consultori/, "serviços profissionais"],
   [/energia|el[ée]tric|solar|petr[óo]le/, "energia"],
 ];
+
+/** Rótulos dos setores não indexados — o prompt do LLM lê daqui, não de uma cópia. */
+export const ROTULOS_FORA_DA_BASE = TERMOS_FORA_DA_BASE.map(([, rotulo]) => rotulo);
 
 export type SetorResolvido = {
   /** Prefixos CNAE a filtrar. Vazio = sem recorte de setor. */

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase";
+import { createUserClient } from "@/lib/supabase-server";
 
 export const runtime = "nodejs";
 
@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
   const opId = req.nextUrl.searchParams.get("oportunidade_id");
   if (!opId) return NextResponse.json({ error: "oportunidade_id vazio" }, { status: 400 });
 
-  const supabase = createAdminClient();
+  const supabase = await createUserClient();
   const { data, error } = await supabase
     .from("interacao")
     .select("id, oportunidade_id, tipo, descricao, autor, criado_em")
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
   if (!descricao) return NextResponse.json({ error: "descrição vazia" }, { status: 400 });
   const tipo: Tipo = TIPOS.includes(b?.tipo as Tipo) ? (b!.tipo as Tipo) : "nota";
 
-  const supabase = createAdminClient();
+  const supabase = await createUserClient();
   const { data, error } = await supabase
     .from("interacao")
     .insert({ oportunidade_id: opId, tipo, descricao, autor: b?.autor ? String(b.autor) : null })
@@ -53,7 +53,7 @@ export async function DELETE(req: NextRequest) {
   const id = req.nextUrl.searchParams.get("id");
   if (!id) return NextResponse.json({ error: "id vazio" }, { status: 400 });
 
-  const supabase = createAdminClient();
+  const supabase = await createUserClient();
   const { error } = await supabase.from("interacao").delete().eq("id", id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ ok: true });

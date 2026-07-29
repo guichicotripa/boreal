@@ -1,6 +1,8 @@
 // Referência CNAE 2.0 — nomes curtos por divisão (2 díg) e seção econômica por faixa.
 // Usado pelo heat-map pra rotular e agrupar as divisões. Dado estável (CONCLA/IBGE).
 
+import { SETORES } from "./setores";
+
 export const NOME_DIVISAO: Record<string, string> = {
   "01": "Agricultura", "02": "Silvicultura", "03": "Pesca",
   "05": "Carvão", "06": "Petróleo e gás", "07": "Minerais metálicos", "08": "Extração não-met.", "09": "Apoio à extração",
@@ -56,8 +58,12 @@ export function nomeDivisao(div: string): string {
   return NOME_DIVISAO[div] ?? `CNAE ${div}`;
 }
 
-// Divisões dos 3 setores com SCORE validado (setores.json) — ganham marcador no heat-map.
-export const DIVISOES_VALIDADAS = new Set(["24", "25", "28", "86", "85"]);
+// Divisões dos setores com SCORE validado — ganham marcador no heat-map.
+// Derivado do registry: era uma cópia à mão que precisava ser lembrada a cada
+// setor novo, e um esquecimento não quebra nada visível (o marcador só some).
+export const DIVISOES_VALIDADAS = new Set(
+  SETORES.flatMap((s) => s.cnaes.map((c) => c.slice(0, 2)))
+);
 
 // UF → região, pro filtro do heat-map.
 export const UF_REGIAO: Record<string, string> = {

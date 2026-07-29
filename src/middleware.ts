@@ -1,23 +1,62 @@
-import { NextRequest, NextResponse } from "next/server";
-import { gateToken, GATE_COOKIE } from "@/lib/gate";
+import { createServerClient } from "@supabase/ssr";
+import { NextResponse, type NextRequest } from "next/server";
 
-// Gate de acesso: privatiza o app quando BOREAL_GATE_PASSWORD está setada. Sem ela, passa tudo.
-const PUBLICAS = ["/acesso", "/api/acesso"];
+/* Porta de entrada do app. Duas funções, nesta ordem:
+   1. renovar a sessão do Supabase (o access token dura 1h; sem esta renovação o
+      usuário desloga no meio do uso, que é o bug mais chato desse tipo de auth);
+   2. barrar quem não está logado.
 
-export async function middleware(req: NextRequest) {
-  if (!process.env.BOREAL_GATE_PASSWORD) return NextResponse.next(); // gate desligado
+   Substituiu o gate de senha única compartilhada. Não há mais escape hatch por
+   variável de ambiente: o gate antigo passava TUDO quando BOREAL_GATE_PASSWORD
+   não estava setada, e "modo aberto que depende de env" é exatamente o tipo de
+   coisa que chega em produção por engano. Em dev também se entra por magic link.
 
-  const { pathname } = req.nextUrl;
-  if (PUBLICAS.some((p) => pathname === p || pathname.startsWith(p + "/"))) return NextResponse.next();
+   O que a middleware NÃO faz: checar se o usuário pertence a alguma firma. Isso
+   custaria uma query ao banco em toda requisição. Como o login roda com
+   `shouldCreateUser: false` e o convite cria o usuário e a linha em `membro`
+   juntos, "autenticado sem firma" só existe se alguém mexer no banco à mão. Se
+   existir, `escopoAtual()` recusa (ver lib/escopo.ts) e o único dado alcançável
+   é o registro público de CNPJ. */
 
-  const cookie = req.cookies.get(GATE_COOKIE)?.value;
-  if (cookie && cookie === (await gateToken())) return NextResponse.next();
+const PUBLICAS = ["/acesso", "/auth/callback"];
 
-  if (pathname.startsWith("/api/")) return NextResponse.json({ error: "não autorizado" }, { status: 401 });
-  const url = req.nextUrl.clone();
-  url.pathname = "/acesso";
-  url.searchParams.set("next", pathname);
-  return NextResponse.redirect(url);
+export async function middleware(request: NextRequest) {
+  let resposta = NextResponse.next({ request });
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !anon) return resposta; // build sem env: não derruba a request
+
+  const supabase = createServerClient(url, anon, {
+    cookies: {
+      getAll: () => request.cookies.getAll(),
+      setAll: (paraGravar) => {
+        /* Dança obrigatória do @supabase/ssr: o cookie renovado precisa entrar na
+           REQUEST (pra quem roda depois nesta mesma passagem já ver a sessão nova)
+           E na RESPONSE (pra chegar no navegador). Gravar só num dos dois é a
+           causa clássica do "desloga sozinho". */
+        for (const { name, value } of paraGravar) request.cookies.set(name, value);
+        resposta = NextResponse.next({ request });
+        for (const { name, value, options } of paraGravar) resposta.cookies.set(name, value, options);
+      },
+    },
+  });
+
+  // getUser() valida o token no servidor do Supabase; getSession() só leria o
+  // cookie, que é forjável. Esta chamada é o que dispara a renovação acima.
+  const { data } = await supabase.auth.getUser();
+  const { pathname } = request.nextUrl;
+
+  if (PUBLICAS.some((p) => pathname === p || pathname.startsWith(p + "/"))) return resposta;
+  if (data.user) return resposta;
+
+  if (pathname.startsWith("/api/")) {
+    return NextResponse.json({ error: "não autorizado" }, { status: 401 });
+  }
+  const destino = request.nextUrl.clone();
+  destino.pathname = "/acesso";
+  destino.searchParams.set("next", pathname);
+  return NextResponse.redirect(destino);
 }
 
 // Não intercepta assets estáticos nem imagens de OG/ícones.

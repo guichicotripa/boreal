@@ -5,7 +5,8 @@
 // Aqui só geramos a análise — economiza tokens e mantém os dados 100% precisos.
 
 import Anthropic from "@anthropic-ai/sdk";
-import type { Empresa, DossierAnalise, RedFlag } from "./types";
+import type { Empresa, DossierAnalise, RedFlag, ResearchResult } from "./types";
+import { MODELO_ANALISE } from "./modelos.ts";
 
 let _client: Anthropic | null = null;
 function getClient() {
@@ -26,6 +27,28 @@ const FAIXA_LABEL: Record<string, string> = {
   "1": "0-12", "2": "13-20", "3": "21-30", "4": "31-40", "5": "41-50",
   "6": "51-60", "7": "61-70", "8": "71-80", "9": "80+",
 };
+
+/* O que a investigação (v1) achou na web, reduzido ao que muda a análise.
+   Sem isto o memo escrevia tese de aproximação, red flags e próximo passo
+   conhecendo só o registro do CNPJ — cego para "tem banco de investimento
+   contratado", "o herdeiro seguiu outra carreira", "há menção pública a venda".
+   São justamente os fatos que decidem o ângulo e a urgência da abordagem. */
+function researchParaPrompt(r: ResearchResult) {
+  return {
+    resumo_do_que_foi_achado: r.resumo,
+    perfil_do_negocio: r.perfil_negocio ?? null,
+    presenca_digital: r.presenca_digital,
+    gatilho_de_timing: r.gatilho,
+    score_apos_investigacao: r.score_v1,
+    delta_vs_score_de_registro: r.delta,
+    sinais_encontrados: (r.sinais ?? []).map((s) => ({
+      sinal: s.rotulo,
+      descricao: s.descricao,
+      peso_no_score: s.peso,
+      fonte: s.fonte_url,
+    })),
+  };
+}
 
 function dadosParaPrompt(e: Empresa) {
   const socios = (e.socio ?? []).map((s) => ({
@@ -54,10 +77,17 @@ function dadosParaPrompt(e: Empresa) {
   };
 }
 
-export async function gerarDossierAnalise(empresa: Empresa): Promise<DossierAnalise> {
-  const dados = dadosParaPrompt(empresa);
+/* O prompt e o parse são exportados separados da chamada porque o memo é gerado
+   por dois caminhos: a rota (API, sob demanda) e o lote (assinatura, custo zero).
+   Se cada caminho tivesse a própria cópia do prompt, os memos do lote e os do uso
+   real divergiriam sem ninguém notar — é o mesmo motivo de calcScore ser importada
+   em vez de replicada nos scripts. */
+export const DOSSIER_SYSTEM = SYSTEM;
 
-  const prompt = `Gere a análise do dossiê desta empresa. Use SÓ os dados fornecidos —
+export function promptDossier(empresa: Empresa, research?: ResearchResult | null): string {
+  const dados = dadosParaPrompt(empresa);
+  const investigacao = research ? researchParaPrompt(research) : null;
+  return `Gere a análise do dossiê desta empresa. Use SÓ os dados fornecidos —
 não invente faturamento, número de funcionários ou fatos que não estão aqui.
 
 REGRAS CRÍTICAS:
@@ -65,6 +95,14 @@ REGRAS CRÍTICAS:
   pode estar defasado décadas. Se mencionar, deixe claro que não indica receita nem valor.
 - Não invente número financeiro. Se não há base para estimar faturamento/EBITDA, diga "não estimável
   sem dados adicionais" — não chute.
+- Não invente ESTATÍSTICA nem base de comparação. Nada de "empresas nesse perfil vendem em 3-5 anos",
+  "X% dos casos", "estatisticamente antecede". Nenhum número desses foi medido; escrever isso é
+  inventar prova. Descreva o padrão em palavras ("quadro parado há 29 anos, sem geração seguinte
+  visível") e pare aí.
+- Não invente CREDENCIAL nossa. Você não sabe em que setor a boutique atua, quem ela conhece nem que
+  deals já fez. O "por que nós" de tese_aproximacao deve sair do que os DADOS sustentam (ex: "chegar
+  antes de virar processo competitivo", "o ângulo é continuidade, não venda") — nunca de experiência
+  ou especialização afirmada sobre nós mesmos.
 - red_flags: liste os riscos PROVÁVEIS dado o perfil (setor, idade da empresa, estrutura) — não afirme
   que o passivo existe; classifique a severidade e diga COMO verificar. Para indústria antiga, considere:
   passivo fiscal (checar PGFN/CARF/TJSP — grátis), NR-12 (segurança de máquinas), passivo ambiental,
@@ -80,11 +118,37 @@ Responda APENAS com este JSON:
   "proximo_passo": "1 frase concreta: qual o próximo passo de origination — canal sugerido (usar telefone/email se houver no dado de contato; senão LinkedIn do sócio mais jovem, contador via QSA, ou associação setorial) + ação"
 }
 
-Dados da empresa:
-${JSON.stringify(dados, null, 2)}`;
+Dados da empresa (registro público do CNPJ):
+${JSON.stringify(dados, null, 2)}
+${investigacao ? `
+INVESTIGAÇÃO NA WEB (v1) — já feita para esta empresa. Use estes achados; eles valem
+mais que o perfil de registro para decidir o ângulo e a urgência:
+${JSON.stringify(investigacao, null, 2)}
+
+Como usar a investigação:
+- "tese_aproximacao" e "proximo_passo" devem partir dos sinais encontrados e do gatilho de
+  timing, não só do perfil societário. Se há banco de investimento contratado ou menção
+  pública a venda, isso MUDA o ângulo e precisa aparecer.
+- "analise_sucessoria" deve reconciliar registro e web: se a investigação achou sucessor
+  familiar já atuando, diga que o risco sucessório é menor do que o quadro sugere.
+- "perguntas_abordagem" devem incorporar o que já se sabe — não pergunte o que a
+  investigação já respondeu.
+- "red_flags": só o que o perfil ou os achados sustentam. A investigação NÃO autoriza
+  afirmar passivo; segue valendo listar risco provável e como verificar.
+- Cite o achado, nunca a fonte crua como se fosse fato consumado. Se um sinal tem
+  fonte null, trate como indício fraco.` : `
+SEM investigação na web para esta empresa: escreva a partir do registro apenas, e não
+finja saber de fatos externos (assessores, intenção de venda, sucessores).`}`;
+}
+
+export async function gerarDossierAnalise(
+  empresa: Empresa,
+  research?: ResearchResult | null
+): Promise<DossierAnalise> {
+  const prompt = promptDossier(empresa, research);
 
   const message = await getClient().messages.create({
-    model: "claude-sonnet-4-6",
+    model: MODELO_ANALISE,
     max_tokens: 1500,
     system: SYSTEM,
     messages: [{ role: "user", content: prompt }],
@@ -96,7 +160,11 @@ ${JSON.stringify(dados, null, 2)}`;
     ` ($${((usage.input_tokens * 3 + usage.output_tokens * 15) / 1_000_000).toFixed(4)})`
   );
 
-  const raw = message.content[0].type === "text" ? message.content[0].text : "";
+  return parseDossier(message.content[0].type === "text" ? message.content[0].text : "");
+}
+
+/** Normaliza a resposta do modelo em DossierAnalise. Compartilhado pelos dois caminhos. */
+export function parseDossier(raw: string): DossierAnalise {
   const match = raw.match(/\{[\s\S]*\}/);
   if (!match) throw new Error("Dossier: resposta sem JSON: " + raw.slice(0, 200));
 

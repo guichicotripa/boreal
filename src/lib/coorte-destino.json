@@ -1,10 +1,20 @@
 {
-  "gerado_em": "2026-06-04",
+  "gerado_em": "2026-07-27",
   "janela": {
     "de": "2023-06-10",
     "ate": "2025-11-09"
   },
   "verticais": {
+    "agro": {
+      "total": 1152,
+      "destinos": {
+        "inalterada": 872,
+        "socio_saiu_ou_pj": 104,
+        "baixada_inativa": 86,
+        "sucessao_familiar": 80,
+        "vendida": 10
+      }
+    },
     "educacao": {
       "total": 2128,
       "destinos": {
