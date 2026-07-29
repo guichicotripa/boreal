@@ -23,9 +23,20 @@ const PUBLICAS = ["/acesso", "/auth/callback"];
 export async function middleware(request: NextRequest) {
   let resposta = NextResponse.next({ request });
 
+  const { pathname } = request.nextUrl;
+
+  /* Sem as variáveis do Supabase, FECHA. A versão anterior devolvia `resposta`,
+     ou seja: um deploy que esquecesse de setar a env servia o app inteiro sem
+     autenticação nenhuma, e nada na tela denunciaria isso. "Não derruba a
+     request" é a atitude certa pra telemetria e a errada pra o portão. */
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !anon) return resposta; // build sem env: não derruba a request
+  if (!url || !anon) {
+    console.error("middleware: faltam NEXT_PUBLIC_SUPABASE_URL/ANON_KEY — negando tudo");
+    return pathname.startsWith("/api/")
+      ? NextResponse.json({ error: "servidor mal configurado" }, { status: 503 })
+      : new NextResponse("Servidor mal configurado.", { status: 503 });
+  }
 
   const supabase = createServerClient(url, anon, {
     cookies: {
@@ -45,7 +56,6 @@ export async function middleware(request: NextRequest) {
   // getUser() valida o token no servidor do Supabase; getSession() só leria o
   // cookie, que é forjável. Esta chamada é o que dispara a renovação acima.
   const { data } = await supabase.auth.getUser();
-  const { pathname } = request.nextUrl;
 
   if (PUBLICAS.some((p) => pathname === p || pathname.startsWith(p + "/"))) return resposta;
   if (data.user) return resposta;
