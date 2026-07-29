@@ -56,17 +56,25 @@ export async function registrarBusca(
   supabase: SupabaseClient,
   query: string,
   filtros: unknown,
-  empresas: Empresa[]
+  empresas: Empresa[],
+  pagina = 0
 ) {
   await gravar(supabase, "busca", null, {
     query,
     filtros,
+    /* Página importa pro loop: escolher o 3º da página 1 e escolher o 3º da
+       página 4 são sinais muito diferentes (o segundo é posição 153 do ranking).
+       Sem isto, as posições de páginas distintas se misturariam como se fossem
+       todas do topo, e a mediana mentiria pra baixo. */
+    pagina,
     total: empresas.length,
     // posicao é 1-based porque a pergunta que se faz depois é "em que lugar da
     // lista ele achou o que prestava", e ninguém pensa nisso começando do zero.
     top: empresas.slice(0, 50).map((e, i) => ({
       id: e.id,
-      posicao: i + 1,
+      // Posição ABSOLUTA no ranking, não dentro da página: é o número que responde
+      // "quão longe do topo estava o que ele quis".
+      posicao: pagina * 50 + i + 1,
       score: e.score_v1?.score ?? e.score?.score ?? null,
       tinha_v1: !!e.score_v1,
     })),

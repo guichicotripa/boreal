@@ -177,4 +177,8 @@ export type SearchResponse = {
      `foraDoContratoParcial` = veio lista, mas menor que a pergunta. */
   foraDoContrato?: string | null;
   foraDoContratoParcial?: string | null;
+  /** Página servida (0-based) e se existe próxima. `temMais` vem do banco, antes
+   *  do filtro de descartadas: página com menos de 50 ainda pode ter próxima. */
+  pagina?: number;
+  temMais?: boolean;
 };

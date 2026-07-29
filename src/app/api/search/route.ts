@@ -77,8 +77,23 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "query vazia" }, { status: 400 });
   }
 
+  /* Página em vez de "os 50 e pronto". Antes da paginação, tudo além do 50º era
+     inalcançável: numa base de 51.033 empresas, o originador via 0,1% do universo
+     e não tinha como saber que havia mais.
+
+     Vem como `pagina` (0-based) e não como offset cru: offset do cliente é
+     forjável pra pular pro fim da base e paginar dado que a tese não pediu.
+     Limitado a 40 páginas porque ninguém garimpa 2.000 empresas na mão, e sem
+     teto o `.range()` fundo fica caro. */
+  const paginaBruta = Number((body as { pagina?: number })?.pagina ?? 0);
+  const pagina = Number.isFinite(paginaBruta) ? Math.min(Math.max(Math.trunc(paginaBruta), 0), 40) : 0;
+
   // ── 0. Cache — demos canônicos (texto) ou browse de setor (instantâneo no demo) ──
-  const skipCache = req.nextUrl.searchParams.get("fresh") === "1";
+  /* `pagina > 0` ignora o cache: os caches (demo e browse de setor) guardam a
+     PRIMEIRA página de cada consulta, não o universo. Servir o cache na página 2
+     devolveria as mesmas 50 empresas de novo, e o originador leria isso como
+     "acabou" quando ainda há 51 mil linhas atrás. */
+  const skipCache = req.nextUrl.searchParams.get("fresh") === "1" || pagina > 0;
   // Tese + setor (saúde/educação): chave composta `setor|tese`, pra ficar instantâneo como o
   // metalmec. Metalmec é o setor default (a home não manda setor) e cai no ramo de texto puro abaixo.
   if (!skipCache && queryText && setorId) {
@@ -175,6 +190,7 @@ export async function POST(req: NextRequest) {
 
   // ── 2. Monta e roda a query no Supabase ──────────────────────────────────────
   const supabase = await createUserClient();
+  const offset = pagina * filters.limit;
 
   // Se filtra por idade do sócio, usa inner join (só empresas COM sócio que bate).
   const socioEmbed = filters.minFaixaEtaria != null ? "socio!inner" : "socio";
@@ -218,14 +234,27 @@ export async function POST(req: NextRequest) {
      de faixa etária mais alta, e qualquer 50 daquelas linhas pareciam boas.
      score_v0 é materializado por scripts/backfill-score-v0.ts (migration 0008);
      `nulls last` joga empresa ainda não pontuada pro fim em vez de pro topo. */
-  q = q.order("score_v0", { ascending: false, nullsFirst: false }).limit(filters.limit);
+  /* `.order("id")` como desempate NÃO é enfeite: é o que torna a paginação
+     possível. O score está SATURADO no topo (as primeiras dezenas são todas 100),
+     e `.range()` sobre ordem com empate devolve a mesma empresa em duas páginas e
+     esquece outra — foi assim que o backfill de score_v0 deixou 18.386 de fora.
+     Com o id como último critério, a ordem é total e estável entre requests. */
+  q = q
+    .order("score_v0", { ascending: false, nullsFirst: false })
+    .order("id")
+    /* Pede UMA linha além da página pra saber se existe próxima, sem um count()
+       separado (que numa tabela de 51 mil linhas com filtro custa mais que a
+       própria busca). A linha extra é descartada abaixo. */
+    .range(offset, offset + filters.limit);
 
   const { data, error } = await q;
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  const empresas = (data ?? []) as Empresa[];
+  const linhas = (data ?? []) as Empresa[];
+  const temMais = linhas.length > filters.limit;
+  const empresas = temMais ? linhas.slice(0, filters.limit) : linhas;
 
   // ── 2b. Quadro societário completo ───────────────────────────────────────────
   // O inner join do filtro de idade projeta SÓ os sócios que batem o filtro. Mas o score
@@ -296,13 +325,19 @@ export async function POST(req: NextRequest) {
      o banco devolveu antes de reordenar. `await` de propósito: em serverless, o
      que fica pendente depois da resposta pode simplesmente não acontecer, e este
      é o único dado do sistema que não dá pra recomputar depois. */
-  await registrarBusca(supabase, queryText, filters, scored);
+  await registrarBusca(supabase, queryText, filters, scored, pagina);
 
   return NextResponse.json({
     filters,
     parsedBy,
     count: scored.length,
     empresas: scored,
+    pagina,
+    /* `temMais` sai da linha extra pedida ao banco, ANTES do filtro de
+       descartadas. Uma página pode voltar com menos de 50 (descarte remove do
+       meio) e ainda assim ter próxima — por isso não dá pra inferir "acabou" de
+       `count < limit`, que é o erro óbvio de quem consome isto. */
+    temMais,
     reasoned,
     reasonedCount,
     // Parte do pedido ficou fora do contrato: a lista veio, mas incompleta em

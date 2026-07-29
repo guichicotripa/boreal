@@ -23,6 +23,9 @@ export default function Radar() {
   const [texto, setTexto] = useState("");
   const [loading, setLoading] = useState(false);
   const [res, setRes] = useState<SearchResponse | null>(null);
+  // A consulta que gerou `res` — "carregar mais" repete ela, não o input atual.
+  const [consulta, setConsulta] = useState<{ q: string; setor?: string } | null>(null);
+  const [carregandoMais, setCarregandoMais] = useState(false);
   const [erro, setErro] = useState<string | null>(null);
   const [setorAtivo, setSetorAtivo] = useState<string | null>(null);
   const [peekId, setPeekId] = useState<string | null>(null);
@@ -119,6 +122,11 @@ export default function Radar() {
     setErro(null);
     setRes(null);
     setPeekId(null);
+    /* Guarda a consulta pra "carregar mais" repetir EXATAMENTE a mesma. Sem isto,
+       a próxima página sairia do que estiver no input naquele momento, que pode ter
+       sido editado depois da busca — e o originador receberia página 2 de outra
+       pergunta, emendada na lista da primeira. */
+    setConsulta({ q, setor });
     try {
       const r = await fetch("/api/search", {
         method: "POST",
@@ -132,6 +140,43 @@ export default function Radar() {
       setErro("falha");
     } finally {
       setLoading(false);
+    }
+  }
+
+  /* Próxima página, APENDADA em vez de substituir a lista. O originador está
+     garimpando: trocar a tela por 50 empresas novas perderia o contexto do que ele
+     acabou de descartar mentalmente, e faria ele rolar de volta pra comparar. */
+  async function carregarMais() {
+    if (!res || !consulta || carregandoMais) return;
+    setCarregandoMais(true);
+    try {
+      const proxima = (res.pagina ?? 0) + 1;
+      const r = await fetch("/api/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: consulta.q,
+          ...(consulta.setor ? { setor: consulta.setor } : {}),
+          pagina: proxima,
+        }),
+      });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const data: SearchResponse = await r.json();
+      setRes((anterior) =>
+        !anterior
+          ? data
+          : {
+              ...data,
+              // Concatena e mantém `count` como o total acumulado na tela: é o número
+              // que a UI mostra, e ele tem que bater com o que está listado.
+              empresas: [...anterior.empresas, ...data.empresas],
+              count: anterior.empresas.length + data.empresas.length,
+            }
+      );
+    } catch {
+      setErro("falha ao carregar mais");
+    } finally {
+      setCarregandoMais(false);
     }
   }
 
@@ -442,6 +487,25 @@ export default function Radar() {
                 onPeek={(e) => setPeekId((cur) => (cur === e.id ? null : e.id))}
                 onDescartar={descartar}
               />
+            )}
+
+            {/* Carregar mais. Só aparece quando o banco confirmou que há próxima
+                página (`temMais`), nunca inferido de "veio 50" — descarte pode
+                deixar a página com 47 e ainda haver 51 mil linhas atrás. */}
+            {res.temMais && empresasOrdenadas.length > 0 && (
+              <div className="mt-4 flex flex-col items-center gap-1.5">
+                <button
+                  onClick={carregarMais}
+                  disabled={carregandoMais}
+                  className="rounded-md border border-hairline px-4 py-2 font-data text-[11px] uppercase tracking-wider text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink disabled:opacity-40"
+                >
+                  {carregandoMais ? "Carregando…" : "Carregar mais 50"}
+                </button>
+                <p className="font-data text-[10px] text-ink-muted">
+                  {empresasOrdenadas.length} de {(res.pagina ?? 0) + 1} página
+                  {(res.pagina ?? 0) > 0 ? "s" : ""} · ordenado por score
+                </p>
+              </div>
             )}
 
             {res.count > 0 && empresasOrdenadas.length === 0 && (
