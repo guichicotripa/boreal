@@ -23,10 +23,26 @@ const bq = new BigQuery({
 const CORTE = "2023-06-10";
 const NOVO = "2025-11-09";
 
+/* --amplo: o universo deixa de ser os 4 verticais cobertos e passa a ser o CNPJ inteiro, com o
+   decil calculado dentro da DIVISAO CNAE (2 digitos) em vez do vertical.
+   Existe porque o numero que a gente cita ao cliente (recall dentro do perfil sucessorio) sai de
+   n=167 no modo estreito, e com esse n um ganho de +5,4pp nao e conclusivo: metalmecanica chega a
+   trocar de sinal entre as metades. Ampliar o universo nao muda a pergunta, muda o tamanho da
+   amostra que a responde. Divisao CNAE continua sendo a unidade certa de comparacao, porque o
+   originador rankeia empresas do mesmo setor entre si, nunca clinica contra metalurgica. */
+const AMPLO = process.argv.includes("--amplo");
+
 const reg = JSON.parse(readFileSync(path.resolve("src/lib/setores.json"), "utf8"));
 const likeDe = (s) => "(" + s.cnaes.map((p) => `e.cnae_fiscal_principal LIKE '${p}%'`).join(" OR ") + ")";
-const caseVertical = "CASE " + reg.setores.map((s) => `WHEN ${likeDe(s)} THEN '${s.id}'`).join(" ") + " END";
-const filtroCnae = "(" + reg.setores.map(likeDe).join(" OR ") + ")";
+const caseVertical = AMPLO
+  ? "SUBSTR(LPAD(e.cnae_fiscal_principal, 7, '0'), 1, 2)"
+  : "CASE " + reg.setores.map((s) => `WHEN ${likeDe(s)} THEN '${s.id}'`).join(" ") + " END";
+/* Divisoes minusculas dariam decil sobre punhado de empresa, onde "top 10%" nao significa nada.
+   1.000 e o piso: com menos que isso o decil tem menos de 100 linhas. */
+const filtroCnae = AMPLO
+  ? "e.cnae_fiscal_principal IS NOT NULL AND e.cnae_fiscal_principal != ''"
+  : "(" + reg.setores.map(likeDe).join(" OR ") + ")";
+const PISO_DIVISAO = AMPLO ? 1000 : 0;
 
 const V0 = `
   (CASE mf WHEN 9 THEN 30 WHEN 8 THEN 26 WHEN 7 THEN 20 WHEN 6 THEN 10 ELSE 0 END)
@@ -69,9 +85,13 @@ base AS (
 comcap AS (
   SELECT *, PERCENT_RANK() OVER (PARTITION BY vertical ORDER BY COALESCE(capital, 0)) AS cap_pct FROM base
 ),
+grandes AS (
+  SELECT vertical FROM comcap GROUP BY 1 HAVING COUNT(*) >= ${PISO_DIVISAO}
+),
 scored AS (
   SELECT cnpj_basico, vertical, metade, (mf >= 7 AND anos_emp >= 25) AS no_perfil,
-    (${V0}) AS s_v0, (${V1}) AS s_v1 FROM comcap
+    (${V0}) AS s_v0, (${V1}) AS s_v1
+  FROM comcap WHERE vertical IN (SELECT vertical FROM grandes)
 ),
 a AS (SELECT cnpj_basico, COUNTIF(tipo='1') pj, COUNTIF(tipo='2') pf FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${CORTE}' GROUP BY 1),
 b AS (SELECT cnpj_basico, COUNTIF(tipo='1') pj, COUNTIF(tipo='2') pf FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${NOVO}' GROUP BY 1),
@@ -127,7 +147,7 @@ function bloco(recorte, metade, titulo) {
   const agg = (k) => rs.reduce((a, r) => a + (Number(r[k]) / 100) * Number(r.n_adq), 0) / total * 100;
   console.log(`\n=== ${titulo} ===`);
   console.log(`  vertical      N        v0        v1     delta`);
-  for (const r of rs) {
+  for (const r of AMPLO ? [] : rs) {
     const d = Number(r.v1) - Number(r.v0);
     console.log(`  ${r.vertical.padEnd(10)} ${String(r.n_adq).padStart(4)}  ${(Number(r.v0).toFixed(1)+"%").padStart(8)}  ${(Number(r.v1).toFixed(1)+"%").padStart(8)}  ${(d>=0?"+":"")+d.toFixed(1)+"pp"}`);
   }
@@ -173,5 +193,5 @@ const artefato = {
     maior_empate_v0: Number(s.maior_empate_v0), maior_empate_v1: Number(s.maior_empate_v1),
   })),
 };
-writeFileSync(path.resolve("src/lib/validacao-v1.json"), JSON.stringify(artefato, null, 2) + "\n", "utf8");
+writeFileSync(path.resolve(AMPLO ? "src/lib/validacao-v1-amplo.json" : "src/lib/validacao-v1.json"), JSON.stringify(artefato, null, 2) + "\n", "utf8");
 console.log(`\n✓ src/lib/validacao-v1.json`);

@@ -345,19 +345,34 @@ engenharia. São coisas distintas e devem ser ditas distintamente.
 
 ## 6. Os números atuais, com a leitura honesta
 
-### Recall@top10%, holdout, nacional
+### Recall@top10%, holdout
 
-| recorte | v0 | v1 | n de aquisições |
+Duas medições, com universos diferentes de propósito.
+
+**Modo estreito** (os 4 verticais cobertos, decil dentro do vertical):
+
+| recorte | v0 | v1 | n |
 |---|---|---|---|
-| universo completo | 42,0% | **72,4%** | 838 |
-| perfil sucessório | 32,9% | **38,3%** | 167 |
+| universo | 42,0% | 72,4% | 838 |
+| perfil sucessório | 32,9% | 38,3% | 167 |
 
-**Cite o segundo.** O salto grande do primeiro vem quase todo de agro, onde capital simplesmente
-separa agronegócio real de milhões de CNPJs de produtor rural. É um efeito de filtro, não uma
-descoberta sobre sucessão. No recorte que o originador de fato vê, o ganho é +5,4pp com n=167, e
-metalmecânica troca de sinal entre as duas metades, o que caracteriza ruído.
+**Modo amplo** (`--amplo`: CNPJ inteiro, 22,4 milhões de empresas, decil dentro da divisão CNAE,
+79 divisões). Existe porque com n=167 um ganho de +5,4pp não era conclusivo:
 
-Dizer "72%" para a Setter seria tecnicamente verdadeiro e substantivamente enganoso.
+| recorte | v0 | v1 | delta | n |
+|---|---|---|---|---|
+| universo | 47,2% | 60,6% | +13,4pp | 7.060 |
+| **perfil sucessório** | **35,8%** | **41,5%** | **+5,7pp** | **978** |
+
+**O ganho replicou.** Com o n 6x maior (167 → 978), o delta praticamente não se moveu (+5,4pp →
++5,7pp). Essa é a evidência que importa: um efeito que sobrevive ao aumento da amostra não era
+ruído. O z da diferença é **2,59** mesmo no cálculo não-pareado (o pareado seria maior, são as
+mesmas 978 empresas rankeadas por dois scores).
+
+**O número para citar é 41,5% no perfil sucessório, 4,1 vezes melhor que sorteio.** O 60,6% do
+universo é verdadeiro e enganoso ao mesmo tempo: boa parte do salto vem de setores onde capital
+apenas separa empresa real de CNPJ minúsculo, o que é efeito de filtro e não descoberta sobre
+sucessão. Se te perguntarem o número do universo, dê os dois e explique a diferença.
 
 ### Recall em vendas de sucessão, por setor (`src/lib/setores.json`)
 
@@ -424,11 +439,29 @@ A tese reformulada, e é assim que você deve falar dela:
 > transferir, geração seguinte presente, quadro se movimentando, e escala que justifique a
 > transação. O octogenário sozinho num quadro congelado não vende, ele fecha.
 
-**Pendência aberta e importante:** o agente de research (v1 qualitativo) ainda cobra **-25** no
-sinal `sucessor_familiar_ativo`, que é o maior castigo do sistema, apontado exatamente para o lado
-contrário do que este dado mostra. Das 9 investigações rodadas, 4 dispararam esse sinal. Enquanto
-não for revisto, o research rebaixa em 25 pontos justamente as leads que o ground truth diz serem
-2,14x mais prováveis. Ver `brain/pending.md`.
+**Corrigido no research em 29/07/2026.** O agente qualitativo tinha DOIS sinais invertidos, e os
+dois codificavam a mesma tese ingênua, simetricamente:
+
+| sinal | era | virou |
+|---|---|---|
+| `sucessor_familiar_ativo` (herdeiro na gestão) | **-25**, o maior castigo do sistema | **+12** |
+| `herdeiro_fora_carreira` (herdeiros longe do negócio) | +8 | **-8** |
+
+Junto com a troca de sinal entraram duas regras no prompt: sucessor familiar só conta com **fonte
+externa ao registro** (página de agregador de CNPJ apenas repete o quadro societário que já foi
+lido e pontuado, e re-reportá-lo faz o mesmo fato valer duas vezes), e "sócio idoso" deixou de ser
+gatilho válido, porque é condição de anos e não motivo de agora.
+
+As 43 investigações já persistidas foram **recalculadas, não descartadas**
+(`scripts/recalcula-research.ts`): o achado do LLM custa ~100s por empresa e continua válido; só a
+aritmética envelheceu. 42 das 43 mudaram de score.
+
+**Ressalva honesta sobre esses pesos:** eles não vieram de lift medido e não têm como vir, porque
+medir exigiria rodar o LLM sobre centenas de milhares de empresas. A magnitude é ancorada no eixo
+equivalente do score determinístico (sucessor aparente vale 14 de 100), um pouco abaixo porque
+evidência qualitativa é menos verificável que registro. O que o dado obriga é a **direção**. Os
+outros pesos do research (`banco_investimento` +15, `mencao_sucessao_venda` +12, `csuite_externo`
++6, `big4_auditoria` +5, `sem_presenca_digital` +3) continuam sem validação de espécie alguma.
 
 ---
 
@@ -450,9 +483,19 @@ ablação (tirar um eixo e ver se o recall cai).
 
 ```bash
 node --env-file=.env.local scripts/validacao-score-v1.mjs
+node --env-file=.env.local scripts/validacao-score-v1.mjs --amplo
 ```
-Medição definitiva: v0 vs v1, universo e perfil sucessório, mais saturação. Gera
-`src/lib/validacao-v1.json`. **É este script que autoriza uma troca de score.**
+Medição definitiva: v0 vs v1, universo e perfil sucessório, mais saturação. **É este script que
+autoriza uma troca de score.** Sem flag roda nos 4 verticais e gera `validacao-v1.json`; com
+`--amplo` roda o CNPJ inteiro com decil por divisão CNAE e gera `validacao-v1-amplo.json`. Rode
+os dois: o estreito é o produto, o amplo é quem dá n suficiente para o resultado ser conclusivo.
+
+```bash
+node --experimental-strip-types --env-file=.env.local scripts/recalcula-research.ts --aplicar
+```
+Refaz a aritmética das investigações persistidas sem reinvestigar. **Rodar depois de toda mudança
+em `scoring.ts` ou nos PESOS do research**, senão empresa investigada aparece com a régua antiga
+no meio de uma lista com a régua nova.
 
 ```bash
 node --env-file=.env.local scripts/build-capital-percentis.mjs
@@ -505,8 +548,9 @@ cópia é uma, em `scripts/lib/score-sql.mjs`.
 
 1. **O ground truth é proxy.** Captura reorganização societária como se fosse venda, e não captura
    venda de PF para PF. Seção 2.
-2. **O ganho no recorte que importa não é estatisticamente decisivo.** +5,4pp com n=167. É positivo
-   e consistente na direção, mas não é conclusivo, e metalmecânica regride no holdout.
+2. **O ganho no recorte que importa é modesto, ainda que agora significativo.** +5,7pp com n=978,
+   z = 2,59. É real e replicou, mas é +5,7pp, não uma virada de patamar. O salto grande do modo
+   amplo (+13,4pp no universo) é majoritariamente efeito de filtro por tamanho.
 3. **A seleção de features tem vazamento.** Escolhidas olhando o lift da amostra inteira. O holdout
    protege a comparação de variantes, não a escolha do conjunto.
 4. **Capital social é proxy sujo.** Declarado, nominal, frequentemente desatualizado desde a
