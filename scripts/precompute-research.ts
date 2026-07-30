@@ -37,6 +37,10 @@ const flag = (n: string, p: string | null = null) => {
 };
 const N = Number(flag("n", "25"));
 const setorId = flag("setor");
+/* Teto e piso de score_v0 da coorte a investigar. Sem --max o lote mira o topo
+   absoluto, que e onde o v1 nao consegue mexer no numero (ver candidatas()). */
+const scoreMax = flag("max") ? Number(flag("max")) : null;
+const scoreMin = flag("min") ? Number(flag("min")) : null;
 const dry = args.includes("--dry");
 /* Modelo fixo pelo mesmo motivo do lote de memo: default do CLI variou entre duas
    execuções no mesmo dia, e corpus meio escrito por um modelo e meio por outro tem
@@ -60,7 +64,17 @@ const SELECT = `id, cnpj, razao_social, nome_fantasia, cnae_principal, cnae_prin
 /* Candidatas: sem v1, do topo do ranking pra baixo. O originador vê a lista
    ordenada por score, então investigar em outra ordem é preencher primeiro o que
    ninguém vai abrir. Pagina com `.order` explícito (score_v0, depois id como
-   desempate) — sem ordenação estável o `.range()` repete e pula linha. */
+   desempate) — sem ordenação estável o `.range()` repete e pula linha.
+
+   `--max` existe por causa de um lote inteiro desperdiçado em 30/07/2026. As 10
+   primeiras de metalmecânica estavam todas em score 100, e como v1 = clamp(v0 +
+   ajuste, 0, 100), nenhum sinal positivo tinha para onde subir: as 10 voltaram com
+   delta 0 depois de 15,8 minutos de inferência. O v1 não mudou nenhuma posição
+   porque não havia posição a mudar — o score já tinha decidido.
+
+   Inferência cara tem que ir onde ela MUDA uma decisão. Abaixo do teto, um +12 ou
+   um -8 reordena de verdade; no teto, o v1 só serve pelo gatilho, que é outro
+   produto. Daí investigar a faixa logo abaixo do topo em vez do topo. */
 async function candidatas(precisa: number): Promise<Empresa[]> {
   const jaInvestigadas = await idsComResearch(supabase);
   const lista: Empresa[] = [];
@@ -75,6 +89,8 @@ async function candidatas(precisa: number): Promise<Empresa[]> {
       .order("id")
       .range(from, from + BLOCO - 1);
     if (cnaeFiltro) q = q.or(cnaeFiltro);
+    if (scoreMax != null) q = q.lte("score_v0", scoreMax);
+    if (scoreMin != null) q = q.gte("score_v0", scoreMin);
 
     const { data, error } = await q;
     if (error) { console.error("FAIL leitura:", error.message); process.exit(1); }
@@ -122,7 +138,9 @@ async function investigarComRetry(empresa: Empresa, tentativas = 2) {
 }
 
 const alvo = setor ? setor.nome : "todos os setores";
-console.log(`Investigações (v1) em lote · ${alvo} · alvo ${N} empresas sem v1 · ordem score_v0 desc`);
+const faixa = scoreMin != null || scoreMax != null
+  ? ` · faixa de score ${scoreMin ?? 0}–${scoreMax ?? 100}` : "";
+console.log(`Investigações (v1) em lote · ${alvo} · alvo ${N} empresas sem v1 · ordem score_v0 desc${faixa}`);
 console.log(`modelo ${MODELO} · via assinatura (custo zero, orçamento de sessão)\n`);
 
 const lista = await candidatas(N);
