@@ -1,3 +1,4 @@
+import { ajusteDeSinais } from "./research.ts";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { ResearchResult, ScoreV1 } from "./types";
 
@@ -16,7 +17,11 @@ type ScoreRunRow = {
   empresa_id: string;
   score: number;
   created_at: string;
+  sinais: { tipo: string }[] | null;
 };
+
+/** O que a busca precisa saber de uma investigação para ranquear e exibir. */
+export type V1Lido = { score: number; investigado_em: string; ajuste_bruto: number };
 
 /**
  * Persiste uma investigação no score_run. Um caminho só para a rota (sob demanda,
@@ -90,22 +95,30 @@ export async function lerResearchSalvo(
 export async function lerScoresV1(
   supabase: SupabaseClient,
   empresaIds: string[]
-): Promise<Record<string, { score: number; investigado_em: string }>> {
+): Promise<Record<string, V1Lido>> {
   if (empresaIds.length === 0) return {};
 
   const { data, error } = await supabase
     .from("score_run")
-    .select("empresa_id, score, created_at")
+    .select("empresa_id, score, created_at, sinais")
     .in("empresa_id", empresaIds)
     .order("created_at", { ascending: false });
 
   if (error || !data) return {};
 
-  const out: Record<string, { score: number; investigado_em: string }> = {};
+  const out: Record<string, V1Lido> = {};
   for (const row of data as ScoreRunRow[]) {
     // Ordenado desc: a primeira ocorrência de cada empresa já é a mais recente.
     if (out[row.empresa_id]) continue;
-    out[row.empresa_id] = { score: row.score, investigado_em: row.created_at };
+    out[row.empresa_id] = {
+      score: row.score,
+      investigado_em: row.created_at,
+      /* O ajuste é RECALCULADO da lista de sinais, não lido de um campo gravado.
+         Dois motivos: mudar um peso reordena a lista sozinho, sem backfill; e o
+         valor sobrevive ao teto de 100, que é justamente o problema que ele
+         resolve (ver desempate em aplicarV1). */
+      ajuste_bruto: ajusteDeSinais(row.sinais ?? []),
+    };
   }
   return out;
 }
@@ -138,7 +151,7 @@ type ComScore = { id: string; score?: { score: number } | null; score_v1?: Score
 /** Aplica o v1 salvo sobre uma lista de empresas e reordena pelo score efetivo. */
 export function aplicarV1<T extends ComScore>(
   empresas: T[],
-  v1PorEmpresa: Record<string, { score: number; investigado_em: string }>
+  v1PorEmpresa: Record<string, V1Lido>
 ): T[] {
   for (const e of empresas) {
     const v1 = v1PorEmpresa[e.id];
@@ -147,9 +160,19 @@ export function aplicarV1<T extends ComScore>(
       score: v1.score,
       delta: v1.score - (e.score?.score ?? v1.score), // v1 vs v0 recalculado agora
       investigado_em: v1.investigado_em,
+      ajuste_bruto: v1.ajuste_bruto,
     };
   }
-  return [...empresas].sort((a, b) => scoreEfetivo(b) - scoreEfetivo(a));
+  /* Desempate pelo ajuste BRUTO, e não é detalhe: o score para em 100, a evidência
+     não. Medido em 30/07/2026 num lote de metalmecânica, ajustes de +12, +12, +18,
+     +24, +30 e +30 viraram todos o mesmo +3 depois do teto. A CSN tinha quatro
+     menções públicas a venda, mais sucessor familiar, mais C-suite externo, e ficava
+     indistinguível de quem tinha um único sinal. Quem tem mais evidência de transição
+     sobe, mesmo que a tela mostre 100 nos dois. */
+  return [...empresas].sort((a, b) => {
+    const d = scoreEfetivo(b) - scoreEfetivo(a);
+    return d !== 0 ? d : (b.score_v1?.ajuste_bruto ?? 0) - (a.score_v1?.ajuste_bruto ?? 0);
+  });
 }
 
 /** Score que vale pra ranquear e exibir: o v1 investigado quando existe, senão o v0. */

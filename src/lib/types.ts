@@ -58,6 +58,10 @@ export type ScoreV1 = {
   score: number;
   delta: number;
   investigado_em: string; // ISO — quando a investigação rodou
+  /* Soma dos pesos dos sinais ANTES do teto de 100. O score satura e a evidência
+     não: sem isto, uma empresa com quatro achados e outra com um só empatam em 100
+     e a lista perde a ordem justamente onde o originador começa a trabalhar. */
+  ajuste_bruto?: number;
 };
 
 // Research-agent — sinais qualitativos da web que elevam score v0 → v1.

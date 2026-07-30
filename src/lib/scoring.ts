@@ -145,6 +145,35 @@ function scoreMovimento(socios: Socio[]): { pts: number; sinal: string | null } 
   return { pts: 0, sinal: `Quadro parado há ${decorridos} anos` };
 }
 
+/* ── Alerta de registro (não pontua) ─────────────────────────────────────────
+ *
+ * A junta comercial anexa o estado processual à razão social, então "EM RECUPERAÇÃO
+ * JUDICIAL" está lá para quem quiser ler. Medido em 30/07/2026: 133 empresas na base
+ * e 32 delas com score >= 70, ou seja, no pedaço da lista que o originador trabalha.
+ *
+ * NÃO é eixo e não vale ponto. Distress nunca foi medido contra o ground truth, e o
+ * protocolo do projeto proíbe peso por intuição (ver brain/modelo-de-score.md §10).
+ * O ponto aqui é outro: empresa em recuperação judicial pode até ser um bom deal, mas
+ * é uma conversa completamente diferente de sucessão familiar, e o originador precisa
+ * saber disso ANTES de ligar, não no meio da ligação.
+ *
+ * Vai como sinal de peso zero porque `sinais` já é renderizado em todo lugar que
+ * mostra empresa. Prepend explícito depois da ordenação: os outros sinais ordenam por
+ * peso e este tem que vir primeiro por ser ressalva, não por ser forte. */
+const DISTRESS: [RegExp, string][] = [
+  [/RECUPERA(C|Ç)(A|Ã)O JUD/i, "Em recuperação judicial (registro da junta)"],
+  [/RECUPERA(C|Ç)(A|Ã)O EXTRAJUD/i, "Em recuperação extrajudicial (registro da junta)"],
+  [/EM LIQUIDA(C|Ç)(A|Ã)O/i, "Em liquidação (registro da junta)"],
+  [/INTERVEN(C|Ç)(A|Ã)O/i, "Sob intervenção (registro da junta)"],
+  [/MASSA FALIDA|EM FAL(E|Ê)NCIA/i, "Massa falida (registro da junta)"],
+];
+
+export function alertaDeRegistro(razaoSocial: string | null | undefined): string | null {
+  if (!razaoSocial) return null;
+  for (const [re, rotulo] of DISTRESS) if (re.test(razaoSocial)) return rotulo;
+  return null;
+}
+
 // ── Agregador ─────────────────────────────────────────────────────────────────
 export function calcScore(empresa: Empresa, socios: Socio[] = empresa.socio ?? []): ScoreResult {
   const escala    = scoreEscala(empresa);
@@ -173,6 +202,10 @@ export function calcScore(empresa: Empresa, socios: Socio[] = empresa.socio ?? [
     .filter((x) => x.sinal !== null)
     .sort((a, b) => b.pts - a.pts)
     .map((x) => x.sinal as string);
+
+  // Ressalva vem antes dos sinais de score: quem lê a lista precisa ver isto primeiro.
+  const alerta = alertaDeRegistro(empresa.razao_social);
+  if (alerta) sinais.unshift(alerta);
 
   return { score, breakdown, sinais, perfil_sucessorio: perfilSucessorio(empresa, socios) };
 }

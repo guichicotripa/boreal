@@ -3,7 +3,7 @@
 // Runner nativo do Node (sem dependência): npm test  (node --test --experimental-strip-types).
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { calcScore, perfilSucessorio, scoreTier, EIXOS } from "./scoring.ts";
+import { calcScore, perfilSucessorio, scoreTier, EIXOS, alertaDeRegistro } from "./scoring.ts";
 import percentis from "./capital-percentis.json" with { type: "json" };
 import type { Empresa, Socio } from "./types.ts";
 
@@ -133,4 +133,27 @@ test("ausência de sucessor vira sinal explicado, não silêncio", () => {
   // Vale 0 ponto mas precisa APARECER: é a diferença entre "não achamos" e "achamos o oposto".
   const r = calcScore(emp({ socio: [pf(9), pf(8)] }));
   assert.ok(r.sinais.some((s) => /Nenhum sócio até 50/.test(s)));
+});
+
+test("distress da razão social vira ressalva no topo dos sinais, sem alterar o score", () => {
+  /* 133 empresas na base têm o estado processual anexado à razão social pela junta, e 32
+     estão com score >= 70. Recuperação judicial pode até ser bom deal, mas é conversa
+     diferente de sucessão familiar, e o originador tem que saber antes de ligar. */
+  const limpa = emp({ cnae_principal: METALMEC, capital_social: capTopo, socio: [pf(9), pf(4)] });
+  const rj = emp({
+    ...limpa, razao_social: "PAULISTA DE PEDAGOGIA LTDA EM RECUPERACAO JUDICIAL",
+  } as Partial<Empresa>);
+
+  assert.equal(calcScore(rj).score, calcScore(limpa).score, "é ressalva, não penalidade: score idêntico");
+  assert.ok(/recuperação judicial/i.test(calcScore(rj).sinais[0]), "vem PRIMEIRO, antes dos sinais de score");
+  assert.equal(calcScore(rj).sinais.length, calcScore(limpa).sinais.length + 1);
+});
+
+test("alertaDeRegistro cobre as variantes com e sem acento", () => {
+  assert.ok(alertaDeRegistro("X LTDA EM RECUPERACAO JUDICIAL"));
+  assert.ok(alertaDeRegistro("X LTDA EM RECUPERAÇÃO JUDICIAL"));
+  assert.ok(alertaDeRegistro("X S/A EM LIQUIDACAO"));
+  assert.ok(alertaDeRegistro("BANCO X SOB INTERVENCAO"));
+  assert.equal(alertaDeRegistro("METALURGICA MOCOCA SA"), null);
+  assert.equal(alertaDeRegistro(null), null);
 });
