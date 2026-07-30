@@ -11,22 +11,13 @@
 
 ## 🔴 Antes ou durante o piloto da Setter
 
-- [ ] **Os números do onepager e do pitch estão defasados, e são o que vai pro cliente.**
-  `brain/onepager-setter-piloto.md` e `brain/pitch-mestre.md` afirmam **"97% a 100% de acerto,
-  N=240, Brasil"**. Duas coisas mudaram:
-
-  1. Com o score v1, o `recall_sucessao` nacional é **63% a 95%** (N=317): metalmec 90%, saúde 77%,
-     educação 63%, agro 95%.
-  2. Mais importante: **aquele intervalo era inflado por construção.** A métrica filtra as
-     adquiridas por `mf >= 7 AND idade >= 25` (sócio velho e empresa velha) e o v0 dava 30 pontos
-     para idade e 30 para antiguidade, exatamente os mesmos campos. Uma empresa dentro do filtro já
-     ganhava 42 a 60 dos 100 pontos automaticamente e subia para o decil de topo quase de graça. O
-     v1 caiu porque parou de flutuar esse subconjunto, não porque piorou.
-
-  A comparação limpa é a do holdout, e ela diz o contrário: v1 melhor que v0 nos dois recortes.
-  **Número recomendado para o cliente: 41,5% de recall no perfil sucessório, 4,1x melhor que
-  sorteio, medido em holdout com n=978 e z=2,59.** Decisão sua sobre o que citar; ver
-  `brain/modelo-de-score.md` §6.
+- [x] ~~**Os números do onepager e do pitch estavam defasados.**~~ **Resolvido 30/07.** Afirmavam
+  "97% a 100%, N=240", medido com o v0 e **inflado por construção**: a métrica filtra as adquiridas
+  por sócio 61+ e empresa 25+, e o v0 dava 60 dos 100 pontos exatamente a esses dois campos. Os dois
+  documentos agora citam **63% a 95% por setor (N=317)** mais **41,5% no perfil sucessório em
+  holdout (n=978, z=2,59, 4,1x vs sorteio)**. O pitch também abria com a tese invertida ("dono
+  envelhecendo e sem sucessor") e exibia o caso `PRENSA 100→75` como prova de sofisticação, que era
+  justamente o peso derrubado pela medição. `submissao-clube.md` ganhou aviso de documento histórico.
 
 - [ ] **Os outros pesos do research nunca passaram por validação nenhuma.**
   `banco_investimento` +15, `mencao_sucessao_venda` +12, `csuite_externo` +6, `big4_auditoria` +5,

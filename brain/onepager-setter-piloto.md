@@ -1,12 +1,4 @@
-# Follow-up pós-call — Piloto Boreal x Setter (REVISAR OS NÚMEROS ANTES DE MANDAR)
-
-> ⚠️ **NÚMEROS DEFASADOS (auditoria de 30/07/2026). Não enviar antes de resolver.**
-> Este documento afirma **"97% a 100% de acerto, N=240"**. Esse intervalo foi medido com o score
-> v0, que foi substituído em 29/07, e era **inflado por construção**: a métrica filtra as adquiridas
-> por sócio 61+ e empresa 25+, e o v0 dava 60 dos 100 pontos exatamente a esses dois campos.
-> Com o v1 o mesmo cálculo dá **63% a 95% (N=317)**.
-> Número recomendado, medido em holdout e sem esse viés: **41,5% de recall no perfil sucessório,
-> 4,1x melhor que sorteio, n=978, z=2,59**. Ver `brain/modelo-de-score.md` §6 e `pending.md`.
+# Follow-up pós-call — Piloto Boreal x Setter (PRONTO PRA MANDAR)
 
 > Preenchido com o que saiu da call de 25/06. Faltam só 3 campos que dependem da confirmação interna
 > do Henrique: os 2 setores, os 2 nomes e a data. Valor reposicionado pro jogo da Setter (consolidação
@@ -24,12 +16,13 @@ Henrique, obrigado pela conversa de hoje. Achei muito valiosa, principalmente a 
 Um motor que lê o registro público de empresas (CNPJ) do Brasil inteiro e devolve, pro setor e praça que vocês escolherem:
 - **Descoberta e priorização de alvos:** uma lista rankeada de empresas, cada uma com um dossiê pronto (sócios, contato, red flags, ângulo de abordagem). Economiza o tempo de garimpo manual.
 - **Heat-map de setor e lente de consolidação:** quais setores e empresas estão no jogo de M&A agora, e quem são os consolidadores ativos. Útil tanto pra outbound quanto pra priorizar o inbound de vocês.
-- **Sinal de sucessão onde ele se aplica:** em setores familiares clássicos, prevemos com alta precisão quem tende a vender. Em setores de consolidação (como saúde e tech), o valor é mais a descoberta e o heat-map do que a previsão de sucessão, e somos honestos sobre isso.
+- **Sinal de transição societária onde ele se aplica:** em setores familiares clássicos, prevemos quem tende a vender. Em setores de consolidação (como saúde e tech), o valor é mais a descoberta e o heat-map do que a previsão de sucessão, e somos honestos sobre isso.
 
 Resolve a brecha que Grata e PitchBook não cobrem: o mid-market brasileiro, onde o dado é fragmentado e essas ferramentas (US$12k a 25k por assento ao ano) nem entram.
 
 ## A prova
-- Nas vendas por sucessão, o modelo já colocava a empresa no top 10% **12 meses antes** do negócio, com 97% a 100% de acerto (N=240, Brasil), sem espiar o desfecho.
+- Nas vendas por sucessão, o modelo já colocava a empresa no top 10% do setor **12 meses antes** do negócio, em 63% a 95% dos casos, sem espiar o desfecho (N=317, Brasil inteiro).
+- Num teste mais duro, rankeando só empresas que já passam no perfil sucessório umas contra as outras, o acerto é 41,5%, ainda **4,1x melhor que sorteio**. Esse número sai de metade da base que o modelo nunca viu, então não é resultado de ajustar a régua ao próprio resultado.
 - Geramos nosso próprio ground truth minerando as transições do CNPJ: 340 deals rotulados contra cerca de 5 que a imprensa rende.
 - Cada sinal vem com a fonte. Nada de EBITDA fabricado.
 

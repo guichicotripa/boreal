@@ -1,13 +1,5 @@
 # Pitch Mestre — Domínio completo: destravar o middle/lower market de M&A no Brasil
 
-> ⚠️ **NÚMEROS DEFASADOS (auditoria de 30/07/2026). Não enviar antes de resolver.**
-> Este documento afirma **"97% a 100% de acerto, N=240"**. Esse intervalo foi medido com o score
-> v0, que foi substituído em 29/07, e era **inflado por construção**: a métrica filtra as adquiridas
-> por sócio 61+ e empresa 25+, e o v0 dava 60 dos 100 pontos exatamente a esses dois campos.
-> Com o v1 o mesmo cálculo dá **63% a 95% (N=317)**.
-> Número recomendado, medido em holdout e sem esse viés: **41,5% de recall no perfil sucessório,
-> 4,1x melhor que sorteio, n=978, z=2,59**. Ver `brain/modelo-de-score.md` §6 e `pending.md`.
-
 > Criado: 2026-07-20. Objetivo: Guilherme dominar mercado, método, modelo e defesa a ponto de
 > fazer qualquer pitch (investidor, boutique, dono de empresa, imprensa) sem improvisar.
 > Convenções de honestidade: **[medido]** = dado nosso, reproduzível por script · **[fonte]** =
@@ -19,19 +11,21 @@
 
 ## 1. A narrativa (memorizar, não ler)
 
-**30 segundos:** "O Brasil tem milhões de empresas familiares com dono envelhecendo e sem
-sucessor. Quase nenhuma é atendida por M&A: banco grande não desce, boutique não acha, e o
+**30 segundos:** "O Brasil tem milhões de empresas familiares chegando na hora de trocar de
+comando. Quase nenhuma é atendida por M&A: banco grande não desce, boutique não acha, e o
 dono não se anuncia. Eu minerei o registro público de empresas do país inteiro e construí um
-motor que identifica quem vai vender ANTES de estar à venda — validado contra milhares de
-aquisições reais, com 97-100% de acerto nas vendas de sucessão. Vendo essa originação para
-boutiques de M&A: a primeira já assinou."
+motor que identifica quem vai vender ANTES de estar à venda, validado contra aquisições reais
+mineradas do próprio CNPJ: 4,1x melhor que sorteio num teste de holdout. Vendo essa originação
+para boutiques de M&A: a primeira já assinou."
 
 **Os 3 fatos que sustentam tudo (decorar):**
 1. O estoque existe e está parado: ~80% das empresas com perfil sucessório seguem com o mesmo
-   dono velho anos depois — não fecham, não passam pra herdeiro, não vendem **[medido:
-   coorte-destino.mjs]**.
-2. O sinal existe e é público: o quadro societário do CNPJ (idade dos sócios, entradas/saídas)
-   prevê as vendas de sucessão com 97-100% de recall **[medido: N=240 Brasil-inteiro]**.
+   dono velho anos depois, não fecham, não passam pra herdeiro, não vendem **[medido:
+   coorte-destino.mjs]**. É por isso que o jogo não é achar quem tem o perfil, e sim achar a
+   minoria que está de fato se mexendo.
+2. O sinal existe e é público: o quadro societário do CNPJ (idade do controle, entradas e saídas
+   de sócio, escala) prevê as vendas de sucessão com 63% a 95% de recall por setor **[medido:
+   N=317 Brasil-inteiro]**, e fica 4,1x acima do acaso no teste de holdout **[n=978, z=2,59]**.
 3. Ninguém está nessa camada: quem cobre o Brasil (Inven, Neoway) lê site ou vende cadastro;
    nenhum tem o sinal sucessório em profundidade **[fonte: verificado 06/07]**.
 
@@ -131,15 +125,21 @@ qualificados com dossiê e prova de origem.
    remover SPE/newco/holding (universo só ativo, idade ≥5, filtro cirúrgico em setores
    SPE-heavy) **[medido: build-heatmap + diag-spe]**. Nenhum concorrente BR tem M&A rotulado
    nessa escala — a imprensa dá dezenas; nós temos milhares.
-2. **Score validado leakage-free:** recall nas vendas de sucessão, Brasil inteiro, N=240:
-   metalmec 100%, saúde 99%, educação 83% **[medido: validacao-nacional.mjs]**.
+2. **Score validado leakage-free:** recall nas vendas de sucessão, Brasil inteiro, N=317:
+   metalmec 90%, agro 95%, saúde 77%, educação 63% **[medido: validacao-nacional.mjs]**. No corte
+   mais duro, rankeando só quem já passa no perfil sucessório, 41,5% com metade da base em holdout
+   **[medido: validacao-score-v1.mjs --amplo, n=978, z=2,59]**.
 3. **Duas lentes (a sofisticação que desarma):** sucessão (previsível — nosso jogo) vs
    consolidação (roll-up; testamos prever: lift 1,4x ≈ aleatório → NÃO vendemos como
    predição) **[medido: backtest]**. Saber onde o modelo NÃO funciona é o que convence quem
    entende.
-4. **Research agent (score v1):** IA investiga a empresa na web, ajusta o score com fonte
-   citada, bidirecional (caso PRENSA: 100→75 porque achou sucessor ativo — corrige falso
-   positivo) **[medido: caso real]**.
+4. **Os pesos são medidos, e o dado já nos contrariou:** a tese ingênua é "dono velho, sem
+   herdeiro, quadro congelado". O lift condicional contra aquisições reais diz o oposto: sucessor
+   aparente no quadro tem **2,14x**, quadro parado há dez anos tem **0,60x** (anti-sinal), e mais
+   octogenários no quadro tem **0,50x**. Quem vende é quem já está conduzindo uma transição. Dois
+   pesos do research estavam invertidos por causa disso e foram corrigidos **[medido:
+   validacao-lift-coorte.mjs, z >= 9]**. Saber que o próprio modelo estava errado, e ter o número
+   que provou, é o que separa isto de opinião.
 5. **Sensor forward:** monitor de transições societárias detecta mudança de quadro em
    empresas do pipeline (janela de sucessão abrindo) — o gatilho de abordagem que ninguém
    mais tem **[medido: caso PRENSA detectado]**.
@@ -255,9 +255,9 @@ JÁ quer vender). Se crescer, vira minha cliente ou minha compradora: os comprad
 sofrer com estoque adversamente selecionado, e supply proprietário é exatamente o que eu
 produzo. Capital não compra a saída da seleção adversa.
 
-**"Como você sabe que o score funciona?"** Validação retroativa leakage-free contra 7.877
-aquisições reais mineradas do CNPJ: 97-100% de recall nas vendas de sucessão, Brasil inteiro,
-N=240, reproduzível por script. E digo também onde NÃO funciona: consolidação deu 1,4x ≈
+**"Como você sabe que o score funciona?"** Validação retroativa leakage-free contra aquisições
+reais mineradas do CNPJ: 63% a 95% de recall nas vendas de sucessão por setor, Brasil inteiro,
+N=317, e 4,1x acima do acaso no holdout (n=978), reproduzível por script. E digo também onde NÃO funciona: consolidação deu 1,4x ≈
 aleatório, por isso não vendo predição de roll-up. [Se a pessoa é técnica, explicar a
 mineração de transições; se é de mercado, mostrar o hindcast nominal: Fischer, Polimold —
 empresas com nome que venderam e estavam no nosso top decil ANTES do deal.]
@@ -298,7 +298,8 @@ herdeiro) só entra com desenho jurídico específico — hoje NÃO está no pro
 | M&A BR 2025 | 1.581 transações (PE/VC = 50%) | [fonte: KPMG] |
 | Universo CNPJ | 26,1M matrizes ativas | [medido] |
 | Ground truth | 7.877 aquisições limpas / 2,4 anos | [medido] |
-| Recall sucessão | 97-100% (metalmec/saúde), 83% (educação), N=240 BR | [medido] |
+| Recall sucessão | 90% metalmec · 95% agro · 77% saúde · 63% educação, N=317 BR | [medido] |
+| Recall no perfil sucessório (holdout) | 41,5%, 4,1x vs sorteio, n=978, z=2,59 | [medido] |
 | Consolidação | lift 1,4x ≈ aleatório → não vendemos | [medido] |
 | Coorte parada | ~80% seguem iguais; 0,3-0,7%/ano vendem | [medido] |
 | Custo de servir | ~R$1,08/empresa; R$280-560/mês por parceiro | [medido] |

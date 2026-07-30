@@ -1,5 +1,15 @@
 # Submissão Clube da Programação (Boreal)
 
+> 📁 **DOCUMENTO HISTÓRICO (submissão ao Clube da Programação, 10/06/2026). Não reutilizar os
+> números sem atualizar.** O Clube acabou em junho. O conteúdo fica porque a estrutura narrativa e
+> boa parte da copy continuam servindo de base para pitch, mas duas coisas envelheceram:
+> os números são do score v0 ("97% a 100%, N=240"), substituído em 29/07 — ver `pitch-mestre.md`
+> para os atuais; e a tese central mudou. Onde este texto diz "donos envelhecendo, **sem
+> sucessor**", o dado mostrou o contrário: sucessor aparente no quadro tem lift **2,14x** e quadro
+> parado tem **0,60x**. Quem vende é quem está conduzindo uma transição, não quem foi abandonado.
+> Ver `brain/modelo-de-score.md`.
+
+
 > Deadline: **10/06 23h59** (Loom de 1 min + form). Material pronto pra colar/gravar.
 > Regras de conteúdo: Boreal é a venture (NÃO citar "Relay"); não citar Taylor (dizer "mentor");
 > não citar outros projetos pessoais; sem travessões; tese cíclica + AI-native/agentic company;
