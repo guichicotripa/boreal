@@ -289,13 +289,42 @@ disso vale 0.
 Quadro que mexeu recentemente tem lift 2,22x. Quadro parado 10+ anos tem **0,60x**, sinal negativo.
 Empresa que não mudou nada em uma década também não vai mudar de dono.
 
-### 4.6 O que o score não faz: o gate
+### 4.6 Ressalva de distress (não pontua)
+
+`alertaDeRegistro()` casa o estado processual que a junta anexa à razão social: recuperação
+judicial, recuperação extrajudicial, liquidação, intervenção, massa falida. São 133 empresas na
+base e **32 com score >= 70**, ou seja, dentro do pedaço da lista que o originador trabalha.
+
+**Não vale ponto e não penaliza.** Distress nunca foi medido contra o ground truth, e o protocolo
+da seção 10 proíbe peso por intuição. Sai como sinal de peso zero no **topo** da lista de sinais,
+porque ressalva vem antes de elogio. Empresa em recuperação judicial pode até ser bom deal, mas é
+uma conversa completamente diferente de sucessão familiar, e isso precisa ser sabido antes da
+ligação, não no meio dela.
+
+### 4.7 O que o score não faz: o gate
 
 `perfilSucessorio()` é separado do score e não soma ponto: exige **sócio 61+ e empresa com 25+
 anos**. Fora dele a lente de sucessão não é confiável e o deal provável é consolidação, que é outro
 jogo (ver `scripts/proximo-alvo.mjs`).
 
 É aqui que mora a antiguidade desde o v1, e a seção seguinte explica por quê.
+
+---
+
+## 4.8 O teto de 100 e o desempate por evidência
+
+O v1 é `clamp(v0 + ajuste, 0, 100)`, e no topo da lista o teto apaga a magnitude do research.
+Medido em 30/07/2026 num lote de metalmecânica: ajustes brutos de +12, +12, +18, +24, +30 e +30
+viraram **todos o mesmo +3**. A CSN tinha quatro menções públicas a venda, mais sucessor familiar,
+mais C-suite externo, e ficava indistinguível de quem tinha um sinal só.
+
+Paliativo em produção: `lerScoresV1` recalcula o ajuste bruto a partir da coluna `sinais` (não é
+campo novo, e recalcular faz com que mudar um peso reordene a lista sozinho), e `aplicarV1`
+desempata por ele quando o score empata. A tela continua mostrando 0 a 100.
+
+**É paliativo, não correção.** A causa é que v0 e v1 respondem perguntas diferentes ("tem o
+perfil" e "está acontecendo agora") e não deviam dividir um número só. Separar as duas dimensões
+é mudança de produto, com UI e tipos, e está na fila da seção 11.
 
 ---
 
