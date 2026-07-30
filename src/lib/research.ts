@@ -25,16 +25,32 @@ function getClient() {
   return _client;
 }
 
-// Tipos de sinal e seus pesos (ajuste sobre o score v0). Determinístico no código.
-// Sinais que AUMENTAM propensão a M&A vêm do Playbook §11; redutores são lógicos.
+/* Tipos de sinal e seus pesos (ajuste sobre o score determinístico).
+ *
+ * HONESTIDADE SOBRE ESTES PESOS: diferente dos eixos de scoring.ts, eles NÃO saíram de lift medido
+ * contra aquisições reais, e não têm como sair: medir exigiria rodar o LLM sobre centenas de
+ * milhares de empresas. São calibrados por ancoragem, e onde existe um proxy de registro medível
+ * a DIREÇÃO deles é obrigada a concordar com o dado. Ver brain/modelo-de-score.md §11.
+ *
+ * Foi assim que dois deles apareceram INVERTIDOS em 29/07/2026. Ambos codificavam a tese ingênua
+ * de sucessão (dono velho + nenhum herdeiro = tem que vender), que o lift condicional derrubou:
+ *   · sócio de até 50 anos no quadro  lift 2,14x  (z = 9,5)  → sucessor presente PREVÊ a venda
+ *   · nenhum sócio até 50 anos        lift 0,58x  (z = 9,5)  → ausência é ANTI-sinal
+ * `sucessor_familiar_ativo` valia -25, o maior castigo do sistema, e `herdeiro_fora_carreira`
+ * valia +8. Os dois trocaram de lado. Herdeiro no quadro não trava a venda, ele é quem a conduz.
+ *
+ * Magnitude ancorada no eixo equivalente do score (sucessor aparente = 14 de 100), um pouco abaixo
+ * dele porque evidência qualitativa da web é menos verificável que o registro. A assimetria entre
+ * +12 e -8 acompanha a dos lifts (2,14x sobe mais do que 0,58x desce).
+ */
 const PESOS: Record<string, { peso: number; rotulo: string }> = {
-  mencao_sucessao_venda:  { peso: +12, rotulo: "Menção pública a sucessão/venda" },
   banco_investimento:     { peso: +15, rotulo: "Assessor/banco de investimento contratado" },
-  herdeiro_fora_carreira: { peso: +8,  rotulo: "Herdeiro(s) em outra carreira" },
+  mencao_sucessao_venda:  { peso: +12, rotulo: "Menção pública a sucessão/venda" },
+  sucessor_familiar_ativo:{ peso: +12, rotulo: "Sucessor familiar já atuando" },
   csuite_externo:         { peso: +6,  rotulo: "C-suite profissional externo à família" },
   big4_auditoria:         { peso: +5,  rotulo: "Auditoria Big 4" },
   sem_presenca_digital:   { peso: +3,  rotulo: "Sem pegada digital (perfil old-school)" },
-  sucessor_familiar_ativo:{ peso: -25, rotulo: "Sucessor familiar já atuando" },
+  herdeiro_fora_carreira: { peso: -8,  rotulo: "Herdeiros fora do negócio (sem sucessão à vista)" },
 };
 
 const SYSTEM =
@@ -80,11 +96,22 @@ ${ctxSite}
 Procure evidência pública para estes tipos de sinal (só reporte os que REALMENTE encontrar, com fonte):
 - "mencao_sucessao_venda" — notícia/post mencionando sucessão, venda, fusão ou reorganização
 - "banco_investimento" — empresa contratou assessor/banco de investimento
-- "herdeiro_fora_carreira" — filhos/herdeiros do(s) sócio(s) em outras profissões (não no negócio)
+- "herdeiro_fora_carreira" — filhos/herdeiros do(s) sócio(s) em outras profissões, longe do negócio
 - "csuite_externo" — executivos C-level com sobrenome diferente da família fundadora
 - "big4_auditoria" — auditoria por Big 4 (Deloitte, PwC, EY, KPMG)
-- "sucessor_familiar_ativo" — herdeiro da família JÁ atuando na gestão/sociedade (REDUZ o risco)
+- "sucessor_familiar_ativo" — herdeiro da família JÁ atuando na gestão da empresa
 - "sem_presenca_digital" — a empresa praticamente não tem presença online encontrável
+
+CONTRAINTUITIVO, e é medido: sucessor familiar atuando AUMENTA a propensão à venda, não reduz.
+Quem conduz uma venda é o herdeiro que está dentro do negócio (negocia, organiza a casa, contrata
+assessor, e com frequência é quem decide sair). Empresa de dono idoso sem ninguém da geração
+seguinte tende a encerrar, não a vender. Não "corrija" isso: reporte o que encontrar.
+
+REGRA DE EVIDÊNCIA para "sucessor_familiar_ativo": só reporte se a fonte for EXTERNA ao registro
+público (imprensa, LinkedIn, site da empresa, entrevista). Página de agregador de CNPJ que apenas
+repete o quadro societário NÃO conta: o quadro já foi lido e pontuado antes de você ser chamado,
+e re-reportá-lo faz o mesmo fato valer duas vezes. O que agrega aqui é o herdeiro que aparece na
+GESTÃO sem estar visível como sócio.
 
 REGRA CRÍTICA: o campo "tipo" DEVE ser EXATAMENTE um dos sete identificadores acima (snake_case,
 entre aspas). NUNCA escreva um título livre no campo "tipo" — use o identificador literal. A
@@ -93,8 +120,9 @@ descrição do achado vai no campo "descricao", não no "tipo".
 Depois de listar os sinais, decida duas coisas práticas pro originador:
 
 - "gatilho" — em UMA frase, o motivo mais acionável pra abordar ESTA empresa AGORA (o "por que agora").
-  Use o achado mais time-sensitive: sócio principal em idade avançada sem sucessor, co-sócio que saiu,
-  menção a venda, banco contratado. Se NÃO houver nada que justifique timing, retorne null (não force).
+  Use o achado mais time-sensitive: menção a venda, banco contratado, sucessor assumindo a gestão,
+  co-sócio que saiu, mudança recente no comando. Se NÃO houver nada que justifique timing, retorne
+  null (não force). "Sócio idoso" sozinho NÃO é gatilho: é condição de anos, não motivo de agora.
 - "mensagem_abordagem" — um rascunho curto (3-4 frases, PT-BR, tom respeitoso e consultivo, NÃO vendedor)
   de primeiro contato com o(s) sócio(s)/empresa. DEVE citar o gatilho/achado concreto pra não ser
   genérica. É ponto de partida pro humano editar, não envio automático. Se não houver gatilho, retorne null.
@@ -112,9 +140,9 @@ Ao final, responda APENAS com este JSON (sem markdown), exemplo do formato exato
   "resumo": "1-2 frases do que a investigação concluiu",
   "perfil_negocio": "Fabricante de moldes para injeção plástica; vende B2B para a indústria automotiva e de embalagens.",
   "sinais": [
-    {"tipo": "sucessor_familiar_ativo", "descricao": "André, filho do fundador, já é diretor desde 2015", "fonte_url": "https://..."}
+    {"tipo": "sucessor_familiar_ativo", "descricao": "André, filho do fundador, assumiu a direção comercial em 2023 (entrevista à Valor)", "fonte_url": "https://..."}
   ],
-  "gatilho": "Sócio fundador na faixa 80+ e sem sucessor identificado na gestão — janela de sucessão aberta.",
+  "gatilho": "Segunda geração assumiu a direção em 2023 e a empresa contratou assessoria no mesmo ano: transição em curso, momento de conversa.",
   "mensagem_abordagem": "Prezado(a) [nome], acompanho o setor de [x] no interior de SP..."
 }
 Valores válidos de "tipo": ${TIPOS}. Se não achar nada conclusivo, retorne "sinais": [] e explique no resumo.
@@ -156,6 +184,27 @@ export async function investigarEmpresa(
   return res;
 }
 
+/**
+ * Ajuste total de um conjunto de sinais, com o peso contando UMA VEZ POR TIPO.
+ *
+ * Os pesos foram desenhados como "este sinal existe" → tanto; duas menções ao mesmo fato não são
+ * dois fatos. Sem isto, uma empresa real levou `sucessor_familiar_ativo` duas vezes e o peso
+ * dobrou. Os sinais repetidos FICAM na lista de propósito: cada um tem fonte própria, e duas
+ * fontes para o mesmo achado é evidência mais forte para quem lê. O que não pode dobrar é o número.
+ *
+ * Lê o peso de PESOS pelo tipo em vez de confiar no `peso` gravado no objeto: investigação
+ * persistida carrega o peso da época, então recalcular a partir dela exige a tabela atual. É o
+ * que permite corrigir uma inversão de sinal sem reinvestigar tudo do zero.
+ */
+export function ajusteDeSinais(sinais: { tipo: string }[]): number {
+  const tiposContados = new Set<string>();
+  return sinais.reduce((acc, s) => {
+    if (tiposContados.has(s.tipo)) return acc;
+    tiposContados.add(s.tipo);
+    return acc + (PESOS[s.tipo]?.peso ?? 0);
+  }, 0);
+}
+
 /** Normaliza a resposta do modelo em ResearchResult. Compartilhado pelos dois caminhos. */
 export function parseResearch(raw: string, scoreV0: number): ResearchResult {
   const match = raw.match(/\{[\s\S]*\}/);
@@ -186,13 +235,7 @@ export function parseResearch(raw: string, scoreV0: number): ResearchResult {
      Os sinais repetidos FICAM na lista de propósito: cada um tem fonte própria, e
      duas fontes para o mesmo achado é evidência mais forte para quem lê. O que
      não pode dobrar é o número. */
-  const tiposContados = new Set<string>();
-  const ajuste = sinais.reduce((acc, s) => {
-    if (tiposContados.has(s.tipo)) return acc;
-    tiposContados.add(s.tipo);
-    return acc + s.peso;
-  }, 0);
-  const scoreV1 = clamp(scoreV0 + ajuste);
+  const scoreV1 = clamp(scoreV0 + ajusteDeSinais(sinais));
 
   const gatilho =
     typeof parsed.gatilho === "string" && parsed.gatilho.trim() ? parsed.gatilho.trim() : null;

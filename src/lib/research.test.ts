@@ -9,16 +9,35 @@ function resposta(sinais: unknown[]) {
   return JSON.stringify({ presenca_digital: "baixa", resumo: "x", sinais });
 }
 
+test("sucessor familiar atuando SOBE o score; herdeiro fora do negócio DESCE", () => {
+  /* Os dois valiam o contrário até 29/07/2026 (-25 e +8), codificando a tese ingênua de
+     sucessão. O lift condicional derrubou: sucessor presente 2,14x, ausência 0,58x, z = 9,5 nos
+     dois. Este teste existe para quebrar se alguém "consertar" os sinais de volta por achar que
+     estão errados. Se você discordar, meça de novo e mostre o número. */
+  const comSucessor = parseResearch(
+    resposta([{ tipo: "sucessor_familiar_ativo", descricao: "filha assumiu a direção", fonte_url: "https://a.com" }]),
+    50
+  );
+  const semSucessor = parseResearch(
+    resposta([{ tipo: "herdeiro_fora_carreira", descricao: "filhos são médicos, fora da empresa", fonte_url: "https://b.com" }]),
+    50
+  );
+  assert.equal(comSucessor.score_v1, 62, "sucessor atuando é sinal POSITIVO");
+  assert.equal(semSucessor.score_v1, 42, "herdeiro longe do negócio é sinal NEGATIVO");
+  assert.ok(comSucessor.score_v1 > semSucessor.score_v1);
+});
+
 test("peso conta uma vez por TIPO, não por ocorrência", () => {
-  // Aconteceu com uma empresa real: dois `sucessor_familiar_ativo` viraram -50.
+  // Aconteceu com uma empresa real: dois `sucessor_familiar_ativo` viraram o dobro do peso.
+  // Base 50 e não 100 de propósito: no teto o clamp esconderia a soma dupla.
   const r = parseResearch(
     resposta([
       { tipo: "sucessor_familiar_ativo", descricao: "filho é diretor", fonte_url: "https://a.com" },
       { tipo: "sucessor_familiar_ativo", descricao: "outra fonte diz o mesmo", fonte_url: "https://b.com" },
     ]),
-    100
+    50
   );
-  assert.equal(r.score_v1, 75, "-25 aplicado uma vez, não duas");
+  assert.equal(r.score_v1, 62, "+12 aplicado uma vez, não duas");
   assert.equal(r.sinais.length, 2, "os dois sinais FICAM: cada um tem fonte própria");
 });
 
@@ -53,8 +72,8 @@ test("score fica preso entre 0 e 100", () => {
   assert.equal(alto.score_v1, 100, "não passa de 100");
 
   const baixo = parseResearch(
-    resposta([{ tipo: "sucessor_familiar_ativo", descricao: "x", fonte_url: "https://a.com" }]),
-    10
+    resposta([{ tipo: "herdeiro_fora_carreira", descricao: "x", fonte_url: "https://a.com" }]),
+    5
   );
   assert.equal(baixo.score_v1, 0, "não fica negativo");
 });
