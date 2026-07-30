@@ -2,9 +2,9 @@
 
 Skills do **Claude Code** que automatizam o fluxo de trabalho colaborativo no Boreal.
 
-> O objetivo: qualquer um (Guilherme ou Maguto) abre o repo no Claude Code, roda `/boreal`
-> e já sabe tudo que foi feito e o que vem agora. No fim, roda `/salve` e o progresso fica
-> registrado pro outro continuar de onde parou.
+> O objetivo: abrir o repo no Claude Code, rodar `/boreal` e já saber tudo que foi feito e o que
+> vem agora. No fim, rodar `/salve` e o progresso fica registrado para a próxima sessão continuar
+> de onde parou.
 
 ## Skills disponíveis
 
@@ -29,7 +29,7 @@ O Boreal tem as skills em **dois lugares**, e os dois funcionam:
 
 Os arquivos em `.claude/commands/boreal.md` e `.claude/commands/salve.md` vêm junto com o
 `git clone`. **Não precisa instalar nada** — basta abrir o Claude Code dentro da pasta `boreal/`
-e digitar `/boreal` ou `/salve`. Esse é o caminho pro Maguto: clonar e usar.
+e digitar `/boreal` ou `/salve`. Quem clonar o repo já tem os dois.
 
 ### 2. `skills/` — instalação global (opcional)
 
@@ -50,24 +50,18 @@ cp -r ./skills/* ~/.claude/skills/
 
 Pro fluxo do Boreal, o caminho 1 basta — clonou, funciona.
 
-## Onboarding do Maguto (resumo)
+## Setup de quem clonar
 
-1. `git clone https://github.com/guichicotripa/boreal`
-2. `cd boreal && npm install`
-3. **Identificar-se no git** (uma vez só — define o nome das suas branches):
-   ```
-   git config user.name "Maguto"
-   git config user.email "<seu-email>"
-   ```
-4. Copiar `.env.example` → `.env.local` e preencher as chaves (pedir ao Guilherme — **nunca** colar chave em chat/commit)
-5. Abrir Claude Code na pasta → digitar `/boreal` (ele te coloca numa branch própria automaticamente)
-6. Trabalhar → `/salve` no fim (ele faz rebase + push da sua branch + abre PR)
+```bash
+git clone <repo> && cd boreal
+npm install
+cp .env.example .env.local   # preencher Supabase, Anthropic e GCP
+```
 
-> **Como vocês trabalham em paralelo:** cada um na sua branch (`gui/...`, `maguto/...`), a `main`
-> só recebe via PR. Os skills cuidam do git sozinhos — você não precisa decorar comando.
-> Divisão sugerida: **Gui no motor** (`scoring.ts`, `reasoner.ts`, `llm.ts`, `api/`) ·
-> **Maguto na interface** (`page.tsx`, componentes, estilo, demos). O contrato entre os dois é
-> `src/lib/types.ts` — quem for mudar um tipo, avisa o outro antes.
+> Projeto é solo desde o fim do Clube da Programação (junho/2026). A antiga regra de domínio, que
+> separava "motor" (Guilherme) de "interface" (Maguto), **não vale mais**: um agente edita o repo
+> inteiro. Maguto segue com acesso de tester na plataforma.
+
 
 ## Anatomia de uma skill
 

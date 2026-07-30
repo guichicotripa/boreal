@@ -1,5 +1,13 @@
 # Pitch Mestre — Domínio completo: destravar o middle/lower market de M&A no Brasil
 
+> ⚠️ **NÚMEROS DEFASADOS (auditoria de 30/07/2026). Não enviar antes de resolver.**
+> Este documento afirma **"97% a 100% de acerto, N=240"**. Esse intervalo foi medido com o score
+> v0, que foi substituído em 29/07, e era **inflado por construção**: a métrica filtra as adquiridas
+> por sócio 61+ e empresa 25+, e o v0 dava 60 dos 100 pontos exatamente a esses dois campos.
+> Com o v1 o mesmo cálculo dá **63% a 95% (N=317)**.
+> Número recomendado, medido em holdout e sem esse viés: **41,5% de recall no perfil sucessório,
+> 4,1x melhor que sorteio, n=978, z=2,59**. Ver `brain/modelo-de-score.md` §6 e `pending.md`.
+
 > Criado: 2026-07-20. Objetivo: Guilherme dominar mercado, método, modelo e defesa a ponto de
 > fazer qualquer pitch (investidor, boutique, dono de empresa, imprensa) sem improvisar.
 > Convenções de honestidade: **[medido]** = dado nosso, reproduzível por script · **[fonte]** =

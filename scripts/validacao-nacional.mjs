@@ -3,6 +3,7 @@
 // se sustenta com N maior. NÃO altera o app (que segue SP); é check de confiança pro pitch.
 //   node --env-file=.env.local scripts/validacao-nacional.mjs
 import { BigQuery } from "@google-cloud/bigquery";
+import { SCORE_V1, ctesSocios, CAP_PCT } from "./lib/score-sql.mjs";
 import { readFileSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -19,28 +20,24 @@ function likeClause(prefixes, col = "e.cnae_fiscal_principal") {
 async function umSetor(s) {
   const cnaeFiltro = likeClause(s.cnaes);
   const sql = `
-  WITH sc AS (
-    SELECT cnpj_basico, MAX(SAFE_CAST(faixa_etaria AS INT64)) AS mf, COUNTIF(tipo='2') AS n_pf
-    FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${CORTE}' GROUP BY 1
-  ),
-  universo AS (
-    SELECT e.cnpj_basico, sc.mf AS mf, (2023-EXTRACT(YEAR FROM e.data_inicio_atividade)) AS idade,
-      (CASE sc.mf WHEN 9 THEN 30 WHEN 8 THEN 26 WHEN 7 THEN 20 WHEN 6 THEN 10 ELSE 0 END)
-      + (CASE WHEN 2023-EXTRACT(YEAR FROM e.data_inicio_atividade) >= 40 THEN 30
-              WHEN 2023-EXTRACT(YEAR FROM e.data_inicio_atividade) >= 25 THEN 22
-              WHEN 2023-EXTRACT(YEAR FROM e.data_inicio_atividade) >= 15 THEN 10 ELSE 0 END)
-      + (CASE WHEN REGEXP_REPLACE(emp.porte,'^0','')='5' THEN 30
-              WHEN REGEXP_REPLACE(emp.porte,'^0','')='3' THEN 15
-              WHEN REGEXP_REPLACE(emp.porte,'^0','')='1' THEN 5 ELSE 0 END)
-      + (CASE WHEN sc.n_pf >= 2 THEN 10 ELSE 0 END) AS score
+  WITH sc AS (${ctesSocios(CORTE)}),
+  bruto AS (
+    SELECT e.cnpj_basico, sc.mf AS mf, sc.menor, sc.n_pf,
+      DATE_DIFF(DATE('${CORTE}'), sc.ult, YEAR) AS anos_ult,
+      SAFE_CAST(emp.capital_social AS FLOAT64) AS capital,
+      '${s.id}' AS vertical,
+      (2023-EXTRACT(YEAR FROM e.data_inicio_atividade)) AS idade
     FROM \`basedosdados.br_me_cnpj.estabelecimentos\` e
     JOIN \`basedosdados.br_me_cnpj.empresas\` emp ON emp.cnpj_basico=e.cnpj_basico AND emp.data='${CORTE}'
     LEFT JOIN sc ON sc.cnpj_basico=e.cnpj_basico
-    -- ATIVA no corte e desempate no NTILE: as mesmas duas correções do
-    -- build-setores. Sem elas o número nacional não é comparável com o de SP,
-    -- que é justamente o papel deste script.
+    -- ATIVA no corte e desempate no NTILE: as mesmas duas correcoes do
+    -- build-setores. Sem elas o numero nacional nao e comparavel com o de SP,
+    -- que e justamente o papel deste script.
     WHERE e.data='${CORTE}' AND e.identificador_matriz_filial='1'
       AND e.situacao_cadastral='2' AND ${cnaeFiltro}
+  ),
+  universo AS (
+    SELECT *, ${SCORE_V1} AS score FROM (SELECT *, ${CAP_PCT} AS cap_pct FROM bruto)
   ),
   ranked AS (SELECT cnpj_basico, mf, idade, NTILE(10) OVER (ORDER BY score DESC, cnpj_basico) AS decil FROM universo),
   a AS (SELECT cnpj_basico, COUNTIF(tipo='1') pj, COUNTIF(tipo='2') pf FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${CORTE}' GROUP BY 1),

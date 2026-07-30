@@ -5,7 +5,7 @@
     "ate": "2025-11-09"
   },
   "uf": "SP",
-  "nacional_gerado_em": "2026-07-25",
+  "nacional_gerado_em": "2026-07-30",
   "setores": [
     {
       "id": "metalmec",
@@ -25,9 +25,9 @@
       "nacional": {
         "universo": 250845,
         "n_aquisicoes": 211,
-        "recall_top10": 77,
+        "recall_top10": 81,
         "n_aquisicoes_sucessao": 77,
-        "recall_sucessao": 100
+        "recall_sucessao": 90
       }
     },
     {
@@ -46,9 +46,9 @@
       "nacional": {
         "universo": 531119,
         "n_aquisicoes": 894,
-        "recall_top10": 33,
+        "recall_top10": 57,
         "n_aquisicoes_sucessao": 133,
-        "recall_sucessao": 100
+        "recall_sucessao": 77
       }
     },
     {
@@ -68,9 +68,9 @@
       "nacional": {
         "universo": 64914,
         "n_aquisicoes": 59,
-        "recall_top10": 46,
+        "recall_top10": 49,
         "n_aquisicoes_sucessao": 24,
-        "recall_sucessao": 96
+        "recall_sucessao": 63
       }
     },
     {
@@ -91,9 +91,9 @@
       "nacional": {
         "universo": 618787,
         "n_aquisicoes": 446,
-        "recall_top10": 33,
+        "recall_top10": 97,
         "n_aquisicoes_sucessao": 83,
-        "recall_sucessao": 87
+        "recall_sucessao": 95
       }
     }
   ]

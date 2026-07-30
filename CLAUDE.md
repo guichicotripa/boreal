@@ -3,70 +3,59 @@
 # Boreal — Brain do Projeto
 
 > Entry point. Todo agente (Claude Code) e todo humano novo no repo lê **isto primeiro**.
-> Modelo enxuto inspirado no "segundo cérebro" do Guilherme, focado num produto de 4 semanas.
+> Modelo enxuto inspirado no "segundo cérebro" do Guilherme.
 
 ---
 
 ## 1. O que é
 
 **Boreal** é um *AI-native research agent para deal sourcing em PE/M&A no middle market
-brasileiro*. Foco: empresas familiares com **succession risk** — sócios envelhecendo, sem
-plano sucessório evidente, sem mudança societária recente.
+brasileiro*. Foco: empresas familiares em **transição societária** — controle em idade de
+transferir, geração seguinte presente, quadro se movimentando, e escala que justifique o deal.
 
-**Nicho inicial:** metalmecânica / indústria média no interior de SP + Sul.
-CNAEs **24** (metalurgia básica), **25** (produtos de metal), **28** (máquinas e equipamentos).
+> A tese mudou em 29/07/2026 e vale saber por quê antes de escrever qualquer coisa: a formulação
+> antiga era "sócio envelhecendo, sem sucessão evidente, sem mudança societária recente". O lift
+> condicional contra aquisições reais derrubou as três pontas. Quadro parado tem lift **0,60x** e
+> sucessor aparente tem **2,14x**. Quem vende é quem está administrando uma transição, não quem
+> foi abandonado. Metodologia inteira em `brain/modelo-de-score.md`.
 
-**Por que existe:** competição **Clube da Programação** (organizada por Laura Dubugras).
-4 semanas, prêmio **US$ 10.000** (patrocínio Cognition). Submissão = Loom de 1 minuto.
+**Setores cobertos:** metalmecânica (CNAE 24/25/28), saúde (86), educação (851/852) e agro
+(01/02/03). Base indexada: **51.033 empresas**.
 
-| Data | Marco |
-|------|-------|
-| 2026-06-02 20h | Reunião 2 — mostrar progresso Semana 1 |
-| 2026-06-09 20h | Reunião 3 — produto demoável |
-| **2026-06-14** | **Deadline submissão (Loom 1min)** |
-| 2026-06-16 20h | Reunião 4 — Demo Day ao vivo |
-
-**Critério de julgamento:** mais subjetivo do que objetivo — pesa **progresso pessoal** e o que
-cada um conseguiu realizar/aprender. Implicação: o Loom precisa contar a jornada (o que
-aprendemos a construir em 4 semanas), não só exibir um produto pronto. Por isso `progress.md`
-importa tanto quanto o código.
+**Estágio:** produto em produção, com **piloto pago da boutique Setter** iniciando em agosto/2026
+(R$ 2.000 + 0,5% de success fee). Não é mais protótipo e não é mais projeto de prazo curto.
 
 ---
 
 ## 2. Quem
 
-| Pessoa | Frente | Nunca delega / sempre puxa |
-|--------|--------|-----------------------------|
-| **Guilherme Augusto** | arquitetura, prompts, lógica de scoring/ranking, integração LLM | prompts, scoring, arquitetura |
-| **Maguto** | UI, copy da landing, busca/limpeza de dados, gravação/edição do vídeo | autonomia crescente da semana 3 em diante |
+**Guilherme Augusto**, solo. Arquitetura, prompts, lógica de scoring e ranking, integração LLM,
+produto e comercial.
 
-Ambos usam **Claude Code**. Dividem o prêmio se ganhar.
-
-### Regra de domínio (não cruzar a fronteira)
-
-Conflito real já aconteceu (PRs colidiram em `page.tsx`) porque o motor editou a interface. Pra não repetir:
-
-| Domínio | Dono | Arquivos | Regra |
-|---------|------|----------|-------|
-| **Motor** | Guilherme | `src/lib/*`, `scripts/`, `src/app/api/*` | Define o contrato em `types.ts`. **NÃO edita o render.** |
-| **Interface** | Maguto | `src/app/page.tsx`, `globals.css`, `layout.tsx`, `src/components/*` | Renderiza o que o contrato expõe. **NÃO edita a lógica do motor.** |
-
-- **`types.ts` é a fronteira.** Motor adiciona campo no tipo (ex: `red_flags`, `proximo_passo`) → avisa →
-  **quem renderiza é sempre o Maguto.** Motor nunca mexe em JSX/CSS.
-- **`brain/progress.md` é append-only** — cada um adiciona sua entrada no fim (conflito de append resolve fácil).
+> Histórico, porque o repo inteiro carrega marcas disso: o Boreal nasceu como entrada na competição
+> Clube da Programação (Laura Dubugras, prêmio US$ 10.000, submissão em 10/06/2026) e era tocado a
+> dois, com o **Maguto** cuidando de UI, copy e dados. O Clube acabou em junho e o Maguto parou de
+> trabalhar no projeto depois disso. A antiga "regra de domínio" que separava motor e interface não
+> vale mais: **hoje um agente edita o repo inteiro.** Maguto segue com acesso de tester.
 
 ---
 
-## 3. O produto — demo de 60 segundos
+## 3. O produto
 
 **Input** em linguagem natural:
-> *"empresas de metalmecânica no interior de SP, EBITDA estimado 10–50M, sócios acima de 60
-> anos, sem sucessão evidente."*
+> *"metalmecânica no interior de SP com sócios acima de 60 anos"*
 
-**Output** em ~30s: lista priorizada de empresas reais (CNPJ, site, sócios) com **score de
-succession risk** + **dossier curto** por empresa (overview, sinais, perguntas pra abordagem).
+**Output:** lista priorizada de empresas reais (CNPJ, contato, sócios) com **score determinístico**
+e composição por eixo, mais **investigação sob demanda** que busca na web o gatilho de timing ("por
+que agora") e um rascunho de abordagem. Do resultado nasce um **pipeline de originação** com selo
+de proveniência, que é o que destrava o success fee.
 
-Tagline: *"o gargalo do deal sourcing colapsado de 2 semanas pra 30 segundos."*
+Duas perguntas diferentes, e é importante não confundi-las:
+
+| camada | responde | custo |
+|---|---|---|
+| score determinístico (`scoring.ts`) | "esta empresa tem o perfil?" | microssegundos, roda no universo inteiro |
+| investigação / research (`research.ts`) | "vale ligar hoje?" | ~100s de LLM por empresa, sob demanda |
 
 ---
 
@@ -80,10 +69,10 @@ Tagline: *"o gargalo do deal sourcing colapsado de 2 semanas pra 30 segundos."*
 | Frontend | Next.js (App Router) + TypeScript | 16.x |
 | UI | Tailwind + shadcn/ui | Tailwind v4 |
 | Backend / DB | Supabase (Postgres + Auth) | — |
-| LLM | Claude API (Sonnet 4.6 default; Opus 4.7 pontual) | — |
+| LLM | Claude API + Agent SDK. Modelos fixados em `src/lib/modelos.ts` (Sonnet 5 default, Opus 5 pontual, Haiku 4.5 extração) | — |
 | Dados CNPJ | BrasilAPI + Receita Federal aberta + scraping curado | — |
 | Deploy | Vercel | — |
-| Vídeo | Loom | — |
+
 
 ---
 
@@ -91,8 +80,7 @@ Tagline: *"o gargalo do deal sourcing colapsado de 2 semanas pra 30 segundos."*
 
 - **Idioma:** código, commits e comentários em **inglês**. Nomes de domínio em **português**
   (`empresa`, `socio`, `cnae`, `score_run`) — os dados são em português, não traduzir.
-- **Commits:** pequenos e frequentes direto na `main`. Mensagem diz **o quê + porquê** —
-  isso vira o changelog natural da jornada pro Loom.
+- **Commits:** pequenos e frequentes direto na `main`. Mensagem diz **o quê + porquê**.
 - **Fim de cada sessão de trabalho** → atualizar `brain/progress.md` (append, nunca sobrescrever).
 - **Decisão relevante** (escopo, stack, nome, scoring) → `brain/decisions.md`.
 - **Próximos passos / o que está em aberto** → `brain/pending.md`.
@@ -104,18 +92,29 @@ Tagline: *"o gargalo do deal sourcing colapsado de 2 semanas pra 30 segundos."*
 1. **Planejar antes de codar** em tarefa que toca >1 arquivo ou >~30 linhas: ler → propor
    plano → executar → validar.
 2. **Evidência > confiança.** Não dizer "deve funcionar". Rodar e verificar, ou dizer que não testou.
-3. **YAGNI.** São 4 semanas. Construir só o que a demo de 60s precisa. Sem abstração prematura.
-4. **Explicar decisões técnicas em linguagem natural** — o Maguto está aprendendo o ciclo
-   AI-native end-to-end. Definir conceito avançado em uma frase antes de usar.
+3. **YAGNI.** Construir o que o originador usa hoje. Sem abstração prematura.
+4. **Explicar decisões técnicas em linguagem natural.** Definir conceito avançado em uma frase
+   antes de usar.
+5. **Nenhum peso de score por intuição.** O protocolo de mudança está em `brain/modelo-de-score.md`
+   §10: lift condicional com z >= 2, depois ablação em holdout, depois os dois arquivos de fórmula
+   (`src/lib/scoring.ts` e `scripts/lib/score-sql.mjs`) mudam juntos.
 5. **Tom direto.** Sem preâmbulo, sem bajulação.
 
 ---
 
 ## 7. Estado atual
 
-**2026-05-27** — Scaffold inicial. Next.js 16 + Tailwind v4 + shadcn/ui prontos. Supabase e
-primeira pull de CNPJs a seguir. Ainda sem pipeline. Ver `brain/progress.md` pro detalhe e
-`brain/pending.md` pro que vem agora.
+**2026-07-30.** Em produção em `boreal-teste.vercel.app`, multi-tenant real (org, membro, RLS),
+contratos por setor/praça/módulo, log de eventos como sinal de treino e página de métricas para
+staff.
+
+- **Score v1** (29/07) substituiu o v0. Pesos medidos por lift condicional contra aquisições reais
+  mineradas do CNPJ; recall no perfil sucessório de **41,5%** em holdout (n=978, z=2,59), 4,1x
+  melhor que sorteio. **Ler `brain/modelo-de-score.md` antes de tocar em `scoring.ts`.**
+- Piloto da Setter começando; faltam do lado deles os 2 setores, a praça e a lista de CRM
+  incumbente.
+
+Detalhe sessão a sessão em `brain/progress.md`, o que está aberto em `brain/pending.md`.
 
 ---
 
@@ -129,10 +128,11 @@ primeira pull de CNPJs a seguir. Ainda sem pipeline. Ver `brain/progress.md` pro
 | `brain/decisions.md` | decisões + porquê |
 | `brain/pending.md` | próximos passos / em aberto |
 | `brain/modelo-de-score.md` | **como o score é construído, medido e revisado** — metodologia completa, protocolo de mudança e limitações. Ler antes de tocar em `scoring.ts`. |
-| `skills/_index.md` | catálogo das skills + onboarding do Maguto |
+| `brain/referencia-site-fairplay.md` | referência visual e de copy para o site institucional |
+| `skills/_index.md` | catálogo das skills |
 
 > Contexto operacional completo (deadlines, equipe, relação com Relay/BRHSIC) vive no segundo
-> cérebro do Guilherme em `memory/projects/clube-programacao.md` — fora deste repo.
+> cérebro do Guilherme em `memory/projects/boreal.md` — fora deste repo.
 
 ---
 

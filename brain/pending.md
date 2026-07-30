@@ -1,462 +1,145 @@
 # Pending — Próximos Passos / Em Aberto
 
 > O que falta fazer agora. Marcar `[x]` ao concluir. Mover concluídos pro `progress.md` no fim da sessão.
+>
+> **Auditado e reescrito em 30/07/2026.** O arquivo tinha 462 linhas e carregava uma era inteira já
+> morta: Semanas 1 a 4, Demo Day, submissão do Loom (deadline 10/06) e as frentes do Maguto, que
+> parou de trabalhar no Boreal depois do fim do Clube da Programação. Histórico completo em
+> `progress.md` e no git; o que sobreviveu aqui é só o que continua aberto de verdade.
 
 ---
 
-## ✅ Research corrigido + ganho confirmado (29/07)
+## 🔴 Antes ou durante o piloto da Setter
 
-Duas pontas fechadas. Metodologia completa em [`brain/modelo-de-score.md`](modelo-de-score.md).
+- [ ] **Os números do onepager e do pitch estão defasados, e são o que vai pro cliente.**
+  `brain/onepager-setter-piloto.md` e `brain/pitch-mestre.md` afirmam **"97% a 100% de acerto,
+  N=240, Brasil"**. Duas coisas mudaram:
 
-**Os sinais de sucessão estavam invertidos, e eram dois, não um:**
+  1. Com o score v1, o `recall_sucessao` nacional é **63% a 95%** (N=317): metalmec 90%, saúde 77%,
+     educação 63%, agro 95%.
+  2. Mais importante: **aquele intervalo era inflado por construção.** A métrica filtra as
+     adquiridas por `mf >= 7 AND idade >= 25` (sócio velho e empresa velha) e o v0 dava 30 pontos
+     para idade e 30 para antiguidade, exatamente os mesmos campos. Uma empresa dentro do filtro já
+     ganhava 42 a 60 dos 100 pontos automaticamente e subia para o decil de topo quase de graça. O
+     v1 caiu porque parou de flutuar esse subconjunto, não porque piorou.
 
-| sinal | era | virou | lift medido |
-|---|---|---|---|
-| `sucessor_familiar_ativo` | **-25** (maior castigo do sistema) | **+12** | 2,14x (z = 9,5) |
-| `herdeiro_fora_carreira` | +8 | **-8** | 0,58x (z = 9,5) |
-
-Junto vieram duas regras no prompt: sucessor familiar exige **fonte externa ao registro** (agregador
-de CNPJ só repete o quadro que o score já leu, e re-reportá-lo faz o mesmo fato valer duas vezes),
-e "sócio idoso" deixou de ser gatilho, porque é condição de anos e não motivo de agora. As 43
-investigações persistidas foram **recalculadas, não descartadas** (`scripts/recalcula-research.ts`).
-
-**O ganho do v1 deixou de ser inconclusivo.** `validacao-score-v1.mjs --amplo` roda o CNPJ inteiro
-(22,4 mi de empresas, decil por divisão CNAE) em vez dos 4 verticais:
-
-- perfil sucessório: 35,8% → **41,5%**, +5,7pp, **n = 978**, **z = 2,59**
-- o delta praticamente não se moveu com o n 6x maior (+5,4pp → +5,7pp), que é a evidência de que
-  não era ruído
-
-Número a citar ao cliente: **41,5% de recall no perfil sucessório, 4,1x melhor que sorteio.**
-
-### O que ficou aberto disso
+  A comparação limpa é a do holdout, e ela diz o contrário: v1 melhor que v0 nos dois recortes.
+  **Número recomendado para o cliente: 41,5% de recall no perfil sucessório, 4,1x melhor que
+  sorteio, medido em holdout com n=978 e z=2,59.** Decisão sua sobre o que citar; ver
+  `brain/modelo-de-score.md` §6.
 
 - [ ] **Os outros pesos do research nunca passaram por validação nenhuma.**
   `banco_investimento` +15, `mencao_sucessao_venda` +12, `csuite_externo` +6, `big4_auditoria` +5,
-  `sem_presenca_digital` +3. Foram escolhidos por intuição, que é exatamente o que o score deixou
-  de fazer. Alguns nem têm proxy de registro para medir; nesses, o melhor possível é ancorar a
-  direção e dizer que a magnitude é arbitrada.
+  `sem_presenca_digital` +3. Escolhidos por intuição, que é exatamente o que o score deixou de
+  fazer. Alguns não têm proxy de registro para medir; nesses, o melhor possível é ancorar a direção
+  e declarar que a magnitude é arbitrada. O `sucessor_familiar_ativo` e o `herdeiro_fora_carreira`
+  já foram corrigidos (29/07), e o `herdeiro_fora_carreira` **nunca disparou em 20 investigações**,
+  então a correção dele é teórica por enquanto.
+
 - [ ] **29% do topo da lista (score >= 90) já tem sócio PJ no quadro.** Pode ser holding da família
   (segue alvo), já parcialmente vendida (não é mais sucessão) ou sócio institucional (outro jogo), e
-  hoje as três aparecem iguais. É decisão de tese, não bug: definir se PJ controlador desqualifica e
-  então testar como **filtro**, nunca como eixo (medimos lift 3,15x, mas confundido com a definição
+  hoje as três aparecem iguais. **Decisão de tese, não bug:** definir se PJ controlador desqualifica
+  e então testar como **filtro**, nunca como eixo (o lift de 3,15x está confundido com a definição
   do ground truth).
-- [ ] **25 empresas em recuperação judicial dentro do topo** (108 na base inteira). Detectável por
-  string na razão social. Flag na linha, não exclusão.
+
+- [ ] **Recarregar crédito da `ANTHROPIC_API_KEY`.** Acabou em 25/07. Não bloqueia os lotes (rodam
+  por assinatura), mas bloqueia o que o servidor faz ao vivo: research e dossiê sob demanda, e o
+  parser LLM da busca. A busca **não** quebra sem ele, cai no parser heurístico, que resolve setor,
+  praça e idade corretamente.
 
 ---
 
+## 🟡 Bloqueado no Henrique / Setter
 
-## ✅ Cache pronto (25/07)
-
-4 setores + 15 chaves de tese, **todos com score médio 100** (o topo real) e **15 insights
-cada**. Antes as teses cacheadas serviam 65,9 a 87,1 sem ordenação correta. Verificado no
-browser: os 4 caminhos (browse e tese, com e sem setor) servem do cache em 0,5–1,4s, e 285
-insights passaram pelo filtro de linguagem com zero violações.
-
-Rebuild depois de um ingest (custo zero, assinatura, sem dev server):
-```
-node --experimental-strip-types --env-file=.env.local scripts/cache-sub.ts
-```
-Reaproveita insight já escrito sobre a mesma empresa — só chama o LLM para empresa nova.
-Use `--refazer-insights` quando o prompt ou a regra de linguagem mudar.
-
-- [ ] *(opcional)* **Recarregar crédito da `ANTHROPIC_API_KEY`.** Acabou em 25/07. Não bloqueia
-  o cache (que roda por assinatura), mas bloqueia o que é feito ao vivo pelo servidor:
-  research/dossiê e o parser LLM da busca. A busca **não** quebra sem ele — cai no parser
-  heurístico, que hoje resolve setor, praça e idade corretamente.
-
-> **Limite de sessão da assinatura:** uma execução cheia consome bastante. Se estourar no meio
-> (`You've hit your session limit`), o script degrada sem insight em vez de abortar — e como
-> agora ele reaproveita antes de chamar o LLM, rodar de novo depois do reset continua de onde
-> parou em vez de recomeçar.
-
-**ACOPLAMENTO PERMANENTE:** todo ingest exige, nesta ordem —
-`backfill-score-v0.ts` → `check-ranking.ts` (tem que dar 50/50) → `cache-sub.ts`.
-Pular o backfill deixa a empresa nova com `score_v0` NULL e ela some do topo da busca;
-pular o cache serve o ranking da base antiga sem sintoma nenhum na tela.
-
-**Não usar `cache-demo-sub.mjs` nem `build-demo-cache.mjs`/`build-setor-cache.mjs`** —
-o primeiro tem `.limit()` sem `order by` (reintroduz o defeito da 0008 dentro do cache); os
-outros dependem de API key e dev server. `cache-sub.ts` substitui os três.
+- [ ] **Os 2 setores + a praça do contrato.** Enquanto não vierem, `org_setor` da Setter está vazia
+  e ela enxerga os 4 setores. Se vier tech, manter o enquadramento honesto de que lá o valor é
+  descoberta e heat-map, não score de sucessão.
+- [ ] **Importar a lista de CRM incumbente** em `crm_incumbente` (hoje vazia, então tudo marca
+  "novo" e a métrica-manchete do piloto não pode ser computada).
 
 ---
 
-## 🟡 Revisão end-to-end (02/07) — execução em fases
+## 🟡 Aberto, não bloqueia o piloto
 
-**Feito e commitado (branch `feat/research-scrapling-hibrido`):**
-- [x] Gate de acesso (middleware + /acesso). Ativar: setar `BOREAL_GATE_PASSWORD` + `BOREAL_GATE_SECRET` na Vercel.
-- [x] Selo de proveniência (migration 0005 + API + página do certificado). Ver abaixo o que falta pra ativar.
-- [x] Teste do score (`npm test`). README real. Comentário da ponte de empresa.
-- [x] Feature saída-do-Simples validada (adiciona sinal além do porte).
+### Score e dados
 
-**Falta pra ATIVAR o que já está em código:**
-- [x] **Aplicar `migration 0005`** no Supabase (Guilherme aplicou 03/07).
-- [x] **Gate ativado** — senhas setadas na Vercel (03/07). Local segue aberto (sem env no `.env.local`).
-- [x] **Botão "emitir selo" plugado no pipeline** + testado ponta a ponta no banco real (selar → certificado assinado).
-- [ ] **Importar a lista de CRM incumbente da Setter** em `crm_incumbente` (hoje vazia → tudo marca "novo"). Depende do dado deles.
+- [ ] **Nº de estabelecimentos como eixo.** Já medido: vale ~1,3pp de recall. Preso porque o ingest
+  não traz contagem de filiais. É o ganho mais barato que existe hoje.
+- [ ] **Proxy limpo de tamanho.** Capital social é declarado, nominal e frequentemente desatualizado
+  desde a constituição, e mesmo assim é o eixo mais forte (3,80x). Empregados via RAIS/CAGED ou
+  faturamento estimado deve bater isso.
+- [ ] **Validar o proxy de ground truth contra desfecho real da Setter.** Quando houver ~20
+  conversas com desfecho no pipeline, checar se as empresas que ela realmente destravou estavam no
+  nosso topo. **Maior valor da lista inteira** e sai de graça de operar o piloto.
+- [ ] **Teto de mandato.** O topo da lista tem empresa grande demais: capital mediano de R$ 4,4 mi
+  em metalmec e máximo de R$ 274 mi, com CSN e ROMI (ambas de capital aberto) aparecendo. A Fairplay
+  declara publicamente trabalhar R$ 20M a R$ 500M de deal; se a Setter for parecida, isso é corte
+  por cima. É filtro de mandato, não eixo. **Guilherme pediu para não tratar agora (30/07).**
+- [ ] **Separar v0 e v1 em duas dimensões.** Hoje `v1 = clamp(v0 + ajuste, 0, 100)` e o teto apaga a
+  magnitude do research (medido: ajustes de +12 a +30 viraram todos +3). O desempate por ajuste
+  bruto (30/07) é paliativo. A correção real é v0 responder "tem o perfil" e o research responder
+  "está acontecendo agora", cada um com seu indicador. Mudança de produto, com UI e tipos: pós-piloto.
 
-**Próximas fases da revisão (maiores, precisam de decisão/dado):**
-- [ ] **Fechar o loop de outcome (2a):** realimentar o `resultado` (deal_fechado/perdido) no score. Precisa de dado do piloto.
-- [x] ~~**Integrar a feature Simples no score (2b)**~~ — **DESCARTADO (03/07):** prevê aquisição mas não sucessão (é sinal de crescimento, off-thesis) + cobertura baixa no mid-market. Parqueada. Ver decisions.md.
-- [ ] **Sensor forward vivo (2c):** transição societária das empresas salvas vira sinal no pipeline (o `monitor-transicoes.mjs` já minera).
-- [ ] **Decisão de produto:** estimativa de tamanho no memo (incorporar com metodologia vs manter abstenção). Depende do Guilherme.
-- [ ] **Créditos da API** (billing, Guilherme) — trava research/dossiê ao vivo fora do cache.
+### Produto e originação
 
----
+- [ ] **Fechar o loop de outcome.** Realimentar `resultado` (deal_fechado / perdido) no score.
+  Precisa de dado do piloto.
+- [ ] **Sensor forward vivo.** Transição societária das empresas salvas vira sinal no pipeline; o
+  `scripts/monitor-transicoes.mjs` já minera.
+- [ ] **Descoberta de tech** (CNAEs 62xx/63xx) como mapeamento e descoberta, não predição de
+  sucessão. O enquadramento honesto já está definido.
+- [ ] **Moat de descoberta:** ligar CNPJ ao site da empresa de forma sistemática. Guilherme pediu
+  para desenvolver.
+- [ ] **Descoberta residual:** empresa sem email próprio e com nome genérico (ex: clínica IMUNE) não
+  é resolvida pelo SERP.
+- [ ] **Deploy do Scrapling.** É Python com browser e **não roda no Vercel**; a coleta tem que ficar
+  em worker offline.
+- [ ] **Trajetória societária** (removida da home em 07/06, handoff para Guilherme).
 
-## 🟡 Features pós-call Setter (28/06 · branch `feat/research-scrapling-hibrido`)
+### Prospecção
 
-As 3 frentes que saíram da call do Henrique, em ordem de retorno:
-
-- [x] **1. Heat-map de setor** — **v4: treemap TradingView, Brasil + região + DADOS LIMPOS** (`/heat-map`,
-  `lib/{heatmap,treemap,cnae}.ts`, `components/{MapaSetores,Treemap}.tsx`, `build-heatmap-setores.mjs`).
-  Métrica de M&A pra TODOS os setores e TODO o Brasil, filtro por região que recomputa client-side. Tile =
-  volume, cor cinza (escala LOG) = densidade normalizada na seleção, full-viewport, setores validados com dot.
-  - [x] **Limpeza do sinal (01/07, ver `decisions.md`):** o sinal cru misturava M&A com SPE/newco e
-    reorganização de holding. Corrigido: universo só ativo (era 2x inflado por baixadas), idade≥5 (remove
-    newco), filtro de holding cirúrgico em constr/imob/energia. 14.486 brutas → **7.877 limpas**. Ranking
-    honesto (indústria no topo, imob/constr no fundo). Escala de cor linear→log + PISO_N 10→15 (matava
-    outlier de n pequeno). Verificado no browser.
-  - [ ] **Review visual do Guilherme** (screenshot trava no headless; verifiquei via DOM). Único revisor de UI.
-    Ele tinha "coisinhas de design pra mudar" — pegar isso depois da validação dos dados.
-  - [ ] **Validação futura (a fazer):** rodar o score no subconjunto **`limpa`** do ground truth (NÃO as
-    14.486 brutas — têm SPE dentro) por setor/região → medir recall fora dos 3 setores. O ground truth
-    agora guarda idade/situação/natureza das PJ entrantes → re-filtrável sem BigQuery (`reaggregate-local.mjs`).
-  - [ ] **Re-mineração (cadência):** trimestral/semestral, janela deslizante de ~2 anos (hoje: corte
-    2023-06-10 → 2025-11-09 fixo no `build-heatmap-setores.mjs`).
-- [ ] **2. Selo de proveniência** (destrava o success fee) — carimbar empresa que entra no pipeline a
-  partir de uma lista do Boreal: origem + data + score + check de que não estava no CRM deles. NÃO cobrar
-  no piloto, só garantir o direito. Timestamp puro não basta (atribuição é o medo do Henrique).
-- [ ] **3. Descoberta de tech** — varrer CNAEs de tech (62xx/63xx) como MAPEAMENTO/descoberta, não predição
-  de venda (moat fraco em tech). Vender como "mapa do território + dossiê", honesto. Build sério da lente
-  tech (funding/headcount via scraping) fica pra depois.
+- [ ] **Fairplay Capital como prospect, não como ameaça.** Boutique de 2024, Sorocaba/SP,
+  middle-market R$ 20M a R$ 500M, três pessoas, sem originação proprietária. É a Setter com outro
+  nome. Convite de conversa de aprendizado enviado ao José Venancio em 30/07 (Mom Test, sem demo).
+  Análise completa em `brain/referencia-site-fairplay.md`.
 
 ---
 
-## 🟡 Research híbrido com Scrapling (27/06 · branch `feat/research-scrapling-hibrido`)
+## 🔵 Dívida técnica
 
-Objetivo: enriquecer o research lendo o SITE OFICIAL da empresa a fundo (Scrapling, stealth) em vez de
-só depender do `web_search`. Medido no protótipo: perfil_negocio sai mais profundo e **~15x mais barato**
-(R$0,06-0,07 vs R$1,08) quando a URL certa está em mãos.
+> Herdados da auditoria de 30/07 sem reverificação. Confirmar se ainda valem antes de agir.
 
-**Feito e testado:**
-- [x] `research.ts` aceita `opts.contextoSite` (aditivo, backward-compat): injeta o texto do site no
-  prompt, baixa as buscas de 4→3 (foco em sucessão, que o site nunca traz). Caller atual intacto.
-- [x] `scripts/scrape-sites.py` — coleta o site → `src/lib/site-cache.json`. Browser stealth, roda LOCAL.
-- [x] `scripts/proto-scrapling-perfil.py` — protótipo de medição (perfil v1 web_search vs v2 site).
-
-**Achado central — a descoberta do site (o elo fraco):**
-- **Email do CNPJ resolve ~26% de graça.** A Receita traz email de domínio próprio em 116/450 empresas
-  do demo-cache; `email.split('@')[1]` = site oficial, custo zero, ~100% preciso. Já é a 1ª opção do
-  `escolher_site` (filtra genérico/gmail e domínio de contador). Testado: Prensa e Alpina acertaram.
-- **SERP scraping (DuckDuckGo) é ruim pra descobrir** — whack-a-mole de agregadores (dnb, eguias, cylex,
-  saudecidade, todosnegocios). Serve só de fallback fraco.
-- **RDAP do registro.br confirma titular** (domínio.br → CNPJ), mas **recall baixo**: o domínio costuma
-  estar sob o CNPJ da holding/grupo, não da subsidiária. Vale como validação-bônus, não como mecanismo.
-
-**Em aberto:**
-- [ ] **Descoberta residual** (empresas sem email próprio + nome genérico, ex: clínica IMUNE): o SERP não
-  resolve. Caminho certo = `web_search`/LLM acha a URL oficial (preciso), Scrapling lê. NÃO usar SERP.
-- [ ] **Moat de descoberta (Guilherme pediu pra desenvolver):** ligar CNPJ→site de forma sistemática e
-  defensável pro mid-market BR. Hoje: email (26%) + web_search (resíduo) + RDAP (validação). Pensar em
-  índice próprio CNPJ→domínio (acumular o que a gente confirma vira ativo que ninguém compra).
-- [x] **Wire feito** (`2094b5b`): `cache-research-saude-edu.mjs` lê `site-cache.json` e injeta o texto.
-  A/B confirmou ganho de QUALIDADE (Alpina 3→4 sinais, perfis/gatilhos ancorados no site). Honestidade:
-  o "15x mais barato" vale só pro perfil isolado; no research completo o custo é ~neutro (contexto adiciona
-  tokens, buscas caem só 5→4) e o ganho é qualidade. **Falta** rodar a regeneração completa do cache de
-  produção (gasta assinatura/tempo) — operação manual quando quiser atualizar.
-- [ ] **Deploy:** Scrapling é Python+browser, **não roda no Vercel**. Coleta fica em worker offline
-  (VPS quando fechar a Setter — vai hospedar openclaw/hermes e serve). Produto serve do cache.
+- [ ] Fix de dados em `/validacao` · `hindcast.json`.
+- [ ] Navegação `<a>` → `<Link>`, repo-wide.
+- [ ] Aposentar o `dossier-cache.json`.
+- [ ] Busca em 3,3s em produção (mediana, warm). O gargalo medido é a query mais o scoring, não a
+  chamada de LLM.
 
 ---
 
-## 🟢 Sessão 12/06 — bug fixes + polish (PR #41 na main `a9e3d0d`)
+## ⚪ Decisões em aberto
 
-**Concluído:**
-- [x] Bugs de interface: reordenar por score pós-investigação, switcher de setor passivo, "buscar neste setor" passivo, consolidadores clicáveis (só os 6 ingeridos).
-- [x] Hero spacing (80→40px no topo, desktop).
-- [x] OG/Twitter: travessão → `·`; imagem OG repaginada (centralizada + onda dupla + Newsreader no satori).
-- [x] **Bug do one-liner saúde/educação destravado** — era `ANTHROPIC_API_KEY` vazia no `.env.local` local (não afetava o deploy). Key colada, verificado ao vivo.
-
-**Próximo (bloqueia o júri ver a versão nova):**
-- [x] **🔴 Vercel sincronizado com a main** RESOLVIDO (12/06). Causa raiz: o plano Hobby da Vercel
-  bloqueia o auto-deploy de commits autorados por membro sem acesso ao projeto em repo privado (todos
-  os commits recentes são do Maguto), e por isso a produção travou pré-#41. Desbloqueado com um commit
-  do owner por cima (`ccd0d92`) que carrega a árvore atual e vira o HEAD autorizado. Atenção, é gambiarra:
-  todo push do Maguto vai bloquear de novo até um commit do owner entrar por cima. **Correção definitiva:
-  upgrade pra Vercel Pro e adicionar o Maguto ao time.** (O 401 / deployment protection também já foi
-  desligado, site público.)
-
-**Backlog de acabamento (PRs novos, domínio interface/Maguto):** — P1–P3 ✅ FEITOS (12/06, branch `maguto/acabamento-loading-404`)
-- [x] P1: `theme-color` (Smoky, via `viewport`) + 404 com marca (`not-found.tsx`). *(favicon `icon.svg` já existia.)*
-- [x] P2: loading da busca → `SearchSkeleton` (espelha o `EmpresaCard`, reserva altura, anti layout-shift) + linha de status técnico única que avança pelas fases. Substituiu o `LoadingSteps`.
-- [x] P3: `SalvarButton` com estado derivado da prop (zera o lint `set-state-in-effect`); varredura estática de hydration no golden path limpa; card/`/empresa/[id]` revisados (já bem-guardados, sem bug).
-- [x] **Extra:** liveness no loading da `/empresa/[id]` (`ResearchProgress`, fase rotativa + faixa 30-60s) + placeholder da busca seguindo o setor ativo (era fixo em metalmec).
-- [ ] (Opcional, **domínio Guilherme**) pré-cachear os exemplos de saúde/educação pra ficarem instantâneos como metalmec — exige ajustar o guard de cache texto+setor no `route.ts` + gerar cache. Hoje rodam ao vivo (~30-60s) **e atualmente FALHAM** (ver bloqueador de créditos abaixo).
-
-**🔴 BLOQUEADOR NOVO (12/06) — conta da API sem créditos:**
-- [ ] **A `ANTHROPIC_API_KEY` está sem saldo** — toda chamada ao vivo retorna 400 `"credit balance too low"` (erro em <1s, não é lentidão). Quebra research/dossiê/busca de teses novas no browser; **só funciona o cacheado** (4 empresas metalmec). **Atinge os jurados** se testarem fora do caminho metalmec. Guilherme conferindo os créditos em console.anthropic.com → Plans & Billing. A key é válida; é saldo. Nota: o item de 12/06 "one-liner destravado · key colada" tratava de a key estar **vazia** no `.env.local`; agora a key está lá mas a **conta** não tem crédito — problemas diferentes.
-- Dev: a **assinatura** (Agent SDK, login) voltou a funcionar (bloqueio antigo "org disabled subscription access" não está mais ativo). Política: durante o dev usamos a assinatura pra teste/reprodução; o app mantém a API direta.
-
-**Fora de escopo (decidido):** banner de fallback cross-query visível (risco de dado incoerente), detecção de "tese ampla demais", estados de sessão/permissão (sem auth), timeout elegante (baixo valor).
+- **Estimativa financeira no memo.** Já decidido **não fazer**: proxy de EBITDA cheira a dado
+  inventado para quem entende de PE, e é melhor ser honesto com capital social e porte do que
+  fabricar número. Fica registrado porque o juiz de M&A penaliza a ausência (0-1/10) e a tensão
+  volta toda vez. Se mudar, tem que vir com metodologia declarada.
+- **Qualificação do sócio** (código "49" = Sócio-Administrador, "Inventariante" = sinal sucessório
+  direto): resolver via dicionário do BigQuery. Barato e alto valor pro dossiê.
+- **Enrichment nível 1** (site/web da empresa): job assíncrono, não bloqueante. Metade das
+  empresas-alvo não tem presença digital, e a ausência é ela mesma um sinal.
 
 ---
 
-## 🟢 Handoff Maguto → Guilherme (09/06) — RESOLVIDO (11/06)
+## Removido nesta auditoria (30/07)
 
-Pipeline remodel (PR #39) mergeado na main (`41c62ee`). Itens abaixo implementados pelo Maguto em sessões posteriores; info dos setores descartada por decisão.
+Registrado para ninguém procurar depois:
 
-### INÍCIO (`/`)
-- [x] ~~**Info dos setores à direita**~~ — **decidido NÃO colocar** (optamos por não ter a coluna de setores na home).
-
-### PIPELINE (`/pipeline`)
-- [x] **Col Dono/Estágio — texto muito à esquerda** — o container `min-w-0 space-y-0.5` da coluna 3 não tem padding horizontal; o texto "Guilherme" e o select "IDENTIFICADO" começam rente à borda da célula, visualmente feio. Fix: adicionar `px-2` (ou similar) ao wrapper da col 3.
-- [x] **DateInput — remover ícone nativo** — `<input type="date">` renderiza ícone de agenda do browser + o SVG bone customizado; ficam dois ícones. Manter só o SVG bone (já tem hover ajustado). Fix: adicionar `[&::-webkit-calendar-picker-indicator]:hidden` ao className do input nativo em `DateInput`.
-- [x] **Atividade: botão "+" mais próximo do título, com box própria** — o `+` de adicionar toque/log fica longe do label "Atividade" e não tem delimitação visual. Jogar adjacente ao título e dar uma caixa delimitada para o bloco de log.
-- [x] **View geral (cross-stage)** — aba ou toggle que mostra _todas_ as oportunidades numa tabela única, sem filtrar por estágio. Candidatos: aba "Todos" antes das abas de estágio, ou um toggle "Estágios | Todos" no header do pipeline.
-- [x] **Aba Agenda — underline amarelo → floral** — active state usa `border-risk-mid` (ocre) em vez de `border-floral`. Fix: trocar `accentAgenda ? "border-risk-mid text-floral" : "border-floral text-floral"` por `"border-floral text-floral"` (Agenda recebe o mesmo tratamento dos demais estágios).
-- [x] **Separar Agenda dos estágios visualmente** — Agenda é uma dimensão operacional (fila de ações), não um estágio do funil. Hoje aparece na mesma barra de tabs que Identificado/Abordado/etc, o que confunde a narrativa. Solução: separador visual ou agrupamento distinto, mantendo navegabilidade por teclado (← →) entre todas as abas. Em aberto qual forma — discutir e decidir antes de implementar.
-- [x] **Review com impeccable no final** — após as features acima prontas, rodar `/impeccable polish pipeline/page.tsx` para quality pass de design antes de qualquer demo/Loom.
-
----
-
-## 🟡 Pipeline remodel (planejado 08/06 · Maguto)
-
-Problema: kanban de 6 colunas espreme os cards (nome ilegível) e com volume vira scroll
-infinito + expandir card a card. O board paga o custo das colunas sem usar o benefício (não
-tem drag — troca de estágio já é via `<Select>`).
-
-**Direção fechada:**
-- **Layout = tabs de estágio + linhas largas** (uma view de estágio por vez, em largura cheia,
-  legível sem expandir). Caminho natural pro híbrido Funil/Lista (opção C) depois, se der tempo.
-- **Worklist fria (`/worklist`) morre** — sua função de descoberta já é melhor servida pela busca
-  (ranqueia por score + mostra contato + deixa salvar). Aposentar a rota; opcional: preset
-  "perfil sucessório · com contato" na home pra preservar o atalho de prospecção.
-- **Agenda entra no pipeline** — fila quente sobre os salvos (com ação devida, ordenada por
-  prioridade: atrasadas → data → score). É a visão de ação do pipeline, não é "worklist". Nome: **Agenda**.
-
-**Em aberto:**
-- [ ] **Aba inicial: Agenda vs Identificado** — standby, Maguto vai alinhar com Guilherme
-  (operacional pede Agenda; narrativa do Loom pode pedir o funil/overview).
-- [ ] **Notas na linha: opção A/B/C** — em discussão (A: só indicador→página; B: expand só de
-  notas, log na página; C: notas+log inline). Tendência B.
-- [ ] **Alerta de mudança societária (monitor) — repensar a forma na linha.** O ponto terracota
-  testado no sandbox destoa do guideline (linguagem de notificação, atropela a semântica
-  reservada de ocre/terracota). Manter o sinal (é o sensor forward, diferencial vs. Grata) mas
-  na linguagem do brand: micro-rótulo tipográfico mono uppercase risk-high (ex: `⚠ TRANSIÇÃO`),
-  como o banner já faz hoje em `pipeline/page.tsx`. **Não é prioridade — fazer depois do remodel.**
-
-## 🟢 Home restyle Fase 1 (07/06 · Maguto) — pré-reunião 3
-
-Lote de baixo risco antes da reunião de terça (09/06). Tudo em `src/app/page.tsx` + `src/components/brand/Nav.tsx`.
-
-- [x] Copy da home enxuta (subhead sem moldura de venda; "ver metodologia →")
-- [x] Navbar: Início · Pipeline · Worklist + dropdown **Metodologia** (Validação/Mercado/Consolidadores/Setores)
-- [x] Card: stats strip (Porte · Capital · Fundada · Sócio+), capital compacto, badges + linha olive removidos, ações curtas
-- [x] Switcher de setor na home (segmented control) — troca o universo sem ir a /setores; cobertura segue o setor (2.000 empresas · SP por setor)
-- [x] Fix de toggle "não fecha" em investigar/memo/similares; labels olive→bone/70 na investigação
-- [x] Lint limpo (`set-state-in-effect` + prop `rank` órfã)
-
-## 🔴 Trajetória societária — handoff p/ Guilherme (removida da home 07/06)
-
-Removida do card da home (pesada inline: query BigQuery ao vivo, lenta/instável p/ empresas sem snapshot).
-**Rota `/api/trajetoria` + libs preservadas** — nada deletado do backend; só saíram botão/painel/handler do `page.tsx`
-(recuperáveis do git p/ a página da empresa).
-
-- [x] **Cachear trajetória das empresas-top dos demos** → `trajetoria-cache.json` + rota lê cache-first.
-  _(`build-trajetoria-cache.mjs` em lote via BigQuery, 110 empresas / 87 com eventos; `/api/trajetoria`
-  cache-first com `?fresh=1` pra forçar. Branch `gui/contexto-illa`.)_
-- [x] ~~Reviver o painel de trajetória na **página da empresa**~~ → **consolidado no dossiê** (decisão
-  09/06 com Guilherme): a seção standalone duplicava a linha do tempo do dossiê. O sinal que a Timeline
-  não tem (saídas + envelhecimento de faixa) virou o bloco "Movimentação societária" dentro do dossiê.
-
-## 🟡 Fase 2 — página da empresa + interatividade (versão final, esta semana)
-
-Decidido com o Maguto (07/06): busca e pipeline precisam ser navegáveis — clicar numa empresa abre a **página própria**
-dela (card + infos completas). Racional: o analista de M&A revisa muitas empresas e não lembra delas só pelo nome.
-
-- [x] Rota `/empresa/[id]` — recebe as ações pesadas (investigar, memo, similares, trajetória) + sócios + contato +
-  **score explainer** (o `breakdown` já vem no payload do `calcScore`). _(PR #38, `a60b01c`)_
-- [x] Card da busca vira link → página da empresa (card magro de verdade; lista longa fica varrível). _(PR #38)_
-- [x] **Pipeline:** cards clicáveis → página da empresa (mesma lógica). _(`138249b`)_
-- [x] **Similares funcional:** botão "Salvar no pipeline" por linha + legenda do critério (CNAE+praça+porte+época).
-  Hoje é lista morta; vira "ache parecidas → salve as boas" (wedge do Grata). _(resolvido)_
-- [x] Dependência opcional (Guilherme): `GET /api/empresa/[id]` (empresa + score) p/ a página sobreviver a
-  refresh/deploy. Sem isso, dá pra navegar via estado no clique (suficiente p/ o Loom). _(`138249b`, feito pelo Maguto)_
-
-## 🎨 Restyle sistema v1 (em curso — 03/06 · branch `maguto/restyle-sistema-v1`)
-
-Sistema de tipografia/cor documentado em `brand/uso-tipografia-cor.md`. Feito: base (strong 600, pesos
-sans 400/500/600), hero, card/memo. Faltam as páginas.
-
-- [x] **Ajeitar erro de borda na box** — resolvido.
-- [x] Etapa 3 — pipeline (`fb62e46`)
-- [x] Etapa 4 — validação (`4e769af` + `57b838f` + `5659693`)
-- [x] Etapa 5 — consolidadores (`fe59f28`) — aguarda revisão do Maguto no browser
-- [x] Etapa 6 — mercado ("0,46%" ocre → floral + strong sem cor) _(PR #35, `3bfe6a0`)_
-- [x] Etapa 7 — /setores (nova página do Guilherme, sem restyle) _(PR #35)_
-- [x] Etapa 8 — /worklist (nova página do Guilherme, sem restyle) _(PR #35; /worklist depois aposentada no PR #39)_
-- [x] Decidir peso do negrito — **decidido manter 600** (atual).
-- [x] SINAL_COR em validacao/page.tsx — **decidido manter como está; não usaremos SINAL_COR.**
-- [x] Abrir PR: `maguto/restyle-sistema-v1` → main _(PR #35 mergeado em main, `3bfe6a0`)_
-
-## 🔵 Fix de dados — /validacao · hindcast.json (Guilherme)
-
-- [x] **`hindcast.json`: campo `municipio` tem código IBGE em vez de nome da cidade** (ex: `3549102`
-  em vez de `"Sorocaba, SP"`). _(PR #36, `083b440` — lookup via API IBGE, 76 deals corrigidos)_
-  _Causa raiz também corrigida (`gui/contexto-illa`, `b67084b`): o `build-hindcast-cache.mjs` gerava
-  o código cru e reverteria o fix do JSON na próxima regeneração — agora faz JOIN com a tabela
-  `municipio` no BigQuery e formata "Cidade, SP". Sem isso, qualquer rebuild voltaria a quebrar._
-
-## 🔵 Dívida técnica — navegação `<a>` → `<Link>` (Guilherme, repo-wide)
-
-- [x] **Migrar back links de `<a href="/">` para `<Link>` do `next/link`** em todas as páginas.
-  _(Feito repo-wide em home, validação, pipeline, mercado, consolidadores e setores; `/worklist`
-  não existe mais. Zerou as 8+ violações de `@next/next/no-html-link-for-pages`. Links externos
-  (http, `target=_blank`) seguem como `<a>`. Branch `gui/contexto-illa`.)_
-
----
-
-## 🟢 Data moat + validação (30/05) ✅ MARCO
-
-- [x] **Mineração de transições do CNPJ** — ground truth de M&A de graça (340 deals saúde+metalmec SP).
-      `scripts/detectar-transicoes.mjs`. Ver `segundo-cerebro/wiki/synthesis/relay-data-moat.md`.
-- [x] **Validação retroativa em escala** + reconstrução temporal — `validacao-escala.mjs` (N=340).
-- [x] **Score v0.1 recalibrado por lift** e **portado pro produto** — top decil 17%→28%. PR #13.
-- [x] **Fix**: busca filtrada usa quadro societário completo (não subconjunto).
-
-## 🟢 Research na API + assinatura destravada (30/05) ✅
-
-- [x] **Research-agent migrado pra Anthropic API** + web search tool server-side (`web_search_20250305`).
-      `lib/research.ts` + `route.ts` + `check-research.mjs`. Interface intacta; validado (PRENSA 24s).
-- [x] **Assinatura destravada** — era conta errada logada no Claude Code (não bug da key). Re-login
-      com a conta pessoal Pro resolveu. Agent SDK voltou a custo zero (`check-agent-sdk.mjs` confirma).
-- [x] **Arquitetura:** produto na API (deploy-ready) · cache gerado via assinatura (custo zero).
-- [x] **Cache via assinatura:** `cache-research-sub.mjs` + `cache-dossier-sub.mjs` (fábricas custo-zero).
-
-## 🟢 Juiz de M&A validado (30/05) ✅
-
-- [x] **Rubric construído via assinatura** (`build-juiz-rubric.mjs`, 284s, custo zero): 8 dimensões
-      (pesos 3-5), 13 red flags, 24 fontes reais. Salvo em `scripts/juiz-rubric.json`.
-- [x] **Juiz rodado em 2 dossiês reais** (`juiz-avaliar.mjs`, migrado pra assinatura): PRENSA **4/10**
-      e MECANOTECNICA **4/10**, notas quase idênticas por dimensão. **O eval generaliza** — detecta
-      fraquezas sistemáticas do `dossier.ts`, não ruído. Tem sinal real (pegou o capital-social-como-porte).
-
-## 🟢 Correções do dossiê aplicadas + ganho medido pelo juiz (30/05) ✅
-
-- [x] **Red flags** (era 1/10 → **7-8/10**): seção classificada por severidade + como verificar
-      (PGFN/CARF/TJSP, NR-12, ambiental, dependência de owner, concentração). *Maior salto.*
-- [x] **Capital social**: prompt instrui explicitamente a NÃO usar como porte/receita.
-- [x] **Tese com "por que nós"**: ângulo do adquirente/originador (MECANOTECNICA tese 5→7).
-- [x] **Canal + próximo passo**: usa telefone/email do banco (ex: PRENSA "ligar (11) 4039-8240, falar
-      com Lucas; email é de terceiro → secundário"). Campo `proximo_passo` no dossiê.
-- [x] **Loop fechado e medido**: PRENSA **4→5**, MECANOTECNICA **4→6**. Ganho localizado nas dimensões
-      corrigidas (juiz mede de forma confiável). Cache de memos regenerado via assinatura (9 memos).
-- [x] **Bug do avaliador corrigido**: `juiz-avaliar.mjs` não passava os campos novos → juiz avaliava cego.
-
-## 🟡 Gargalo restante (decisão de produto pendente)
-
-- [ ] **Estimativa financeira** (juiz: 0-1/10, trava a nota geral) — ⚠️ TENSÃO com a decisão de não fazer
-      proxy de EBITDA. **Argumento novo do juiz**: a estimativa é o **primeiro corte de qualificação por
-      tamanho** (MECANOTECNICA: EPP → EBITDA ~R$580-860K, provável < ticket mínimo institucional → corta
-      o target *antes* de gastar tempo). Não é "número bonito", é filtro. Meio-termo: CAGED/PIA-IBGE +
-      flag "não auditado, pré-DD". **Decisão do Guilherme: incorporar com metodologia ou manter abstenção?**
-- [ ] Perfil competitivo do negócio (juiz: 3/10) + metodologia do score no memo (2/10) — não estavam nas 4 baratas.
-
-## ⚪ Semana 3 — deploy + Loom
-
-- [x] API direta (~31–38s, ~$0.04/busca)
-- [ ] **Deploy no Vercel** — env vars (Supabase + Anthropic + GCP). Com research na API, destrava.
-- [ ] **Calls de validação** — DMs enviadas (Daniella/Volaris, Nathália, Brenda, Illa). Na call: pedir
-      deal list (ground truth premium) + transcrição alimenta o juiz. Roteiro em `brain/roteiro-validacao.md`.
-
-## 🟡 Semana 1 — Foundation (até reunião 2, 02/06)
-
-- [x] BigQuery conectado — `br_me_cnpj` confirmado, 79k empresas SP ativas CNAE 24/25/28
-- [x] Ingerir dataset: 2.000 empresas + 4.929 sócios via `scripts/ingest-empresas.mjs`
-- [x] Schema Postgres: `empresa`, `socio`, `score_run` (migration 0001 aplicada)
-- [x] Pipeline v0: input NL → filtro → lista bruta — `/api/search` + UI (`page.tsx`)
-      LLM via Agent SDK (assinatura, local). ⚠️ no deploy trocar por Anthropic API direta.
-
-## 🟢 Semana 2 — Inteligência ✅ CONCLUÍDA
-
-- [x] **Heurística de succession risk** — `src/lib/scoring.ts`, 4 dimensões somáveis
-      (idade 40 + antiguidade 30 + estabilidade 20 + porte 10), ordenação desc na search
-- [x] **Reasoner LLM batched** — `src/lib/reasoner.ts`, 1 chamada Claude pro top 15,
-      retorna one_liner + flags por empresa. Qualidade excelente, cita dados específicos.
-- [x] **API direta** — `llm.ts` (Haiku no parser) + `reasoner.ts` (Sonnet). ~31–38s, ~$0.04/busca.
-- [x] **Enrichment Nível 0** — `enrich-empresas.mjs` resolveu município/CNAE/natureza (código→nome)
-      nas 2.000 empresas; telefone/email exibidos; ingest atualizado com JOINs (dados novos já nascem
-      resolvidos). `cnaes_secundarios` com descrição.
-- [x] **Dossiê estruturado** — `lib/dossier.ts` + `/api/dossier` + painel expansível na UI.
-      Memo: overview, análise sucessória, perguntas de abordagem, tese + timeline societária (CSS).
-- [x] **Fluxo de colaboração automático** nos skills `/boreal` e `/salve` (branch por pessoa,
-      rebase, PR via `gh`, "automático mas avisa").
-
-## 🟢 Semana 2.5 — Research-agent (score v1) ✅ CONCLUÍDA
-
-- [x] **Research-agent** — `src/lib/research.ts` + `/api/research`. Eleva score v0→v1 com sinais
-      qualitativos da web (Playbook §11). Via **Agent SDK + WebSearch nativo na ASSINATURA**
-      (truque: `env` do query() sem ANTHROPIC_API_KEY → Claude Code cai no login). **Custo zero.**
-      Híbrido: LLM identifica sinais da lista fechada + cita fonte; código aplica pesos. Bidirecional.
-- [x] **UI**: botão "🔍 Investigar com IA", badge muda v0→v1 ao vivo com delta (↑/↓), sinais com
-      peso colorido + link de fonte, resumo. Validado por Guilherme.
-- [x] **Cache de research** — `research-cache.json` + `build-research-cache.mjs`. Top 3 dos demos
-      pré-investigado → clique instantâneo (0.5s vs ~68s ao vivo). PR #6 mergeado.
-
-## ⚪ Semana 3 — Polish + Loom (SUBMIT até 10/06 23h59) ← FOCO ATUAL
-
-- [x] **Cache de demos** — `demo-cache.json` + `build-demo-cache.mjs`. Queries instantâneas.
-- [x] **Demo dos dois lados** — **MECANOTECNICA 85→96** ↑ (IA achou herdeiro na pecuária → sem
-      sucessor no negócio → eleva, com fonte real). Complementa o rebaixamento PRENSA 100→75 ↓.
-      Cacheado via assinatura. (Subida forte é rara no dataset — leads frios não têm M&A público.)
-- [x] **Cache de memos (dossiês)** — `/api/dossier` lê de `dossier-cache.json`; 9 memos pré-gerados
-      via assinatura (top-5 dos demos + research-cache). Expandir memo no pitch = instantâneo, custo 0.
-- [x] **Polish da hierarquia visual do card** — restyle completo na branch `maguto/restyle-brandkit`.
-      Card D.2 com two-column badge+content, border-left por tier, ações funcionais, dossiê + timeline.
-- [ ] **Ajustes UI/UX pós-restyle** (doc `boreal_ajustes_finais_ui_ux_3105.md`) — implementar amanhã:
-      - **Etapa A (Home):** label "DESCREVA UMA TESE EM LINGUAGEM LIVRE" + "Score de risco sucessório"
-      - **Etapa B (Cards):** "top 15 analisadas por IA" · badge RISCO SUCESSÓRIO ALTO/MÉDIO/BAIXO ·
-        limitar badges a 3 · reordenar ações (Ver detalhes → Investigar → Memo) · "Salvar no pipeline"
-      - **Etapa C (Pipeline):** lanes visuais sutis · empty states nas colunas
-      - **Decidir antes:** coluna direita (cobertura vs placeholder metodologia) · contador "PIPELINE · N"
-      - **Etapa D (memo — blocos `red_flags` + `proximo_passo` do #17, integrados no merge 31/05):**
-        Integrei o conteúdo do Guilherme reestilizado no brandkit (build/typecheck limpos), mas
-        a estilização foi 1ª tentativa "no automático" — revisar junto:
-        - **D.1 — cor por severidade dos red flags:** usei borda+texto `risk-high` (terracota/alta),
-          `risk-mid` (ocre/média), `hairline`+`bone` (baixa). Conferir leitura e se não compete com
-          o badge de score do card.
-        - **D.2 — densidade da lista de red flags:** o rubric tem até 13 flags possíveis; a lista pode
-          ficar longa. Avaliar limitar a N, ordenar por severidade (alta primeiro), ou agrupar.
-        - **D.3 — `como_verificar`:** hoje vem após " — " em `text-bone` na mesma linha. Em lista longa
-          fica pesado. Avaliar quebra de linha, tamanho menor, ou esconder atrás de hover/expandir.
-        - **D.4 — destaque do `proximo_passo`:** hoje é só "→ texto" em `text-floral`. É um call-to-action;
-          talvez mereça mais peso (bloco com borda/fundo sutil, como a tese).
-        - **D.5 — poluição de badges:** card já tem badge de score + chips de flags; red flags adiciona
-          badges de severidade. Cruzar com o ponto B ("limitar badges a 3") pra não virar ruído visual.
-        - **D.6 — ordem dos blocos no memo:** red flags entre análise sucessória e perguntas; próximo
-          passo no fim (após a tese). Confirmar se é a melhor hierarquia de leitura.
-- [ ] **Deploy no Vercel — decisão REVERTIDA (10/06): deployamos pros jurados.** O link está no ar,
-      mas **rodando versão antiga: o PR #40 (alinhamento de colunas + polish de empresa/home) ainda NÃO
-      está no Vercel.** Guilherme tem que re-deployar / sincronizar o Vercel com a main. Infra pendente:
-      env vars, `/api/trajetoria` quebra em serverless (BigQuery `keyFilename` → JSON inline), teto de
-      custo do link aberto. (decisão registrada em `decisions.md`, entrada retroativa 11/06)
-- [x] Roteiro do Loom escrito (v11 em `brain/submissao-clube.md`), gravar + editar.
-- [x] **⏰ SUBMETER o Loom até 10/06 23h59** — **submetido a tempo (10/06).**
-
-## 🔵 Semana 4 — Demo Day (15–16/06)
-
-- [ ] Se shortlist: ensaiar pitch ao vivo (~3–5min) + backup pré-gravado
-
----
-
-## Decisões em aberto
-
-- Enrichment Nível 1 (site/web da empresa): job assíncrono futuro, não bloqueante. Metade das
-  empresas-alvo não tem presença digital (ausência é, ela mesma, sinal). Não é prioridade pro Loom.
-- Como estimar EBITDA sem demonstrativo (proxy por porte / capital social)? Decisão: **não fazer**
-  — proxy financeiro cheira a dado inventado num pitch pra quem entende de PE. Melhor ser honesto
-  com o que temos (capital social, porte) do que fabricar número.
-- Qualificação do sócio (código "49" → "Sócio-Administrador", "Inventariante" = sinal sucessório
-  direto): resolver via dicionário do BigQuery. Barato e alto valor pro dossiê. Próximo enrichment.
+| o que | por quê |
+|---|---|
+| Semanas 1, 2, 2.5, 3, 4 e Demo Day | cronograma do Clube da Programação, encerrado em junho |
+| Submissão do Loom (deadline 10/06) | submetido a tempo; `brain/submissao-clube.md` fica como material reaproveitável de pitch |
+| Deploy no Vercel | **feito**, verificado em produção nesta sessão |
+| Selo de proveniência | **feito**, testado ponta a ponta e verificado nesta sessão |
+| Pré-cachear saúde e educação | **feito** no cache de 25/07 (4 setores + 15 chaves de tese) |
+| Pipeline remodel, home restyle, restyle sistema v1, handoff Maguto | frentes do Maguto, que parou depois do fim do Clube |
+| Enquadramentos de "atinge os jurados" | não há mais jurados |
