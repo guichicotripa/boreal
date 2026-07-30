@@ -91,8 +91,22 @@
 
 - [ ] **Fairplay Capital como prospect, não como ameaça.** Boutique de 2024, Sorocaba/SP,
   middle-market R$ 20M a R$ 500M, três pessoas, sem originação proprietária. É a Setter com outro
-  nome. Convite de conversa de aprendizado enviado ao José Venancio em 30/07 (Mom Test, sem demo).
-  Análise completa em `brain/referencia-site-fairplay.md`.
+  nome. Análise completa em `brain/referencia-site-fairplay.md`.
+
+  **Estado (30/07):** convite de conversa de aprendizado enviado ao José Venancio (Mom Test, sem
+  demo). Ele respondeu em ~3h, caloroso, mas **não aceitou o 1:1**: ofereceu no lugar uma
+  "masterclass com jovens talentosos interessados em M&A". Ou seja, reclassificou o Guilherme de
+  quem-constrói-em-originação para plateia. Provavelmente é o mesmo motor do Fairmind, construção
+  de audiência e funil de recrutamento.
+
+  Resposta enviada aceita a masterclass **e** repropõe os 20 minutos, ancorando no fato do piloto
+  em agosto para desfazer o enquadramento sem se gabar. Se ele empurrar de novo, reconsiderar
+  mandar um recorte de dado (ex: heat-map de M&A da praça de Sorocaba) como presente, não como
+  demo: ficar em silêncio dentro do enquadramento de aluno é pior que o risco de mostrar output.
+
+  Ir na masterclass mesmo assim, com expectativa correta: é jogada de relacionamento, não de
+  aprendizado. O valor está em virar rosto conhecido antes da conversa comercial e em quem mais
+  estará na sala (público adjacente ao da BRHSIC Academy).
 
 ---
 
