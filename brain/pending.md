@@ -4,6 +4,33 @@
 
 ---
 
+## 🔴 O research castiga o que o dado premia (29/07)
+
+O score determinístico virou v1 e a metodologia inteira está em
+[`brain/modelo-de-score.md`](modelo-de-score.md). Uma ponta ficou aberta e é a mais séria:
+
+O agente de research cobra **−25** em `sucessor_familiar_ativo`, o maior castigo do sistema. A
+medição de lift condicional diz que sucessor aparente no quadro tem lift **2,14x positivo** (z =
+9,5). Ou seja, o peso está apontado para o lado contrário do que as aquisições reais mostram.
+
+Não é teórico: das 9 investigações rodadas até aqui, **4 dispararam esse sinal**. O comportamento
+dominante do research hoje é rebaixar em 25 pontos justamente as leads que o ground truth diz
+serem 2,14x mais prováveis de vender. Durante o piloto isso empurra a Setter para baixo na lista
+certa.
+
+- [ ] **Decidir com o Guilherme** se inverte agora ou depois do piloto. Inverter é decisão de
+  produto, não correção de bug, porque muda o comportamento do agente.
+- [ ] **Medir os outros pesos do research.** `sucessor_familiar_ativo` foi o único testado, e só
+  porque a variável de registro correspondente existe. Os demais (`banco_investimento` +15,
+  `mencao_sucessao_venda` +12, `big4_auditoria` +5, `sem_presenca_digital`) **nunca passaram por
+  lift**. Foram escolhidos por intuição, que é exatamente o que o score deixou de fazer.
+- [ ] Agravante metodológico já observado: numa das investigações (ESCOLAS PADRE ANCHIETA) o
+  `sucessor_familiar_ativo` foi disparado por uma página de agregador de CNPJ, ou seja, o research
+  gastou ~100s de LLM para reler o mesmo registro que o score já tinha. Se o sinal for mantido, a
+  regra de evidência precisa exigir fonte externa ao registro.
+
+---
+
 ## ✅ Cache pronto (25/07)
 
 4 setores + 15 chaves de tese, **todos com score médio 100** (o topo real) e **15 insights

@@ -28,6 +28,11 @@
 //
 // Números nunca moram neste comentário: src/lib/lift-coorte.json e src/lib/validacao-v1.json são
 // as fontes. Comentário que repete número é comentário que vai mentir.
+//
+// METODOLOGIA COMPLETA em brain/modelo-de-score.md: de onde vem o ground truth, por que lift
+// condicional e não marginal, por que recall@top10% e não acurácia, e o RITO para adicionar ou
+// remover eixo. Leia antes de mexer aqui. Mexeu neste arquivo, mexe também em
+// scripts/lib/score-sql.mjs (o espelho SQL) e roda scripts/validacao-score-v1.mjs.
 
 import type { Empresa, Socio } from "./types";
 import percentis from "./capital-percentis.json" with { type: "json" };

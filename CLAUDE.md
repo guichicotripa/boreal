@@ -128,6 +128,7 @@ primeira pull de CNPJs a seguir. Ainda sem pipeline. Ver `brain/progress.md` pro
 | `brain/progress.md` | o que foi feito, sessão por sessão (append-only) |
 | `brain/decisions.md` | decisões + porquê |
 | `brain/pending.md` | próximos passos / em aberto |
+| `brain/modelo-de-score.md` | **como o score é construído, medido e revisado** — metodologia completa, protocolo de mudança e limitações. Ler antes de tocar em `scoring.ts`. |
 | `skills/_index.md` | catálogo das skills + onboarding do Maguto |
 
 > Contexto operacional completo (deadlines, equipe, relação com Relay/BRHSIC) vive no segundo
