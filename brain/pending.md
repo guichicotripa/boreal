@@ -4,32 +4,48 @@
 
 ---
 
-## 🔴 O research castiga o que o dado premia (29/07)
+## ✅ Research corrigido + ganho confirmado (29/07)
 
-O score determinístico virou v1 e a metodologia inteira está em
-[`brain/modelo-de-score.md`](modelo-de-score.md). Uma ponta ficou aberta e é a mais séria:
+Duas pontas fechadas. Metodologia completa em [`brain/modelo-de-score.md`](modelo-de-score.md).
 
-O agente de research cobra **−25** em `sucessor_familiar_ativo`, o maior castigo do sistema. A
-medição de lift condicional diz que sucessor aparente no quadro tem lift **2,14x positivo** (z =
-9,5). Ou seja, o peso está apontado para o lado contrário do que as aquisições reais mostram.
+**Os sinais de sucessão estavam invertidos, e eram dois, não um:**
 
-Não é teórico: das 9 investigações rodadas até aqui, **4 dispararam esse sinal**. O comportamento
-dominante do research hoje é rebaixar em 25 pontos justamente as leads que o ground truth diz
-serem 2,14x mais prováveis de vender. Durante o piloto isso empurra a Setter para baixo na lista
-certa.
+| sinal | era | virou | lift medido |
+|---|---|---|---|
+| `sucessor_familiar_ativo` | **-25** (maior castigo do sistema) | **+12** | 2,14x (z = 9,5) |
+| `herdeiro_fora_carreira` | +8 | **-8** | 0,58x (z = 9,5) |
 
-- [ ] **Decidir com o Guilherme** se inverte agora ou depois do piloto. Inverter é decisão de
-  produto, não correção de bug, porque muda o comportamento do agente.
-- [ ] **Medir os outros pesos do research.** `sucessor_familiar_ativo` foi o único testado, e só
-  porque a variável de registro correspondente existe. Os demais (`banco_investimento` +15,
-  `mencao_sucessao_venda` +12, `big4_auditoria` +5, `sem_presenca_digital`) **nunca passaram por
-  lift**. Foram escolhidos por intuição, que é exatamente o que o score deixou de fazer.
-- [ ] Agravante metodológico já observado: numa das investigações (ESCOLAS PADRE ANCHIETA) o
-  `sucessor_familiar_ativo` foi disparado por uma página de agregador de CNPJ, ou seja, o research
-  gastou ~100s de LLM para reler o mesmo registro que o score já tinha. Se o sinal for mantido, a
-  regra de evidência precisa exigir fonte externa ao registro.
+Junto vieram duas regras no prompt: sucessor familiar exige **fonte externa ao registro** (agregador
+de CNPJ só repete o quadro que o score já leu, e re-reportá-lo faz o mesmo fato valer duas vezes),
+e "sócio idoso" deixou de ser gatilho, porque é condição de anos e não motivo de agora. As 43
+investigações persistidas foram **recalculadas, não descartadas** (`scripts/recalcula-research.ts`).
+
+**O ganho do v1 deixou de ser inconclusivo.** `validacao-score-v1.mjs --amplo` roda o CNPJ inteiro
+(22,4 mi de empresas, decil por divisão CNAE) em vez dos 4 verticais:
+
+- perfil sucessório: 35,8% → **41,5%**, +5,7pp, **n = 978**, **z = 2,59**
+- o delta praticamente não se moveu com o n 6x maior (+5,4pp → +5,7pp), que é a evidência de que
+  não era ruído
+
+Número a citar ao cliente: **41,5% de recall no perfil sucessório, 4,1x melhor que sorteio.**
+
+### O que ficou aberto disso
+
+- [ ] **Os outros pesos do research nunca passaram por validação nenhuma.**
+  `banco_investimento` +15, `mencao_sucessao_venda` +12, `csuite_externo` +6, `big4_auditoria` +5,
+  `sem_presenca_digital` +3. Foram escolhidos por intuição, que é exatamente o que o score deixou
+  de fazer. Alguns nem têm proxy de registro para medir; nesses, o melhor possível é ancorar a
+  direção e dizer que a magnitude é arbitrada.
+- [ ] **29% do topo da lista (score >= 90) já tem sócio PJ no quadro.** Pode ser holding da família
+  (segue alvo), já parcialmente vendida (não é mais sucessão) ou sócio institucional (outro jogo), e
+  hoje as três aparecem iguais. É decisão de tese, não bug: definir se PJ controlador desqualifica e
+  então testar como **filtro**, nunca como eixo (medimos lift 3,15x, mas confundido com a definição
+  do ground truth).
+- [ ] **25 empresas em recuperação judicial dentro do topo** (108 na base inteira). Detectável por
+  string na razão social. Flag na linha, não exclusão.
 
 ---
+
 
 ## ✅ Cache pronto (25/07)
 
