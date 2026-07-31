@@ -119,6 +119,13 @@
 - [ ] Aposentar o `dossier-cache.json`.
 - [ ] Busca em 3,3s em produção (mediana, warm). O gargalo medido é a query mais o scoring, não a
   chamada de LLM.
+- [ ] **`/api/research` não tem guarda de teto.** Exposto pelo mapa de fluxo (31/07): o lote
+  (`precompute-research.ts`) ganhou `--min/--max` justamente porque investigar quem já está em
+  score_v0 = 100 não move nada (o clamp come o ajuste), mas a rota sob demanda, que é a que
+  **custa dinheiro** (US$ 0,04 a 0,22 por chamada), não herdou nada disso. O originador clica
+  "investigar" no 1º da lista, que é exatamente quem está no teto. Opções: avisar na UI antes de
+  gastar, ou passar a exibir o `ajuste_bruto` como o resultado visível quando o score satura (o
+  campo já existe e já é usado no desempate).
 
 ---
 

@@ -129,6 +129,7 @@ Detalhe sessão a sessão em `brain/progress.md`, o que está aberto em `brain/p
 | `brain/pending.md` | próximos passos / em aberto |
 | `brain/modelo-de-score.md` | **como o score é construído, medido e revisado** — metodologia completa, protocolo de mudança e limitações. Ler antes de tocar em `scoring.ts`. |
 | `brain/referencia-site-fairplay.md` | referência visual e de copy para o site institucional |
+| `brain/fluxo-de-dados.excalidraw` | **mapa do pipeline inteiro** — BigQuery → ingest → Supabase → score v0 → busca → v1 → produto, mais o laço de calibração offline. Gerado por `scripts/gen-fluxo-excalidraw.py`: mudou o pipeline, edita a spec e roda de novo, não edita o desenho à mão. |
 | `skills/_index.md` | catálogo das skills |
 
 > Contexto operacional completo (deadlines, equipe, relação com Relay/BRHSIC) vive no segundo

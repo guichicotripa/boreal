@@ -1378,3 +1378,45 @@ dados). PR #40 mergeado na main.
 
 **Resultado:** `next build` + `tsc` limpos (18 rotas; `/consolidadores` e `/opengraph-image` estáticas). PR #41 mergeado na main (`a9e3d0d`); branch deletada.
 **Aprendizado:** (1) front passando `setor` redundante quebra o cache — alinhar o switcher à convenção `?? "metalmec"` (default = `null`) restaurou o cache sem tocar no motor. (2) testar acento via `curl -d` inline no bash corrompe encoding (falso "cache miss"); usar `--data-binary @arquivo`. (3) repaginar OG no satori exige carregar fonte explicitamente (não traz Newsreader) — fetch do subset + fallback.
+
+## [2026-07-31] Guilherme | Mapa do fluxo de dados (Excalidraw gerado, não desenhado)
+
+**Contexto:** faltava uma visão única do pipeline. O conhecimento estava correto mas espalhado
+entre `modelo-de-score.md` (o score), os cabeçalhos dos scripts (a ingestão e as validações) e o
+código das rotas (o runtime). Ninguém, incluindo o Guilherme, conseguia responder "o que acontece
+entre o CNPJ no BigQuery e a lista ordenada na tela" sem abrir cinco arquivos.
+
+**Entregue:** `brain/fluxo-de-dados.excalidraw` (134 elementos), em dois laços separados de
+propósito:
+- **Laço de runtime**, 6 colunas: ingestão (`ingest-setor.mjs` + `enrich-empresas.mjs`) → Supabase
+  (empresa/socio, score_run, tabelas de app e RLS) → busca (`/api/search`, parse da query, escopo,
+  `comOverlays`) → score v0 (`scoring.ts`, os 5 eixos com os pontos) → score v1 (as duas rotas de
+  investigação, os pesos aplicados pelo código, o clamp) → produto (páginas, memo, `evento`).
+- **Laço de calibração**, offline: dois snapshots do BigQuery → ground truth pela assinatura do
+  quadro societário → lift condicional / holdout / percentis → artefatos versionados → **uma seta
+  roxa subindo** para `scoring.ts`. É a única entrada de peso no score, e o desenho torna isso
+  visualmente inegociável.
+
+Os três retornos que o desenho torna óbvios e o texto não tornava: o v1 grava em `score_run` e
+volta como overlay na busca; o `evento` volta pro banco como sinal de treino; e a calibração é a
+única coisa que mexe na fórmula.
+
+**Decisão de método:** o diagrama é **gerado** por `scripts/gen-fluxo-excalidraw.py`, não
+desenhado. Diagrama de arquitetura editado à mão e abandonado vira mentira em duas semanas, e
+mentira desenhada convence mais que parágrafo desatualizado (mesmo raciocínio que motivou a
+auditoria do brain em 30/07). Mudou o pipeline: edita a spec no script e roda de novo. O
+`.excalidraw` continua editável no app pra rabiscar por cima numa call, mas a versão commitada é
+sempre a gerada.
+
+**Validação:** check de geometria automatizado sobre o JSON de saída — zero colisões texto/texto,
+zero texto sobre caixa, zero seta cruzando o interior de caixa. Rasterizado em PNG e conferido
+visualmente. Três problemas corrigidos no caminho: rótulos caindo dentro das caixas (corredores
+alargados de 60 pra 120px + posicionamento manual dos 8 rótulos difíceis), uma seta tracejada
+atravessando a caixa de artefatos (removida, `modelo-de-score.md` é regra e não fluxo de dado), e
+a seta de `/api/search` → produto cruzando a caixa da tese invertida (reroteada pela faixa livre
+de y=920).
+
+**Aprendizado:** o desenho expôs uma assimetria que o código esconde — o v1 tem duas portas de
+entrada (`/api/research` paga por empresa, `precompute-research.ts` roda pela assinatura) que
+compartilham prompt e parse, mas só a segunda tem controle de faixa de score. Na prática o produto
+gasta dinheiro investigando empresa que talvez esteja no teto e não vai se mover.
