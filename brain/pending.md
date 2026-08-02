@@ -114,6 +114,11 @@
 
 > Herdados da auditoria de 30/07 sem reverificação. Confirmar se ainda valem antes de agir.
 
+- [ ] **`PRODUCT.md` está na condição em que o README estava** (achado de 02/08, não corrigido).
+  Descreve o Maguto como co-dono com fronteira de domínio por arquivo (`page.tsx` dele, `lib/` do
+  Guilherme) e o produto como submissão de competição de clube de programação com Loom de 1 minuto.
+  Nada disso vale desde junho. Decidir entre reescrever (vira doc de produto de verdade) ou marcar
+  como documento histórico, igual foi feito com `submissao-clube.md`.
 - [ ] Fix de dados em `/validacao` · `hindcast.json`.
 - [ ] Navegação `<a>` → `<Link>`, repo-wide.
 - [ ] Aposentar o `dossier-cache.json`.

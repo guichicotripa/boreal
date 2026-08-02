@@ -1420,3 +1420,42 @@ de y=920).
 entrada (`/api/research` paga por empresa, `precompute-research.ts` roda pela assinatura) que
 compartilham prompt e parse, mas só a segunda tem controle de faixa de score. Na prática o produto
 gasta dinheiro investigando empresa que talvez esteja no teto e não vai se mover.
+
+## [2026-08-02] Guilherme | README reescrito do zero, com os diagramas
+
+**Contexto:** pedido de "melhorar o README usando o diagrama". Virou reescrita, porque o arquivo
+estava **errado**, não velho. Quatro afirmações falsas na página de entrada do repo:
+
+| Dizia | Verdade |
+|---|---|
+| "É o motor de originação do Relay" | O Relay virou Boreal em 20/07. Não existe mais. |
+| Score = idade do sócio, antiguidade, porte, quadro plural | Antiguidade e porte saíram em 29/07. |
+| "67% das aquisições no top 10%" | Número de fórmula aposentada. |
+| Gate por `BOREAL_GATE_PASSWORD` | Virou Supabase Auth em 28/07. |
+
+Pior: a tese na primeira frase era a **invertida** ("dono envelhecendo, sem sucessor no quadro"),
+exatamente o que o lift condicional derrubou. A vitrine do projeto vendia a tese errada.
+
+**Entregue:** README em 13 seções, cobrindo as duas leituras que o Guilherme pediu:
+- **Não técnica** (§1, §2, §3): o que é sem jargão, o problema, e a inversão da tese com a tabela
+  de lift e z. A inversão virou seção própria porque é o ativo intelectual do projeto, não nota
+  de rodapé.
+- **Técnica** (§4 a §8, §10 a §13): ciclo de vida da request, cada peça do pipeline, a validação
+  com holdout e recall por setor, o laço de calibração, stack, setup, mapa do código.
+- **§9 lista as limitações em voz alta**, incluindo as sete que o `pending.md` já rastreava.
+
+**Diagramas:** cinco Mermaid (GitHub renderiza nativo, então versionam como texto e não envelhecem
+como imagem) + o PNG do fluxo completo em `docs/`, gerado por `scripts/render-fluxo-png.py` a
+partir do mesmo `.excalidraw`. Os Mermaid são: busca em 30s (não técnico), sequence da request,
+composição v0 → v1, ER do multi-tenant, e o gate do laço de calibração.
+
+**Validação:** os 5 blocos Mermaid foram extraídos do README e renderizados no mermaid 11 (a mesma
+versão do GitHub) numa página servida localmente. Resultado: `TODOS OK (5)`. Sem isso o risco era
+publicar diagrama que quebra só na página do GitHub. O renderizador de PNG teve um bug de moldura
+no caminho: numa seta o `width` é o span dos pontos e o `x` é o primeiro ponto, então `x + width`
+não é a borda direita, e setas que vão pra esquerda estouravam a imagem em 3.000px de branco.
+
+**Achado que não foi corrigido:** `PRODUCT.md` está na mesma condição em que o README estava.
+Descreve o Maguto como co-dono com fronteira de domínio por arquivo, e o produto como submissão de
+competição de clube de programação com Loom de 1 minuto. Anotado no `pending.md`, não reescrito
+nesta sessão.
