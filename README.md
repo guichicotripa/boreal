@@ -320,7 +320,9 @@ De todas as aquisições reais, que fatia o score colocou no **decil mais alto**
 | Universo nacional | 7.060 | 47,2% | **60,6%** | 6,1x |
 | Perfil sucessório (a tese) | 978 | 35,8% | **41,5%** | 4,1x |
 
-O ganho no perfil sucessório é de 5,7 pontos com **z = 2,59**, medido em holdout com n seis vezes maior que a primeira medição. É o número para citar externamente.
+O ganho no perfil sucessório é de 5,7 pontos com **z = 2,59**, medido em holdout com n seis vezes maior que a primeira medição.
+
+> ⚠️ **Estes números estão em revisão desde 02/08/2026, e para baixo.** A calibração descobriu que o label de aquisição não consegue classificar empresa de sócio único: são 292.499 empresas com 1 sócio PF e **zero** aquisições detectadas, porque a assinatura "entra PJ e sai PF" exige que sobre alguém no quadro. Essas empresas estavam no denominador, nunca podiam contar como acerto perdido e ainda liberavam vaga no decil de cima. Medindo só onde o label consegue classificar, o recall do perfil sucessório cai de **42,0% para 36,9%**. O método já foi trocado (universo elegível + métrica estratificada por nº de sócios) e está documentado em [`brain/modelo-de-score.md`](brain/modelo-de-score.md) §13; a renumeração de todas as tabelas desta seção acontece quando os pesos recalibrados forem aplicados. Até lá, **o número honesto para citar é 36,9%**, e não o 41,5% da tabela acima.
 
 ### Por setor
 
@@ -386,7 +388,7 @@ O passo do `score-sql.mjs` não é burocracia. Existiam cópias independentes da
 
 ## 9. Limitações que a gente diz em voz alta
 
-- **O ground truth é proxy.** "Entra sócio PJ e sai sócio PF" captura troca de controle registrada, não deal confirmado. Pega reorganização de holding familiar junto, e perde aquisição feita por pessoa física ou estruturada fora do quadro societário.
+- **O ground truth é proxy, e é cego justamente no caso central.** "Entra sócio PJ e sai sócio PF" captura troca de controle registrada, não deal confirmado. Pega reorganização de holding familiar junto, e perde aquisição feita por pessoa física ou estruturada fora do quadro societário. Pior: ele **só enxerga aquisição parcial**. Empresa de sócio único é estruturalmente inclassificável (sair de 1 sócio PF para 0 acontece 1 vez em 292 mil no registro), e é exatamente o perfil que a tese de sucessão mais quer prever. Consequência medida em 02/08/2026: o eixo de idade do dono tem lift 1,00x dentro de faixas de nº de sócios, o que **não** quer dizer que idade não prevê venda, e sim que este label não consegue testar idade. Ver [`brain/modelo-de-score.md`](brain/modelo-de-score.md) §13.
 - **Faixa etária é faixa, não idade.** A Receita publica banda (61 a 70, 71 a 80, 80+), não a data de nascimento. O eixo de idade é mais grosso do que parece.
 - **Capital social não é faturamento.** É o sinal de tamanho mais honesto que o registro público oferece, e é por isso que ele é usado, mas correlaciona imperfeitamente com porte real. O produto **nunca** fabrica EBITDA ou receita.
 - **Cinco dos sete pesos do v1 nunca foram validados** contra lift medido.

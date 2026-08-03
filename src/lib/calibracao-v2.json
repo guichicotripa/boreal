@@ -1,0 +1,117 @@
+{
+  "gerado_em": "2026-08-02",
+  "fonte": "scripts/calibra-score.py",
+  "label": "basica",
+  "universo": {
+    "n_matriz": 1465665,
+    "n_elegivel": 451222,
+    "criterio_elegivel": "presente no snapshot de desfecho e n_pf >= 2",
+    "aquisicoes": 1610
+  },
+  "metrica_primaria": "recall@top10% estratificado por (vertical, faixa de nº de socios)",
+  "metodo": "de_base",
+  "faixas": {
+    "escala_capital": [
+      "<p50",
+      "p50",
+      "p70",
+      "p85",
+      "p95"
+    ],
+    "idade_controle": [
+      "<6",
+      "6",
+      "7",
+      "8",
+      "9"
+    ],
+    "sucessor_aparente": [
+      "sem",
+      "<=5"
+    ],
+    "movimento_societario": [
+      "10+/sem",
+      "<10",
+      "<5"
+    ]
+  },
+  "pesos_atuais": {
+    "escala_capital": [
+      0,
+      11,
+      19,
+      27,
+      34
+    ],
+    "idade_controle": [
+      0,
+      10,
+      19,
+      25,
+      28
+    ],
+    "sucessor_aparente": [
+      0,
+      14
+    ],
+    "quadro_plural": [
+      0,
+      7,
+      13
+    ],
+    "movimento_societario": [
+      0,
+      6,
+      11
+    ]
+  },
+  "pesos_propostos": {
+    "escala_capital": [
+      0,
+      5,
+      17,
+      27,
+      51
+    ],
+    "idade_controle": [
+      0,
+      17,
+      17,
+      30,
+      30
+    ],
+    "sucessor_aparente": [
+      0,
+      1
+    ],
+    "movimento_societario": [
+      0,
+      1,
+      5
+    ]
+  },
+  "desenvolvimento": {
+    "cv": 38.214,
+    "baseline_cv": 31.551,
+    "estratificado": 37.44,
+    "simples": 47.15,
+    "perfil": 25.33,
+    "baseline_estratificado": 30.83,
+    "baseline_simples": 45.47,
+    "baseline_perfil": 24.67
+  },
+  "holdout": {
+    "n": 838,
+    "n_perfil": 167,
+    "baseline": {
+      "estratificado": 31.74,
+      "simples": 46.3,
+      "perfil": 19.16
+    },
+    "proposto": {
+      "estratificado": 35.32,
+      "simples": 46.66,
+      "perfil": 22.75
+    }
+  }
+}

@@ -1330,3 +1330,39 @@ Brasil inteiro. Duas saídas:
 1.460/34 tiles, nota e cor recalibradas), sem scroll. Screenshot trava no headless — **review visual pendente**.
 
 **Status:** ✅ Implementado na branch. Pendente review visual do Guilherme.
+
+## [2026-08-02] Métrica de validação passa a ser estratificada, e o universo passa a ser o elegível
+
+**Contexto.** Tentativa de ajustar os pesos do score v0 por fit em vez de ancoragem. O primeiro
+loop devolveu `quadro_plural = [0,41,58]` com `idade_controle` colapsando pra 4: o ajuste
+descobriu que o melhor preditor era contar sócios.
+
+**O achado.** O label (`entra PJ e sai PF`) é estruturalmente incapaz de disparar em empresa de
+sócio único: 292.499 empresas com 1 sócio PF, **zero** aquisições; sair de 1 sócio para 0
+acontece 1 vez em 292 mil. O label só vê aquisição parcial. A prevalência dele sobe 10x com o
+número de sócios por aritmética, não por propensão.
+
+**Decisão, em três partes:**
+
+1. **Universo elegível.** Recall só se mede sobre quem o label consegue classificar (presente no
+   snapshot de desfecho e n_pf ≥ 2). Custo: o número honesto do perfil sucessório cai de 42,0%
+   para 36,9%. Aceito, porque a diferença era crédito por ranquear empresa que nunca poderia
+   contar como erro.
+2. **Métrica estratificada.** `recall@top10%` dentro de `(vertical, faixa de nº de sócios)`.
+   Neutraliza a parte mecânica do label.
+3. **Eixo que a métrica não julga não entra na busca.** `quadro_plural` sai do ajuste e é
+   decidido à parte, explicitamente.
+
+**O que NÃO foi decidido, de propósito.** O eixo de idade tem lift 1,00x dentro do estrato, e
+mesmo assim **não** foi removido. A transação que a idade previria (venda integral de empresa de
+dono único) é justamente a que o label não enxerga. Tirar o eixo por causa desse número seria
+sobreajustar a um instrumento cego no caso central do produto. Ausência de evidência aqui é
+limitação de medição, não evidência de ausência. Ver `brain/modelo-de-score.md` §13.
+
+**Custo aceito.** Todo número público (README, onepager, pitch, /validacao) foi medido no
+universo inflado e precisa ser refeito. É a segunda vez em quatro dias que um número de cliente
+cai por erro de construção de métrica, e as duas vezes foram achadas olhando *como* o número foi
+feito, não olhando o número.
+
+**Status:** ✅ Método trocado e documentado. ⏳ Pesos propostos medidos (+3,58 no holdout,
+McNemar z=2,42) mas **não aplicados** em `scoring.ts` — decisão do Guilherme.

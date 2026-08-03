@@ -9,6 +9,30 @@
 
 ---
 
+## 🔴 Decisões abertas da calibração (02/08)
+
+> Contexto completo em `brain/modelo-de-score.md` §13. O método já mudou e está documentado;
+> o que falta é decisão de produto, não de medição.
+
+- [ ] **Aplicar ou não os pesos propostos em `scoring.ts`.** Ganham +3,58 no holdout
+  (31,74% → 35,32% estratificado), McNemar z=2,42. Custo: `sucessor_aparente` cai de 14 pra 1
+  ponto, o que esvazia a "inversão da tese" que hoje é a história central do pitch e do README.
+- [ ] **O que fazer com `idade_controle`.** Lift 1,00x dentro do estrato, ou seja, o label não
+  consegue testá-lo. Não é evidência de que não sirva: a venda integral de empresa de dono único,
+  que é o caso central da tese, é invisível pro registro. Manter por julgamento, reduzir, ou
+  buscar outro ground truth que enxergue esse caso.
+- [ ] **`quadro_plural` compra número, não ordenação.** Variar de 0 a 26 pontos não move a métrica
+  estratificada e move a contaminada. Remover ou manter declaradamente como julgamento.
+- [ ] **Refazer todo número público.** README, onepager da Setter, pitch-mestre e `/validacao`
+  citam recall medido no universo inflado. O 41,5% em holdout vira 36,9% no universo elegível.
+- [ ] **Decidir sobre `tem filial`** (lift 1,82x-2,48x estratificado, z 7-8). Exige adicionar
+  contagem de estabelecimentos ao ingest e à tabela `empresa`. Hoje não é calculável em runtime.
+- [ ] **Decidir sobre `tem sócio PJ`** (lift 2,12x-5,07x estratificado). É derivável em runtime,
+  mas mede empresa que já tem sócio institucional, o que encosta no desfecho. Ver a ressalva de
+  tese dos 29% do topo com sócio PJ.
+
+---
+
 ## 🔴 Antes ou durante o piloto da Setter
 
 - [x] ~~**Os números do onepager e do pitch estavam defasados.**~~ **Resolvido 30/07.** Afirmavam

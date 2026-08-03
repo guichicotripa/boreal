@@ -675,3 +675,146 @@ Em ordem aproximada de valor esperado sobre esforço.
    abandonado.
 5. O número honesto para o cliente é 38,3% de recall no perfil sucessório, 3,8 vezes melhor que
    sorteio, e não os 72% do universo completo.
+
+---
+
+## 13. A rodada de 02/08/2026: o label estava contaminado
+
+> Esta seção corrige as seções 3, 4, 6 e 7 acima. Elas continuam no documento porque o
+> raciocínio delas foi honesto com o que se sabia na época, e porque saber *como* a medição
+> errou vale mais que só ver o número novo. Onde houver conflito, **esta seção vence**.
+
+### 13.1. O que disparou a investigação
+
+O objetivo era ajustar os pesos por fit em vez de ancoragem. O primeiro loop rodou contra o
+label de sempre e devolveu isto:
+
+```
+quadro_plural:  [0, 41, 58]     ← nº de sócios PF virando 58 dos 100 pontos
+idade_controle: [0,  1,  1, 3, 4]  ← idade do dono colapsando pra 4
+sucessor_aparente: [0, 0]        ← zerado
+```
+
+Resultado bom demais na métrica (recall 71% → 80%) e absurdo no conteúdo. Score de risco
+sucessório não deveria descobrir que a idade do dono não importa e que o que importa é contar
+sócios. Quando o ajuste acha algo assim, o suspeito não é o mundo, é o label.
+
+### 13.2. O achado: o label não consegue classificar empresa de sócio único
+
+O label é `entra sócio PJ E sai sócio PF` entre os dois snapshots. Medindo a prevalência dele
+por número de sócios PF no corte:
+
+| nº de sócios PF no corte | empresas | aquisições detectadas | prevalência |
+|---|---:|---:|---:|
+| 0 (sem registro de sócio) | 20.966 | 0 | 0,000% |
+| 1 | 292.499 | **0** | **0,000%** |
+| 2 | 323.211 | 490 | 0,152% |
+| 3 | 64.350 | 288 | 0,448% |
+| 4 | 28.591 | 271 | 0,948% |
+| 5+ | 35.070 | 561 | 1,600% |
+
+**292.499 empresas de sócio único, zero aquisições.** No cruzamento, sair de 1 sócio PF para 0
+acontece **1 vez em 292 mil**. O label só enxerga aquisição **parcial**, em que um PJ entra e
+ainda sobra sócio PF no quadro.
+
+Não é que empresa de dono único não venda. É que a venda dela não deixa essa assinatura no
+registro. Ela é **estruturalmente inclassificável**, e ainda assim estava no denominador de
+tudo que a gente reportou.
+
+Duas consequências, e as duas são ruins:
+
+1. **Recall inflado de graça.** Empresa inclassificável nunca conta como acerto perdido, e
+   ainda ocupa o fundo do ranking liberando vaga no decil de cima. Medindo só onde o label
+   consegue classificar (n_pf ≥ 2), o recall do score de hoje cai de **42,0% para 36,9%** no
+   perfil sucessório.
+2. **O ajuste aprende a contar sócios.** A probabilidade do label sobe 10x com o número de
+   sócios por aritmética pura: cinco sócios dão cinco chances de alguém sair.
+
+### 13.3. Paradoxo de Simpson nos eixos da tese
+
+Estratificando por faixa de nº de sócios, que é o que neutraliza a parte mecânica, os lifts
+do universo elegível ficam assim:
+
+| Sinal | Global | 2 sócios | 3-4 | 5+ | Veredito |
+|---|---:|---:|---:|---:|---|
+| Capital acima da mediana | 2,14x (z56) | 2,18x (z29) | 1,96x (z32) | 1,94x (z31) | sobrevive forte |
+| Tem sócio PJ | 5,75x (z12) | 5,07x (z4) | 3,94x (z7) | 2,12x (z6) | sobrevive forte |
+| Tem filial | 2,46x (z15) | 2,48x (z8) | 1,96x (z8) | 1,82x (z7) | sobrevive forte |
+| Quadro mexeu < 5 anos | 1,62x (z20) | 1,50x (z8) | 1,31x (z7) | 1,29x (z9) | sobrevive |
+| Quadro parado 10+ | 0,51x (z19) | 0,64x (z8) | 0,69x (z5) | 0,43x (z11) | sobrevive, anti-sinal |
+| Sócio até 50 (sucessor aparente) | 1,15x (z11) | 1,04x (z1) | 1,06x (z3) | 1,10x (z6) | quase morre |
+| **Sócio 61+ (idade do controle)** | **1,20x (z7)** | **1,00x (z0)** | **0,99x (z0)** | **0,96x (z1)** | **morre** |
+
+O eixo que vale 28 dos 100 pontos, e que dá nome ao produto, tem lift **1,00x** dentro do
+estrato. O global de 1,20x é Simpson: empresa com mais sócios tem mais chance de ter algum
+sócio velho **e** mais chance de disparar o label. Os dois sobem juntos sem se causarem.
+
+**A leitura certa NÃO é "idade não prevê nada".** É que **este label não consegue testar
+idade**, porque a transação que a idade previria (venda integral de empresa fechada, de dono
+único) é exatamente a que o registro não mostra. Ausência de evidência aqui é uma limitação
+do instrumento, não evidência de ausência. Tirar o eixo de idade por causa deste número seria
+sobreajustar a um label cego justo no caso central do produto.
+
+### 13.4. O que mudou no método, e vale daqui pra frente
+
+1. **Universo elegível.** Toda medição de recall roda só sobre quem o label consegue
+   classificar (presente no snapshot de desfecho e n_pf ≥ 2). Fora disso o número é cortesia.
+2. **Métrica estratificada.** `recall@top10%` dentro de `(vertical, faixa de nº de sócios)`.
+   A pergunta certa é "entre empresas com o mesmo tamanho de quadro, as adquiridas sobem?".
+3. **Eixo que a métrica não consegue julgar sai da busca.** `quadro_plural` é quase constante
+   dentro do estrato, então o ajuste não o enxerga. Ele foi julgado à parte e o resultado está
+   em 13.5.
+4. **Extração única, loop local.** `extrai-matriz-score.mjs` puxa a matriz do BigQuery uma vez
+   (1.465.665 empresas, 1.610 aquisições); `calibra-score.py` roda milhares de avaliações em
+   numpy. Sem isso, uma busca de verdade é cara e lenta demais pra alguém rodar.
+5. **Disciplina de amostra.** Ajuste e busca só no desenvolvimento, com 5 folds. O holdout é
+   aberto **uma vez**, no fim, e o número dele é o que se reporta.
+
+### 13.5. Resultado da calibração
+
+Ajuste nos quatro eixos que a métrica estratificada consegue julgar, holdout aberto uma vez:
+
+| | estratificado | perfil |
+|---|---:|---:|
+| Score de hoje | 31,74% | 19,2% |
+| Proposto | **35,32%** | **22,8%** |
+| Delta | **+3,58** | **+3,6** |
+
+**McNemar pareado no holdout: 81 aquisições só o proposto pegou, 53 só o atual, z = 2,42.**
+O ganho é real e não sorteio de empate. No desenvolvimento o ganho era +6,7, ou seja, metade
+era sobreajuste da busca; a metade que sobreviveu é a que vale.
+
+Pesos propostos (os quatro eixos, escala preservada em 87 pontos):
+
+| Eixo | Hoje | Proposto |
+|---|---|---|
+| `escala_capital` | [0, 11, 19, 27, 34] | [0, 5, 17, 27, 51] |
+| `idade_controle` | [0, 10, 19, 25, 28] | [0, 17, 17, 30, 30] |
+| `sucessor_aparente` | [0, 14] | [0, 1] |
+| `movimento_societario` | [0, 6, 11] | [0, 1, 5] |
+
+**`quadro_plural`, julgado à parte:** variar de [0,0,0] a [0,14,26] **não move** a métrica
+estratificada (37,44% nos quatro casos) e move só a métrica contaminada. Os 13 pontos de hoje
+compram número de validação, não ordenação real.
+
+**Sinais fortes ainda de fora:** `tem sócio PJ` (derivável em runtime) e `tem filial` (exige
+mudar o ingest, não está na tabela `empresa`). Somados ao proposto, no desenvolvimento, levam
+o perfil de 25,3% para 29,3% mas não movem o estratificado. Não é decisão fechada.
+
+### 13.6. O que isto obriga a corrigir
+
+- Os números do README e do material de cliente foram medidos no universo inflado. O
+  41,5% em holdout vira **36,9%** quando medido só onde o label classifica.
+- A seção 7 (a inversão da tese) precisa ser reescrita: o lift 2,14x do sucessor aparente é em
+  boa parte o artefato de contagem. Dentro do estrato ele é 1,04x a 1,10x.
+- O `lift-coorte.json` foi gerado com a fórmula v0 antiga e sem estratificar. Ele não deve ser
+  citado sem essa ressalva.
+
+### 13.7. Reproduzir
+
+```bash
+node --env-file=.env.local scripts/extrai-matriz-score.mjs   # matriz, uma vez
+python scripts/diagnostico-label.py                          # contaminação do label
+python scripts/calibra-score.py --iters=500                  # busca, só no dev
+python scripts/calibra-score.py --iters=500 --holdout        # abre o holdout, uma vez
+```

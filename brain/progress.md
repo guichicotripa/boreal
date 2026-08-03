@@ -1459,3 +1459,37 @@ não é a borda direita, e setas que vão pra esquerda estouravam a imagem em 3.
 Descreve o Maguto como co-dono com fronteira de domínio por arquivo, e o produto como submissão de
 competição de clube de programação com Loom de 1 minuto. Anotado no `pending.md`, não reescrito
 nesta sessão.
+
+## [2026-08-02] Guilherme | Calibração do score v0: o label estava contaminado
+
+**Objetivo:** parar de ancorar peso por julgamento e ajustar por fit contra aquisições reais,
+com um loop que iterasse até calibrar.
+
+**O que foi construído:**
+- `scripts/extrai-matriz-score.mjs`: puxa do BigQuery, uma vez, a matriz de features + contagem
+  crua de sócios nos dois snapshots (1.465.665 empresas, 1.610 aquisições). Extrai contadores em
+  vez de label pronto, de propósito: label é definição, não dado, e assim qualquer definição
+  alternativa é testável localmente.
+- `scripts/diagnostico-label.py`: mede a contaminação de cinco definições de aquisição.
+- `scripts/calibra-score.py`: o loop. WoE + regressão logística (Newton/IRLS em numpy, sem
+  dependência nova) + subida de encosta na métrica, 5 folds no dev, holdout aberto uma vez.
+
+**O achado, que virou o trabalho do avesso.** O primeiro loop devolveu `quadro_plural=[0,41,58]`
+e `idade_controle=[0,1,1,3,4]`. Investigando: o label não classifica empresa de sócio único
+(292.499 empresas, zero aquisições; 1→0 sócio acontece 1 vez em 292 mil). Ele só vê aquisição
+parcial, e a prevalência sobe 10x com o nº de sócios por aritmética.
+
+Estratificando, o eixo de idade do dono tem lift **1,00x** (era 1,20x global) e o sucessor
+aparente cai de 1,15x para 1,04x-1,10x. Paradoxo de Simpson: mais sócios significa mais chance
+de ter sócio velho **e** mais chance de disparar o label.
+
+**Resultado.** Método novo (universo elegível + métrica estratificada). Recall honesto do score
+atual no perfil: **36,9%**, não 42,0%. Pesos propostos ganham **+3,58** no holdout
+(31,74% → 35,32%), McNemar z=2,42, com metade do ganho de dev perdida como sobreajuste.
+
+**Não apliquei em `scoring.ts`.** O proposto quase zera o `sucessor_aparente`, e o eixo de idade
+só sobrevive por julgamento. Mexer na tese do produto com base num label cego no caso central
+é decisão do Guilherme, não consequência automática do fit.
+
+**Aprendizado:** quando o ajuste acha algo bom demais, o suspeito é o label, não o mundo. As duas
+últimas quedas de número de cliente vieram de *como a métrica foi construída*, não do valor dela.
