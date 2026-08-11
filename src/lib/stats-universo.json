@@ -1,0 +1,57 @@
+{
+  "gerado_em": "2026-08-11",
+  "snapshot": "2025-11-09",
+  "fonte": "basedosdados.br_me_cnpj (Receita Federal)",
+  "script": "scripts/stats-universo.mjs",
+  "setores": [
+    "metalmec",
+    "saude",
+    "educacao",
+    "agro"
+  ],
+  "estabelecimentos_total": 68448345,
+  "empresas_total": 65277300,
+  "empresas_ativas": 26109815,
+  "empresas_baixadas": 30242558,
+  "empresas_suspensas_inaptas": 8822257,
+  "nos_4_setores": 1823438,
+  "com_quadro": 1013099,
+  "com_socio_pf": 1013030,
+  "com_2mais_pf": 482195,
+  "com_idade_de_socio": 1013030,
+  "com_capital": 1243129,
+  "com_email": 1517352,
+  "com_telefone": 1782187,
+  "perfil_sucessorio": 55157,
+  "perfil_e_elegivel": 44362,
+  "por_setor": [
+    {
+      "setor": "saude",
+      "universo": 778541,
+      "com_idade_de_socio": 662663,
+      "com_2mais_pf": 256534,
+      "perfil": 26566
+    },
+    {
+      "setor": "agro",
+      "universo": 686325,
+      "com_idade_de_socio": 208896,
+      "com_2mais_pf": 165812,
+      "perfil": 7535
+    },
+    {
+      "setor": "metalmec",
+      "universo": 293017,
+      "com_idade_de_socio": 85260,
+      "com_2mais_pf": 36918,
+      "perfil": 12003
+    },
+    {
+      "setor": "educacao",
+      "universo": 65555,
+      "com_idade_de_socio": 56211,
+      "com_2mais_pf": 22931,
+      "perfil": 9053
+    }
+  ]
+}

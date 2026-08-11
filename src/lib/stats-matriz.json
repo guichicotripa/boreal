@@ -1,0 +1,49 @@
+{
+  "gerado_em": "2026-08-11",
+  "fonte": "scripts/data/matriz-score.tsv.gz",
+  "script": "scripts/stats-matriz.py",
+  "snapshot_corte": "2023-06-10",
+  "snapshot_desfecho": "2025-11-09",
+  "criterio": "matriz, situacao ativa, CNAE dos 4 setores",
+  "universo": 1465665,
+  "campos": {
+    "sem_quadro_societario": 720683,
+    "com_socio_pf": 744929,
+    "com_2mais_socios_pf": 452103,
+    "com_socio_pj": 24410,
+    "com_idade_de_socio": 744929,
+    "com_data_entrada_socio": 744999,
+    "com_idade_da_empresa": 1465663,
+    "com_porte": 1465665
+  },
+  "perfil_sucessorio": 45638,
+  "perfil_e_elegivel": 38233,
+  "aquisicoes_detectadas": 1610,
+  "aquisicoes_no_perfil": 317,
+  "por_setor": {
+    "agro": {
+      "universo": 618787,
+      "com_idade_de_socio": 182098,
+      "perfil_sucessorio": 6711,
+      "aquisicoes_detectadas": 446
+    },
+    "educacao": {
+      "universo": 64914,
+      "com_idade_de_socio": 53982,
+      "perfil_sucessorio": 7543,
+      "aquisicoes_detectadas": 59
+    },
+    "metalmec": {
+      "universo": 250845,
+      "com_idade_de_socio": 71409,
+      "perfil_sucessorio": 10808,
+      "aquisicoes_detectadas": 211
+    },
+    "saude": {
+      "universo": 531119,
+      "com_idade_de_socio": 437440,
+      "perfil_sucessorio": 20576,
+      "aquisicoes_detectadas": 894
+    }
+  }
+}

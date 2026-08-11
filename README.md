@@ -15,16 +15,17 @@ Encontra empresas familiares do middle market brasileiro cujo controle tende a m
 1. [O que é isto, sem jargão](#1-o-que-é-isto-sem-jargão)
 2. [O problema](#2-o-problema)
 3. [A tese, e por que ela mudou](#3-a-tese-e-por-que-ela-mudou)
-4. [Como funciona, em 30 segundos](#4-como-funciona-em-30-segundos)
-5. [O mapa completo do fluxo de dados](#5-o-mapa-completo-do-fluxo-de-dados)
-6. [As peças, uma por uma](#6-as-peças-uma-por-uma)
-7. [Como sabemos que funciona](#7-como-sabemos-que-funciona)
-8. [O laço de calibração](#8-o-laço-de-calibração)
-9. [Limitações que a gente diz em voz alta](#9-limitações-que-a-gente-diz-em-voz-alta)
-10. [Stack](#10-stack)
-11. [Rodando local](#11-rodando-local)
-12. [Mapa do código](#12-mapa-do-código)
-13. [Convenções do repo](#13-convenções-do-repo)
+4. [O universo em números](#4-o-universo-em-números)
+5. [Como funciona, em 30 segundos](#5-como-funciona-em-30-segundos)
+6. [O mapa completo do fluxo de dados](#6-o-mapa-completo-do-fluxo-de-dados)
+7. [As peças, uma por uma](#7-as-peças-uma-por-uma)
+8. [Como sabemos que funciona](#8-como-sabemos-que-funciona)
+9. [O laço de calibração](#9-o-laço-de-calibração)
+10. [Limitações que a gente diz em voz alta](#10-limitações-que-a-gente-diz-em-voz-alta)
+11. [Stack](#11-stack)
+12. [Rodando local](#12-rodando-local)
+13. [Mapa do código](#13-mapa-do-código)
+14. [Convenções do repo](#14-convenções-do-repo)
 
 ---
 
@@ -90,7 +91,79 @@ Metodologia completa e protocolo de revisão em [`brain/modelo-de-score.md`](bra
 
 ---
 
-## 4. Como funciona, em 30 segundos
+## 4. O universo em números
+
+Todos os números desta seção saem do snapshot de **2025-11-09** do registro da Receita Federal, e são regerados por [`scripts/stats-universo.mjs`](scripts/stats-universo.mjs), que escreve [`src/lib/stats-universo.json`](src/lib/stats-universo.json). Nada aqui é estimativa.
+
+### Do Brasil inteiro até a lista
+
+```mermaid
+flowchart TD
+    A["<b>68.448.345</b><br/>estabelecimentos no registro<br/><i>matriz + filial</i>"] --> B["<b>65.277.300</b><br/>empresas (só matriz)<br/><i>95,4%</i>"]
+    B --> C["<b>26.109.815</b><br/>ATIVAS<br/><i>40,0% do registro</i>"]
+    B --> X["30.242.558 baixadas<br/>8.822.257 suspensas ou inaptas<br/><i>59,8% do registro é entulho</i>"]
+    C --> D["<b>1.823.438</b><br/>ativas nos 4 setores do Boreal<br/><i>7,0% das ativas</i>"]
+    D --> E["<b>1.013.030</b><br/>com quadro societário<br/><i>55,6%</i>"]
+    E --> F["<b>482.195</b><br/>com 2+ sócios PF<br/><i>26,4% — onde o ground truth enxerga</i>"]
+    D --> G["<b>55.157</b><br/>perfil sucessório<br/><i>3,0% — sócio 61+ e empresa 25+</i>"]
+
+    classDef bom fill:#dcfce7,stroke:#16a34a,color:#14532d
+    classDef neutro fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
+    classDef ruim fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    classDef alvo fill:#fef3c7,stroke:#d97706,color:#78350f
+    class A,B neutro
+    class C,D,E,F bom
+    class X ruim
+    class G alvo
+```
+
+**A primeira coisa que o número mostra é que 6 em cada 10 CNPJs do Brasil são lixo para originação.** 30,2 milhões estão baixados e 8,8 milhões suspensos ou inaptos. Qualquer ferramenta que anuncie "60 milhões de empresas" está contando cadáver. O universo real com que se trabalha é 26,1 milhões.
+
+### Metade do universo não tem sócio registrado, e isso não é bug
+
+Dentro dos 4 setores ativos, **44,4% das empresas não têm nenhum sócio no registro**. Antes de tratar isso como falha de ingestão, vale ver a natureza jurídica:
+
+| natureza jurídica | empresas | sem sócio registrado |
+|---|---:|---:|
+| Sociedade Empresária Limitada | 754.753 | **0,3%** |
+| Produtor Rural (Pessoa Física) | 511.215 | **75,4%** |
+| Empresário (Individual) | 416.238 | **100%** |
+| Sociedade Simples Limitada | 61.979 | 1,3% |
+
+**Não falta dado, falta sócio.** Empresário individual e produtor rural pessoa física não têm quadro societário por definição legal: o dono *é* a pessoa física, e não existe registro de sócio para existir. Onde há sociedade de verdade, a cobertura é de 99,7%.
+
+Mas a consequência para o produto é dura e vale dizer em voz alta: **para 928 mil dessas empresas, o eixo de idade do dono não está incompleto, ele é estruturalmente indisponível.** Não há onde ler a idade do dono no registro público.
+
+E é a mesma população que o ground truth não enxerga (ver a [seção 10](#10-limitações-que-a-gente-diz-em-voz-alta)): empresa de dono único não deixa a assinatura "entra sócio PJ e sai sócio PF" quando é vendida. **O ponto cego dos dados e o ponto cego do label são o mesmo conjunto de empresas**, e é justamente onde a tese sucessória deveria ser mais forte.
+
+### Por setor
+
+| setor | universo ativo | com idade de sócio | % | com 2+ sócios PF | perfil sucessório |
+|---|---:|---:|---:|---:|---:|
+| Saúde | 778.541 | 662.663 | **85,1%** | 256.534 | 26.566 |
+| Agropecuária | 686.325 | 208.896 | **30,4%** | 165.812 | 7.535 |
+| Metalmecânica | 293.017 | 85.260 | **29,1%** | 36.918 | 12.003 |
+| Educação básica | 65.555 | 56.211 | **85,7%** | 22.931 | 9.053 |
+
+A diferença é enorme e é estrutural, não aleatória. Saúde e educação são sociedades (clínica com dois médicos sócios, escola com mantenedora), então o score enxerga quase tudo. Agro é produtor rural pessoa física e metalmecânica tem muita oficina de dono único, então **o score opera às cegas em cerca de 70% desses dois setores**. Agro é o maior universo dos quatro e é onde o modelo vê menos.
+
+### Preenchimento dos campos
+
+| campo | cobertura nos 4 setores ativos |
+|---|---:|
+| telefone | **97,7%** |
+| e-mail | **83,2%** |
+| capital social > 0 | 68,2% |
+| quadro societário | 55,6% |
+| 2 ou mais sócios PF | 26,4% |
+
+Os campos de **contato são o lado forte da base**, e isso importa mais do que parece: originação morre na hora de falar com a empresa, e 97,7% de telefone significa que a lista é acionável. Já `capital_social` está preenchido em 68,2%, e a [seção 10](#10-limitações-que-a-gente-diz-em-voz-alta) explica por que mesmo o preenchido vale menos do que aparenta.
+
+> Para comparação, a matriz usada na calibração tem **1.465.665** empresas, porque ela é fotografada no corte de **2023-06-10** e não hoje. Os 1.823.438 atuais são 24% a mais em pouco mais de dois anos. Reproduzir com `python scripts/stats-matriz.py`.
+
+---
+
+## 5. Como funciona, em 30 segundos
 
 ```mermaid
 flowchart LR
@@ -138,7 +211,7 @@ sequenceDiagram
 
 ---
 
-## 5. O mapa completo do fluxo de dados
+## 6. O mapa completo do fluxo de dados
 
 Do CNPJ bruto no BigQuery até a lista ordenada na tela, mais o laço de calibração que roda por fora e é o único que muda a fórmula.
 
@@ -156,9 +229,9 @@ Três coisas que o mapa torna óbvias e o texto não tornava:
 
 ---
 
-## 6. As peças, uma por uma
+## 7. As peças, uma por uma
 
-### 6.1. Ingestão (offline)
+### 7.1. Ingestão (offline)
 
 Roda quando se abre uma praça ou um setor novo, não a cada request.
 
@@ -174,7 +247,7 @@ O `--faixa-min` existe por um motivo específico: cortar só por `--limit` orden
 
 `scripts/enrich-empresas.mjs` resolve código para nome legível (município via IBGE, descrição de CNAE, natureza jurídica) lendo do payload `raw` guardado no upsert, então é idempotente e nada se perde.
 
-### 6.2. Score v0: o registro público, determinístico
+### 7.2. Score v0: o registro público, determinístico
 
 [`src/lib/scoring.ts`](src/lib/scoring.ts). Roda em toda resposta, custa microssegundos, cinco eixos somando exatamente 100.
 
@@ -193,7 +266,7 @@ Duas funções vivem no mesmo módulo e **não somam ponto**:
 
 Os cortes de percentil vivem em `src/lib/capital-percentis.json`, gerados a partir da **própria base indexada** e não do BigQuery, porque quem é rankeado são as empresas do Supabase. Consequência aceita: crescer o ingest desloca os cortes e reordena a lista, então o arquivo é versionado e regerado de propósito, nunca calculado em runtime.
 
-### 6.3. Busca (runtime)
+### 7.3. Busca (runtime)
 
 [`src/app/api/search/route.ts`](src/app/api/search/route.ts).
 
@@ -202,7 +275,7 @@ Os cortes de percentil vivem em `src/lib/capital-percentis.json`, gerados a part
 3. `comOverlays()` recalcula o score de toda resposta (inclusive as vindas de cache), remove as empresas descartadas no radar, aplica o overlay do v1 e reordena.
 4. `reasonAboutEmpresas()` gera o insight da lista e o one-liner de cada empresa.
 
-### 6.4. Score v1: a investigação com LLM
+### 7.4. Score v1: a investigação com LLM
 
 [`src/lib/research.ts`](src/lib/research.ts). Híbrido e honesto, com a divisão de trabalho explícita:
 
@@ -251,7 +324,7 @@ flowchart TD
 
 O `ajuste_bruto` existe porque o score satura em 100 e a evidência não. Ajustes de +12 a +30 viravam todos o mesmo +3 no teto, e seis níveis diferentes de evidência ficavam visualmente idênticos. Ele é recalculado **na leitura**, a partir da lista de sinais crua, então sobrevive a mudança de peso.
 
-### 6.5. O produto
+### 7.5. O produto
 
 | Rota | O que faz |
 |---|---|
@@ -267,7 +340,7 @@ O `ajuste_bruto` existe porque o score satura em 100 e a evidência não. Ajuste
 
 **Proveniência** é um HMAC-SHA256 sobre `(cnpj | data_origem | score)` com o segredo do servidor. Só o Boreal emite um selo válido, então ele prova origem e data, e o parceiro não consegue forjar nem retroagir. É o que destrava o success fee sem discussão.
 
-### 6.6. Acesso e multi-tenant
+### 7.6. Acesso e multi-tenant
 
 Não existe auto-cadastro. Entra quem foi convidado por `scripts/convidar.ts`, que cria o usuário no Supabase Auth e a linha em `membro` na mesma operação, de forma idempotente. O login é por magic link em `/acesso`. A middleware renova a sessão e barra quem não está autenticado, mas não checa vínculo com firma, porque isso custaria uma query por request: quem recusa é `escopoAtual()`.
 
@@ -287,7 +360,7 @@ erDiagram
 
 `empresa`, `socio` e `score_run` são **corpus compartilhado**, derivado de registro público. O que é por firma são `oportunidade`, `interacao`, `empresa_memo`, `empresa_descartada` e os entitlements.
 
-### 6.7. `evento`: o sensor do laço de aprendizado
+### 7.7. `evento`: o sensor do laço de aprendizado
 
 O que se grava em `evento` não é uso, é **sinal de treino**. O v0 é heurística e o v1 soma sinais da web; nenhum dos dois aprende sozinho. Quem ensina é a revelação de preferência do analista: a lista que mostramos contra o que ele salvou e o que descartou. Salvar o 17º e ignorar o 1º é o score errando, com rótulo de graça.
 
@@ -295,7 +368,7 @@ Por isso `registrarBusca` guarda **o top ranqueado**, não só a query. Diferent
 
 ---
 
-## 7. Como sabemos que funciona
+## 8. Como sabemos que funciona
 
 ### O ground truth sai de graça do próprio CNPJ
 
@@ -305,7 +378,7 @@ Ninguém precisa comprar base de M&A. Comparando dois snapshots do registro de C
 - Snapshot de desfecho, **2025-11-09**: as aquisições são detectadas aqui.
 - **Zero lookahead.** O score nunca enxerga informação posterior ao corte.
 
-É proxy, não confirmação de deal. A limitação está na seção 9.
+É proxy, não confirmação de deal. A limitação está na seção 10.
 
 ### Holdout, não ajuste na própria amostra
 
@@ -354,7 +427,7 @@ npm test                                                            # testes do 
 
 ---
 
-## 8. O laço de calibração
+## 9. O laço de calibração
 
 Nenhum peso entra no score por intuição. O caminho é fechado e tem gate em dois pontos:
 
@@ -386,11 +459,13 @@ O passo do `score-sql.mjs` não é burocracia. Existiam cópias independentes da
 
 ---
 
-## 9. Limitações que a gente diz em voz alta
+## 10. Limitações que a gente diz em voz alta
 
 - **O ground truth é proxy, e é cego justamente no caso central.** "Entra sócio PJ e sai sócio PF" captura troca de controle registrada, não deal confirmado. Pega reorganização de holding familiar junto, e perde aquisição feita por pessoa física ou estruturada fora do quadro societário. Pior: ele **só enxerga aquisição parcial**. Empresa de sócio único é estruturalmente inclassificável (sair de 1 sócio PF para 0 acontece 1 vez em 292 mil no registro), e é exatamente o perfil que a tese de sucessão mais quer prever. Consequência medida em 02/08/2026: o eixo de idade do dono tem lift 1,00x dentro de faixas de nº de sócios, o que **não** quer dizer que idade não prevê venda, e sim que este label não consegue testar idade. Ver [`brain/modelo-de-score.md`](brain/modelo-de-score.md) §13.
 - **Faixa etária é faixa, não idade.** A Receita publica banda (61 a 70, 71 a 80, 80+), não a data de nascimento. O eixo de idade é mais grosso do que parece.
-- **Capital social não é faturamento.** É o sinal de tamanho mais honesto que o registro público oferece, e é por isso que ele é usado, mas correlaciona imperfeitamente com porte real. O produto **nunca** fabrica EBITDA ou receita.
+- **Capital social não é faturamento, e é um número congelado.** Ele é declarado na constituição da empresa e quase nunca atualizado: medido em 11/08/2026, o valor é **idêntico entre os snapshots de 2023 e 2025 em 96,8%** das empresas dos 4 setores. Mesmo assim é o eixo mais forte do score, o que diz mais sobre a pobreza do registro público do que sobre a qualidade do campo. O `porte` da Receita entrou como segundo eixo de tamanho em 11/08 e é ainda mais estático (99,0% idêntico), então ele agrega por medir outra coisa, faixa de receita, e não por ser mais fresco. O produto **nunca** fabrica EBITDA ou receita. Ver [`brain/modelo-de-score.md`](brain/modelo-de-score.md) §14.
+- **Metade do universo não tem sócio, e não há como consertar.** Empresário individual e produtor rural pessoa física não têm quadro societário por definição legal, e são 928 mil empresas nos 4 setores. Para elas o eixo de idade do dono é **estruturalmente indisponível**, não incompleto. É a mesma população que o ground truth não enxerga. Números na [seção 4](#4-o-universo-em-números).
+- **A lista tem empate na fronteira.** O score é uma soma de poucos inteiros, então tem cerca de 60 valores distintos para 200 mil empresas, e o corte do top 10% cai dentro de um bloco de empates. Medido: **4,1% das vagas do top 10% são preenchidas por desempate arbitrário** com os pesos de hoje. Consequência prática: o recall citado carrega ±0,25 ponto de ruído no agregado e **±0,91 no recorte do perfil sucessório**, que é justamente o número mais citado. Uma casa decimal ali é precisão falsa.
 - **Cinco dos sete pesos do v1 nunca foram validados** contra lift medido.
 - **A validação existe em quatro setores.** Fora de metalmecânica, saúde, educação e agro, o score roda, mas sem recall medido. O heat-map marca explicitamente quais divisões são validadas.
 - **29% da faixa de score 90+ já tem sócio PJ no quadro.** Pode ser holding familiar, pode ser venda parcial já ocorrida, pode ser sócio institucional. É decisão de tese em aberto, não bug.
@@ -400,7 +475,7 @@ O que está aberto agora fica em [`brain/pending.md`](brain/pending.md), sempre.
 
 ---
 
-## 10. Stack
+## 11. Stack
 
 | Camada | Escolha |
 |---|---|
@@ -416,7 +491,7 @@ Sobre a verificação de domínio: o reverso CNPJ para domínio não é público
 
 ---
 
-## 11. Rodando local
+## 12. Rodando local
 
 ```bash
 npm install
@@ -448,7 +523,7 @@ python scripts/gen-fluxo-excalidraw.py && python scripts/render-fluxo-png.py
 
 ---
 
-## 12. Mapa do código
+## 13. Mapa do código
 
 | Caminho | O quê |
 |---|---|
@@ -463,6 +538,12 @@ python scripts/gen-fluxo-excalidraw.py && python scripts/render-fluxo-png.py
 | `src/lib/heatmap.ts` · `treemap.ts` | Atividade de M&A por setor e região |
 | `scripts/ingest-*.mjs` | Ingestão do BigQuery para o Supabase |
 | `scripts/validacao-*.mjs` | Medição: lift, holdout, recall |
+| `scripts/stats-universo.mjs` · `stats-matriz.py` | **Os números da seção 4.** Funil do universo e saúde da base |
+| `scripts/extrai-matriz-score.mjs` | Extrai a matriz de calibração do BigQuery, uma vez |
+| `scripts/calibra-score.py` | **O laço de calibração.** Busca no dev, `--ruido`, `--holdout` |
+| `scripts/diagnostico-*.py` | Contaminação do label e lift condicional dos eixos candidatos |
+| `scripts/check-vazamento-simples.mjs` | Prova de por que a flag do Simples não pode ser feature |
+| `scripts/check-estagnacao-campos.mjs` | Quanto `capital_social` e `porte` ficam congelados |
 | `scripts/lib/score-sql.mjs` | **Espelho SQL da fórmula, fonte única.** Mexeu em `scoring.ts`, mexe aqui |
 | `scripts/precompute-*.ts` | Lotes offline de investigação e memo |
 | `supabase/migrations/` | Schema do Postgres |
@@ -481,7 +562,7 @@ python scripts/gen-fluxo-excalidraw.py && python scripts/render-fluxo-png.py
 
 ---
 
-## 13. Convenções do repo
+## 14. Convenções do repo
 
 - **Domínio em português, código em inglês.** Os dados são brasileiros e traduzir `empresa`, `socio`, `junta_comercial` só cria distância entre o schema e a fonte. Variáveis de infraestrutura, commits e comentários técnicos ficam em inglês.
 - **Nenhum peso de score por intuição.** O protocolo está em `brain/modelo-de-score.md` §10 e vale para os dois lados: adicionar e remover eixo.
