@@ -1734,3 +1734,38 @@ dez dias, e os três foram achados olhando **como** o número foi construído, n
 Label contaminado (02/08), proxy congelado (11/08) e flag pós-desfecho (11/08). O padrão que
 detecta os três é o mesmo: *quando o resultado é bom demais, suspeite do instrumento antes do
 mundo*.
+
+### README ganha a seção 4: o funil do universo, medido
+
+O Guilherme pediu dados básicos do universo no README, com uma razão dupla: contexto pra quem lê e
+**teste de saúde da base**. Virou a seção 4, com todo número gerado por script
+(`stats-universo.mjs` no BigQuery, `stats-matriz.py` local) e nada estimado.
+
+**O funil (snapshot 2025-11-09):** 68.448.345 estabelecimentos → 65.277.300 empresas matriz →
+**26.109.815 ativas (40,0%)** → 1.823.438 nos 4 setores (7,0% das ativas) → 1.013.030 com quadro
+societário (55,6%) → 482.195 com 2+ sócios PF (26,4%) → 55.157 no perfil sucessório (3,0%).
+
+**Três achados que valem além do README.**
+
+1. **6 em cada 10 CNPJs do Brasil são entulho.** 30,2 mi baixados e 8,8 mi suspensos ou inaptos.
+   Serve de resposta pronta a qualquer concorrente que anuncie "60 milhões de empresas".
+
+2. **44,4% das empresas dos 4 setores não têm sócio, e não é bug.** Cruzando com natureza jurídica:
+   Sociedade Empresária Limitada tem 0,3% sem sócio, mas **Empresário Individual tem 100%** e
+   **Produtor Rural PF tem 75,4%**. Não falta dado, falta sócio: essas naturezas não têm quadro
+   societário por definição legal. São 928 mil empresas em que o eixo de idade do dono é
+   **estruturalmente indisponível**, não incompleto. E é a mesma população que o label de aquisição
+   não enxerga. **O ponto cego dos dados e o ponto cego do ground truth são o mesmo conjunto**, e é
+   onde a tese sucessória deveria ser mais forte.
+
+3. **A cobertura varia brutalmente por setor:** saúde 85,1% e educação 85,7% contra agro 30,4% e
+   metalmec 29,1%. Saúde e educação são sociedades; agro é produtor rural PF e metalmec tem muita
+   oficina de dono único. **O score opera às cegas em ~70% de agro e metalmec**, e agro é o maior
+   universo dos quatro. Isso nunca tinha sido dito em lugar nenhum.
+
+**O lado bom, e ele importa comercialmente:** telefone em 97,7% e e-mail em 83,2%. Originação morre
+na hora de falar com a empresa, então a lista é acionável mesmo onde o score é cego.
+
+A seção 10 (limitações) ganhou três itens novos com o que foi medido em 11/08: capital congelado em
+96,8%, o buraco estrutural dos 928 mil, e o empate na fronteira do decil. As seções 4 a 13 antigas
+viraram 5 a 14, e o índice e a referência interna de "seção 9" foram corrigidos junto.
