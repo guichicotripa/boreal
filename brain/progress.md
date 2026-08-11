@@ -1570,3 +1570,69 @@ normal do `scripts/convidar.ts` (magic link, sem auto-cadastro). Não há oferta
 sistema da Setter, então **a `crm_incumbente` continua vazia e continua bloqueando** a métrica de
 "quantos alvos eram novos". Se ela importa pro critério de sucesso, tem que ser pedida
 explicitamente na quinta, como item próprio.
+
+### Sondagem dos setores (11/08, mesmo dia): o setor que ele tirou do foco é o único com deal
+
+Três queries no BigQuery, corte 2023-06-10 e desfecho 2025-11-09, matriz e ativa, universo nacional.
+Scripts: `sonda-setores-setter.mjs`, `-cauda.mjs`, `-crescimento.mjs`.
+
+**Universo e aquisições (corte 2023):**
+
+| grupo | universo | SP | perfil suc. | elegível | adq | adq perfil |
+|---|---:|---:|---:|---:|---:|---:|
+| vet_outros (7500 restante) | 23.379 | 7.896 | 274 | 7.163 | 10 | 1 |
+| death_care (9603) | 10.193 | 1.730 | **857** | 4.056 | **51** | **14** |
+| **A_vet_lab** (7500 + nome de lab) | 1.191 | 449 | 19 | 610 | 6 | 1 |
+| plano_funeral (65111) | 736 | 104 | 71 | 484 | 5 | 3 |
+| B_vet_plano (7500 + nome de plano) | 701 | 146 | 10 | 275 | 2 | 0 |
+| A_lab_vet_em_8640 | 222 | 71 | 2 | 122 | 1 | 0 |
+| **B_plano_pet_seguro** (6550/6512 + nome pet) | 57 | 15 | 1 | 34 | 0 | 0 |
+
+**Cauda de tamanho, que é o que decide:**
+
+| grupo | n | ≥R$1mi | ≥R$5mi | ≥R$20mi | ≥1mi **e** perfil | p99 |
+|---|---:|---:|---:|---:|---:|---:|
+| death_care | 10.193 | **234** | 57 | 13 | **52** | 2.100.000 |
+| plano_funeral | 736 | **65** | 44 | **36** | 20 | 878.350.424 |
+| vet_outros | 23.379 | 44 | 9 | 3 | 3 | 260.000 |
+| **A_vet_lab** | 1.191 | **9** | 3 | 1 | **0** | 457.100 |
+| B_vet_plano | 701 | 7 | 0 | 0 | 1 | 610.000 |
+| B_plano_pet_seguro | 57 | 4 | 1 | 0 | 0 | 10.691.794 |
+
+**Universo em 2023 vs 2025**, porque o mercado pet cresceu muito no meio e levar número de 2023
+pra call de 2026 seria comer a objeção óbvia sem resposta:
+
+| grupo | 2023 | 2025 | cresc. | ≥1mi 23 | ≥1mi 25 |
+|---|---:|---:|---:|---:|---:|
+| vet_outros | 23.379 | 36.425 | +56% | 44 | 78 |
+| A_vet_lab | 1.191 | 1.661 | +39% | 9 | **11** |
+| B_vet_plano | 701 | 1.014 | +45% | 7 | 6 |
+| B_plano_pet_seguro | 40 | 60 | +50% | 3 | 4 |
+| death_care | 10.193 | 11.046 | +8% | 234 | 308 |
+| plano_funeral | 736 | 666 | **−10%** | 65 | **84** |
+
+**As três leituras.**
+
+1. **Foco A não é setor, é uma tarde de trabalho.** 1.661 laboratórios de diagnóstico veterinário no
+   país, e **11 acima de R$1 mi de capital**. Zero acima de R$1 mi com perfil sucessório. Não existe
+   plataforma de originação pra 11 empresas: o Henrique monta essa lista à mão numa tarde.
+2. **Foco B é menor ainda.** 60 empresas no recorte estrito de operadora, 4 acima de R$1 mi.
+3. **Death care é o oposto, e foi o que ele tirou do foco.** Somando com plano funerário: 11.712
+   empresas, **392 acima de R$1 mi**, 101 acima de R$5 mi, 49 acima de R$20 mi, 72 acima de R$1 mi
+   já dentro do perfil sucessório. Prevalência de aquisição de **0,50% contra 0,043%** da
+   veterinária, ou seja **11,6x mais consolidação**. E 8,4% do universo no perfil sucessório contra
+   1,2% da veterinária: funerária é setor velho e familiar, veterinária é setor jovem.
+
+**A assinatura mais bonita do conjunto:** plano funerário **encolheu 10% em número de empresas
+enquanto as acima de R$1 mi subiram 29%**. Universo diminuindo e os grandes engordando é exatamente
+o que consolidação em curso parece no registro. Veterinária faz o contrário: cresce 56% em número
+de empresas e quase nada em ativo comprável, ou seja, cresce em micro.
+
+**Ressalvas que têm que ir junto do número, senão ele vale menos do que parece.**
+- **Capital social subestima empresa antiga.** É declarado na constituição e raramente atualizado,
+  então enviesa contra exatamente o alvo da tese. O corte de R$1 mi é **piso**, não verdade. O que é
+  robusto aqui é a **comparação entre setores**, porque o viés é o mesmo nos dois.
+- **O regex de `A_vet_lab` é piso.** Laboratório que não tem "laborat", "diagnóstic", "patolog" nem
+  "análises" no nome escapa. Mesmo dobrando o universo, os 11 acima de R$1 mi não viram centenas.
+- **O label de aquisição é o contaminado de 02/08.** Com n de 6, ele não valida nada nesses grupos;
+  serve só como ordem de grandeza comparativa.
