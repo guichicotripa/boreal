@@ -1529,3 +1529,45 @@ de previsão de sucessão.
 **Leitura de timing, que é a parte boa.** O score de sucessão acabou de perder número na calibração
 de 02/08 (41,5% vira 36,9%). O Henrique escolheu, sem saber disso, dois setores onde o valor nunca
 foi o número de sucessão. O piloto passa a não depender da métrica que está em revisão.
+
+### Atualização no mesmo dia: Henrique refina, e o setor vira mandato
+
+Duas horas depois ele estreitou: **foco A é laboratório de diagnóstico veterinário, foco B é
+operadora de plano de saúde pet.** Death care sumiu do foco declarado. Marcou call pra **quinta,
+13/08, 9:30**, pediu os emails de quem terá acesso à plataforma, e disse a frase que muda o
+enquadramento todo:
+
+> "não quero que vc trabalhe ou fique desconfortável de trabalhar, antes da minuta. quero te deixar
+> à vontade para iniciar ou nao"
+
+**O que isso realmente é.** "Foco A" e "foco B" não é escolha de vertical, é linguagem de mandato
+comprador. Uma boutique não escolhe setor por curiosidade, escolhe porque tem cliente comprando.
+E o tamanho confirma: laboratório de diagnóstico veterinário no Brasil é universo de centenas, e
+operadora de plano de saúde pet é de dezenas. Comparar com metalmec (250 mil empresas) ou saúde
+(531 mil) deixa óbvio que **o recall@top10% não é o produto aqui**. Rankear 300 empresas em decis
+significa entregar 30. Numa lista desse tamanho o que vale é exaustividade e dado de contato
+resolvido, que é a camada de descoberta e enriquecimento, não o score. Isso precisa ser dito na
+quinta, antes de vender ranking pra um universo que não pede ranking.
+
+**Sobre trabalhar antes da minuta.** A resposta correta separa duas classes de trabalho que hoje
+estão coladas no onepager:
+
+1. **Carregar o setor é ativo do Boreal.** Ingerir veterinária e death care fica no produto se a
+   Setter assinar e fica se ela não assinar. Não é trabalho pra cliente, é roadmap. Custo real é
+   query de BigQuery e o ingest, e os dois setores se defendem sozinhos como vertical.
+2. **Operar o piloto é trabalho pra Setter.** A hora por semana, o tuning ao fluxo deles, dossiê sob
+   demanda e o critério de sucesso. Isso começa na minuta.
+
+Dar acesso à plataforma cai na categoria 1: é reversível, custa um comando (`scripts/convidar.ts`,
+magic link, sem auto-cadastro) e não obriga ninguém a nada.
+
+**Ponto de atenção na frase dele.** A intenção é decente e vale registrar como tal, mas o efeito é
+transferir pro Guilherme a decisão de começar, num contrato que o próprio Henrique só consegue
+descrever como "espero que sim". A minuta não está travada em vontade, está travada em dono: o
+Pedro saiu e ninguém assumiu. O pedido de quinta é nome e data, não garantia.
+
+**Ambiguidade a resolver em uma linha:** "preciso do email das pessoas que ficaram com acesso a
+plataforma, para eu dar o acesso". No Boreal quem concede acesso somos nós, então ou ele quer mandar
+os emails da Setter pra serem convidados, ou está oferecendo acesso a alguma coisa do lado dele
+(CRM? data room?). A segunda leitura importaria muito, porque destravaria `crm_incumbente`, que hoje
+está vazia e impede computar a métrica-manchete do piloto.

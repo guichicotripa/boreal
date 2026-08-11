@@ -66,9 +66,17 @@
 
 ## 🟡 Bloqueado no Henrique / Setter
 
-- [x] ~~**Os 2 setores.**~~ **Chegaram em 11/08**, por WhatsApp: (1) diagnóstico para PET e/ou plano
-  de saúde PET, (2) death care. **A praça continua não definida.** Nenhum dos dois está entre os 4
-  verticais atuais, então os dois exigem ingest novo.
+- [x] ~~**Os 2 setores.**~~ **Chegaram em 11/08**, por WhatsApp, e foram **refinados no mesmo dia**:
+  **foco A = laboratório de diagnóstico veterinário**, **foco B = operadora de plano de saúde pet**.
+  Death care caiu do foco declarado. **A praça continua não definida.** Nenhum dos dois está entre
+  os 4 verticais atuais.
+- [ ] **Isto não é setor, é mandato.** "Foco A" e "foco B" é linguagem de mandato comprador, não de
+  escolha de vertical. Lab de diagnóstico veterinário no Brasil é universo de centenas; operadora de
+  plano pet é universo de dezenas. **Nesse tamanho o ranking do Boreal quase não importa:** o que
+  vale é achar todo mundo e resolver contato, ou seja, a camada de descoberta e enriquecimento, não
+  o score. **Perguntar direto na call de quinta se existe mandato comprador nos dois.** Se existir,
+  o piloto muda de forma: exaustividade e dado de contato viram a métrica, não recall@top10%.
+- [ ] **Call marcada: quinta 13/08, 9:30.** Pauta em `progress.md` na entrada de 11/08.
 - [ ] **Sondar os dois setores no BigQuery antes de prometer qualquer coisa.** Universo nacional,
   nº de aquisições detectáveis e nº de aquisições no perfil sucessório. Sem isso não dá pra dizer
   se o score é validável nesses setores ou se o enquadramento honesto é só descoberta e heat-map.
