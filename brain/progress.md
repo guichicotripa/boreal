@@ -1533,9 +1533,8 @@ foi o número de sucessão. O piloto passa a não depender da métrica que está
 ### Atualização no mesmo dia: Henrique refina, e o setor vira mandato
 
 Duas horas depois ele estreitou: **foco A é laboratório de diagnóstico veterinário, foco B é
-operadora de plano de saúde pet.** Death care sumiu do foco declarado. Marcou call pra **quinta,
-13/08, 9:30**, pediu os emails de quem terá acesso à plataforma, e disse a frase que muda o
-enquadramento todo:
+operadora de plano de saúde pet.** Death care sumiu do foco declarado. Ofereceu quinta ou sexta
+9:30 e o Guilherme fechou **quinta, 13/08**. Depois disse a frase que muda o enquadramento todo:
 
 > "não quero que vc trabalhe ou fique desconfortável de trabalhar, antes da minuta. quero te deixar
 > à vontade para iniciar ou nao"
@@ -1566,8 +1565,8 @@ transferir pro Guilherme a decisão de começar, num contrato que o próprio Hen
 descrever como "espero que sim". A minuta não está travada em vontade, está travada em dono: o
 Pedro saiu e ninguém assumiu. O pedido de quinta é nome e data, não garantia.
 
-**Ambiguidade a resolver em uma linha:** "preciso do email das pessoas que ficaram com acesso a
-plataforma, para eu dar o acesso". No Boreal quem concede acesso somos nós, então ou ele quer mandar
-os emails da Setter pra serem convidados, ou está oferecendo acesso a alguma coisa do lado dele
-(CRM? data room?). A segunda leitura importaria muito, porque destravaria `crm_incumbente`, que hoje
-está vazia e impede computar a métrica-manchete do piloto.
+**Acesso à plataforma:** o pedido dos emails partiu do Guilherme, não do Henrique, e é o fluxo
+normal do `scripts/convidar.ts` (magic link, sem auto-cadastro). Não há oferta de acesso a nenhum
+sistema da Setter, então **a `crm_incumbente` continua vazia e continua bloqueando** a métrica de
+"quantos alvos eram novos". Se ela importa pro critério de sucesso, tem que ser pedida
+explicitamente na quinta, como item próprio.
