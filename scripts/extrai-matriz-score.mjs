@@ -69,6 +69,27 @@ est AS (
   SELECT cnpj_basico, COUNT(*) AS n_estab
   FROM \`basedosdados.br_me_cnpj.estabelecimentos\` WHERE data = '${CORTE}' GROUP BY 1
 ),
+-- A tabela \`simples\` NAO tem particao por data: ela e estado atual, de 2026.
+--
+-- SO EXISTE UMA FEATURE SEGURA AQUI, e a primeira versao deste bloco errou nas outras duas.
+-- A Lei Complementar 123 proibe empresa com socio PJ de ficar no Simples. Como o label de
+-- aquisicao E "entra socio PJ", toda adquirida foi obrigada a sair do Simples. Entao qualquer
+-- feature que dependa de a empresa AINDA estar no Simples, ou de a data de exclusao ser nula,
+-- le o desfecho. Medido em check-vazamento-simples.mjs: 137.328 empresas com a flag atual ligada
+-- e sem data de exclusao tiveram 28 aquisicoes contra as ~490 esperadas, lift 0,06x. Isso nao e
+-- previsao, e consequencia.
+--
+-- O que sobra e o que olha so pro passado do corte:
+--   saiu_simples = data_exclusao_simples < CORTE. A empresa ja tinha estourado o teto de receita
+--                  (R$4,8 mi) ANTES da foto, o que e fato conhecido na data do corte. Lift
+--                  medido: 2,15x no universo elegivel.
+-- Limitacao conhecida: a tabela guarda so a ultima opcao e a ultima exclusao, entao empresa que
+-- saiu e voltou aparece so com o ultimo par. E caso de borda, nao corrige aqui.
+simp AS (
+  SELECT cnpj_basico,
+    IF(data_exclusao_simples IS NOT NULL AND data_exclusao_simples < DATE('${CORTE}'), 1, 0) AS saiu_simples
+  FROM \`basedosdados.br_me_cnpj.simples\`
+),
 base AS (
   SELECT
     e.cnpj_basico,
@@ -81,12 +102,16 @@ base AS (
     DATE_DIFF(DATE('${CORTE}'), sc.ult, YEAR)                    AS anos_ult,
     DATE_DIFF(DATE('${CORTE}'), e.data_inicio_atividade, YEAR)   AS anos_emp,
     SAFE_CAST(emp.capital_social AS FLOAT64)                     AS capital,
-    COALESCE(est.n_estab, 1)                                     AS n_estab
+    COALESCE(est.n_estab, 1)                                     AS n_estab,
+    -- porte da Receita no corte: 1=ME, 3=EPP, 5=DEMAIS. 0 quando ausente.
+    COALESCE(SAFE_CAST(emp.porte AS INT64), 0)                   AS porte,
+    COALESCE(simp.saiu_simples, 0)                               AS saiu_simples
   FROM \`basedosdados.br_me_cnpj.estabelecimentos\` e
   JOIN \`basedosdados.br_me_cnpj.empresas\` emp
     ON emp.cnpj_basico = e.cnpj_basico AND emp.data = '${CORTE}'
-  LEFT JOIN sc  ON sc.cnpj_basico  = e.cnpj_basico
-  LEFT JOIN est ON est.cnpj_basico = e.cnpj_basico
+  LEFT JOIN sc   ON sc.cnpj_basico   = e.cnpj_basico
+  LEFT JOIN est  ON est.cnpj_basico  = e.cnpj_basico
+  LEFT JOIN simp ON simp.cnpj_basico = e.cnpj_basico
   WHERE e.data = '${CORTE}'
     AND e.identificador_matriz_filial = '1'
     AND e.situacao_cadastral = '2'
@@ -109,11 +134,21 @@ SELECT
   c.vertical, c.metade, c.mf, c.menor, c.n_pf, c.n_pj,
   c.anos_ult, c.anos_emp, ROUND(c.cap_pct, 6) AS cap_pct, c.n_estab,
   IF(b.cnpj_basico IS NULL, -1, b.pf) AS pf_novo,
-  IF(b.cnpj_basico IS NULL, -1, b.pj) AS pj_novo
+  IF(b.cnpj_basico IS NULL, -1, b.pj) AS pj_novo,
+  c.porte, c.saiu_simples,
+  -- Desempate ESTAVEL, derivado do proprio CNPJ. Sem isto o calibra-score.py sorteava o
+  -- desempate por POSICAO da linha, e o BigQuery nao garante ordem entre extracoes: a mesma
+  -- matriz reextraida dava recall diferente (31,74% e 31,86% no mesmo baseline, em 02/08 e
+  -- 11/08). O score tem ~60 valores distintos pra 200 mil empresas, entao a fronteira do decil
+  -- cai dentro de um bloco enorme de empates e quem entra depende so do desempate.
+  MOD(ABS(FARM_FINGERPRINT(c.cnpj_basico)), 1000000) / 1000000.0 AS desempate
 FROM comcap c
 LEFT JOIN b ON b.cnpj_basico = c.cnpj_basico`;
 
-const COLS = ["vertical","metade","mf","menor","n_pf","n_pj","anos_ult","anos_emp","cap_pct","n_estab","pf_novo","pj_novo"];
+// Colunas novas vao no FIM de proposito: calibra-score.py e diagnostico-label.py leem por nome
+// via mapa do header, entao acrescentar no fim nao quebra nenhum dos dois.
+const COLS = ["vertical","metade","mf","menor","n_pf","n_pj","anos_ult","anos_emp","cap_pct","n_estab","pf_novo","pj_novo",
+              "porte","saiu_simples","desempate"];
 
 mkdirSync(path.dirname(SAIDA), { recursive: true });
 const gz = createGzip({ level: 6 });
@@ -140,6 +175,7 @@ await new Promise((resolve, reject) => {
         row.anos_ult == null ? -1 : row.anos_ult,
         row.anos_emp == null ? -1 : row.anos_emp,
         row.cap_pct, row.n_estab, row.pf_novo, row.pj_novo,
+        row.porte, row.saiu_simples, row.desempate,
       ].join("\t");
       n += 1;
       if (Number(row.pj_novo) > Number(row.n_pj) && Number(row.pf_novo) < Number(row.n_pf)) nAdq += 1;

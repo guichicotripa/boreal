@@ -4,6 +4,7 @@ Loop de calibracao do score v0, contra aquisicoes reais e com o artefato do labe
 
     python scripts/calibra-score.py                  # busca no desenvolvimento
     python scripts/calibra-score.py --iters=800      # busca mais longa
+    python scripts/calibra-score.py --com-simples    # inclui um eixo que exige mudar o ingest
     python scripts/calibra-score.py --holdout        # SO no fim: abre o holdout, uma vez
 
 Entrada:  scripts/data/matriz-score.tsv.gz   (extrai-matriz-score.mjs)
@@ -40,6 +41,35 @@ DUAS CORRECOES, e sao elas que fazem este script diferente de uma busca ingenua:
 Consequencia direta: quadro_plural NAO E AVALIAVEL pela metrica estratificada (ele e quase
 constante dentro de cada estrato). Por isso ele nao entra na busca, e a decisao sobre ele e
 tomada a parte, explicitamente, no fim do relatorio.
+
+──────────────────────────────────────────────────────────────────────────────────
+RODADA DE 11/08/2026: `porte` entra, e um candidato foi barrado por vazamento
+
+Motivo de reabrir: `escala_capital` vale 34 dos 100 pontos e e o eixo mais forte do v0, e a
+sondagem de 11/08 mediu que `capital_social` e IDENTICO entre 2023 e 2025 em 91% a 95% das
+empresas. O eixo mais forte estava construido num campo declarado na fundacao e quase nunca
+atualizado. `src/lib/dossier.ts` ja proibia o LLM de usar capital como tamanho; o score fazia
+exatamente isso.
+
+Dois candidatos foram testados (`scripts/diagnostico-porte.py`):
+
+  · `porte` da Receita (1=ME, 3=EPP, 5=DEMAIS). ENTRA na busca. Ja esta no ingest e na tabela
+    `empresa` do Supabase (ingest-empresas.mjs), entao e usavel em runtime hoje, sem obra.
+    As faixas NAO sao monotonicas no tamanho: ME 0,72x · DEMAIS ~1,00x · EPP 2,67x. Por isso a
+    ordem dos bins e ME, DEMAIS, EPP e nao a ordem natural. Leitura: EPP e a faixa de mid-market
+    de dono unico que a boutique procura, e DEMAIS mistura empresa grande com empresa inelegivel
+    ao regime por natureza juridica, inclusive as que ja tem socio PJ.
+
+  · `saiu_simples` (excluida do Simples ANTES do corte, ou seja, estourou o teto de R$4,8 mi de
+    receita). Lift 2,15x. So entra com --com-simples, porque a tabela `simples` NAO esta no
+    ingest: e medicao do que valeria mudar o ingest, igual ao tratamento dado a `n_estab`.
+
+BARRADO POR VAZAMENTO: a flag `opcao_simples` ("ainda no Simples") dava lift 0,00x com z=11,4,
+o que parecia o melhor sinal ja medido e era o desfecho disfarcado. A Lei Complementar 123 proibe
+socio PJ no Simples, e o label de aquisicao E "entra socio PJ", entao toda adquirida foi obrigada
+a sair. Como a tabela nao tem particao por data, a flag e o estado de 2026. Prova em
+`scripts/check-vazamento-simples.mjs`. O campo foi removido da extracao e ha uma guarda abaixo
+pra que ele nao volte por acidente numa matriz antiga.
 ──────────────────────────────────────────────────────────────────────────────────
 """
 import gzip, io, json, math, os, sys, time
@@ -59,6 +89,7 @@ def flag(n, p):
 ITERS = int(flag("iters", "400"))
 LABEL = flag("label", "basica")
 ABRIR_HOLDOUT = "--holdout" in args
+COM_SIMPLES = "--com-simples" in args
 SEED = int(flag("seed", "7"))
 N_FOLDS = 5
 rng = np.random.default_rng(SEED)
@@ -79,7 +110,17 @@ anos_ult, anos_emp = gi("anos_ult"), gi("anos_emp")
 cap_pct = gi("cap_pct", np.float32)
 n_estab = gi("n_estab")
 pf_novo, pj_novo = gi("pf_novo"), gi("pj_novo")
+porte = gi("porte") if "porte" in col else np.zeros(len(raw), dtype=np.int32)
+saiu_simples = gi("saiu_simples") if "saiu_simples" in col else np.zeros(len(raw), dtype=np.int32)
 N = len(mf)
+
+# Guarda contra matriz antiga: estas duas colunas existiram por algumas horas em 11/08/2026 e
+# LEEM O DESFECHO (ver o cabecalho). Se aparecerem, a matriz e velha e tem que ser reextraida,
+# porque deixar o campo disponivel e esperar disciplina e como o erro volta.
+_proibidas = [c for c in ("no_simples", "mei") if c in col]
+if _proibidas:
+    sys.exit(f"ABORTADO: a matriz tem coluna contaminada {_proibidas}. "
+             "Rode `node --env-file=.env.local scripts/extrai-matriz-score.mjs` de novo.")
 verticais = sorted(set(vert_txt))
 vert = np.searchsorted(np.array(verticais), vert_txt)
 
@@ -100,7 +141,11 @@ estrato = np.select([n_pf >= 5, n_pf >= 3], [2, 1], 0)   # 0: 2 socios · 1: 3-4
 
 dev, hol = (metade == 0) & elegivel, (metade == 1) & elegivel
 fold = rng.integers(0, N_FOLDS, size=N)
-desempate = rng.random(N).astype(np.float32)   # reproduz o desempate arbitrario do NTILE
+# Desempate vem da MATRIZ (hash do CNPJ), nao de sorteio por posicao de linha. Antes de 11/08 era
+# `rng.random(N)`, que depende da ordem das linhas, e o BigQuery nao garante ordem entre extracoes:
+# o mesmo baseline deu 31,74% e 31,86% em duas rodadas. Ver --ruido pra magnitude do efeito.
+desempate = (gi("desempate", np.float32) if "desempate" in col
+             else rng.random(N).astype(np.float32))
 
 print(f"  {N:,} linhas · elegiveis {int(elegivel.sum()):,} ({elegivel.sum()/N*100:.1f}%)")
 print(f"  label '{LABEL}': {int(y[elegivel].sum()):,} aquisicoes"
@@ -126,7 +171,15 @@ EIXOS = {
     "movimento_societario": (anos_ult, [("10+/sem", lambda v: (v >= 10) | (v < 0)),
                                         ("<10", lambda v: (v >= 5) & (v < 10)),
                                         ("<5", lambda v: (v >= 0) & (v < 5))]),
+    # Ordem dos bins NAO e o tamanho, e o lift medido: ME 0,72x · DEMAIS 1,00x · EPP 2,67x.
+    # `escala_para` impoe monotonicidade na ordem dos bins, entao a ordem E a hipotese.
+    "porte_receita": (porte, [("ME/ausente", lambda v: (v == 1) | (v == 0)),
+                              ("DEMAIS", lambda v: v == 5),
+                              ("EPP", lambda v: v == 3)]),
 }
+if COM_SIMPLES:
+    # Fora do ingest hoje. Entra so pra medir quanto valeria trazer a tabela `simples`.
+    EIXOS["saiu_simples"] = (saiu_simples, [("nao", lambda v: v == 0), ("sim", lambda v: v == 1)])
 # Fora da busca de proposito: quase constante dentro de cada estrato, entao a metrica
 # estratificada nao consegue julga-lo. Decisao a parte, no fim.
 QUADRO = (n_pf, [("1", lambda v: v < 2), ("2-4", lambda v: v >= 2), ("5+", lambda v: v >= 5)])
@@ -139,7 +192,9 @@ NB = {k: len(EIXOS[k][1]) for k in NOMES}
 BASE_FULL = {"escala_capital": [0, 11, 19, 27, 34], "idade_controle": [0, 10, 19, 25, 28],
              "sucessor_aparente": [0, 14], "quadro_plural": [0, 7, 13],
              "movimento_societario": [0, 6, 11]}
-BASE = {k: list(BASE_FULL[k]) for k in NOMES}
+# Eixo novo entra no baseline valendo ZERO, pra que "baseline" continue sendo exatamente o
+# scoring.ts de hoje e o TETO nao mude. Sem isso a comparacao com a rodada de 02/08 quebra.
+BASE = {k: list(BASE_FULL.get(k, [0] * NB[k])) for k in NOMES}
 
 def pontua(pesos, quadro=None):
     s = np.zeros(N, dtype=np.float32)
@@ -362,6 +417,68 @@ resultado = {
     "holdout": None,
 }
 
+def bloco_de_empate(pesos, rotulo):
+    """Quanto do corte do decil e decidido por empate, e nao pelo score.
+
+    O score e uma soma de poucos inteiros, entao ele tem dezenas de valores distintos pra centenas
+    de milhares de empresas. A fronteira do top 10% quase sempre cai DENTRO de um bloco de empate,
+    e ai quem entra na lista e quem sai dela e decidido por criterio arbitrario. Isso vale tanto
+    aqui quanto na producao, que usa NTILE."""
+    s = pontua(pesos)
+    vagas_disputadas, vagas_totais = 0, 0
+    for v in range(len(verticais)):
+        for e in range(3):
+            m = dev & (vert == v) & (estrato == e)
+            nv = int(m.sum())
+            if nv == 0:
+                continue
+            topo = nv // 10 + (1 if nv % 10 else 0)
+            sv = np.sort(s[m])[::-1]
+            corte = sv[topo - 1]
+            n_no_corte = int((sv == corte).sum())            # empatados no valor da fronteira
+            acima = int((sv > corte).sum())                  # entram por merito
+            vagas_disputadas += min(n_no_corte, topo - acima) if topo > acima else 0
+            vagas_totais += topo
+    pct = vagas_disputadas / max(vagas_totais, 1) * 100
+    print(f"  {rotulo:10} {vagas_totais:>8,} vagas no top 10% · {vagas_disputadas:>8,} preenchidas"
+          f" por desempate ({pct:.1f}%)")
+    return pct
+
+
+print("\n" + "=" * 84)
+print("GRANULARIDADE: quanto do top 10% e decidido por desempate, e nao pelo score")
+print("=" * 84)
+bloco_de_empate(BASE, "baseline")
+bloco_de_empate(P, "proposto")
+print("\n  Score com poucos valores distintos faz a fronteira do decil cair dentro de um bloco de")
+print("  empate. Producao tem o mesmo problema, porque o NTILE tambem desempata arbitrariamente.")
+
+RUIDO = int(flag("ruido", "0"))
+if RUIDO:
+    # POR QUE ISTO EXISTE: em 11/08/2026 o baseline no holdout deu 31,86% quando a rodada de
+    # 02/08 tinha dado 31,74%, com o MESMO codigo, os MESMOS pesos e as mesmas 838 aquisicoes.
+    # A causa nao e o modelo: o score tem ~60 valores distintos pra 200 mil empresas, entao a
+    # fronteira do decil cai no meio de um bloco gigante de empates, e quem entra no top 10%
+    # depende do desempate arbitrario. O BigQuery nao garante ordem de linha entre extracoes,
+    # entao o desempate muda de empresa. Producao tem o mesmo problema: o NTILE do SQL tambem
+    # desempata arbitrariamente.
+    # Sem medir isto, qualquer delta menor que o ruido seria lido como ganho.
+    print("\n" + "=" * 84)
+    print(f"RUIDO DE DESEMPATE: {RUIDO} sorteios do criterio de desempate, mesmos pesos (dev)")
+    print("=" * 84)
+    guardado = desempate.copy()
+    for rot, pesos in [("baseline", BASE), ("proposto", P)]:
+        vals_e, vals_p = [], []
+        for s in range(RUIDO):
+            desempate[:] = np.random.default_rng(1000 + s).random(N).astype(np.float32)
+            a = relatorio(pesos, dev)
+            vals_e.append(a["estratificado"]); vals_p.append(a["perfil"])
+        print(f"  {rot:10} estratificado {np.mean(vals_e):6.2f}% ± {np.std(vals_e):.2f}"
+              f"  (min {min(vals_e):.2f} max {max(vals_e):.2f})"
+              f"   ·  perfil {np.mean(vals_p):6.2f}% ± {np.std(vals_p):.2f}")
+    desempate[:] = guardado
+    print("\n  Leitura: qualquer delta menor que ~2x o desvio acima e empate, nao ganho.")
+
 if ABRIR_HOLDOUT:
     print("\n" + "=" * 84)
     print("HOLDOUT (aberto uma vez)")
@@ -373,6 +490,30 @@ if ABRIR_HOLDOUT:
     print(f"  {'delta':22} {hp['estratificado']-hb['estratificado']:>+14.2f}  "
           f"{hp['simples']-hb['simples']:>+9.1f}  {hp['perfil']-hb['perfil']:>+9.1f}")
     print(f"\n  n aquisicoes no holdout: {hp['n']} (perfil {hp['n_perfil']})")
+
+    # McNemar pareado: os dois rankers veem as MESMAS aquisicoes, entao comparar duas taxas
+    # independentes superestima a incerteza. O que importa e so onde eles discordam.
+    def pegou(pesos):
+        s = pontua(pesos)
+        d = np.zeros(N, dtype=bool)
+        for v in range(len(verticais)):
+            for e in range(3):
+                m = hol & (vert == v) & (estrato == e)
+                nv = int(m.sum())
+                if nv == 0:
+                    continue
+                idx = np.where(m)[0]
+                topo = nv // 10 + (1 if nv % 10 else 0)
+                o = np.lexsort((desempate[m], -s[m]))[:topo]
+                d[idx[o]] = True
+        return d
+    da, db = pegou(BASE), pegou(P)
+    pos = hol & (y == 1)
+    b01 = int((pos & db & ~da).sum())   # so o proposto pegou
+    b10 = int((pos & da & ~db).sum())   # so o atual pegou
+    zmc = (b01 - b10) / math.sqrt(b01 + b10) if (b01 + b10) else float("nan")
+    print(f"  McNemar: so o PROPOSTO pegou {b01} · so o ATUAL pegou {b10} · z = {zmc:.2f}")
+    resultado["mcnemar"] = {"so_proposto": b01, "so_atual": b10, "z": round(zmc, 3)}
     resultado["holdout"] = {"n": hp["n"], "n_perfil": hp["n_perfil"],
                             "baseline": {k: round(hb[k], 2) for k in ("estratificado", "simples", "perfil")},
                             "proposto": {k: round(hp[k], 2) for k in ("estratificado", "simples", "perfil")}}
