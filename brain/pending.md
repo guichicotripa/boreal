@@ -114,6 +114,19 @@
 - [ ] **Proxy limpo de tamanho.** Capital social é declarado, nominal e frequentemente desatualizado
   desde a constituição, e mesmo assim é o eixo mais forte (3,80x). Empregados via RAIS/CAGED ou
   faturamento estimado deve bater isso.
+
+  **Medido em 11/08 e é pior do que parecia:** o capital é **idêntico entre 2023 e 2025 em 91% a 95%
+  das empresas**. O substituto imediato é `empresas.porte` (ME/EPP/DEMAIS), mantido porque tem
+  consequência tributária, e que sobe com a idade da empresa como proxy real (4,4% DEMAIS nas
+  fundadas nos anos 2020 contra 21,8% nas anteriores a 1979). Trocar o corte mudou os números da
+  sondagem da Setter em 2,5x. **Ressalva:** DEMAIS é "nem ME nem EPP", então inclui inelegível por
+  natureza jurídica (S/A, empresa com sócio PJ) e superestima tamanho onde já há sócio
+  institucional. **O corte limpo mesmo é a data de exclusão do Simples** (estouro do teto de
+  R$4,8 mi, com data) em `basedosdados.br_me_cnpj.simples`, ainda não medida. Ver `progress.md`
+  de 11/08 e `scripts/sonda-proxy-tamanho.mjs`.
+- [ ] **Testar `porte` como eixo do score.** Se ele é melhor proxy de tamanho que capital, e capital
+  é o eixo mais forte do v0 (3,80x), então a calibração de 02/08 pode estar deixando ganho na mesa.
+  É medível com a matriz local se `porte` for adicionado à extração.
 - [ ] **Validar o proxy de ground truth contra desfecho real da Setter.** Quando houver ~20
   conversas com desfecho no pipeline, checar se as empresas que ela realmente destravou estavam no
   nosso topo. **Maior valor da lista inteira** e sai de graça de operar o piloto.
