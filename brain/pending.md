@@ -77,12 +77,16 @@
   o score. **Perguntar direto na call de quinta se existe mandato comprador nos dois.** Se existir,
   o piloto muda de forma: exaustividade e dado de contato viram a métrica, não recall@top10%.
 - [ ] **Call marcada: quinta 13/08, 9:30.** Pauta em `progress.md` na entrada de 11/08.
-- [ ] **Sondar os dois setores no BigQuery antes de prometer qualquer coisa.** Universo nacional,
-  nº de aquisições detectáveis e nº de aquisições no perfil sucessório. Sem isso não dá pra dizer
-  se o score é validável nesses setores ou se o enquadramento honesto é só descoberta e heat-map.
-  Ordem de grandeza esperada: os dois são universos pequenos perto de metalmec (250k) ou saúde
-  (531k), e a 0,11% de taxa-base isso pode dar poucas dezenas de aquisições, abaixo do que sustenta
-  um recall por setor. **Isto é hipótese, não medição.**
+- [x] ~~**Sondar os dois setores no BigQuery.**~~ **Feito em 11/08.** Tabelas completas em
+  `progress.md`. Resultado: **foco A tem 1.661 empresas e 11 acima de R$1 mi de capital, nenhuma
+  delas no perfil sucessório. Foco B tem 60 empresas e 4 acima de R$1 mi.** Death care mais plano
+  funerário, que ele tirou do foco, tem 11.712 empresas e **392 acima de R$1 mi**, com prevalência
+  de aquisição 11,6x maior. **A hipótese de que os focos eram pequenos demais se confirmou, e por
+  margem maior do que eu esperava.**
+- [ ] **Levar pra quinta a recomendação de inverter o foco pra death care.** Não como "seu setor é
+  ruim", e sim: se existe mandato comprador em lab veterinário, o Boreal entrega a lista completa
+  em dias e não precisa de piloto de um mês pra isso; o piloto de um mês só se justifica onde tem
+  universo. E o setor com universo é o que ele já tinha citado primeiro.
 - [ ] **`death care` é um CNAE limpo, `pet` não é.** Death care é a classe **9603-3** inteira
   (gestão de cemitérios, cremação, sepultamento, funerárias, somatoconservação), mais **6511-1/02**
   (planos de auxílio funeral), que existe como CNAE próprio. Prefixos ingeríveis hoje: `9603` e
