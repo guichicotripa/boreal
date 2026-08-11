@@ -9,14 +9,28 @@
 
 ---
 
-## 🔴 Decisões abertas da calibração (02/08)
+## 🔴 Decisões abertas da calibração (02/08, atualizado 11/08)
 
-> Contexto completo em `brain/modelo-de-score.md` §13. O método já mudou e está documentado;
-> o que falta é decisão de produto, não de medição.
+> Contexto completo em `brain/modelo-de-score.md` §13 e **§14**. O método já mudou e está
+> documentado; o que falta é decisão de produto, não de medição.
+>
+> **Atualização de 11/08:** a proposta ficou bem melhor com a entrada de `porte` e todos os números
+> abaixo foram refeitos. Os defeitos de instrumento achados na rodada (vazamento do Simples e ruído
+> de desempate) já estão corrigidos no código.
 
-- [ ] **Aplicar ou não os pesos propostos em `scoring.ts`.** Ganham +3,58 no holdout
-  (31,74% → 35,32% estratificado), McNemar z=2,42. Custo: `sucessor_aparente` cai de 14 pra 1
-  ponto, o que esvazia a "inversão da tese" que hoje é a história central do pitch e do README.
+- [ ] **Aplicar ou não os pesos propostos em `scoring.ts`.** Com `porte`, ganham **+6,92** no
+  holdout (31,62% → 38,54% estratificado), McNemar **z=4,30**. Quase o dobro dos +3,58 de 02/08.
+  Dois custos: `sucessor_aparente` cai de 14 pra 4 pontos, o que esvazia a "inversão da tese" que
+  hoje é a história central do pitch e do README; e **o proposto preenche 13,0% das vagas do top
+  10% por desempate contra 4,1% do baseline**, ou seja, uma em cada oito empresas da lista entra
+  por sorteio. Ganha recall e perde granularidade.
+- [ ] **Se aplicar, tornar o score mais fino junto.** O problema dos 13% não é dos pesos, é de o
+  score ter ~60 valores distintos pra 200 mil empresas. Sem resolver isso, `NTILE` continua
+  decidindo a lista no par ou ímpar na fronteira. É o item que mais melhora a experiência real de
+  quem usa a lista, e não aparece em nenhuma métrica de recall.
+- [ ] **Citar recall sempre com o intervalo de desempate.** Medido em 25 sorteios: **±0,25** no
+  estratificado e **±0,91 no perfil**, que é justamente a métrica citada publicamente. Uma decimal
+  no "36,9%" é precisão falsa.
 - [ ] **O que fazer com `idade_controle`.** Lift 1,00x dentro do estrato, ou seja, o label não
   consegue testá-lo. Não é evidência de que não sirva: a venda integral de empresa de dono único,
   que é o caso central da tese, é invisível pro registro. Manter por julgamento, reduzir, ou
@@ -29,7 +43,18 @@
   contagem de estabelecimentos ao ingest e à tabela `empresa`. Hoje não é calculável em runtime.
 - [ ] **Decidir sobre `tem sócio PJ`** (lift 2,12x-5,07x estratificado). É derivável em runtime,
   mas mede empresa que já tem sócio institucional, o que encosta no desfecho. Ver a ressalva de
-  tese dos 29% do topo com sócio PJ.
+  tese dos 29% do topo com sócio PJ. **Nota de 11/08:** o eixo `porte` já carrega parte disso sem
+  querer, porque `DEMAIS` inclui empresa inelegível ao Simples por ter sócio PJ. Se `tem sócio PJ`
+  virar filtro, revisar o `porte` junto.
+- [x] ~~**Trazer a tabela `simples` pro ingest.**~~ **Medido e descartado em 11/08.**
+  `saiu_simples` tem lift 2,15x isolado, mas incluí-lo **piora** o dev CV (42,32% contra 42,57%):
+  é redundante com capital e porte. Resultado negativo que economiza a obra. A flag `opcao_simples`
+  está **proibida** e há guarda no `calibra-score.py`, porque ela lê o desfecho.
+- [x] ~~**Proxy de tamanho melhor que capital social.**~~ **Resolvido em 11/08 com `porte`**, que já
+  estava no ingest e não exigiu obra nenhuma. Cuidado com a justificativa: `porte` **não** é mais
+  atualizado que capital (99,0% congelado contra 96,8%). O que sustenta o eixo é o lift medido e o
+  ganho no holdout, não frescor. Empregados via RAIS/CAGED continua sendo o proxy limpo de verdade
+  e continua aberto.
 
 ---
 
@@ -111,22 +136,17 @@
 
 - [ ] **Nº de estabelecimentos como eixo.** Já medido: vale ~1,3pp de recall. Preso porque o ingest
   não traz contagem de filiais. É o ganho mais barato que existe hoje.
-- [ ] **Proxy limpo de tamanho.** Capital social é declarado, nominal e frequentemente desatualizado
-  desde a constituição, e mesmo assim é o eixo mais forte (3,80x). Empregados via RAIS/CAGED ou
-  faturamento estimado deve bater isso.
+- [ ] **Proxy limpo de tamanho (o que ainda falta).** Empregados via RAIS/CAGED ou faturamento
+  estimado. `porte` resolveu parte do problema em 11/08, mas é tão congelado quanto capital.
 
-  **Medido em 11/08 e é pior do que parecia:** o capital é **idêntico entre 2023 e 2025 em 91% a 95%
+  **Medido em 11/08:** o capital é **idêntico entre 2023 e 2025 em 91% a 95%
   das empresas**. O substituto imediato é `empresas.porte` (ME/EPP/DEMAIS), mantido porque tem
   consequência tributária, e que sobe com a idade da empresa como proxy real (4,4% DEMAIS nas
   fundadas nos anos 2020 contra 21,8% nas anteriores a 1979). Trocar o corte mudou os números da
   sondagem da Setter em 2,5x. **Ressalva:** DEMAIS é "nem ME nem EPP", então inclui inelegível por
   natureza jurídica (S/A, empresa com sócio PJ) e superestima tamanho onde já há sócio
-  institucional. **O corte limpo mesmo é a data de exclusão do Simples** (estouro do teto de
-  R$4,8 mi, com data) em `basedosdados.br_me_cnpj.simples`, ainda não medida. Ver `progress.md`
-  de 11/08 e `scripts/sonda-proxy-tamanho.mjs`.
-- [ ] **Testar `porte` como eixo do score.** Se ele é melhor proxy de tamanho que capital, e capital
-  é o eixo mais forte do v0 (3,80x), então a calibração de 02/08 pode estar deixando ganho na mesa.
-  É medível com a matriz local se `porte` for adicionado à extração.
+  institucional. A data de exclusão do Simples **foi medida** em 11/08 e não agrega (ver acima).
+  Ver `modelo-de-score.md` §14 e `scripts/sonda-proxy-tamanho.mjs`.
 - [ ] **Validar o proxy de ground truth contra desfecho real da Setter.** Quando houver ~20
   conversas com desfecho no pipeline, checar se as empresas que ela realmente destravou estavam no
   nosso topo. **Maior valor da lista inteira** e sai de graça de operar o piloto.
