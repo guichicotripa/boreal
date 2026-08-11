@@ -1710,3 +1710,27 @@ com sócio PJ). Então DEMAIS **superestima** tamanho justamente onde já existe
 que é o grupo que a ressalva dos 29% do topo já mandava tratar com cuidado. O corte limpo de
 verdade seria a data de exclusão do Simples (estouro do teto de R$4,8 mi, com data) na tabela
 `basedosdados.br_me_cnpj.simples`, que ainda não foi medida.
+
+### Sessão de score: `porte` entra, um vazamento é barrado, o desempate vira determinístico
+
+Saiu da pergunta do Guilherme sobre capital social e virou a rodada de calibração mais produtiva
+até agora. Detalhe completo em `modelo-de-score.md` §14. O resumo do que mudou de verdade:
+
+- **Ganho no holdout dobrou:** +6,92 contra os +3,58 de 02/08, com McNemar z subindo de 2,42 para
+  4,30. O eixo novo, `porte`, leva 17 dos 87 pontos.
+- **Capital não foi substituído, ficou mais forte** (34 → 45 pontos). Os dois medem coisas
+  diferentes: capital ≥ p85 dentro de porte DEMAIS dá 9,00x.
+- **Um vazamento meu foi pego antes de entrar.** Construí `no_simples` achando que era sinal de
+  tamanho; era o desfecho, porque adquirida é obrigada a sair do Simples. Só apareceu porque o
+  número era bom demais (lift 0,00x, z=11,4). Mesma heurística que salvou a rodada de 02/08.
+- **Um resultado negativo que economiza obra:** trazer a tabela `simples` pro ingest não melhora
+  nada. Não fazer.
+- **Um defeito antigo que ninguém tinha medido:** o desempate arbitrário movia o recall em ±0,25
+  no estratificado e ±0,91 no perfil, e explicava a diferença entre 31,74% e 31,86% no mesmo
+  baseline. Agora o desempate vem do hash do CNPJ e é reproduzível.
+
+**Aprendizado da sessão, e é o mesmo das duas anteriores em roupa nova:** três erros de medição em
+dez dias, e os três foram achados olhando **como** o número foi construído, nunca olhando o número.
+Label contaminado (02/08), proxy congelado (11/08) e flag pós-desfecho (11/08). O padrão que
+detecta os três é o mesmo: *quando o resultado é bom demais, suspeite do instrumento antes do
+mundo*.

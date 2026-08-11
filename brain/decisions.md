@@ -1366,3 +1366,48 @@ feito, não olhando o número.
 
 **Status:** ✅ Método trocado e documentado. ⏳ Pesos propostos medidos (+3,58 no holdout,
 McNemar z=2,42) mas **não aplicados** em `scoring.ts` — decisão do Guilherme.
+
+---
+
+## [2026-08-11] `porte` entra como eixo, a flag do Simples é barrada, e o desempate vira determinístico
+
+**Contexto.** O Guilherme apontou que `capital_social` é declarado no CNPJ e empresa não atualiza.
+Medido: idêntico entre 2023 e 2025 em **96,8%** das empresas. E `escala_capital` era 34 dos 100
+pontos, o eixo mais forte do v0. `src/lib/dossier.ts` já proibia o LLM de usar capital como tamanho;
+o score fazia exatamente isso. Contradição interna do produto.
+
+**Decisões tomadas.**
+
+1. **`porte` da Receita entra na busca como eixo.** Não porque seja mais fresco (medido: é *mais*
+   congelado que capital, 99,0%), e sim porque codifica outra coisa, faixa de receita em vez de
+   capital declarado, e porque o ganho é medido. Ordem de bins **ME → DEMAIS → EPP**, contra a
+   ordem natural de tamanho, porque o lift não é monotônico: EPP 2,67x contra DEMAIS 1,00x. Já está
+   no ingest, então **não exige obra nenhuma** para ir a runtime.
+
+2. **A tabela `simples` NÃO entra no ingest.** `saiu_simples` tem lift 2,15x isolado, mas incluí-lo
+   piora o dev CV (42,32% contra 42,57%). É redundante com capital e porte. Resultado negativo que
+   economiza uma mudança de ingest.
+
+3. **A flag `opcao_simples` fica proibida, com guarda no código.** Ela dava lift 0,00x com z=11,4 e
+   era o desfecho disfarçado: a LC 123 proíbe sócio PJ no Simples, o label de aquisição é "entra
+   sócio PJ", e a tabela não tem partição por data. `calibra-score.py` **aborta** se a coluna
+   aparecer. Confiar em disciplina para não usar um campo disponível é como o erro volta.
+
+4. **O desempate passa a ser derivado do hash do CNPJ**, não sorteado por posição de linha. Antes
+   disso, reextrair a mesma matriz mudava o recall do mesmo baseline (31,74% e 31,86%), porque o
+   BigQuery não garante ordem entre extrações.
+
+5. **Todo número de recall passa a ser citado com o intervalo de desempate.** Medido em 25
+   sorteios: ±0,25 no estratificado e **±0,91 no perfil**. O "36,9%" citado em 02/08 tem cerca de
+   ±1 ponto de ruído puro. Uma decimal é precisão falsa.
+
+**Resultado no holdout (aberto uma vez):** 31,62% → **38,54%** estratificado, **delta +6,92**,
+McNemar z = **4,30** (120 contra 62). A proposta de 02/08, sem porte, dava +3,58 com z=2,42.
+
+**O que NÃO foi decidido.** Os pesos continuam **não aplicados** em `scoring.ts`. Além dos motivos
+de 02/08 (`sucessor_aparente` esvaziado, `idade_controle` mantido por julgamento), apareceu um custo
+novo: o proposto preenche **13,0%** das vagas do top 10% por desempate, contra 4,1% do baseline. Ele
+ganha recall e piora a granularidade da lista. Uma em cada oito empresas entra por sorteio. Isso é
+decisão de produto.
+
+**Status:** ✅ Medido, documentado e reproduzível. ⏳ Não aplicado.

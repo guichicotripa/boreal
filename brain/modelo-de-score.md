@@ -818,3 +818,145 @@ python scripts/diagnostico-label.py                          # contaminação do
 python scripts/calibra-score.py --iters=500                  # busca, só no dev
 python scripts/calibra-score.py --iters=500 --holdout        # abre o holdout, uma vez
 ```
+
+---
+
+## 14. A rodada de 11/08/2026: o eixo mais forte estava num campo congelado
+
+> Esta seção **soma** à §13, não a substitui. O método da §13 (universo elegível, recall
+> estratificado) continua valendo integralmente. O que muda aqui é a lista de eixos, e aparecem
+> dois defeitos de instrumento que a §13 não tinha visto: um vazamento novo e um ruído de
+> desempate que sempre esteve lá, sem ter sido medido.
+
+### 14.1. O que abriu a investigação
+
+Sondando setores para a Setter, o corte de tamanho usado foi `capital_social >= R$1 mi`. O
+Guilherme apontou que capital social é declarado no registro do CNPJ e empresa não atualiza.
+Medido em `scripts/check-estagnacao-campos.mjs`:
+
+| campo | idêntico entre 2023-06-10 e 2025-11-09 |
+|---|---:|
+| `capital_social` | **96,8%** |
+| `porte` | **99,0%** |
+
+E `escala_capital` vale **34 dos 100 pontos** do v0, o eixo mais forte do modelo. Pior: o
+`src/lib/dossier.ts:94` já instruía o LLM com *"NUNCA use capital_social como proxy de
+porte/tamanho/faturamento, é registro contábil histórico"*. O produto proibia numa camada o que
+fazia na outra.
+
+### 14.2. Os candidatos, e o que sobrou de cada um
+
+**`porte` da Receita (1=ME, 3=EPP, 5=DEMAIS). ENTROU.** Já está no ingest e na tabela `empresa`
+do Supabase (`ingest-empresas.mjs:194`), então é usável em runtime hoje, sem obra. Lift
+estratificado no dev: ME **0,72x**, DEMAIS **1,00x**, EPP **2,67x** (z=5,2 no estrato de 2 sócios).
+
+As faixas **não são monotônicas no tamanho**, e isso é o achado: EPP é a faixa de mid-market que a
+boutique procura, e DEMAIS mistura empresa grande com empresa inelegível ao regime por natureza
+jurídica, inclusive as que **já têm sócio PJ**. Por isso a ordem dos bins na busca é
+`ME → DEMAIS → EPP`, e não a ordem natural de tamanho.
+
+**`saiu_simples` (excluída do Simples antes do corte, ou seja, estourou o teto de R$4,8 mi).
+MEDIDO E DESCARTADO.** Lift 2,15x isolado, mas com ele o dev CV é **42,32%** contra **42,57%** sem.
+Não agrega, porque é redundante com capital e porte. **Resultado negativo útil: economiza a mudança
+de ingest** que traria a tabela `simples`.
+
+**A flag `opcao_simples`. BARRADA POR VAZAMENTO.** Dava lift **0,00x com z=11,4** dentro de capital
+alto, o que parecia o melhor sinal já medido. A Lei Complementar 123 proíbe sócio PJ no Simples, e
+o label de aquisição **é** "entra sócio PJ", então toda adquirida foi obrigada a sair. Como a tabela
+`simples` não tem partição por data, a flag é o estado de 2026. Prova em
+`scripts/check-vazamento-simples.mjs`:
+
+| flag hoje | janela da exclusão | n | adq | lift |
+|---|---|---:|---:|---:|
+| no Simples | sem data de exclusão | 137.328 | **28** | **0,06x** |
+| fora | sem data de exclusão | 243.842 | 1.187 | 1,36x |
+| fora | **antes do corte** | 30.795 | 236 | **2,15x** |
+| fora | entre corte e desfecho | 28.155 | 151 | 1,50x |
+
+O campo foi removido da extração e há uma **guarda que aborta** `calibra-score.py` se ele reaparecer
+numa matriz antiga. Deixar o campo disponível e confiar em disciplina é como o erro volta.
+
+### 14.3. O defeito de instrumento: o desempate
+
+O baseline no holdout deu **31,86%** nesta rodada e **31,74%** em 02/08, com o mesmo código, os
+mesmos pesos e as mesmas 838 aquisições. A causa não é o modelo.
+
+O score é uma soma de poucos inteiros, então tem **cerca de 60 valores distintos para 200 mil
+empresas**. A fronteira do top 10% cai dentro de um bloco enorme de empates, e quem entra é
+decidido por critério arbitrário. `calibra-score.py` sorteava esse critério **por posição de
+linha**, e o BigQuery não garante ordem entre extrações.
+
+Medido com `--ruido=25` (25 sorteios do desempate, mesmos pesos, dev):
+
+| | estratificado | perfil |
+|---|---|---|
+| baseline | 31,18% **± 0,25** | 24,69% **± 0,91** |
+| proposto | 41,60% **± 0,27** | 29,17% **± 0,91** |
+
+**A métrica do perfil, que é a citada publicamente, carrega quase 1 ponto de desvio só de
+desempate.** Citar "36,9%" com uma decimal é precisão falsa. O intervalo honesto é de cerca de
+±1 ponto.
+
+E isto **não é só do script**: produção usa `NTILE`, que também desempata arbitrariamente. Medido
+com `bloco_de_empate`:
+
+| | vagas no top 10% | preenchidas por desempate |
+|---|---:|---:|
+| baseline | 22.522 | 918 (**4,1%**) |
+| proposto | 22.522 | 2.917 (**13,0%**) |
+
+**O proposto ganha recall e piora a granularidade.** Uma em cada oito empresas da lista está lá por
+sorteio. É custo real e tem que entrar na decisão.
+
+**Corrigido:** a matriz agora traz uma coluna `desempate` derivada de
+`MOD(ABS(FARM_FINGERPRINT(cnpj_basico)), 1000000)`, então o desempate é estável entre extrações e
+reproduzível. As duas rodadas anteriores não eram.
+
+### 14.4. Resultado
+
+Busca só no dev, 5 folds, vencedor por CV. Holdout aberto uma vez no fim.
+
+| eixo | hoje | proposto | faixas |
+|---|---|---|---|
+| `escala_capital` | [0, 11, 19, 27, 34] | **[0, 24, 37, 37, 45]** | <p50 p50 p70 p85 p95 |
+| `idade_controle` | [0, 10, 19, 25, 28] | **[0, 2, 2, 6, 11]** | <6 6 7 8 9 |
+| `sucessor_aparente` | [0, 14] | **[0, 4]** | sem ≤5 |
+| `movimento_societario` | [0, 6, 11] | **[0, 0, 10]** | 10+/sem <10 <5 |
+| **`porte_receita`** | [0, 0, 0] | **[0, 17, 17]** | ME/ausente DEMAIS EPP |
+
+| holdout (n=838, perfil 167) | estratificado | simples | perfil |
+|---|---:|---:|---:|
+| baseline (o `scoring.ts` de hoje) | 31,62% | 46,2% | 19,8% |
+| proposto | **38,54%** | 54,4% | **24,0%** |
+| delta | **+6,92** | +8,2 | +4,2 |
+
+**McNemar pareado: só o proposto pegou 120, só o atual pegou 62, z = 4,30.**
+
+Para comparar: a proposta de 02/08, sem `porte`, deu **+3,58 com z=2,42**. Adicionar `porte`
+praticamente **dobra o ganho** e sobe a significância de 2,4 para 4,3 desvios.
+
+Repare que `escala_capital` **subiu** de 34 para 45 dos 87 pontos. Porte não substituiu capital: os
+dois medem coisas diferentes e o modelo quer os dois. Confirma o teste condicional do
+`diagnostico-porte.py`, onde capital ≥ p85 dentro de porte DEMAIS dá **9,00x** (z=7,1).
+
+### 14.5. O que continua igual à §13, e não foi resolvido
+
+- `idade_controle` continua colapsando (28 → 11 pontos) e continua sendo mantido por julgamento,
+  pelo mesmo motivo: o label não enxerga venda integral de empresa de dono único.
+- `sucessor_aparente` continua sendo esvaziado (14 → 4), com o mesmo custo narrativo.
+- `quadro_plural` continua sem mover a métrica estratificada em nenhum valor de 0 a 26.
+- O holdout **já foi aberto três vezes** (02/08, e duas em 11/08, uma delas antes do desempate
+  estável). Isso queima poder estatístico. Se houver uma quarta rodada de calibração, o certo é
+  refazer o corte de metades com outra semente.
+
+### 14.6. Reproduzir
+
+```bash
+node --env-file=.env.local scripts/extrai-matriz-score.mjs      # matriz, com porte e desempate
+node --env-file=.env.local scripts/check-estagnacao-campos.mjs  # capital e porte congelados?
+node --env-file=.env.local scripts/check-vazamento-simples.mjs  # prova do vazamento da flag
+python scripts/diagnostico-porte.py                             # lift condicional porte x capital
+python scripts/calibra-score.py --iters=600 --ruido=25          # busca + ruído de desempate
+python scripts/calibra-score.py --iters=600 --com-simples       # quanto valeria o ingest do Simples
+python scripts/calibra-score.py --iters=600 --holdout           # abre o holdout
+```
