@@ -66,11 +66,30 @@
 
 ## 🟡 Bloqueado no Henrique / Setter
 
-- [ ] **Os 2 setores + a praça do contrato.** Enquanto não vierem, `org_setor` da Setter está vazia
-  e ela enxerga os 4 setores. Se vier tech, manter o enquadramento honesto de que lá o valor é
-  descoberta e heat-map, não score de sucessão.
+- [x] ~~**Os 2 setores.**~~ **Chegaram em 11/08**, por WhatsApp: (1) diagnóstico para PET e/ou plano
+  de saúde PET, (2) death care. **A praça continua não definida.** Nenhum dos dois está entre os 4
+  verticais atuais, então os dois exigem ingest novo.
+- [ ] **Sondar os dois setores no BigQuery antes de prometer qualquer coisa.** Universo nacional,
+  nº de aquisições detectáveis e nº de aquisições no perfil sucessório. Sem isso não dá pra dizer
+  se o score é validável nesses setores ou se o enquadramento honesto é só descoberta e heat-map.
+  Ordem de grandeza esperada: os dois são universos pequenos perto de metalmec (250k) ou saúde
+  (531k), e a 0,11% de taxa-base isso pode dar poucas dezenas de aquisições, abaixo do que sustenta
+  um recall por setor. **Isto é hipótese, não medição.**
+- [ ] **`death care` é um CNAE limpo, `pet` não é.** Death care é a classe **9603-3** inteira
+  (gestão de cemitérios, cremação, sepultamento, funerárias, somatoconservação), mais **6511-1/02**
+  (planos de auxílio funeral), que existe como CNAE próprio. Prefixos ingeríveis hoje: `9603` e
+  `65111`. Já **"diagnóstico para PET" e "plano de saúde PET" não têm CNAE**: os dois caem dentro
+  de **7500-1/00 (atividades veterinárias)**, junto com toda clínica de bairro, hospital veterinário
+  e serviço de vacinação. Segmentar isso é problema de classificação por nome e site, não de filtro
+  de CNAE, e cai na mesma pendência de "descoberta residual" mais abaixo. **Levar essa restrição
+  pra call em vez de aceitar o setor e descobrir depois.**
+- [ ] **Definir a praça.** Sem ela o universo de death care e de veterinária provavelmente é
+  nacional inteiro, o que muda o custo de ingest.
 - [ ] **Importar a lista de CRM incumbente** em `crm_incumbente` (hoje vazia, então tudo marca
   "novo" e a métrica-manchete do piloto não pode ser computada).
+- [ ] **A minuta travou do lado deles, duas vezes.** Pedro (Comercial) saiu da Setter e o jurídico
+  não devolveu a minuta. O piloto não tem contrato e não tem data. Na call, pedir nome de quem
+  assumiu a minuta agora que o Pedro saiu, com data, em vez de aceitar "o jurídico está vendo".
 
 ---
 

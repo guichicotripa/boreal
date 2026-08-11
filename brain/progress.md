@@ -1493,3 +1493,39 @@ só sobrevive por julgamento. Mexer na tese do produto com base num label cego n
 
 **Aprendizado:** quando o ajuste acha algo bom demais, o suspeito é o label, não o mundo. As duas
 últimas quedas de número de cliente vieram de *como a métrica foi construída*, não do valor dela.
+
+---
+
+## [2026-08-11] Guilherme | Henrique volta com os 2 setores do piloto: PET e death care
+
+Mensagem do Henrique no WhatsApp, depois de um silêncio longo. Dois recados num só:
+
+**Operacional, e é a parte ruim.** O Pedro, do Comercial da Setter, saiu da firma. O jurídico não
+devolveu a minuta. Ou seja, o piloto continua sem contrato, sem data e sem originador nomeado, e
+travou duas vezes do lado deles. É o segundo nome do time da Setter a sair durante a janela da
+formalização (o primeiro foi a Gabi, registrado em `wiki/entities/setter-investimentos`). O padrão
+não é hostilidade, é uma boutique pequena sem dono definido pra essa decisão.
+
+**Os setores, e é a parte que dá trabalho.** Ele propôs: (1) empresa de diagnóstico para PET e/ou
+plano de saúde PET, (2) death care. Nenhum dos dois está entre os 4 verticais ingeridos
+(metalmec, saúde, educação, agro), e os dois se comportam de forma bem diferente na taxonomia:
+
+- **Death care é ingerível hoje.** Classe CNAE **9603-3** inteira, com seis subclasses (cemitérios,
+  cremação, sepultamento, funerárias, somatoconservação, e o resíduo), mais **6511-1/02**, planos de
+  auxílio funeral, que ganhou CNAE próprio. Prefixos `9603` e `65111` entram em `setores.json` sem
+  nenhuma mudança de código.
+- **PET não é um setor, é um recorte dentro de um.** Nem "diagnóstico veterinário" nem "plano de
+  saúde pet" existem como CNAE. Os dois caem em **7500-1/00, atividades veterinárias**, misturados
+  com clínica de bairro, consultório, ambulância veterinária e vacinação. O Boreal segmenta por
+  CNAE, então esse recorte só sai por classificação de nome e site, que é exatamente a pendência
+  de "descoberta residual" já aberta. Vai pra call como restrição declarada, não como surpresa.
+
+**O que ainda não sei e não vou fingir que sei:** o tamanho dos dois universos e quantas aquisições
+o proxy consegue detectar neles. A sondagem no BigQuery está aberta em `pending.md`. A hipótese é
+que os dois sejam pequenos o suficiente pra não sustentar um recall por setor, o que empurraria o
+enquadramento pro que o onepager já promete honestamente nesses casos: descoberta e heat-map em vez
+de previsão de sucessão.
+
+**Leitura de timing, que é a parte boa.** O score de sucessão acabou de perder número na calibração
+de 02/08 (41,5% vira 36,9%). O Henrique escolheu, sem saber disso, dois setores onde o valor nunca
+foi o número de sucessão. O piloto passa a não depender da métrica que está em revisão.
