@@ -96,15 +96,18 @@
   Death care caiu do foco declarado. **A praça continua não definida.** Nenhum dos dois está entre
   os 4 verticais atuais.
 - [ ] **Isto não é setor, é mandato.** "Foco A" e "foco B" é linguagem de mandato comprador, não de
-  escolha de vertical. Lab de diagnóstico veterinário no Brasil é universo de centenas; operadora de
-  plano pet é universo de dezenas. **Nesse tamanho o ranking do Boreal quase não importa:** o que
-  vale é achar todo mundo e resolver contato, ou seja, a camada de descoberta e enriquecimento, não
-  o score. **Perguntar direto na call de quinta se existe mandato comprador nos dois.** Se existir,
-  o piloto muda de forma: exaustividade e dado de contato viram a métrica, não recall@top10%.
+  escolha de vertical. **Números corrigidos pelo proxy de porte** (o corte por capital ≥ R$1 mi
+  subestimava tudo em ~2,5x): foco A tem **93 empresas de porte relevante no Brasil, 6 delas no
+  perfil sucessório**; foco B tem **49** somando os dois recortes, nenhuma no perfil. Death care tem
+  **962, com 163 no perfil**. Em São Paulo: foco A+B **66**, death care **265**.
+  **Nesse tamanho o ranking do Boreal importa pouco:** o que vale é achar todo mundo e resolver
+  contato, ou seja, a camada de descoberta e enriquecimento, não o score. **Perguntar direto na call
+  de quinta se existe mandato comprador nos dois.** Se existir, o piloto muda de forma:
+  exaustividade e dado de contato viram a métrica, não recall@top10%.
 - [ ] **Call marcada: quinta 13/08, 9:30.** Pauta em `progress.md` na entrada de 11/08.
-- [x] ~~**Sondar os dois setores no BigQuery.**~~ **Feito em 11/08.** Tabelas completas em
-  `progress.md`. Resultado: **foco A tem 1.661 empresas e 11 acima de R$1 mi de capital, nenhuma
-  delas no perfil sucessório. Foco B tem 60 empresas e 4 acima de R$1 mi.** Death care mais plano
+- [x] ~~**Sondar os dois setores no BigQuery.**~~ **Feito em 11/08**, e refeito no mesmo dia depois
+  que o proxy de tamanho foi corrigido. Tabelas completas em `progress.md`. Pelo corte antigo de
+  capital (**subestima, não usar**): foco A 11 empresas, foco B 4. Death care mais plano
   funerário, que ele tirou do foco, tem 11.712 empresas e **392 acima de R$1 mi**, com prevalência
   de aquisição 11,6x maior. **A hipótese de que os focos eram pequenos demais se confirmou, e por
   margem maior do que eu esperava.**
