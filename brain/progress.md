@@ -1662,3 +1662,51 @@ com SP em 29% e RJ em 13%. Dá pra rodar piloto em uma praça sem perder o setor
 
 Nos focos pet a concentração é ilusória (100% em 8 estados) porque o total é pequeno demais pra
 concentração significar coisa alguma. Registrado pra não citar esse 100% como se fosse sinal.
+
+### CORREÇÃO no mesmo dia: o corte de tamanho estava errado, e os números da sondagem sobem
+
+O Guilherme apontou o furo: `capital_social` é declarado no registro do CNPJ e empresa não
+atualiza. Eu tinha declarado a ressalva nas três primeiras passadas mas não tinha medido, o que é
+a diferença entre honestidade e trabalho. `sonda-proxy-tamanho.mjs` mede.
+
+**1. O campo está congelado.** Capital idêntico entre 2023-06-10 e 2025-11-09 em **90,8%** das
+empresas de death care, **94,1%** de veterinária e **95,0%** dos laboratórios.
+
+**2. Mas o viés não é o que eu supunha.** Capital de death care por década de fundação: a mediana
+fica travada entre R$20k e R$36k atravessando quarenta anos, que é a assinatura de número redondo
+declarado uma vez. Só que o p90 **sobe** com a idade, de R$150k (2020s) a R$2.000.000 (até 1979). O
+campo não achata a empresa velha, ele é grosso e lumpy. A hipótese de "empresa antiga fica com
+capital ridículo" **não se confirmou** na cauda.
+
+**3. Existe proxy melhor na mesma tabela: `porte`.** ME, EPP e DEMAIS, mantido pela Receita porque
+tem consequência tributária. Comporta-se como tamanho de verdade: % DEMAIS sobe monotonicamente com
+a idade da empresa, de 4,4% nas fundadas nos anos 2020 para 21,8% nas anteriores a 1979.
+**716 das 962 empresas DEMAIS de death care têm capital abaixo de R$1 mi**, ou seja, o corte antigo
+descartava dois terços do universo relevante.
+
+**Tabela refeita** (snapshot 2025-11-09, `sonda-setores-setter-uf.mjs` agora corta por porte):
+
+| grupo | BR | DEMAIS | DEMAIS **e** perfil | corte antigo ≥R$1mi |
+|---|---:|---:|---:|---:|
+| death care (9603 + 65111) | 11.712 | **962** | **163** | 392 |
+| vet_outros | 36.425 | 809 | 22 | 78 |
+| A_vet_lab | 1.661 | **93** | **6** | 11 |
+| B_vet_plano | 1.014 | 33 | 1 | 6 |
+| B_plano_pet | 90 | 16 | 0 | 7 |
+
+**Em São Paulo:** death care 265 DEMAIS com **47** no perfil; foco A 43 DEMAIS com 5 no perfil;
+foco B (os dois recortes) 23 DEMAIS com 1 no perfil.
+
+**O que isso obriga a corrigir na conversa da quinta.** A frase "foco A e foco B em SP não enchem
+uma página de lista" **estava errada**, e errada por causa do proxy ruim. O número certo é
+**66 empresas de porte relevante em SP nos dois focos somados**, contra 265 de death care. A
+conclusão sobrevive mas muda de tom: não é "seu setor não existe", é "seu setor é 4x menor em
+universo e 8x mais fino na tese sucessória (6 contra 47 em SP)". Isso é um argumento, não um
+knockout, e tem que ser dito assim.
+
+**Ressalva do novo proxy, que precisa ir junto:** `porte = DEMAIS` significa "nem ME nem EPP", o que
+inclui empresa inelegível a esses regimes por natureza jurídica e não por receita (S/A, e empresa
+com sócio PJ). Então DEMAIS **superestima** tamanho justamente onde já existe sócio institucional,
+que é o grupo que a ressalva dos 29% do topo já mandava tratar com cuidado. O corte limpo de
+verdade seria a data de exclusão do Simples (estouro do teto de R$4,8 mi, com data) na tabela
+`basedosdados.br_me_cnpj.simples`, que ainda não foi medida.
