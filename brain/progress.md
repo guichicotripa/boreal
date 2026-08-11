@@ -1636,3 +1636,29 @@ de empresas e quase nada em ativo comprável, ou seja, cresce em micro.
   "análises" no nome escapa. Mesmo dobrando o universo, os 11 acima de R$1 mi não viram centenas.
 - **O label de aquisição é o contaminado de 02/08.** Com n de 6, ele não valida nada nesses grupos;
   serve só como ordem de grandeza comparativa.
+
+### Quarta passada: a geografia mata o foco pet em qualquer praça
+
+As três primeiras já eram nacionais (nenhuma tinha filtro de UF, `universo_sp` era coluna à parte).
+Faltava a pergunta da **praça**, que é item aberto do contrato. `sonda-setores-setter-uf.mjs`,
+snapshot 2025-11-09, porque aqui a pergunta é onde estão os alvos hoje.
+
+**Empresas acima de R$1 mi de capital, por UF:**
+
+| grupo | BR | SP | RJ | MG | PR | no perfil (BR) |
+|---|---:|---:|---:|---:|---:|---:|
+| death care (9603 + 65111) | **392** | **112** | 51 | 36 | 29 | **87** |
+| A_vet_lab | 11 | 3 | 2 | 4 | 4 | **0** |
+| B_vet_plano | 6 | 3 | 1 | 0 | 1 | 0 |
+| B_plano_pet (6550/6512) | 7 | 1 | 0 | 3 | 1 | 0 |
+
+**O número que fecha a discussão:** somando os dois focos do Henrique, são **24 empresas acima de
+R$1 mi no Brasil inteiro**, e **7 em São Paulo**. Death care em São Paulo sozinho são **112, com 17
+já dentro do perfil sucessório**. Se a praça for SP, o foco A e o foco B juntos não enchem uma
+página de lista.
+
+Death care também tem concentração operável: 78% das empresas acima de R$1 mi estão em 8 estados,
+com SP em 29% e RJ em 13%. Dá pra rodar piloto em uma praça sem perder o setor.
+
+Nos focos pet a concentração é ilusória (100% em 8 estados) porque o total é pequeno demais pra
+concentração significar coisa alguma. Registrado pra não citar esse 100% como se fosse sinal.
