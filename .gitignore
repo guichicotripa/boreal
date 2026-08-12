@@ -57,3 +57,6 @@ __pycache__/
 *.pyc
 scripts/data/*.tsv.gz
 scripts/data/calibra-log.tsv
+
+# supabase CLI — estado local do link (guarda o project ref e credencial de sessão)
+supabase/.temp/
