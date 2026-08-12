@@ -682,12 +682,22 @@ export default function RadarClient({ setores, mandatos }: Props) {
               </nav>
             )}
 
+            {/* Esvaziou a página descartando. Com o descarte filtrado no banco, recarregar a MESMA
+                página traz 50 empresas novas: as descartadas saíram do conjunto e as de trás
+                subiram. Sem este botão a tela virava beco, com o paginador como única saída. */}
             {res.count > 0 && empresasOrdenadas.length === 0 && (
               <div className="rounded-lg border border-hairline py-12 text-center">
-                <p className="font-display text-lg text-ink">Você descartou todas.</p>
+                <p className="font-display text-lg text-ink">Você descartou todas desta página.</p>
                 <p className="mx-auto mt-2 max-w-md text-sm text-ink-soft">
-                  Todas as empresas desta busca foram descartadas do Radar.
+                  As descartadas saem da lista de vez. Recarregando, as próximas sobem no lugar.
                 </p>
+                <button
+                  onClick={() => irParaPagina(paginaAtual)}
+                  disabled={carregandoMais}
+                  className="mt-4 rounded-md border border-hairline px-4 py-2 font-data text-[11px] uppercase tracking-wider text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink disabled:opacity-40"
+                >
+                  {carregandoMais ? "Carregando…" : "Trazer as próximas 50"}
+                </button>
               </div>
             )}
 

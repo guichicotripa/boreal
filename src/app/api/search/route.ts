@@ -246,14 +246,36 @@ export async function POST(req: NextRequest) {
 
   // Se filtra por idade do sócio, usa inner join (só empresas COM sócio que bate).
   const socioEmbed = filters.minFaixaEtaria != null ? "socio!inner" : "socio";
+
+  /* DESCARTE FILTRADO NO BANCO, e não em JS depois do `.range()`.
+     Antes: a query pegava as linhas 0-49, e o filtro de descarte rodava sobre elas em memória. Uma
+     página com 3 descartadas voltava com 47 e os 3 lugares simplesmente sumiam da tela. Nada era
+     perdido (a próxima página continuava começando na linha 50), mas a lista mentia sobre o próprio
+     tamanho e a régua "as 20 primeiras" deixava de valer.
+
+     `!left` + `is null` é o anti-join do PostgREST: traz a empresa só quando NÃO existe linha
+     correspondente em empresa_descartada. Assim o `.range()` já opera sobre o conjunto limpo e a
+     página vem sempre cheia. De quebra, restaurar uma empresa a devolve à posição que o score dela
+     manda, sem nenhuma contabilidade no cliente — igual ao que o overlay do v1 faz.
+
+     Escolhido em vez de `.not("id","in",(...))` porque aquele carrega TODOS os ids descartados na
+     querystring: 36 bytes por UUID, e algumas centenas de descartes já ameaçam o limite de tamanho
+     da URL. Aqui o custo não cresce com o histórico.
+
+     O `.eq` do escopo é explícito de propósito. Para o originador a policy já limitaria à própria
+     org, mas STAFF lê `empresa_descartada` de todas as orgs (migration 0013): sem o filtro, o
+     descarte de uma firma esconderia empresa da tela de outra. */
   let q = supabase
     .from("empresa")
     .select(
       `id, cnpj, razao_social, nome_fantasia, cnae_principal, cnae_principal_desc,
        cnaes_secundarios, natureza_juridica, municipio, uf,
        data_inicio_atividade, capital_social, porte, telefone, email,
-       ${socioEmbed}(id, nome, qualificacao, faixa_etaria, data_entrada_sociedade)`
-    );
+       ${socioEmbed}(id, nome, qualificacao, faixa_etaria, data_entrada_sociedade),
+       empresa_descartada!left(empresa_id)`
+    )
+    .eq("empresa_descartada.escopo_id", await escopoAtual())
+    .is("empresa_descartada", null);
 
   /* Mandato substitui o filtro de CNAE por um mais estreito: `and(cnae, or(nomes))` por recorte.
      Sem isto, foco A e foco B devolveriam a MESMA lista, porque os dois vivem no CNAE 7500 e só se
@@ -308,7 +330,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  const linhas = (data ?? []) as Empresa[];
+  /* `empresa_descartada` volta em cada linha por ser a chave do anti-join, sempre como array vazio
+     (é essa a condição do `is null`). Sai aqui: não é campo de Empresa, e deixá-lo passar o
+     empurraria pro JSON da resposta, pro cache e pro store do cliente como se fosse dado. */
+  const linhas = (data ?? []).map(({ empresa_descartada: _descarte, ...e }) => e) as Empresa[];
   const temMais = linhas.length > filters.limit;
   const empresas = temMais ? linhas.slice(0, filters.limit) : linhas;
 
@@ -337,9 +362,13 @@ export async function POST(req: NextRequest) {
     .map((e) => ({ ...e, score: calcScore(e) }))
     .sort((a, b) => (b.score?.score ?? 0) - (a.score?.score ?? 0));
 
-  // ── 3a. Tira as descartadas no Radar ─────────────────────────────────────────
-  // Antes do reasoner: não faz sentido gastar chamada de LLM comentando empresa
-  // que o operador já disse que não quer ver.
+  /* ── 3a. Rede de segurança do descarte ──────────────────────────────────────
+     O filtro DE VERDADE agora é o anti-join da query (ver o comentário do `.select`), que é o que
+     mantém a página cheia. Isto aqui vira rede: se o anti-join regredir, o modo de falha dele é
+     SILENCIOSO (linha descartada volta a aparecer), e empresa que o cliente disse "não quero ver"
+     reaparecendo na frente dele é pior que página com 47 linhas. Uma consulta indexada sobre no
+     máximo 50 ids custa quase nada e troca a falha visível pela invisível.
+     Continua antes do reasoner: não se gasta LLM comentando empresa descartada. */
   try {
     const descartadas = await lerDescartadas(supabase, await escopoAtual(), scored.map((e) => e.id));
     scored = filtrarDescartadas(scored, descartadas);
