@@ -9,6 +9,7 @@ import { setorPorId, type Setor } from "@/lib/setores";
 import { tesesDe } from "@/lib/teses";
 import { type Mandato } from "@/lib/mandatos";
 import { aberturaDaBancada } from "@/lib/contrato";
+import { janelaDePaginas } from "@/lib/paginacao";
 import { readScoresConhecidos, storeEmpresa, storeOrigin, type ScoreConhecido } from "@/lib/empresa-store";
 import { ResultsTable } from "@/components/radar/ResultsTable";
 import { PeekPanel } from "@/components/radar/PeekPanel";
@@ -30,9 +31,14 @@ export default function RadarClient({ setores, mandatos }: Props) {
   const [texto, setTexto] = useState("");
   const [loading, setLoading] = useState(false);
   const [res, setRes] = useState<SearchResponse | null>(null);
-  // A consulta que gerou `res` — "carregar mais" repete ela, não o input atual.
+  // A consulta que gerou `res` — trocar de página repete ela, não o input atual.
   const [consulta, setConsulta] = useState<{ q: string; setor?: string } | null>(null);
   const [carregandoMais, setCarregandoMais] = useState(false);
+  /* Maior índice de página que o servidor já confirmou existir. Cresce conforme se navega e NÃO
+     encolhe ao voltar: a rota não devolve total de linhas de propósito (um `count()` sobre a base
+     filtrada custa mais que a busca), então "existe a próxima" é tudo o que se sabe, e esquecer o
+     que já foi descoberto faria os números do paginador sumirem ao clicar em "1". */
+  const [maxPagina, setMaxPagina] = useState(0);
   const [erro, setErro] = useState<string | null>(null);
   /* null = metalmecânica, que é o universo default da home e a única chave do demo-cache sem
      prefixo. Firma cujo contrato não inclui metalmec começa com o setor explícito, senão a busca
@@ -179,6 +185,8 @@ export default function RadarClient({ setores, mandatos }: Props) {
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const data: SearchResponse = await r.json();
       setRes(data);
+      // Busca nova: a memória de páginas da busca anterior não vale mais nada.
+      setMaxPagina(data.temMais ? 1 : 0);
     } catch {
       setErro("falha");
     } finally {
@@ -186,38 +194,37 @@ export default function RadarClient({ setores, mandatos }: Props) {
     }
   }
 
-  /* Próxima página, APENDADA em vez de substituir a lista. O originador está
-     garimpando: trocar a tela por 50 empresas novas perderia o contexto do que ele
-     acabou de descartar mentalmente, e faria ele rolar de volta pra comparar. */
-  async function carregarMais() {
-    if (!res || !consulta || carregandoMais) return;
+  /* Navegação por PÁGINA, substituindo a lista.
+     Era "carregar mais 50" apendado, com o argumento de não perder o contexto de quem está
+     garimpando. Na prática a lista virava uma fita de centenas de linhas sem marco: o originador
+     não sabia onde estava, não conseguia voltar pro começo sem rolar tudo, e "mandei pro Henrique
+     as 20 primeiras" deixava de ser uma frase verificável. Página é endereço; rolagem não é.
+
+     A lista é SUBSTITUÍDA, e o `res` novo traz `pagina` e `temMais` do servidor. */
+  async function irParaPagina(n: number) {
+    if (!consulta || carregandoMais || n < 0) return;
     setCarregandoMais(true);
+    setErro(null);
     try {
-      const proxima = (res.pagina ?? 0) + 1;
       const r = await fetch("/api/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           query: consulta.q,
           ...(consulta.setor ? { setor: consulta.setor } : {}),
-          pagina: proxima,
+          pagina: n,
         }),
       });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const data: SearchResponse = await r.json();
-      setRes((anterior) =>
-        !anterior
-          ? data
-          : {
-              ...data,
-              // Concatena e mantém `count` como o total acumulado na tela: é o número
-              // que a UI mostra, e ele tem que bater com o que está listado.
-              empresas: [...anterior.empresas, ...data.empresas],
-              count: anterior.empresas.length + data.empresas.length,
-            }
-      );
+      setRes(data);
+      setMaxPagina((prev) => Math.max(prev, data.temMais ? n + 1 : n));
+      setPeekId(null);
+      /* A página trocou embaixo de um scroll que pode estar no fim da anterior. Sem isto, quem
+         clica em "próxima" cai no meio da lista nova achando que nada aconteceu. */
+      document.getElementById("resultados")?.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch {
-      setErro("falha ao carregar mais");
+      setErro("falha ao trocar de página");
     } finally {
       setCarregandoMais(false);
     }
@@ -229,6 +236,8 @@ export default function RadarClient({ setores, mandatos }: Props) {
      mandato está aberto, a lista na tela é dele, e mandar o setor junto faria o atalho de tese
      buscar num universo diferente do que está listado. Era exatamente o defeito de antes — abrir
      "Diagnóstico veterinário" e clicar num atalho jogava a busca de volta em metalmecânica. */
+  const paginaAtual = res?.pagina ?? 0;
+  const porPagina = res?.filters?.limit ?? 50;
   const universoAtivo = mandatoAtivo ?? setorAtivo ?? setorDefault;
   const escopoBusca = mandatoAtivo ?? setorAtivo ?? undefined;
   const exemplos = tesesDe(universoAtivo);
@@ -556,7 +565,7 @@ export default function RadarClient({ setores, mandatos }: Props) {
 
         {/* Resultados */}
         {res && !loading && (
-          <section className="mt-6">
+          <section id="resultados" className="mt-6 scroll-mt-6">
             <div className="mb-3 flex flex-wrap items-center justify-between gap-y-2 text-sm text-ink-soft">
               <span className="flex flex-wrap items-center gap-x-1">
                 <span className="whitespace-nowrap">
@@ -611,23 +620,66 @@ export default function RadarClient({ setores, mandatos }: Props) {
               />
             )}
 
-            {/* Carregar mais. Só aparece quando o banco confirmou que há próxima
-                página (`temMais`), nunca inferido de "veio 50" — descarte pode
-                deixar a página com 47 e ainda haver 51 mil linhas atrás. */}
-            {res.temMais && empresasOrdenadas.length > 0 && (
-              <div className="mt-4 flex flex-col items-center gap-1.5">
-                <button
-                  onClick={carregarMais}
-                  disabled={carregandoMais}
-                  className="rounded-md border border-hairline px-4 py-2 font-data text-[11px] uppercase tracking-wider text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink disabled:opacity-40"
-                >
-                  {carregandoMais ? "Carregando…" : "Carregar mais 50"}
-                </button>
+            {/* Paginador. `temMais` vem do banco, nunca inferido de "veio 50" — descarte pode
+                deixar a página com 47 e ainda haver 51 mil linhas atrás.
+
+                Aparece na última página também, senão não haveria como voltar. E aparece mesmo com
+                a lista VAZIA de propósito: descartar as 50 da página 3 zera a lista, e sem o
+                paginador ali o originador ficaria preso numa tela em branco, sem caminho de volta
+                pra página 2 nem adiante pra 4. */}
+            {maxPagina > 0 && (
+              <nav aria-label="Páginas de resultados" className="mt-5 flex flex-col items-center gap-2">
+                <div className="flex flex-wrap items-center justify-center gap-1">
+                  <button
+                    onClick={() => irParaPagina(paginaAtual - 1)}
+                    disabled={carregandoMais || paginaAtual === 0}
+                    aria-label="Página anterior"
+                    className="rounded-md border border-hairline px-2.5 py-1.5 font-data text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink disabled:opacity-30"
+                  >
+                    ‹
+                  </button>
+
+                  {janelaDePaginas(paginaAtual, maxPagina).map((p, i) =>
+                    p === null ? (
+                      <span key={`gap-${i}`} className="px-1 font-data text-[11px] text-ink-faint">
+                        …
+                      </span>
+                    ) : (
+                      <button
+                        key={p}
+                        onClick={() => irParaPagina(p)}
+                        disabled={carregandoMais}
+                        aria-current={p === paginaAtual ? "page" : undefined}
+                        className={`min-w-[2rem] rounded-md border px-2 py-1.5 font-data text-[11px] tabular-nums transition-colors disabled:opacity-40 ${
+                          p === paginaAtual
+                            ? "border-ink/40 bg-surface-hover text-ink"
+                            : "border-hairline text-ink-soft hover:border-hairline-hover hover:text-ink"
+                        }`}
+                      >
+                        {p + 1}
+                      </button>
+                    )
+                  )}
+
+                  <button
+                    onClick={() => irParaPagina(paginaAtual + 1)}
+                    disabled={carregandoMais || !res.temMais}
+                    aria-label="Próxima página"
+                    className="rounded-md border border-hairline px-2.5 py-1.5 font-data text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink disabled:opacity-30"
+                  >
+                    ›
+                  </button>
+                </div>
+                {/* Sem total de linhas: a rota não faz `count()` de propósito. Então o rodapé diz o
+                    que é verdade (que posição esta página ocupa) e não inventa "de N". */}
                 <p className="font-data text-[10px] text-ink-muted">
-                  {empresasOrdenadas.length} de {(res.pagina ?? 0) + 1} página
-                  {(res.pagina ?? 0) > 0 ? "s" : ""} · ordenado por score
+                  {carregandoMais
+                    ? "carregando…"
+                    : empresasOrdenadas.length === 0
+                      ? `página ${paginaAtual + 1} · nada para mostrar aqui`
+                      : `empresas ${paginaAtual * porPagina + 1} a ${paginaAtual * porPagina + empresasOrdenadas.length} · ordenado por score`}
                 </p>
-              </div>
+              </nav>
             )}
 
             {res.count > 0 && empresasOrdenadas.length === 0 && (
