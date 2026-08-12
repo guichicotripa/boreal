@@ -960,3 +960,116 @@ python scripts/calibra-score.py --iters=600 --ruido=25          # busca + ruído
 python scripts/calibra-score.py --iters=600 --com-simples       # quanto valeria o ingest do Simples
 python scripts/calibra-score.py --iters=600 --holdout           # abre o holdout
 ```
+
+---
+
+## 15. A rodada de 12/08/2026: o ponto cego tem instrumento, e o que ele mostra é ruim
+
+> Esta seção **não corrige** as §13 e §14, ela mede o que elas declararam impossível de medir.
+> Nenhum peso mudou por causa dela. O que mudou foi o que sabemos não saber.
+
+### 15.1. A ideia
+
+Veio do Guilherme: iterar pesos com base em "últimas movimentações". Dentro disso havia uma ideia
+que resolve o ponto cego estrutural da §13. O label de hoje é "entra sócio PJ e sai sócio PF" e
+**exige que sobre alguém no quadro**, então empresa de sócio único é inclassificável: sair de 1
+sócio PF para 0 acontece 1 vez em 292 mil.
+
+Só que existe uma movimentação que dispara nessa população: **o sócio único trocar de identidade**.
+A venda de uma empresa de dono único não aparece como queda na contagem, aparece como troca. A
+tabela `socios` tem `documento`, então dá para comparar conjuntos e não só contagens.
+
+### 15.2. O tamanho
+
+| label | eventos |
+|---|---:|
+| aquisição (o de hoje, base inteira) | 1.610 |
+| dono único presente nos dois snapshots | 279.429 |
+| trocou de dono | 14.726 (5,27%) |
+| **transação** (nenhum sobrenome em comum) | **10.860** (74% das trocas) |
+| familiar (sobrenome em comum) | 3.866 (26%) |
+
+**7,7x mais eventos mensuráveis.** E cobre 279 mil empresas que estavam no denominador de todo
+número publicado sem nunca poder contar como acerto perdido.
+
+### 15.3. O teste da mortalidade, que o label precisava passar
+
+Na faixa 71+ a taxa de óbito em 2,4 anos é da mesma ordem da taxa de troca. Se o label fosse
+dominado por morte, o modelo aprenderia mortalidade e o eixo de idade "funcionaria" trivialmente,
+indicando espólio para um comprador que quer negociar com quem decide. Herança mantém sobrenome,
+venda não. Separando por tokens de nome (sem partículas e sem sufixo de geração, que são o próprio
+marcador de herança e inflariam a semelhança):
+
+| faixa do dono | transação | lift | familiar | lift |
+|---|---:|---:|---:|---:|
+| até 50 | 3,38% | 0,87x | 1,24% | 0,89x |
+| 51-60 | 5,62% | **1,45x** | 1,68% | 1,21x |
+| 61-70 | 5,07% | 1,30x | 1,63% | 1,18x |
+| 71+ | 5,85% | 1,50x | 3,09% | **2,24x** |
+
+**O label passa.** O degrau de mortalidade aparece isolado no lado familiar (1,18x → 2,24x) e
+**não** contamina o lado transação, que é quase plano de 51-60 a 71+. Idade do dono é sinal de
+venda, mas modesto: 1,30x a 1,50x, contra 1,94x-2,18x do capital no label antigo.
+
+### 15.4. O resultado que dói
+
+**Recall@top10% do score ATUAL, por label:**
+
+| universo | n | eventos | recall | vs sorteio |
+|---|---:|---:|---:|---:|
+| 2+ sócios, label de aquisição (o número publicado) | 451.222 | 1.610 | 48,6% | 4,9x |
+| **dono único, transação** | **279.429** | **10.860** | **11,3%** | **1,1x** |
+| dono único, herança familiar | 279.429 | 3.866 | 14,6% | 1,5x |
+| dono único, transação, empresa 25+ anos | 17.678 | 2.595 | 5,5% | **0,6x** |
+
+**Na metade do universo que nunca foi medida, o score é indistinguível de sorteio.** E no recorte
+que mais parece a tese (empresa antiga de dono único) ele é *pior* que sorteio.
+
+Por setor, contra transação: saúde 22,7% (2,3x) · metalmec 18,9% (1,9x) · agro 9,2% (0,9x) ·
+**educação 3,5% (0,3x)**.
+
+**Por que.** Em dono único, `quadro_plural` e `sucessor_aparente` são constantes por construção
+(n_pf=1 sempre, e o menor sócio é o próprio), então 27 dos 100 pontos não discriminam nada. Sobram
+capital, idade e movimento. E os eixos **invertem de sinal** entre os dois labels:
+
+| eixo | contra aquisição | contra transação |
+|---|---:|---:|
+| capital ≥ p85 | 3,75x | **0,80x** |
+| porte EPP | 2,67x | **0,68x** |
+| porte DEMAIS | ~1,00x | **3,23x** |
+| empresa 25+ anos | (não é eixo) | **3,78x** (z=40) |
+
+O sinal mais forte contra o label novo, antiguidade da empresa, **não é eixo do score**.
+
+### 15.5. Mas o label novo está sujo, e isto impede calibrar nele
+
+A taxa de transação por faixa de capital é **em U**: 1,33x abaixo da mediana, 0,48x a 0,68x no
+meio, 1,33x acima do p95. Isso é a assinatura de **dois fenômenos misturados**: rotatividade
+cadastral de microempresa embaixo e transação de verdade em cima. Por porte a coisa é mais limpa
+(ME 0,40x · EPP 0,68x · DEMAIS 3,23x), e no cruzamento `DEMAIS e capital ≥ p85` o score chega a
+**25,4% (2,5x)**, com n=532. Estreito demais para concluir.
+
+Outro dado do mesmo corte: **28.530 empresas de 2+ sócios tiveram entrada E saída de sócio PF, e o
+label antigo marcou apenas 539 (1,9%) como aquisição.** Os dois labels medem coisas muito
+diferentes; nenhum é "o certo".
+
+### 15.6. O que isto obriga
+
+- **Não calibrar contra `transação` ainda.** O label mistura rotatividade com venda, e ajustar peso
+  contra ele ensinaria o modelo a achar microempresa que muda de titular.
+- **Parar de citar o recall como se valesse para a base toda.** Ele vale para empresa de 2+ sócios,
+  que é 31% do universo dos 4 setores. Nos outros 69% o número honesto hoje é "não medido", e a
+  única medição existente diz 1,1x.
+- **Antiguidade da empresa vira candidata a eixo** (3,78x, z=40 contra transação). Já está na
+  tabela `empresa` e é calculável em runtime.
+- **`idade_controle` sobrevive, mas menor.** 1,30x a 1,50x contra transação. Não é o 1,00x do label
+  cego, e não justifica 28 dos 100 pontos.
+
+### 15.7. Reproduzir
+
+```bash
+node --env-file=.env.local scripts/sonda-troca-de-dono.mjs      # o tamanho do ponto cego
+node --env-file=.env.local scripts/sonda-troca-sobrenome.mjs    # venda x herança
+node --env-file=.env.local scripts/extrai-matriz-score.mjs      # matriz com o label novo
+python scripts/diagnostico-troca-dono.py                        # lift, recall e o teste de sujeira
+```

@@ -122,6 +122,28 @@ comcap AS (
   FROM base
 ),
 -- Quadro societario no snapshot de DESFECHO. A contagem do corte ja veio do CTE sc.
+--
+-- Alem da CONTAGEM, guardamos os DOCUMENTOS e os TOKENS DE NOME dos socios PF nos dois snapshots.
+-- Motivo: o label "entra PJ e sai PF" e cego pra empresa de socio unico, que sao 292 mil no
+-- universo e o caso central da tese sucessoria (§13 do modelo-de-score). Sair de 1 socio PF pra 0
+-- nao acontece; o que acontece e TROCAR a identidade do dono, e isso so se ve comparando conjuntos
+-- e nao contagens. Medido em 12/08/2026: 14.726 trocas em 279 mil empresas de dono unico, contra
+-- 1.610 aquisicoes do label antigo em toda a base.
+--
+-- E preciso separar VENDA de HERANCA, senao o modelo aprende mortalidade: na faixa 71+ a taxa de
+-- obito em 2,4 anos e da mesma ordem da taxa de troca. Heranca mantem sobrenome, venda nao. Os
+-- tokens de nome (sem particulas e sem sufixo de geracao, que sao o proprio marcador de heranca e
+-- inflariam a semelhanca) permitem a separacao localmente, sem voltar ao BigQuery.
+tok AS (
+  SELECT cnpj_basico, data, documento,
+    ARRAY(SELECT t FROM UNNEST(SPLIT(REGEXP_REPLACE(NORMALIZE(UPPER(COALESCE(nome,'')), NFD), r'\pM',''), ' ')) t
+          WHERE LENGTH(t) >= 4
+            AND NOT REGEXP_CONTAINS(t, '^(DA|DE|DO|DAS|DOS|DI|DEL|VAN|VON|JUNIOR|FILHO|FILHA|NETO|NETA|SOBRINHO|SOBRINHA)$')) AS toks
+  FROM \`basedosdados.br_me_cnpj.socios\`
+  WHERE data IN ('${CORTE}', '${NOVO}') AND tipo = '2'
+),
+ta AS (SELECT cnpj_basico, ARRAY_AGG(documento) docs, ARRAY_CONCAT_AGG(toks) toks FROM tok WHERE data='${CORTE}' GROUP BY 1),
+tb AS (SELECT cnpj_basico, ARRAY_AGG(documento) docs, ARRAY_CONCAT_AGG(toks) toks FROM tok WHERE data='${NOVO}'  GROUP BY 1),
 b AS (SELECT cnpj_basico, COUNTIF(tipo='1') pj, COUNTIF(tipo='2') pf
       FROM \`basedosdados.br_me_cnpj.socios\` WHERE data='${NOVO}' GROUP BY 1)
 -- NAO gravamos o label pronto, e sim a CONTAGEM DE SOCIOS nos dois snapshots.
@@ -136,6 +158,12 @@ SELECT
   IF(b.cnpj_basico IS NULL, -1, b.pf) AS pf_novo,
   IF(b.cnpj_basico IS NULL, -1, b.pj) AS pj_novo,
   c.porte, c.saiu_simples,
+  -- Socios PF do corte que NAO estao no desfecho, e do desfecho que NAO estavam no corte.
+  -- Com n_pf=1 nos dois lados e saiu=entrou=1, isso e exatamente "trocou de dono".
+  COALESCE(ARRAY_LENGTH(ARRAY(SELECT d FROM UNNEST(ta.docs) d WHERE d NOT IN UNNEST(tb.docs))), 0) AS pf_saiu,
+  COALESCE(ARRAY_LENGTH(ARRAY(SELECT d FROM UNNEST(tb.docs) d WHERE d NOT IN UNNEST(ta.docs))), 0) AS pf_entrou,
+  -- 1 = algum socio NOVO compartilha sobrenome com algum ANTIGO. Proxy de heranca.
+  IF(ARRAY_LENGTH(ARRAY(SELECT t FROM UNNEST(tb.toks) t WHERE t IN UNNEST(ta.toks))) > 0, 1, 0) AS nome_em_comum,
   -- Desempate ESTAVEL, derivado do proprio CNPJ. Sem isto o calibra-score.py sorteava o
   -- desempate por POSICAO da linha, e o BigQuery nao garante ordem entre extracoes: a mesma
   -- matriz reextraida dava recall diferente (31,74% e 31,86% no mesmo baseline, em 02/08 e
@@ -143,12 +171,14 @@ SELECT
   -- cai dentro de um bloco enorme de empates e quem entra depende so do desempate.
   MOD(ABS(FARM_FINGERPRINT(c.cnpj_basico)), 1000000) / 1000000.0 AS desempate
 FROM comcap c
-LEFT JOIN b ON b.cnpj_basico = c.cnpj_basico`;
+LEFT JOIN b  ON b.cnpj_basico  = c.cnpj_basico
+LEFT JOIN ta ON ta.cnpj_basico = c.cnpj_basico
+LEFT JOIN tb ON tb.cnpj_basico = c.cnpj_basico`;
 
 // Colunas novas vao no FIM de proposito: calibra-score.py e diagnostico-label.py leem por nome
 // via mapa do header, entao acrescentar no fim nao quebra nenhum dos dois.
 const COLS = ["vertical","metade","mf","menor","n_pf","n_pj","anos_ult","anos_emp","cap_pct","n_estab","pf_novo","pj_novo",
-              "porte","saiu_simples","desempate"];
+              "porte","saiu_simples","pf_saiu","pf_entrou","nome_em_comum","desempate"];
 
 mkdirSync(path.dirname(SAIDA), { recursive: true });
 const gz = createGzip({ level: 6 });
@@ -175,7 +205,7 @@ await new Promise((resolve, reject) => {
         row.anos_ult == null ? -1 : row.anos_ult,
         row.anos_emp == null ? -1 : row.anos_emp,
         row.cap_pct, row.n_estab, row.pf_novo, row.pj_novo,
-        row.porte, row.saiu_simples, row.desempate,
+        row.porte, row.saiu_simples, row.pf_saiu, row.pf_entrou, row.nome_em_comum, row.desempate,
       ].join("\t");
       n += 1;
       if (Number(row.pj_novo) > Number(row.n_pj) && Number(row.pf_novo) < Number(row.n_pf)) nAdq += 1;
