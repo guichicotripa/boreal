@@ -14,6 +14,7 @@ import { registrarBusca } from "@/lib/evento";
 import type { Empresa, Socio, SearchResponse } from "@/lib/types";
 import demoCache from "@/lib/demo-cache.json";
 import setoresData from "@/lib/setores.json";
+import { mandatoPorId, filtroOr } from "@/lib/mandatos";
 import setorCache from "@/lib/setor-cache.json";
 
 function cnaesDoSetor(id: string): string[] | null {
@@ -81,7 +82,15 @@ export async function POST(req: NextRequest) {
   const queryText = String((body as { query?: string })?.query ?? "").trim();
   // Setor escolhido (página /setores) escopa os CNAEs — permite "trabalhar setor por setor".
   const setorId = String((body as { setor?: string })?.setor ?? "").trim();
-  const setorCnaes = setorId ? cnaesDoSetor(setorId) : null;
+  /* Mandato antes de setor: os ids não colidem, e o mandato precisa vencer porque ele carrega um
+     filtro de NOME que o setor não tem. Resolver aqui, e não no query-parser, tira a listagem da
+     dependência do LLM — o chip da tela tem que devolver a mesma lista toda vez. */
+  const mandato = setorId ? mandatoPorId(setorId) : undefined;
+  const setorCnaes = mandato
+    ? mandato.recortes.flatMap((r) => r.cnaes)
+    : setorId
+      ? cnaesDoSetor(setorId)
+      : null;
   if (!queryText && !setorCnaes) {
     return NextResponse.json({ error: "query vazia" }, { status: 400 });
   }
@@ -215,8 +224,12 @@ export async function POST(req: NextRequest) {
        ${socioEmbed}(id, nome, qualificacao, faixa_etaria, data_entrada_sociedade)`
     );
 
-  // CNAE: OR de LIKE por prefixo (no .or() o wildcard é '*', não '%')
-  if (filters.cnaePrefixes.length > 0) {
+  /* Mandato substitui o filtro de CNAE por um mais estreito: `and(cnae, or(nomes))` por recorte.
+     Sem isto, foco A e foco B devolveriam a MESMA lista, porque os dois vivem no CNAE 7500 e só se
+     distinguem pelo nome da empresa. */
+  if (mandato) {
+    q = q.or(filtroOr(mandato));
+  } else if (filters.cnaePrefixes.length > 0) {
     const orClause = filters.cnaePrefixes
       .map((p) => `cnae_principal.like.${p}*`)
       .join(",");

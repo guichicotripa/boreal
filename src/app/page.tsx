@@ -7,6 +7,7 @@ import type { SearchResponse, Empresa } from "@/lib/types";
 import { FAIXA_LABEL } from "@/lib/format";
 import { setorPorId, SETORES } from "@/lib/setores";
 import { TESES_POR_SETOR } from "@/lib/teses";
+import { MANDATOS } from "@/lib/mandatos";
 import { readScoresConhecidos, storeEmpresa, storeOrigin, type ScoreConhecido } from "@/lib/empresa-store";
 import { ResultsTable } from "@/components/radar/ResultsTable";
 import { PeekPanel } from "@/components/radar/PeekPanel";
@@ -28,6 +29,9 @@ export default function Radar() {
   const [carregandoMais, setCarregandoMais] = useState(false);
   const [erro, setErro] = useState<string | null>(null);
   const [setorAtivo, setSetorAtivo] = useState<string | null>(null);
+  // Mandato aberto no momento. Separado de `setorAtivo` de propósito: mandato não é setor, não tem
+  // recall e não deve entrar no switcher de cima como se fosse mais um vertical validado.
+  const [mandatoAtivo, setMandatoAtivo] = useState<string | null>(null);
   const [peekId, setPeekId] = useState<string | null>(null);
   // Overlay de score pós-investigação: a página da empresa persiste o score_v1;
   // aqui refletimos ao montar e ao voltar (bfcache/refocus) sem refazer a busca.
@@ -111,9 +115,20 @@ export default function Radar() {
   // metalmec = universo default (null) — mantém o demo-cache instantâneo.
   function trocarSetor(id: string) {
     setSetorAtivo(id === "metalmec" ? null : id);
+    setMandatoAtivo(null);
     setRes(null);
     setErro(null);
     setPeekId(null);
+  }
+
+  /* Abre a lista de um mandato. Vai pelo mesmo caminho do browse de setor (sem texto), então a
+     API resolve o recorte pelo id e a lista é a MESMA toda vez, sem passar pelo parser nem pelo
+     LLM. Reprodutibilidade importa aqui: é a lista que o cliente vai anotar. */
+  function abrirMandato(id: string) {
+    setMandatoAtivo(id);
+    setSetorAtivo(null);
+    setTexto("");
+    buscar("", id);
   }
 
   async function buscar(q: string, setor?: string) {
@@ -340,6 +355,44 @@ export default function Radar() {
               ver validação →
             </Link>
           </p>
+        </div>
+
+        {/* MANDATOS — universos carregados pra um cliente específico, fora do registry validado.
+            Linha própria, e não mais um chip no switcher de cima, porque a diferença é substantiva:
+            setor tem recall medido, mandato não tem e provavelmente nunca vai ter (universo pequeno
+            demais pro proxy de aquisição render N). Misturar os dois na mesma fileira faria a tela
+            afirmar validação que não existe. */}
+        <div className="mt-5 border-t border-hairline pt-4">
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <p className="text-[11px] font-medium text-ink-muted">Mandatos</p>
+            <p className="text-[11px] text-ink-muted/70">
+              universos carregados para o piloto · sem recall validado
+            </p>
+          </div>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {MANDATOS.map((m) => {
+              const ativo = mandatoAtivo === m.id;
+              return (
+                <button
+                  key={m.id}
+                  type="button"
+                  onClick={() => abrirMandato(m.id)}
+                  aria-pressed={ativo}
+                  title={m.descricao}
+                  className={`rounded-lg border px-3 py-2 text-left transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 ${
+                    ativo
+                      ? "border-ink/40 bg-surface-hover text-ink"
+                      : "border-hairline text-ink-muted hover:border-ink/25 hover:text-ink-soft"
+                  }`}
+                >
+                  <span className="block text-[12.5px] font-medium">{m.nome}</span>
+                  <span className="block text-[11px] tabular-nums text-ink-muted/70">
+                    {m.empresas.toLocaleString("pt-BR")} empresas
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Busca — input em linha + botão primário sólido (a ação principal da tela) */}

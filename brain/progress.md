@@ -1922,3 +1922,39 @@ foco A e B viram **entrega de escopo fixo e rápida** (cabem nisso, critério ve
 execução) e o **piloto pago de um mês roda em death care** (11.712 empresas, 962 de porte
 relevante, 163 no perfil), onde o score tem o que fazer. **Rodar o piloto pago só em foco A é cobrar
 R$2.000 por um mês pra provar a parte do produto que não é vantagem competitiva.**
+
+### [12/08] Os mandatos ganham entrada visual no Radar
+
+O Guilherme pediu jeito de acessar a lista pela tela. O que existia era só o switcher de 4 setores
+do registry, e os três universos novos não apareciam em lugar nenhum.
+
+**Onde ficou:** linha própria abaixo do switcher, rotulada **"Mandatos · universos carregados para
+o piloto · sem recall validado"**, com um chip por mandato mostrando nome e contagem. Linha
+separada, e não mais um chip no switcher, porque a diferença é substantiva: setor tem recall
+medido, mandato não tem e provavelmente nunca vai ter. Misturar faria a tela afirmar validação
+inexistente.
+
+**A decisão técnica que importava.** Foco A e foco B vivem no **mesmo CNAE 7500** e só se
+distinguem pelo nome da empresa. Um chip que filtrasse por CNAE devolveria a mesma lista nos dois,
+com cara de certa. Então:
+
+- Novo `src/lib/mandatos.ts`, com `recortes: {cnaes, nomes}[]` em vez de CNAE e nomes soltos. O
+  filtro de nome que vale num CNAE não vale no outro: dentro do 7500, foco B é quem tem
+  PLANO/ASSISTÊNCIA no nome; dentro de 6550/6512 é o CNAE inteiro, porque só as 90 pet foram
+  ingeridas ali. Achatar num OR único traria toda clínica com "ANIMAL" no nome, que é quase todas.
+- `filtroOr()` monta `and(cnae, or(nomes))` por recorte, com OR entre recortes.
+- A API resolve o mandato **pelo id, antes do setor**, e não pelo texto. Isso tira a listagem da
+  dependência do parser e do LLM: o chip devolve a mesma lista toda vez, o que importa porque é a
+  lista que o cliente vai anotar.
+- **Acento:** `razao_social` vem da Receita com acento e `ilike` não normaliza, então as variantes
+  acentuadas estão explícitas (`ANALIS` e `ANÁLIS`, `ASSISTENC` e `ASSISTÊNC`). Feio e correto; a
+  alternativa era coluna normalizada no banco.
+
+**Verificado, e o que NÃO foi.** `scripts/check-mandatos.ts` rodou contra o Supabase e os três
+filtros retornam **exatamente** a contagem da ingestão: 1.671, 1.119 e 11.712. O PostgREST aceitou
+o `and()` aninhado. Mais 5 testes de forma em `src/lib/mandatos.test.ts` (suíte em 77 passando),
+incluindo um que trava foco A e foco B produzindo filtros diferentes. Typecheck limpo e o dev
+server compilou.
+
+**Não verifiquei a tela logado:** o acesso é por magic link e a sessão não é automatizável aqui.
+O que garante a tela é o typecheck e o compile; o que garante a LISTA é o check contra o banco.
