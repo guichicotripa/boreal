@@ -1411,3 +1411,59 @@ ganha recall e piora a granularidade da lista. Uma em cada oito empresas entra p
 decisão de produto.
 
 **Status:** ✅ Medido, documentado e reproduzível. ⏳ Não aplicado.
+
+---
+
+## 2026-08-12 — Mandato entra no contrato, e a tela do piloto deixa de oferecer o que o banco nega
+
+**Contexto.** Pedido era de layout: "a Setter só terá os 3 mandatos, não precisa aparecer os
+outros 4 setores, e ajusta os atalhos de tese". Ao abrir o código apareceram três problemas, e só
+o primeiro era de layout.
+
+**1. A Setter não tinha restrição nenhuma.** `org_setor` está vazia para ela, e vazia significa
+"sem restrição" por desenho da 0012. Um originador logado lia as 1.465.665 empresas dos quatro
+setores validados, tendo fechado piloto em R$2.000 por três mandatos. Não era estética.
+
+**2. Os atalhos de tese trocavam o universo em silêncio.** `EXEMPLOS_POR_SETOR[setorAtivo ?? "metalmec"]`.
+Abrir "Diagnóstico veterinário" mostrava a lista certa e os atalhos de metalmecânica; clicar num
+deles jogava a busca em metalmecânica com a lista do mandato ainda na tela.
+
+**3. O cache estático furava a proteção que eu estava construindo.** Os caches de demo e de browse
+são JSON do bundle e são servidos ANTES da checagem de contrato. RLS não alcança arquivo, e o
+caminho do cache é o mais usado (todo atalho bate nele). Sem mover a checagem para antes, a
+migration nasceria decorativa para o fluxo principal. Corrigido em `8dff80a`.
+
+**Decisões.**
+- **Mandato ganha dimensão própria** (`mandato` + `org_mandato`, migration 0014), espelhando
+  `setor` + `org_setor` linha a linha, com sync script e teste de drift. Não entrou em
+  `setores.json` pelo motivo já registrado: o registry carrega recall e universo, e mandato não
+  tem nenhum dos dois.
+- **A regra de leitura de mandato é o INVERSO da de setor.** Setor vazio = todos; mandato vazio =
+  nenhum. Mandato é universo carregado sob encomenda, então o default de quem não comprou é não
+  ver. E firma COM mandato passa a ler `setores` ao pé da letra, senão `[]` viraria "todos" e o
+  switcher continuaria oferecendo os quatro validados. As três regras estão em `src/lib/contrato.ts`,
+  separado de `permissoes.ts` só para poder ter teste (o runner nativo não importa server-only).
+- **A proteção é por PREFIXO DE CNAE, não por mandato exato.** A policy é regex de prefixo e
+  mandato é CNAE + filtro de nome. O banco libera o 7500 inteiro, não só os 1.671 laboratórios.
+  Sobra de leitura dentro do universo contratado, não vazamento entre clientes. A alternativa
+  escreveria o filtro de nome em dois lugares (código e Postgres) com risco de divergir. Declarado
+  em `prefixosDe()` e no cabeçalho da migration.
+- **A credencial de 97% some quando um mandato está aberto.** Aquele recall foi medido contra
+  aquisições em metalmecânica, e nos três mandatos não há evento de aquisição medido nenhum.
+  Repetir o número ali seria transferir credibilidade de uma medição para um universo que ela não
+  cobre. No lugar entra "cobertura completa do recorte; sem recall medido neste mandato", que é o
+  que de fato temos e é o enquadramento que §16 do modelo-de-score recomenda.
+- **Atalhos escritos depois de medir** (`scripts/check-teses-mandato.ts`). O parser lê quatro
+  coisas: CNAE, faixa etária, ano de fundação e UF; o resto é ignorado em silêncio. Os cortes de
+  idade diferem por mandato de propósito: 70+ renderia 64 empresas no Foco A e 20 no Foco B, contra
+  1.739 em death care. Dois testes travam isso, um contra tese que isola subsegmento inexistente,
+  outro contra tese que não aciona filtro nenhum.
+
+**Custo assumido.** `page.tsx` virou casca de servidor e a bancada foi para
+`components/radar/RadarClient.tsx`. Divisão rasa: só a leitura de permissão saiu, a interação toda
+continua num arquivo.
+
+**Estado.** Código commitado e verificado (`npm test` 86 passa, `tsc --noEmit` limpo, `npm run
+build` completa, lint com os mesmos 26 problemas pré-existentes de antes). **Banco não aplicado.**
+Não deu para verificar a tela logada: o acesso é magic link e a sessão do navegador não tem login.
+Os três passos de aplicação estão em `pending.md`.

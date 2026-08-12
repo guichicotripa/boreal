@@ -65,6 +65,15 @@
 > mas só 1,9% de perfil sucessório. Death care tem 11,0% de perfil e 20,4% de score zero. Ou seja,
 > o mandato onde a tese se aplica é o que está visualmente pior, e vice-versa.
 
+- [ ] **Aplicar a migration 0014 e gravar o contrato da Setter.** Código pronto e commitado
+  (`490b9d8`, `8dff80a`, `aeca373`), banco ainda não. Três passos, nesta ordem:
+  1. rodar `supabase/migrations/0014_mandato_no_contrato.sql` no SQL editor do Supabase
+  2. `node --experimental-strip-types --env-file=.env.local scripts/sync-mandatos.ts`
+  3. `node --experimental-strip-types --env-file=.env.local scripts/contrato-setter.ts` (tem `--dry`)
+  Depois: `npm run test:db` para as duas guardas de espelho passarem de SKIP a verde.
+  **Até isso rodar, a Setter continua enxergando as 1,4 milhão de empresas dos 4 setores
+  validados por R$2.000.** Achado de 12/08: `org_setor` vazia significa "sem restrição".
+
 - [ ] **Separar o entregável por mandato, e dizer isso ao Henrique antes do dia 1.**
   Foco A e B = censo completo e enriquecido (a afirmação é cobertura exaustiva, não previsão).
   Death care = ranking por sucessão (é onde o motor tem o que fazer). Prometer score de sucessão
