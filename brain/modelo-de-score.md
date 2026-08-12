@@ -1222,3 +1222,38 @@ Números que mudaram depois do conserto (o da esquerda foi dito na conversa e es
 
 Duas execuções seguidas da versão corrigida batem byte a byte. É o mesmo bug de `.range()` que o
 cabeçalho do `backfill-score-v0.ts` documenta desde julho, cometido de novo em script novo.
+
+### 16.3. Por que a vertical pet não tem nenhuma empresa com score 100
+
+Guilherme reparou que o teto de Foco A e Foco B é **91**, enquanto death care chega a 100. Não é
+bug nem corte artificial: é o universo.
+
+Marcar 100 exige os cinco eixos no máximo ao mesmo tempo, e dois deles são raros e correlacionados
+entre si:
+
+| eixo (máximo) | Foco A | Foco B | Death care |
+|---|---:|---:|---:|
+| Escala, capital no topo (34) | 0,7% | 1,3% | 4,3% |
+| Idade do controle, sócio 80+ (28) | **0,4%** | **0,5%** | 2,5% |
+| Sucessor aparente (14) | 84,6% | 75,5% | 44,0% |
+| Quadro plural, 5+ sócios (13) | **1,0%** | **1,0%** | 1,7% |
+| Movimento societário (11) | 52,6% | 55,3% | 26,2% |
+| **os cinco juntos = 100** | **0** | **0** | 6 (0,1%) |
+
+O gargalo é a conjunção "sócio 80+ **e** 5+ sócios PF": 2 empresas no Foco A, **zero** no Foco B,
+40 em death care. Sem ela o teto cai para 91, e foi exatamente onde os dois pararam.
+
+A melhor do Foco A tem capital de R$ 3,75 milhões, mais que a melhor de death care (R$ 1,0 milhão),
+e ainda assim marca 91: perde 3 pontos por ter sócio de 71-80 em vez de 80+, e 6 por ter 3 sócios
+em vez de 5.
+
+**Isto não é defeito a corrigir, é a mesma coisa que §16 já dizia por outro caminho.** Diagnóstico
+veterinário e plano pet são verticais jovens em consolidação: dono na faixa dos 40-50, quadro
+enxuto, empresa fundada depois de 2010. O score foi calibrado para achar transição de controle em
+empresa familiar madura, e ele está corretamente informando que essa configuração quase não existe
+ali. Forçar 100 nesses dois exigiria recalibrar os pesos contra um label que não temos para eles
+(zero aquisição medida em laboratório veterinário).
+
+**O que NÃO fazer:** normalizar o score por mandato para que cada um tenha o próprio 100. Isso faria
+91 virar 100 sem nenhum fato novo, e a comparação entre mandatos, que é o que o originador usa para
+decidir onde gastar a semana, deixaria de significar qualquer coisa.
