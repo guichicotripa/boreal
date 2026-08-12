@@ -297,5 +297,30 @@ if (pctSem > pctEsperado + 5) {
   process.exit(8);
 }
 
+/* SCORE MATERIALIZADO, AQUI DENTRO E NÃO NUM SEGUNDO COMANDO.
+   `empresa.score_v0` é por onde a busca ORDENA antes do LIMIT. Empresa recém-ingerida entra com
+   ele NULO e, se o universo inteiro estiver nulo, `nulls last` empata TODAS as linhas: a ordem
+   cai no desempate `id`, que é UUID, e a "shortlist priorizada" vira amostra aleatória
+   reordenada entre si. É o defeito de 25/07/2026 (ver o comentário do `.order` em
+   src/app/api/search/route.ts) voltando por outra porta.
+
+   `backfill-score-v0.ts` já avisava "RODAR DEPOIS DE TODO INGEST" no cabeçalho, e mesmo assim foi
+   esquecido nos três mandatos da Setter em 12/08/2026 — medido depois: o death care entregava 50
+   empresas de score médio 29,5 quando o topo real era 95,8, e ZERO das devolvidas estava no top 50.
+   Aviso em docstring não é mecanismo. Rodar aqui é. */
+console.log("\nMaterializando score_v0 das novas…");
+const { spawnSync } = await import("node:child_process");
+const bf = spawnSync(
+  process.execPath,
+  ["--experimental-strip-types", path.resolve(ROOT, "scripts/backfill-score-v0.ts"), "--so-nulos"],
+  { stdio: "inherit", env: process.env }
+);
+if (bf.status !== 0) {
+  console.error(`\n✗ ingestão gravada, mas o backfill de score_v0 falhou (código ${bf.status}).`);
+  console.error("  A busca vai ordenar por score nulo e devolver amostra aleatória. Rode:");
+  console.error("  node --experimental-strip-types --env-file=.env.local scripts/backfill-score-v0.ts --so-nulos");
+  process.exit(9);
+}
+
 console.log(`\n✓ ${setor.nome}: ${n} empresas, ${ns} sócios ingeridos.`);
 console.log(`  BigQuery cobrou ${emGB(bytesCobrados)} GB nesta execução (free tier = 1024 GB/mês).`);

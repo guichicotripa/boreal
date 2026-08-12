@@ -60,24 +60,24 @@ export const TESES_POR_SETOR: Record<string, string[]> = {
  *    segmentos aparecem no rótulo é porque o mandato cobre os dois, não porque o texto separa.
  *
  * Os cortes de idade são diferentes entre os mandatos DE PROPÓSITO, e o número é medido
- * (scripts/check-teses-mandato.ts, 12/08/2026). 70+ renderia 64 empresas no Foco A e 20 no Foco B:
- * verticais jovens, onde a tese sucessória quase não se aplica (1,9% e 1,2% de perfil sucessório,
- * contra 11,0% em death care). Atalho que volta quase vazio no primeiro clique do piloto é pior
- * que atalho nenhum. Em death care o 70+ rende 1.739 e é o corte certo. */
+ * (scripts/check-teses-mandato.ts, 12/08/2026). 70+ renderia 65 empresas no Foco A e 25 no Foco B:
+ * verticais jovens, onde a tese sucessória quase não se aplica (1,6% e 1,2% de perfil sucessório,
+ * contra 9,8% em death care). Atalho que volta quase vazio no primeiro clique do piloto é pior
+ * que atalho nenhum. Em death care o 70+ rende 1.068 e é o corte certo. */
 export const TESES_POR_MANDATO: Record<string, string[]> = {
-  // 624 · 151 · 185 empresas, respectivamente
+  // 624 · 153 · 189 empresas, respectivamente
   "foco-a-vet-lab": [
     "laboratórios de diagnóstico veterinário em São Paulo",
     "diagnóstico veterinário com sócios acima de 60 anos",
     "laboratórios veterinários fundados antes de 2010",
   ],
-  // 234 · 78 · 108
+  // 252 · 95 · 106
   "foco-b-plano-pet": [
     "planos de saúde pet em São Paulo",
     "planos de saúde pet com sócios acima de 60 anos",
     "planos de saúde pet fundados antes de 2010",
   ],
-  // 1.739 · 425 · 1.017
+  // 1.068 · 260 · 893
   "death-care": [
     "funerárias e cemitérios com sócios acima de 70 anos",
     "death care em São Paulo com sócios acima de 70 anos",

@@ -26,8 +26,13 @@ const SEL = "id,razao_social,data_inicio_atividade,porte,capital_social,cnae_pri
 
 for (const m of MANDATOS) {
   const linhas: any[] = [];
+  /* `.order("id")` no laco de paginacao NAO e enfeite: sem ordenacao explicita o Postgres nao
+     garante ordem estavel entre paginas, e `.range()` passa a repetir linha numa pagina e pular
+     linha em outra. Medido em 12/08/2026: a coleta "completa" trazia 1.671 linhas do mandato e
+     perdia 31 das 32 empresas com score >= 70. Este script existe pra auditar a lista do cliente;
+     auditor com amostragem quebrada produz numero errado com cara de medicao. */
   for (let from = 0; ; from += 1000) {
-    const { data, error } = await sb.from("empresa").select(SEL).or(filtroOr(m)).range(from, from + 999);
+    const { data, error } = await sb.from("empresa").select(SEL).or(filtroOr(m)).order("id").range(from, from + 999);
     if (error) { console.log(`${m.nome}: ERRO ${error.message}`); break; }
     linhas.push(...(data ?? []));
     if (!data || data.length < 1000) break;

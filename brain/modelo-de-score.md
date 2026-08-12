@@ -1129,31 +1129,38 @@ python scripts/diagnostico-troca-dono.py                        # lift, recall e
 Medido com `scripts/check-mandato-entregavel.ts`, que importa o `scoring.ts` real (não replica) e
 roda contra o que está ingerido no Supabase. Números do produto, não do BigQuery.
 
+> **Números refeitos em 12/08 (segunda medição).** A primeira rodada deste script paginava com
+> `.range()` **sem `.order()`**, e o Postgres não garante ordem estável entre páginas: a coleta
+> trazia a contagem certa de linhas com repetição e omissão. O erro mais grave que ela produziu foi
+> "Foco A não tem nenhuma empresa com score zero", que virou afirmação na conversa. A tabela abaixo
+> é da versão com `.order("id")`, e duas execuções seguidas batem byte a byte.
+
 | | Foco A · diag. vet | Foco B · plano pet | Death care |
 |---|---:|---:|---:|
 | empresas | 1.671 | 1.119 | 11.712 |
-| sem sócio cadastrado | **0 (0,0%)** | 173 (15,5%) | 4.007 (34,2%) |
-| 1 sócio PF | 831 (49,7%) | 572 (51,1%) | 3.338 (28,5%) |
-| 2+ sócios PF (onde o recall foi medido) | **840 (50,3%)** | 374 (33,4%) | 4.367 (37,3%) |
-| não é ME (EPP + DEMAIS) | 377 (22,6%) | 144 (12,9%) | 1.984 (16,9%) |
-| **score zero** | **0 (0,0%)** | 79 (7,1%) | **2.391 (20,4%)** |
-| **perfil sucessório** | **31 (1,9%)** | **13 (1,2%)** | **1.286 (11,0%)** |
-| score do 20º da lista | 76 | 70 | 97 |
-| do top 20, quantas não são ME | 13/20 | 8/20 | 18/20 |
+| sem sócio cadastrado | 129 (7,7%) | 169 (15,1%) | 4.333 (37,0%) |
+| 1 sócio PF | 870 (52,1%) | 573 (51,2%) | 3.146 (26,9%) |
+| 2+ sócios PF (onde o recall foi medido) | 672 (40,2%) | 377 (33,7%) | 4.233 (36,1%) |
+| não é ME (EPP + DEMAIS) | 299 (17,9%) | 144 (12,9%) | 1.977 (16,9%) |
+| **score zero** | **77 (4,6%)** | **77 (6,9%)** | **2.528 (21,6%)** |
+| **perfil sucessório** | **27 (1,6%)** | **13 (1,2%)** | **1.146 (9,8%)** |
+| score do 20º da lista | 72 | 70 | 95 |
+| do top 20, quantas não são ME | 13/20 | 8/20 | 19/20 |
 
 **Três leituras que mudam o desenho do piloto:**
 
-1. **O problema visual dos score zero não existe no Foco A.** Zero empresas sem sócio, zero com
-   score zero. Laboratório é sociedade constituída, não Empresário Individual. O buraco estrutural
-   de §13 é concentrado em death care (20,4%), que é justamente onde a lista é longa.
+1. **O problema dos score zero é muito menor no Foco A, mas não é zero.** 4,6% contra 21,6% em
+   death care. Laboratório em geral é sociedade constituída, não Empresário Individual, então o
+   buraco estrutural de §13 se concentra em death care, que é justamente onde a lista é longa.
+   *A primeira medição dizia 0,0% e estava errada; ver o aviso acima da tabela.*
 
-2. **A tese sucessória quase não se aplica aos mandatos escolhidos.** 1,9% e 1,2% de perfil
-   sucessório, contra 11,0% em death care. Foco A e B são verticais jovens em consolidação: o dono
+2. **A tese sucessória quase não se aplica aos mandatos escolhidos.** 1,6% e 1,2% de perfil
+   sucessório, contra 9,8% em death care. Foco A e B são verticais jovens em consolidação: o dono
    não está envelhecendo, o comprador é que está montando plataforma. Vender "score de sucessão"
    ali é vender a régua errada. O onepager já diz isso (linha 19) e a linha precisa ser mantida na
    conversa, não só no papel.
 
-3. **Metade do Foco A tem 2+ sócios**, que é a população onde o recall de 4,9x foi medido. Isso é
+3. **40,2% do Foco A tem 2+ sócios**, que é a população onde o recall de 4,9x foi medido. Ainda é
    melhor do que a base geral (31%). Mas **não há nenhum evento de aquisição medido em laboratório
    veterinário**: o 4,9x é transferência de credibilidade de outros setores, não medição neste. Se
    o Henrique perguntar, é isso que se responde.
@@ -1161,3 +1168,57 @@ roda contra o que está ingerido no Supabase. Números do produto, não do BigQu
 **Consequência de produto:** em Foco A e B o entregável defensável é **censo completo e enriquecido**
 (cobertura exaustiva, dedupe, sócio, idade, porte, praça, contato), não ranking por sucessão. Em
 death care o entregável é **ranking**, que é onde o motor tem o que fazer.
+
+### 16.1. O defeito que estava entre a lista e o cliente (12/08, tarde)
+
+Guilherme perguntou se havia algo espalhando o score pela lista de 50, e pediu pra parar. Não
+havia: a rota ordena por `empresa.score_v0` DESC antes do LIMIT. O problema era o oposto e pior.
+
+**`score_v0` estava NULO em 100% das empresas dos três mandatos** (14.487 linhas). A coluna é
+materializada por `scripts/backfill-score-v0.ts`, que não foi rodado depois da ingestão de 12/08.
+Com `nulls last` e o universo inteiro nulo, TODAS as linhas empatam e a ordem cai no desempate
+`id`, que é UUID. A "shortlist priorizada" era **uma amostra aleatória do mandato**, reordenada
+entre si pelo score de runtime.
+
+Medido antes e depois (`scripts/check-ordem-mandato.ts`):
+
+| mandato | score médio da página | depois | topo real |
+|---|---:|---:|---:|
+| Diagnóstico veterinário | 39,4 | **72,6** | 72,6 |
+| Plano de saúde pet | 31,6 | **68,4** | 68,4 |
+| Death care | **29,5** | **94,0** | 94,0 |
+
+Death care entregava média 29,5 com 12 empresas de score 0 na primeira página, e **zero** das 50
+devolvidas estava no top 50 real. Depois do backfill a média da página bate exatamente com a do
+topo real, e não há mais nenhum score 0 na primeira página.
+
+**É reincidência.** O mesmo defeito foi achado em 25/07/2026, quando saúde foi de 2.000 pra 34.599
+empresas, e gerou a migration 0008 mais o `.order("score_v0")` na rota. Voltou por outra porta:
+universo novo ingerido sem materializar o score. O cabeçalho do backfill já dizia "RODAR DEPOIS DE
+TODO INGEST" e mesmo assim foi esquecido. **Aviso em docstring não é mecanismo**, então
+`ingest-setor.mjs` passou a rodar o backfill como último passo e a sair com código 9 se ele falhar.
+
+**Nota sobre a percepção do usuário.** O incômodo de 11/08 ("score tão baixo e muitas empresas com
+score 0") era leitura correta de um defeito real, não implicância com a faixa do score. O conserto
+de exibição ("não avaliável" em vez de 0) continua valendo, mas era o segundo problema, não o
+primeiro.
+
+### 16.2. E o auditor também estava quebrado
+
+`check-mandato-entregavel.ts` e `check-teses-mandato.ts` paginavam com `.range()` **sem
+`.order()`**. Sem ordenação explícita o Postgres não garante ordem estável entre páginas: a coleta
+devolvia a contagem certa de linhas, com repetição e omissão. Perdia 31 das 32 empresas com score
+>= 70 no Foco A.
+
+Números que mudaram depois do conserto (o da esquerda foi dito na conversa e está errado):
+
+| | antes (errado) | depois |
+|---|---:|---:|
+| Foco A, score zero | **0 (0,0%)** | 77 (4,6%) |
+| Foco A, sem sócio | 0 (0,0%) | 129 (7,7%) |
+| Foco A, 2+ sócios | 50,3% | 40,2% |
+| Death care, perfil sucessório | 11,0% | 9,8% |
+| Death care, sócio 70+ (atalho) | 1.739 | 1.068 |
+
+Duas execuções seguidas da versão corrigida batem byte a byte. É o mesmo bug de `.range()` que o
+cabeçalho do `backfill-score-v0.ts` documenta desde julho, cometido de novo em script novo.
