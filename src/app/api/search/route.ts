@@ -9,7 +9,7 @@ import { lerDescartadas, filtrarDescartadas } from "@/lib/descarte-store";
 import { escopoAtual } from "@/lib/escopo";
 import { normalizeQuery } from "@/lib/teses";
 import { SETORES } from "@/lib/setores";
-import { permissoesAtuais, setorPermitido, ufPermitida } from "@/lib/permissoes";
+import { permissoesAtuais, setorPermitido, mandatoPermitido, ufPermitida } from "@/lib/permissoes";
 import { registrarBusca } from "@/lib/evento";
 import type { Empresa, Socio, SearchResponse } from "@/lib/types";
 import demoCache from "@/lib/demo-cache.json";
@@ -106,6 +106,34 @@ export async function POST(req: NextRequest) {
   const paginaBruta = Number((body as { pagina?: number })?.pagina ?? 0);
   const pagina = Number.isFinite(paginaBruta) ? Math.min(Math.max(Math.trunc(paginaBruta), 0), 40) : 0;
 
+  /* CONTRATO ANTES DO CACHE, e isto não é ordem estética.
+     Os caches abaixo são JSON do bundle, não banco. RLS não alcança arquivo estático, então uma
+     firma sem o setor no contrato receberia a lista completa pelo cache enquanto a mesma consulta
+     no banco devolveria zero. E o caminho do cache é justamente o mais usado: todo atalho de tese
+     da home bate nele. Deixar a checagem lá embaixo, junto da explicação, tornaria a migration
+     0014 decorativa para o fluxo principal.
+
+     `permissoesAtuais` é memoizado por request (React cache), então antecipar não custa ida extra. */
+  const perm = await permissoesAtuais();
+  const foraDoContrato = (oque: string) =>
+    NextResponse.json({
+      filters: { cnaePrefixes: [], minFaixaEtaria: null, maxAnoFundacao: null, ufs: null, setorForaDaBase: null, limit: 50 },
+      parsedBy: "heuristic" as const,
+      count: 0,
+      empresas: [],
+      reasoned: false,
+      reasonedCount: 0,
+      foraDoContrato: oque,
+    });
+
+  if (mandato && !mandatoPermitido(perm, mandato.id)) return foraDoContrato(mandato.nome);
+  if (!mandato && setorId && !setorPermitido(perm, setorId)) {
+    return foraDoContrato(SETORES.find((s) => s.id === setorId)?.nome ?? setorId);
+  }
+  /* Consulta em texto puro, sem setor, cai no cache de metalmecânica: é o setor default da home
+     (ver a chave sem prefixo em chaveDemoCache). Então o portão dela é a permissão de metalmec. */
+  const podeODefault = setorPermitido(perm, "metalmec");
+
   // ── 0. Cache — demos canônicos (texto) ou browse de setor (instantâneo no demo) ──
   /* `pagina > 0` ignora o cache: os caches (demo e browse de setor) guardam a
      PRIMEIRA página de cada consulta, não o universo. Servir o cache na página 2
@@ -120,7 +148,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ...(await comOverlays(hit)), cached: true });
     }
   }
-  if (!skipCache && queryText && !setorCnaes) {
+  if (!skipCache && queryText && !setorCnaes && podeODefault) {
     const hit = CACHE[normalizeQuery(queryText)];
     if (hit) {
       return NextResponse.json({ ...(await comOverlays(hit)), cached: true });
@@ -176,10 +204,13 @@ export async function POST(req: NextRequest) {
   }
 
   /* Pediu algo fora do CONTRATO (≠ fora da base: o dado existe, esta firma é que
-     não comprou). As policies da 0012 já devolveriam zero linha sozinhas — isto
+     não comprou). As policies da 0012/0014 já devolveriam zero linha sozinhas — isto
      não é a proteção, é a explicação. Sem a mensagem o originador vê lista vazia
-     num setor que ele sabe que existe e conclui que a ferramenta quebrou. */
-  const perm = await permissoesAtuais();
+     num setor que ele sabe que existe e conclui que a ferramenta quebrou.
+
+     Setor e mandato PEDIDOS EXPLICITAMENTE já foram barrados lá em cima, antes do cache. O que
+     sobra aqui é o setor que veio do TEXTO livre ("clínicas com sócios acima de 70 anos" resolve
+     pra saúde sem ninguém clicar em nada), que só existe depois do parse. */
   const pedidos = SETORES.filter((s) =>
     filters.cnaePrefixes.some((p) => s.cnaes.some((c) => c.startsWith(p) || p.startsWith(c)))
   );
