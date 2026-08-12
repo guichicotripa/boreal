@@ -1070,14 +1070,34 @@ diferentes; nenhum é "o certo".
 O teste de sujeira interno (§15.5) dizia "o label mistura coisas". Existe um argumento mais forte e
 mais barato, que é aritmética de ordem de grandeza contra fonte de fora:
 
-| | eventos | por ano | contra o mercado brasileiro |
-|---|---:|---:|---|
-| label de aquisição (4 setores, 2,4 anos) | 1.610 | ~670 | **42% do Brasil inteiro**, em 4 setores |
-| label `transação` (4 setores, 2,4 anos) | 10.860 | ~4.525 | **2,9x todo o M&A do Brasil**, em 4 setores |
+**Correção do que foi escrito primeiro.** A versão inicial desta seção comparava as 1.610 aquisições
+dos 4 setores contra os 1.581 deals da KKR e concluía "42% do Brasil". Isso confunde escopos: o
+nosso é 4 setores em 2,4 anos, o da KKR é o país inteiro em 1 ano. Rodamos o mesmo label sem recorte
+de CNAE (`scripts/sonda-aquisicoes-brasil.mjs`) e o número real apareceu.
 
-Referência: **1.581 deals no Brasil em 2025** (report da KKR). O label de aquisição fica na mesma
-ordem de grandeza de uma fonte independente que nunca viu nosso código. O label novo estoura o
-mercado inteiro em quase 3x cobrindo só 4 setores. Não é M&A.
+| | eventos | por ano | leitura |
+|---|---:|---:|---|
+| KKR, deals anunciados no Brasil, 2025 | 1.581 | 1.581 | âncora externa |
+| nosso label, **Brasil inteiro**, 2,42 anos | **14.093** | **5.830** | **3,7x o anunciado** |
+| nosso label, os 4 setores validados | 1.610 | 665 | **11,4% do total nacional** |
+| label `transação`, só os 4 setores | 10.860 | 4.490 | escala nacional daria ordem de 10⁵ |
+
+Universo nacional: 22.469.122 matrizes ativas, das quais **3.230.115 (14,4%) têm 2+ sócios PF**, que
+é a única população onde o label consegue disparar. Taxa nacional de aquisição sobre elegíveis:
+**0,44%**.
+
+**A leitura correta.** 3,7x entre "toda troca de controle visível no registro" e "deal anunciado" é
+uma razão plausível, provavelmente até conservadora: a Receita enxerga transação pequena sem
+assessor e sem imprensa, que é justamente o mid-market que a KKR não conta. O label de aquisição
+sobrevive à âncora. O label `transação` não: 10.860 em 4 setores já é 7x o país anunciado, e
+extrapolado dá ordem de grandeza incompatível com qualquer definição de M&A.
+
+**Achado de lado, que contraria a escolha de verticais.** Taxa de aquisição sobre elegíveis, por
+divisão de CNAE: 64 serviços financeiros 1,31% · 41 construção 1,05% · 68 imobiliário 0,99% · 62
+software 0,70% · média nacional 0,44% · **86 saúde 0,38% · 01 agro 0,26%**. Os quatro setores
+validados estão **abaixo** da média nacional de intensidade de M&A. Ressalva antes de agir nisso:
+64 e 68 são cheios de holding e SPE, onde "entra PJ" é reorganização e não venda, então o topo da
+lista está inflado. 41 e 62 parecem transação de verdade.
 
 **Ressalva honesta, que não salva o label novo.** O número da KKR conta deal anunciado, então
 subestima a cauda de transferência de pequeno negócio, que de fato existe e é grande. Mas essa
