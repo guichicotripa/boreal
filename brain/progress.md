@@ -1776,7 +1776,7 @@ O Henrique avisou que a minuta só sai semana que vem. Reflexo natural é ler co
 contrário, e a razão está nos números da sondagem.
 
 **O piloto do onepager não cabe nos setores que ele escolheu.** O desenho é "2 originadores usam o
-Boreal nos deals que já caçam, 1h por semana comigo, durante um mês, R$2.500". Isso pressupõe
+Boreal nos deals que já caçam, 1h por semana comigo, durante um mês, R$2.000". Isso pressupõe
 universo grande o bastante pra a ferramenta continuar devolvendo coisa nova durante quatro semanas.
 
 Foco A tem **93 empresas de porte relevante no Brasil e 43 em São Paulo**. Foco B tem menos. Um
@@ -1803,3 +1803,53 @@ sucessório. Isso prova capacidade e dimensiona o mandato sem entregar o entreg�
 
 **E a minuta:** "semana que vem" sem dono e sem data vira "mês que vem". O pedido da call é nome e
 data, não garantia. O Pedro saiu e ninguém assumiu, e esse é o problema real.
+
+### [12/08] A call vira sessão de trabalho, e o foco A vira exercício de rotulagem
+
+Três decisões do Guilherme, e a segunda é a melhor ideia da semana.
+
+**1. Piloto fechado em R$2.000** (era R$2.500 no onepager). Corrigido em `onepager-setter-piloto.md`,
+`pending.md` e aqui.
+
+**2. Adiar a call de quinta pra semana que vem, mandando o conteúdo por escrito.** A ressalva:
+os dois itens que mais precisam da call são justamente os que o Henrique vem evitando por escrito
+(existe mandato comprador? quem assumiu a minuta?). Mas o argumento dele é mais forte: **se os focos
+A e B estiverem carregados na plataforma antes, a call deixa de ser reunião de planejamento e vira
+sessão sobre output real.** Só não pode adiar pro vazio: adiar **entregando** e já remarcando com
+data, senão a Setter fica com o passo da relação inteira.
+
+**3. Carregar foco A e B na plataforma pro Henrique anotar, e usar isso como sinal de treino.**
+A plataforma **já suporta isso inteiro**, e foi desenhada pra isso:
+
+- `oportunidade.notas` — "anotações do analista (por que segue / por que parou)"
+- `oportunidade.estagio` e `oportunidade.resultado` — este último documentado na migration 0003
+  como *"ground truth do propensity score... o feedback que realimenta o score. A base do moat"*
+- `interacao` — log de toques, com tipo `nota`
+- `empresa_descartada.motivo` — por que saiu
+- `evento.ts` — o sensor que grava salvou/descartou/estágio, com o comentário *"salvar o 17º e
+  ignorar o 1º é o score errando, com rótulo de graça"*
+
+**Nada disso precisa ser construído.** O que precisa é o universo estar lá.
+
+**O que NÃO dizer pro Henrique: que isso "treina o algoritmo".** Com 142 empresas e talvez 10 a 30
+marcadas como interessantes, não se ajusta peso nenhum. O que esse exercício realmente entrega, e é
+mais valioso do que soa:
+
+- **A primeira validação contra julgamento humano**, e não contra proxy de registro. Tudo que existe
+  hoje mede o score contra "entra sócio PJ e sai sócio PF".
+- **Falso positivo que o CNPJ não enxerga:** já vendida, parada de fato, segmento errado, pequena
+  demais. O registro diz que está ativa; o Henrique sabe que não está.
+- **E o prêmio de verdade:** o label de aquisição é cego pra empresa de sócio único, que é o caso
+  central da tese. **O julgamento do Henrique não é.** Esse é o único instrumento à mão capaz de
+  testar `idade_controle`, que está em aberto desde 02/08. Direcional com n=142, não conclusivo,
+  mas é a única leitura possível hoje.
+
+**O custo, e é real:** ele vê a lista nominal. Na sessão anterior a recomendação era não entregar,
+porque num universo de 93 a lista É o produto. A troca se justifica porque o rótulo vale mais que a
+lista, mas com uma condição: **acesso dentro da plataforma, atrás de login e logado por `evento`,
+sem exportação em planilha.** Trabalhar com o dado, sim; levar embora, não.
+
+**O que falta de código:** `ingest-setor.mjs` filtra por CNAE e o foco A é um recorte por NOME
+dentro do CNAE 7500 (laboratório, diagnóstico, patologia, análises). Carregar `7500` inteiro joga
+36.425 clínicas de bairro na cara dele e enterra as 1.661. Precisa de um `--nome=` no script, que é
+pequeno e reutilizável: **todo mandato futuro vai ser um recorte sub-CNAE**, não um setor.

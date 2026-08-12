@@ -29,7 +29,7 @@ Resolve a brecha que Grata e PitchBook não cobrem: o mid-market brasileiro, ond
 ## A proposta de piloto (1 mês)
 - **Quem usa:** 2 originadores de vocês, em [A CONFIRMAR: 2 setores distintos, ex. saúde + um segundo].
 - **Como:** eles usam o Boreal nos deals que já caçam; eu sento com o time uma vez por semana pra ajustar a ferramenta ao fluxo real de vocês. A modelagem é rápida, dá pra iterar dentro do mês.
-- **Custo:** R$2.500 no mês, cobrindo o custo operacional. É desconto de piloto.
+- **Custo:** R$2.000 no mês, cobrindo o custo operacional. É desconto de piloto. (Fechado em 12/08/2026.)
 - **Critério de sucesso (proposta minha, aberto a ajuste):** ao fim do mês, o Boreal entregou a cada originador um punhado de alvos qualificados que eles não tinham no radar, e pelo menos 1 ou 2 viraram abordagem real. Como métrica de apoio, o tempo de achar e qualificar uma empresa cai de horas para minutos. Não amarro em "fechar deal", porque deal leva quase um ano.
 
 ## O que preciso de vocês pra começar
