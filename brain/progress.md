@@ -1769,3 +1769,37 @@ na hora de falar com a empresa, então a lista é acionável mesmo onde o score 
 A seção 10 (limitações) ganhou três itens novos com o que foi medido em 11/08: capital congelado em
 96,8%, o buraco estrutural dos 928 mil, e o empate na fronteira do decil. As seções 4 a 13 antigas
 viraram 5 a 14, e o índice e a referência interna de "seção 9" foram corrigidos junto.
+
+### [12/08] A minuta escorrega pra semana que vem, e isso salva o piloto de nascer errado
+
+O Henrique avisou que a minuta só sai semana que vem. Reflexo natural é ler como má notícia. É o
+contrário, e a razão está nos números da sondagem.
+
+**O piloto do onepager não cabe nos setores que ele escolheu.** O desenho é "2 originadores usam o
+Boreal nos deals que já caçam, 1h por semana comigo, durante um mês, R$2.500". Isso pressupõe
+universo grande o bastante pra a ferramenta continuar devolvendo coisa nova durante quatro semanas.
+
+Foco A tem **93 empresas de porte relevante no Brasil e 43 em São Paulo**. Foco B tem menos. Um
+originador esgota isso em dias, não em um mês. **Se a minuta tivesse chegado na sexta, o Guilherme
+teria assinado um contrato que descreve um piloto incompatível com o escopo acordado depois.** O
+atraso deu janela pra redesenhar antes de assinar.
+
+**As duas formas que o piloto pode tomar, pra levar à call de quinta:**
+
+1. **Escopo fixo, e cabe hoje.** Mapa completo dos focos A e B, contato resolvido, prazo curto.
+   Critério de sucesso verificável e honesto: exaustividade do universo e taxa de contato válido.
+   Não promete recall, que nesse tamanho não significa nada.
+2. **O piloto de um mês, no setor que comporta.** Death care em SP são 265 empresas de porte
+   relevante com 47 no perfil sucessório. Aí dois originadores usam a ferramenta por um mês e ela
+   continua tendo o que mostrar.
+
+As duas **não são excludentes**, e a oferta boa é a soma: o mapa de A e B como prova rápida, e o mês
+de uso em death care. Isso respeita a escolha dele em vez de atropelar.
+
+**O que NÃO fazer: entregar a lista nominal de A antes do contrato.** Num universo de 93 empresas,
+a lista **é** o produto. Entregar de graça remove a razão de pagar. O que dá pra mostrar sem se
+esvaziar é a **forma** do universo: contagem, distribuição por UF, concentração, quantas têm perfil
+sucessório. Isso prova capacidade e dimensiona o mandato sem entregar o entregável.
+
+**E a minuta:** "semana que vem" sem dono e sem data vira "mês que vem". O pedido da call é nome e
+data, não garantia. O Pedro saiu e ninguém assumiu, e esse é o problema real.

@@ -104,7 +104,16 @@
   contato, ou seja, a camada de descoberta e enriquecimento, não o score. **Perguntar direto na call
   de quinta se existe mandato comprador nos dois.** Se existir, o piloto muda de forma:
   exaustividade e dado de contato viram a métrica, não recall@top10%.
-- [ ] **Call marcada: quinta 13/08, 9:30.** Pauta em `progress.md` na entrada de 11/08.
+- [ ] **Call marcada: quinta 13/08, 9:30.** Pauta em `progress.md` nas entradas de 11 e 12/08.
+- [ ] **A minuta escorregou pra semana que vem (avisado em 12/08).** Não é só atraso: o piloto do
+  onepager (2 originadores, 1h/semana, um mês, R$2.500) **não cabe** num foco A de 93 empresas.
+  Assinar aquela minuta seria travar um piloto incompatível com o escopo. **Levar pra call as duas
+  formas alternativas:** (a) escopo fixo, mapa completo de A e B com contato resolvido, critério de
+  sucesso = exaustividade e taxa de contato; (b) o mês de uso em death care, que tem 265 empresas de
+  porte relevante em SP e 47 no perfil. As duas somam bem.
+- [ ] **Não entregar a lista nominal do foco A antes do contrato.** Com 93 empresas, a lista É o
+  produto. Mostrar a **forma** do universo (contagem, UF, concentração, quantas no perfil) prova a
+  capacidade sem entregar o entregável.
 - [x] ~~**Sondar os dois setores no BigQuery.**~~ **Feito em 11/08**, e refeito no mesmo dia depois
   que o proxy de tamanho foi corrigido. Tabelas completas em `progress.md`. Pelo corte antigo de
   capital (**subestima, não usar**): foco A 11 empresas, foco B 4. Death care mais plano
