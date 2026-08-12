@@ -65,14 +65,15 @@
 > mas só 1,9% de perfil sucessório. Death care tem 11,0% de perfil e 20,4% de score zero. Ou seja,
 > o mandato onde a tese se aplica é o que está visualmente pior, e vice-versa.
 
-- [ ] **Aplicar a migration 0014 e gravar o contrato da Setter.** Código pronto e commitado
-  (`490b9d8`, `8dff80a`, `aeca373`), banco ainda não. Três passos, nesta ordem:
-  1. rodar `supabase/migrations/0014_mandato_no_contrato.sql` no SQL editor do Supabase
-  2. `node --experimental-strip-types --env-file=.env.local scripts/sync-mandatos.ts`
-  3. `node --experimental-strip-types --env-file=.env.local scripts/contrato-setter.ts` (tem `--dry`)
-  Depois: `npm run test:db` para as duas guardas de espelho passarem de SKIP a verde.
-  **Até isso rodar, a Setter continua enxergando as 1,4 milhão de empresas dos 4 setores
-  validados por R$2.000.** Achado de 12/08: `org_setor` vazia significa "sem restrição".
+- [x] ~~**Aplicar a migration 0014 e gravar o contrato da Setter.**~~ **Feito em 12/08.** CLI do
+  Supabase ligada ao projeto (`hoomnogktlvjekkpdouz`), 0001 a 0013 reconciliadas com
+  `migration repair`, 0014 aplicada por `db push`, espelho sincronizado e contrato gravado.
+  `npm run test:db` passa 88/88 com **zero skip** — as duas guardas de espelho agora rodam de
+  verdade. Regex do contrato conferida: nega 24/25/28/86/85/01, libera 65111/6550/7500/9603.
+  **Fica em aberto uma verificação:** a policy nunca foi exercida por uma sessão de originador da
+  Setter. Service role passa por cima de RLS, e o único login disponível (Guilherme) é
+  `papel='boreal'`, que ignora contrato por desenho. Fechar isso exige entrar com um usuário
+  originador da org Setter.
 
 - [ ] **Separar o entregável por mandato, e dizer isso ao Henrique antes do dia 1.**
   Foco A e B = censo completo e enriquecido (a afirmação é cobertura exaustiva, não previsão).
