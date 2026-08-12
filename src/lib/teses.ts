@@ -43,6 +43,55 @@ export const TESES_POR_SETOR: Record<string, string[]> = {
   ],
 };
 
+/* Teses por MANDATO. Chave separada de TESES_POR_SETOR só para deixar a fronteira visível; a
+   busca trata id de mandato e id de setor no mesmo parâmetro, então `tesesDe()` no fim resolve
+   as duas com uma consulta só.
+ *
+ * DUAS REGRAS QUE VALEM AQUI, as duas custaram erro antes.
+ *
+ * 1. Só escrever tese que o parser SABE ler. Ele entende quatro coisas: CNAE (que aqui vem do
+ *    mandato clicado), faixa etária mínima do sócio, ano máximo de fundação e UF. Qualquer outra
+ *    palavra é ignorada em silêncio, e a lista volta parecendo que obedeceu. Foi assim que
+ *    "consultórios com sócio único idoso" ficou meses prometendo um filtro inexistente.
+ *
+ * 2. Nada de tese que nomeia um SUBSEGMENTO do mandato. Dentro do mandato o CNAE já está fixado
+ *    pelo chip, e o texto não consegue estreitar mais. "Planos funerários fundados antes de 1990"
+ *    devolveria todo o death care fundado antes de 1990, funerária e cemitério junto. Onde os dois
+ *    segmentos aparecem no rótulo é porque o mandato cobre os dois, não porque o texto separa.
+ *
+ * Os cortes de idade são diferentes entre os mandatos DE PROPÓSITO, e o número é medido
+ * (scripts/check-teses-mandato.ts, 12/08/2026). 70+ renderia 64 empresas no Foco A e 20 no Foco B:
+ * verticais jovens, onde a tese sucessória quase não se aplica (1,9% e 1,2% de perfil sucessório,
+ * contra 11,0% em death care). Atalho que volta quase vazio no primeiro clique do piloto é pior
+ * que atalho nenhum. Em death care o 70+ rende 1.739 e é o corte certo. */
+export const TESES_POR_MANDATO: Record<string, string[]> = {
+  // 624 · 151 · 185 empresas, respectivamente
+  "foco-a-vet-lab": [
+    "laboratórios de diagnóstico veterinário em São Paulo",
+    "diagnóstico veterinário com sócios acima de 60 anos",
+    "laboratórios veterinários fundados antes de 2010",
+  ],
+  // 234 · 78 · 108
+  "foco-b-plano-pet": [
+    "planos de saúde pet em São Paulo",
+    "planos de saúde pet com sócios acima de 60 anos",
+    "planos de saúde pet fundados antes de 2010",
+  ],
+  // 1.739 · 425 · 1.017
+  "death-care": [
+    "funerárias e cemitérios com sócios acima de 70 anos",
+    "death care em São Paulo com sócios acima de 70 anos",
+    "funerárias e cemitérios fundados antes de 1990",
+  ],
+};
+
+/** Teses do universo aberto, seja ele setor do registry ou mandato. Fallback: metalmecânica, que
+ *  é o setor default da home. */
+export function tesesDe(id: string | null | undefined): string[] {
+  if (!id) return TESES_POR_SETOR.metalmec;
+  return TESES_POR_MANDATO[id] ?? TESES_POR_SETOR[id] ?? TESES_POR_SETOR.metalmec;
+}
+
 /** Normalização de consulta — a MESMA da rota de busca (chave do demo-cache). */
 export function normalizeQuery(q: string): string {
   return q
