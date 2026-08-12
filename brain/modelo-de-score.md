@@ -1065,7 +1065,35 @@ diferentes; nenhum é "o certo".
 - **`idade_controle` sobrevive, mas menor.** 1,30x a 1,50x contra transação. Não é o 1,00x do label
   cego, e não justifica 28 dos 100 pontos.
 
-### 15.7. Reproduzir
+### 15.7. A âncora externa que fecha o assunto (Guilherme, 12/08)
+
+O teste de sujeira interno (§15.5) dizia "o label mistura coisas". Existe um argumento mais forte e
+mais barato, que é aritmética de ordem de grandeza contra fonte de fora:
+
+| | eventos | por ano | contra o mercado brasileiro |
+|---|---:|---:|---|
+| label de aquisição (4 setores, 2,4 anos) | 1.610 | ~670 | **42% do Brasil inteiro**, em 4 setores |
+| label `transação` (4 setores, 2,4 anos) | 10.860 | ~4.525 | **2,9x todo o M&A do Brasil**, em 4 setores |
+
+Referência: **1.581 deals no Brasil em 2025** (report da KKR). O label de aquisição fica na mesma
+ordem de grandeza de uma fonte independente que nunca viu nosso código. O label novo estoura o
+mercado inteiro em quase 3x cobrindo só 4 setores. Não é M&A.
+
+**Ressalva honesta, que não salva o label novo.** O número da KKR conta deal anunciado, então
+subestima a cauda de transferência de pequeno negócio, que de fato existe e é grande. Mas essa
+cauda é exatamente o mercado que a Setter **não** atende. O label mede um mercado que não é o
+nosso, e isso reforça a decisão em vez de enfraquecê-la.
+
+**O que sobrevive do trabalho de §15:**
+1. É o único instrumento que enxerga empresa de dono único. Continua servindo como **diagnóstico**
+   de cobertura, e foi ele que provou que o recall publicado só vale para 31% da base.
+2. Vira candidato a **anti-sinal**: empresa cujo dono trocou há pouco dificilmente vende de novo já.
+3. A técnica de separar herança de venda por token de sobrenome é reaproveitável.
+
+**Como alvo de calibração, está morto.** O alvo continua sendo o label de aquisição, e o próximo
+ground truth de verdade não sai do CNPJ: sai das **notas de originador** (§16 quando existir).
+
+### 15.8. Reproduzir
 
 ```bash
 node --env-file=.env.local scripts/sonda-troca-de-dono.mjs      # o tamanho do ponto cego
@@ -1073,3 +1101,43 @@ node --env-file=.env.local scripts/sonda-troca-sobrenome.mjs    # venda x heran�
 node --env-file=.env.local scripts/extrai-matriz-score.mjs      # matriz com o label novo
 python scripts/diagnostico-troca-dono.py                        # lift, recall e o teste de sujeira
 ```
+
+---
+
+## 16. O que o piloto da Setter vai de fato mostrar na tela (12/08/2026)
+
+Medido com `scripts/check-mandato-entregavel.ts`, que importa o `scoring.ts` real (não replica) e
+roda contra o que está ingerido no Supabase. Números do produto, não do BigQuery.
+
+| | Foco A · diag. vet | Foco B · plano pet | Death care |
+|---|---:|---:|---:|
+| empresas | 1.671 | 1.119 | 11.712 |
+| sem sócio cadastrado | **0 (0,0%)** | 173 (15,5%) | 4.007 (34,2%) |
+| 1 sócio PF | 831 (49,7%) | 572 (51,1%) | 3.338 (28,5%) |
+| 2+ sócios PF (onde o recall foi medido) | **840 (50,3%)** | 374 (33,4%) | 4.367 (37,3%) |
+| não é ME (EPP + DEMAIS) | 377 (22,6%) | 144 (12,9%) | 1.984 (16,9%) |
+| **score zero** | **0 (0,0%)** | 79 (7,1%) | **2.391 (20,4%)** |
+| **perfil sucessório** | **31 (1,9%)** | **13 (1,2%)** | **1.286 (11,0%)** |
+| score do 20º da lista | 76 | 70 | 97 |
+| do top 20, quantas não são ME | 13/20 | 8/20 | 18/20 |
+
+**Três leituras que mudam o desenho do piloto:**
+
+1. **O problema visual dos score zero não existe no Foco A.** Zero empresas sem sócio, zero com
+   score zero. Laboratório é sociedade constituída, não Empresário Individual. O buraco estrutural
+   de §13 é concentrado em death care (20,4%), que é justamente onde a lista é longa.
+
+2. **A tese sucessória quase não se aplica aos mandatos escolhidos.** 1,9% e 1,2% de perfil
+   sucessório, contra 11,0% em death care. Foco A e B são verticais jovens em consolidação: o dono
+   não está envelhecendo, o comprador é que está montando plataforma. Vender "score de sucessão"
+   ali é vender a régua errada. O onepager já diz isso (linha 19) e a linha precisa ser mantida na
+   conversa, não só no papel.
+
+3. **Metade do Foco A tem 2+ sócios**, que é a população onde o recall de 4,9x foi medido. Isso é
+   melhor do que a base geral (31%). Mas **não há nenhum evento de aquisição medido em laboratório
+   veterinário**: o 4,9x é transferência de credibilidade de outros setores, não medição neste. Se
+   o Henrique perguntar, é isso que se responde.
+
+**Consequência de produto:** em Foco A e B o entregável defensável é **censo completo e enriquecido**
+(cobertura exaustiva, dedupe, sócio, idade, porte, praça, contato), não ranking por sucessão. Em
+death care o entregável é **ranking**, que é onde o motor tem o que fazer.

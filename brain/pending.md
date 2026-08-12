@@ -60,6 +60,30 @@
 
 ## 🔴 Antes ou durante o piloto da Setter
 
+> **Desenho do piloto, revisado em 12/08 com número medido.** Ver `modelo-de-score.md` §16. O que
+> foi medido: Foco A não tem nenhum score zero e tem 50,3% com 2+ sócios (melhor que a base geral),
+> mas só 1,9% de perfil sucessório. Death care tem 11,0% de perfil e 20,4% de score zero. Ou seja,
+> o mandato onde a tese se aplica é o que está visualmente pior, e vice-versa.
+
+- [ ] **Separar o entregável por mandato, e dizer isso ao Henrique antes do dia 1.**
+  Foco A e B = censo completo e enriquecido (a afirmação é cobertura exaustiva, não previsão).
+  Death care = ranking por sucessão (é onde o motor tem o que fazer). Prometer score de sucessão
+  num universo com 1,9% de perfil é vender a régua errada e perder credibilidade na primeira tela.
+- [ ] **Fechar o critério de sucesso em NOVIDADE e CONVERSA, não em recall.** Recall não é
+  verificável dentro de um mês e o nosso não foi medido nestes setores. O que o Henrique consegue
+  julgar em 30 dias: quantas do top N a Setter não conhecia, e quantas viraram abordagem. Isso
+  precisa entrar na minuta.
+- [ ] **Instrumentar as notas do originador como dado, não como feedback solto.** Escolha forçada
+  em 3 opções (ligaria / não ligaria / já conheço), 20 empresas em 10 minutos. O campo
+  **"já conheço"** é o que mede cobertura incremental, que é o argumento de renovação. E é o
+  primeiro ground truth de intenção real de comprador que teríamos (o CNPJ nunca vai dar isso).
+- [ ] **Resolver os 2.391 score zero de death care antes do dia 1.** É a primeira coisa em que um
+  cético clica. Ver o item de "não avaliável" nas decisões de UI.
+- [ ] **Decidir a postura sobre venda da plataforma.** Vender pra Setter converte ativo que
+  compõe (as notas de vários mandatos treinam o modelo de todos) em consultoria de cliente único,
+  e ancora preço em "ferramenta de boutique". A alternativa é exclusividade por setor/praça com
+  prêmio, que preserva o compounding. Decisão de negócio, ainda não tomada.
+
 - [x] ~~**Os números do onepager e do pitch estavam defasados.**~~ **Resolvido 30/07.** Afirmavam
   "97% a 100%, N=240", medido com o v0 e **inflado por construção**: a métrica filtra as adquiridas
   por sócio 61+ e empresa 25+, e o v0 dava 60 dos 100 pontos exatamente a esses dois campos. Os dois
