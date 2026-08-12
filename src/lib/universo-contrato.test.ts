@@ -11,7 +11,7 @@
  * Puro, sem banco: são funções de decisão, não de acesso. */
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { universoDaOrg, setorPermitido, mandatoPermitido, type Permissoes } from "./contrato.ts";
+import { universoDaOrg, aberturaDaBancada, setorPermitido, mandatoPermitido, type Permissoes } from "./contrato.ts";
 import { tesesDe, TESES_POR_MANDATO, TESES_POR_SETOR } from "./teses.ts";
 
 const SETORES = [{ id: "metalmec" }, { id: "saude" }, { id: "agro" }, { id: "educacao" }];
@@ -109,4 +109,33 @@ test("todo atalho de mandato aciona ao menos um filtro real", () => {
       );
     }
   }
+});
+
+/* O defeito que a conta de teste da Setter revelou antes de existir: com `setores: []`, a primeira
+   tela não tinha switcher, não tinha lista, e os três atalhos vinham de `tesesDe(null)`, que cai
+   em METALMECÂNICA — setor que a firma não contratou e cujo clique só produz "fora do contrato". */
+test("firma só de mandato abre no primeiro mandato, nunca em metalmecânica", () => {
+  const a = aberturaDaBancada([], MANDATOS);
+  assert.equal(a.setorDefault, null);
+  assert.equal(a.setorInicial, null);
+  assert.equal(a.mandatoInicial, "foco-a-vet-lab");
+  assert.notDeepEqual(tesesDe(a.mandatoInicial), TESES_POR_SETOR.metalmec);
+});
+
+test("firma com metalmec abre nele, e `setorAtivo` fica null (sentinela do demo-cache)", () => {
+  const a = aberturaDaBancada(SETORES, MANDATOS);
+  assert.equal(a.setorDefault, "metalmec");
+  assert.equal(a.setorInicial, null, "null = metalmec; id explícito perderia o cache sem prefixo");
+  assert.equal(a.mandatoInicial, null, "quem tem setor abre em branco, não num mandato");
+});
+
+test("firma com setor mas sem metalmec abre no setor dela, explícito", () => {
+  const a = aberturaDaBancada([{ id: "saude" }], MANDATOS);
+  assert.equal(a.setorInicial, "saude", "sem isto a busca sairia sem escopo e cairia no cache de metalmec");
+  assert.equal(a.mandatoInicial, null);
+});
+
+test("firma sem nada contratado não quebra", () => {
+  const a = aberturaDaBancada([], []);
+  assert.deepEqual(a, { setorDefault: null, setorInicial: null, mandatoInicial: null });
 });

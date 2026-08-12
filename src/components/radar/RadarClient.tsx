@@ -8,6 +8,7 @@ import { FAIXA_LABEL } from "@/lib/format";
 import { setorPorId, type Setor } from "@/lib/setores";
 import { tesesDe } from "@/lib/teses";
 import { type Mandato } from "@/lib/mandatos";
+import { aberturaDaBancada } from "@/lib/contrato";
 import { readScoresConhecidos, storeEmpresa, storeOrigin, type ScoreConhecido } from "@/lib/empresa-store";
 import { ResultsTable } from "@/components/radar/ResultsTable";
 import { PeekPanel } from "@/components/radar/PeekPanel";
@@ -22,10 +23,10 @@ type Props = { setores: Setor[]; mandatos: Mandato[] };
 
 export default function RadarClient({ setores, mandatos }: Props) {
   const router = useRouter();
-  /* Setor que a home abre quando ninguém escolheu nada. Era "metalmec" fixo, o que quebra em dois
-     casos novos: firma sem metalmec no contrato, e firma sem setor nenhum (só mandatos). null aqui
-     significa "esta firma não tem universo de setor", e a tela some com o switcher inteiro. */
-  const setorDefault = setores.find((s) => s.id === "metalmec")?.id ?? setores[0]?.id ?? null;
+  /* Com que universo a bancada abre. A regra mora em lib/contrato porque é a mesma família das
+     outras decisões de contrato e porque é testável fora do React — foi ali que o caso "firma sem
+     setor abria com atalho de metalmecânica" ficou travado por teste. */
+  const { setorDefault, setorInicial, mandatoInicial } = aberturaDaBancada(setores, mandatos);
   const [texto, setTexto] = useState("");
   const [loading, setLoading] = useState(false);
   const [res, setRes] = useState<SearchResponse | null>(null);
@@ -36,12 +37,15 @@ export default function RadarClient({ setores, mandatos }: Props) {
   /* null = metalmecânica, que é o universo default da home e a única chave do demo-cache sem
      prefixo. Firma cujo contrato não inclui metalmec começa com o setor explícito, senão a busca
      sairia sem escopo e cairia num cache que o contrato dela nega. */
-  const [setorAtivo, setSetorAtivo] = useState<string | null>(
-    setorDefault === "metalmec" ? null : setorDefault
-  );
-  // Mandato aberto no momento. Separado de `setorAtivo` de propósito: mandato não é setor, não tem
-  // recall e não deve entrar no switcher de cima como se fosse mais um vertical validado.
-  const [mandatoAtivo, setMandatoAtivo] = useState<string | null>(null);
+  const [setorAtivo, setSetorAtivo] = useState<string | null>(setorInicial);
+  /* Mandato aberto no momento. Separado de `setorAtivo` de propósito: mandato não é setor, não tem
+     recall e não deve entrar no switcher de cima como se fosse mais um vertical validado.
+
+     Firma SEM setor no contrato (o piloto da Setter) abre já num mandato. Sem isto a primeira tela
+     dela era: nenhum switcher, nenhuma lista, e três atalhos de METALMECÂNICA vindos do fallback
+     de `tesesDe(null)` — um setor que ela não contratou e cujo clique só produz "fora do
+     contrato". Quem tem setor continua abrindo no setor, como antes. */
+  const [mandatoAtivo, setMandatoAtivo] = useState<string | null>(mandatoInicial);
   const [peekId, setPeekId] = useState<string | null>(null);
   // Overlay de score pós-investigação: a página da empresa persiste o score_v1;
   // aqui refletimos ao montar e ao voltar (bfcache/refocus) sem refazer a busca.
@@ -123,6 +127,17 @@ export default function RadarClient({ setores, mandatos }: Props) {
       setSetorAtivo(s === "metalmec" ? null : s);
     }
   }, [setores]);
+
+  /* Carrega o mandato de abertura. Só dispara pra firma que abre num mandato (sem setor no
+     contrato); quem tem setor continua caindo na tela em branco de sempre, que é deliberada —
+     o originador escreve a tese antes de ver lista.
+
+     Roda uma vez: `mandatoAtivo` já nasce preenchido nesse caso, e a dependência vazia evita
+     refazer a busca a cada clique de chip. */
+  useEffect(() => {
+    if (mandatoInicial) buscar("", mandatoInicial);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Troca o setor ativo sem rodar busca; limpa resultados de outro setor.
   // metalmec = universo default (null) — mantém o demo-cache instantâneo.

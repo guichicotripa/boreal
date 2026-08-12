@@ -69,6 +69,34 @@ export function temModulo(p: Permissoes, modulo: string): boolean {
    policy da 0014 nega.
 
    Firma sem mandato nenhum mantém o comportamento antigo, inclusive `[]` = todos. */
+/* Com que universo a bancada ABRE, dado o que a firma contratou.
+ *
+ * Três saídas porque a tela usa três coisas diferentes:
+ *   setorDefault   — o setor que manda nos atalhos e na faixa de cobertura quando nada foi clicado
+ *   setorInicial   — o estado de `setorAtivo`, onde **null significa metalmecânica**. O sentinela
+ *                    existe porque metalmec é a única chave do demo-cache sem prefixo; mandar o id
+ *                    explícito faria a home perder o cache instantâneo.
+ *   mandatoInicial — preenchido só pra firma SEM setor no contrato.
+ *
+ * O DEFEITO QUE ISTO CONSERTA. A Setter tem `setores: []`, então `setorDefault` é null e a
+ * primeira tela dela era: nenhum switcher, nenhuma lista, e três atalhos de METALMECÂNICA vindos
+ * do fallback de `tesesDe(null)`. Um setor que ela não contratou, cujo clique só produz "fora do
+ * contrato". Abrir no primeiro mandato resolve as três coisas de uma vez.
+ *
+ * Firma COM setor continua abrindo na tela em branco, que é deliberada: o originador escreve a
+ * tese antes de ver lista. */
+export function aberturaDaBancada(
+  setores: readonly { id: string }[],
+  mandatos: readonly { id: string }[]
+): { setorDefault: string | null; setorInicial: string | null; mandatoInicial: string | null } {
+  const setorDefault = setores.find((s) => s.id === "metalmec")?.id ?? setores[0]?.id ?? null;
+  return {
+    setorDefault,
+    setorInicial: setorDefault === "metalmec" ? null : setorDefault,
+    mandatoInicial: setorDefault === null ? mandatos[0]?.id ?? null : null,
+  };
+}
+
 export function universoDaOrg(
   p: Permissoes,
   todosSetores: readonly { id: string }[],
