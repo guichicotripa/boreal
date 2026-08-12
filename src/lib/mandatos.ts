@@ -77,6 +77,19 @@ export function mandatoPorId(id: string): Mandato | undefined {
   return MANDATOS.find((m) => m.id === id);
 }
 
+/* Prefixos de CNAE do mandato, sem os filtros de nome. É o que a tabela-espelho `mandato` guarda
+   e o que a policy de RLS consegue expressar (regex de prefixo; nome não cabe ali).
+
+   A CONSEQUÊNCIA, declarada de propósito: o contrato protege no nível do CNAE, a tela recorta no
+   nível do mandato. Uma firma contratada em `foco-a-vet-lab` fica com o 7500 inteiro liberado no
+   banco, e não só os 1.671 laboratórios. Isso é sobra de leitura, não vazamento entre clientes,
+   e a alternativa (levar o filtro de nome pra dentro da policy) escreveria a mesma regra em dois
+   lugares, com o custo por linha e o risco de divergência que isso traz. Se um dia a sobra
+   incomodar comercialmente, o recorte certo é ingerir o mandato num setor próprio do registry. */
+export function prefixosDe(m: Mandato): string[] {
+  return [...new Set(m.recortes.flatMap((r) => r.cnaes))].sort();
+}
+
 /* Monta o filtro do PostgREST. Cada recorte vira `and(cnae, or(nomes))`, e os recortes viram um
    OR entre si. No `.or()` do PostgREST o coringa é `*` e não `%`, e vírgula dentro de valor
    quebraria a expressão — daí o guard. */
