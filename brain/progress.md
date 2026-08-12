@@ -1853,3 +1853,45 @@ sem exportação em planilha.** Trabalhar com o dado, sim; levar embora, não.
 dentro do CNAE 7500 (laboratório, diagnóstico, patologia, análises). Carregar `7500` inteiro joga
 36.425 clínicas de bairro na cara dele e enterra as 1.661. Precisa de um `--nome=` no script, que é
 pequeno e reutilizável: **todo mandato futuro vai ser um recorte sub-CNAE**, não um setor.
+
+### [12/08] Os três universos entram na plataforma
+
+Carregados por `ingest-setor.mjs`, snapshot 2025-11-09, matriz e ativa, Brasil inteiro:
+
+| recorte | CNAE | filtro de nome | empresas | sócios |
+|---|---|---|---:|---:|
+| Foco A · diagnóstico veterinário | 7500 | `LABORAT\|DIAGNOSTIC\|PATOLOG\|ANALISES\|CITOPATOL\|HEMATOLOG` | **1.671** | 2.541 |
+| Foco B · plano pet (vet) | 7500 | `PLANO\|ASSISTENCIA\|SAUDE ANIMAL\|SAUDE PET\|OPERADORA` | **1.029** | 1.285 |
+| Foco B · operadora | 6550, 6512 | `\bPET\b\|ANIMAL\|VETERINARI\|\bVET\b` | **90** | 180 |
+| Death care | 9603, 65111 | (CNAE limpo, sem filtro) | **11.712** | 14.292 |
+
+Total **14.502 empresas novas**, base foi de ~51 mil pra **65.520**. BigQuery cobrou 57,8 GB
+somando as quatro execuções (free tier 1.024 GB/mês).
+
+**Três correções de código que a ingestão exigiu, e as três valem além deste caso.**
+
+1. **`--nome=` no `ingest-setor.mjs`.** Mandato de boutique quase nunca coincide com um CNAE.
+   Carregar 7500 inteiro são 36.425 clínicas de bairro e enterra as 1.671 que interessam. Regex
+   sobre razão social + nome fantasia, com `NORMALIZE(NFD)` pra casar com e sem acento. **Todo
+   mandato futuro vai ser um recorte sub-CNAE**, então isto é infraestrutura.
+
+2. **O portão de integridade estava calibrado no setor errado.** Ele abortava se mais de 10% do
+   lote ficasse sem sócio. **Death care tem 37,0% sem sócio**, e teria sido abortado sendo uma
+   ingestão perfeita, porque Empresário Individual não tem quadro societário por definição legal.
+   Trocado por comparação com o **esperado**, que o script já sabia do próprio BigQuery: se o
+   Supabase reproduz a taxa, está íntegro. Bateu exato nas quatro execuções (7,7% · 16,2% · 2,2% ·
+   37,0%). O número mágico virou medição.
+
+3. **A busca devolveria a coisa errada em silêncio.** O regex de `saude` no `query-parser` tem
+   `laboratóri|diagnóstic`, então **"laboratório de diagnóstico veterinário" filtrava pra CNAE 86 e
+   devolvia laboratório humano**, escondendo justamente as 1.671 recém-carregadas. Criada a tabela
+   `RECORTES_DE_MANDATO`, que **vence** o setor do registry quando casa. Vive no `query-parser` e
+   **não** em `setores.json` de propósito: o registry carrega recall e universo e alimenta
+   `/setores`, `/validacao` e `/mercado`. Recorte de mandato não tem recall, e pôr zero ali sujaria
+   três páginas que existem pra dizer o que é medido. **Ficar fora do registry é a afirmação
+   correta: está na base, é buscável, e não tem validação.** 6 casos novos no
+   `query-parser.test.ts`, suíte em 72 passando.
+
+**Verificado:** contagem direta no Supabase por prefixo de CNAE (2.685 em 7500, 11.046 em 9603,
+666 em 65111, 90 em 6550/6512) e os testes do parser. **Não** cliquei na UI logado: o acesso é por
+magic link e não dá pra automatizar aqui.

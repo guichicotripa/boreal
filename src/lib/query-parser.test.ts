@@ -46,6 +46,14 @@ for (const [consulta, esperado] of CASOS) {
 const CASOS_SETOR: [string, { ids: string[]; foraDaBase: string | null }][] = [
   ["clínicas com sócios acima de 60 anos", { ids: ["saude"], foraDaBase: null }],
   ["laboratórios de diagnóstico em SP", { ids: ["saude"], foraDaBase: null }],
+  // Recortes de mandato (12/08/2026). Vencem o setor do registry quando casam: sem isto,
+  // "laboratório de diagnóstico veterinário" caía no regex de `saude` e devolvia lab humano.
+  ["laboratório de diagnóstico veterinário", { ids: ["veterinaria"], foraDaBase: null }],
+  ["clínicas veterinárias com donos idosos", { ids: ["veterinaria"], foraDaBase: null }],
+  ["operadoras de plano de saúde pet", { ids: ["veterinaria"], foraDaBase: null }],
+  ["funerárias e cemitérios", { ids: ["deathcare"], foraDaBase: null }],
+  ["empresas de death care no interior", { ids: ["deathcare"], foraDaBase: null }],
+  ["serviços de cremação", { ids: ["deathcare"], foraDaBase: null }],
   ["escolas familiares com donos idosos", { ids: ["educacao"], foraDaBase: null }],
   ["colégios fundados antes de 1990", { ids: ["educacao"], foraDaBase: null }],
   ["metalmecânica no interior de SP", { ids: ["metalmec"], foraDaBase: null }],

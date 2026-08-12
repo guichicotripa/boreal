@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-08-02",
+  "gerado_em": "2026-08-11",
   "fonte": "scripts/calibra-score.py",
   "label": "basica",
   "universo": {
@@ -9,7 +9,7 @@
     "aquisicoes": 1610
   },
   "metrica_primaria": "recall@top10% estratificado por (vertical, faixa de nº de socios)",
-  "metodo": "de_base",
+  "metodo": "de_logistica",
   "faixas": {
     "escala_capital": [
       "<p50",
@@ -33,6 +33,11 @@
       "10+/sem",
       "<10",
       "<5"
+    ],
+    "porte_receita": [
+      "ME/ausente",
+      "DEMAIS",
+      "EPP"
     ]
   },
   "pesos_atuais": {
@@ -68,50 +73,60 @@
   "pesos_propostos": {
     "escala_capital": [
       0,
-      5,
-      17,
-      27,
-      51
+      24,
+      37,
+      37,
+      45
     ],
     "idade_controle": [
       0,
-      17,
-      17,
-      30,
-      30
+      2,
+      2,
+      6,
+      11
     ],
     "sucessor_aparente": [
       0,
-      1
+      4
     ],
     "movimento_societario": [
       0,
-      1,
-      5
+      0,
+      10
+    ],
+    "porte_receita": [
+      0,
+      17,
+      17
     ]
   },
   "desenvolvimento": {
-    "cv": 38.214,
-    "baseline_cv": 31.551,
-    "estratificado": 37.44,
-    "simples": 47.15,
-    "perfil": 25.33,
-    "baseline_estratificado": 30.83,
+    "cv": 41.615,
+    "baseline_cv": 31.188,
+    "estratificado": 41.58,
+    "simples": 54.92,
+    "perfil": 28.0,
+    "baseline_estratificado": 31.09,
     "baseline_simples": 45.47,
-    "baseline_perfil": 24.67
+    "baseline_perfil": 24.0
   },
   "holdout": {
     "n": 838,
     "n_perfil": 167,
     "baseline": {
-      "estratificado": 31.74,
-      "simples": 46.3,
-      "perfil": 19.16
+      "estratificado": 31.62,
+      "simples": 46.18,
+      "perfil": 19.76
     },
     "proposto": {
-      "estratificado": 35.32,
-      "simples": 46.66,
-      "perfil": 22.75
+      "estratificado": 38.54,
+      "simples": 54.42,
+      "perfil": 23.95
     }
+  },
+  "mcnemar": {
+    "so_proposto": 120,
+    "so_atual": 62,
+    "z": 4.299
   }
 }

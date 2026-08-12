@@ -72,6 +72,34 @@ const TERMOS_POR_SETOR: Record<string, RegExp> = {
    esse esquecimento; esta constante existe pra ele poder checar. */
 export const IDS_COM_TERMOS = Object.keys(TERMOS_POR_SETOR);
 
+/* RECORTES DE MANDATO — universo ingerido que NÃO é um setor validado.
+
+   Vive aqui e não em setores.json de propósito. O registry carrega recall, universo e nº de
+   aquisições, e é o que alimenta /setores, /validacao e /mercado. Um recorte de mandato não tem
+   nenhuma dessas métricas, e inventar zero ali sujaria três páginas que existem justamente pra
+   dizer o que é medido. Ficar de fora do registry é a afirmação correta: está na base, dá pra
+   buscar, e NÃO tem recall validado.
+
+   Primeiro caso real: os focos que a Setter pediu em 12/08/2026, mais death care. Sem esta tabela
+   a busca por "laboratório de diagnóstico veterinário" casava o regex de `saude` (que tem
+   `laboratóri|diagnóstic`), filtrava pra CNAE 86 e devolvia laboratório humano, escondendo
+   exatamente as 1.671 empresas recém-ingeridas. Errado e em silêncio, que é o pior modo. */
+const RECORTES_DE_MANDATO: { id: string; cnaes: string[]; termos: RegExp }[] = [
+  {
+    id: "veterinaria",
+    cnaes: ["7500", "6550", "6512"],
+    termos: /veterinari|\bvet\b|\bpet\b|\bpets\b|animal|animais/,
+  },
+  {
+    id: "deathcare",
+    cnaes: ["9603", "65111"],
+    termos: /funerari|funeral|funerap|cemiteri|cremac|crematori|sepultamen|jazigo|luto|death ?care|somatoconserv/,
+  },
+];
+
+/** Ids dos recortes de mandato. Exportado pra o teste travar o par termos/CNAE. */
+export const IDS_DE_MANDATO = RECORTES_DE_MANDATO.map((r) => r.id);
+
 /* Setores que o usuário pode pedir e que NÃO estão indexados. Não é uma lista
    fechada do mundo — é o suficiente pra distinguir "pediu algo que não temos"
    de "não citou setor nenhum". Falso negativo aqui degrada pro comportamento
@@ -111,6 +139,14 @@ export function resolverSetor(texto: string): SetorResolvido {
     .toLowerCase()
     .normalize("NFD")
     .replace(/[̀-ͯ]/g, "");
+
+  /* Recorte de mandato VENCE o setor do registry quando casa, em vez de somar. "veterinário" e
+     "funerária" são termos específicos; se o usuário disse um deles, ele não quer a união com
+     saúde. Somar devolveria laboratório humano junto do veterinário, que num universo de mandato
+     de 1.671 empresas é ruído que engole o sinal. */
+  for (const r of RECORTES_DE_MANDATO) {
+    if (r.termos.test(t)) return { cnaes: [...r.cnaes], ids: [r.id], foraDaBase: null };
+  }
 
   const ids: string[] = [];
   const cnaes = new Set<string>();

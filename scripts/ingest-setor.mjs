@@ -57,6 +57,13 @@ const FAIXA_MIN = flag("faixa-min") == null ? null : Number(flag("faixa-min"));
    mede outra coisa. Ingerir os 51 mil encheria a base de empresa que o score
    ranqueia com confiança e critério errado. */
 const IDADE_MIN = flag("idade-min") == null ? null : Number(flag("idade-min"));
+/* --nome: regex sobre razão social + nome fantasia, DENTRO do CNAE.
+   Existe porque mandato de boutique quase nunca coincide com um CNAE. O primeiro caso real foi a
+   Setter (12/08/2026) pedindo "laboratório de diagnóstico veterinário": não existe CNAE pra isso,
+   os laboratórios estão dentro de 7500-1/00 junto com toda clínica de bairro. Carregar 7500 inteiro
+   são 36.425 empresas e enterra as 1.661 que interessam. Todo mandato futuro vai ser um recorte
+   sub-CNAE, então isto é infraestrutura, não gambiarra pro caso de hoje. */
+const NOME_RX = flag("nome");
 
 const reg = JSON.parse(readFileSync(path.resolve(ROOT, "src/lib/setores.json"), "utf8"));
 
@@ -74,6 +81,7 @@ if (cnaeAvulso) {
   --cnae       prefixos avulsos, pra setor fora do registry.
   --faixa-min  faixa etária do sócio mais velho (7 = 61+, a definição de "quente").
   --idade-min  idade mínima da empresa em anos (necessário no agro, ver comentário).
+  --nome       regex sobre razão social + nome fantasia, pra recorte de mandato dentro do CNAE.
 
 setores no registry: ${reg.setores.map((s) => s.id).join(", ")}`);
     process.exit(1);
@@ -127,6 +135,15 @@ const idadeFiltro = IDADE_MIN != null
   ? `AND (2025 - EXTRACT(YEAR FROM e.data_inicio_atividade)) >= ${IDADE_MIN}`
   : "";
 
+/* NORMALIZE(NFD) separa a letra do acento e o REGEXP_REPLACE joga fora a marca, então 'Análises'
+   vira 'ANALISES' e um padrão só casa as duas grafias. Sem isso, procurar 'DIAGNOSTICO' perde
+   'DIAGNÓSTICO', que é como a maioria escreve. */
+const nomeFiltro = NOME_RX
+  ? `AND REGEXP_CONTAINS(REGEXP_REPLACE(NORMALIZE(UPPER(CONCAT(
+       COALESCE(emp.razao_social, ''), ' ', COALESCE(e.nome_fantasia, ''))), NFD), r'\\pM', ''),
+       r'${NOME_RX.replace(/'/g, "")}')`
+  : "";
+
 /* Quanto o BigQuery cobrou. O dry-run não estima nas tabelas do basedosdados
    (row-level security zera a projeção) e o INFORMATION_SCHEMA.JOBS está fechado
    pra esta service account, então a única medida honesta é a do job executado.
@@ -147,6 +164,7 @@ function parseCnaesSec(raw, map = {}) { if (!raw) return null; const c = String(
 function chunks(a, n) { const o = []; for (let i = 0; i < a.length; i += n) o.push(a.slice(i, i + n)); return o; }
 
 const recorte = [
+  NOME_RX ? `nome ~ /${NOME_RX}/` : null,
   FAIXA_MIN != null ? `sócio faixa ${FAIXA_MIN}+` : null,
   IDADE_MIN != null ? `empresa ${IDADE_MIN}+ anos` : null,
   FAIXA_MIN != null || IDADE_MIN != null ? `teto ${LIMIT}` : `top ${LIMIT} por risco sucessório`,
@@ -166,7 +184,7 @@ const empresasSql = `
   LEFT JOIN \`basedosdados.br_bd_diretorios_brasil.municipio\` mun ON mun.id_municipio = e.id_municipio
   LEFT JOIN \`basedosdados.br_bd_diretorios_brasil.cnae_2\` cnae ON cnae.subclasse = e.cnae_fiscal_principal
   LEFT JOIN \`basedosdados.br_bd_diretorios_brasil.natureza_juridica\` nat ON nat.id_natureza_juridica = emp.natureza_juridica
-  WHERE e.data = '${SNAPSHOT}' AND ${cnaeFiltro} ${ufFiltro} ${idadeFiltro}
+  WHERE e.data = '${SNAPSHOT}' AND ${cnaeFiltro} ${ufFiltro} ${idadeFiltro} ${nomeFiltro}
     AND e.situacao_cadastral = '2' AND e.identificador_matriz_filial = '1'
   GROUP BY e.cnpj, e.cnpj_basico, emp.razao_social, e.nome_fantasia, e.cnae_fiscal_principal,
     cnae.descricao_subclasse, e.cnae_fiscal_secundaria, e.data_inicio_atividade, e.sigla_uf,
@@ -263,10 +281,19 @@ for (const batch of chunks(cnpjs, BATCH_SOCIO)) {
 }
 // Sem sócio PF no registro da Receita é legítimo (ex: filial de grupo, natureza
 // jurídica sem quadro societário). O que denuncia execução truncada é a MASSA.
+/* O portão era `> 10%` fixo, calibrado no perfil dos setores antigos, e teria abortado uma
+   ingestão CORRETA de funerária ou veterinária: Empresário Individual e Produtor Rural PF não têm
+   quadro societário por definição legal, e medido em 12/08/2026 eles fazem 44,4% das empresas dos
+   4 setores ingeridos (mais de 69% em agro). O critério certo não é número mágico, é comparar com
+   o ESPERADO: o script já sabe, do próprio BigQuery, quais empresas do lote têm sócio. Se o
+   Supabase reproduz essa taxa, está íntegro; se está muito acima, truncou. */
+const semSocioNoBq = bqEmpresas.filter((e) => !(sociosByBasico[e.cnpj_basico] ?? []).length).length;
+const pctEsperado = (semSocioNoBq / bqEmpresas.length) * 100;
 const pctSem = (semSocio / cnpjs.length) * 100;
-console.log(`  empresas do lote sem nenhum sócio: ${semSocio}/${cnpjs.length} (${pctSem.toFixed(1)}%)`);
-if (pctSem > 10) {
-  console.error(`\n✗ ${setor.nome}: ${pctSem.toFixed(1)}% do lote ficou sem sócio — execução provavelmente truncada. Rode de novo.`);
+console.log(`  sem nenhum sócio no Supabase: ${semSocio}/${cnpjs.length} (${pctSem.toFixed(1)}%)`);
+console.log(`  sem nenhum sócio no BigQuery: ${semSocioNoBq}/${bqEmpresas.length} (${pctEsperado.toFixed(1)}%)  ← o esperado`);
+if (pctSem > pctEsperado + 5) {
+  console.error(`\n✗ ${setor.nome}: ${pctSem.toFixed(1)}% sem sócio contra ${pctEsperado.toFixed(1)}% esperados — execução provavelmente truncada. Rode de novo.`);
   process.exit(8);
 }
 
