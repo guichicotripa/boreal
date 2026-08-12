@@ -1895,3 +1895,30 @@ somando as quatro execuções (free tier 1.024 GB/mês).
 **Verificado:** contagem direta no Supabase por prefixo de CNAE (2.685 em 7500, 11.046 em 9603,
 666 em 65111, 90 em 6550/6512) e os testes do parser. **Não** cliquei na UI logado: o acesso é por
 magic link e não dá pra automatizar aqui.
+
+### [12/08] Correção: "universo pequeno melhora o piloto" era meia verdade
+
+O Guilherme cobrou a frase e ela não se sustenta inteira. Registro o argumento completo porque ele
+decide o formato do piloto.
+
+**O que é verdade.** O piloto original testa ranqueamento, e ranqueamento não é verificável em um
+mês (deal leva um ano). Por isso o critério de sucesso do onepager desceu pra "achou alvos que você
+não tinha no radar", que depende da memória do originador e não é falseável. Num universo de 1.671
+o critério vira **exaustividade** (confira contra a sua lista) e **taxa de contato válido** (disque
+e veja), os dois checáveis em dias.
+
+**O que estava omitido, e pesa mais.** Universo pequeno significa produto menos valioso: comprimir
+250 mil em 30 é o valor do Boreal; comprimir 1.671 em 93 um estagiário faz com o CNPJ aberto. Pior,
+**o score não é exercitado**: com 93 empresas de porte relevante, ranquear não decide nada, e o
+piloto validaria só a camada de descoberta e enriquecimento, que é a **menos defensável** do
+produto. O moat é o score mais a mineração de ground truth. E os 142 rótulos são direcionalmente
+úteis e estatisticamente nada, então não resgatam.
+
+**Saldo:** o universo menor deixa o piloto mais fácil de entregar e verificar, e faz ele provar
+menos do que importa. As duas coisas ao mesmo tempo.
+
+**Consequência prática, e é a razão de a recomendação de 12/08 continuar de pé com argumento novo:**
+foco A e B viram **entrega de escopo fixo e rápida** (cabem nisso, critério verificável, prova de
+execução) e o **piloto pago de um mês roda em death care** (11.712 empresas, 962 de porte
+relevante, 163 no perfil), onde o score tem o que fazer. **Rodar o piloto pago só em foco A é cobrar
+R$2.000 por um mês pra provar a parte do produto que não é vantagem competitiva.**
