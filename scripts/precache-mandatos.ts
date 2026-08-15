@@ -149,8 +149,25 @@ for (const m of alvos) {
       const fases = `${(( Date.now() - t) / 1000).toFixed(0)}s [res ${(tRes / 1000).toFixed(0)}s · dos ${(tDos / 1000).toFixed(0)}s]`;
       console.log(`${rot} · ${fases}${dv}`);
     } catch (err) {
+      const msg = (err as Error).message;
+      /* PARA NA HORA quando o limite da assinatura estoura. Sem isto o lote atravessa as 300
+         empresas repetindo a MESMA falha e sai com código 0, parecendo sucesso: foi o que
+         aconteceu em 12/08/2026, 299 falhas em 8 minutos e nenhuma linha gravada. Erro que não
+         vai melhorar tentando de novo tem que interromper, não virar 299 linhas de log.
+
+         O limite é da ASSINATURA e é compartilhado com a sessão interativa do Claude Code: rodar
+         lote pesado enquanto se conversa consome a mesma cota, e vários processos em paralelo
+         consomem várias vezes mais rápido. */
+      if (/session limit|usage limit|rate.?limit/i.test(msg)) {
+        console.error(`
+${rot} · LIMITE DA ASSINATURA: ${msg.slice(0, 140)}`);
+        console.error(`
+Interrompido com ${feitos} processadas nesta execução. Nada se perde:`);
+        console.error("rodar de novo depois do reset pula tudo que já foi salvo.");
+        process.exit(3);
+      }
       falhas++;
-      console.error(`${rot} · FALHOU: ${(err as Error).message.slice(0, 110)}`);
+      console.error(`${rot} · FALHOU: ${msg.slice(0, 110)}`);
     }
 
     if (feitos > 0 && (feitos + falhas) % 10 === 0) {
