@@ -32,13 +32,35 @@ export async function GET() {
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
+  /* OPORTUNIDADE CUJA EMPRESA O CONTRATO NÃO LIBERA SAI DA LISTA.
+     `oportunidade` é escopada por firma, mas `empresa` é escopada por CONTRATO (migration 0014), e
+     as duas regras são independentes. Uma oportunidade salva ANTES do contrato existir aponta para
+     empresa que a firma não pode mais ler: a policy nega o embed e o PostgREST devolve a linha com
+     `empresa: null`.
+
+     Foi exatamente o que aconteceu em 16/08/2026: PRENSA JUNDIAI (CNAE 2840200, metalmecânica)
+     tinha sido salva quando a Setter enxergava tudo. Depois do contrato de três mandatos, abrir a
+     aba "Em conversa" derrubava a página inteira no error boundary do Next.
+
+     Filtrar aqui e não só na tela porque a linha é inútil para a firma de qualquer jeito: ela não
+     abre a empresa, não vê o contato, não acha na busca. Devolvê-la só produz uma linha vazia.
+     Staff continua vendo tudo, porque para staff a policy não nega o embed. */
+    const visiveis = (data ?? []).filter((o) => (o as { empresa?: unknown }).empresa);
+    const ocultas = (data ?? []).length - visiveis.length;
+    if (ocultas > 0) {
+      console.warn(`pipeline: ${ocultas} oportunidade(s) ocultada(s) — empresa fora do contrato da firma`);
+    }
+
   /* `escopoProprio` vai junto porque staff lê através das firmas (policy da 0013)
      e a lista chega misturada. Sem saber qual é a própria org, a tela não teria
      como escolher o padrão do filtro, e o pipeline abriria com oportunidade de
      testador no meio da do cliente, sem nada indicando de quem é. */
   return NextResponse.json({
-    oportunidades: data ?? [],
+    oportunidades: visiveis,
     escopoProprio: await escopoAtual(),
+    /* A tela não usa hoje, mas o número vai junto de propósito: sumiço silencioso de linha é o
+       tipo de coisa que vira "sumiu minha oportunidade" sem ninguém conseguir explicar. */
+    ocultasForaDoContrato: ocultas,
   });
 }
 

@@ -90,7 +90,11 @@ export function PipelineView({ modo = "pipeline" }: { modo?: "pipeline" | "agend
       const r = await fetch("/api/oportunidade");
       const d = await r.json();
       if (!ativo) return;
-      setOps(d.oportunidades ?? []);
+      /* Guarda de cinto: a rota já filtra oportunidade sem empresa legível, mas `Row` desreferencia
+         `o.empresa.cnpj` direto e uma única linha nula derruba a PÁGINA INTEIRA no error boundary.
+         Uma lista que perde uma linha é um defeito pequeno; uma tela que não carrega é um defeito
+         grande, e o cliente não distingue os dois. */
+      setOps((d.oportunidades ?? []).filter((o: { empresa?: unknown }) => o?.empresa));
       if (d.escopoProprio) setEscopoProprio(d.escopoProprio);
       setLoading(false);
     })();

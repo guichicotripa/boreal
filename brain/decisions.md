@@ -1573,3 +1573,39 @@ não sabe nada sobre o alvo, que é o oposto do que houve.
 **Bug continua sendo bug.** Erro não classificado segue como 500 com "tentar de novo". Um teste
 trava isso de propósito: se um defeito nosso passar a ser reportado ao cliente como "sem crédito",
 a gente perde o sinal de que existe defeito.
+
+---
+
+## 2026-08-16 — O contrato derrubou o pipeline, e eu já tinha visto o sinal
+
+**Sintoma.** Clicar em "Em conversa" no pipeline dava "This page couldn't load" — error boundary do
+Next, página inteira morta.
+
+**Causa.** `oportunidade` é escopada por FIRMA; `empresa` é escopada por CONTRATO (migration 0014).
+São regras independentes, e uma oportunidade salva ANTES do contrato aponta para empresa que a
+firma não pode mais ler. A policy nega o embed, o PostgREST devolve `empresa: null`, e
+`Row.tsx:81` faz `o.empresa.cnpj` sem guarda.
+
+A linha era **PRENSA JUNDIAI S/A, CNAE 2840200**, metalmecânica, salva quando a Setter enxergava
+tudo. A outra oportunidade (AMIGOO PET, CNAE 7500100) está dentro do Foco B e carregava normal —
+por isso só aquela aba quebrava.
+
+**O que dói admitir:** eu VI essa linha ao aplicar o contrato. Rodei a consulta, achei "1
+oportunidade, CNAE 28", e escrevi que era dado de teste e não bloqueava. Registrei o fato e não
+segui o raciocínio até a consequência. O sinal estava na tela e eu li como ruído.
+
+**Correção em duas camadas, de propósito:**
+1. A rota filtra oportunidade sem empresa legível. É o conserto certo: a linha é inútil para a
+   firma de qualquer jeito (não abre a empresa, não vê contato, não acha na busca). Devolve
+   `ocultasForaDoContrato` junto, porque sumiço silencioso de linha vira "sumiu minha oportunidade"
+   sem ninguém saber explicar.
+2. A tela filtra de novo antes de renderizar. Não é redundância decorativa: `Row` desreferencia
+   `o.empresa` em uma dúzia de lugares, e uma linha nula derruba a PÁGINA. Lista que perde uma
+   linha é defeito pequeno; tela que não carrega é defeito grande, e o cliente não distingue.
+
+**Staff não é afetado** (a policy não nega o embed para ele), o que explica por que isto só
+apareceu quando alguém entrou pela conta de originador.
+
+**Lição para o resto do contrato:** toda tela que faz JOIN de `empresa` com tabela escopada por
+firma tem esta mesma falha latente. Ficam na lista para conferir: `/descartadas`, `/agenda` e
+`/proveniencia/[id]`.
