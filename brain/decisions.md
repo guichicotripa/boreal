@@ -1539,3 +1539,37 @@ de virar resposta. O teste usou a org **Boreal Demo**, nunca a Setter, e conferi
 
 **Na tela:** "Você descartou todas desta página" ganhou botão que recarrega a mesma página. Com o
 filtro no banco, recarregar traz 50 novas em vez de repetir o vazio.
+
+---
+
+## 2026-08-16 — Indisponibilidade deixa de se disfarçar de bug
+
+**Contexto.** Três originadores da Setter ganharam acesso (bruno.bellodi, fernanda.arbage,
+henrique.consentino). O pré-cache cobre o topo de cada mandato, não o universo: Foco A completo,
+Foco B até a 69ª, death care em andamento. Empresa fora do lote cai no caminho ao vivo, que usa a
+`ANTHROPIC_API_KEY` — sem crédito desde 25/07.
+
+**O que acontecia.** As rotas de research e dossiê devolviam 500 com "falha na investigação", que é
+literalmente a mesma tela de um bug. Para quem está avaliando a ferramenta, isso lê como produto
+quebrado; o fato é administrativo e banal.
+
+**A distinção que importa não é cosmética, é a AÇÃO.** Sem crédito, tentar de novo não vai
+funcionar nunca, e o botão de repetir promete uma saída que não existe. Congestionamento (429/529)
+é o oposto: repetir é exatamente a coisa certa. Por isso `motivoIndisponivel` separa
+`sem_credito` / `sem_chave` de `limite`, e a UI esconde o botão nos dois primeiros.
+
+**Detalhes que só apareceram medindo contra o erro REAL** (não contra o que eu supus):
+- saldo insuficiente chega como **400**, não 402. Classificar por status sozinho o jogaria no balde
+  de "requisição malformada".
+- chave ausente estoura na CONSTRUÇÃO do cliente, antes de existir request, então não tem status
+  nenhum — só a mensagem do SDK.
+Confirmado com uma chamada de verdade à API: status 400, "Your credit balance is too low", que o
+classificador marca como `sem_credito` e a tela traduz sem botão de repetir.
+
+**O que a mensagem faz questão de dizer:** que o problema não é aquela empresa nem aquela busca, e
+que o topo de cada mandato já vem investigado. Sem essa frase o originador conclui que a ferramenta
+não sabe nada sobre o alvo, que é o oposto do que houve.
+
+**Bug continua sendo bug.** Erro não classificado segue como 500 com "tentar de novo". Um teste
+trava isso de propósito: se um defeito nosso passar a ser reportado ao cliente como "sem crédito",
+a gente perde o sinal de que existe defeito.

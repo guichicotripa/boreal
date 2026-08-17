@@ -63,12 +63,15 @@ export default function EmpresaPage() {
   // com cache, custo zero em re-visita. Pendência de alinhamento com Guilherme registrada).
   const [research, setResearch] = useState<ResearchResult | null>(null);
   const [researchLoading, setResearchLoading] = useState(false);
-  const [researchErro, setResearchErro] = useState(false);
+  /* Erro guarda a MENSAGEM, não só um booleano. A rota agora distingue bug (500, tentar de novo
+     resolve) de indisponibilidade (503, sem crédito na conta de API, tentar de novo nunca resolve),
+     e a tela precisa dizer qual dos dois é. Ver src/lib/llm-indisponivel.ts. */
+  const [researchErro, setResearchErro] = useState<{ msg: string; tentarDeNovo: boolean } | null>(null);
 
   // Memo — sob demanda (LLM mais pesado).
   const [memo, setMemo] = useState<DossierAnalise | null>(null);
   const [memoLoading, setMemoLoading] = useState(false);
-  const [memoErro, setMemoErro] = useState(false);
+  const [memoErro, setMemoErro] = useState<{ msg: string; tentarDeNovo: boolean } | null>(null);
 
   // Similares — auto (query barata por CNAE).
   const [similares, setSimilares] = useState<EmpresaSimilar[] | null>(null);
@@ -96,7 +99,7 @@ export default function EmpresaPage() {
 
   const fetchResearch = useCallback(async () => {
     setResearchLoading(true);
-    setResearchErro(false);
+    setResearchErro(null);
     try {
       const r = await fetch("/api/research", {
         method: "POST",
@@ -104,14 +107,21 @@ export default function EmpresaPage() {
         body: JSON.stringify({ empresaId: id }),
       });
       const data = await r.json();
-      if (!r.ok) throw new Error(data.error);
+      if (!r.ok) {
+        setResearchErro({
+          msg: data.error || "Não foi possível carregar a investigação.",
+          // 503 = indisponível e a rota já disse se repetir adianta; 500 = bug, repetir é razoável.
+          tentarDeNovo: r.status === 503 ? !!data.tentarDeNovo : true,
+        });
+        return;
+      }
       setResearch(data.research);
       // Propaga o score_v1 + delta para a home (e demais telas) refletirem a investigação.
       if (typeof data.research?.score_v1 === "number") {
         storeScoreConhecido(id, data.research.score_v1, data.research.delta ?? 0);
       }
     } catch {
-      setResearchErro(true);
+      setResearchErro({ msg: "Não foi possível carregar a investigação.", tentarDeNovo: true });
     } finally {
       setResearchLoading(false);
     }
@@ -152,7 +162,7 @@ export default function EmpresaPage() {
   async function gerarMemo() {
     if (memo) return;
     setMemoLoading(true);
-    setMemoErro(false);
+    setMemoErro(null);
     try {
       const r = await fetch("/api/dossier", {
         method: "POST",
@@ -160,10 +170,16 @@ export default function EmpresaPage() {
         body: JSON.stringify({ empresaId: id }),
       });
       const data = await r.json();
-      if (!r.ok) throw new Error(data.error);
+      if (!r.ok) {
+        setMemoErro({
+          msg: data.error || "Não foi possível gerar o memo.",
+          tentarDeNovo: r.status === 503 ? !!data.tentarDeNovo : true,
+        });
+        return;
+      }
       setMemo(data.analise);
     } catch {
-      setMemoErro(true);
+      setMemoErro({ msg: "Não foi possível gerar o memo.", tentarDeNovo: true });
     } finally {
       setMemoLoading(false);
     }
@@ -529,7 +545,7 @@ export default function EmpresaPage() {
               ) : research ? (
                 <ResearchDisplay research={research} />
               ) : researchErro ? (
-                <EstadoErro msg="Não foi possível carregar a investigação." onRetry={fetchResearch} />
+                <EstadoErro msg={researchErro.msg} onRetry={researchErro.tentarDeNovo ? fetchResearch : undefined} />
               ) : null
             )}
 
@@ -542,7 +558,7 @@ export default function EmpresaPage() {
                   Gerando memo…
                 </p>
               ) : memoErro ? (
-                <EstadoErro msg="Não foi possível gerar o memo." onRetry={gerarMemo} />
+                <EstadoErro msg={memoErro.msg} onRetry={memoErro.tentarDeNovo ? gerarMemo : undefined} />
               ) : (
                 <div>
                   <p className="max-w-md text-[13px] leading-relaxed text-ink-muted">
@@ -670,10 +686,14 @@ function ResearchProgress() {
 }
 
 // Estado de erro — variante monocromática (sem cor de alarme), com retry. Brand v3.
-function EstadoErro({ msg, onRetry }: { msg: string; onRetry: () => void }) {
+/* `onRetry` é OPCIONAL. Quando a causa é falta de crédito, repetir não vai funcionar nunca, e
+   oferecer o botão é prometer uma saída que não existe: o originador clica, espera, e recebe o
+   mesmo texto. Sem o botão, a mensagem sozinha já diz o que houve e o que ainda funciona. */
+function EstadoErro({ msg, onRetry }: { msg: string; onRetry?: () => void }) {
   return (
     <div>
-      <p className="text-[13px] text-ink-muted">{msg}</p>
+      <p className="max-w-lg text-[13px] leading-relaxed text-ink-muted">{msg}</p>
+      {onRetry && (
       <button
         type="button"
         onClick={onRetry}
@@ -681,6 +701,7 @@ function EstadoErro({ msg, onRetry }: { msg: string; onRetry: () => void }) {
       >
         <span aria-hidden="true">↻</span> Tentar de novo
       </button>
+      )}
     </div>
   );
 }

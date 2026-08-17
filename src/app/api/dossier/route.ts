@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { motivoIndisponivel, mensagemIndisponivel, valeTentarDeNovo } from "@/lib/llm-indisponivel";
 import { createAdminClient } from "@/lib/supabase";
 import { createUserClient } from "@/lib/supabase-server";
 import { calcScore } from "@/lib/scoring";
@@ -93,6 +94,18 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ empresa, analise });
   } catch (err) {
     console.error("Dossier falhou:", (err as Error).message);
+    /* INDISPONIBILIDADE não é BUG, e a tela precisa saber a diferença. A conta de API está sem
+       crédito desde 25/07, e o pré-cache cobre só o topo de cada mandato: empresa fora do lote
+       caía aqui como 500 "falha", que é a mesma cara de defeito de verdade. Para um originador da
+       Setter isso lê como produto quebrado, quando o fato é administrativo.
+       503 e não 500 porque é serviço indisponível, não erro de processamento. */
+    const motivo = motivoIndisponivel(err);
+    if (motivo) {
+      return NextResponse.json(
+        { error: mensagemIndisponivel(motivo, "memo"), indisponivel: motivo, tentarDeNovo: valeTentarDeNovo(motivo) },
+        { status: 503 }
+      );
+    }
     return NextResponse.json({ error: "falha ao gerar análise" }, { status: 500 });
   }
 }
