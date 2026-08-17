@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # Roda `precache-mandatos.ts` em JANELAS, retomando sozinho quando a cota da assinatura reseta.
 #
-#   bash scripts/precache-loop.sh                 # 100 por mandato, até 24h de tentativa
-#   bash scripts/precache-loop.sh 100 12          # limite por mandato, horas máximas
+#   bash scripts/precache-loop.sh                      # 100 por mandato, até 24h de tentativa
+#   bash scripts/precache-loop.sh 100 12               # limite por mandato, horas máximas
+#   bash scripts/precache-loop.sh 100 24 death-care    # um mandato só, quando a ordem importa
 #
 # POR QUE UM LAÇO, e não mais processos em paralelo:
 # medido em 12/08/2026, o gargalo NÃO é tempo de máquina, é cota da assinatura. Uma janela rendeu
@@ -23,6 +24,12 @@ cd "$(dirname "$0")/.." || exit 1
 
 LIMITE="${1:-100}"
 MAX_HORAS="${2:-24}"
+# Terceiro argumento restringe a um mandato. Com a cota escassa, a ORDEM vira decisão de produto:
+# death care é onde o motor tem mais o que mostrar (1.146 empresas com perfil sucessório contra 27
+# do Foco A), então cobri-lo primeiro rende mais por unidade de cota gasta.
+MANDATO="${3:-}"
+ARG_MANDATO=""
+[ -n "$MANDATO" ] && ARG_MANDATO="--mandato=$MANDATO"
 ESPERA_MIN=30                      # entre uma janela esgotada e a próxima tentativa
 FIM=$(( $(date +%s) + MAX_HORAS * 3600 ))
 VOLTA=0
@@ -42,7 +49,7 @@ while :; do
   VOLTA=$((VOLTA + 1))
   echo ""
   echo "########## volta $VOLTA · $(date '+%H:%M:%S') ##########"
-  node --experimental-strip-types --env-file=.env.local scripts/precache-mandatos.ts --limite="$LIMITE"
+  node --experimental-strip-types --env-file=.env.local scripts/precache-mandatos.ts --limite="$LIMITE" $ARG_MANDATO
   CODIGO=$?
   progresso
 
