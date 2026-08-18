@@ -88,8 +88,15 @@ export default function RadarClient({ setores, mandatos }: Props) {
       try {
         const r = await fetch("/api/oportunidade");
         const d = await r.json();
+        /* `empresa` pode vir nula: a oportunidade é escopada por firma, a empresa por contrato
+           (migration 0014), e uma salva antes do contrato aponta pra empresa que a policy nega.
+           A rota já filtra, mas aqui o `catch` é SILENCIOSO — sem a guarda, uma linha nula
+           esvaziava `savedIds` inteiro e o Radar parava de marcar as empresas já salvas, sem erro
+           nenhum na tela. Falha muda, que é a pior de achar. */
         const ids = new Set<string>(
-          (d.oportunidades ?? []).map((o: { empresa: { id: string } }) => o.empresa.id)
+          (d.oportunidades ?? [])
+            .filter((o: { empresa?: { id: string } | null }) => o?.empresa?.id)
+            .map((o: { empresa: { id: string } }) => o.empresa.id)
         );
         setSavedIds(ids);
       } catch { /* silencioso */ }

@@ -1609,3 +1609,25 @@ apareceu quando alguém entrou pela conta de originador.
 **Lição para o resto do contrato:** toda tela que faz JOIN de `empresa` com tabela escopada por
 firma tem esta mesma falha latente. Ficam na lista para conferir: `/descartadas`, `/agenda` e
 `/proveniencia/[id]`.
+
+### Varredura das telas com o mesmo padrão (16/08)
+
+Depois da queda do pipeline, varri o `src/` inteiro por desreferência de `.empresa.` sem `?.`,
+em vez de conferir só as três telas que eu tinha chutado. Resultado:
+
+| tela | veredito |
+|---|---|
+| `/agenda` | **era a mesma falha** — usa o mesmo `PipelineView`, já coberta pela correção |
+| `/descartadas` | já seguro: tipa `empresa: Empresa \| null` e renderiza com `{e ? ... : ...}` |
+| `/proveniencia/[id]` | já seguro: a rota usa `row.empresa?.cnpj ?? ""` |
+| **Radar (`savedIds`)** | **não estava na minha lista e tinha o defeito** |
+
+O caso do Radar é pior de achar que o do pipeline, e por isso vale registrar: ele monta `savedIds`
+a partir de `/api/oportunidade` com `o.empresa.id`, dentro de um `try/catch` **silencioso**. Uma
+linha nula não derrubava nada: esvaziava o conjunto inteiro e o Radar simplesmente parava de marcar
+quais empresas já estavam no pipeline. Nenhum erro na tela, nenhum log. O originador reencontraria
+empresas que já salvou como se fossem novas.
+
+**A lição não é "guardar contra null", é sobre o `catch` mudo.** O pipeline quebrou alto e foi
+consertado em uma hora; o Radar falharia baixo e poderia ficar meses assim. Chutar três telas
+encontrou zero defeitos novos; a varredura mecânica encontrou o único que faltava.
