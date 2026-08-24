@@ -1711,9 +1711,30 @@ seguradoras sobem: **4 das 10 primeiras linhas** são BMG Seguradora, Icatu (R$ 
 Zurich Minas Brasil (R$ 2,4 **bilhões**, score 91). Na página inteira são 5 de 50, mas elas
 ocupam a primeira tela.
 
-Fernanda abriu death care uma vez, em 21/08 às 13:27, e **nunca mais voltou**: zero descartes,
-zero saves em 50 linhas. É o mandato onde nossa tese é mais forte (9,8% de perfil sucessório
-contra 1,6% e 1,2% nos dois de pet) e ele foi abandonado na primeira tela.
+Fernanda abriu death care uma vez, em 21/08 às 13:27, e nunca mais voltou: zero descartes,
+zero saves em 50 linhas.
+
+**Correção (Guilherme, 24/08):** atribuí esse abandono à poluição do topo. Está errado. Fernanda
+é a especialista de pet na Setter; ela não voltou a death care porque death care não é dela. A
+poluição por seguradora continua sendo defeito real e continua valendo consertar, mas ela **nunca
+foi testada contra um usuário**, e portanto não explica nada do que se observou.
+
+O que a correção revela é pior que o defeito original. Cobertura de mandato por pessoa:
+
+| pessoa | 7500 (diag. vet) | 7500+6550+6512 (plano pet) | 9603+65111 (death care) |
+|---|---:|---:|---:|
+| Fernanda | 14 buscas, até pág. 3 | 7 buscas, até pág. 2 | 1 busca, pág. 1 |
+| Henrique | 2 buscas | 0 | 2 buscas |
+| Bruno | 0 | 0 | 0 |
+
+**Death care não tem dono no piloto.** É o mandato onde a tese é mais forte (9,8% de perfil
+sucessório contra 1,6% e 1,2% nos de pet), é onde as 100 empresas mais caras de pré-cachear
+foram gastas, e a única pessoa que o abriu com intenção passou dois minutos na plataforma em
+17/08. Dois dos três mandatos do piloto estão sem usuário.
+
+Consequência prática: consertar 6511101 antes que o dono de death care apareça, não depois. A
+primeira tela dele hoje tem quatro seguradoras entre as dez primeiras linhas, e primeira
+impressão de mandato não se repete.
 
 ### Fato 6 — mostramos empresas já compradas nas posições 2, 3 e 4
 

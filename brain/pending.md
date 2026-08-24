@@ -308,8 +308,9 @@ Ordenado por evidência, não por gosto. Tudo aqui saiu de 299 eventos da Setter
    (p95 = R$ 600 mil) porque `capital-percentis.json` só tem agro/saude/educacao/metalmec. O eixo
    satura abaixo da faixa em que a decisão acontece.
 3. **Separar 6511101 de 6511102 no mandato de death care.** Seguros de vida (Zurich, Icatu,
-   Sabemi, BMG) ocupam 4 das 10 primeiras linhas. Foi provavelmente por isto que ela abriu death
-   care uma vez e nunca voltou.
+   Sabemi, BMG) ocupam 4 das 10 primeiras linhas. Prazo real: **antes** de o dono de death care
+   entrar na plataforma. Fernanda é a especialista de pet e nunca julgou esse mandato, então o
+   defeito ainda não foi visto por ninguém da Setter. Primeira impressão de mandato não repete.
 4. **Corrigir `score_no_save`** (`POST /api/oportunidade`): faltam `capital_social` e
    `cnae_principal` no select, o eixo de escala vale sempre 0, teto 66. Bug de uma linha que
    corrompe o rótulo positivo do loop.
@@ -319,5 +320,8 @@ Ordenado por evidência, não por gosto. Tudo aqui saiu de 299 eventos da Setter
 7. **Descobrir por que ninguém abre dossiê.** Zero em 299 eventos. Ou o caminho até
    `/empresa/[id]` não é achado, ou o card basta para recusar. Perguntar à Fernanda antes de
    investir mais cota em pré-cache.
-8. **Adoção é de uma pessoa só.** Bruno nunca entrou, Henrique ficou 2 minutos. Isso é conversa
-   com o Henrique, não é código.
+8. **Dois dos três mandatos não têm dono.** Fernanda cobre pet (21 das 25 buscas dela). Death
+   care teve 1 busca dela e 2 do Henrique, que ficou 2 minutos no total. Bruno nunca entrou.
+   Pergunta para o Henrique, junto com a do dossiê: **quem na Setter cobre death care, e essa
+   pessoa tem login?** Sem isso, 100 das 300 empresas pré-cacheadas foram gastas num mandato que
+   ninguém abre.
