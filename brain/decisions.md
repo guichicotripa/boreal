@@ -1846,3 +1846,71 @@ e é verificável. Isso confirma, agora com número, a conclusão qualitativa re
 eventos de `dossie` e `investigacao`. Ou "entrar nela" é o peek panel (não instrumentado), ou ela
 confere em outro lugar. O job to be done, porém, ficou nítido e é estreito: **foi adquirida ou
 não**. Não é um memo genérico.
+
+---
+
+## 2026-08-24 (segundo áudio) — Ela desmente duas coisas que eu afirmei, e a segunda derruba a tese do score
+
+**Fonte:** segundo áudio da Fernanda, 18:59, 112s, transcrito com whisper `small` local.
+
+### Correção 1 — capital social NÃO é filtro dela
+
+> "Eu **não descarto** uma empresa por ela ter um capital social pequeno. Mas eu tendo a olhar
+> mais profundamente se ela tiver um capital social grande **combinado** com a informação dela
+> não ser uma ME ou uma EPP e não ter sido fundada, sei lá, dois, três anos."
+
+Eu tinha reportado o gap de 43x em capital como o driver da escolha dela. Está errado como
+mecanismo. Porte e ano de fundação são **exclusão dura**; capital é **amplificador** dentro do
+que sobrevive. O próprio dado já dizia isso e eu passei por cima: ela salvou SÃO FRANCISCO com
+R$ 150 mil de capital.
+
+**Nota que muda o entregável:** `porte` da Receita é definido por receita bruta (LC 123/2006):
+ME até R$ 360 mil/ano, EPP até R$ 4,8 milhões/ano, DEMAIS acima disso. O filtro dela é, na
+prática, **um filtro de faturamento**. "Porte DEMAIS" quer dizer "fatura mais de R$ 4,8 milhões".
+É de longe o melhor proxy de tamanho que temos, e é melhor que capital social. (Ressalva:
+autodeclarado, desatualiza, e quem sai do Simples por opção também cai em DEMAIS.)
+
+### Correção 2 — sucessão não discrimina nestes setores
+
+> "O fato de ela eventualmente já estar na segunda geração, sócio com menos de 40 anos etc.,
+> **ela não é um ponto tão relevante**, porque a gente tem muita gente que é muito nova, na
+> terceira geração, e **está todo mundo querendo vender**. Então não é um ponto de descartar."
+
+Isto é o mais importante que saiu do piloto inteiro. O score v0 é majoritariamente sucessão:
+`idade_controle` 28 + `sucessor_aparente` + `quadro_plural`. Ela está dizendo que, nestes dois
+setores, o sinal **não separa**, porque a disposição de vender é universal.
+
+**Reenquadramento que vale guardar:** risco sucessório só é discriminante onde a disposição de
+vender é *rara*. Em setor quente, todo mundo quer vender e o sinal vira ruído. Isso não invalida
+a tese, delimita onde ela vale: setor fragmentado e frio (metalmecânica, death care), não setor
+em consolidação ativa (pet).
+
+### A medida que fecha o argumento (Foco A, 7500)
+
+| | |
+|---|---:|
+| universo qualificado pela regra dela | **96** |
+| quantos ela viu em 3 páginas / 327 linhas | **16 (17%)** |
+| quantos estavam na primeira página | 13 |
+| dos 96, com `score_v0` < 50 (o ranking enterra) | **76 (79%)** |
+| das 327 linhas exibidas, quantas não passam na regra | **311 (95%)** |
+
+`score_v0` dos 96 qualificados: mediana **38**. `score_v0` médio do que exibimos a ela: **62**.
+
+**Nosso ranking é anticorrelacionado com a qualificação dela.** O score premia "muitos sócios PF
+velhos", que é a assinatura da empresa familiar pequena. Ela quer independente de médio porte,
+que costuma ter poucos sócios ou sócio PJ. Em uma frase: **construímos um detector de padaria
+familiar e ela está comprando mid-market.**
+
+### O resto do áudio
+
+- Reconhece adquiridas de cabeça: "tem algumas que eu já bato o olho e já sei que foram
+  adquiridas, porque são dois setores que acompanho muito. NEW PROVET já tinha sido adquirida."
+- O teste de realidade dela: "é difícil ver uma empresa de diagnóstico, laboratório de análises
+  clínicas ou de plano de saúde pet que fatura tipo 20 milhões e **não foi comprada por ninguém**."
+
+**Conclusão estratégica, sem hedge:** em Foco A e Foco B a Boreal entrega pouco para a Fernanda.
+O universo é de ~100 ativos, ela conhece o setor de cor e reconhece as adquiridas de memória. O
+mandato em que a plataforma tem vantagem real é **death care**: 11.046 empresas, 591 qualificadas,
+ninguém na Setter tem isso na cabeça. E é o mandato sem dono. O piloto está sendo julgado
+exatamente onde a ferramenta é mais fraca.
