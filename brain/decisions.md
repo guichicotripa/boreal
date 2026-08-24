@@ -1772,3 +1772,77 @@ sensor não vê.
 prioridade da próxima: filtro de porte e percentil por mandato valem mais que qualquer refino de
 peso do score, e o pré-cache de dossiê não é gargalo de adoção porque dossiê não está sendo
 aberto.
+
+---
+
+## 2026-08-24 (noite) — Fernanda disse a regra dela em voz alta, e a regra mata 91% do que entregamos
+
+**Contexto:** primeira mensagem direta para a Fernanda (áudio de resposta às 18:05, transcrito
+com whisper `small` local). Ela descreveu, sem ser perguntada sobre isso, o filtro que aplica.
+
+**As três regras, nas palavras dela:**
+1. **Porte:** "eu nunca pego o MEI, de microempresa, ou o EPP, é muito pequeno."
+2. **Ano de fundação:** "de 2020 pra cima, em regra, ela é bem pequena, e aí eu não costumo olhar."
+3. **Capital + porte juntos:** "quando ela é um pouco mais antiga, tipo 2015, tem um capital social
+   legal e está com porte DEMAIS, aí eu entro nela pra olhar."
+4. **O motivo de abrir:** "pra entender se ela não foi adquirida."
+
+### A regra testada contra o que a plataforma mostrou (624 empresas exibidas a ela)
+
+| | |
+|---|---:|
+| porte ME | 448 (72%) |
+| porte EPP | 98 (16%) |
+| porte DEMAIS | 78 (13%) |
+| fundadas em 2020 ou depois | 352 (56%) |
+| **sobrevivem à regra dela** | **55 de 624 (9%)** |
+
+**91% do que entregamos estava morto antes de ela ler a linha.**
+
+Precisão da regra contra as escolhas reais dela: **5 de 5 saves passam**; **497 dos 507
+descartes (98%) a regra já teria eliminado**. É o filtro dela, não uma aproximação nossa.
+
+### Ela nunca digitou uma busca
+
+**0 de 27 buscas** com `query` preenchida, e **0 com `maxAnoFundacao`**. Ela só clica nos botões
+de mandato. `maxAnoFundacao` (que faz exatamente o corte de 2020 que ela quer) **já existe** no
+backend desde sempre, e só é alcançável escrevendo em linguagem natural. O filtro que ela precisa
+existe pela metade e está atrás de uma caixa de texto que esta usuária não usa.
+
+`porte` é coluna da tabela `empresa` e já é eixo de score desde 11/08. Mas eixo de score é
+empurrãozinho; ela usa como **exclusão dura**, e ponto não expressa exclusão.
+
+### Ela estava descartando enquanto gravava o áudio
+
+Contagem ao vivo às 21:05 UTC: **541 descartes, 6 saves, 27 buscas**. Só hoje foram **276
+descartes** entre 14:15 e 21:05. Os 12 últimos vieram em **10 segundos**. Ela está clicando um
+botão por segundo para fazer à mão o que uma linha de SQL faz.
+
+### O universo que sobra (a mensagem do Henrique estava certa)
+
+> "ambos os setores (plano e diagnósticos) têm poucos ativos grandes porque os demais já foram
+> comprados. Então de fato não deveriam sobrar taaaantos ativos."
+
+Confirmado, e é pior do que eles imaginam:
+
+| mandato | base | porte DEMAIS | + fundada < 2020 | + capital > R$ 500k |
+|---|---:|---:|---:|---:|
+| Foco A · diagnóstico vet (7500) | 2.685 | 127 | **96** | **5** |
+| Foco B · plano pet (6550/6512) | 90 | 16 | **7** | **3** |
+| Death care (9603) | 11.046 | 733 | **591** | **180** |
+
+**Death care tem 36x mais ativos qualificados que os dois de pet somados**, e é o mandato sem
+dono no piloto (ver entrada anterior de 24/08).
+
+Ressalva: `porte` é autodeclarado à Receita e desatualiza; "DEMAIS" também recolhe quem
+simplesmente não declarou. Os 96 são ordem de grandeza, não contagem exata.
+
+**Consequência para o entregável:** em Foco A e Foco B, ranquear 2.685 linhas é a coisa errada.
+O entregável honesto é **censo**: "existem 96 ativos independentes de porte em diagnóstico
+veterinário no Brasil inteiro, aqui estão os 96, com o que se sabe de cada um". Cabe em uma tela
+e é verificável. Isso confirma, agora com número, a conclusão qualitativa registrada em 12/08.
+
+**O dossiê continua sem explicação.** Ela diz "aí eu entro nela pra olhar" e continua com **zero**
+eventos de `dossie` e `investigacao`. Ou "entrar nela" é o peek panel (não instrumentado), ou ela
+confere em outro lugar. O job to be done, porém, ficou nítido e é estreito: **foi adquirida ou
+não**. Não é um memo genérico.
