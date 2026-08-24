@@ -294,3 +294,30 @@ Registrado para ninguém procurar depois:
 | Pré-cachear saúde e educação | **feito** no cache de 25/07 (4 setores + 15 chaves de tese) |
 | Pipeline remodel, home restyle, restyle sistema v1, handoff Maguto | frentes do Maguto, que parou depois do fim do Clube |
 | Enquadramentos de "atinge os jurados" | não há mais jurados |
+
+---
+
+## 🔴 Vindo do uso real do piloto (24/08) — ver `decisions.md` da mesma data
+
+Ordenado por evidência, não por gosto. Tudo aqui saiu de 299 eventos da Setter.
+
+1. **Filtro de porte/capital nos `Filtros`.** 59% do que mostramos tem capital ≤ R$ 100 mil e
+   ela descartou 275 empresas à mão, 18 delas escrevendo "Pequena". É o item de maior razão
+   valor/esforço do backlog inteiro.
+2. **Percentil de capital por mandato.** Os três mandatos do piloto caem no percentil geral
+   (p95 = R$ 600 mil) porque `capital-percentis.json` só tem agro/saude/educacao/metalmec. O eixo
+   satura abaixo da faixa em que a decisão acontece.
+3. **Separar 6511101 de 6511102 no mandato de death care.** Seguros de vida (Zurich, Icatu,
+   Sabemi, BMG) ocupam 4 das 10 primeiras linhas. Foi provavelmente por isto que ela abriu death
+   care uma vez e nunca voltou.
+4. **Corrigir `score_no_save`** (`POST /api/oportunidade`): faltam `capital_social` e
+   `cnae_principal` no select, o eixo de escala vale sempre 0, teto 66. Bug de uma linha que
+   corrompe o rótulo positivo do loop.
+5. **Instrumentar o peek panel.** Sem isso não dá pra saber se o score foi lido antes do descarte.
+6. **Marcar empresa já consolidada.** NEW PROVET, PROVET e TECSA apareceram nas posições 2, 3 e 4
+   com dono conhecido dela. `novo_para_setter` está null nas 5 oportunidades.
+7. **Descobrir por que ninguém abre dossiê.** Zero em 299 eventos. Ou o caminho até
+   `/empresa/[id]` não é achado, ou o card basta para recusar. Perguntar à Fernanda antes de
+   investir mais cota em pré-cache.
+8. **Adoção é de uma pessoa só.** Bruno nunca entrou, Henrique ficou 2 minutos. Isso é conversa
+   com o Henrique, não é código.

@@ -1631,3 +1631,123 @@ empresas que já salvou como se fossem novas.
 **A lição não é "guardar contra null", é sobre o `catch` mudo.** O pipeline quebrou alto e foi
 consertado em uma hora; o Radar falharia baixo e poderia ficar meses assim. Chutar três telas
 encontrou zero defeitos novos; a varredura mecânica encontrou o único que faltava.
+
+---
+
+## 2026-08-24 — O piloto foi usado de verdade, e o uso desmente o produto que construímos
+
+**Contexto:** primeira leitura da tabela `evento` desde que Setter ganhou acesso (17/08). São
+400 eventos no total, 299 deles dos três logins da Setter. Isto não é analytics: é o sensor de
+revelação de preferência descrito na migration 0013, e é a primeira vez que ele tem dado real.
+
+### Quem usou
+
+| pessoa | sessões | busca | descartou | salvou | dossiê | investigação |
+|---|---|---|---|---|---|---|
+| Fernanda Arbage | 21/08 (4h) + 24/08 (20min) | 21 | 268 | 6 | 0 | 0 |
+| Henrique Consentino | 17/08 (2 min) | 4 | 0 | 0 | 0 | 0 |
+| Bruno Bellodi | nunca entrou | 0 | 0 | 0 | 0 | 0 |
+
+Uma pessoa é o piloto inteiro. E ela **voltou** sete dias depois, sem ninguém pedir. Retenção
+existe; adoção de time não.
+
+### Fato 1 — ninguém abriu um dossiê. Nem uma vez.
+
+A instrumentação cobre os dois caminhos (`registrarDossie` grava tanto cache quanto ao vivo, e
+`registrarInvestigacao` grava o research). Zero eventos dos dois tipos. As 300 empresas
+pré-cacheadas em 16-24/08, que custaram ~14 janelas de cota da assinatura, **nunca foram
+tocadas por um usuário da Setter**. Ela julgou 275 empresas pelo card e pelo peek panel.
+
+Consequência direta: a camada de inteligência (research + memo), que é o diferencial que
+justifica o preço, não participou de nenhuma decisão do piloto. O que a Setter usou foi uma
+lista filtrável de CNPJs enriquecidos.
+
+### Fato 2 — a taxa de descarte é PLANA ao longo do ranking
+
+| faixa de posição | exibidas | descartadas | salvas | % descarte |
+|---|---:|---:|---:|---:|
+| 1–10 | 56 | 31 | 5 | 55% |
+| 11–25 | 87 | 56 | 0 | 64% |
+| 26–50 | 147 | 97 | 0 | 66% |
+| 51–100 | 141 | 91 | 0 | 65% |
+
+Se o ranking funcionasse, o descarte subiria com a posição. Ele é plano dentro do erro. O score
+**ordena quase nada** para esta usuária neste mandato. O que salva a lista é que todos os 5
+saves vieram do top 10 (9% de acerto lá, 0% depois) — o topo tem valor, o resto da ordenação não.
+
+### Fato 3 — o que ela escolhe é TAMANHO, e não existe filtro de tamanho
+
+| grupo | n | capital mediano | com sócio PJ | com sócio 70+ | idade | score_v0 |
+|---|---:|---:|---:|---:|---:|---:|
+| salvou | 5 | R$ 3.750.234 | 60% | 60% | 17a | 74 |
+| descartou | 275 | R$ 88.000 | 6% | 39% | 9a | 61 |
+| exibido | 470 | R$ 100.000 | 8% | 39% | 10a | 62 |
+
+Capital mediano do salvo é **43x** o do descartado. Sócio PJ tem lift de **~8x**. Sócio 70+, que
+é o coração da nossa tese, tem lift de 1,5x. E os motivos escritos à mão dizem o mesmo:
+"Pequena" (18x), "Tamanho" (5x).
+
+59% de tudo que mostramos a ela tinha capital ≤ R$ 100 mil. `Filtros` (src/lib/types.ts) tem
+`cnaePrefixes`, `minFaixaEtaria`, `maxAnoFundacao`, `ufs`. **Não tem nada de porte ou capital.**
+Ela passou quatro horas fazendo à mão, uma linha por vez, o que um filtro resolveria.
+
+### Fato 4 — o percentil de capital não existe para nenhum dos três mandatos
+
+`capital-percentis.json` tem verticais para agro, saude, educacao e metalmec. `setorPorCnae`
+devolve nada para 7500, 9603, 65111 e 6550, então os três mandatos do piloto caem no
+**percentil geral** (p95 = R$ 600 mil). Efeito medido:
+
+- FLEVET (R$ 50 mil de capital) → `escala_capital` 19 pts, score **85**, posição 1. Descartada.
+- GENEAL GENÉTICA (R$ 48,2 milhões) → `escala_capital` 34 pts, score **71**. Salva.
+
+O eixo satura em R$ 600 mil, exatamente abaixo da faixa em que a decisão dela acontece. Um
+laboratório de R$ 700 mil e uma empresa de R$ 48 milhões recebem os mesmos 34 pontos.
+
+### Fato 5 — o topo de death care é seguradora, não alvo
+
+O prefixo `65111` do mandato pega **6511101 (seguros de vida, 123 empresas)** junto com
+6511102 (planos de auxílio funeral, 543), que era o alvo. Como o score é puxado por capital, as
+seguradoras sobem: **4 das 10 primeiras linhas** são BMG Seguradora, Icatu (R$ 640 mi), Sabemi e
+Zurich Minas Brasil (R$ 2,4 **bilhões**, score 91). Na página inteira são 5 de 50, mas elas
+ocupam a primeira tela.
+
+Fernanda abriu death care uma vez, em 21/08 às 13:27, e **nunca mais voltou**: zero descartes,
+zero saves em 50 linhas. É o mandato onde nossa tese é mais forte (9,8% de perfil sucessório
+contra 1,6% e 1,2% nos dois de pet) e ele foi abandonado na primeira tela.
+
+### Fato 6 — mostramos empresas já compradas nas posições 2, 3 e 4
+
+Motivos escritos por ela: "Consolidada pela Petlove" em NEW PROVET (pos. 2) e PROVET (pos. 3),
+"Empresa consolidadora e já investida" em TECSA (pos. 4), "Sócios de grupo grande" em TOMOVET.
+Ela conhece o mercado e nós não. `novo_para_setter` existe na tabela `oportunidade` e está
+**null nas 5 linhas**: o critério de sucesso do piloto (novidade) não está sendo capturado.
+
+### Fato 7 (bug confirmado) — `score_no_save` grava o número errado
+
+`POST /api/oportunidade` pede `id, data_inicio_atividade, porte, socio(...)` e chama
+`calcScore`. Faltam `capital_social` e `cnae_principal`, que `scoreEscala` exige, então o eixo
+de escala vale **sempre 0** e o teto do campo é 66, não 100. Verificado nas 5 oportunidades:
+
+| empresa | score com campos completos | truncado | gravado |
+|---|---:|---:|---:|
+| GENEAL GENÉTICA | 71 | 37 | **37** |
+| AMIGOO PET | 91 | 57 | **57** |
+| GENEAL DIAGNÓSTICOS | 91 | 57 | **57** |
+| DIAGNOSTIC (DF) | 59 | 25 | **25** |
+| SÃO FRANCISCO (SC) | 58 | 31 | **31** |
+
+O rótulo positivo do loop de outcome está sistematicamente deflacionado, e deflacionado
+**justamente pelo eixo que ela usa para decidir**. Treinar com isto ensina o oposto da verdade:
+que ela escolhe empresas de score baixo.
+
+### Fato 8 (lacuna de instrumentação) — o peek panel é invisível
+
+275 descartes sem um único `dossie`. O peek panel (`PeekPanel.tsx`) mostra breakdown, sinais,
+telefone e e-mail sem sair da lista, e **não grava evento nenhum**. Não dá pra distinguir "olhou
+e recusou" de "recusou pelo card". É a diferença entre o score ter sido lido ou não, e hoje o
+sensor não vê.
+
+**Decisão:** nada de código muda nesta sessão. O registro fica porque a leitura inverte a
+prioridade da próxima: filtro de porte e percentil por mandato valem mais que qualquer refino de
+peso do score, e o pré-cache de dossiê não é gargalo de adoção porque dossiê não está sendo
+aberto.
