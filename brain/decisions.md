@@ -1970,3 +1970,75 @@ a registrar se a busca rodou com ou sem o corte. Sinal de treino de graça.
 build de produção compila, lint sem nada novo nos arquivos tocados. **NÃO clicado no navegador:**
 o app exige link mágico por e-mail e eu não entro em tela de login. Os dois erros de lint que
 sobram são pré-existentes, em `descartadas/page.tsx` e `metricas/page.tsx`, arquivos que não toquei.
+
+---
+
+## 2026-08-26 — Fernanda acha o furo do filtro de porte, e a resposta NÃO é scraping
+
+**O que ela mandou (WhatsApp, 11:46):**
+
+> "Tem algumas empresas que têm porte DEMAIS, porém elas são optantes pelo regime de lucro simples,
+> ou seja, faturam menos de R$ 4,8 MM. Não fazem sentido para nós."
+> "Só que essa info não aparece no Boreal, e aí procuro por fora, tipo no site CNPJ Biz."
+> "Veja se conseguimos fazer o scrapping dessa informação."
+
+Ela está certa. O corte de porte que subiu em 24/08 tem um furo conhecido e eu tinha escrito a
+ressalva na hora ("quem sai do Simples por opção também cai em DEMAIS"), mas não medi o tamanho.
+
+### Tamanho do furo, medido
+
+| mandato | hoje na tela | optantes pelo Simples | sobrariam |
+|---|---:|---:|---:|
+| Diagnóstico veterinário | 72 | **20 (28%)** | 52 |
+| Plano de saúde pet | 31 | **11 (35%)** | 20 |
+| Death care | 777 | **101 (13%)** | 676 |
+
+Mais de um quarto do Foco A e mais de um terço do Foco B é ruído que ela confere um a um no
+CNPJ.biz. Exemplos que a plataforma está entregando a ela: ANIMALTEC (capital R$ 20 mil),
+VET DIAGNOSE (R$ 3.500), KETHER VETLAB (R$ 10 mil).
+
+### Scraping não é a resposta
+
+CNPJ.biz é revenda dos **dados abertos da Receita**, os mesmos que já usamos. A tabela
+`basedosdados.br_me_cnpj.simples` já está acessível com a credencial que já existe, com as colunas
+`opcao_simples`, `data_opcao_simples`, `data_exclusao_simples` e as equivalentes de MEI. Rodei a
+consulta para o universo inteiro dos três mandatos hoje: segundos, uma chamada.
+
+Raspar o site seria mais lento (uma página por CNPJ contra um lote), frágil (quebra quando o HTML
+mudar), contra os termos de uso deles, e chegaria no mesmo dado. **É um caso em que o pedido do
+cliente está certo no problema e errado no meio.**
+
+### O bônus que ela não pediu: `data_exclusao_simples`
+
+A mesma tabela diz em que ANO a empresa deixou o Simples. Mas sair tem duas causas que significam
+coisas **opostas** para originação:
+
+- **estourou o teto de R$ 4,8 MM** → cresceu, é alvo
+- **entrou sócio PJ** → a LC 123 proíbe sócio PJ no Simples, então foi adquirida ou reestruturada
+
+Separando pela presença de sócio PJ hoje:
+
+| mandato | saíram | com sócio PJ (adquirida?) | sem sócio PJ (cresceu?) |
+|---|---:|---:|---:|
+| Diagnóstico veterinário | 15 | 3 | **12** |
+| Plano de saúde pet | 8 | 2 | **6** |
+| Death care | 185 | 84 | **101** |
+
+Os 12 do Foco A são o melhor pedaço da lista dela: empresa que provavelmente cruzou R$ 4,8 milhões
+num ano conhecido e que não tem sócio PJ no quadro. É literalmente o que ela descreveu procurar no
+áudio de 24/08 ("é difícil ver uma empresa que fatura 20 milhões e não foi comprada").
+
+**Ressalva obrigatória:** sair do Simples também acontece por débito tributário, CNAE vedado ou
+opção própria. É **sinal, não prova de faturamento**. Vai para a tela com essa qualificação ou não
+vai.
+
+### O que NÃO muda: a flag continua proibida no score
+
+Decisão de 11/08 continua de pé, com a guarda que aborta `calibra-score.py` (linha 122). O motivo é
+exatamente a LC 123 acima: o rótulo de aquisição do nosso ground truth É "entra sócio PJ", e toda
+adquirida foi obrigada a sair do Simples. A flag deu lift 0,00x com z=11,4, que era o desfecho
+disfarçado de sinal.
+
+**A distinção que precisa ficar escrita:** proibido como FEATURE DE TREINO, legítimo como FILTRO e
+como FATO NA TELA. São usos diferentes do mesmo campo, e confundir os dois é como o vazamento
+volta. Quem for mexer no ingest tem que ler isto antes.
