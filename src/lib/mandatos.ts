@@ -20,6 +20,8 @@
  * Contagens conferidas no Supabase em 2026-08-12, logo após a ingestão.
  */
 
+import type { FiltroPadrao } from "./filtro-padrao";
+
 export type Recorte = {
   /** Prefixos de CNAE. */
   cnaes: string[];
@@ -35,6 +37,14 @@ export type Mandato = {
   recortes: Recorte[];
   /** Quantas empresas havia na ingestão. Serve pra flagrar divergência na tela. */
   empresas: number;
+  /* Corte que a lista já nasce aplicando, desligável na tela. Vive no mandato e não na rota
+     porque é DADO: mandato novo declara o próprio corte e a rota não muda. Ver
+     src/lib/filtro-padrao.ts para a origem (áudio da Fernanda, 24/08/2026) e o porquê de ser
+     porte e não capital social. */
+  filtroPadrao?: FiltroPadrao;
+  /* Quantas sobram depois do `filtroPadrao`. Vai PARA A TELA do cliente ("72 de 1.671"), então
+     não pode ser chute: `mandatos-contagem.test.ts` confere os dois números contra o banco. */
+  empresasFiltradas?: number;
 };
 
 export const MANDATOS: Mandato[] = [
@@ -43,6 +53,9 @@ export const MANDATOS: Mandato[] = [
     nome: "Diagnóstico veterinário",
     descricao: "Foco A da Setter. Laboratórios dentro do CNAE de atividades veterinárias.",
     empresas: 1671,
+    /* Fundada até 2019 e porte acima de EPP: 72 das 1.671. Ver filtro-padrao.ts. */
+    filtroPadrao: { portes: ["DEMAIS"], maxAnoFundacao: 2019 },
+    empresasFiltradas: 72,
     recortes: [
       {
         cnaes: ["7500"],
@@ -55,6 +68,9 @@ export const MANDATOS: Mandato[] = [
     nome: "Plano de saúde pet",
     descricao: "Foco B da Setter. Operadoras e planos, dentro de veterinária e de planos de saúde.",
     empresas: 1119,
+    /* 31 das 1.119 sobrevivem ao corte. */
+    filtroPadrao: { portes: ["DEMAIS"], maxAnoFundacao: 2019 },
+    empresasFiltradas: 31,
     recortes: [
       {
         cnaes: ["7500"],
@@ -69,6 +85,10 @@ export const MANDATOS: Mandato[] = [
     nome: "Death care",
     descricao: "Funerárias, cemitérios, cremação e planos de auxílio funeral. CNAE limpo.",
     empresas: 11712,
+    /* 777 das 11.712. Mandato ainda sem dono na Setter; o padrão vale igual, e é justamente
+       aqui que ele mais poupa tela (o universo é 7x o dos dois de pet somados). */
+    filtroPadrao: { portes: ["DEMAIS"], maxAnoFundacao: 2019 },
+    empresasFiltradas: 777,
     recortes: [{ cnaes: ["9603", "65111"], nomes: [] }],
   },
 ];

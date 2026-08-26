@@ -1914,3 +1914,59 @@ O universo é de ~100 ativos, ela conhece o setor de cor e reconhece as adquirid
 mandato em que a plataforma tem vantagem real é **death care**: 11.046 empresas, 591 qualificadas,
 ninguém na Setter tem isso na cabeça. E é o mandato sem dono. O piloto está sendo julgado
 exatamente onde a ferramenta é mais fraca.
+
+---
+
+## 2026-08-24 (noite) — O filtro que ela descrevia vira controle da ferramenta
+
+**Contexto:** direto do áudio das 18:05. Ela descreveu a regra e estava aplicando à mão, um clique
+por segundo. 541 descartes acumulados. O trabalho aqui é transformar a fala em cláusula.
+
+**Decisão — corte padrão por mandato, ligado por default, desligável na tela.**
+
+`{ portes: ["DEMAIS"], maxAnoFundacao: 2019 }` nos três mandatos:
+
+| mandato | universo | com o corte |
+|---|---:|---:|
+| Diagnóstico veterinário | 1.671 | **72** |
+| Plano de saúde pet | 1.119 | **31** |
+| Death care | 11.712 | **777** |
+
+**Por que `porte` e não `capital_social`.** `porte` da Receita é definido por receita bruta
+(LC 123/2006: ME até R$ 360 mil, EPP até R$ 4,8 milhões, DEMAIS acima), então é o único proxy de
+faturamento na base. Capital fica FORA de propósito: ela disse "não descarto por capital social
+pequeno" e salvou uma empresa de R$ 150 mil. Tem teste travando isso — quem quiser acrescentar
+capital ao corte quebra `filtro-padrao.test.ts` e é obrigado a reler a fonte antes.
+
+**Por que desligável, e não corte fixo.** `porte` é autodeclarado e desatualiza: empresa que
+cresceu e não mexeu no cadastro continua ME. Corte silencioso de 94% do universo transformaria
+erro de cadastro em alvo perdido sem rastro. Na tela ele é visível ("Filtrado · porte acima de
+EPP · fundada até 2019 · 72 de 1.671") com um "ver todas" ao lado.
+
+**Metade já existia.** `maxAnoFundacao` fazia exatamente o corte de 2020 desde sempre e só era
+alcançável escrevendo em linguagem natural, coisa que ela nunca fez (0 de 27 buscas com texto).
+Só o campo `portes` é novo. A lição não é de código: **a capacidade existia e a interface a
+escondia.**
+
+**Onde a regra mora.** Em `mandatos.ts`, como dado do mandato, não como `if` na rota. Mandato novo
+declara o próprio corte e a rota não muda.
+
+**Arquivos:** `src/lib/filtro-padrao.ts` (novo, puro), `types.ts` (+`portes`), `mandatos.ts`
+(+`filtroPadrao`, +`empresasFiltradas`), `api/search/route.ts`, `RadarClient.tsx`.
+
+**Três guardas que valem mais que o recurso:**
+1. `mandatos-contagem.test.ts` confere "72 de 1.671" contra o banco, com 2% de folga. Número que
+   vai pra tela de cliente e não tem guarda é afirmação sem fonte.
+2. Teste que barra capital social no corte.
+3. Teste que barra mandato com cache estático de setor. A rota serve `setorCache.porSetor[setorId]`
+   ANTES de montar a query, e mandato chega pelo mesmo campo. Pré-cachear um mandato faria a lista
+   sair do bundle e o corte nunca rodar, com a tela ainda dizendo "72 de 1.671". É o mesmo defeito
+   de 12/08, em que o cache estático furava o contrato da firma.
+
+**De brinde para o loop:** `registrarBusca` grava o objeto `filters` efetivo, então o evento passa
+a registrar se a busca rodou com ou sem o corte. Sinal de treino de graça.
+
+**Verificação:** 120 testes, 0 falha, 0 skip (3 batem no banco de verdade). `tsc --noEmit` limpo,
+build de produção compila, lint sem nada novo nos arquivos tocados. **NÃO clicado no navegador:**
+o app exige link mágico por e-mail e eu não entro em tela de login. Os dois erros de lint que
+sobram são pré-existentes, em `descartadas/page.tsx` e `metricas/page.tsx`, arquivos que não toquei.

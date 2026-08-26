@@ -11,6 +11,7 @@ import { normalizeQuery } from "@/lib/teses";
 import { SETORES } from "@/lib/setores";
 import { permissoesAtuais, setorPermitido, mandatoPermitido, ufPermitida } from "@/lib/permissoes";
 import { registrarBusca } from "@/lib/evento";
+import { comFiltroPadrao } from "@/lib/filtro-padrao";
 import type { Empresa, Socio, SearchResponse } from "@/lib/types";
 import demoCache from "@/lib/demo-cache.json";
 import setoresData from "@/lib/setores.json";
@@ -86,6 +87,12 @@ export async function POST(req: NextRequest) {
      filtro de NOME que o setor não tem. Resolver aqui, e não no query-parser, tira a listagem da
      dependência do LLM — o chip da tela tem que devolver a mesma lista toda vez. */
   const mandato = setorId ? mandatoPorId(setorId) : undefined;
+  /* A tela pode desligar o corte padrão do mandato. Default LIGADO: o originador que descreveu a
+     regra estava descartando uma empresa por segundo pra aplicá-la à mão. Mas `porte` é
+     autodeclarado à Receita e desatualiza, então empresa que cresceu e não atualizou o cadastro
+     continua ME — por isso existe o desligar, e por isso o corte é visível na tela em vez de
+     silencioso. */
+  const semFiltroPadrao = (body as { semFiltroPadrao?: boolean })?.semFiltroPadrao === true;
   const setorCnaes = mandato
     ? mandato.recortes.flatMap((r) => r.cnaes)
     : setorId
@@ -117,7 +124,7 @@ export async function POST(req: NextRequest) {
   const perm = await permissoesAtuais();
   const foraDoContrato = (oque: string) =>
     NextResponse.json({
-      filters: { cnaePrefixes: [], minFaixaEtaria: null, maxAnoFundacao: null, ufs: null, setorForaDaBase: null, limit: 50 },
+      filters: { cnaePrefixes: [], minFaixaEtaria: null, maxAnoFundacao: null, portes: null, ufs: null, setorForaDaBase: null, limit: 50 },
       parsedBy: "heuristic" as const,
       count: 0,
       empresas: [],
@@ -188,6 +195,12 @@ export async function POST(req: NextRequest) {
     filters.cnaePrefixes = setorCnaes;
     filters.setorForaDaBase = null; // o seletor manda: o setor está indexado
   }
+
+  /* Corte padrão do mandato. DEPOIS do parser de propósito: filtro escrito à mão vence o padrão
+     (quem pede "fundadas antes de 1990" está sendo mais restritivo, e afrouxar pra 2019 seria
+     desobedecer). Como `filters` é o objeto devolvido na resposta, a tela recebe exatamente o
+     corte que a query rodou — não uma reconstrução dele. */
+  filters = comFiltroPadrao(filters, mandato?.filtroPadrao, semFiltroPadrao);
 
   // Pediu setor que a base não cobre: devolve zero AGORA, com o motivo. Antes o
   // parser trocava calado por metalmecânica e entregava 50 empresas erradas.
@@ -295,6 +308,12 @@ export async function POST(req: NextRequest) {
 
   if (filters.maxAnoFundacao != null) {
     q = q.lte("data_inicio_atividade", `${filters.maxAnoFundacao}-12-31`);
+  }
+
+  /* Porte = faixa de receita bruta declarada à Receita (LC 123/2006). A base só tem ME, EPP e
+     DEMAIS, sem null, então o `.in` não descarta linha por dado ausente. */
+  if (filters.portes?.length) {
+    q = q.in("porte", filters.portes);
   }
 
   // Praça. Sem isto a UF da tese era ignorada e a busca devolvia outra região

@@ -5,6 +5,11 @@ export type SearchFilters = {
   cnaePrefixes: string[];        // prefixos CNAE, ex: ["24","25","28"]
   minFaixaEtaria: number | null; // faixa etária mínima dos sócios (código 1–9)
   maxAnoFundacao: number | null; // empresa fundada ATÉ este ano (= empresa antiga)
+  /* Valores de `empresa.porte` que passam (ME | EPP | DEMAIS). null/vazio = todos.
+     É filtro de FATURAMENTO disfarçado: o porte da Receita é definido por receita bruta
+     (LC 123/2006), e é o único proxy de tamanho que a base tem. Opcional porque os caches
+     estáticos foram gerados antes deste campo existir. Ver src/lib/filtro-padrao.ts. */
+  portes?: string[] | null;
   // Praça: siglas de UF, ou null se a tese não restringir. Opcional porque os
   // caches estáticos foram gerados antes deste campo existir.
   ufs?: string[] | null;

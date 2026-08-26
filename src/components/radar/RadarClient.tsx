@@ -8,6 +8,7 @@ import { FAIXA_LABEL } from "@/lib/format";
 import { setorPorId, type Setor } from "@/lib/setores";
 import { tesesDe } from "@/lib/teses";
 import { type Mandato } from "@/lib/mandatos";
+import { descreveFiltroPadrao } from "@/lib/filtro-padrao";
 import { aberturaDaBancada } from "@/lib/contrato";
 import { janelaDePaginas } from "@/lib/paginacao";
 import { readScoresConhecidos, storeEmpresa, storeOrigin, type ScoreConhecido } from "@/lib/empresa-store";
@@ -52,6 +53,10 @@ export default function RadarClient({ setores, mandatos }: Props) {
      de `tesesDe(null)` — um setor que ela não contratou e cujo clique só produz "fora do
      contrato". Quem tem setor continua abrindo no setor, como antes. */
   const [mandatoAtivo, setMandatoAtivo] = useState<string | null>(mandatoInicial);
+  /* Corte padrão do mandato desligado pelo originador. Nasce FALSE (o corte vale) porque a regra
+     veio do próprio originador; existe o desligar porque `porte` é autodeclarado à Receita e
+     desatualiza, e empresa que cresceu sem atualizar o cadastro sumiria sem rastro. */
+  const [semFiltroPadrao, setSemFiltroPadrao] = useState(false);
   const [peekId, setPeekId] = useState<string | null>(null);
   // Overlay de score pós-investigação: a página da empresa persiste o score_v1;
   // aqui refletimos ao montar e ao voltar (bfcache/refocus) sem refazer a busca.
@@ -172,7 +177,10 @@ export default function RadarClient({ setores, mandatos }: Props) {
     buscar("", id);
   }
 
-  async function buscar(q: string, setor?: string) {
+  /* `sem` é parâmetro e não só estado porque o toggle precisa rebuscar com o valor NOVO, e o
+     setState do React só vale no próximo render — ler o estado aqui rodaria a busca com o valor
+     antigo e a tela mostraria o oposto do que o botão diz. */
+  async function buscar(q: string, setor?: string, sem: boolean = semFiltroPadrao) {
     if (!q.trim() && !setor) return;
     setLoading(true);
     setErro(null);
@@ -187,7 +195,7 @@ export default function RadarClient({ setores, mandatos }: Props) {
       const r = await fetch("/api/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(setor ? { query: q, setor } : { query: q }),
+        body: JSON.stringify({ query: q, ...(setor ? { setor } : {}), ...(sem ? { semFiltroPadrao: true } : {}) }),
       });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const data: SearchResponse = await r.json();
@@ -219,6 +227,8 @@ export default function RadarClient({ setores, mandatos }: Props) {
         body: JSON.stringify({
           query: consulta.q,
           ...(consulta.setor ? { setor: consulta.setor } : {}),
+          // Sem isto a página 2 viria do universo cheio e a lista mudaria de regra no meio.
+          ...(semFiltroPadrao ? { semFiltroPadrao: true } : {}),
           pagina: n,
         }),
       });
@@ -519,6 +529,7 @@ export default function RadarClient({ setores, mandatos }: Props) {
             lente) não existem pro mandato, e herdar os de metalmecânica seria afirmar medição que
             não foi feita. Sobra o que é verdade e é útil: o recorte, os CNAEs e o tamanho. */}
         {mandatoAberto ? (
+          <>
           <p className="mt-4 border-t border-hairline pt-3 text-[11.5px] text-ink-muted">
             <span className="text-ink-soft">{mandatoAberto.nome}</span>
             {" · "}CNAE {[...new Set(mandatoAberto.recortes.flatMap((r) => r.cnaes))].join("/")}
@@ -527,6 +538,51 @@ export default function RadarClient({ setores, mandatos }: Props) {
             {" · cobertura completa do recorte"}
             {" · sem recall medido"}
           </p>
+          {/* Corte padrão do mandato, VISÍVEL. A regra é do próprio originador (áudio da Setter,
+              24/08), mas `porte` é autodeclarado à Receita e desatualiza: cortar 94% do universo
+              em silêncio transformaria cadastro desatualizado em alvo perdido sem rastro. Aqui
+              ele lê o que está valendo e desliga com um clique. */}
+          {mandatoAberto.filtroPadrao && (
+            <p className="mt-1.5 text-[11.5px] text-ink-muted">
+              {semFiltroPadrao ? (
+                <>
+                  <span className="text-ink-soft">Universo completo</span>
+                  {" · "}
+                  <span className="tabular-nums">{mandatoAberto.empresas.toLocaleString("pt-BR")}</span> empresas
+                  {", sem corte de porte nem de fundação"}
+                </>
+              ) : (
+                <>
+                  <span className="text-ink-soft">Filtrado</span>
+                  {" · "}
+                  {descreveFiltroPadrao(mandatoAberto.filtroPadrao)}
+                  {mandatoAberto.empresasFiltradas != null && (
+                    <>
+                      {" · "}
+                      <span className="tabular-nums">
+                        {mandatoAberto.empresasFiltradas.toLocaleString("pt-BR")}
+                      </span>{" "}
+                      de{" "}
+                      <span className="tabular-nums">{mandatoAberto.empresas.toLocaleString("pt-BR")}</span>
+                    </>
+                  )}
+                </>
+              )}
+              {" · "}
+              <button
+                type="button"
+                onClick={() => {
+                  const proximo = !semFiltroPadrao;
+                  setSemFiltroPadrao(proximo);
+                  if (consulta) buscar(consulta.q, consulta.setor, proximo);
+                }}
+                className="text-ink underline decoration-hairline underline-offset-2 transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50 rounded-sm"
+              >
+                {semFiltroPadrao ? "aplicar filtro" : "ver todas"}
+              </button>
+            </p>
+          )}
+          </>
         ) : (
         <p className="mt-4 border-t border-hairline pt-3 text-[11.5px] text-ink-muted">
           <span className="text-ink-soft">{setorCob.nome}</span>
