@@ -2042,3 +2042,40 @@ disfarçado de sinal.
 **A distinção que precisa ficar escrita:** proibido como FEATURE DE TREINO, legítimo como FILTRO e
 como FATO NA TELA. São usos diferentes do mesmo campo, e confundir os dois é como o vazamento
 volta. Quem for mexer no ingest tem que ler isto antes.
+
+**Implementado no mesmo dia.**
+
+| mandato | universo | só porte+ano | com o corte do Simples |
+|---|---:|---:|---:|
+| Diagnóstico veterinário | 1.671 | 72 | **52** |
+| Plano de saúde pet | 1.119 | 31 | **20** |
+| Death care | 11.712 | 777 | **676** |
+
+**Peças:**
+- `0015_simples_nacional.sql` — `opcao_simples` e `data_exclusao_simples` em `empresa`, índice
+  parcial `where opcao_simples is not true`.
+- `0016_aplica_simples.sql` — função de UPDATE em lote. Existe porque `upsert` do PostgREST é
+  INSERT ON CONFLICT e exige `razao_social NOT NULL`: mandar só `{cnpj, opcao_simples}` estoura na
+  primeira linha. Descoberto na marra. A alternativa era um update por linha, 65 mil idas.
+- `scripts/backfill-simples.mjs` — rodou: **65.520 linhas, 29.772 optantes (45% da base), 9.937 já
+  saíram**.
+- `scripts/ingest-setor.mjs` — LEFT JOIN na `simples` (sem filtro de data, a tabela é estado atual),
+  para carga nova já vir com o campo.
+- `filtro-padrao.ts` — `excluirSimples` no corte e `regimeTributario()` para a tela.
+- Busca aplica `not("opcao_simples", "is", true)`, e **não** `eq(false)`: NULL significa "não
+  verificado", e quando o dado falta o erro certo é mostrar a empresa, não escondê-la.
+- Tela: coluna de porte ganha "· Simples" ou "· saiu 2021", e o peek panel ganha a linha inteira
+  "Regime tributário" com a qualificação ("cresceu ou tomou sócio PJ").
+
+**A guarda de vazamento foi ESTENDIDA, não relaxada.** `calibra-score.py` agora aborta também com
+`opcao_simples` e `data_exclusao_simples` na matriz. Com as colunas no banco, o caminho para elas
+chegarem ao treino por acidente ficou mais curto que antes, então os nomes entram explicitamente.
+
+**Testes:** 128, zero falha, zero skip. Dois novos que valem por si:
+- "todo mandato que corta por porte também tira os optantes do Simples" — impede que o furo volte
+  num mandato futuro.
+- "o rótulo NUNCA afirma faturamento" — trava a tela de dizer "fatura mais de R$ 4,8 MM" a partir
+  de uma saída do Simples, que tem quatro causas possíveis.
+
+Verificado replicando a query da rota: zero optantes na primeira página dos três mandatos, e
+DIAGNOSTIC (uma das cinco que a Fernanda salvou) aparece com "Saiu do Simples em 2021".

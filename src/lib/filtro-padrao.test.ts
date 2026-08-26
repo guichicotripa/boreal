@@ -2,7 +2,7 @@
    Errar aqui não deixa a tela feia: entrega uma lista que parece completa e não é. */
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { comFiltroPadrao, filtroPadraoAtivo, descreveFiltroPadrao } from "./filtro-padrao.ts";
+import { comFiltroPadrao, filtroPadraoAtivo, descreveFiltroPadrao, regimeTributario } from "./filtro-padrao.ts";
 import { MANDATOS } from "./mandatos.ts";
 import type { SearchFilters } from "./types.ts";
 
@@ -67,14 +67,42 @@ test("a descrição fala do efeito, não do nome do campo", () => {
    social pequeno") e salvou uma de R$ 150 mil. Se alguém acrescentar capital ao corte, este teste
    quebra e obriga a reler a fonte antes. */
 test("nenhum mandato corta por capital social", () => {
+  /* Asserção sobre o CONCEITO e não sobre a lista de chaves: dimensão nova e legítima (o corte do
+     Simples entrou em 26/08) não pode quebrar o teste, mas capital tem que continuar barrado. */
   for (const m of MANDATOS) {
     if (!m.filtroPadrao) continue;
-    assert.deepEqual(
-      Object.keys(m.filtroPadrao).sort(),
-      ["maxAnoFundacao", "portes"],
-      `${m.id}: o corte padrão só pode ser porte e ano de fundação`
+    for (const chave of Object.keys(m.filtroPadrao)) {
+      assert.doesNotMatch(
+        chave,
+        /capital/i,
+        `${m.id}: capital social não pode ser critério de CORTE (ela disse que capital pequeno não descarta). Ordenação, sim.`
+      );
+    }
+  }
+});
+
+/* O corte do Simples é a outra metade da pergunta "fatura acima de R$ 4,8 MM?": `porte = DEMAIS`
+   diz que a Receita classificou acima do teto, e a opção pelo Simples diz que a empresa declara
+   estar abaixo. Sem os dois juntos, 28% do Foco A era ruído. */
+test("todo mandato que corta por porte também tira os optantes do Simples", () => {
+  for (const m of MANDATOS) {
+    if (!m.filtroPadrao?.portes.length) continue;
+    assert.equal(
+      m.filtroPadrao.excluirSimples,
+      true,
+      `${m.id}: cortar por porte sem tirar optante do Simples deixa entrar quem fatura < R$ 4,8 MM`
     );
   }
+});
+
+test("o corte do Simples aparece no rótulo da tela", () => {
+  assert.match(descreveFiltroPadrao({ ...PADRAO, excluirSimples: true }), /fora do Simples/);
+  assert.doesNotMatch(descreveFiltroPadrao(PADRAO), /Simples/);
+});
+
+test("desligar o padrão desliga também o corte do Simples", () => {
+  const r = comFiltroPadrao(VAZIO, { ...PADRAO, excluirSimples: true }, true);
+  assert.notEqual(r.excluirSimples, true);
 });
 
 test("todo mandato com corte declara quantas sobram, e sobra menos que o universo", () => {
@@ -105,4 +133,38 @@ test("nenhum mandato tem cache estático de setor (o cache pularia o corte padr�
       `mandato "${m.id}" tem cache de setor: a busca serviria o JSON e o filtroPadrao seria ignorado`
     );
   }
+});
+
+/* ── regimeTributario: o que a tela AFIRMA sobre a empresa ────────────────────
+   Rótulo errado aqui não é cosmético: é a plataforma dizendo a um cliente pagante que uma empresa
+   fatura acima de R$ 4,8 MM quando ela não fatura, ou o contrário. */
+test("optante é marcado como Simples e tratado como negativo", () => {
+  const r = regimeTributario({ opcao_simples: true, data_exclusao_simples: null });
+  assert.equal(r?.tom, "negativo");
+  assert.match(r!.rotulo, /Simples Nacional/);
+});
+
+test("quem saiu do Simples mostra o ano e é positivo", () => {
+  const r = regimeTributario({ opcao_simples: false, data_exclusao_simples: "2024-03-31" });
+  assert.equal(r?.tom, "positivo");
+  assert.match(r!.rotulo, /2024/);
+});
+
+/* A LC 123 proíbe sócio PJ no Simples, então sair também acontece por aquisição, por débito
+   tributário, por CNAE vedado ou por opção. Afirmar faturamento seria inventar. */
+test("o rótulo NUNCA afirma faturamento, porque sair do Simples tem várias causas", () => {
+  const r = regimeTributario({ opcao_simples: false, data_exclusao_simples: "2024-03-31" });
+  assert.doesNotMatch(r!.rotulo, /4,8|fatura|receita/i);
+});
+
+test("nunca optou é neutro, não positivo", () => {
+  const r = regimeTributario({ opcao_simples: false, data_exclusao_simples: null });
+  assert.equal(r?.tom, "neutro");
+});
+
+/* NULL é "não verificado", não "não é optante". Rótulo aqui faria a tela afirmar o que o banco
+   não sabe — e antes do backfill da 0015 a base inteira estava neste estado. */
+test("não verificado não vira rótulo nenhum", () => {
+  assert.equal(regimeTributario({ opcao_simples: null, data_exclusao_simples: null }), null);
+  assert.equal(regimeTributario({}), null);
 });

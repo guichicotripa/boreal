@@ -114,10 +114,19 @@ porte = gi("porte") if "porte" in col else np.zeros(len(raw), dtype=np.int32)
 saiu_simples = gi("saiu_simples") if "saiu_simples" in col else np.zeros(len(raw), dtype=np.int32)
 N = len(mf)
 
-# Guarda contra matriz antiga: estas duas colunas existiram por algumas horas em 11/08/2026 e
-# LEEM O DESFECHO (ver o cabecalho). Se aparecerem, a matriz e velha e tem que ser reextraida,
-# porque deixar o campo disponivel e esperar disciplina e como o erro volta.
-_proibidas = [c for c in ("no_simples", "mei") if c in col]
+# Guarda contra matriz contaminada: estas colunas LEEM O DESFECHO (ver o cabecalho). Se
+# aparecerem, a matriz tem que ser reextraida, porque deixar o campo disponivel e esperar
+# disciplina e como o erro volta.
+#
+# `no_simples` e `mei` existiram por algumas horas em 11/08/2026.
+#
+# `opcao_simples` e `data_exclusao_simples` entraram na tabela `empresa` em 26/08/2026 (migration
+# 0015) para FILTRAR a lista e MOSTRAR o regime na tela, a pedido da Setter. Esses usos sao
+# legitimos; treinar com eles NAO e, pelo mesmo motivo de sempre: a LC 123 proibe socio PJ no
+# Simples e o rotulo de aquisicao E "entra socio PJ", entao toda adquirida foi obrigada a sair.
+# Agora que as colunas estao no banco, o caminho para elas chegarem aqui por acidente e MAIS
+# curto que antes, e por isso os nomes entram nesta lista explicitamente.
+_proibidas = [c for c in ("no_simples", "mei", "opcao_simples", "data_exclusao_simples") if c in col]
 if _proibidas:
     sys.exit(f"ABORTADO: a matriz tem coluna contaminada {_proibidas}. "
              "Rode `node --env-file=.env.local scripts/extrai-matriz-score.mjs` de novo.")

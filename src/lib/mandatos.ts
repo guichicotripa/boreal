@@ -53,9 +53,10 @@ export const MANDATOS: Mandato[] = [
     nome: "Diagnóstico veterinário",
     descricao: "Foco A da Setter. Laboratórios dentro do CNAE de atividades veterinárias.",
     empresas: 1671,
-    /* Fundada até 2019 e porte acima de EPP: 72 das 1.671. Ver filtro-padrao.ts. */
-    filtroPadrao: { portes: ["DEMAIS"], maxAnoFundacao: 2019 },
-    empresasFiltradas: 72,
+    /* Porte acima de EPP, fundada até 2019 e fora do Simples: 52 das 1.671. Sem o corte do
+       Simples seriam 72, e 20 delas faturam menos de R$ 4,8 MM. Ver filtro-padrao.ts. */
+    filtroPadrao: { portes: ["DEMAIS"], maxAnoFundacao: 2019, excluirSimples: true },
+    empresasFiltradas: 52,
     recortes: [
       {
         cnaes: ["7500"],
@@ -68,9 +69,9 @@ export const MANDATOS: Mandato[] = [
     nome: "Plano de saúde pet",
     descricao: "Foco B da Setter. Operadoras e planos, dentro de veterinária e de planos de saúde.",
     empresas: 1119,
-    /* 31 das 1.119 sobrevivem ao corte. */
-    filtroPadrao: { portes: ["DEMAIS"], maxAnoFundacao: 2019 },
-    empresasFiltradas: 31,
+    /* 20 das 1.119 sobrevivem ao corte (eram 31 antes de tirar os optantes do Simples). */
+    filtroPadrao: { portes: ["DEMAIS"], maxAnoFundacao: 2019, excluirSimples: true },
+    empresasFiltradas: 20,
     recortes: [
       {
         cnaes: ["7500"],
@@ -85,10 +86,10 @@ export const MANDATOS: Mandato[] = [
     nome: "Death care",
     descricao: "Funerárias, cemitérios, cremação e planos de auxílio funeral. CNAE limpo.",
     empresas: 11712,
-    /* 777 das 11.712. Mandato ainda sem dono na Setter; o padrão vale igual, e é justamente
-       aqui que ele mais poupa tela (o universo é 7x o dos dois de pet somados). */
-    filtroPadrao: { portes: ["DEMAIS"], maxAnoFundacao: 2019 },
-    empresasFiltradas: 777,
+    /* 676 das 11.712 (eram 777 antes do corte do Simples). Mandato ainda sem dono na Setter; o
+       padrão vale igual, e é aqui que ele mais poupa tela: o universo é 7x o dos dois de pet. */
+    filtroPadrao: { portes: ["DEMAIS"], maxAnoFundacao: 2019, excluirSimples: true },
+    empresasFiltradas: 676,
     recortes: [{ cnaes: ["9603", "65111"], nomes: [] }],
   },
 ];

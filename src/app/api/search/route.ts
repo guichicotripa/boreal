@@ -124,7 +124,7 @@ export async function POST(req: NextRequest) {
   const perm = await permissoesAtuais();
   const foraDoContrato = (oque: string) =>
     NextResponse.json({
-      filters: { cnaePrefixes: [], minFaixaEtaria: null, maxAnoFundacao: null, portes: null, ufs: null, setorForaDaBase: null, limit: 50 },
+      filters: { cnaePrefixes: [], minFaixaEtaria: null, maxAnoFundacao: null, portes: null, excluirSimples: false, ufs: null, setorForaDaBase: null, limit: 50 },
       parsedBy: "heuristic" as const,
       count: 0,
       empresas: [],
@@ -283,7 +283,7 @@ export async function POST(req: NextRequest) {
     .select(
       `id, cnpj, razao_social, nome_fantasia, cnae_principal, cnae_principal_desc,
        cnaes_secundarios, natureza_juridica, municipio, uf,
-       data_inicio_atividade, capital_social, porte, telefone, email,
+       data_inicio_atividade, capital_social, porte, opcao_simples, data_exclusao_simples, telefone, email,
        ${socioEmbed}(id, nome, qualificacao, faixa_etaria, data_entrada_sociedade),
        empresa_descartada!left(empresa_id)`
     )
@@ -314,6 +314,14 @@ export async function POST(req: NextRequest) {
      DEMAIS, sem null, então o `.in` não descarta linha por dado ausente. */
   if (filters.portes?.length) {
     q = q.in("porte", filters.portes);
+  }
+
+  /* `not.is.true` e NÃO `eq.false`: NULL significa "ainda não verificado" (empresa ingerida antes
+     da migration 0015, ou backfill que ainda não passou). Com `eq.false` ela sumiria da lista sem
+     ninguém saber por quê; com `not.is.true` ela aparece. Quando o dado falta, o erro certo é
+     mostrar a empresa, não escondê-la. */
+  if (filters.excluirSimples) {
+    q = q.not("opcao_simples", "is", true);
   }
 
   // Praça. Sem isto a UF da tese era ignorada e a busca devolvia outra região

@@ -6,6 +6,7 @@ import type { Empresa } from "@/lib/types";
 import { scoreTier, EIXOS } from "@/lib/scoring";
 import { TIER_STYLES, FAIXA_LABEL, formatCnpj, formatTelefone, formatCapitalCompact } from "@/lib/format";
 import { storeEmpresa, storeOrigin, type ScoreConhecido } from "@/lib/empresa-store";
+import { regimeTributario } from "@/lib/filtro-padrao";
 import { ProcedenciaChip } from "@/components/ProcedenciaChip";
 import { SalvarButton } from "./SalvarButton";
 import { X, ArrowUpRight, Phone, Mail, EyeOff } from "lucide-react";
@@ -48,6 +49,7 @@ export function PeekPanel({
   const delta = investigacao?.delta ?? null;
   const t = TIER_STYLES[scoreTier(score)];
   const socios = e.socio ?? [];
+  const regime = regimeTributario(e);
   const anoFund = e.data_inicio_atividade ? e.data_inicio_atividade.slice(0, 4) : "—";
   const anosOp = e.data_inicio_atividade
     ? new Date().getFullYear() - Number(e.data_inicio_atividade.slice(0, 4))
@@ -157,6 +159,31 @@ export function PeekPanel({
                 <dd className="mt-0.5 text-[12.5px] tabular-nums text-ink-soft">{v}</dd>
               </div>
             ))}
+            {/* Regime tributário ocupa a linha inteira: "Saiu do Simples em 2024" não cabe numa
+                coluna, e é o campo que mais vale ler aqui. Some quando o dado não foi verificado,
+                em vez de mostrar um travessão que pareceria "não tem". */}
+            {regime && (
+              <div className="col-span-2">
+                <dt className="text-[10.5px] font-medium text-ink-muted">Regime tributário</dt>
+                <dd
+                  className={`mt-0.5 text-[12.5px] ${
+                    regime.tom === "negativo"
+                      ? "text-ink-muted"
+                      : regime.tom === "positivo"
+                        ? "text-ink"
+                        : "text-ink-soft"
+                  }`}
+                >
+                  {regime.rotulo}
+                  {regime.tom === "negativo" && (
+                    <span className="text-ink-muted"> · fatura menos de R$ 4,8 MM/ano</span>
+                  )}
+                  {regime.tom === "positivo" && (
+                    <span className="text-ink-muted"> · cresceu ou tomou sócio PJ</span>
+                  )}
+                </dd>
+              </div>
+            )}
           </dl>
           {e.cnae_principal_desc && (
             <p className="mt-2 text-[12px] leading-snug text-ink-muted">{e.cnae_principal_desc}</p>

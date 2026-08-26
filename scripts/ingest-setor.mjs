@@ -177,6 +177,8 @@ const empresasSql = `
     e.sigla_uf, e.id_municipio, mun.nome AS municipio_nome, e.email,
     CONCAT(COALESCE(e.ddd_1, ''), COALESCE(e.telefone_1, '')) AS telefone,
     emp.natureza_juridica, nat.descricao AS natureza_juridica_desc, emp.capital_social, emp.porte,
+    IFNULL(sim.opcao_simples, 0) AS opcao_simples,
+    FORMAT_DATE('%Y-%m-%d', sim.data_exclusao_simples) AS data_exclusao_simples,
     MAX(SAFE_CAST(s.faixa_etaria AS INT64)) AS max_faixa_etaria
   FROM \`basedosdados.br_me_cnpj.estabelecimentos\` e
   JOIN \`basedosdados.br_me_cnpj.empresas\` emp ON emp.cnpj_basico = e.cnpj_basico AND emp.data = '${SNAPSHOT}'
@@ -184,11 +186,16 @@ const empresasSql = `
   LEFT JOIN \`basedosdados.br_bd_diretorios_brasil.municipio\` mun ON mun.id_municipio = e.id_municipio
   LEFT JOIN \`basedosdados.br_bd_diretorios_brasil.cnae_2\` cnae ON cnae.subclasse = e.cnae_fiscal_principal
   LEFT JOIN \`basedosdados.br_bd_diretorios_brasil.natureza_juridica\` nat ON nat.id_natureza_juridica = emp.natureza_juridica
+  -- Regime tributario. Sem filtro de data: a tabela simples da Receita NAO tem particao por data,
+  -- e estado atual. Para filtrar a lista de hoje e o que se quer; para TREINAR o score e vazamento,
+  -- e por isso calibra-score.py aborta se a coluna aparecer (ver migration 0015).
+  LEFT JOIN \`basedosdados.br_me_cnpj.simples\` sim ON sim.cnpj_basico = e.cnpj_basico
   WHERE e.data = '${SNAPSHOT}' AND ${cnaeFiltro} ${ufFiltro} ${idadeFiltro} ${nomeFiltro}
     AND e.situacao_cadastral = '2' AND e.identificador_matriz_filial = '1'
   GROUP BY e.cnpj, e.cnpj_basico, emp.razao_social, e.nome_fantasia, e.cnae_fiscal_principal,
     cnae.descricao_subclasse, e.cnae_fiscal_secundaria, e.data_inicio_atividade, e.sigla_uf,
-    e.id_municipio, mun.nome, e.email, telefone, emp.natureza_juridica, nat.descricao, emp.capital_social, emp.porte
+    e.id_municipio, mun.nome, e.email, telefone, emp.natureza_juridica, nat.descricao, emp.capital_social, emp.porte,
+    sim.opcao_simples, sim.data_exclusao_simples
   ${faixaFiltro}
   ORDER BY max_faixa_etaria DESC NULLS LAST LIMIT ${LIMIT}`;
 // --dry: imprime o SQL e sai. Serve pra conferir o recorte (CNAE/UF/limite) sem
@@ -233,7 +240,12 @@ const empresaPayloads = bqEmpresas.map((r) => ({
   natureza_juridica: r.natureza_juridica_desc || r.natureza_juridica || null,
   capital_social: r.capital_social ?? null, porte: mapPorte(r.porte), situacao_cadastral: "ATIVA",
   data_inicio_atividade: bqDate(r.data_inicio_atividade), municipio: r.municipio_nome || r.id_municipio || null,
-  uf: r.sigla_uf || null, telefone: r.telefone || null, email: r.email || null, raw: r, updated_at: new Date().toISOString(),
+  uf: r.sigla_uf || null, telefone: r.telefone || null, email: r.email || null,
+  /* Ausente na tabela `simples` = nunca optou, e o IFNULL do SQL já resolveu isso pra 0. `false`
+     explícito e não NULL: NULL passa a significar só "ainda não verificado", e é o que faz o
+     filtro da busca degradar mostrando a empresa em vez de escondê-la. */
+  opcao_simples: r.opcao_simples === 1, data_exclusao_simples: r.data_exclusao_simples || null,
+  raw: r, updated_at: new Date().toISOString(),
 }));
 let n = 0;
 for (const batch of chunks(empresaPayloads, BATCH)) {

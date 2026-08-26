@@ -29,6 +29,18 @@ export type FiltroPadrao = {
   portes: string[];
   /** Fundada ATÉ este ano, inclusive. 2019 = exclui 2020 em diante. */
   maxAnoFundacao: number;
+  /* Tira os optantes pelo Simples Nacional.
+   *
+   * Fernanda apontou o furo em 26/08/2026: "tem algumas empresas que têm porte DEMAIS, porém são
+   * optantes pelo Simples, ou seja, faturam menos de R$ 4,8 MM. Não fazem sentido para nós." Ela
+   * conferia uma por uma no CNPJ.biz. Medido no mesmo dia: 28% do universo qualificado do Foco A,
+   * 35% do Foco B, 13% do death care.
+   *
+   * Não é redundante com `portes`: são as duas metades da MESMA pergunta (a empresa fatura acima
+   * de R$ 4,8 milhões?). `porte = DEMAIS` diz que a Receita a classificou acima do teto; a opção
+   * pelo Simples diz que ela declara estar abaixo. Quando os dois discordam, o Simples vence,
+   * porque é opção ativa e anual, e o porte é herdado de cadastro que ninguém atualiza. */
+  excluirSimples?: boolean;
 };
 
 /**
@@ -51,6 +63,7 @@ export function comFiltroPadrao(
     ...filtros,
     portes: padrao.portes,
     maxAnoFundacao: filtros.maxAnoFundacao ?? padrao.maxAnoFundacao,
+    excluirSimples: padrao.excluirSimples ?? false,
   };
 }
 
@@ -71,5 +84,38 @@ const ROTULO_PORTE: Record<string, string> = {
  */
 export function descreveFiltroPadrao(padrao: FiltroPadrao): string {
   const porte = padrao.portes.length === 1 ? ROTULO_PORTE[padrao.portes[0]] : padrao.portes.join("/");
-  return `porte ${porte ?? padrao.portes.join("/")} · fundada até ${padrao.maxAnoFundacao}`;
+  const partes = [`porte ${porte ?? padrao.portes.join("/")}`, `fundada até ${padrao.maxAnoFundacao}`];
+  // "fora do Simples" e não "opcao_simples = false": o rótulo tem que dizer o efeito pra quem opera.
+  if (padrao.excluirSimples) partes.push("fora do Simples");
+  return partes.join(" · ");
+}
+
+/* ── O regime tributário como FATO na tela ────────────────────────────────────
+ *
+ * Não basta filtrar: a informação é do originador, não só do filtro. Ela conferia isso a mão no
+ * CNPJ.biz, então mostrar na linha economiza a ida mesmo quando o corte está desligado.
+ *
+ * Três estados, e o do meio é o mais valioso e o mais fácil de vender errado:
+ *
+ *   optante         fatura < R$ 4,8 MM/ano. É o que o corte tira.
+ *   saiu em AAAA    deixou o Simples naquele ano. DUAS causas OPOSTAS: estourou o teto de receita
+ *                   (cresceu, é alvo) OU entrou sócio PJ, que a LC 123 proíbe (foi adquirida).
+ *                   Também pode ser débito tributário, CNAE vedado ou opção própria.
+ *                   Por isso o rótulo diz "saiu do Simples" e NUNCA "fatura mais de R$ 4,8 MM":
+ *                   é sinal, não prova, e a diferença importa numa tela de cliente.
+ *   fora            nunca optou. Lucro Real ou Presumido desde sempre.
+ */
+export type Regime = { rotulo: string; tom: "negativo" | "positivo" | "neutro" } | null;
+
+export function regimeTributario(e: {
+  opcao_simples?: boolean | null;
+  data_exclusao_simples?: string | null;
+}): Regime {
+  // NULL não é "não é optante": é "ainda não verificado". Inventar um rótulo aqui seria pior que
+  // não mostrar nada, porque a tela passaria a afirmar algo que o banco não sabe.
+  if (e.opcao_simples == null) return null;
+  if (e.opcao_simples) return { rotulo: "Simples Nacional", tom: "negativo" };
+  const ano = e.data_exclusao_simples?.slice(0, 4);
+  if (ano) return { rotulo: `Saiu do Simples em ${ano}`, tom: "positivo" };
+  return { rotulo: "Fora do Simples", tom: "neutro" };
 }

@@ -46,6 +46,8 @@ if (!url || !key) {
       let q = supabase.from("empresa").select("id", { count: "exact", head: true }).or(filtroOr(m));
       q = q.in("porte", m.filtroPadrao.portes);
       q = q.lte("data_inicio_atividade", `${m.filtroPadrao.maxAnoFundacao}-12-31`);
+      // Espelha a rota: `not.is.true` e não `eq.false`, pra NULL (não verificado) continuar passando.
+      if (m.filtroPadrao.excluirSimples) q = q.not("opcao_simples", "is", true);
       const filtrado = await q;
       assert.equal(filtrado.error, null, `leitura falhou: ${filtrado.error?.message}`);
 

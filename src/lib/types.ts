@@ -10,6 +10,10 @@ export type SearchFilters = {
      (LC 123/2006), e é o único proxy de tamanho que a base tem. Opcional porque os caches
      estáticos foram gerados antes deste campo existir. Ver src/lib/filtro-padrao.ts. */
   portes?: string[] | null;
+  /* Tira da lista quem e optante pelo Simples Nacional (fatura < R$ 4,8 MM/ano). Existe porque
+     `porte = DEMAIS` sozinho MENTE: 28% do universo qualificado do Foco A estava em DEMAIS e no
+     Simples ao mesmo tempo. Ver src/lib/filtro-padrao.ts. */
+  excluirSimples?: boolean;
   // Praça: siglas de UF, ou null se a tese não restringir. Opcional porque os
   // caches estáticos foram gerados antes deste campo existir.
   ufs?: string[] | null;
@@ -44,6 +48,12 @@ export type Empresa = {
   data_inicio_atividade: string | null;
   capital_social: number | null;
   porte: string | null;
+  /* Regime tributário (migration 0015). `opcao_simples` NULL = não verificado, diferente de false.
+     `data_exclusao_simples` tem DUAS causas opostas: estourou o teto de R$ 4,8 MM (cresceu) ou
+     entrou sócio PJ, que a LC 123 proíbe (foi adquirida). Ver regimeTributario() em
+     filtro-padrao.ts. PROIBIDOS como feature de treino do score. */
+  opcao_simples?: boolean | null;
+  data_exclusao_simples?: string | null;
   telefone: string | null;                // contato — output mais valioso pra deal sourcing
   email: string | null;
   socio?: Socio[];

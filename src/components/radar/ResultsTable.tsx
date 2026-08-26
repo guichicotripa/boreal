@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { Empresa } from "@/lib/types";
 import { scoreTier } from "@/lib/scoring";
 import { TIER_STYLES, FAIXA_LABEL, formatCapitalCompact } from "@/lib/format";
+import { regimeTributario } from "@/lib/filtro-padrao";
 import { storeEmpresa, storeOrigin, type ScoreConhecido } from "@/lib/empresa-store";
 import { SalvarButton } from "./SalvarButton";
 import { ArrowUpRight, EyeOff } from "lucide-react";
@@ -133,7 +134,31 @@ export function ResultsTable({
                     <span className="text-[11px] text-ink-muted">—</span>
                   )}
                 </td>
-                <td className="px-3 py-2 text-[12px] text-ink-soft">{e.porte ?? "—"}</td>
+                {/* Porte com a ressalva do regime na mesma célula. Porte sozinho MENTE: DEMAIS
+                    com opção pelo Simples fatura menos de R$ 4,8 MM, e era o que ela conferia a
+                    mão no CNPJ.biz. Com o corte padrão ligado nenhum optante aparece, mas a marca
+                    fica pra quando ela desliga o filtro. */}
+                <td className="px-3 py-2 text-[12px] text-ink-soft">
+                  {e.porte ?? "—"}
+                  {(() => {
+                    const r = regimeTributario(e);
+                    if (!r || r.tom === "neutro") return null;
+                    return (
+                      <span
+                        className={`ml-1.5 whitespace-nowrap text-[10.5px] ${
+                          r.tom === "negativo" ? "text-ink-muted" : "text-ink"
+                        }`}
+                        title={
+                          r.tom === "negativo"
+                            ? "Optante pelo Simples Nacional: fatura menos de R$ 4,8 MM/ano"
+                            : `${r.rotulo}. Estourou o teto de receita ou tomou sócio PJ (a LC 123 proíbe sócio PJ no Simples).`
+                        }
+                      >
+                        {r.tom === "negativo" ? "· Simples" : `· saiu ${r.rotulo.slice(-4)}`}
+                      </span>
+                    );
+                  })()}
+                </td>
                 <td className="whitespace-nowrap px-3 py-2 text-[12px] tabular-nums text-ink-soft">
                   {anoDe(e.data_inicio_atividade)}
                 </td>
