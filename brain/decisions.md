@@ -2079,3 +2079,46 @@ chegarem ao treino por acidente ficou mais curto que antes, então os nomes entr
 
 Verificado replicando a query da rota: zero optantes na primeira página dos três mandatos, e
 DIAGNOSTIC (uma das cinco que a Fernanda salvou) aparece com "Saiu do Simples em 2021".
+
+---
+
+## 2026-08-26 (noite) — O custo do corte de ano, medido: 10 empresas
+
+**Pergunta do Guilherme:** tem empresa fundada depois de 2019 que passaria no filtro?
+
+Tem, e são poucas e nomeáveis. Barradas SÓ pelo corte de ano (porte DEMAIS, fora do Simples,
+fundada 2020+):
+
+| mandato | barradas | capital > R$ 500k | SPE/seguradora/concessionária | com sócio PJ | **independentes** |
+|---|---:|---:|---:|---:|---:|
+| Diagnóstico veterinário | 20 | 1 | 0 | 0 | **1** |
+| Plano de saúde pet | 13 | 4 | 0 | 2 | **2** |
+| Death care | 173 | 67 | 28 | 30 | **9** |
+
+**Correção do meu próprio número:** o regex de sócio PJ que venho usando desde a análise de 24/08
+não cobre `LLC`. Duas das 12 caem por isso:
+
+- **PHAGELAB BRASIL** (R$ 18,1 mi, Curitiba) tem `PHAGELAB LLC` no quadro: é o braço brasileiro de
+  um grupo estrangeiro, não uma independente.
+- **UBN INSURANCE ALLIANCE GROUP, LLC. LTDA** é veículo de seguro, mesmo balde das seguradoras.
+
+Sobram **10**. E o número de "sócio PJ" citado em análises anteriores está subestimado pelo mesmo
+motivo: o regex precisa de `LLC`, `INC`, `CORP`, `GMBH`, `S\.L\.`, `B\.V\.`.
+
+**A leitura por mandato é oposta.** Em Foco A o corte de ano não custa nada (zero independentes
+perdidas): a regra da Fernanda está certa naquele universo, 19 das 20 barradas têm capital de
+R$ 100 mil ou menos. Em death care ele barra 173, e mesmo depois de tirar SPE e sócio PJ sobram 9,
+com MEMORIAL PARQUE UBERABA (R$ 12 mi) na frente.
+
+**Insight de desenho que isso revela:** o corte de ano é um PROXY de "pequena", e as outras três
+condições (porte DEMAIS + fora do Simples + capital) medem tamanho **diretamente e melhor**. Para
+uma empresa de 2021 com R$ 5 milhões de capital, porte DEMAIS e fora do Simples, o ano de fundação
+não acrescenta informação nenhuma — só remove.
+
+**Decisão: NÃO mexer no filtro por conta própria.** A regra é da Fernanda e ela a descreveu em voz
+alta; trocá-la com base em 10 casos seria substituir o julgamento dela pelo meu. O caminho é
+mostrar as 10 e perguntar. Se ela topar, a mudança é pequena: liberar 2020+ quando capital
+> R$ 500 mil E sem sócio PJ E fora do Simples.
+
+**Pendência nova:** corrigir o regex de sócio PJ para cobrir sufixos estrangeiros, e refazer os
+números de lift que dependem dele.
