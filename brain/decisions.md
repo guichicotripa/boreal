@@ -2122,3 +2122,30 @@ mostrar as 10 e perguntar. Se ela topar, a mudança é pequena: liberar 2020+ qu
 
 **Pendência nova:** corrigir o regex de sócio PJ para cobrir sufixos estrangeiros, e refazer os
 números de lift que dependem dele.
+
+---
+
+## 2026-09-14 — Uso do piloto antes da call de fim de mês com Henrique e Fernanda
+
+Leitura da tabela `evento` de 26/08 a 14/09, para a call de hoje.
+
+| | até 24/08 (sem corte) | 26/08 a 11/09 (com corte) |
+|---|---:|---:|
+| salvou | 6 | **28** |
+| descartou | 541 | 60 |
+| taxa de save | **1,1%** | **32%** |
+
+Ressalva: o universo encolheu (52/20/676) e boa parte da triagem pesada já tinha sido feita, então
+a comparação não é limpa. Mas a direção é inequívoca, e várias das salvas de 26/08 (LABORATORIOS
+BOTEGA, CANIS FELIS) estavam na lista "saiu do Simples sem sócio PJ" medida no mesmo dia.
+
+- **Uma pessoa continua sendo o piloto inteiro.** Fernanda: 34 buscas, 5 dias ativos (26/08, 31/08,
+  04/09, 08/09, 11/09), cadência quase semanal. Henrique: nada desde 17/08. Bruno: nunca entrou.
+- **34 de 34 buscas com o corte padrão ligado. Zero "ver todas".** O filtro virou o modo de uso.
+- **Death care ganhou uso:** 10 salvas em 08/09. A leitura "mandato sem dono" de 24/08 envelheceu.
+- **Dossiê começou a ser usado:** 3 investigações e 1 dossiê. Ainda baixo, mas saiu do zero.
+- **31 oportunidades, TODAS em "identificado".** Nenhuma andou no funil, e `novo_para_setter`
+  continua vazio. É a pergunta central da call: sem saber o que aconteceu com as 31, não existe
+  argumento de renovação medido.
+- Nenhum commit no repo desde 27/08. O grafo de warm-intro **não está construído**: segue hipótese
+  de arquitetura.
