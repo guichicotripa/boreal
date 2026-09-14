@@ -325,3 +325,19 @@ Ordenado por evidência, não por gosto. Tudo aqui saiu de 299 eventos da Setter
    Pergunta para o Henrique, junto com a do dossiê: **quem na Setter cobre death care, e essa
    pessoa tem login?** Sem isso, 100 das 300 empresas pré-cacheadas foram gastas num mandato que
    ninguém abre.
+
+---
+
+## 🔴 Da call de fim de piloto (14/09) — ver `decisions.md` da mesma data
+
+1. **Convites do Teams** para as calls de 21/09 e 28/09.
+2. **Proposta escrita de B e C com preço**, para 21/09.
+3. **Exclusividade de C:** propor campo de uso (boutique de M&A sell-side concorrente) × setor × praça
+   × janela, com uso fora de M&A livre. Corrigir antes a frase "não pretendo me relacionar com o
+   mercado".
+4. **Cláusula de PI na minuta** antes de C.
+5. **Escopo do grafo sem scraping:** exportação de contatos do LinkedIn + mailing + QSA. Prazo só
+   depois do escopo.
+6. **Dono interno na Setter** como condição de B ou C.
+7. **Medir a novidade das 31 salvas.**
+

@@ -2149,3 +2149,44 @@ BOTEGA, CANIS FELIS) estavam na lista "saiu do Simples sem sócio PJ" medida no 
   argumento de renovação medido.
 - Nenhum commit no repo desde 27/08. O grafo de warm-intro **não está construído**: segue hipótese
   de arquitetura.
+
+---
+
+## 2026-09-14 — Call de fim de piloto: vai assinar, e o grafo vira pedido de cliente
+
+Fonte completa no segundo cérebro: `wiki/sources/setter-call-henrique-2026-09.md` (transcrição em
+`raw/setter-call-henrique-2026-09-14.md`).
+
+**Fechado:** a Setter sobe o contrato para assinatura nesta semana e paga. Piloto estendido até
+30/09, mesmo escopo, sem custo. Calls toda segunda pelo Teams.
+
+**Aberto, com a Setter decidindo:** (A) encerrar, (B) manter com mensalidade e melhoria contínua,
+(C) construir o grafo de warm-intro, com a pergunta "como você não vai dar isso ao meu concorrente".
+
+**O que isto muda no produto:**
+1. **A dor mudou de camada.** Descobrir empresa já não é o gargalo; **acessar o dono** é. O pedido
+   explícito: "linkar sócios, contatos, redes sociais". A busca funcionou o suficiente para expor o
+   problema seguinte.
+2. **O grafo sai da gaveta.** Estava registrado como hipótese que "não entra antes das entregas do
+   contrato Setter". Virou a entrega candidata de C, e foi o maior sinal de valor da relação.
+   Desenho mínimo: nós = pessoas e empresas; arestas públicas = QSA; arestas privadas = contatos
+   exportados do LinkedIn por cada pessoa da Setter + mailing de ~3 mil; pergunta = caminho mais
+   curto e mais confiável entre alguém da firma e o sócio-alvo. O trabalho duro é entity resolution
+   (casar o nome do mailing com o sócio do QSA).
+3. **Coleta sem scraping.** Raspar LinkedIn viola os termos e trata dado pessoal sob a LGPD; é o
+   mesmo raciocínio que recusou raspar o CNPJ.biz em 26/08. A exportação de contatos é feita pelo
+   próprio dono da conta.
+4. **Score não decide fora da vertical dele.** Em death care, "independente de ser 100 ou 30", o
+   filtro humano manda. Reforça o caminho de scores por tese, e não um score único.
+5. **Escala por setor não é automática.** Cada setor tem critério próprio. Isso favorece o modelo de
+   exclusividade por setor (profundo e caro) e desfavorece o de assinatura genérica.
+
+**O que o cliente pôs como condição:** "ter um líder que direcione o tempo e o esforço, até para
+justificar o custo". O piloto rodou sem esse dono, no tempo ocioso de uma pessoa.
+
+**Três riscos que nasceram na call, a tratar antes de 21/09:**
+- A frase "não pretendo me relacionar com outras pessoas do mercado" não corresponde às frentes em
+  andamento e pode virar base de uma exclusividade ampla demais.
+- O prazo de "4 meses" foi dado sem escopo.
+- A minuta não tem cláusula de propriedade intelectual, e C é exatamente o caso em que ela importa:
+  separar código e método (Boreal) da rede de relacionamento (Setter).
