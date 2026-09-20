@@ -1,10 +1,13 @@
-# Escopo das opções B e C para a Setter
+# Escopo das opções B e C para a Setter (v2)
 
-> Rascunho de 14/09/2026 para a call de 21/09. **Parte 1** é texto de proposta, pode ir para a
-> Setter depois de revisado. **Parte 2** são notas internas de negociação e não vão.
+> **v2 de 20/09/2026**, para a call de 21/09. A v1 foi revisada pelo Codex
+> (`brain/revisao-codex-escopo-b-c.md`) e a maior parte das críticas entrou aqui.
 >
-> Decisões já tomadas pelo Guilherme: ~20h/semana de out/2026 a jul/2027; C é adicional sobre B;
-> SLU própria antes de C; B ancorado entre R$ 4 e 6 mil com obrigação de desfecho.
+> **Parte 1** é texto de proposta, vai para a Setter. **Parte 2** são notas internas. **Parte 3** é
+> o roteiro da call de amanhã.
+>
+> Decisões do Guilherme: período inicial de 90 dias; taxa de êxito fica em 0,5%; consegue manter a
+> ferramenta depois de agosto de 2027; C é adicional ao B, com a fase 0 contratável à parte.
 >
 > Origem: call de 14/09 (`segundo-cerebro/wiki/sources/setter-call-henrique-2026-09.md`).
 
@@ -12,74 +15,103 @@
 
 # PARTE 1 · Proposta
 
-## Resumo
+## O que vocês pediram na última call, e onde cada pedido caiu
 
-| | **B · Plataforma e evolução contínua** | **C · Caminho até o dono (adicional ao B)** |
-|---|---|---|
-| O que resolve | Encontrar e qualificar as empresas certas em cada tese | Descobrir quem da Setter chega no dono de cada empresa |
-| Formato | Mensalidade | Projeto em três fases, com decisão de seguir ou parar entre elas |
-| Preço | R$ 6.000/mês, ou R$ 4.500/mês com prazo de 6 meses e desfecho registrado | R$ 6.000 + R$ 24.000 + R$ 8.000 por fase |
-| Prazo | 6 meses, renovável | ~16 semanas, out/2026 a fev/2027 |
-| Contrapartida da Setter | Registrar o que acontece com cada empresa salva; um dono interno | Dados de relacionamento e exportações de contatos; um dono interno |
+| O que vocês disseram | Onde entra |
+|---|---|
+| "Refinar isso para pensar num produto mais automático" | B, filtros por tese salvos por mandato |
+| "Cada setor vai ter uma particularidade, não necessariamente você vai ganhar escala" | B, mandato novo sob demanda com sessão de critérios, não em série |
+| "Precisa de um filtro humano, de quem tem familiaridade" | B, o critério de quem conhece o setor vira filtro da ferramenta |
+| "Independente de ser 100 ou 30, precisa de um filtro nosso" | B, ordenação própria por tese, o score deixa de ser critério único |
+| "Quais são as teses, e como a gente vai fazer esses filtros" | B, uma sessão por mandato para responder isso junto |
+| **"Como é que eu vou acessar esses caras"** | **B, bloco de acesso, e C** |
+| "Linkar os sócios, contatos, redes sociais" | B para contato da Receita, C para o caminho de relacionamento |
+| "Costurar a cadeia para chegar nesses caras" | C |
+| "Em laboratório pet não temos nenhum cara que lidera, precisamos de quem abra portas" | C, a fase 0 procura exatamente isso |
+| "Reorganizar a dinâmica interna, ter um líder que direcione" | Contrapartida da Setter, nas duas opções |
 
 ## O que o piloto mostrou
 
-- A ferramenta funcionou como atalho: depois do filtro de porte, ano de fundação e Simples, a taxa de
-  aproveitamento subiu de **1% para 32%**, e a Setter salvou **31 empresas** em três mandatos.
-- Cada setor pede critério próprio. Não existe um filtro genérico que sirva para 50 setores.
-- O gargalo agora é **acesso**. Encontrar a empresa deixou de ser o problema; chegar no dono é.
-- O uso veio de uma pessoa, no tempo livre. Para continuar, a Setter precisa de um dono interno.
+- Depois que o filtro que a Fernanda descreveu virou ferramenta (porte, ano de fundação e Simples),
+  a proporção de empresas salvas em vez de descartadas subiu de 1% para 32%. Ressalva honesta: o
+  universo também encolheu, então parte do ganho vem disso. **31 empresas foram salvas.**
+- **As 31 continuam paradas no primeiro estágio.** Nenhuma foi contatada dentro da plataforma, e não
+  sabemos quantas vocês já conheciam.
+- O uso concentrou em uma pessoa, no tempo livre.
 
-As duas opções abaixo respondem a esses quatro pontos, nessa ordem.
+**A conclusão que tiramos disso, e que orienta a proposta:** o problema deixou de ser achar empresa.
+É transformar as empresas achadas em conversa. Por isso o B abaixo começa pelas 31 que já estão lá,
+e não por abrir mandatos novos.
 
 ---
 
-## Opção B · Plataforma e evolução contínua
+## Opção B · Da lista para a conversa
 
-### O que está incluído
+**R$ 4.500 por mês, por 90 dias.** Sem prazo longo e sem multa. No fim dos 90 dias, decidimos a
+continuidade com os números na mesa.
 
-1. **Até 5 acessos** da Setter à plataforma.
-2. **Os 3 mandatos atuais**, mantidos e atualizados com a base da Receita.
-3. **Um mandato novo por mês**, até 6 ativos ao mesmo tempo. Cada mandato novo começa com uma
-   sessão de 1 hora com quem conhece o setor, para transformar o critério da pessoa em filtro, do
-   jeito que foi feito com porte, ano de fundação e Simples. Resultado de cada sessão:
-   - filtro padrão do mandato, visível e desligável
-   - ordenação ajustada à tese (sucessão, consolidação ou outra)
-   - investigação e dossiê prontos para as 100 primeiras empresas
-4. **Contato marcado por confiabilidade.** Telefone e e-mail da Receita já aparecem para 89% das
-   empresas, mas cerca de 20% se repetem em vários CNPJs, o que costuma indicar o escritório de
-   contabilidade. A plataforma passa a separar contato **provavelmente direto** de **provavelmente
-   do contador**. Nas 31 empresas salvas, 22 têm telefone que não se repete.
-5. **Correções e melhorias contínuas**, com prioridade definida junto com a Setter.
-6. **Call semanal de 30 minutos** e correção de erro que impeça o uso em até 1 dia útil.
-7. **Relatório mensal:** empresas salvas, empresas novas para a Setter, avanço no funil e
-   aproveitamento por mandato.
+### Bloco 1 · Acesso (é o centro desta fase)
+
+1. **Lista de trabalho das 31 empresas já salvas**, pronta no primeiro dia, cada uma com contato e
+   verificação abaixo.
+2. **Contato classificado por confiabilidade.** Telefone e e-mail da Receita existem para 89% das
+   empresas da base. Cerca de 20% se repetem em vários CNPJs, o que costuma indicar escritório de
+   contabilidade ou grupo econômico. A plataforma passa a marcar cada contato como **não repetido na
+   base**, **compartilhado com N empresas** ou **validado pela Setter**. Nas 31 empresas salvas, 22
+   têm telefone que não se repete. Não afirmamos que o contato é do dono, afirmamos o que a base
+   mostra.
+3. **Verificação de "já foi adquirida".** Até 40 empresas por mês escolhidas por vocês, cada uma com
+   resposta, fonte e data, e um grau de certeza declarado. Foi a pergunta que a Fernanda fez em voz
+   alta: "entro nela para olhar, para entender se ela não foi adquirida".
+4. **Quem procurar dentro da empresa:** sócios com qualificação (administrador, inventariante) e
+   faixa etária, para a abordagem não cair na pessoa errada.
+
+### Bloco 2 · Descoberta (mantida, sob demanda)
+
+5. **Os 3 mandatos atuais** mantidos e atualizados com a base da Receita.
+6. **Até 2 mandatos novos nos 90 dias**, cada um abrindo com uma sessão de 1 hora com quem conhece o
+   setor, para transformar o critério da pessoa em filtro. Cada mandato entregue com: universo
+   descrito, filtro padrão visível e desligável, ordenação ajustada à tese e as 50 primeiras
+   empresas já investigadas. Prazo de 3 semanas por mandato, contado de quando recebermos os
+   critérios.
+
+### Bloco 3 · Operação
+
+7. **Até 5 acessos.**
+8. **Call semanal de 30 minutos** e, em falha que impeça o uso, **primeira resposta em 1 dia útil**
+   com previsão de solução depois do diagnóstico.
+9. **Relatório quinzenal:** empresas trabalhadas, contatos classificados, aquisições encontradas e
+   avanço no funil.
 
 ### O que a Setter faz
 
-- **Registra o que acontece com cada empresa salva** (contatada, reunião, mandato, descartada e
-  motivo), direto na plataforma, pelo menos a cada 15 dias.
-- **Marca, ao salvar, se já conhecia a empresa.**
 - **Indica um dono interno** da ferramenta.
+- **Registra o que aconteceu** com cada empresa trabalhada: contatada, reunião, descartada e por quê.
+- **Marca, ao salvar, se já conhecia a empresa.**
 
-O registro não é burocracia. É o que faz a plataforma melhorar para a Setter: cada desfecho ajusta a
-ordenação dos mandatos. Sem ele, o que existe é uma lista, e uma lista não precisa de mensalidade.
+Sem esse registro não há como medir nada no fim dos 90 dias, e a conversa de continuidade fica sem
+base. Enquanto ele estiver atrasado, pausamos customizações novas e seguimos com o que já existe.
+Não há cobrança extra por isso.
 
-### Preço
+### Taxa de êxito
 
-- **R$ 6.000/mês.**
-- **R$ 4.500/mês** com prazo mínimo de 6 meses e registro de desfecho em dia. Se o registro atrasar
-  mais de 30 dias, o mês seguinte volta ao valor cheio.
-- **Taxa de êxito de 0,5%** sobre operações com empresas salvas na plataforma que não estavam na base
-  de relacionamento da Setter na data em que foram salvas, por **24 meses** a partir dessa data. A
-  data e a empresa ficam registradas com selo de proveniência. A base de relacionamento de
-  referência é uma lista de CNPJs entregue pela Setter na assinatura.
+**0,5% sobre o valor pago pelas ações**, nas operações de empresas que estavam registradas na
+plataforma antes do primeiro contato de vocês com elas, dentro de **24 meses** desse registro. É a
+mesma ordem de grandeza da faixa que combinamos em julho, de cerca de 10% do fee de vocês.
+
+- Ficam de fora as empresas da lista de CNPJs que vocês entregarem na assinatura, e qualquer empresa
+  em que vocês demonstrem relacionamento anterior.
+- O pagamento acompanha o recebimento de vocês: se os honorários forem parcelados, a taxa também é.
+- A data e a empresa ficam registradas com selo de proveniência, com hash e horário.
 
 ### Exclusividade
 
-Enquanto o contrato estiver vigente e em dia, a Boreal não oferece os mandatos ativos da Setter a
-outra assessoria de M&A no Brasil. A exclusividade é **por mandato**: não cobre outros setores nem
-usos fora de M&A.
+Enquanto o contrato estiver vigente e em dia, a Boreal não oferece a outra **assessoria de M&A no
+Brasil** os mandatos contratados por vocês. Cada mandato entra em anexo com o recorte exato (CNAE,
+filtros de nome e praça), para não haver dúvida sobre o que está protegido.
+
+Não está coberto: outros setores, usos fora de M&A e atendimento a compradores e consolidadores.
+Se vocês quiserem incluir compradores, dá para conversar à parte.
 
 ### Fora do escopo
 
@@ -90,154 +122,175 @@ redes sociais, setores sem mandato contratado.
 
 ## Opção C · Caminho até o dono
 
-> Adicional ao B. Não existe sem ele, porque usa a base de empresas e sócios que o B mantém.
+Responde ao "como é que eu vou acessar esses caras" e ao "não temos ninguém que abra portas em
+laboratório pet".
 
 ### O que é
 
-Na página de cada empresa, a plataforma mostra **quem da Setter tem o caminho mais curto e mais
-confiável até o dono**, e por onde passa esse caminho. Exemplo de saída:
+Na página de cada empresa, a plataforma mostra **por onde a Setter pode chegar no dono**, e classifica
+cada caminho em três níveis:
 
-> **Laboratório X** · 2 caminhos
-> 1. Fernanda → João Silva (contato no LinkedIn) → João é sócio da Empresa Y junto com Maria Souza,
->    sócia do Laboratório X
-> 2. Henrique → Carlos Lima (mailing) → Carlos trabalha no Laboratório X
+- **Confirmado:** alguém da Setter confirmou que consegue pedir essa apresentação.
+- **Candidato:** o vínculo existe nas fontes, mas ninguém confirmou que dá para acionar.
+- **Inconclusivo:** há indício de ligação e falta evidência. Não vira caminho.
+
+Exemplo de caminho candidato:
+
+> **Laboratório X**
+> Fernanda conhece João Silva (contato no LinkedIn). João é sócio da Empresa Y junto com Maria
+> Souza, que é sócia-administradora do Laboratório X.
 
 ### Como funciona
 
-Três fontes, e nenhuma delas é raspagem:
+Três fontes, nenhuma delas raspagem:
 
-1. **Quadro de sócios da Receita**, público: quem é sócio de qual empresa, desde quando.
+1. **Quadro de sócios da Receita**, público, Brasil inteiro: quem é sócio de qual empresa e desde
+   quando.
 2. **Mailing da Setter** (~3 mil contatos).
-3. **Contatos do LinkedIn exportados por cada pessoa da Setter**, pela função de exportação de dados
-   da própria plataforma. Cada pessoa decide se participa.
+3. **Contatos do LinkedIn exportados por cada pessoa da Setter**, pela própria função de exportação
+   da plataforma. Cada pessoa decide se participa, e pedimos apenas o arquivo de conexões.
 
-O trabalho técnico central é **casar nomes**: descobrir que o "João Silva" do mailing é o mesmo João
-Silva sócio de uma empresa. Casamentos duvidosos passam por revisão humana antes de virar caminho.
+O trabalho central é **casar identidades**: descobrir que o "João Silva" do mailing é o mesmo João
+Silva do quadro societário. Casamentos sem evidência suficiente ficam como inconclusivos.
 
-### O que ele não faz (dito antes, para não virar expectativa)
+### O que ele não faz
 
-- **Não chega a "6 graus".** A exportação do LinkedIn traz os contatos diretos de cada pessoa, não os
-  contatos dos contatos. O alcance real é de **2 a 3 passos**, usando o quadro de sócios como ponte.
-- Não envia mensagem nem contata ninguém. Mostra o caminho; a apresentação é pedida por uma pessoa.
-- Não enxerga relação que não esteja em nenhuma das três fontes (família, clube, faculdade).
+- **Não são "6 graus".** A exportação traz os contatos diretos de cada pessoa, não os contatos dos
+  contatos. O alcance real é de 2 a 3 passos, com o quadro societário como ponte.
+- **Conexão não é confiança.** Estar conectado no LinkedIn ou no mailing não significa que a pessoa
+  vai fazer a apresentação. Por isso existe o nível "confirmado".
+- Não envia mensagem nem contata ninguém.
+- Não enxerga relação que não esteja nas três fontes (família, faculdade, clube).
 
 ### Fases
 
 | Fase | Duração | O que entrega | Decisão ao final |
 |---|---|---|---|
-| **0 · Diagnóstico dos dados** | 2 semanas | Inventário do mailing e das exportações; teste de casamento com o mailing + 3 exportações; **quantas das 31 empresas salvas têm pelo menos um caminho de até 3 passos** | Se menos de 20% das salvas tiverem caminho, o projeto para aqui |
-| **1 · Primeira versão** | 6 semanas | Caminhos na página da empresa para os mandatos ativos, com todas as exportações que a Setter reunir; revisão dos casamentos duvidosos | Uso real por 4 semanas antes da fase 2 |
-| **2 · Medição** | 8 semanas | Registro de cada caminho usado: pedido de apresentação, resposta, reunião. Comparação com a taxa atual de resposta da Setter em abordagem sem vínculo (~3%). Atualização trimestral dos contatos | Relatório de eficiência: custo, tempo e diferença |
+| **0 · Diagnóstico** | 2 semanas | Inventário do mailing e de 3 exportações; teste de casamento de identidades; **dois números separados: quantas das 31 empresas têm caminho candidato, e quantas têm caminho confirmado por alguém de vocês** | Seguimos se houver pelo menos 8 caminhos confirmados, número que combinamos antes de começar |
+| **1 · Primeira versão** | 10 semanas | Caminhos na página da empresa em todos os mandatos ativos, com as exportações que vocês reunirem, revisão de identidades e os três níveis de confiança | Uso real por 4 semanas |
+| **2 · Medição** | 8 semanas, em paralelo ao uso | Registro de cada caminho acionado: pedido de apresentação, resposta, reunião. Comparação com a taxa de resposta que vocês têm hoje sem vínculo | Relatório de eficiência: tempo, custo e diferença |
 
 ### Preço
 
 | Fase | Valor | Pagamento |
 |---|---:|---|
 | 0 · Diagnóstico | R$ 6.000 | na entrega |
-| 1 · Primeira versão | R$ 24.000 | 50% no início, 50% na entrega |
+| 1 · Primeira versão | R$ 24.000 | metade no início, metade na entrega |
 | 2 · Medição | R$ 8.000 | na entrega |
-| **Total se as três fases acontecerem** | **R$ 38.000** | |
 
-A Setter só se compromete com a fase seguinte depois de ver o resultado da anterior. Se a fase 0
-mostrar que o grafo não encontra caminho, o custo total é R$ 6.000.
+**A fase 0 pode ser contratada sozinha, sem o B.** As fases 1 e 2 exigem o B ativo, porque o caminho
+aparece dentro da plataforma. Vocês só se comprometem com a fase seguinte depois de ver o resultado
+da anterior: se a fase 0 mostrar que não há caminho acionável, o custo do experimento foi R$ 6.000.
 
-### Dados, propriedade e exclusividade
+### Dados, propriedade e continuidade
 
-- **Os dados de relacionamento são da Setter.** Mailing, exportações e o mapa de relações montado com
-  eles não são usados para nenhum outro cliente e são apagados ao fim do contrato.
-- **O código e o método são da Boreal**, licenciados à Setter enquanto o contrato estiver vigente.
-- **A Boreal não oferece o caminho até o dono a outra assessoria de M&A no Brasil por 12 meses**
-  contados da entrega da fase 1. Usos fora de M&A ficam livres.
-- A Boreal atua como **operadora** dos dados pessoais, com a Setter como controladora, e isso vai em
-  cláusula própria de proteção de dados.
+- **Os dados de relacionamento são de vocês.** Mailing, exportações e o mapa construído com eles não
+  são usados para nenhum outro cliente. No encerramento, exportamos tudo para vocês e apagamos, com
+  exceção do registro mínimo de proveniência, se houver taxa de êxito em aberto.
+- **A tecnologia e o método são da Boreal**, licenciados a vocês enquanto o contrato estiver vigente.
+  **Se a Boreal descontinuar o produto, a licença da versão entregue passa a ser perpétua e vocês
+  recebem a exportação completa mais a documentação para transferir a outro fornecedor.**
+- **Depois de agosto de 2027**, quando eu estiver na faculdade, o serviço continua em **modo
+  manutenção**: base atualizando, correções e uma call por mês, por R$ 2.500 mensais, sem
+  desenvolvimento novo. Volto ao ritmo integral nas férias.
+- A Boreal trata os dados como **operadora** e vocês como controladores, em cláusula própria. Antes
+  da coleta entregamos a finalidade documentada e o procedimento para pedidos dos titulares.
 
-### Pré-requisitos para começar
+### Exclusividade do C
 
-- Contrato de C assinado pela empresa própria da Boreal.
-- Cláusula de proteção de dados com a Boreal como operadora.
-- Pelo menos 3 pessoas da Setter dispostas a exportar os contatos na fase 0.
-- Dono interno definido.
+Pelos **12 meses seguintes à entrega da fase 1**, a Boreal não oferece o caminho até o dono a outra
+assessoria de M&A no Brasil, enquanto o contrato de B estiver vigente e em dia. Usos fora de M&A
+ficam livres. Ao fim dos 12 meses, renovamos ou liberamos, e vocês têm preferência para renovar.
+
+### Para começar
+
+Contrato assinado pela empresa própria da Boreal, cláusula de proteção de dados, pelo menos 3 pessoas
+de vocês dispostas a exportar os contatos, e o dono interno definido.
 
 ---
 
-# PARTE 2 · Notas internas (não vão para a Setter)
+# PARTE 2 · Notas internas
 
-## Por que esses números
+## O que mudou da v1 para a v2, e por quê
 
-**Custo de servir não é o argumento.** R$ 1,08 por empresa investigada, R$ 0,21 por busca, uns R$ 300
-a 560 por mês de API. A margem é quase total em qualquer preço. O preço sai de três coisas:
-
-1. **Tempo seu.** C são ~16 semanas a ~20h, ~320 horas. R$ 38 mil dá ~R$ 120 por hora. É barato para
-   desenvolvimento sob medida com conhecimento de domínio, e é o que torna o C aprovável.
-2. **Valor para a Setter.** Um mandato que nasça de um caminho do grafo paga o projeto inteiro muitas
-   vezes. É o argumento verbal, não o escrito.
-3. **O histórico deles.** Nunca pagaram ferramenta além do CRM, e o piloto fechou em R$ 2 mil. R$ 6 mil
-   cheio é o triplo, e o desconto para R$ 4.500 existe para parecer uma escolha, não um recuo.
-
-## Como negociar
-
-- **Ancorar no cheio por escrito** (R$ 6.000). O R$ 4.500 aparece como consequência de um compromisso
-  deles, não como desconto pedido.
-- **Carta na manga para o C, se o Henrique empurrar preço:** reduzir a fase 1 para R$ 12 mil e subir
-  a taxa de êxito para **1%** nas operações cujo primeiro contato veio de um caminho sugerido. Com o
-  grafo, a atribuição fica **registrada na plataforma** (caminho sugerido, pedido de apresentação),
-  o que resolve a dificuldade de controle apontada em 11/08. Só usar se precisar: troca caixa agora
-  por receita incerta daqui a 12 a 24 meses.
-- **O dono interno é condição, não pedido.** Foi o próprio Henrique quem disse. Repetir as palavras
-  dele: "ter um líder que direcione o tempo e o esforço, até para justificar o custo".
-- **Não repetir "4 meses" sem as fases.** O cronograma agora é o da tabela, com portões.
-
-## Perguntas que o Henrique vai fazer
-
-**"E quando você for para a faculdade?"**
-Resposta a preparar antes de 21/09. Proposta: aviso prévio de 90 dias; B continua em modo de
-manutenção (dados atualizando, correções) ou encerra com exportação completa do que é da Setter
-(empresas salvas, estágios, notas). **Decisão sua, ainda aberta.**
-
-**"Por que o preço triplicou se só a Fernanda usou?"**
-Porque B não é o piloto: é um mandato novo por mês com critério próprio, contato marcado, relatório
-e call semanal. E o valor menor existe justamente em troca do registro de desfecho e do prazo. Se
-continuar só uma pessoa usando, o dono interno resolve isso, não o preço.
-
-**"Como eu garanto que você não leva isso para o concorrente?"**
-Três camadas: exclusividade por mandato no B; 12 meses de exclusividade do caminho até o dono entre
-assessorias de M&A no C; e os dados de relacionamento da Setter nunca saem, porque são deles.
-
-**"E se o grafo não achar nada?"**
-A fase 0 existe para isso. Custo máximo de descobrir: R$ 6 mil e duas semanas.
-
-**"O código fica com quem?"**
-Com a Boreal, licenciado. O que é da Setter são os dados. É o mesmo desenho de qualquer software.
-
-## O que mudar na minuta atual
-
-| Ponto | Hoje | Proposta |
+| v1 | v2 | Motivo |
 |---|---|---|
-| Responsabilidade por LGPD | sem teto | teto de 12 mensalidades, exceto dolo |
-| Propriedade intelectual | não existe | código e método da Boreal; dados da Setter |
-| Janela da taxa de êxito | 1 mês | 24 meses a partir da data em que a empresa foi salva |
-| Base de relacionamento | indefinida | lista de CNPJs entregue na assinatura |
-| Exclusividade | total, por R$ 2 mil | por mandato no B; 12 meses entre assessorias no C |
-| Citação da Setter | proibida | autorização para citar como cliente |
-| Proteção de dados no C | não existe | Boreal operadora, Setter controladora |
-| Saída | não trata | aviso de 90 dias e exportação dos dados da Setter |
+| 6 meses, R$ 6.000 ou R$ 4.500 | 90 dias, R$ 4.500 | Quatro mudanças comerciais de uma vez empurravam para a opção A |
+| Volta ao preço cheio se atrasar registro | Pausa de customizações | Multa pune o cliente quando ele já vê menos valor, e gera preenchimento falso |
+| Um mandato novo por mês | Até 2 em 90 dias, com aceite e prazo | Era encomenda mensal de desenvolvimento disfarçada de assinatura |
+| 100 dossiês por mandato | 40 verificações de "já foi adquirida" por mês | É o trabalho que a Fernanda faz à mão; dossiê genérico quase não foi aberto |
+| "Contato provavelmente direto" | "Não repetido na base" | O método não valida que o contato é do dono |
+| "Caminho mais curto e mais confiável" | Confirmado, candidato, inconclusivo | Conexão não prova confiança |
+| Portão de 20% com caminho | 8 caminhos confirmados por pessoas da Setter | O teste certo é se dá para pedir a apresentação |
+| Fase 1 em 6 semanas, 320h de C | Fase 1 em 10 semanas | 320h eram 16 semanas de toda a capacidade, sem sobrar B |
+| "Uma lista não precisa de mensalidade" | removido | Entregava ao Henrique o argumento pronto para encerrar |
+| Continuidade só nas notas internas | Modo manutenção a R$ 2.500 e licença perpétua se descontinuar | Sem isso, C não fecha: a exclusividade atravessa a ida para a faculdade |
+| Fase 0 amarrada ao B | Fase 0 avulsa | Amarrar fazia o compromisso parecer R$ 33 mil em vez de R$ 6 mil |
 
-## Riscos
+## Números que ficam de reserva
 
-- **Outubro a dezembro é a janela de prazo das aplicações.** Se apertar, o C desacelera, o B não.
-- **O B depende de uso.** Com uma usuária no tempo livre, o relatório mensal vai mostrar pouco, e isso
-  aparece na renovação. O dono interno é o que protege o B.
-- **A frase de 14/09** ("não pretendo me relacionar com outras pessoas do mercado") precisa ser
-  corrigida antes de falar de exclusividade. A exclusividade desta proposta é estreita de propósito:
-  por mandato, e 12 meses só para o caminho até o dono.
-- **Fase 0 pode dar pouco caminho.** O portão de 20% é chute inicial; vale discutir com o Henrique qual
-  número faria a Setter querer a fase 1.
-- **B pela EI do tio, C pela SLU.** Dois CNPJs na mesma relação; a SLU tem que existir antes da
-  assinatura do C, e o teto de responsabilidade no B vira obrigatório.
+- Compromisso total do B nos 90 dias: **R$ 13.500**. Com a fase 0 do C: **R$ 19.500**.
+- C completo, se as três fases acontecerem: **R$ 38.000**, distribuídos em cerca de 5 meses.
+- Custo de servir continua irrelevante (R$ 1,08 por empresa investigada). Não é argumento de venda.
+- Capacidade real: 20h por semana, das quais cerca de 8h ficam no B. Sobram 12h para o C, o que dá
+  as 10 semanas da fase 1.
 
-## Decisões suas ainda abertas
+## O que ainda não está resolvido
 
-1. Continuidade depois de agosto de 2027 (manutenção ou encerramento com exportação).
-2. Se a exclusividade do B inclui compradores diretos (consolidadores e fundos) ou só assessorias.
-3. O número do portão da fase 0.
-4. Se a carta da taxa de êxito de 1% entra na proposta escrita ou fica guardada.
+1. **Sobre o que incide a taxa de êxito na minuta que vai ser assinada.** O onepager de julho falava
+   em "faixa de 10% do fee de vocês"; a minuta traz 0,5% sem dizer de quê. A v2 define como valor
+   pago pelas ações, que é a leitura compatível. **Confirmar o texto antes de assinar.**
+2. **Janela de 1 mês na minuta.** Precisa virar 24 meses, senão a taxa de êxito é decorativa.
+3. **Teto de responsabilidade.** Com a indenização de LGPD sem teto e o contrato no CNPJ do seu tio,
+   o risco alcança patrimônio pessoal dele. É o ponto mais urgente do contrato.
+4. **Compradores e consolidadores dentro ou fora da exclusividade.**
+5. **Isolamento no banco.** Hoje `empresa` e `socio` são legíveis por qualquer usuário autenticado.
+   O grafo privado da Setter exige isolamento antes da fase 1, não depois.
+
+---
+
+# PARTE 3 · Roteiro da call de 21/09
+
+## O fato que abre a call, dito por você antes que ele pergunte
+
+Desde 14/09 houve **5 eventos na plataforma, todos no próprio dia da call**. Nada nos últimos 6
+dias. As 31 empresas continuam paradas no primeiro estágio, sem nota e sem marcação de novidade.
+
+Falar isso primeiro faz três coisas: tira a chance de virar pergunta constrangedora no meio, prova
+que a medição existe, e prepara o pedido do dono interno com evidência em vez de opinião.
+
+> "Estendi o piloto até o fim do mês e quase ninguém entrou. Isso não me surpreendeu, porque é
+> exatamente o que você tinha me dito: sem alguém com o tema na mão, fica no tempo ocioso. Por isso
+> a proposta que eu trouxe começa pelas 31 empresas que já estão lá, e não por abrir setor novo."
+
+## Ordem
+
+1. **O fato acima**, em 30 segundos.
+2. **O que vocês pediram na última call**, lendo a tabela da Parte 1. Mostra que a proposta saiu da
+   fala deles, não do seu desejo.
+3. **B, 90 dias, R$ 4.500.** Enfatizar que o centro é acesso: contato classificado, verificação de
+   aquisição, lista das 31 pronta no dia 1.
+4. **C, começando pela fase 0 avulsa de R$ 6.000.** "Custo máximo de descobrir se isso funciona."
+5. **Perguntas suas**, todas fechadas.
+
+## Perguntas que você precisa fazer
+
+- O contrato do piloto subiu para assinatura?
+- Quem vai ser o dono interno da ferramenta?
+- Consigo 3 pessoas para exportar os contatos do LinkedIn na fase 0?
+- Das 31, quantas vocês já conheciam?
+- Podemos começar o B em 1º de outubro?
+
+## Se ele empurrar preço
+
+Primeiro cortar escopo, não preço: cai de 2 mandatos novos para 1, ou de 40 verificações mensais
+para 20. Se ainda assim, R$ 3.500 nos 90 dias **em troca do registro de desfecho em dia e do dono
+interno nomeado na call**. Não abrir mão das duas coisas, porque sem elas não existe número para a
+conversa de renovação.
+
+## O que não falar
+
+- Não repetir "não pretendo me relacionar com outras pessoas do mercado". A exclusividade desta
+  proposta já é delimitada por escrito, e é ela que responde à preocupação dele.
+- Não prometer prazo para o C fora das fases.
+- Não citar taxa de resposta de outras casas de M&A sem fonte.
