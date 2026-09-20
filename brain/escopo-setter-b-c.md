@@ -55,16 +55,33 @@ continuidade com os números na mesa.
 1. **Lista de trabalho das 31 empresas já salvas**, pronta no primeiro dia, cada uma com contato e
    verificação abaixo.
 2. **Contato classificado por confiabilidade.** Telefone e e-mail da Receita existem para 89% das
-   empresas da base. Cerca de 20% se repetem em vários CNPJs, o que costuma indicar escritório de
-   contabilidade ou grupo econômico. A plataforma passa a marcar cada contato como **não repetido na
-   base**, **compartilhado com N empresas** ou **validado pela Setter**. Nas 31 empresas salvas, 22
-   têm telefone que não se repete. Não afirmamos que o contato é do dono, afirmamos o que a base
-   mostra.
-3. **Verificação de "já foi adquirida".** Até 40 empresas por mês escolhidas por vocês, cada uma com
-   resposta, fonte e data, e um grau de certeza declarado. Foi a pergunta que a Fernanda fez em voz
-   alta: "entro nela para olhar, para entender se ela não foi adquirida".
-4. **Quem procurar dentro da empresa:** sócios com qualificação (administrador, inventariante) e
-   faixa etária, para a abordagem não cair na pessoa errada.
+   empresas da base, mas boa parte é do escritório de contabilidade. A plataforma passa a dizer, para
+   cada contato, **em quantas empresas do Brasil inteiro aquele mesmo telefone aparece**.
+
+   Medido nas 31 empresas que vocês salvaram: **8 têm telefone exclusivo da empresa, 7 dividem com 2
+   a 4 empresas e 16 dividem com 5 ou mais.** Um deles aparece em 454 empresas, outro em 95. Ou seja,
+   de cada duas ligações que a lista de hoje sugere, uma cai no contador.
+
+   Não afirmamos que o contato é do dono. Afirmamos quantas empresas usam aquele número, que é
+   verificável, e deixamos vocês marcarem o contato como validado quando confirmarem.
+3. **Verificação de "já foi adquirida".** Foi a pergunta que a Fernanda fez em voz alta: "entro nela
+   para olhar, para entender se ela não foi adquirida". Duas camadas:
+
+   **Automática, no dado público, para todas as empresas da lista:** entrada de sócio pessoa jurídica
+   com a data, troca completa do quadro societário e mudança de capital. Medido nas 31 salvas: **12
+   têm sócio pessoa jurídica, 9 receberam esse sócio de 2020 para cá e 11 trocaram o quadro inteiro
+   depois da fundação.** Exemplos reais da lista de vocês: SAFRA SÃO FRANCISCO recebeu IRMÃOS VILA
+   PARTICIPAÇÕES em 2022, LOTUS LABORATÓRIO recebeu LIFE INVESTMENTS BRASIL em 2022.
+
+   **Sob demanda, com busca na web, para até 40 empresas por mês** escolhidas por vocês, com resposta,
+   fonte, data e grau de certeza declarado.
+
+   Ressalva: sócio pessoa jurídica entrando pode ser holding da própria família em vez de venda. A
+   ferramenta separa os dois casos comparando sobrenomes do quadro, e marca quando não dá para saber.
+4. **Quem procurar dentro da empresa.** A Receita informa a qualificação de cada sócio, e nas 31
+   empresas salvas ela está preenchida em 100% dos 126 sócios: 33 são sócio-administrador, 23 são
+   administrador, o resto é sócio sem poder de gestão. A plataforma passa a mostrar isso por extenso,
+   com a faixa etária, para a abordagem não cair na pessoa errada.
 
 ### Bloco 2 · Descoberta (mantida, sob demanda)
 
@@ -219,7 +236,7 @@ de vocês dispostas a exportar os contatos, e o dono interno definido.
 | Volta ao preço cheio se atrasar registro | Pausa de customizações | Multa pune o cliente quando ele já vê menos valor, e gera preenchimento falso |
 | Um mandato novo por mês | Até 2 em 90 dias, com aceite e prazo | Era encomenda mensal de desenvolvimento disfarçada de assinatura |
 | 100 dossiês por mandato | 40 verificações de "já foi adquirida" por mês | É o trabalho que a Fernanda faz à mão; dossiê genérico quase não foi aberto |
-| "Contato provavelmente direto" | "Não repetido na base" | O método não valida que o contato é do dono |
+| "Contato provavelmente direto", 22 de 31 | Contagem nacional do telefone: 8 exclusivos, 16 compartilhados com 5+ | O número da v1 usava só a nossa base de 65 mil e subestimava. Medido no Brasil inteiro em 20/09 |
 | "Caminho mais curto e mais confiável" | Confirmado, candidato, inconclusivo | Conexão não prova confiança |
 | Portão de 20% com caminho | 8 caminhos confirmados por pessoas da Setter | O teste certo é se dá para pedir a apresentação |
 | Fase 1 em 6 semanas, 320h de C | Fase 1 em 10 semanas | 320h eram 16 semanas de toda a capacidade, sem sobrar B |
