@@ -10,12 +10,13 @@
 > responder aquela pergunta da Fernanda de "essa aqui já foi comprada?".
 >
 > **8 têm sócio pessoa jurídica de fora da família, ou seja, provavelmente já têm dono.** Outras 4
-> têm holding, mas é da própria família, então continuam disponíveis. E 5 trocaram o quadro inteiro
-> depois da fundação, o que não prova venda mas merece um olhar antes de vocês investirem tempo.
+> têm holding, mas é da própria família, então continuam disponíveis. E 5 trocaram o quadro inteiro depois da fundação, o que não prova venda mas merece um olhar antes de vocês investirem tempo.
 >
-> Testei o método contra o que a Fernanda já sabia de cabeça, e ele achou sozinho a PROVET comprada
-> pela Petlove, a NEW PROVET comprada pela PROVET e a TECSA pela Pet Care. Não pegou a TOMOVET,
-> porque lá o vínculo está nas pessoas e não numa holding.
+> Testei o método contra o que a Fernanda já sabia de cabeça, e ele achou sozinho a PROVET comprada pela Petlove, a NEW PROVET comprada pela PROVET e a TECSA pela Pet Care. Não pegou a TOMOVET, porque lá o vínculo está nas pessoas e não numa holding.
+>
+> Também rodei busca na web nas 13 mais relevantes. Ela **não confirmou nenhuma aquisição**, e isso
+> diz mais sobre o mercado do que sobre as empresas: compra de PME brasileira quase não sai na
+> imprensa. Mas trouxe quatro observações que mudam a leitura de algumas linhas, no fim do documento.
 >
 > Segue a lista. É sinal de cadastro, não confirmação de negócio, então trata como ponto de partida.
 
@@ -25,73 +26,65 @@
 
 Sócio pessoa jurídica sem sobrenome em comum com o quadro, com o ano em que entrou.
 
-| Empresa | Praça | Quem entrou | Ano |
-|---|---|---|---|
-| **VETGUARD PLANO DE SAUDE VETERINARIO** | Rio de Janeiro/RJ | GRP VEPET PARTICIPACOES | 2020 |
-| **LOTUS LABORATORIO VETERINARIO** | Cascavel/PR | LIFE INVESTIMENTS BRASIL | 2022 |
-| **DIAGNOSTIC CENTRO DE DIAGNOSTICO VETERINARIO** | Brasília/DF | MAAB PARTICIPACOES EMPRESARIAIS | 2022 |
-| **AMIGOO PET (APET)** | São Paulo/SP | PROFITUS PARTICIPACOES | 2023 |
-| **CEMITERIO MEMORIAL VALE DA SAUDADE** | Cruz do Espírito Santo/PB | PROADM HOLDING | 2023 |
-| **JARDIM DA PAZ ADMINISTRACAO DE CEMITERIO** | S. J. do Rio Preto/SP | C4 PARTICIPACOES E INVESTIMENTOS | 2023 |
-| **VERSAN EMPREENDIMENTOS** | Arapiraca/AL | MCB PARTICIPACOES | 2023 |
-| **GENEAL DIAGNOSTICOS** | Uberaba/MG | GENESIS ADMINISTRACAO PARTICIPACOES | 2025 |
+| Empresa                                          | Praça                     | Quem entrou                         | Ano  |
+| ------------------------------------------------ | ------------------------- | ----------------------------------- | ---- |
+| **VETGUARD PLANO DE SAUDE VETERINARIO**          | Rio de Janeiro/RJ         | GRP VEPET PARTICIPACOES             | 2020 |
+| **LOTUS LABORATORIO VETERINARIO**                | Cascavel/PR               | LIFE INVESTIMENTS BRASIL            | 2022 |
+| **DIAGNOSTIC CENTRO DE DIAGNOSTICO VETERINARIO** | Brasília/DF               | MAAB PARTICIPACOES EMPRESARIAIS     | 2022 |
+| **AMIGOO PET (APET)**                            | São Paulo/SP              | PROFITUS PARTICIPACOES              | 2023 |
+| **CEMITERIO MEMORIAL VALE DA SAUDADE**           | Cruz do Espírito Santo/PB | PROADM HOLDING                      | 2023 |
+| **JARDIM DA PAZ ADMINISTRACAO DE CEMITERIO**     | S. J. do Rio Preto/SP     | C4 PARTICIPACOES E INVESTIMENTOS    | 2023 |
+| **VERSAN EMPREENDIMENTOS**                       | Arapiraca/AL              | MCB PARTICIPACOES                   | 2023 |
+| **GENEAL DIAGNOSTICOS**                          | Uberaba/MG                | GENESIS ADMINISTRACAO PARTICIPACOES | 2025 |
 
-**Dois compradores aparecem mais de uma vez na base**, o que sugere consolidação em curso no death
-care: **PROADM HOLDING** está em 6 empresas e **MCB PARTICIPACOES** em 5.
+**Dois compradores aparecem mais de uma vez na base**, o que sugere consolidação em curso no death care: **PROADM HOLDING** está em 6 empresas e **MCB PARTICIPACOES** em 5.
 
 ## 2. Têm holding, mas é da própria família (4)
 
 O nome da holding divide sobrenome com os sócios pessoa física. Não é venda, é organização
 patrimonial. Seguem disponíveis.
 
-| Empresa | Praça | Holding |
-|---|---|---|
-| INTERNATIONAL PET (DR PET) | São Paulo/SP | RENE EMPREENDIMENTOS E PARTICIPACOES |
-| MORADA CEMITERIOS (MORADA DA PAZ) | Parnamirim/RN | VILA PARTICIPACOES |
-| SAO FRANCISCO SERVICOS FUNERARIOS | João Pessoa/PB | VILA PARTICIPACOES |
-| SAFRA SAO FRANCISCO ASSISTENCIA FUNERARIA | Natal/RN | IRMAOS VILA PARTICIPACOES |
+| Empresa                                   | Praça          | Holding                              |
+| ----------------------------------------- | -------------- | ------------------------------------ |
+| INTERNATIONAL PET (DR PET)                | São Paulo/SP   | RENE EMPREENDIMENTOS E PARTICIPACOES |
+| MORADA CEMITERIOS (MORADA DA PAZ)         | Parnamirim/RN  | VILA PARTICIPACOES                   |
+| SAO FRANCISCO SERVICOS FUNERARIOS         | João Pessoa/PB | VILA PARTICIPACOES                   |
+| SAFRA SAO FRANCISCO ASSISTENCIA FUNERARIA | Natal/RN       | IRMAOS VILA PARTICIPACOES            |
 
-**Atenção:** as três últimas são do mesmo grupo. VILA PARTICIPACOES aparece em 4 empresas da base e
-IRMAOS VILA em 5. Tratar como um interlocutor só, não como três alvos.
+**Atenção:** as três últimas são do mesmo grupo. VILA PARTICIPACOES aparece em 4 empresas da base e IRMAOS VILA em 5. Tratar como um interlocutor só, não como três alvos.
 
 ## 3. Não dá para saber, mas o quadro mudou (5)
 
-Nenhum sócio atual estava na empresa na fundação. Pode ter sido compra por pessoas físicas, saída de
-fundador ou sucessão. Vale confirmar antes de investir tempo.
+Nenhum sócio atual estava na empresa na fundação. Pode ter sido compra por pessoas físicas, saída de fundador ou sucessão. Vale confirmar antes de investir tempo.
 
-| Empresa | Praça | Fundação | Primeiro sócio atual entrou em |
-|---|---|---:|---:|
-| CANIS FELIS DIAGNOSTICO VETERINARIO | São Paulo/SP | 2010 | 2017 |
-| NUCLEO DIAGNOSTICO VETERINARIO MARINGA | Maringá/PR | 2014 | 2017 |
-| LAB & VET DIAGNOSTICO E CONSULTORIA | São Paulo/SP | 1995 | 2004 |
-| EMEDAUX ADMINISTRACAO DE CEMITERIOS | Florianópolis/SC | 1975 | 2000 |
-| GESTORA E ADMINISTRADORA JARDIM DA SAUDADE | Curitiba/PR | 1983 | 2007 |
+| Empresa                                    | Praça            | Fundação | Primeiro sócio atual entrou em |
+| ------------------------------------------ | ---------------- | -------: | -----------------------------: |
+| CANIS FELIS DIAGNOSTICO VETERINARIO        | São Paulo/SP     |     2010 |                           2017 |
+| NUCLEO DIAGNOSTICO VETERINARIO MARINGA     | Maringá/PR       |     2014 |                           2017 |
+| LAB & VET DIAGNOSTICO E CONSULTORIA        | São Paulo/SP     |     1995 |                           2004 |
+| EMEDAUX ADMINISTRACAO DE CEMITERIOS        | Florianópolis/SC |     1975 |                           2000 |
+| GESTORA E ADMINISTRADORA JARDIM DA SAUDADE | Curitiba/PR      |     1983 |                           2007 |
 
 ## 4. Sem sinal de venda (14)
 
 Só sócios pessoa física, com pelo menos um desde a fundação.
 
-AXYS ANALISES · CARE PLANO DE SAUDE ANIMAL · DIMEVET · FRLAC · HISTOPATO · HOSPITAL VETERINARIO SAO
-FRANCISCO DE ASSIS · LABORATORIO SAO FRANCISCO (Blumenau) · LABORATORIOS BOTEGA (CENTERVET) ·
-NARDOTTO SCAN · NUCLEO DIAGNOSTICO VETERINARIO · ROUS PATOLOGIA ANIMAL · SERVICOS DE ASSISTENCIA
-FAMILIAR FOZ · ZELLE PATOLOGIA VETERINARIA · ZIIGO ASSISTENCIA FUNERARIA
+AXYS ANALISES · CARE PLANO DE SAUDE ANIMAL · DIMEVET · FRLAC · HISTOPATO · HOSPITAL VETERINARIO SAO FRANCISCO DE ASSIS · LABORATORIO SAO FRANCISCO (Blumenau) · LABORATORIOS BOTEGA (CENTERVET) · NARDOTTO SCAN · NUCLEO DIAGNOSTICO VETERINARIO · ROUS PATOLOGIA ANIMAL · SERVICOS DE ASSISTENCIA FAMILIAR FOZ · ZELLE PATOLOGIA VETERINARIA · ZIIGO ASSISTENCIA FUNERARIA
 
 ---
 
 ## Teste de acurácia contra o que a Setter já sabia
 
-Na call de 24/08 a Fernanda citou de memória três empresas que já tinham dono. O detector, olhando
-só o cadastro, chegou nas mesmas:
+Na call de 24/08 a Fernanda citou de memória três empresas que já tinham dono. O detector, olhando só o cadastro, chegou nas mesmas:
 
-| O que ela disse | O que o cadastro mostra |
-|---|---|
-| "NEW PROVET já tinha sido adquirida" | NEW PROVET recebeu a PROVET como sócia em 2025 |
-| "Consolidada pela Petlove" | PROVET recebeu PETSUPERMARKET COMERCIO DE PRODUTOS PARA ANIMAIS, razão social da Petlove, em 2025 |
-| "TECSA, empresa consolidadora e já investida" | TECSA recebeu PET CARE CENTRO VETERINARIO SA em 2021 |
-| "TOMOVET, sócios de grupo grande" | **não detectado**: não há pessoa jurídica no quadro, o vínculo está nas pessoas |
+| O que ela disse                               | O que o cadastro mostra                                                                           |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| "NEW PROVET já tinha sido adquirida"          | NEW PROVET recebeu a PROVET como sócia em 2025                                                    |
+| "Consolidada pela Petlove"                    | PROVET recebeu PETSUPERMARKET COMERCIO DE PRODUTOS PARA ANIMAIS, razão social da Petlove, em 2025 |
+| "TECSA, empresa consolidadora e já investida" | TECSA recebeu PET CARE CENTRO VETERINARIO SA em 2021                                              |
+| "TOMOVET, sócios de grupo grande"             | **não detectado**: não há pessoa jurídica no quadro, o vínculo está nas pessoas                   |
 
-Três de quatro, e a falha é explicável. Serve como calibração honesta do que o método pega e do que
-não pega.
+Três de quatro, e a falha é explicável. Serve como calibração honesta do que o método pega e do que não pega.
 
 ## Limites, para dizer junto
 
@@ -100,3 +93,30 @@ não pega.
   separação por sobrenome pega a maioria dos casos, não todos.
 - O snapshot é de novembro de 2025. Movimentos posteriores entram na próxima atualização da base.
 - Quem foi comprado por pessoas físicas não aparece na categoria 1, só na 3.
+
+---
+
+## 5. O que a busca na web acrescentou (20/09)
+
+Rodadas 13 verificações com busca na web: as 5 do grupo 3 e as 8 do grupo 1. **Nenhuma confirmou
+aquisição.** Onze voltaram com fonte real (site institucional, diretórios, notícia) e nenhuma delas
+falava de venda; duas não acharam nada.
+
+**Isso não é falha da busca, é característica do mercado.** Aquisição de empresa familiar de médio
+porte no Brasil quase nunca vira notícia. É a mesma razão pela qual a Boreal minera o registro do
+CNPJ em vez de imprensa: o registro rende centenas de transações onde a imprensa rende unidades.
+Na prática, **para este segmento o quadro societário é a fonte forte e a web é a fonte fraca.**
+
+Ainda assim, quatro achados mudam a leitura:
+
+| Empresa | O que a web mostrou | Como isso muda |
+|---|---|---|
+| **AMIGOO PET (APET)** | Aporte de R$ 10 milhões noticiado em 2023, parceria de distribuição com o Itaú e mudança de marca de Amigoo Pet para APet | A entrada da PROFITUS em 2023 tem cara de **rodada de investimento**, não de venda de controle. Pode seguir como alvo, com sócio financeiro na mesa |
+| **GENEAL DIAGNOSTICOS** | Aparece vinculada ao **grupo Brasif**, com Brasif S/A e Genesis Administração Participações no quadro | Não é empresa familiar independente. É ativo de grupo grande, e a conversa é outra |
+| **VERSAN EMPREENDIMENTOS** | Indício de ligação com o **Grupo Parque das Flores**, em Alagoas, via anúncio de vaga e matéria local | Reforça a leitura de que já tem dono, sem confirmar |
+| **VETGUARD** | Menção a cadastro da Receita **suspenso** | A conferir. Nossa base diz ATIVA, mas o snapshot é de novembro de 2025. Se estiver suspensa, sai da lista de alvos |
+
+**Uma consequência para a ferramenta:** a base foi ingerida com o snapshot de novembro de 2025 e a
+situação cadastral não é reconferida desde então. Empresa que foi baixada ou suspensa depois disso
+continua aparecendo como ativa. Entra na lista de correções.
+
