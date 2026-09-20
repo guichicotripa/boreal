@@ -18,6 +18,7 @@
  * A separação é por sobrenome em comum, e quando não dá para decidir o veredito é "não sei".
  */
 import { createClient } from "@supabase/supabase-js";
+import { pathToFileURL } from "url";
 
 const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
   auth: { persistSession: false },
@@ -124,30 +125,37 @@ export function classifica(empresa) {
   };
 }
 
-const empresas = await empresasAlvo();
-const analisadas = empresas.map((e) => ({ empresa: e, ...classifica(e) }));
-const holdings = [...new Set(analisadas.map((a) => a.holding?.cpf_cnpj_mascarado).filter(Boolean))];
-const alcance = await alcanceDasHoldings(holdings);
+/* Guarda de execucao: este arquivo tambem e IMPORTADO (por scripts/verifica-aquisicao.ts, que
+   reusa `classifica`). Sem isto, importar dispararia o relatorio inteiro, com consultas ao banco
+   e saida no console no meio de outro script. */
+if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
 
-const ORDEM = { "provavelmente comprada": 0, "reorganização familiar": 1, "não sei, mas o quadro mudou": 2, "sem sinal de venda": 3 };
-analisadas.sort((a, b) => ORDEM[a.veredito] - ORDEM[b.veredito] || String(a.empresa.razao_social).localeCompare(b.empresa.razao_social));
+  const empresas = await empresasAlvo();
+  const analisadas = empresas.map((e) => ({ empresa: e, ...classifica(e) }));
+  const holdings = [...new Set(analisadas.map((a) => a.holding?.cpf_cnpj_mascarado).filter(Boolean))];
+  const alcance = await alcanceDasHoldings(holdings);
 
-const fmtCnpj = (c) => String(c).replace(/\D/g, "").replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");
-const contagem = {};
-for (const a of analisadas) contagem[a.veredito] = (contagem[a.veredito] || 0) + 1;
+  const ORDEM = { "provavelmente comprada": 0, "reorganização familiar": 1, "não sei, mas o quadro mudou": 2, "sem sinal de venda": 3 };
+  analisadas.sort((a, b) => ORDEM[a.veredito] - ORDEM[b.veredito] || String(a.empresa.razao_social).localeCompare(b.empresa.razao_social));
 
-console.log(`\n${empresas.length} empresas analisadas${MANDATO ? ` no mandato ${MANDATO}` : " (salvas no pipeline)"}\n`);
-for (const [v, n] of Object.entries(contagem)) console.log(`${String(n).padStart(4)}  ${v}`);
+  const fmtCnpj = (c) => String(c).replace(/\D/g, "").replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");
+  const contagem = {};
+  for (const a of analisadas) contagem[a.veredito] = (contagem[a.veredito] || 0) + 1;
 
-let atual = null;
-for (const a of analisadas) {
-  if (a.veredito !== atual) { atual = a.veredito; console.log(`\n### ${atual.toUpperCase()}\n`); }
-  const e = a.empresa;
-  const n = a.holding ? (alcance.get(a.holding.cpf_cnpj_mascarado)?.size ?? 1) - 1 : 0;
-  const extra = n > 0 ? ` · essa sócia também aparece em ${n} outra(s) empresa(s) da base` : "";
-  console.log(`${e.razao_social}${e.nome_fantasia ? ` (${e.nome_fantasia})` : ""}`);
-  console.log(`   ${fmtCnpj(e.cnpj)} · ${e.municipio}/${e.uf} · fundada ${ano(e.data_inicio_atividade)} · confiança ${a.confianca}`);
-  console.log(`   ${a.porque}${extra}`);
+  console.log(`\n${empresas.length} empresas analisadas${MANDATO ? ` no mandato ${MANDATO}` : " (salvas no pipeline)"}\n`);
+  for (const [v, n] of Object.entries(contagem)) console.log(`${String(n).padStart(4)}  ${v}`);
+
+  let atual = null;
+  for (const a of analisadas) {
+    if (a.veredito !== atual) { atual = a.veredito; console.log(`\n### ${atual.toUpperCase()}\n`); }
+    const e = a.empresa;
+    const n = a.holding ? (alcance.get(a.holding.cpf_cnpj_mascarado)?.size ?? 1) - 1 : 0;
+    const extra = n > 0 ? ` · essa sócia também aparece em ${n} outra(s) empresa(s) da base` : "";
+    console.log(`${e.razao_social}${e.nome_fantasia ? ` (${e.nome_fantasia})` : ""}`);
+    console.log(`   ${fmtCnpj(e.cnpj)} · ${e.municipio}/${e.uf} · fundada ${ano(e.data_inicio_atividade)} · confiança ${a.confianca}`);
+    console.log(`   ${a.porque}${extra}`);
+  }
+  console.log(`\nFonte: quadro societário do CNPJ (Receita Federal), snapshot de 09/11/2025.`);
+  console.log(`Sinal de cadastro, não confirmação de negócio.`);
+
 }
-console.log(`\nFonte: quadro societário do CNPJ (Receita Federal), snapshot de 09/11/2025.`);
-console.log(`Sinal de cadastro, não confirmação de negócio.`);
