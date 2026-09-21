@@ -1,24 +1,16 @@
 # Empresas do pipeline da Setter que provavelmente já têm dono
 
-> Gerado em 20/09/2026 por `scripts/detecta-aquisicao.mjs` sobre as 31 empresas salvas pela Setter.
-> Fonte única: quadro societário do CNPJ (Receita Federal), snapshot de 09/11/2025.
-> **Sinal de cadastro, não confirmação de negócio.**
+> Gerado em 20/09/2026 por `scripts/detecta-aquisicao.mjs` sobre as 31 empresas salvas pela Setter. Fonte única: quadro societário do CNPJ (Receita Federal), snapshot de 09/11/2025. **Sinal de cadastro, não confirmação de negócio.**
 
 ## Mensagem curta, para mandar
 
-> Henrique, rodei uma verificação no quadro societário das 31 empresas que vocês salvaram, para
-> responder aquela pergunta da Fernanda de "essa aqui já foi comprada?".
+> Henrique, rodei uma verificação no quadro societário das 31 empresas que vocês salvaram, para responder aquela pergunta da Fernanda de "essa aqui já foi comprada?".
 >
-> **8 têm sócio pessoa jurídica de fora da família, ou seja, provavelmente já têm dono.** Outras 4
-> têm holding, mas é da própria família, então continuam disponíveis. E 5 trocaram o quadro inteiro depois da fundação, o que não prova venda mas merece um olhar antes de vocês investirem tempo.
+> **8 têm sócio pessoa jurídica de fora da família, ou seja, provavelmente já têm dono.** Outras 4 têm holding, mas é da própria família, então continuam disponíveis. E 5 trocaram o quadro inteiro depois da fundação, o que não prova venda mas merece um olhar antes de vocês investirem tempo.
 >
 > Testei o método contra o que a Fernanda já sabia de cabeça, e ele achou sozinho a PROVET comprada pela Petlove, a NEW PROVET comprada pela PROVET e a TECSA pela Pet Care. Não pegou a TOMOVET, porque lá o vínculo está nas pessoas e não numa holding.
 >
-> Também rodei busca na web nas **31**, uma por uma, com fonte registrada. Ela **não confirmou
-> nenhuma aquisição**, e isso diz mais sobre o mercado do que sobre as empresas: compra de PME
-> brasileira quase não sai na imprensa. Em compensação **confirmou 4 empresas como independentes**,
-> com o nome de quem controla, e achou 8 casos com evento societário que o cadastro não mostrava.
-> Está tudo na seção 5, no fim do documento.
+> Também rodei busca na web nas **31**, uma por uma, com fonte registrada. Ela **não confirmou nenhuma aquisição**, e isso diz mais sobre o mercado do que sobre as empresas: compra de PME brasileira quase não sai na imprensa. Em compensação **confirmou 4 empresas como independentes**, com o nome de quem controla, e achou 8 casos com evento societário que o cadastro não mostrava. Está tudo na seção 5, no fim do documento.
 >
 > Segue a lista. É sinal de cadastro, não confirmação de negócio, então trata como ponto de partida.
 
@@ -43,8 +35,7 @@ Sócio pessoa jurídica sem sobrenome em comum com o quadro, com o ano em que en
 
 ## 2. Têm holding, mas é da própria família (4)
 
-O nome da holding divide sobrenome com os sócios pessoa física. Não é venda, é organização
-patrimonial. Seguem disponíveis.
+O nome da holding divide sobrenome com os sócios pessoa física. Não é venda, é organização patrimonial. Seguem disponíveis.
 
 | Empresa                                   | Praça          | Holding                              |
 | ----------------------------------------- | -------------- | ------------------------------------ |
@@ -91,8 +82,7 @@ Três de quatro, e a falha é explicável. Serve como calibração honesta do qu
 ## Limites, para dizer junto
 
 - É cadastro, não notícia. Uma venda fechada e ainda não registrada não aparece.
-- Sócio pessoa jurídica pode ser holding patrimonial de um sócio individual, e não comprador. A
-  separação por sobrenome pega a maioria dos casos, não todos.
+- Sócio pessoa jurídica pode ser holding patrimonial de um sócio individual, e não comprador. A separação por sobrenome pega a maioria dos casos, não todos.
 - O snapshot é de novembro de 2025. Movimentos posteriores entram na próxima atualização da base.
 - Quem foi comprado por pessoas físicas não aparece na categoria 1, só na 3.
 
@@ -111,15 +101,11 @@ Três de quatro, e a falha é explicável. Serve como calibração honesta do qu
 | **Independência confirmada**, com fonte | **4** |
 | Sem informação pública suficiente | 27 |
 
-**Nenhuma aquisição saiu na imprensa, e isso é sobre o mercado, não sobre as empresas.** Compra de
-empresa familiar de médio porte no Brasil quase nunca vira notícia. É a mesma razão pela qual a
-Boreal minera o registro do CNPJ: o registro rende centenas de transações onde a imprensa rende
-unidades. **Para este segmento, o quadro societário é a fonte forte e a web é a fraca.**
+**Nenhuma aquisição saiu na imprensa, e isso é sobre o mercado, não sobre as empresas.** Compra de empresa familiar de médio porte no Brasil quase nunca vira notícia. É a mesma razão pela qual a Boreal minera o registro do CNPJ: o registro rende centenas de transações onde a imprensa rende unidades. **Para este segmento, o quadro societário é a fonte forte e a web é a fraca.**
 
 ### As quatro independências confirmadas valem dinheiro
 
-Saber que uma empresa **não** foi comprada é tão útil quanto o contrário: é a diferença entre
-abordar com confiança e gastar a ligação para descobrir.
+Saber que uma empresa **não** foi comprada é tão útil quanto o contrário: é a diferença entre abordar com confiança e gastar a ligação para descobrir.
 
 | Empresa | Quem controla hoje, segundo a web |
 |---|---|
@@ -128,36 +114,24 @@ abordar com confiança e gastar a ligação para descobrir.
 | **DIMEVET** | Dra. Débora L. Dalzochio, sócia fundadora e responsável técnica |
 | **HISTOPATO** | Os três sócios originais de 2014: André Santos, Guilherme Blume e Letícia Batelli |
 
-Uma ressalva sobre a DIMEVET: ela aparece como credenciada da rede Petlove Saúde. Isso é **parceria
-comercial, não mudança de controle**, e vale saber antes da conversa.
+Uma ressalva sobre a DIMEVET: ela aparece como credenciada da rede Petlove Saúde. Isso é **parceria comercial, não mudança de controle**, e vale saber antes da conversa.
 
 ### A web confirmou a leitura do cadastro
 
-A separação entre "comprador de fora" e "holding da própria família", que o detector faz por
-sobrenome, bateu com o que a web diz de forma independente:
+A separação entre "comprador de fora" e "holding da própria família", que o detector faz por sobrenome, bateu com o que a web diz de forma independente:
 
-- SÃO FRANCISCO SERVIÇOS FUNERÁRIOS e SAFRA aparecem publicamente como **Grupo Morada da Paz**, e a
-  SAFRA tem a Irmãos Vila Participações descrita como holding familiar dos irmãos Vila
+- SÃO FRANCISCO SERVIÇOS FUNERÁRIOS e SAFRA aparecem publicamente como **Grupo Morada da Paz**, e a SAFRA tem a Irmãos Vila Participações descrita como holding familiar dos irmãos Vila
 - MORADA CEMITÉRIOS se declara parte do Grupo Morada
 
 Ou seja: as três continuam disponíveis como alvo, e continuam sendo **um interlocutor só**.
 
 ### Três coisas que o cadastro não pegaria
 
-**ZIIGO ASSISTÊNCIA FUNERÁRIA** aparece como "sem sinal de venda" no quadro societário, mas a web
-mostra **aporte milionário em novembro de 2019**, de um empresário do setor funerário cujo nome e
-valor ficaram sob sigilo, e depois **conversão de Ltda para S.A.**, com Vicente Conte Neto no
-Conselho de Administração e ligação dos sócios à Zion Invest e ao fundo CARE11. Os cinco fundadores
-seguem no quadro. É exatamente o caso em que a busca agrega sobre o registro: dinheiro de fundo
-entra sem necessariamente mudar o quadro de sócios.
+**ZIIGO ASSISTÊNCIA FUNERÁRIA** aparece como "sem sinal de venda" no quadro societário, mas a web mostra **aporte milionário em novembro de 2019**, de um empresário do setor funerário cujo nome e valor ficaram sob sigilo, e depois **conversão de Ltda para S.A.**, com Vicente Conte Neto no Conselho de Administração e ligação dos sócios à Zion Invest e ao fundo CARE11. Os cinco fundadores seguem no quadro. É exatamente o caso em que a busca agrega sobre o registro: dinheiro de fundo entra sem necessariamente mudar o quadro de sócios.
 
-**HOSPITAL VETERINÁRIO SÃO FRANCISCO DE ASSIS (RS)** não é empresa familiar. É vinculado à faculdade
-IDEAU de Getúlio Vargas e está cadastrado como **organização da sociedade civil** no MapaOSC do
-IPEA. Não é alvo de M&A, e sai da lista de trabalho.
+**HOSPITAL VETERINÁRIO SÃO FRANCISCO DE ASSIS (RS)** não é empresa familiar. É vinculado à faculdade IDEAU de Getúlio Vargas e está cadastrado como **organização da sociedade civil** no MapaOSC do IPEA. Não é alvo de M&A, e sai da lista de trabalho.
 
-**LABORATÓRIO SÃO FRANCISCO (Blumenau)** consta como **suspenso na lista de laboratórios credenciados
-do MAPA**. Segue independente, mas o credenciamento é o que sustenta parte da operação de um
-laboratório veterinário. Vale entender antes de investir tempo.
+**LABORATÓRIO SÃO FRANCISCO (Blumenau)** consta como **suspenso na lista de laboratórios credenciados do MAPA**. Segue independente, mas o credenciamento é o que sustenta parte da operação de um laboratório veterinário. Vale entender antes de investir tempo.
 
 ### As observações da primeira rodada, revisadas
 
@@ -168,7 +142,4 @@ laboratório veterinário. Vale entender antes de investir tempo.
 | **VERSAN EMPREENDIMENTOS** | Vaga anunciada como "Previda Versan, Arapiraca, **Grupo Parque das Flores**" e matéria de 2021 citando unidade do grupo na cidade | Reforça que já tem dono. Não distingue aquisição de origem societária comum |
 | **VETGUARD** | **Cadastro da Receita consta como suspenso**, e o site institucional segue no ar | Confirmado em segunda checagem. Entender a situação cadastral antes de abordar |
 
-**Uma consequência para a ferramenta:** a base foi carregada com o snapshot de novembro de 2025 e a
-situação cadastral não é reconferida desde então. Empresa baixada ou suspensa depois disso continua
-aparecendo como ativa, e a VETGUARD e o LABORATÓRIO SÃO FRANCISCO são os dois casos concretos disso
-na lista de vocês. Entrou na lista de correções.
+**Uma consequência para a ferramenta:** a base foi carregada com o snapshot de novembro de 2025 e a situação cadastral não é reconferida desde então. Empresa baixada ou suspensa depois disso continua aparecendo como ativa, e a VETGUARD e o LABORATÓRIO SÃO FRANCISCO são os dois casos concretos disso na lista de vocês. Entrou na lista de correções.
