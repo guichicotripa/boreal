@@ -96,27 +96,60 @@ Três de quatro, e a falha é explicável. Serve como calibração honesta do qu
 
 ---
 
-## 5. O que a busca na web acrescentou (20/09)
+## 5. O que a busca na web acrescentou (21/09)
 
-Rodadas 13 verificações com busca na web: as 5 do grupo 3 e as 8 do grupo 1. **Nenhuma confirmou
-aquisição.** Onze voltaram com fonte real (site institucional, diretórios, notícia) e nenhuma delas
-falava de venda; duas não acharam nada.
+**28 das 31 verificadas** com busca na web. As 3 restantes ficaram de fora porque a cota do dia
+acabou, e entram na próxima rodada.
 
-**Isso não é falha da busca, é característica do mercado.** Aquisição de empresa familiar de médio
-porte no Brasil quase nunca vira notícia. É a mesma razão pela qual a Boreal minera o registro do
-CNPJ em vez de imprensa: o registro rende centenas de transações onde a imprensa rende unidades.
-Na prática, **para este segmento o quadro societário é a fonte forte e a web é a fonte fraca.**
+### O veredito de controle
 
-Ainda assim, quatro achados mudam a leitura:
+| | |
+|---|---:|
+| Aquisição confirmada pela web | **0** |
+| **Independência confirmada**, com fonte | **2** |
+| Sem informação pública suficiente | 26 |
+
+**Nenhuma aquisição saiu na imprensa, e isso é sobre o mercado, não sobre as empresas.** Compra de
+empresa familiar de médio porte no Brasil quase nunca vira notícia. É a mesma razão pela qual a
+Boreal minera o registro do CNPJ: o registro rende centenas de transações onde a imprensa rende
+unidades. **Para este segmento, o quadro societário é a fonte forte e a web é a fraca.**
+
+### As duas independências confirmadas valem dinheiro
+
+- **MORADA CEMITÉRIOS (Morada da Paz):** segue sob controle da família Vila, com Daniel, Ibsen e
+  José Eduardo Vila como administradores. Alvo disponível, com o dono identificado pelo nome.
+- **LABORATÓRIOS BOTEGA (Centervet):** fundado em 1997, segue com Lucas e Marilda Botega Spinelli
+  no controle, sem indício de aquisição, aporte ou grupo.
+
+Saber que uma empresa **não** foi comprada é tão útil quanto o contrário: é a diferença entre
+abordar com confiança e gastar a ligação para descobrir.
+
+### A web confirmou a leitura do cadastro
+
+A separação entre "comprador de fora" e "holding da própria família", que o detector faz por
+sobrenome, bateu com o que a web diz de forma independente:
+
+- SÃO FRANCISCO SERVIÇOS FUNERÁRIOS e SAFRA aparecem publicamente como **Grupo Morada da Paz**
+- MORADA CEMITÉRIOS se declara parte do Grupo Morada, com a Vila Participações no quadro
+
+Ou seja: as três continuam disponíveis como alvo, e continuam sendo **um interlocutor só**.
+
+### Um achado que o cadastro não pegaria
+
+**ZIIGO ASSISTÊNCIA FUNERÁRIA** aparece como "sem sinal de venda" no quadro societário, mas a web
+mostra **aporte em novembro de 2019** e sócios ligados à Zion Invest e ao fundo CARE11. É
+exatamente o caso em que a busca agrega sobre o registro: dinheiro de fundo entra sem
+necessariamente mudar o quadro de sócios.
+
+### Quatro observações da primeira rodada, que seguem valendo
 
 | Empresa | O que a web mostrou | Como isso muda |
 |---|---|---|
-| **AMIGOO PET (APET)** | Aporte de R$ 10 milhões noticiado em 2023, parceria de distribuição com o Itaú e mudança de marca de Amigoo Pet para APet | A entrada da PROFITUS em 2023 tem cara de **rodada de investimento**, não de venda de controle. Pode seguir como alvo, com sócio financeiro na mesa |
-| **GENEAL DIAGNOSTICOS** | Aparece vinculada ao **grupo Brasif**, com Brasif S/A e Genesis Administração Participações no quadro | Não é empresa familiar independente. É ativo de grupo grande, e a conversa é outra |
-| **VERSAN EMPREENDIMENTOS** | Indício de ligação com o **Grupo Parque das Flores**, em Alagoas, via anúncio de vaga e matéria local | Reforça a leitura de que já tem dono, sem confirmar |
-| **VETGUARD** | Menção a cadastro da Receita **suspenso** | A conferir. Nossa base diz ATIVA, mas o snapshot é de novembro de 2025. Se estiver suspensa, sai da lista de alvos |
+| **AMIGOO PET (APET)** | Aporte de R$ 10 milhões noticiado em 2023, parceria com o Itaú e mudança de marca | A entrada da PROFITUS em 2023 tem cara de **rodada de investimento**, não de venda de controle. Pode seguir como alvo |
+| **GENEAL DIAGNOSTICOS** | Vinculada ao **grupo Brasif** | Não é familiar independente, é ativo de grupo grande |
+| **VERSAN EMPREENDIMENTOS** | Indício de ligação com o **Grupo Parque das Flores**, em Alagoas | Reforça que já tem dono, sem confirmar |
+| **VETGUARD** | Uma menção a cadastro suspenso, **não confirmada** nas verificações seguintes | A conferir antes de descartar |
 
-**Uma consequência para a ferramenta:** a base foi ingerida com o snapshot de novembro de 2025 e a
-situação cadastral não é reconferida desde então. Empresa que foi baixada ou suspensa depois disso
-continua aparecendo como ativa. Entra na lista de correções.
-
+**Uma consequência para a ferramenta:** a base foi carregada com o snapshot de novembro de 2025 e a
+situação cadastral não é reconferida desde então. Empresa baixada ou suspensa depois disso continua
+aparecendo como ativa. Entrou na lista de correções.
