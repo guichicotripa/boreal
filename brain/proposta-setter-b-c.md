@@ -1,8 +1,12 @@
 # Boreal · Setter Investimentos
 
-## Proposta das opções B e C
+## Proposta de continuidade
 
 **21 de setembro de 2026**
+
+Henrique, como combinamos na call de hoje, segue por escrito o que existe nas duas frentes, para você circular internamente. Vai junto a lista das 31 empresas do pipeline com a verificação de "essa já tem dono", que é entrega do trabalho desta semana e independe da decisão de vocês.
+
+Você colocou três caminhos: encerrar, seguir com a plataforma como está, ou seguir com a plataforma mais o acesso aos contatos e o caminho até cada pessoa. **A opção B abaixo é o segundo caminho e a opção C é o terceiro.** Estão separadas de propósito, em contratos independentes, porque uma pode dar certo sem a outra.
 
 ---
 
@@ -12,15 +16,17 @@ O piloto rodou de 26 de agosto a 14 de setembro. Três coisas saíram dele.
 
 **A primeira é boa.** Depois que o filtro que a Fernanda descreveu virou ferramenta (porte acima de EPP, empresa fundada até 2019, fora do Simples Nacional), a proporção de empresas salvas em vez de descartadas subiu de 1% para 32%. Ressalva honesta: o universo também encolheu, então parte do ganho vem disso. **31 empresas foram salvas.**
 
-**A segunda é o problema.** As 31 continuam paradas no primeiro estágio. Nenhuma foi contatada dentro da plataforma, e não sabemos quantas vocês já conheciam.
+**A segunda é o que define esta proposta.** Você esgotou os três mandatos: em plano de saúde pet sobraram 3 ou 4 empresas e em diagnóstico sobraram cerca de 30. O trabalho de descoberta nesses recortes acabou. Ao mesmo tempo, as 31 que vocês salvaram continuam paradas no primeiro estágio, sem contato registrado.
+
+Os dois fatos juntos dizem a mesma coisa por lados opostos: **acabou o que havia para achar nesses setores, e o que foi achado ainda não virou conversa.**
 
 **A terceira é operacional.** O uso concentrou em uma pessoa, no tempo livre.
 
-**A conclusão que tiramos disso, e que orienta esta proposta:** o problema deixou de ser achar empresa. É transformar as empresas achadas em conversa. Por isso a opção B começa pelas 31 que já estão lá, e não por abrir mandatos novos.
+**A conclusão que orienta esta proposta:** a opção B precisa fazer as duas coisas ao mesmo tempo. Abrir mandato novo todo mês, porque os atuais se esgotaram, e ao mesmo tempo transformar em conversa o que já foi achado, porque senão o mandato novo só produz mais lista parada.
 
 ---
 
-## O que vocês pediram na última call, e onde cada pedido caiu
+## O que vocês pediram, e onde cada pedido caiu
 
 | O que vocês disseram | Onde entra |
 |---|---|
@@ -34,12 +40,15 @@ O piloto rodou de 26 de agosto a 14 de setembro. Três coisas saíram dele.
 | "Costurar a cadeia para chegar nesses caras" | C |
 | "Em laboratório pet não temos nenhum cara que lidera, precisamos de quem abra portas" | C, a fase 0 procura exatamente isso |
 | "Reorganizar a dinâmica interna, ter um líder que direcione" | Contrapartida da Setter, nas duas opções |
+| "Se for seguir com você, vai ter que botar alguém dedicado a esse projeto" (21/09) | Contrapartida da Setter, e é a condição que mais pesa |
+| "Eu exauri os filtros" (21/09) | B, um mandato novo por mês |
+| "Separar os contratos pode funcionar" (21/09) | B e C em contratos independentes |
 
 ---
 
 # Opção B · Da lista para a conversa
 
-**R$ 4.500 por mês, por 90 dias.** Sem prazo longo e sem multa. No fim dos 90 dias, decidimos a continuidade com os números na mesa.
+**Valor mensal a negociar, por um período inicial de 90 dias.** Sem prazo longo e sem multa. No fim dos 90 dias, decidimos a continuidade com os números na mesa.
 
 ## Bloco 1 · Acesso (é o centro desta fase)
 
@@ -75,7 +84,9 @@ A Receita informa a qualificação de cada sócio, e nas 31 empresas salvas ela 
 
 **5.** Os **3 mandatos atuais** mantidos e atualizados com a base da Receita.
 
-**6.** Até **2 mandatos novos nos 90 dias**, cada um abrindo com uma sessão de 1 hora com quem conhece o setor, para transformar o critério da pessoa em filtro. Cada mandato entregue com: universo descrito, filtro padrão visível e desligável, ordenação ajustada à tese e as 50 primeiras empresas já investigadas. Prazo de 3 semanas por mandato, contado de quando recebermos os critérios.
+**6.** **Um mandato novo por mês**, cada um abrindo com uma sessão de 1 hora com quem conhece o setor, para transformar o critério da pessoa em filtro. Cada mandato entregue com: universo descrito, filtro padrão visível e desligável, ordenação ajustada à tese e as 50 primeiras empresas já investigadas. Prazo de 3 semanas por mandato, contado de quando recebermos os critérios.
+
+Antes de abrir cada um, dizemos o tamanho do universo. Nem todo recorte compensa: dois dos três mandatos atuais renderam poucas empresas e um rendeu 676, e essa diferença define se vale gastar um mês naquele setor.
 
 ## Bloco 3 · Operação
 
@@ -87,15 +98,19 @@ A Receita informa a qualificação de cada sócio, e nas 31 empresas salvas ela 
 
 ## O que a Setter faz
 
-- **Indica um dono interno** da ferramenta.
-- **Registra o que aconteceu** com cada empresa trabalhada: contatada, reunião, descartada e por quê.
-- **Marca, ao salvar, se já conhecia a empresa.**
+Você mesmo chegou nisso na call de hoje: *"se for seguir com você, vai ter que botar alguém meio que dedicado a esse projeto"*. É exatamente a condição, e ela pesa mais que qualquer item da lista acima.
+
+- **Uma pessoa alocada**, do jeito que vocês já alocam por projeto.
+- **Registro do que aconteceu** com cada empresa trabalhada: contatada, reunião, descartada e por quê.
+- **Marcar, ao salvar, se já conhecia a empresa.**
 
 Sem esse registro não há como medir nada no fim dos 90 dias, e a conversa de continuidade fica sem base. Enquanto ele estiver atrasado, pausamos customizações novas e seguimos com o que já existe. Não há cobrança extra por isso.
 
+**E a sessão de critérios por mandato precisa de quem conhece o setor**, não de quem só opera a ferramenta. Foi o que a Fernanda fez em pet sem que ninguém pedisse, e é o que faltou em death care.
+
 ## Taxa de êxito
 
-**0,5% sobre o valor pago pelas ações**, nas operações de empresas que estavam registradas na plataforma antes do primeiro contato de vocês com elas, dentro de **24 meses** desse registro. É a mesma ordem de grandeza da faixa que combinamos em julho, de cerca de 10% do fee de vocês.
+**Percentual a negociar sobre o valor pago pelas ações**, nas operações de empresas que estavam registradas na plataforma antes do primeiro contato de vocês com elas, dentro de **24 meses** desse registro. A referência é a faixa que conversamos em julho, de cerca de 10% do fee de vocês.
 
 - Ficam de fora as empresas da lista de CNPJs que vocês entregarem na assinatura, e qualquer empresa em que vocês demonstrem relacionamento anterior.
 - O pagamento acompanha o recebimento de vocês: se os honorários forem parcelados, a taxa também é.
@@ -109,7 +124,7 @@ Não está coberto: outros setores, usos fora de M&A e atendimento a compradores
 
 ## Fora do escopo
 
-Envio automático de mensagens, integração com CRM, compra de contatos de terceiros, raspagem de redes sociais, setores sem mandato contratado.
+Envio automático de mensagens, integração com CRM, compra de contatos de terceiros, setores sem mandato contratado.
 
 ---
 
@@ -133,7 +148,7 @@ Exemplo de caminho candidato:
 
 ## Como funciona
 
-Três fontes, nenhuma delas raspagem:
+Começa por três fontes, e outras entram conforme a fase 0 mostrar o que falta:
 
 1. **Quadro de sócios da Receita**, público, Brasil inteiro: quem é sócio de qual empresa e desde quando.
 2. **Mailing da Setter** (cerca de 3 mil contatos).
@@ -143,10 +158,9 @@ O trabalho central é **casar identidades**: descobrir que o "João Silva" do ma
 
 ## O que ele não faz
 
-- **Não são "6 graus".** A exportação traz os contatos diretos de cada pessoa, não os contatos dos contatos. O alcance real é de 2 a 3 passos, com o quadro societário como ponte.
 - **Conexão não é confiança.** Estar conectado no LinkedIn ou no mailing não significa que a pessoa vai fazer a apresentação. Por isso existe o nível "confirmado".
 - Não envia mensagem nem contata ninguém.
-- Não enxerga relação que não esteja nas três fontes (família, faculdade, clube).
+- Não enxerga relação que não esteja em nenhuma das fontes reunidas. Laço de família, faculdade ou clube que não deixe rastro em lugar nenhum fica de fora.
 
 ## Fases
 
@@ -160,17 +174,17 @@ O trabalho central é **casar identidades**: descobrir que o "João Silva" do ma
 
 | Fase | Valor | Pagamento |
 |---|---:|---|
-| 0 · Diagnóstico | R$ 6.000 | na entrega |
-| 1 · Primeira versão | R$ 24.000 | metade no início, metade na entrega |
-| 2 · Medição | R$ 8.000 | na entrega |
+| 0 · Diagnóstico | a negociar | na entrega |
+| 1 · Primeira versão | a negociar | metade no início, metade na entrega |
+| 2 · Medição | a negociar | na entrega |
 
-**A fase 0 pode ser contratada sozinha, sem o B.** As fases 1 e 2 exigem o B ativo, porque o caminho aparece dentro da plataforma. Vocês só se comprometem com a fase seguinte depois de ver o resultado da anterior: se a fase 0 mostrar que não há caminho acionável, o custo do experimento foi R$ 6.000.
+**A fase 0 pode ser contratada sozinha, sem o B.** As fases 1 e 2 exigem o B ativo, porque o caminho aparece dentro da plataforma. Vocês só se comprometem com a fase seguinte depois de ver o resultado da anterior: se a fase 0 mostrar que não há caminho acionável, o experimento se encerra ali, e o custo foi só o da fase 0.
 
 ## Dados, propriedade e continuidade
 
 - **Os dados de relacionamento são de vocês.** Mailing, exportações e o mapa construído com eles não são usados para nenhum outro cliente. No encerramento, exportamos tudo para vocês e apagamos, com exceção do registro mínimo de proveniência, se houver taxa de êxito em aberto.
 - **A tecnologia e o método são da Boreal**, licenciados a vocês enquanto o contrato estiver vigente. **Se a Boreal descontinuar o produto, a licença da versão entregue passa a ser perpétua e vocês recebem a exportação completa mais a documentação para transferir a outro fornecedor.**
-- **Depois de agosto de 2027**, quando eu estiver na faculdade, o serviço continua em **modo manutenção**: base atualizando, correções e uma call por mês, por R$ 2.500 mensais, sem desenvolvimento novo. Volto ao ritmo integral nas férias.
+- **Depois de agosto de 2027**, quando eu estiver na faculdade, o serviço continua em **modo manutenção**: base atualizando, correções e uma call por mês, por um valor mensal menor a combinar, sem desenvolvimento novo. Volto ao ritmo integral nas férias.
 - A Boreal trata os dados como **operadora** e vocês como controladores, em cláusula própria. Antes da coleta entregamos a finalidade documentada e o procedimento para pedidos dos titulares.
 
 ## Exclusividade do C
@@ -187,10 +201,8 @@ Contrato assinado pela empresa própria da Boreal, cláusula de proteção de da
 
 | | Opção B | Opção C |
 |---|---|---|
-| **Valor** | R$ 4.500 por mês | R$ 6.000 + R$ 24.000 + R$ 8.000, por fase |
+| **Valor** | a negociar, mensal | a negociar, por fase |
 | **Prazo** | 90 dias, sem multa | 2 + 10 + 8 semanas, com decisão entre as fases |
 | **Depende do outro?** | Não | Fase 0 é avulsa. Fases 1 e 2 exigem o B ativo |
-| **Taxa de êxito** | 0,5% sobre o valor pago pelas ações, em 24 meses | mesma do B |
+| **Taxa de êxito** | percentual a negociar sobre o valor pago pelas ações, em 24 meses | mesma do B |
 | **O que vocês precisam colocar** | Dono interno e registro do que aconteceu com cada empresa | 3 pessoas exportando contatos do LinkedIn |
-
-Documento que acompanha esta proposta: **lista das 31 empresas do pipeline com a verificação de "já tem dono"**, com fonte para cada resposta.

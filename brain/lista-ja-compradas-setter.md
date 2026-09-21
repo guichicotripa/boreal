@@ -2,7 +2,7 @@
 
 > Gerado em 20/09/2026 por `scripts/detecta-aquisicao.mjs` sobre as 31 empresas salvas pela Setter. Fonte única: quadro societário do CNPJ (Receita Federal), snapshot de 09/11/2025. **Sinal de cadastro, não confirmação de negócio.**
 
-## Mensagem curta, para mandar
+## Resumo
 
 > Henrique, rodei uma verificação no quadro societário das 31 empresas que vocês salvaram, para responder aquela pergunta da Fernanda de "essa aqui já foi comprada?".
 >
@@ -95,7 +95,7 @@ Três de quatro, e a falha é explicável. Serve como calibração honesta do qu
 
 ### O veredito de controle
 
-| | |
+| Veredito da busca na web | Empresas |
 |---|---:|
 | Aquisição confirmada pela web | **0** |
 | **Independência confirmada**, com fonte | **4** |
