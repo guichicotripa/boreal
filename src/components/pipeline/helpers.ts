@@ -1,5 +1,6 @@
 import type {
   Oportunidade, EstagioOportunidade, ResultadoOportunidade, TipoInteracao,
+  DesfechoInteracao, CanalContato,
 } from "@/lib/types";
 import monitor from "@/lib/monitor.json";
 
@@ -89,3 +90,30 @@ export const RESULTADOS: { id: ResultadoOportunidade; label: string }[] = [
 // Notas é FIXA (92px), não `auto`: como `auto` mede o conteúdo (texto curto no header, botão largo nas linhas),
 // ela roubava largura da 1fr e desalinhava todas as colunas após Empresa entre header e linhas.
 export const COL = "14px 48px 1fr 144px 128px 175px 92px 28px";
+
+/* Desfecho do toque. A ordem é do melhor para o pior de propósito: quem registra escolhe rápido,
+   e a lista é lida de cima para baixo. `nao_atendeu` e `contato_invalido` são coisas diferentes e
+   precisam ficar separados: o primeiro diz que a linha existe, o segundo diz que o dado está
+   errado, e só o segundo é defeito nosso. */
+export const DESFECHOS: { id: DesfechoInteracao; label: string; ajuda: string }[] = [
+  { id: "falou_com_decisor",     label: "Falei com quem decide", ajuda: "Chegou no sócio ou em quem manda na empresa." },
+  { id: "falou_com_empresa",     label: "Falei com a empresa",   ajuda: "Alguém da empresa atendeu, mas não é quem decide." },
+  { id: "caiu_no_intermediario", label: "Caiu no contador",      ajuda: "Contabilidade, escritório ou terceiro que administra o cadastro." },
+  { id: "nao_atendeu",           label: "Não atenderam",         ajuda: "A linha existe, ninguém respondeu." },
+  { id: "contato_invalido",      label: "Contato não existe",    ajuda: "Número inexistente, e-mail voltou, linha desligada." },
+  { id: "recusou",               label: "Disseram não",          ajuda: "Falou com a empresa e a resposta foi negativa." },
+];
+
+/** Por onde o toque foi feito. Só aparece quando faz sentido perguntar. */
+export const CANAIS_CONTATO: { id: CanalContato; label: string }[] = [
+  { id: "telefone",  label: "Telefone"  },
+  { id: "email",     label: "E-mail"    },
+  { id: "whatsapp",  label: "WhatsApp"  },
+  { id: "site",      label: "Site"      },
+  { id: "indicacao", label: "Indicação" },
+  { id: "outro",     label: "Outro"     },
+];
+
+/* "Nota" e "reunião" não têm desfecho de contato: a primeira não é tentativa e a segunda já é o
+   resultado de uma. Perguntar nos dois casos só treina a pessoa a escolher qualquer coisa. */
+export const TIPOS_COM_DESFECHO = new Set<TipoInteracao>(["ligacao", "email", "whatsapp"]);

@@ -7,7 +7,7 @@ import { scoreTier, EIXOS } from "@/lib/scoring";
 import { TIER_STYLES, FAIXA_LABEL, formatCnpj, formatTelefone, formatCapitalCompact } from "@/lib/format";
 import { storeEmpresa, storeOrigin, type ScoreConhecido } from "@/lib/empresa-store";
 import { regimeTributario } from "@/lib/filtro-padrao";
-import { ProcedenciaChip } from "@/components/ProcedenciaChip";
+import { ContatoChips } from "@/components/ProcedenciaChip";
 import { SalvarButton } from "./SalvarButton";
 import { X, ArrowUpRight, Phone, Mail, EyeOff } from "lucide-react";
 
@@ -241,7 +241,7 @@ export function PeekPanel({
                     <Mail aria-hidden="true" className="h-3 w-3 shrink-0" strokeWidth={1.75} />
                     <span className="truncate">{e.email.toLowerCase()}</span>
                   </a>
-                  <ProcedenciaChip email={e.email} />
+                  <ContatoChips empresa={e} />
                 </div>
               )}
             </div>

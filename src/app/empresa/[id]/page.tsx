@@ -14,12 +14,12 @@ import {
   formatCnpj, formatTelefone, formatCapitalCompact,
   FAIXA_LABEL, FAIXA_COLOR, TIER_STYLES, anosOperacao,
 } from "@/lib/format";
-import { ProcedenciaChip } from "@/components/ProcedenciaChip";
+import { ProcedenciaChip, CompartilhamentoChip, TelefoneSuspeitoChip } from "@/components/ProcedenciaChip";
 import { ResearchDisplay } from "@/components/empresa/ResearchDisplay";
 import { MemoDisplay } from "@/components/empresa/MemoDisplay";
 import { Timeline } from "@/components/empresa/Timeline";
 import { TrajetoriaEventos } from "@/components/empresa/TrajetoriaEventos";
-import { Phone, Mail } from "lucide-react";
+import { Phone, Mail, Globe } from "lucide-react";
 
 /* Página da empresa — layout de registro (padrão Grata/Attio):
    rail esquerda com os atributos fixos (score, dados da Receita, contato, sócios)
@@ -350,20 +350,28 @@ export default function EmpresaPage() {
           </section>
 
           {/* Contato */}
-          {(e.telefone || e.email) && (
+          {(e.telefone || e.email || e.site) && (
             <section className="rounded-lg border border-hairline bg-surface p-4">
               <h2 className="mb-3 text-[11px] font-medium text-ink-muted">Contato</h2>
               <div className="flex flex-col gap-2">
                 {e.telefone && (
-                  <a
-                    href={`tel:${e.telefone.replace(/\D/g, "")}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex w-fit items-center gap-1.5 rounded-md border border-hairline px-2.5 py-1.5 text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
-                  >
-                    <Phone aria-hidden="true" className="h-3 w-3" strokeWidth={1.75} />
-                    {formatTelefone(e.telefone)}
-                  </a>
+                  <div className="flex flex-col items-start gap-1">
+                    <a
+                      href={`tel:${e.telefone.replace(/\D/g, "")}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex w-fit items-center gap-1.5 rounded-md border border-hairline px-2.5 py-1.5 text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+                    >
+                      <Phone aria-hidden="true" className="h-3 w-3" strokeWidth={1.75} />
+                      {formatTelefone(e.telefone)}
+                    </a>
+                    {/* Os avisos do telefone ficam COLADOS no telefone, e não no fim do bloco: o
+                        "atende 454 empresas" só serve se for lido antes de alguém clicar para ligar. */}
+                    <div className="flex flex-wrap gap-1">
+                      <TelefoneSuspeitoChip suspeito={e.telefone_suspeito} />
+                      <CompartilhamentoChip empresas={e.telefone_empresas_br} />
+                    </div>
+                  </div>
                 )}
                 {e.email && (
                   <div className="flex flex-col items-start gap-1">
@@ -376,12 +384,30 @@ export default function EmpresaPage() {
                       <Mail aria-hidden="true" className="h-3 w-3 shrink-0" strokeWidth={1.75} />
                       <span className="truncate">{e.email.toLowerCase()}</span>
                     </a>
-                    <ProcedenciaChip email={e.email} />
+                    <div className="flex flex-wrap gap-1">
+                      <ProcedenciaChip email={e.email} procedencia={e.email_procedencia} />
+                      <CompartilhamentoChip empresas={e.email_empresas_br} />
+                    </div>
                   </div>
+                )}
+                {/* Derivado do domínio do e-mail, e só quando o domínio casa com o nome da
+                    empresa. Não é site verificado, e o rótulo diz isso. */}
+                {e.site && (
+                  <a
+                    href={e.site}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Endereço deduzido do domínio do e-mail do cadastro. Não foi verificado."
+                    className="inline-flex w-fit max-w-full items-center gap-1.5 truncate rounded-md border border-hairline px-2.5 py-1.5 text-[11px] text-ink-soft transition-colors hover:border-hairline-hover hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ink/50"
+                  >
+                    <Globe aria-hidden="true" className="h-3 w-3 shrink-0" strokeWidth={1.75} />
+                    <span className="truncate">{e.site.replace(/^https?:\/\//, "")}</span>
+                    <span className="shrink-0 text-ink-muted">deduzido</span>
+                  </a>
                 )}
               </div>
               <p className="mt-3 text-[10.5px] leading-snug text-ink-muted">
-                Contato do cadastro na Receita — nem sempre é o do sócio.
+                Contato do cadastro na Receita, nem sempre é o do sócio.
               </p>
             </section>
           )}

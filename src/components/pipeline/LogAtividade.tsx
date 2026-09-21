@@ -8,14 +8,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { Interacao, TipoInteracao } from "@/lib/types";
-import { TIPOS_INTERACAO, dataCurta } from "./helpers";
+import type { Interacao, TipoInteracao, DesfechoInteracao } from "@/lib/types";
+import { TIPOS_INTERACAO, DESFECHOS, TIPOS_COM_DESFECHO, dataCurta } from "./helpers";
 
-export function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
+/* `telefone` e `email` entram como prop porque `contato_usado` guarda o VALOR que estava na tela
+   na hora, e não uma referência: o contato da empresa muda, e a pergunta que o desfecho responde
+   é sobre o que foi discado naquele dia. Mesmo princípio do selo de proveniência. */
+export function LogAtividade({
+  oportunidadeId,
+  telefone,
+  email,
+}: {
+  oportunidadeId: string;
+  telefone?: string | null;
+  email?: string | null;
+}) {
   const [aberto, setAberto] = useState(false);
   const [itens, setItens] = useState<Interacao[] | null>(null);
   const [tipo, setTipo] = useState<TipoInteracao>("ligacao");
   const [texto, setTexto] = useState("");
+  /* O desfecho é o dado que faz a qualidade do contato APRENDER: sem ele, a hierarquia que a
+     plataforma supõe (domínio próprio > webmail > compartilhado) nunca é testada contra o que
+     aconteceu de verdade na ligação. Começa vazio de propósito, porque "não registrei" é uma
+     resposta diferente de "não atenderam". */
+  const [desfecho, setDesfecho] = useState<DesfechoInteracao | "">("");
 
   async function carregar() {
     const r = await fetch(`/api/interacao?oportunidade_id=${oportunidadeId}`);
@@ -35,16 +51,28 @@ export function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
     const r = await fetch("/api/interacao", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ oportunidade_id: oportunidadeId, tipo, descricao }),
+      body: JSON.stringify({
+        oportunidade_id: oportunidadeId,
+        tipo,
+        descricao,
+        // Só manda desfecho quando o tipo comporta um. Reunião e nota não são tentativa de contato.
+        desfecho: pedeDesfecho && desfecho ? desfecho : undefined,
+        contato_tipo: pedeDesfecho ? canal : undefined,
+        contato_usado: pedeDesfecho ? (contatoUsado ?? undefined) : undefined,
+      }),
     });
     const d = await r.json();
     if (d.interacao) {
       setItens((p) => [d.interacao, ...(p ?? [])]);
       setTexto("");
+      setDesfecho("");
     }
   }
 
   const total = itens?.length ?? 0;
+  const pedeDesfecho = TIPOS_COM_DESFECHO.has(tipo);
+  const canal = tipo === "email" ? "email" : tipo === "whatsapp" ? "whatsapp" : "telefone";
+  const contatoUsado = canal === "email" ? (email ?? null) : (telefone ?? null);
 
   return (
     <div className="mt-2 rounded border border-hairline px-2.5 py-2">
@@ -100,6 +128,28 @@ export function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
             </button>
           </div>
 
+          {/* Só para tentativa de contato. Opcional de propósito: obrigar a escolher faria a
+              pessoa marcar qualquer coisa para o formulário passar, e um rótulo inventado é pior
+              que rótulo ausente. */}
+          {pedeDesfecho && (
+            <div className="flex flex-wrap gap-1">
+              {DESFECHOS.map((d) => (
+                <button
+                  key={d.id}
+                  title={d.ajuda}
+                  onClick={() => setDesfecho(desfecho === d.id ? "" : d.id)}
+                  className={`rounded border px-1.5 py-0.5 text-[10px] transition-colors ${
+                    desfecho === d.id
+                      ? "border-ink/40 bg-surface-hover text-ink"
+                      : "border-hairline text-ink-muted hover:border-hairline-hover hover:text-ink-soft"
+                  }`}
+                >
+                  {d.label}
+                </button>
+              ))}
+            </div>
+          )}
+
           {itens && itens.length > 0 ? (
             <ul className="space-y-1.5">
               {itens.map((it) => (
@@ -109,6 +159,11 @@ export function LogAtividade({ oportunidadeId }: { oportunidadeId: string }) {
                     {TIPOS_INTERACAO.find((t) => t.id === it.tipo)?.label ?? it.tipo}
                   </span>
                   <span className="text-ink-soft"> — {it.descricao}</span>
+                  {it.desfecho && (
+                    <span className="ml-1 rounded bg-fill px-1 py-px text-[10px] text-ink-muted">
+                      {DESFECHOS.find((d) => d.id === it.desfecho)?.label ?? it.desfecho}
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>

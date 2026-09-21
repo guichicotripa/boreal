@@ -283,7 +283,7 @@ export async function POST(req: NextRequest) {
     .select(
       `id, cnpj, razao_social, nome_fantasia, cnae_principal, cnae_principal_desc,
        cnaes_secundarios, natureza_juridica, municipio, uf,
-       data_inicio_atividade, capital_social, porte, opcao_simples, data_exclusao_simples, telefone, email,
+       data_inicio_atividade, capital_social, porte, opcao_simples, data_exclusao_simples, telefone, email, site, email_procedencia, email_empresas_br, telefone_empresas_br, telefone_suspeito,
        ${socioEmbed}(id, nome, qualificacao, faixa_etaria, data_entrada_sociedade),
        empresa_descartada!left(empresa_id)`
     )

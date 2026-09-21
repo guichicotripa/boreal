@@ -1,4 +1,5 @@
 // Tipos compartilhados do pipeline de busca.
+import type { ProcedenciaEmail } from "./contato";
 
 /** Filtros estruturados extraídos da query em linguagem natural. */
 export type SearchFilters = {
@@ -56,6 +57,15 @@ export type Empresa = {
   data_exclusao_simples?: string | null;
   telefone: string | null;                // contato — output mais valioso pra deal sourcing
   email: string | null;
+  site?: string | null;                   // derivado do domínio do e-mail quando ele é próprio
+  /* Qualidade do contato (migration 0019). Calculada pelo backfill e gravada, porque a boa
+     classificação depende de uma lista de 32 mil domínios que nunca vai para o browser.
+     NULL em qualquer uma delas = ainda não aferido, diferente de "aferido e deu negativo". */
+  email_procedencia?: ProcedenciaEmail | null;
+  email_empresas_br?: number | null;      // quantas empresas no Brasil usam este mesmo e-mail
+  telefone_empresas_br?: number | null;   // idem para o telefone. 1 = exclusivo da empresa
+  telefone_suspeito?: boolean | null;     // número que nem vale discar (sintaxe), ≠ compartilhado
+  contato_aferido_em?: string | null;
   socio?: Socio[];
   // Adicionados em runtime pelo /api/search (não vêm do banco):
   score?: import("./scoring").ScoreResult;
@@ -143,6 +153,20 @@ export type ResultadoOportunidade =
 // Tipos de toque no log de atividade (relationship intel, manual-first).
 export type TipoInteracao = "ligacao" | "email" | "reuniao" | "whatsapp" | "nota";
 
+/* O que aconteceu na tentativa (migration 0020). É o rótulo de treino da qualidade de contato:
+   sem ele, a hierarquia que supomos hoje (domínio próprio > webmail > compartilhado) nunca é
+   testada contra a realidade, e o enriquecimento fica congelado. Não é recomputável depois:
+   ninguém reconstrói em janeiro que a ligação de setembro caiu no contador. */
+export type DesfechoInteracao =
+  | "falou_com_decisor"
+  | "falou_com_empresa"
+  | "caiu_no_intermediario"
+  | "nao_atendeu"
+  | "contato_invalido"
+  | "recusou";
+
+export type CanalContato = "telefone" | "email" | "whatsapp" | "site" | "indicacao" | "outro";
+
 export type Interacao = {
   id: string;
   oportunidade_id: string;
@@ -150,6 +174,12 @@ export type Interacao = {
   descricao: string;
   autor: string | null;
   criado_em: string;
+  /* NULL = ainda não registrado, que é diferente de `nao_atendeu`. Uma nota não tem desfecho. */
+  desfecho?: DesfechoInteracao | null;
+  contato_tipo?: CanalContato | null;
+  /* O valor como estava na tela na hora. Guardado como valor, e não como referência, porque o
+     contato da empresa muda e a pergunta é sobre o que foi discado. */
+  contato_usado?: string | null;
 };
 
 export type Oportunidade = {
@@ -177,6 +207,9 @@ export type Oportunidade = {
     Empresa,
     "id" | "cnpj" | "razao_social" | "nome_fantasia" | "cnae_principal_desc"
     | "municipio" | "uf" | "capital_social" | "porte" | "telefone" | "email"
+    /* Qualidade do contato: a linha do pipeline é uma das superfícies de onde alguém disca, então
+       ela precisa avisar antes, e não depois. */
+    | "email_procedencia" | "telefone_empresas_br" | "telefone_suspeito"
   > & {
     /** Sócios com nome e faixa etária — para identificar o fundador na row. */
     socio?: Pick<Socio, "nome" | "faixa_etaria">[];

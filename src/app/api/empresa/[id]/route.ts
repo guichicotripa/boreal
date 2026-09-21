@@ -22,7 +22,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
     .select(
       `id, cnpj, razao_social, nome_fantasia, cnae_principal, cnae_principal_desc,
        cnaes_secundarios, natureza_juridica, municipio, uf, data_inicio_atividade,
-       capital_social, porte, telefone, email,
+       capital_social, porte, telefone, email, site, email_procedencia, email_empresas_br, telefone_empresas_br, telefone_suspeito,
        socio(id, nome, qualificacao, faixa_etaria, data_entrada_sociedade)`
     )
     .eq("id", id)

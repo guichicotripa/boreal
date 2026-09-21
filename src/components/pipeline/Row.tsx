@@ -8,7 +8,7 @@ import { storeEmpresa, storeOrigin } from "@/lib/empresa-store";
 import {
   COL, atrasou, diasDesde, formatTelefone, mudancaDe, socioMain, ultimoToqueEm,
 } from "./helpers";
-import { ProcedenciaChip } from "@/components/ProcedenciaChip";
+import { ContatoChips } from "@/components/ProcedenciaChip";
 import { EstagioChip, ResultadoChip } from "./EstagioChips";
 import { ProvenienciaBlock } from "./ProvenienciaBlock";
 import { LogAtividade } from "./LogAtividade";
@@ -275,7 +275,7 @@ export function Row({
               {o.empresa.email}
             </a>
           ) : null}
-          {o.empresa.email && <ProcedenciaChip email={o.empresa.email} />}
+          <ContatoChips empresa={o.empresa} />
           {!o.empresa.telefone && !o.empresa.email && (
             <span className="text-[11px] text-ink-muted">sem contato</span>
           )}
@@ -331,7 +331,13 @@ export function Row({
             className="w-full resize-none rounded border border-hairline bg-fill px-1.5 py-1 text-[12px] text-ink outline-none placeholder:text-ink-muted focus:border-hairline-hover"
           />
           <ProvenienciaBlock o={o} />
-          {context === "agenda" && <LogAtividade oportunidadeId={o.id} />}
+          {context === "agenda" && (
+            <LogAtividade
+              oportunidadeId={o.id}
+              telefone={o.empresa.telefone}
+              email={o.empresa.email}
+            />
+          )}
         </div>
       )}
     </li>
