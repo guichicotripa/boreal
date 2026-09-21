@@ -1958,3 +1958,43 @@ server compilou.
 
 **Não verifiquei a tela logado:** o acesso é por magic link e a sessão não é automatizável aqui.
 O que garante a tela é o typecheck e o compile; o que garante a LISTA é o check contra o banco.
+
+---
+
+## [2026-09-21] Guilherme + Claude | A versão de acesso ganha as duas primeiras peças
+
+Fecha a semana que começou na call de fim de piloto. Notas completas em
+`brain/semana-2026-09-14-a-21.md`.
+
+**O que ficou pronto:**
+
+- `scripts/detecta-aquisicao.mjs` — detector de "já foi comprada" pelo quadro societário público.
+  Reconhece sócio PJ pelo cadastro (14 dígitos ou `faixa_etaria = '0'`), não por regex de nome, e
+  separa comprador de fora de holding da própria família comparando sobrenomes. Sem essa separação
+  o detector chamaria de vendida a SÃO FRANCISCO, que segue com a família Vila.
+- `scripts/verifica-aquisicao.ts` — verificação na web em lote, pela assinatura do Claude Code
+  (`ANTHROPIC_API_KEY: undefined`), custo de API zero. Migrations `0017` e `0018`.
+
+**As 31 do pipeline da Setter foram verificadas nas duas camadas.** Resultado: 0 aquisições
+confirmadas pela web, **4 independências confirmadas com fonte** (MORADA CEMITÉRIOS, LABORATÓRIOS
+BOTEGA, DIMEVET, HISTOPATO), 27 inconclusivas e 8 empresas com evento societário achado.
+
+**O que aprendi, e que mudou o produto no meio do caminho.** A primeira rodada voltou 13
+inconclusivos em 13. O diagnóstico de mercado estava certo (compra de PME brasileira não vira
+notícia), mas havia um erro meu embutido: a pergunta era estreita demais e a busca estava achando
+coisa relevante e jogando fora. A AMIGOO PET tinha aporte de R$ 10 milhões em 2023 que explicava a
+entrada da PROFITUS como rodada e não como venda de controle. A pergunta passou de "foi comprada"
+para "que evento societário aconteceu", com campo próprio e URL por evento. O veredito continua
+sendo sobre controle, porque é essa a decisão da Setter.
+
+**A trava que importa:** veredito de compra sem nenhuma URL é rebaixado para inconclusivo
+automaticamente. O pior erro do script não é dizer "não sei", é fazer a Setter descartar um alvo
+bom.
+
+**Custo arquitetural registrado:** a assinatura exige Claude Code logado na máquina local, então
+isso **nunca** vira botão que o cliente aperta. É lote, e a fila é o que torna operável.
+
+**Também nesta semana:** escopo B e C revisado pelo Codex (gpt-6-astra) e reescrito em v2, correção
+do número de contato confiável contra o CNPJ nacional (de "22 de 31 exclusivos" para 8 exclusivos,
+7 dividindo com 2 a 4 e 16 dividindo com 5 ou mais), e os dois documentos de cliente prontos:
+`brain/proposta-setter-b-c.md` e `brain/lista-ja-compradas-setter.md`.

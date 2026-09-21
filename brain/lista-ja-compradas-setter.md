@@ -14,9 +14,11 @@
 >
 > Testei o método contra o que a Fernanda já sabia de cabeça, e ele achou sozinho a PROVET comprada pela Petlove, a NEW PROVET comprada pela PROVET e a TECSA pela Pet Care. Não pegou a TOMOVET, porque lá o vínculo está nas pessoas e não numa holding.
 >
-> Também rodei busca na web nas 13 mais relevantes. Ela **não confirmou nenhuma aquisição**, e isso
-> diz mais sobre o mercado do que sobre as empresas: compra de PME brasileira quase não sai na
-> imprensa. Mas trouxe quatro observações que mudam a leitura de algumas linhas, no fim do documento.
+> Também rodei busca na web nas **31**, uma por uma, com fonte registrada. Ela **não confirmou
+> nenhuma aquisição**, e isso diz mais sobre o mercado do que sobre as empresas: compra de PME
+> brasileira quase não sai na imprensa. Em compensação **confirmou 4 empresas como independentes**,
+> com o nome de quem controla, e achou 8 casos com evento societário que o cadastro não mostrava.
+> Está tudo na seção 5, no fim do documento.
 >
 > Segue a lista. É sinal de cadastro, não confirmação de negócio, então trata como ponto de partida.
 
@@ -69,7 +71,7 @@ Nenhum sócio atual estava na empresa na fundação. Pode ter sido compra por pe
 
 Só sócios pessoa física, com pelo menos um desde a fundação.
 
-AXYS ANALISES · CARE PLANO DE SAUDE ANIMAL · DIMEVET · FRLAC · HISTOPATO · HOSPITAL VETERINARIO SAO FRANCISCO DE ASSIS · LABORATORIO SAO FRANCISCO (Blumenau) · LABORATORIOS BOTEGA (CENTERVET) · NARDOTTO SCAN · NUCLEO DIAGNOSTICO VETERINARIO · ROUS PATOLOGIA ANIMAL · SERVICOS DE ASSISTENCIA FAMILIAR FOZ · ZELLE PATOLOGIA VETERINARIA · ZIIGO ASSISTENCIA FUNERARIA
+AXYS ANALISES · CARE PLANO DE SAUDE ANIMAL · DIMEVET · FRLAC · HISTOPATO · HOSPITAL VETERINARIO SAO FRANCISCO DE ASSIS (ver seção 5: é OSC ligada a faculdade, não é alvo) · LABORATORIO SAO FRANCISCO (Blumenau) · LABORATORIOS BOTEGA (CENTERVET) · NARDOTTO SCAN · NUCLEO DIAGNOSTICO VETERINARIO · ROUS PATOLOGIA ANIMAL · SERVICOS DE ASSISTENCIA FAMILIAR FOZ · ZELLE PATOLOGIA VETERINARIA · ZIIGO ASSISTENCIA FUNERARIA
 
 ---
 
@@ -96,60 +98,77 @@ Três de quatro, e a falha é explicável. Serve como calibração honesta do qu
 
 ---
 
+
 ## 5. O que a busca na web acrescentou (21/09)
 
-**28 das 31 verificadas** com busca na web. As 3 restantes ficaram de fora porque a cota do dia
-acabou, e entram na próxima rodada.
+**As 31 foram verificadas**, uma por uma, com busca na web e fonte registrada para cada resposta.
 
 ### O veredito de controle
 
 | | |
 |---|---:|
 | Aquisição confirmada pela web | **0** |
-| **Independência confirmada**, com fonte | **2** |
-| Sem informação pública suficiente | 26 |
+| **Independência confirmada**, com fonte | **4** |
+| Sem informação pública suficiente | 27 |
 
 **Nenhuma aquisição saiu na imprensa, e isso é sobre o mercado, não sobre as empresas.** Compra de
 empresa familiar de médio porte no Brasil quase nunca vira notícia. É a mesma razão pela qual a
 Boreal minera o registro do CNPJ: o registro rende centenas de transações onde a imprensa rende
 unidades. **Para este segmento, o quadro societário é a fonte forte e a web é a fraca.**
 
-### As duas independências confirmadas valem dinheiro
-
-- **MORADA CEMITÉRIOS (Morada da Paz):** segue sob controle da família Vila, com Daniel, Ibsen e
-  José Eduardo Vila como administradores. Alvo disponível, com o dono identificado pelo nome.
-- **LABORATÓRIOS BOTEGA (Centervet):** fundado em 1997, segue com Lucas e Marilda Botega Spinelli
-  no controle, sem indício de aquisição, aporte ou grupo.
+### As quatro independências confirmadas valem dinheiro
 
 Saber que uma empresa **não** foi comprada é tão útil quanto o contrário: é a diferença entre
 abordar com confiança e gastar a ligação para descobrir.
+
+| Empresa | Quem controla hoje, segundo a web |
+|---|---|
+| **MORADA CEMITÉRIOS** (Morada da Paz) | Família Vila, com Daniel, Ibsen e José Eduardo Vila como administradores |
+| **LABORATÓRIOS BOTEGA** (Centervet) | Lucas e Marilda Botega Spinelli, desde a fundação em 1997 |
+| **DIMEVET** | Dra. Débora L. Dalzochio, sócia fundadora e responsável técnica |
+| **HISTOPATO** | Os três sócios originais de 2014: André Santos, Guilherme Blume e Letícia Batelli |
+
+Uma ressalva sobre a DIMEVET: ela aparece como credenciada da rede Petlove Saúde. Isso é **parceria
+comercial, não mudança de controle**, e vale saber antes da conversa.
 
 ### A web confirmou a leitura do cadastro
 
 A separação entre "comprador de fora" e "holding da própria família", que o detector faz por
 sobrenome, bateu com o que a web diz de forma independente:
 
-- SÃO FRANCISCO SERVIÇOS FUNERÁRIOS e SAFRA aparecem publicamente como **Grupo Morada da Paz**
-- MORADA CEMITÉRIOS se declara parte do Grupo Morada, com a Vila Participações no quadro
+- SÃO FRANCISCO SERVIÇOS FUNERÁRIOS e SAFRA aparecem publicamente como **Grupo Morada da Paz**, e a
+  SAFRA tem a Irmãos Vila Participações descrita como holding familiar dos irmãos Vila
+- MORADA CEMITÉRIOS se declara parte do Grupo Morada
 
 Ou seja: as três continuam disponíveis como alvo, e continuam sendo **um interlocutor só**.
 
-### Um achado que o cadastro não pegaria
+### Três coisas que o cadastro não pegaria
 
 **ZIIGO ASSISTÊNCIA FUNERÁRIA** aparece como "sem sinal de venda" no quadro societário, mas a web
-mostra **aporte em novembro de 2019** e sócios ligados à Zion Invest e ao fundo CARE11. É
-exatamente o caso em que a busca agrega sobre o registro: dinheiro de fundo entra sem
-necessariamente mudar o quadro de sócios.
+mostra **aporte milionário em novembro de 2019**, de um empresário do setor funerário cujo nome e
+valor ficaram sob sigilo, e depois **conversão de Ltda para S.A.**, com Vicente Conte Neto no
+Conselho de Administração e ligação dos sócios à Zion Invest e ao fundo CARE11. Os cinco fundadores
+seguem no quadro. É exatamente o caso em que a busca agrega sobre o registro: dinheiro de fundo
+entra sem necessariamente mudar o quadro de sócios.
 
-### Quatro observações da primeira rodada, que seguem valendo
+**HOSPITAL VETERINÁRIO SÃO FRANCISCO DE ASSIS (RS)** não é empresa familiar. É vinculado à faculdade
+IDEAU de Getúlio Vargas e está cadastrado como **organização da sociedade civil** no MapaOSC do
+IPEA. Não é alvo de M&A, e sai da lista de trabalho.
+
+**LABORATÓRIO SÃO FRANCISCO (Blumenau)** consta como **suspenso na lista de laboratórios credenciados
+do MAPA**. Segue independente, mas o credenciamento é o que sustenta parte da operação de um
+laboratório veterinário. Vale entender antes de investir tempo.
+
+### As observações da primeira rodada, revisadas
 
 | Empresa | O que a web mostrou | Como isso muda |
 |---|---|---|
-| **AMIGOO PET (APET)** | Aporte de R$ 10 milhões noticiado em 2023, parceria com o Itaú e mudança de marca | A entrada da PROFITUS em 2023 tem cara de **rodada de investimento**, não de venda de controle. Pode seguir como alvo |
-| **GENEAL DIAGNOSTICOS** | Vinculada ao **grupo Brasif** | Não é familiar independente, é ativo de grupo grande |
-| **VERSAN EMPREENDIMENTOS** | Indício de ligação com o **Grupo Parque das Flores**, em Alagoas | Reforça que já tem dono, sem confirmar |
-| **VETGUARD** | Uma menção a cadastro suspenso, **não confirmada** nas verificações seguintes | A conferir antes de descartar |
+| **AMIGOO PET (APET)** | Aporte de R$ 10 milhões noticiado em 2023, parceria de distribuição com o Itaú e rebranding para APet | A entrada da PROFITUS em 2023 tem cara de **rodada de investimento**, não de venda de controle. Pode seguir como alvo |
+| **GENEAL DIAGNÓSTICOS** | Brasif S/A e Genesis Administração Participações no quadro, vinculando ao **grupo Brasif** | Não é familiar independente, é ativo de grupo grande. Sem notícia que confirme a operação |
+| **VERSAN EMPREENDIMENTOS** | Vaga anunciada como "Previda Versan, Arapiraca, **Grupo Parque das Flores**" e matéria de 2021 citando unidade do grupo na cidade | Reforça que já tem dono. Não distingue aquisição de origem societária comum |
+| **VETGUARD** | **Cadastro da Receita consta como suspenso**, e o site institucional segue no ar | Confirmado em segunda checagem. Entender a situação cadastral antes de abordar |
 
 **Uma consequência para a ferramenta:** a base foi carregada com o snapshot de novembro de 2025 e a
 situação cadastral não é reconferida desde então. Empresa baixada ou suspensa depois disso continua
-aparecendo como ativa. Entrou na lista de correções.
+aparecendo como ativa, e a VETGUARD e o LABORATÓRIO SÃO FRANCISCO são os dois casos concretos disso
+na lista de vocês. Entrou na lista de correções.

@@ -341,3 +341,21 @@ Ordenado por evidência, não por gosto. Tudo aqui saiu de 299 eventos da Setter
 6. **Dono interno na Setter** como condição de B ou C.
 7. **Medir a novidade das 31 salvas.**
 
+
+---
+
+## 🔴 Da verificação das 31 (21/09)
+
+1. **Recarregar situação cadastral.** A base congelou no snapshot de 09/11/2025 e nunca reconfere.
+   A semana produziu dois casos concretos na lista da Setter: **VETGUARD** consta suspensa na
+   Receita e **LABORATÓRIO SÃO FRANCISCO (Blumenau)** consta suspenso nos credenciados do MAPA.
+   As duas aparecem como ativas para o cliente. Precisa de rotina de recarga, não de correção
+   pontual.
+2. **Filtrar organização sem fins lucrativos do universo.** HOSPITAL VETERINÁRIO SÃO FRANCISCO DE
+   ASSIS (RS) é ligado à faculdade IDEAU e está cadastrado como OSC no MapaOSC do IPEA. Entrou na
+   lista de 31 como alvo de M&A e não é. Checar se a natureza jurídica da Receita já separa isso.
+3. **Levar o detector para dentro da plataforma.** Hoje `scripts/detecta-aquisicao.mjs` e
+   `scripts/verifica-aquisicao.ts` são script e o resultado mora no banco. Falta virar marca na
+   linha da busca e painel na página da empresa. É o item 3 da versão de acesso.
+4. **A TOMOVET segue como limite conhecido do detector.** Vínculo por pessoa física, sem holding
+   no quadro, não é pego. Documentado, não resolvido.
