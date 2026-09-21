@@ -30,7 +30,7 @@ function getClient() {
  * HONESTIDADE SOBRE ESTES PESOS: diferente dos eixos de scoring.ts, eles NÃO saíram de lift medido
  * contra aquisições reais, e não têm como sair: medir exigiria rodar o LLM sobre centenas de
  * milhares de empresas. São calibrados por ancoragem, e onde existe um proxy de registro medível
- * a DIREÇÃO deles é obrigada a concordar com o dado. Ver brain/modelo-de-score.md §11.
+ * a DIREÇÃO deles é obrigada a concordar com o dado. Ver brain/produto/modelo-de-score.md §11.
  *
  * Foi assim que dois deles apareceram INVERTIDOS em 29/07/2026. Ambos codificavam a tese ingênua
  * de sucessão (dono velho + nenhum herdeiro = tem que vender), que o lift condicional derrubou:

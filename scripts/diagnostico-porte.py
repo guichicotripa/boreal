@@ -23,7 +23,7 @@ Se so o primeiro sobrar, capital e o eixo que deve sair. Se os dois sobrarem, os
 diferentes e o score ganha em ter os dois.
 
 METODO: tudo no universo ELEGIVEL (n_pf >= 2) e estratificado por faixa de nº de socios, pelo mesmo
-motivo da rodada de 02/08 (`brain/modelo-de-score.md` §13): o label "entra PJ e sai PF" premia
+motivo da rodada de 02/08 (`brain/produto/modelo-de-score.md` §13): o label "entra PJ e sai PF" premia
 empresa com muitos socios por aritmetica, entao lift global mente. So DEV: o holdout fica fechado.
 """
 import gzip, math, os, sys

@@ -1,5 +1,10 @@
 # Plano UI/UX — de site-de-pitch a ferramenta de ponta ("workbench")
 
+> **Documento de 21/07/2026, não revisado desde então.** É o plano do redesign que virou o
+> workbench F1-F5, e ele foi executado. Serve como registro da intenção original, não como
+> descrição da UI de hoje. A UI corrente mudou com o corte padrão (25/08), o regime tributário
+> na tela (26/08) e os avisos de contato (21/09).
+
 > Criado: 2026-07-20. Status: AGUARDANDO APROVAÇÃO do Guilherme antes de executar.
 > Diagnóstico que originou (mesma data): o produto foi construído pra ganhar o Clube —
 > centro de gravidade na vitrine (6 páginas de pitch) e não no instrumento (3 telas de

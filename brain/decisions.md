@@ -5,213 +5,81 @@
 
 ---
 
-## [2026-07-21] REDESIGN: produto vira workbench (F1-F5) — merged em main
+<!-- indice -->
+## Índice
 
-**Contexto:** o produto tinha bom craft, mas a arquitetura de UI era centrada em pitch
-("construímos pra ganhar o clube da programação"). Objetivo: deixar de ser algo pitchável e
-virar ferramenta de trabalho densa, no padrão Linear/Attio/Grata. Guilherme foi o único revisor
-visual (screenshots do headless quebrados nesta máquina) — OK por fase.
+Em ordem cronológica. Reordenado em 21/09/2026: cinco entradas de julho tinham sido coladas
+no topo, fora de ordem.
 
-**Decisão — redesign em 5 fases, cada uma commitada e verificada:**
-- **F1 — App shell:** sidebar (Trabalho / Inteligência / Prova colapsável) + topbar + paleta
-  Ctrl+K (hand-rolled, filtro sem acento) + drawer mobile. Shell envolve sem alterar conteúdo;
-  proveniência e acesso ficam FORA do shell.
-- **F2 — Radar (ex-home):** tabela densa + peek panel (preview sem navegar, padrão Attio) +
-  strip de cobertura + botão primário sólido. Hero editorial aposentado.
-- **F3 — Pipeline + Agenda:** Agenda vira rota própria (`/agenda`), chip de selo na linha
-  (status de verificação de CRM), empty states com CTA.
-- **F4 — Empresa:** vira registro (rail de atributos sticky + tabs Visão/Investigação/Memo/
-  Trajetória/Similares). Scroll-spy de coluna única morto.
-- **F5 — Acabamento:** decomposição da PipelineView (1.471 linhas → 10 arquivos), teclado
-  j/k/Enter no Radar, contraste AA **medido** (bone/50 reprovava 3.86:1 → bone/60 4.98:1),
-  title duplicado corrigido, tipografia unificada (mono só em dados, labels em sans medium).
-
-**Regra tipográfica que saiu daqui (vale daqui pra frente):** Plex Mono é reservada a DADOS
-(scores, CNPJ, datas, capital, tel/email, contadores). Labels, botões, tabs e navegação em
-Plex Sans medium, caixa normal. Mono maiúscula com tracking largo dá cara de terminal — foi a
-causa real do "fonte sem polimento", não a família.
-
-**Fora de escopo (mantido):** páginas de prova (validação/mercado/consolidadores) ficam com a
-estética editorial — é a parte forte. Multi-tenant/auth por firma segue esperando o 2º parceiro
-(anti-drift #5). Tema claro e paridade mobile não entraram.
-
-**Status:** ✅ Merged em `main` (`--no-ff`, commit 34e8d07) e pushed. Build de produção +
-tsc + eslint limpos. Branch `feat/ui-workbench` apagada pós-merge. Pendente: a lista de ajustes
-finos do Guilherme ("tem alguns ajustes mas depois te passo") — a dobrar num F6 pontual quando vier.
-
----
-
-## [2026-07-20] REESTRUTURAÇÃO: projeto vira BOREAL, Guilherme solo + revisão dos anti-drifts
-
-**Contexto:** Guilherme está solo — Taylor, Juliano e Fabiano saíram (viram contatos; equity
-25/25/25/25 nunca formalizado). O nome do projeto passa a ser Boreal (o "Relay" morre como marca
-de time). Pedido junto: revisar os anti-drifts acumulados — quais são princípio e quais eram
-circunstância da estrutura antiga.
-
-**Cascata da saída do time:**
-- Vertical educação-NE REABERTA (fator decisivo era a distribuição do Taylor). Curto prazo: os
-  setores do contrato Setter mandam; metalmec é a reserva de sinal (97-100% nas vendas de sucessão).
-- Advisory direto (Ano 2 do plano 06/07) ESFRIA — dependia de sênior fechando. Caminho realista:
-  camada de inteligência (retainer + success fee via selo). NewCo whitelabel segue viável a longo
-  prazo (foi desenhada justamente pra suprir licença/credibilidade que o Guilherme não tem).
-- Risco de continuidade ago/2027 (faculdade) vira O MAIOR risco estrutural (mitigador era o Taylor).
-  Mitigação real: o produto precisa rodar com pouca operação humana — alinhado com AI-native.
-- PJ: LTDA unipessoal (sem acordo de sócios). Confirmar TITULARIDADE da minuta Setter (o acordo de
-  cooperação original era Taylor PF).
-
-**REVISÃO DOS ANTI-DRIFTS (o que fica, o que flexibiliza):**
-
-MANTIDOS — são baseados em EVIDÊNCIA, não em estrutura:
-1. **Lente única: sucessão preditiva; consolidação descritiva.** Fundamento é dado (backtest de
-   consolidação 1,4x ≈ aleatório; sucessão 88-100%). Não mudou nada com a saída do time. Regra de
-   ampliação continua: só com (a) sinal validado E (b) mesmo cliente/objetivo.
-2. **Sem EBITDA/financeiro fabricado.** Validado por Illa (PwC) e pelo juiz de M&A. É identidade
-   de credibilidade ("o Grata chuta, nós não fingimos"). O meio-termo sancionado continua sendo
-   qualificação de porte honesta com faixas + confiança declarada.
-3. **Sem outreach automatizado.** O gargalo é relacional; spam mata a parceria (9 leads ruins de
-   10 mata a Setter). Mais verdadeiro ainda solo: a reputação é de uma pessoa só.
-4. **Disciplina de validação (Phase 0, leakage-free, gates).** Método, não estrutura.
-
-FLEXIBILIZADOS — eram circunstância da estrutura antiga:
-5. **"Não investir em features de SaaS standalone (multi-tenant, billing, auth por firma)".**
-   Premissa era "Boreal = protótipo do Relay com time". Agora o Boreal É o produto e o modelo
-   provável é camada de inteligência pra N boutiques → multi-tenant vira NECESSÁRIO em algum
-   momento. Nova regra: **construir multi-tenant quando o 2º parceiro pagante assinar** (YAGNI
-   continua valendo, a proibição categórica não).
-6. **"Não virar ferramenta-de-boutique" (sem memo de reunião, sem CRM de execução).** A linha foi
-   desenhada quando o Relay planejava originar com pontas humanas PRÓPRIAS e a boutique era só
-   destino. Se a boutique é o CLIENTE pagante, ferramentas do FLUXO DE ORIGINAÇÃO dela (pipeline,
-   agenda, caminho de indicação, dossiê de abordagem) são exatamente o produto que retém o retainer.
-   **Linha nova: fluxo de originação da boutique = fair game; execução de deal (negociação, VDR,
-   proposta/contrato, compliance) = fora.** O anti-escopo de execução continua.
-7. **"Educação-NE como vertical"** — não era anti-drift formal, mas era decisão travada pela
-   distribuição do Taylor. Reaberta (ver cascata).
-
-**Status:** ✅ Registrada. Segundo cérebro atualizado (boreal.md renomeado, people, business-context,
-pendências, deadlines). Plano 06/07 (`plano-produto-modelo.md`) atualizado pro modo solo.
-
----
-
-## [2026-07-02] Revisão end-to-end + execução (Tier 1 do piloto + polish)
-
-**Contexto:** revisão completa do projeto amarrada ao objetivo (rodar o piloto Setter, provar conversão
-e atribuição). Achado central: como demo está forte; o gap é a passagem pra "parceiro roda deal flow e a
-gente prova que o lead foi nosso".
-
-**Executado nesta sessão:**
-- **Gate de acesso** (`src/middleware.ts` + `/acesso`): app fica privado quando `BOREAL_GATE_PASSWORD`
-  está setada (cookie HMAC, sem Supabase Auth). Fecha o buraco de "pipeline público". Ativar na Vercel.
-- **Selo de proveniência** (`migration 0005` + `lib/proveniencia` + `/api/proveniencia` + `/proveniencia/[id]`):
-  prova assinada de origem/data/score/"novo pro CRM deles". Destrava o success fee. **Falta aplicar a
-  0005 no banco + plugar o botão "selar" na entrega.**
-- **Teste do score** (`scoring.test.ts`, runner nativo do Node): trava o IP antes de evoluir.
-- **Feature saída-do-Simples: VALIDADA como preditiva, mas PARQUEADA (revisão 03/07).** O
-  `valida-simples-porte.mjs` mostrou lift 1,8-4,6x dentro de cada banda de porte. MAS "prevê aquisição"
-  ≠ "mede risco sucessório": sair do Simples = a empresa CRESCEU (estourou o teto de R$4,8M), sinal de
-  crescimento, quase o oposto do perfil sucessório (dono desengajado/sem herdeiro). Enfiar no score de
-  sucessão borra o que diferencia o Boreal da Grata. Cobertura ainda é baixa no alvo (só ~12% das
-  adquiridas DEMAIS saíram do Simples; mid-market costuma ser Lucro Real). **Decisão: NÃO entra no score
-  de sucessão.** Se um dia servir, é na lente de consolidação ou como qualificador de porte ao lado do
-  score, nunca misturado. (Correção da 1ª leitura, que dizia "entra após recalibrar".)
-- **Polish:** README real, comentário defasado da ponte de empresa, "1 Issue" do dev = não reproduz.
-
-**Não feito (precisa de decisão/infra):** fechar o loop de outcome (2a, precisa de dado do piloto),
-sensor forward vivo (2c, feature maior), integração da feature Simples (ingest + recalibração),
-estimativa de tamanho no memo (decisão de produto), créditos da API (billing), aplicar migrations.
-
-**Status:** ✅ Tier 1 entregue em código; ativação depende de aplicar migrations + envs na Vercel.
-
----
-
-## [2026-07-02] Data lake / RAG de enriquecimento: NÃO construir agora (sonda matou a premissa)
-
-**Contexto:** Taylor lembrou o Guilherme da possibilidade de um "data lake" com várias bases (crédito,
-financeiro) + RAG pra melhorar scraping e análise de empresas. Ideia atraente, mas avaliada com a lente
-crítica antes de aceitar.
-
-**Crítica (3 reframes):** (1) O data lake já existe — a basedosdados É o maior data lake público do BR e o
-Boreal já roda em cima dela por CNPJ; falta ENRIQUECER a espinha, não construir infra (YAGNI). (2) RAG é
-ferramenta errada pra dado estruturado (crédito/dívida/financeiro): quer SQL/tool-use preciso por CNPJ, não
-busca vetorial por similaridade; RAG só serve pra texto (site raspado, notícia). (3) Crédito/financeiro é
-paywalled pro segmento (PME familiar de capital fechado): score é proprietário (Serasa/LGPD), financeiro
-real só de S.A. aberta (CVM). Mira certa = fontes públicas de porte/distress.
-
-**Sonda barata (uma tarde, `scripts/sonda-distress.mjs`) pra decidir antes de construir:**
-- **Feasibility:** RAIS/CAGED na basedosdados NÃO têm CNPJ (anonimizados por município+CNAE) → sinal de
-  tamanho não linka. PGFN dívida ativa existe (aberta, por CNPJ) mas fora do acesso BigQuery atual e sem
-  histórico pra testar "antecede". Os dois melhores sinais públicos estão fora de alcance barato.
-- **Teste de sinal (dado CNPJ-linkável em mãos, `br_me_cnpj`):** distress ANTECEDE o deal? Tratamento =
-  7.877 aquisições limpas vs controle = 9,2M matriz ativa idade>=5. Resultado CONTRARIA a hipótese:
-  saída do Simples pré-2023 = 22,0% vs 7,2% (**3,06x**), mas isso é TAMANHO (empresa estourou o teto de
-  R$4,8M), não distress; ex-MEI 0,16x e não-ativa@2023 0,27x (adquiridas eram MAIS saudáveis). Alvo é
-  empresa média sólida com dono envelhecendo, não empresa em aperto financeiro. Pressão é geracional, não
-  de balanço.
-
-**Decisão:** **não construir o enriquecimento/lake/RAG agora.** A premissa (cruzar crédito/financeiro pra
-achar pressão) não se sustenta nos dados; produto ainda sem modelo validado; gargalo real é relacional
-(confiança) e prazos duros são outros (piloto Setter, SAT). A sonda custou uma tarde e evitou construir uma
-camada inteira sobre premissa falsa.
-
-**Backlog (o único nugget acionável):** saída do Simples/MEI como **proxy de PORTE** está de graça na
-`br_me_cnpj.simples` (sem fonte nova). Vale testar como feature do score com lift/hold-out decente antes de
-confiar (o 3,06x é confundido com tamanho e cross-seccional, não é lift validado). É o "qualificar por
-tamanho" que parecia perdido quando a RAIS não linkou.
-
-**Status:** ✅ Decidida. Sonda em `scripts/sonda-distress.mjs` (reproduzível).
-
----
-
-## [2026-07-01] Heat-map: limpeza do sinal de M&A (SPE/holding + universo ativo + escala log)
-
-**Contexto:** o sinal cru "PJ entra + PF sai entre 2 snapshots do CNPJ" (14.486 candidatas) NÃO é M&A;
-mistura três coisas. Crítica dos dados a pedido do Guilherme, confirmada por diagnóstico de idade
-(`diag-spe.mjs`): os setores que apareciam mais "quentes" (Finanças, Imobiliária, Construção, Energia)
-tinham 40-48% das "aquisições" em empresas com <5 anos = **SPE/newco e reorganização de holding
-familiar**, não venda de empresa estabelecida. Um sócio da Setter derrubaria em 10s.
-
-**Três correções (build-heatmap-setores.mjs):**
-1. **Universo só ativo** — `situacao_cadastral='2'`. Antes contava as 30,2M matriz **baixadas** ('8')
-   contra 26,1M ativas ('2'); o denominador estava inflado >2x, afundando a densidade de todo mundo.
-2. **Idade ≥ 5 anos** na adquirida (no corte) — remove SPE/newco. Efeito **diferencial**: corta ~50% de
-   Energia/Finanças/Aux.fin (jovens) e só ~15% de metalmec (velhos). É o de-viés que importa.
-3. **Filtro de holding cirúrgico** — só em construção/imobiliária/energia (41/42/43/68/35), onde a SPE é a
-   forma legal dominante (patrimônio de afetação, SPE-por-usina). Exclui a candidata em que **só entraram
-   PJ de holding/participações/incorporadora** (reorganização, não venda). Imobiliária 0,317→0,093;
-   Energia 0,415→0,196; metalmec intacto.
-   - **Testado e REJEITADO como filtro global:** cortava 60-73% de TODOS os setores igualmente, inclusive
-     os validados (Máquinas 81→29), porque nome "Participações" não separa holding-da-família de
-     holding-do-adquirente (PE/estratégico entra via SPV). Efeito não-diferencial = não é filtro de
-     artefato. Só vale nos setores SPE-heavy. As flags `novos_op/novos_hold` ficam gravadas no ground
-     truth pra refino de precisão futuro.
-
-**Resultado:** 14.486 brutas → **7.877 limpas (54%)**. Ranking nacional de densidade agora honesto:
-topo = indústria/consolidação de empresa madura (Bebidas, Química, Equip.elétricos, **Máquinas 0,359**);
-Finanças caiu pro meio (0,220); Imobiliária/Construção foram pro fundo.
-
-**Escala de cor (heatmap.ts):** a densidade é fortemente assimétrica (mediana 0,04% vs cauda >0,5%).
-Linear jogava 90% no escuro e dava branco só pra cauda → **log min-max**. E **PISO_N 10→15** pra suprimir
-densidade de n pequeno (Farmacêutica n=11 tinha 1,43% e sequestrava a escala). **Cor:** monocromático
-quente (cinza→branco), mas a escala linear deixava o meio claro demais (parecia tudo branco). Corrigido
-com **gamma 1,6** (mantém o grosso escuro, só o topo acende) + faixa alargada (L 12%→94%). Luminância
-final 31→100(mediana)→240: o quente vira branco e salta. Testei uma rampa âmbar pra dar mais contraste,
-Guilherme vetou (feio) — fica monocromático. Sem verde/vermelho/ocre (semântica de risco é do score).
-
-**Timespace e cadência (respondido, não vira código agora):** janela = 2 snapshots (10/06/2023 →
-09/11/2025, ~2,42 anos), é foto, não fluxo (não vê timing, conta transição dupla como uma, `deals/ano`
-assume taxa constante). basedosdados atualiza ~mensal; M&A é lento → re-minerar **trimestral/semestral**,
-janela **deslizante** de ~2 anos (fixar o corte incha e envelhece).
-
-**Ground truth (`scripts/data/aquisicoes-br.json`):** agora guarda TODOS os campos crus por aquisição
-(idade, situação, natureza das PJ entrantes) → dá pra re-filtrar qualquer política **sem re-consultar o
-BigQuery** (`reaggregate-local.mjs` faz isso). Pra validar recall fora dos 3 setores, usar o subconjunto
-`limpa`, não as 14.486 brutas.
-
-**Resíduo assumido (honesto):** (a) Finanças 0,220 pode ter holding financeira legítima (CNAE 64/66 É
-holding) — não filtrei porque seria circular; (b) idade≥5 é piso, sobra SPE de 5-8 anos em energia/imob;
-(c) morte de sócio sem venda dispara o mesmo sinal. Rótulo do mapa diz "troca de controle observada",
-não "deal previsto"; o dot marca onde há recall validado.
-
-**Status:** ✅ Tomada e implementada. Verificado no browser (BR + regiões renderizam, gradiente legível).
+| Data | Entrada |
+|---|---|
+| 2026-05-26 | [Direção do produto: AI research agent pra deal sourcing PE/M&A](#2026-05-26-direção-do-produto-ai-research-agent-pra-deal-sourcing-pema) |
+| 2026-05-26 | [Nicho: metalmecânica interior SP + Sul (CNAEs 24/25/28)](#2026-05-26-nicho-metalmecânica-interior-sp--sul-cnaes-242528) |
+| 2026-05-27 | [Nome do projeto: Boreal](#2026-05-27-nome-do-projeto-boreal) |
+| 2026-05-27 | [Stack confirmada com Next.js 16 (não 15)](#2026-05-27-stack-confirmada-com-nextjs-16-não-15) |
+| 2026-05-27 | [Interpretação NL via Claude Agent SDK (assinatura), não API key](#2026-05-27-interpretação-nl-via-claude-agent-sdk-assinatura-não-api-key) |
+| 2026-05-28 | [Score determinístico + Reasoner LLM batched](#2026-05-28-score-determinístico--reasoner-llm-batched) |
+| 2026-05-28 | [Trocar Agent SDK → Anthropic API direta (quando a key chegar)](#2026-05-28-trocar-agent-sdk--anthropic-api-direta-quando-a-key-chegar) |
+| 2026-05-28 | [Boreal = motor do Relay (não só competição)](#2026-05-28-boreal--motor-do-relay-não-só-competição) |
+| 2026-05-29 | [Fluxo de colaboração automático nos skills — "automático mas avisa"](#2026-05-29-fluxo-de-colaboração-automático-nos-skills--automático-mas-avisa) |
+| 2026-05-29 | [Enrichment em regimes + moat do banco = loop de outcomes](#2026-05-29-enrichment-em-regimes--moat-do-banco--loop-de-outcomes) |
+| 2026-05-29 | [Linha de expansão Boreal: research-agent → validação → polish (fiel ao Relay)](#2026-05-29-linha-de-expansão-boreal-research-agent--validação--polish-fiel-ao-relay) |
+| 2026-05-29 | [Research-agent roda na ASSINATURA (Agent SDK), não na API](#2026-05-29-research-agent-roda-na-assinatura-agent-sdk-não-na-api) |
+| 2026-05-30 | [Score v0.1 — recalibrado por validação retroativa (data-driven)](#2026-05-30-score-v01--recalibrado-por-validação-retroativa-data-driven) |
+| 2026-05-30 | [Score sempre usa o quadro societário COMPLETO](#2026-05-30-score-sempre-usa-o-quadro-societário-completo) |
+| 2026-05-30 | [Juiz de M&A — eval sintético (validar qualidade sem depender de calls)](#2026-05-30-juiz-de-ma--eval-sintético-validar-qualidade-sem-depender-de-calls) |
+| 2026-05-30 | [Assinatura Agent SDK bloqueada → research migra pra Anthropic API](#2026-05-30-assinatura-agent-sdk-bloqueada--research-migra-pra-anthropic-api) |
+| 2026-05-30 | [Resolução: a assinatura era conta errada + arquitetura API-no-produto / cache-na-assinatura](#2026-05-30-resolução-a-assinatura-era-conta-errada--arquitetura-api-no-produto--cache-na-assinatura) |
+| 2026-06-01 | [Cores de risco reservadas para score/severidade — destaque editorial é neutro](#2026-06-01-cores-de-risco-reservadas-para-scoreseveridade--destaque-editorial-é-neutro) |
+| 2026-06-01 | [Badge do card: tier (ALTO/MÉD/BAIXO) no lugar do rank](#2026-06-01-badge-do-card-tier-altomédbaixo-no-lugar-do-rank) |
+| 2026-06-02 | [/03] RACIONAL DAS MELHORIAS — o "porquê" pra usar no pitch](#2026-06-0203-racional-das-melhorias--o-porquê-pra-usar-no-pitch) |
+| 2026-06-03 | [Pipeline UX: card colapsável + sort + filtro (escala com volume)](#2026-06-03-pipeline-ux-card-colapsável--sort--filtro-escala-com-volume) |
+| 2026-06-03 | [Look-alike (achar similares) — inspirado no Grata, com nosso dado](#2026-06-03-look-alike-achar-similares--inspirado-no-grata-com-nosso-dado) |
+| 2026-06-03 | [Monitor de transições — o sensor forward (o que mais diferencia do Grata)](#2026-06-03-monitor-de-transições--o-sensor-forward-o-que-mais-diferencia-do-grata) |
+| 2026-06-03 | [Sistema de tipografia/cor v1 — decisões fundamentais](#2026-06-03-sistema-de-tipografiacor-v1--decisões-fundamentais) |
+| 2026-06-04 | [Setor como 1ª classe — cobertura sector-by-sector (venture-scale)](#2026-06-04-setor-como-1ª-classe--cobertura-sector-by-sector-venture-scale) |
+| 2026-06-04 | [Score por lentes + recall de educação — o label estava sujo, não o score](#2026-06-04-score-por-lentes--recall-de-educação--o-label-estava-sujo-não-o-score) |
+| 2026-06-04 | [Robustez: validação Brasil-inteiro (a amostra se sustenta)](#2026-06-04-robustez-validação-brasil-inteiro-a-amostra-se-sustenta) |
+| 2026-06-04 | [Melhorias pós-setores: velocidade + worklist + trajetória (afiar, não dispersar)](#2026-06-04-melhorias-pós-setores-velocidade--worklist--trajetória-afiar-não-dispersar) |
+| 2026-06-04 | [Sistema de tipografia/cor v1 — decisões de aplicação](#2026-06-04-sistema-de-tipografiacor-v1--decisões-de-aplicação) |
+| 2026-06-04 | [Varredura de auditoria — alinhar o app com a tese (6 fixes)](#2026-06-04-varredura-de-auditoria--alinhar-o-app-com-a-tese-6-fixes) |
+| 2026-06-05 | [Sistema de tipografia/cor v3 — contraste, statement de seção e figura editorial](#2026-06-05-sistema-de-tipografiacor-v3--contraste-statement-de-seção-e-figura-editorial) |
+| 2026-06-07 | [Error state monocromático — sem cor de alarme (variantes C e B)](#2026-06-07-error-state-monocromático--sem-cor-de-alarme-variantes-c-e-b) |
+| 2026-06-07 | [Banimento de side-stripe border (`border-left > 1px`) em cards](#2026-06-07-banimento-de-side-stripe-border-border-left--1px-em-cards) |
+| 2026-06-07 | [Home = superfície de triagem; profundidade na página da empresa (arquitetura Fase 1/Fase 2)](#2026-06-07-home--superfície-de-triagem-profundidade-na-página-da-empresa-arquitetura-fase-1fase-2) |
+| 2026-06-08 | [Navegação para /empresa/[id] via ponte sessionStorage (temporária)](#2026-06-08-navegação-para-empresaid-via-ponte-sessionstorage-temporária) |
+| 2026-06-08 | [`GET /api/empresa/[id]` criado — a página busca os próprios dados pelo id](#2026-06-08-get-apiempresaid-criado--a-página-busca-os-próprios-dados-pelo-id) |
+| 2026-06-08 | [Barras do breakdown do score na cor do tier (brand guide #16/#17)](#2026-06-08-barras-do-breakdown-do-score-na-cor-do-tier-brand-guide-1617) |
+| 2026-06-08 | [/09] Pipeline: kanban descartado — tabs por estágio + linhas de largura cheia](#2026-06-0809-pipeline-kanban-descartado--tabs-por-estágio--linhas-de-largura-cheia) |
+| 2026-06-08 | [/09] Aba Agenda: dimensão operacional distinta dos estágios de negociação](#2026-06-0809-aba-agenda-dimensão-operacional-distinta-dos-estágios-de-negociação) |
+| 2026-06-10 | [Pipeline: coluna Dono alinhada à esquerda (não centralizada)](#2026-06-10-pipeline-coluna-dono-alinhada-à-esquerda-não-centralizada) |
+| 2026-06-10 | [Grid do pipeline: uma única coluna flexível (Notas vira largura fixa)](#2026-06-10-grid-do-pipeline-uma-única-coluna-flexível-notas-vira-largura-fixa) |
+| 2026-06-10 | [Fazer deploy no Vercel para a submissão (reverte "não fazer deploy agora")](#2026-06-10-fazer-deploy-no-vercel-para-a-submissão-reverte-não-fazer-deploy-agora) |
+| 2026-06-28 | [Research híbrido — Scrapling lê o site oficial; descoberta por email do CNPJ](#2026-06-28-research-híbrido--scrapling-lê-o-site-oficial-descoberta-por-email-do-cnpj) |
+| 2026-06-28 | [Maguto saiu do time (fim do Clube) — interface volta pro escopo do Guilherme](#2026-06-28-maguto-saiu-do-time-fim-do-clube--interface-volta-pro-escopo-do-guilherme) |
+| 2026-06-28 | [Heat-map de setor — temperatura monocromática (estende a regra de cor do brand)](#2026-06-28-heat-map-de-setor--temperatura-monocromática-estende-a-regra-de-cor-do-brand) |
+| 2026-06-28 | [Heat-map v2 — treemap tipo TradingView, métrica pra TODOS os setores](#2026-06-28-heat-map-v2--treemap-tipo-tradingview-métrica-pra-todos-os-setores) |
+| 2026-06-28 | [Heat-map v3 — Brasil inteiro, filtro por região, ground truth pra validação](#2026-06-28-heat-map-v3--brasil-inteiro-filtro-por-região-ground-truth-pra-validação) |
+| 2026-07-01 | [Heat-map: limpeza do sinal de M&A (SPE/holding + universo ativo + escala log)](#2026-07-01-heat-map-limpeza-do-sinal-de-ma-speholding--universo-ativo--escala-log) |
+| 2026-07-02 | [Revisão end-to-end + execução (Tier 1 do piloto + polish)](#2026-07-02-revisão-end-to-end--execução-tier-1-do-piloto--polish) |
+| 2026-07-02 | [Data lake / RAG de enriquecimento: NÃO construir agora (sonda matou a premissa)](#2026-07-02-data-lake--rag-de-enriquecimento-não-construir-agora-sonda-matou-a-premissa) |
+| 2026-07-20 | [REESTRUTURAÇÃO: projeto vira BOREAL, Guilherme solo + revisão dos anti-drifts](#2026-07-20-reestruturação-projeto-vira-boreal-guilherme-solo--revisão-dos-anti-drifts) |
+| 2026-07-21 | [REDESIGN: produto vira workbench (F1-F5) — merged em main](#2026-07-21-redesign-produto-vira-workbench-f1-f5--merged-em-main) |
+| 2026-08-02 | [Métrica de validação passa a ser estratificada, e o universo passa a ser o elegível](#2026-08-02-métrica-de-validação-passa-a-ser-estratificada-e-o-universo-passa-a-ser-o-elegível) |
+| 2026-08-11 | [`porte` entra como eixo, a flag do Simples é barrada, e o desempate vira determinístico](#2026-08-11-porte-entra-como-eixo-a-flag-do-simples-é-barrada-e-o-desempate-vira-determinístico) |
+| 2026-08-12 | [Mandato entra no contrato, e a tela do piloto deixa de oferecer o que o banco nega](#2026-08-12--mandato-entra-no-contrato-e-a-tela-do-piloto-deixa-de-oferecer-o-que-o-banco-nega) |
+| 2026-08-12 | [Migration deixa de ser manual](#2026-08-12--migration-deixa-de-ser-manual) |
+| 2026-08-12 | [Descarte passa a ser filtrado no banco, e a página para de encolher](#2026-08-12--descarte-passa-a-ser-filtrado-no-banco-e-a-página-para-de-encolher) |
+| 2026-08-16 | [Indisponibilidade deixa de se disfarçar de bug](#2026-08-16--indisponibilidade-deixa-de-se-disfarçar-de-bug) |
+| 2026-08-16 | [O contrato derrubou o pipeline, e eu já tinha visto o sinal](#2026-08-16--o-contrato-derrubou-o-pipeline-e-eu-já-tinha-visto-o-sinal) |
+| 2026-08-24 | [O piloto foi usado de verdade, e o uso desmente o produto que construímos](#2026-08-24--o-piloto-foi-usado-de-verdade-e-o-uso-desmente-o-produto-que-construímos) |
+| 2026-08-24 | [(noite) Fernanda disse a regra dela em voz alta, e a regra mata 91% do que entregamos](#2026-08-24-noite--fernanda-disse-a-regra-dela-em-voz-alta-e-a-regra-mata-91-do-que-entregamos) |
+| 2026-08-24 | [(segundo áudio) Ela desmente duas coisas que eu afirmei, e a segunda derruba a tese do score](#2026-08-24-segundo-áudio--ela-desmente-duas-coisas-que-eu-afirmei-e-a-segunda-derruba-a-tese-do-score) |
+| 2026-08-24 | [(noite) O filtro que ela descrevia vira controle da ferramenta](#2026-08-24-noite--o-filtro-que-ela-descrevia-vira-controle-da-ferramenta) |
+| 2026-08-26 | [Fernanda acha o furo do filtro de porte, e a resposta NÃO é scraping](#2026-08-26--fernanda-acha-o-furo-do-filtro-de-porte-e-a-resposta-não-é-scraping) |
+| 2026-08-26 | [(noite) O custo do corte de ano, medido: 10 empresas](#2026-08-26-noite--o-custo-do-corte-de-ano-medido-10-empresas) |
+| 2026-09-14 | [Uso do piloto antes da call de fim de mês com Henrique e Fernanda](#2026-09-14--uso-do-piloto-antes-da-call-de-fim-de-mês-com-henrique-e-fernanda) |
+| 2026-09-14 | [Call de fim de piloto: vai assinar, e o grafo vira pedido de cliente](#2026-09-14--call-de-fim-de-piloto-vai-assinar-e-o-grafo-vira-pedido-de-cliente) |
 
 ---
 
@@ -512,6 +380,38 @@ Pro (guichicotrip4@gmail.com) destravou; `check-agent-sdk.mjs` voltou a responde
 
 ---
 
+## [2026-06-01] Cores de risco reservadas para score/severidade — destaque editorial é neutro
+
+**Contexto:** ao destacar "Tese de aproximação" e "Próximo passo" no memo, a cor `risk-mid` (ocre)
+estava sendo usada tanto pra score médio nos cards quanto pra realçar texto editorial. Mesma
+ambiguidade já vista na lane "Qualificada" do pipeline (ocre = "atenção/risco médio"?).
+
+**Decisão:** terracota (`risk-high`) e ocre (`risk-mid`) ficam **exclusivas** de sinalização de
+score, badge de tier e severidade de red flags. Destaques editoriais (tese, próximo passo, lanes do
+pipeline) usam paleta neutra (hairline, bone, surface-hover). Regra vale pra qualquer elemento
+editorial futuro.
+
+**Consequência:** tese `border-risk-mid` → `border-bone/30`; próximo passo → `bg-surface-hover`;
+lanes do pipeline → `border-floral/15` uniforme. Validado em sandbox com os 3 tiers lado a lado.
+
+**Status:** ✅ Implementada (PR #22).
+
+---
+
+## [2026-06-01] Badge do card: tier (ALTO/MÉD/BAIXO) no lugar do rank
+
+**Contexto:** o badge mostrava o número de rank (01, 02…) abaixo do score. Mas a investigação com
+IA altera o score (sobe/desce), o que mudaria a ordenação — o rank impresso fica infiel sem
+re-ranking, e re-rankear a lista a cada investigação é complexidade de estrutura desnecessária.
+
+**Decisão:** trocar o rank por um rótulo de tier derivado do score atual (`scoreTier`: ≥70 alto,
+≥50 médio, <50 baixo). Sempre fiel — seja score v0 ou v1 pós-investigação. Atualiza junto com o
+delta `↑/↓` sem nenhuma lógica de ordenação extra.
+
+**Status:** ✅ Implementada (PR #22).
+
+---
+
 ## [2026-06-02/03] RACIONAL DAS MELHORIAS — o "porquê" pra usar no pitch
 
 > Cada item: **o que** construímos, **por quê**, e **o que rejeitamos** (a parte que mais convence um
@@ -641,6 +541,46 @@ janela de sucessão). Alerta renderiza no card (borda + banner vermelho).
 **Status:** ✅ Implementado e testado via script (sem Chrome, a pedido). PR #29.
 
 ---
+
+## [2026-06-03] Sistema de tipografia/cor v1 — decisões fundamentais
+
+> ⚠️ Entrada retroativa registrada em 2026-06-11. A sessão de 03/06 não foi salva no brain do Boreal
+> na época (só o segundo cérebro pessoal). Este registro fecha o gap. São as decisões **fundamentais**
+> que originaram `brand/uso-tipografia-cor.md`; as decisões de **aplicação** subsequentes (etapas 3–5)
+> estão na entrada de [2026-06-04] mais abaixo.
+
+**Contexto:** as páginas novas do Guilherme (validação, mercado, consolidadores, pipeline v2) usavam o
+ocre (`risk-mid`) como cor de destaque genérico (links, métricas, passos) — viola "cor de risco só pra
+score". Faltava um sistema explícito de quando usar cada fonte/peso/cor/opacidade. Decisões fechadas via
+sandbox HTML (antes/depois) nesta sessão e documentadas em `brand/uso-tipografia-cor.md`.
+
+**Decisões:**
+
+1. **Contraste por peso, não por cor** — ênfase no corpo = `strong` peso 600 na mesma cor. Floral e Bone
+   não se misturam na mesma frase como ênfase (poluem); convivem entre blocos (síntese Floral + corpo Bone).
+
+2. **Corpo de leitura = Bone em 15px** — Floral (quase-branco) em volume cansa/hala; o desconforto do Bone
+   era o tamanho 14px, não a cor. Bone 15px é confortável e mais sóbrio ("Private, not loud").
+
+3. **Regra híbrida** — síntese/impacto curto em Floral; leitura longa em Bone. **Exceção:** painel compacto
+   (card/memo) usa corpo Floral — bone "apaga" o painel; a regra de bone-pra-leitura vale só pra páginas de prosa.
+
+4. **`strong` = 600 global** (`globals.css`), sem cor própria — mata o faux-700 sintetizado (borrado).
+   Plex Sans `400/500/600` (remove o 300).
+
+5. **Escala de opacidade fixa** — /100 · /70 · /45 (acaba com `/55`, `/30` arbitrários). Labels de seção = Bone/70.
+
+6. **Ocre/terracota só pra score de succession risk.** Link/ação = Floral. Exceção registrada: box
+   "Por que agora" (gatilho de timing) usa terracota como alerta de oportunidade.
+
+**Status:** ✅ Documentado em `brand/uso-tipografia-cor.md`. Etapas 0–2 aplicadas nesta sessão; 3–5 em 04/06.
+
+---
+
+> ⚠️ **Entrada retroativa (registrada em 11/06).** A sessão de 05/06 não foi salva no brain do Boreal na
+> época — só o segundo cérebro pessoal. Logada aqui depois. Evolui o "Sistema de tipografia/cor v1" de
+> 04/06 acima para **v3**, com os padrões fechados durante o restyle profundo de /validacao (card hero,
+> contraste, a11y). Documentado em `brand/uso-tipografia-cor.md` v3.
 
 ## [2026-06-04] Setor como 1ª classe — cobertura sector-by-sector (venture-scale)
 
@@ -781,78 +721,6 @@ Várias micro-decisões de design fechadas durante sandboxes.
 > ⚠️ **Entradas retroativas (registradas em 11/06).** As duas decisões abaixo foram tomadas na
 > sessão de 01/06 (PR #22) mas não chegaram a ser logadas no brain na época — só o segundo cérebro
 > foi atualizado. Registradas aqui depois. Cronologicamente precedem as decisões de 04/06 acima.
-
-## [2026-06-01] Cores de risco reservadas para score/severidade — destaque editorial é neutro
-
-**Contexto:** ao destacar "Tese de aproximação" e "Próximo passo" no memo, a cor `risk-mid` (ocre)
-estava sendo usada tanto pra score médio nos cards quanto pra realçar texto editorial. Mesma
-ambiguidade já vista na lane "Qualificada" do pipeline (ocre = "atenção/risco médio"?).
-
-**Decisão:** terracota (`risk-high`) e ocre (`risk-mid`) ficam **exclusivas** de sinalização de
-score, badge de tier e severidade de red flags. Destaques editoriais (tese, próximo passo, lanes do
-pipeline) usam paleta neutra (hairline, bone, surface-hover). Regra vale pra qualquer elemento
-editorial futuro.
-
-**Consequência:** tese `border-risk-mid` → `border-bone/30`; próximo passo → `bg-surface-hover`;
-lanes do pipeline → `border-floral/15` uniforme. Validado em sandbox com os 3 tiers lado a lado.
-
-**Status:** ✅ Implementada (PR #22).
-
----
-
-## [2026-06-01] Badge do card: tier (ALTO/MÉD/BAIXO) no lugar do rank
-
-**Contexto:** o badge mostrava o número de rank (01, 02…) abaixo do score. Mas a investigação com
-IA altera o score (sobe/desce), o que mudaria a ordenação — o rank impresso fica infiel sem
-re-ranking, e re-rankear a lista a cada investigação é complexidade de estrutura desnecessária.
-
-**Decisão:** trocar o rank por um rótulo de tier derivado do score atual (`scoreTier`: ≥70 alto,
-≥50 médio, <50 baixo). Sempre fiel — seja score v0 ou v1 pós-investigação. Atualiza junto com o
-delta `↑/↓` sem nenhuma lógica de ordenação extra.
-
-**Status:** ✅ Implementada (PR #22).
-
----
-
-## [2026-06-03] Sistema de tipografia/cor v1 — decisões fundamentais
-
-> ⚠️ Entrada retroativa registrada em 2026-06-11. A sessão de 03/06 não foi salva no brain do Boreal
-> na época (só o segundo cérebro pessoal). Este registro fecha o gap. São as decisões **fundamentais**
-> que originaram `brand/uso-tipografia-cor.md`; as decisões de **aplicação** subsequentes (etapas 3–5)
-> estão na entrada de [2026-06-04] mais abaixo.
-
-**Contexto:** as páginas novas do Guilherme (validação, mercado, consolidadores, pipeline v2) usavam o
-ocre (`risk-mid`) como cor de destaque genérico (links, métricas, passos) — viola "cor de risco só pra
-score". Faltava um sistema explícito de quando usar cada fonte/peso/cor/opacidade. Decisões fechadas via
-sandbox HTML (antes/depois) nesta sessão e documentadas em `brand/uso-tipografia-cor.md`.
-
-**Decisões:**
-
-1. **Contraste por peso, não por cor** — ênfase no corpo = `strong` peso 600 na mesma cor. Floral e Bone
-   não se misturam na mesma frase como ênfase (poluem); convivem entre blocos (síntese Floral + corpo Bone).
-
-2. **Corpo de leitura = Bone em 15px** — Floral (quase-branco) em volume cansa/hala; o desconforto do Bone
-   era o tamanho 14px, não a cor. Bone 15px é confortável e mais sóbrio ("Private, not loud").
-
-3. **Regra híbrida** — síntese/impacto curto em Floral; leitura longa em Bone. **Exceção:** painel compacto
-   (card/memo) usa corpo Floral — bone "apaga" o painel; a regra de bone-pra-leitura vale só pra páginas de prosa.
-
-4. **`strong` = 600 global** (`globals.css`), sem cor própria — mata o faux-700 sintetizado (borrado).
-   Plex Sans `400/500/600` (remove o 300).
-
-5. **Escala de opacidade fixa** — /100 · /70 · /45 (acaba com `/55`, `/30` arbitrários). Labels de seção = Bone/70.
-
-6. **Ocre/terracota só pra score de succession risk.** Link/ação = Floral. Exceção registrada: box
-   "Por que agora" (gatilho de timing) usa terracota como alerta de oportunidade.
-
-**Status:** ✅ Documentado em `brand/uso-tipografia-cor.md`. Etapas 0–2 aplicadas nesta sessão; 3–5 em 04/06.
-
----
-
-> ⚠️ **Entrada retroativa (registrada em 11/06).** A sessão de 05/06 não foi salva no brain do Boreal na
-> época — só o segundo cérebro pessoal. Logada aqui depois. Evolui o "Sistema de tipografia/cor v1" de
-> 04/06 acima para **v3**, com os padrões fechados durante o restyle profundo de /validacao (card hero,
-> contraste, a11y). Documentado em `brand/uso-tipografia-cor.md` v3.
 
 ## [2026-06-05] Sistema de tipografia/cor v3 — contraste, statement de seção e figura editorial
 
@@ -1331,6 +1199,216 @@ Brasil inteiro. Duas saídas:
 
 **Status:** ✅ Implementado na branch. Pendente review visual do Guilherme.
 
+## [2026-07-01] Heat-map: limpeza do sinal de M&A (SPE/holding + universo ativo + escala log)
+
+**Contexto:** o sinal cru "PJ entra + PF sai entre 2 snapshots do CNPJ" (14.486 candidatas) NÃO é M&A;
+mistura três coisas. Crítica dos dados a pedido do Guilherme, confirmada por diagnóstico de idade
+(`diag-spe.mjs`): os setores que apareciam mais "quentes" (Finanças, Imobiliária, Construção, Energia)
+tinham 40-48% das "aquisições" em empresas com <5 anos = **SPE/newco e reorganização de holding
+familiar**, não venda de empresa estabelecida. Um sócio da Setter derrubaria em 10s.
+
+**Três correções (build-heatmap-setores.mjs):**
+1. **Universo só ativo** — `situacao_cadastral='2'`. Antes contava as 30,2M matriz **baixadas** ('8')
+   contra 26,1M ativas ('2'); o denominador estava inflado >2x, afundando a densidade de todo mundo.
+2. **Idade ≥ 5 anos** na adquirida (no corte) — remove SPE/newco. Efeito **diferencial**: corta ~50% de
+   Energia/Finanças/Aux.fin (jovens) e só ~15% de metalmec (velhos). É o de-viés que importa.
+3. **Filtro de holding cirúrgico** — só em construção/imobiliária/energia (41/42/43/68/35), onde a SPE é a
+   forma legal dominante (patrimônio de afetação, SPE-por-usina). Exclui a candidata em que **só entraram
+   PJ de holding/participações/incorporadora** (reorganização, não venda). Imobiliária 0,317→0,093;
+   Energia 0,415→0,196; metalmec intacto.
+   - **Testado e REJEITADO como filtro global:** cortava 60-73% de TODOS os setores igualmente, inclusive
+     os validados (Máquinas 81→29), porque nome "Participações" não separa holding-da-família de
+     holding-do-adquirente (PE/estratégico entra via SPV). Efeito não-diferencial = não é filtro de
+     artefato. Só vale nos setores SPE-heavy. As flags `novos_op/novos_hold` ficam gravadas no ground
+     truth pra refino de precisão futuro.
+
+**Resultado:** 14.486 brutas → **7.877 limpas (54%)**. Ranking nacional de densidade agora honesto:
+topo = indústria/consolidação de empresa madura (Bebidas, Química, Equip.elétricos, **Máquinas 0,359**);
+Finanças caiu pro meio (0,220); Imobiliária/Construção foram pro fundo.
+
+**Escala de cor (heatmap.ts):** a densidade é fortemente assimétrica (mediana 0,04% vs cauda >0,5%).
+Linear jogava 90% no escuro e dava branco só pra cauda → **log min-max**. E **PISO_N 10→15** pra suprimir
+densidade de n pequeno (Farmacêutica n=11 tinha 1,43% e sequestrava a escala). **Cor:** monocromático
+quente (cinza→branco), mas a escala linear deixava o meio claro demais (parecia tudo branco). Corrigido
+com **gamma 1,6** (mantém o grosso escuro, só o topo acende) + faixa alargada (L 12%→94%). Luminância
+final 31→100(mediana)→240: o quente vira branco e salta. Testei uma rampa âmbar pra dar mais contraste,
+Guilherme vetou (feio) — fica monocromático. Sem verde/vermelho/ocre (semântica de risco é do score).
+
+**Timespace e cadência (respondido, não vira código agora):** janela = 2 snapshots (10/06/2023 →
+09/11/2025, ~2,42 anos), é foto, não fluxo (não vê timing, conta transição dupla como uma, `deals/ano`
+assume taxa constante). basedosdados atualiza ~mensal; M&A é lento → re-minerar **trimestral/semestral**,
+janela **deslizante** de ~2 anos (fixar o corte incha e envelhece).
+
+**Ground truth (`scripts/data/aquisicoes-br.json`):** agora guarda TODOS os campos crus por aquisição
+(idade, situação, natureza das PJ entrantes) → dá pra re-filtrar qualquer política **sem re-consultar o
+BigQuery** (`reaggregate-local.mjs` faz isso). Pra validar recall fora dos 3 setores, usar o subconjunto
+`limpa`, não as 14.486 brutas.
+
+**Resíduo assumido (honesto):** (a) Finanças 0,220 pode ter holding financeira legítima (CNAE 64/66 É
+holding) — não filtrei porque seria circular; (b) idade≥5 é piso, sobra SPE de 5-8 anos em energia/imob;
+(c) morte de sócio sem venda dispara o mesmo sinal. Rótulo do mapa diz "troca de controle observada",
+não "deal previsto"; o dot marca onde há recall validado.
+
+**Status:** ✅ Tomada e implementada. Verificado no browser (BR + regiões renderizam, gradiente legível).
+
+---
+
+## [2026-07-02] Revisão end-to-end + execução (Tier 1 do piloto + polish)
+
+**Contexto:** revisão completa do projeto amarrada ao objetivo (rodar o piloto Setter, provar conversão
+e atribuição). Achado central: como demo está forte; o gap é a passagem pra "parceiro roda deal flow e a
+gente prova que o lead foi nosso".
+
+**Executado nesta sessão:**
+- **Gate de acesso** (`src/middleware.ts` + `/acesso`): app fica privado quando `BOREAL_GATE_PASSWORD`
+  está setada (cookie HMAC, sem Supabase Auth). Fecha o buraco de "pipeline público". Ativar na Vercel.
+- **Selo de proveniência** (`migration 0005` + `lib/proveniencia` + `/api/proveniencia` + `/proveniencia/[id]`):
+  prova assinada de origem/data/score/"novo pro CRM deles". Destrava o success fee. **Falta aplicar a
+  0005 no banco + plugar o botão "selar" na entrega.**
+- **Teste do score** (`scoring.test.ts`, runner nativo do Node): trava o IP antes de evoluir.
+- **Feature saída-do-Simples: VALIDADA como preditiva, mas PARQUEADA (revisão 03/07).** O
+  `valida-simples-porte.mjs` mostrou lift 1,8-4,6x dentro de cada banda de porte. MAS "prevê aquisição"
+  ≠ "mede risco sucessório": sair do Simples = a empresa CRESCEU (estourou o teto de R$4,8M), sinal de
+  crescimento, quase o oposto do perfil sucessório (dono desengajado/sem herdeiro). Enfiar no score de
+  sucessão borra o que diferencia o Boreal da Grata. Cobertura ainda é baixa no alvo (só ~12% das
+  adquiridas DEMAIS saíram do Simples; mid-market costuma ser Lucro Real). **Decisão: NÃO entra no score
+  de sucessão.** Se um dia servir, é na lente de consolidação ou como qualificador de porte ao lado do
+  score, nunca misturado. (Correção da 1ª leitura, que dizia "entra após recalibrar".)
+- **Polish:** README real, comentário defasado da ponte de empresa, "1 Issue" do dev = não reproduz.
+
+**Não feito (precisa de decisão/infra):** fechar o loop de outcome (2a, precisa de dado do piloto),
+sensor forward vivo (2c, feature maior), integração da feature Simples (ingest + recalibração),
+estimativa de tamanho no memo (decisão de produto), créditos da API (billing), aplicar migrations.
+
+**Status:** ✅ Tier 1 entregue em código; ativação depende de aplicar migrations + envs na Vercel.
+
+---
+
+## [2026-07-02] Data lake / RAG de enriquecimento: NÃO construir agora (sonda matou a premissa)
+
+**Contexto:** Taylor lembrou o Guilherme da possibilidade de um "data lake" com várias bases (crédito,
+financeiro) + RAG pra melhorar scraping e análise de empresas. Ideia atraente, mas avaliada com a lente
+crítica antes de aceitar.
+
+**Crítica (3 reframes):** (1) O data lake já existe — a basedosdados É o maior data lake público do BR e o
+Boreal já roda em cima dela por CNPJ; falta ENRIQUECER a espinha, não construir infra (YAGNI). (2) RAG é
+ferramenta errada pra dado estruturado (crédito/dívida/financeiro): quer SQL/tool-use preciso por CNPJ, não
+busca vetorial por similaridade; RAG só serve pra texto (site raspado, notícia). (3) Crédito/financeiro é
+paywalled pro segmento (PME familiar de capital fechado): score é proprietário (Serasa/LGPD), financeiro
+real só de S.A. aberta (CVM). Mira certa = fontes públicas de porte/distress.
+
+**Sonda barata (uma tarde, `scripts/sonda-distress.mjs`) pra decidir antes de construir:**
+- **Feasibility:** RAIS/CAGED na basedosdados NÃO têm CNPJ (anonimizados por município+CNAE) → sinal de
+  tamanho não linka. PGFN dívida ativa existe (aberta, por CNPJ) mas fora do acesso BigQuery atual e sem
+  histórico pra testar "antecede". Os dois melhores sinais públicos estão fora de alcance barato.
+- **Teste de sinal (dado CNPJ-linkável em mãos, `br_me_cnpj`):** distress ANTECEDE o deal? Tratamento =
+  7.877 aquisições limpas vs controle = 9,2M matriz ativa idade>=5. Resultado CONTRARIA a hipótese:
+  saída do Simples pré-2023 = 22,0% vs 7,2% (**3,06x**), mas isso é TAMANHO (empresa estourou o teto de
+  R$4,8M), não distress; ex-MEI 0,16x e não-ativa@2023 0,27x (adquiridas eram MAIS saudáveis). Alvo é
+  empresa média sólida com dono envelhecendo, não empresa em aperto financeiro. Pressão é geracional, não
+  de balanço.
+
+**Decisão:** **não construir o enriquecimento/lake/RAG agora.** A premissa (cruzar crédito/financeiro pra
+achar pressão) não se sustenta nos dados; produto ainda sem modelo validado; gargalo real é relacional
+(confiança) e prazos duros são outros (piloto Setter, SAT). A sonda custou uma tarde e evitou construir uma
+camada inteira sobre premissa falsa.
+
+**Backlog (o único nugget acionável):** saída do Simples/MEI como **proxy de PORTE** está de graça na
+`br_me_cnpj.simples` (sem fonte nova). Vale testar como feature do score com lift/hold-out decente antes de
+confiar (o 3,06x é confundido com tamanho e cross-seccional, não é lift validado). É o "qualificar por
+tamanho" que parecia perdido quando a RAIS não linkou.
+
+**Status:** ✅ Decidida. Sonda em `scripts/sonda-distress.mjs` (reproduzível).
+
+---
+
+## [2026-07-20] REESTRUTURAÇÃO: projeto vira BOREAL, Guilherme solo + revisão dos anti-drifts
+
+**Contexto:** Guilherme está solo — Taylor, Juliano e Fabiano saíram (viram contatos; equity
+25/25/25/25 nunca formalizado). O nome do projeto passa a ser Boreal (o "Relay" morre como marca
+de time). Pedido junto: revisar os anti-drifts acumulados — quais são princípio e quais eram
+circunstância da estrutura antiga.
+
+**Cascata da saída do time:**
+- Vertical educação-NE REABERTA (fator decisivo era a distribuição do Taylor). Curto prazo: os
+  setores do contrato Setter mandam; metalmec é a reserva de sinal (97-100% nas vendas de sucessão).
+- Advisory direto (Ano 2 do plano 06/07) ESFRIA — dependia de sênior fechando. Caminho realista:
+  camada de inteligência (retainer + success fee via selo). NewCo whitelabel segue viável a longo
+  prazo (foi desenhada justamente pra suprir licença/credibilidade que o Guilherme não tem).
+- Risco de continuidade ago/2027 (faculdade) vira O MAIOR risco estrutural (mitigador era o Taylor).
+  Mitigação real: o produto precisa rodar com pouca operação humana — alinhado com AI-native.
+- PJ: LTDA unipessoal (sem acordo de sócios). Confirmar TITULARIDADE da minuta Setter (o acordo de
+  cooperação original era Taylor PF).
+
+**REVISÃO DOS ANTI-DRIFTS (o que fica, o que flexibiliza):**
+
+MANTIDOS — são baseados em EVIDÊNCIA, não em estrutura:
+1. **Lente única: sucessão preditiva; consolidação descritiva.** Fundamento é dado (backtest de
+   consolidação 1,4x ≈ aleatório; sucessão 88-100%). Não mudou nada com a saída do time. Regra de
+   ampliação continua: só com (a) sinal validado E (b) mesmo cliente/objetivo.
+2. **Sem EBITDA/financeiro fabricado.** Validado por Illa (PwC) e pelo juiz de M&A. É identidade
+   de credibilidade ("o Grata chuta, nós não fingimos"). O meio-termo sancionado continua sendo
+   qualificação de porte honesta com faixas + confiança declarada.
+3. **Sem outreach automatizado.** O gargalo é relacional; spam mata a parceria (9 leads ruins de
+   10 mata a Setter). Mais verdadeiro ainda solo: a reputação é de uma pessoa só.
+4. **Disciplina de validação (Phase 0, leakage-free, gates).** Método, não estrutura.
+
+FLEXIBILIZADOS — eram circunstância da estrutura antiga:
+5. **"Não investir em features de SaaS standalone (multi-tenant, billing, auth por firma)".**
+   Premissa era "Boreal = protótipo do Relay com time". Agora o Boreal É o produto e o modelo
+   provável é camada de inteligência pra N boutiques → multi-tenant vira NECESSÁRIO em algum
+   momento. Nova regra: **construir multi-tenant quando o 2º parceiro pagante assinar** (YAGNI
+   continua valendo, a proibição categórica não).
+6. **"Não virar ferramenta-de-boutique" (sem memo de reunião, sem CRM de execução).** A linha foi
+   desenhada quando o Relay planejava originar com pontas humanas PRÓPRIAS e a boutique era só
+   destino. Se a boutique é o CLIENTE pagante, ferramentas do FLUXO DE ORIGINAÇÃO dela (pipeline,
+   agenda, caminho de indicação, dossiê de abordagem) são exatamente o produto que retém o retainer.
+   **Linha nova: fluxo de originação da boutique = fair game; execução de deal (negociação, VDR,
+   proposta/contrato, compliance) = fora.** O anti-escopo de execução continua.
+7. **"Educação-NE como vertical"** — não era anti-drift formal, mas era decisão travada pela
+   distribuição do Taylor. Reaberta (ver cascata).
+
+**Status:** ✅ Registrada. Segundo cérebro atualizado (boreal.md renomeado, people, business-context,
+pendências, deadlines). Plano 06/07 (`plano-produto-modelo.md`) atualizado pro modo solo.
+
+---
+
+## [2026-07-21] REDESIGN: produto vira workbench (F1-F5) — merged em main
+
+**Contexto:** o produto tinha bom craft, mas a arquitetura de UI era centrada em pitch
+("construímos pra ganhar o clube da programação"). Objetivo: deixar de ser algo pitchável e
+virar ferramenta de trabalho densa, no padrão Linear/Attio/Grata. Guilherme foi o único revisor
+visual (screenshots do headless quebrados nesta máquina) — OK por fase.
+
+**Decisão — redesign em 5 fases, cada uma commitada e verificada:**
+- **F1 — App shell:** sidebar (Trabalho / Inteligência / Prova colapsável) + topbar + paleta
+  Ctrl+K (hand-rolled, filtro sem acento) + drawer mobile. Shell envolve sem alterar conteúdo;
+  proveniência e acesso ficam FORA do shell.
+- **F2 — Radar (ex-home):** tabela densa + peek panel (preview sem navegar, padrão Attio) +
+  strip de cobertura + botão primário sólido. Hero editorial aposentado.
+- **F3 — Pipeline + Agenda:** Agenda vira rota própria (`/agenda`), chip de selo na linha
+  (status de verificação de CRM), empty states com CTA.
+- **F4 — Empresa:** vira registro (rail de atributos sticky + tabs Visão/Investigação/Memo/
+  Trajetória/Similares). Scroll-spy de coluna única morto.
+- **F5 — Acabamento:** decomposição da PipelineView (1.471 linhas → 10 arquivos), teclado
+  j/k/Enter no Radar, contraste AA **medido** (bone/50 reprovava 3.86:1 → bone/60 4.98:1),
+  title duplicado corrigido, tipografia unificada (mono só em dados, labels em sans medium).
+
+**Regra tipográfica que saiu daqui (vale daqui pra frente):** Plex Mono é reservada a DADOS
+(scores, CNPJ, datas, capital, tel/email, contadores). Labels, botões, tabs e navegação em
+Plex Sans medium, caixa normal. Mono maiúscula com tracking largo dá cara de terminal — foi a
+causa real do "fonte sem polimento", não a família.
+
+**Fora de escopo (mantido):** páginas de prova (validação/mercado/consolidadores) ficam com a
+estética editorial — é a parte forte. Multi-tenant/auth por firma segue esperando o 2º parceiro
+(anti-drift #5). Tema claro e paridade mobile não entraram.
+
+**Status:** ✅ Merged em `main` (`--no-ff`, commit 34e8d07) e pushed. Build de produção +
+tsc + eslint limpos. Branch `feat/ui-workbench` apagada pós-merge. Pendente: a lista de ajustes
+finos do Guilherme ("tem alguns ajustes mas depois te passo") — a dobrar num F6 pontual quando vier.
+
+---
+
 ## [2026-08-02] Métrica de validação passa a ser estratificada, e o universo passa a ser o elegível
 
 **Contexto.** Tentativa de ajustar os pesos do score v0 por fit em vez de ancoragem. O primeiro
@@ -1357,7 +1435,7 @@ número de sócios por aritmética, não por propensão.
 mesmo assim **não** foi removido. A transação que a idade previria (venda integral de empresa de
 dono único) é justamente a que o label não enxerga. Tirar o eixo por causa desse número seria
 sobreajustar a um instrumento cego no caso central do produto. Ausência de evidência aqui é
-limitação de medição, não evidência de ausência. Ver `brain/modelo-de-score.md` §13.
+limitação de medição, não evidência de ausência. Ver `brain/produto/modelo-de-score.md` §13.
 
 **Custo aceito.** Todo número público (README, onepager, pitch, /validacao) foi medido no
 universo inflado e precisa ser refeito. É a segunda vez em quatro dias que um número de cliente

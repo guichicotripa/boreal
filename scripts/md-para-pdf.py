@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Converte um markdown do brain/ em PDF apresentável, para mandar a cliente.
 
-    python scripts/md-para-pdf.py brain/proposta-setter-b-c.md saida.pdf
-    python scripts/md-para-pdf.py brain/lista-ja-compradas-setter.md saida.pdf --autor "Guilherme Augusto"
+    python scripts/md-para-pdf.py brain/setter/proposta-setter-b-c.md saida.pdf
+    python scripts/md-para-pdf.py brain/setter/lista-ja-compradas-setter.md saida.pdf --autor "Guilherme Augusto"
 
 POR QUE UM CONVERSOR, E NÃO UM SCRIPT POR DOCUMENTO: já existe `gen-onepager-pdf.py`, que tem o
 texto do one-pager escrito dentro do próprio script. Isso significa que editar o documento é

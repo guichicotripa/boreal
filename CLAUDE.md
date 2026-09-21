@@ -17,7 +17,7 @@ transferir, geração seguinte presente, quadro se movimentando, e escala que ju
 > antiga era "sócio envelhecendo, sem sucessão evidente, sem mudança societária recente". O lift
 > condicional contra aquisições reais derrubou as três pontas. Quadro parado tem lift **0,60x** e
 > sucessor aparente tem **2,14x**. Quem vende é quem está administrando uma transição, não quem
-> foi abandonado. Metodologia inteira em `brain/modelo-de-score.md`.
+> foi abandonado. Metodologia inteira em `brain/produto/modelo-de-score.md`.
 
 **Setores cobertos:** metalmecânica (CNAE 24/25/28), saúde (86), educação (851/852) e agro
 (01/02/03). Base indexada: **51.033 empresas**.
@@ -95,7 +95,7 @@ Duas perguntas diferentes, e é importante não confundi-las:
 3. **YAGNI.** Construir o que o originador usa hoje. Sem abstração prematura.
 4. **Explicar decisões técnicas em linguagem natural.** Definir conceito avançado em uma frase
    antes de usar.
-5. **Nenhum peso de score por intuição.** O protocolo de mudança está em `brain/modelo-de-score.md`
+5. **Nenhum peso de score por intuição.** O protocolo de mudança está em `brain/produto/modelo-de-score.md`
    §10: lift condicional com z >= 2, depois ablação em holdout, depois os dois arquivos de fórmula
    (`src/lib/scoring.ts` e `scripts/lib/score-sql.mjs`) mudam juntos.
 5. **Tom direto.** Sem preâmbulo, sem bajulação.
@@ -110,7 +110,7 @@ staff.
 
 - **Score v1** (29/07) substituiu o v0. Pesos medidos por lift condicional contra aquisições reais
   mineradas do CNPJ; recall no perfil sucessório de **41,5%** em holdout (n=978, z=2,59), 4,1x
-  melhor que sorteio. **Ler `brain/modelo-de-score.md` antes de tocar em `scoring.ts`.**
+  melhor que sorteio. **Ler `brain/produto/modelo-de-score.md` antes de tocar em `scoring.ts`.**
 - Piloto da Setter começando; faltam do lado deles os 2 setores, a praça e a lista de CRM
   incumbente.
 
@@ -124,12 +124,13 @@ Detalhe sessão a sessão em `brain/progress.md`, o que está aberto em `brain/p
 |---------|-----------|
 | `CLAUDE.md` (este) | schema/contexto — lê primeiro |
 | `AGENTS.md` | regras do Next.js 16 (gerado pelo create-next-app) |
+| `brain/README.md` | **índice do brain** — o que é cada arquivo, o que está vivo e o que é histórico. Ler antes de procurar qualquer coisa na pasta. |
 | `brain/progress.md` | o que foi feito, sessão por sessão (append-only) |
 | `brain/decisions.md` | decisões + porquê |
-| `brain/pending.md` | próximos passos / em aberto |
-| `brain/modelo-de-score.md` | **como o score é construído, medido e revisado** — metodologia completa, protocolo de mudança e limitações. Ler antes de tocar em `scoring.ts`. |
-| `brain/referencia-site-fairplay.md` | referência visual e de copy para o site institucional |
-| `brain/fluxo-de-dados.excalidraw` | **mapa do pipeline inteiro** — BigQuery → ingest → Supabase → score v0 → busca → v1 → produto, mais o laço de calibração offline. Gerado por `scripts/gen-fluxo-excalidraw.py`: mudou o pipeline, edita a spec e roda de novo, não edita o desenho à mão. |
+| `brain/pending.md` | próximos passos / em aberto, **agrupado por tema**: item novo entra no tema, nunca colado no fim |
+| `brain/produto/modelo-de-score.md` | **como o score é construído, medido e revisado** — metodologia completa, protocolo de mudança e limitações. Ler antes de tocar em `scoring.ts`. |
+| `brain/pitch/referencia-site-fairplay.md` | referência visual e de copy para o site institucional |
+| `brain/produto/fluxo-de-dados.excalidraw` | **mapa do pipeline inteiro** — BigQuery → ingest → Supabase → score v0 → busca → v1 → produto, mais o laço de calibração offline. Gerado por `scripts/gen-fluxo-excalidraw.py`: mudou o pipeline, edita a spec e roda de novo, não edita o desenho à mão. |
 | `skills/_index.md` | catálogo das skills |
 
 > Contexto operacional completo (deadlines, equipe, relação com Relay/BRHSIC) vive no segundo

@@ -7,7 +7,7 @@
 > para os atuais; e a tese central mudou. Onde este texto diz "donos envelhecendo, **sem
 > sucessor**", o dado mostrou o contrário: sucessor aparente no quadro tem lift **2,14x** e quadro
 > parado tem **0,60x**. Quem vende é quem está conduzindo uma transição, não quem foi abandonado.
-> Ver `brain/modelo-de-score.md`.
+> Ver `brain/produto/modelo-de-score.md`.
 
 
 > Deadline: **10/06 23h59** (Loom de 1 min + form). Material pronto pra colar/gravar.

@@ -87,7 +87,7 @@ Isto está no código com teste de regressão explícito, para ninguém "consert
 test("sucessor aparente PREMIA (lift 2,14x) — é o eixo contraintuitivo", ...)
 ```
 
-Metodologia completa e protocolo de revisão em [`brain/modelo-de-score.md`](brain/modelo-de-score.md).
+Metodologia completa e protocolo de revisão em [`brain/produto/modelo-de-score.md`](brain/produto/modelo-de-score.md).
 
 ---
 
@@ -217,7 +217,7 @@ Do CNPJ bruto no BigQuery até a lista ordenada na tela, mais o laço de calibra
 
 [![Fluxo de dados do Boreal](docs/fluxo-de-dados.png)](docs/fluxo-de-dados.png)
 
-*Clique para abrir em tamanho real.* O original editável é [`brain/fluxo-de-dados.excalidraw`](brain/fluxo-de-dados.excalidraw).
+*Clique para abrir em tamanho real.* O original editável é [`brain/produto/fluxo-de-dados.excalidraw`](brain/produto/fluxo-de-dados.excalidraw).
 
 > **O desenho é gerado, não desenhado.** [`scripts/gen-fluxo-excalidraw.py`](scripts/gen-fluxo-excalidraw.py) escreve o `.excalidraw` e [`scripts/render-fluxo-png.py`](scripts/render-fluxo-png.py) exporta o PNG que este README embute. Mudou o pipeline, edita a spec no script e roda os dois. Diagrama de arquitetura editado à mão e abandonado vira mentira em duas semanas, e mentira desenhada convence mais que parágrafo desatualizado.
 
@@ -395,7 +395,7 @@ De todas as aquisições reais, que fatia o score colocou no **decil mais alto**
 
 O ganho no perfil sucessório é de 5,7 pontos com **z = 2,59**, medido em holdout com n seis vezes maior que a primeira medição.
 
-> ⚠️ **Estes números estão em revisão desde 02/08/2026, e para baixo.** A calibração descobriu que o label de aquisição não consegue classificar empresa de sócio único: são 292.499 empresas com 1 sócio PF e **zero** aquisições detectadas, porque a assinatura "entra PJ e sai PF" exige que sobre alguém no quadro. Essas empresas estavam no denominador, nunca podiam contar como acerto perdido e ainda liberavam vaga no decil de cima. Medindo só onde o label consegue classificar, o recall do perfil sucessório cai de **42,0% para 36,9%**. O método já foi trocado (universo elegível + métrica estratificada por nº de sócios) e está documentado em [`brain/modelo-de-score.md`](brain/modelo-de-score.md) §13; a renumeração de todas as tabelas desta seção acontece quando os pesos recalibrados forem aplicados. Até lá, **o número honesto para citar é 36,9%**, e não o 41,5% da tabela acima.
+> ⚠️ **Estes números estão em revisão desde 02/08/2026, e para baixo.** A calibração descobriu que o label de aquisição não consegue classificar empresa de sócio único: são 292.499 empresas com 1 sócio PF e **zero** aquisições detectadas, porque a assinatura "entra PJ e sai PF" exige que sobre alguém no quadro. Essas empresas estavam no denominador, nunca podiam contar como acerto perdido e ainda liberavam vaga no decil de cima. Medindo só onde o label consegue classificar, o recall do perfil sucessório cai de **42,0% para 36,9%**. O método já foi trocado (universo elegível + métrica estratificada por nº de sócios) e está documentado em [`brain/produto/modelo-de-score.md`](brain/produto/modelo-de-score.md) §13; a renumeração de todas as tabelas desta seção acontece quando os pesos recalibrados forem aplicados. Até lá, **o número honesto para citar é 36,9%**, e não o 41,5% da tabela acima.
 
 ### Por setor
 
@@ -443,7 +443,7 @@ flowchart TD
     M -->|não| X
     M -->|sim| W["vira eixo em scoring.ts"]
     W --> SQL["espelhar em scripts/lib/score-sql.mjs"]
-    SQL --> DOC["registrar em brain/modelo-de-score.md"]
+    SQL --> DOC["registrar em brain/produto/modelo-de-score.md"]
 
     classDef ok fill:#ebfbee,stroke:#2f9e44,color:#1e1e1e
     classDef no fill:#ffe3e3,stroke:#e03131,color:#1e1e1e
@@ -461,9 +461,9 @@ O passo do `score-sql.mjs` não é burocracia. Existiam cópias independentes da
 
 ## 10. Limitações que a gente diz em voz alta
 
-- **O ground truth é proxy, e é cego justamente no caso central.** "Entra sócio PJ e sai sócio PF" captura troca de controle registrada, não deal confirmado. Pega reorganização de holding familiar junto, e perde aquisição feita por pessoa física ou estruturada fora do quadro societário. Pior: ele **só enxerga aquisição parcial**. Empresa de sócio único é estruturalmente inclassificável (sair de 1 sócio PF para 0 acontece 1 vez em 292 mil no registro), e é exatamente o perfil que a tese de sucessão mais quer prever. Consequência medida em 02/08/2026: o eixo de idade do dono tem lift 1,00x dentro de faixas de nº de sócios, o que **não** quer dizer que idade não prevê venda, e sim que este label não consegue testar idade. Ver [`brain/modelo-de-score.md`](brain/modelo-de-score.md) §13.
+- **O ground truth é proxy, e é cego justamente no caso central.** "Entra sócio PJ e sai sócio PF" captura troca de controle registrada, não deal confirmado. Pega reorganização de holding familiar junto, e perde aquisição feita por pessoa física ou estruturada fora do quadro societário. Pior: ele **só enxerga aquisição parcial**. Empresa de sócio único é estruturalmente inclassificável (sair de 1 sócio PF para 0 acontece 1 vez em 292 mil no registro), e é exatamente o perfil que a tese de sucessão mais quer prever. Consequência medida em 02/08/2026: o eixo de idade do dono tem lift 1,00x dentro de faixas de nº de sócios, o que **não** quer dizer que idade não prevê venda, e sim que este label não consegue testar idade. Ver [`brain/produto/modelo-de-score.md`](brain/produto/modelo-de-score.md) §13.
 - **Faixa etária é faixa, não idade.** A Receita publica banda (61 a 70, 71 a 80, 80+), não a data de nascimento. O eixo de idade é mais grosso do que parece.
-- **Capital social não é faturamento, e é um número congelado.** Ele é declarado na constituição da empresa e quase nunca atualizado: medido em 11/08/2026, o valor é **idêntico entre os snapshots de 2023 e 2025 em 96,8%** das empresas dos 4 setores. Mesmo assim é o eixo mais forte do score, o que diz mais sobre a pobreza do registro público do que sobre a qualidade do campo. O `porte` da Receita entrou como segundo eixo de tamanho em 11/08 e é ainda mais estático (99,0% idêntico), então ele agrega por medir outra coisa, faixa de receita, e não por ser mais fresco. O produto **nunca** fabrica EBITDA ou receita. Ver [`brain/modelo-de-score.md`](brain/modelo-de-score.md) §14.
+- **Capital social não é faturamento, e é um número congelado.** Ele é declarado na constituição da empresa e quase nunca atualizado: medido em 11/08/2026, o valor é **idêntico entre os snapshots de 2023 e 2025 em 96,8%** das empresas dos 4 setores. Mesmo assim é o eixo mais forte do score, o que diz mais sobre a pobreza do registro público do que sobre a qualidade do campo. O `porte` da Receita entrou como segundo eixo de tamanho em 11/08 e é ainda mais estático (99,0% idêntico), então ele agrega por medir outra coisa, faixa de receita, e não por ser mais fresco. O produto **nunca** fabrica EBITDA ou receita. Ver [`brain/produto/modelo-de-score.md`](brain/produto/modelo-de-score.md) §14.
 - **Metade do universo não tem sócio, e não há como consertar.** Empresário individual e produtor rural pessoa física não têm quadro societário por definição legal, e são 928 mil empresas nos 4 setores. Para elas o eixo de idade do dono é **estruturalmente indisponível**, não incompleto. É a mesma população que o ground truth não enxerga. Números na [seção 4](#4-o-universo-em-números).
 - **A lista tem empate na fronteira.** O score é uma soma de poucos inteiros, então tem cerca de 60 valores distintos para 200 mil empresas, e o corte do top 10% cai dentro de um bloco de empates. Medido: **4,1% das vagas do top 10% são preenchidas por desempate arbitrário** com os pesos de hoje. Consequência prática: o recall citado carrega ±0,25 ponto de ruído no agregado e **±0,91 no recorte do perfil sucessório**, que é justamente o número mais citado. Uma casa decimal ali é precisão falsa.
 - **Cinco dos sete pesos do v1 nunca foram validados** contra lift medido.
@@ -554,7 +554,7 @@ python scripts/gen-fluxo-excalidraw.py && python scripts/render-fluxo-png.py
 
 | Se você quer entender... | Leia |
 |---|---|
-| Como o score é construído, medido e revisado | [`brain/modelo-de-score.md`](brain/modelo-de-score.md) |
+| Como o score é construído, medido e revisado | [`brain/produto/modelo-de-score.md`](brain/produto/modelo-de-score.md) |
 | O que está em aberto agora | [`brain/pending.md`](brain/pending.md) |
 | Por que uma decisão foi tomada | [`brain/decisions.md`](brain/decisions.md) |
 | O que aconteceu em cada sessão | [`brain/progress.md`](brain/progress.md) |
@@ -565,7 +565,7 @@ python scripts/gen-fluxo-excalidraw.py && python scripts/render-fluxo-png.py
 ## 14. Convenções do repo
 
 - **Domínio em português, código em inglês.** Os dados são brasileiros e traduzir `empresa`, `socio`, `junta_comercial` só cria distância entre o schema e a fonte. Variáveis de infraestrutura, commits e comentários técnicos ficam em inglês.
-- **Nenhum peso de score por intuição.** O protocolo está em `brain/modelo-de-score.md` §10 e vale para os dois lados: adicionar e remover eixo.
+- **Nenhum peso de score por intuição.** O protocolo está em `brain/produto/modelo-de-score.md` §10 e vale para os dois lados: adicionar e remover eixo.
 - **Mexeu em `scoring.ts`?** Mexe também em `scripts/lib/score-sql.mjs` e roda `scripts/validacao-score-v1.mjs`. As duas cópias da fórmula divergirem em silêncio já aconteceu.
 - **Nunca fabricar métrica financeira.** Porte e capital social são os únicos sinais honestos de tamanho que o registro público oferece.
 - **Artefato de prova documenta a versão viva.** Material de cliente que cita número de uma fórmula aposentada é pior que material nenhum.

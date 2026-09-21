@@ -5,7 +5,7 @@
  *
  * O label de hoje e "entra socio PJ e sai socio PF" entre dois snapshots. Ele exige que SOBRE
  * alguem no quadro, entao empresa de 1 socio PF e estruturalmente inclassificavel: sair de 1 pra 0
- * acontece 1 vez em 292 mil (medido em 02/08/2026, brain/modelo-de-score.md §13). Sao 292 mil
+ * acontece 1 vez em 292 mil (medido em 02/08/2026, brain/produto/modelo-de-score.md §13). Sao 292 mil
  * empresas no denominador que nunca podem contar como acerto perdido, e e justamente o perfil que
  * a tese de sucessao mais quer prever.
  *

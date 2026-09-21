@@ -12,7 +12,7 @@
 --
 -- A pergunta que ele responde, e que hoje não tem resposta: e-mail em domínio próprio chega mais
 -- no dono do que webmail, ou é o contrário em empresa familiar? Telefone dividido com 5 empresas
--- é de fato pior que exclusivo, e quanto pior? São hipóteses no `brain/brainstorm-contato.md`, e
+-- é de fato pior que exclusivo, e quanto pior? São hipóteses no `brain/pesquisa/brainstorm-contato.md`, e
 -- só isto aqui as resolve.
 --
 -- ── Por que na `interacao`, e não em tabela nova ───────────────────────────────

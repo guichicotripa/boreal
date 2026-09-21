@@ -1,5 +1,11 @@
 # Roteiro de validacao - calls com galera de M&A do clube
 
+> **Documento de 12/06/2026, não revisado desde então.** Foi escrito antes da calibração de
+> agosto, que refez o método de medição, e antes do piloto da Setter. Os números de recall
+> citados aqui são do universo inflado: o 41,5% em holdout virou 36,9% no universo elegível.
+> Ler como registro do que se pretendia medir, não como o método corrente. Método atual em
+> `brain/produto/modelo-de-score.md` §13 e §14.
+
 Criado: 2026-05-29. Atualizado: 2026-06-07. Usar nas calls com Daniella, Nathalia, Brenda e Illa.
 Principio: Mom Test - perguntas sobre o passado, nunca hipoteticos. Mostrar produto so no fim.
 

@@ -29,7 +29,7 @@
 // Números nunca moram neste comentário: src/lib/lift-coorte.json e src/lib/validacao-v1.json são
 // as fontes. Comentário que repete número é comentário que vai mentir.
 //
-// METODOLOGIA COMPLETA em brain/modelo-de-score.md: de onde vem o ground truth, por que lift
+// METODOLOGIA COMPLETA em brain/produto/modelo-de-score.md: de onde vem o ground truth, por que lift
 // condicional e não marginal, por que recall@top10% e não acurácia, e o RITO para adicionar ou
 // remover eixo. Leia antes de mexer aqui. Mexeu neste arquivo, mexe também em
 // scripts/lib/score-sql.mjs (o espelho SQL) e roda scripts/validacao-score-v1.mjs.
@@ -152,7 +152,7 @@ function scoreMovimento(socios: Socio[]): { pts: number; sinal: string | null } 
  * e 32 delas com score >= 70, ou seja, no pedaço da lista que o originador trabalha.
  *
  * NÃO é eixo e não vale ponto. Distress nunca foi medido contra o ground truth, e o
- * protocolo do projeto proíbe peso por intuição (ver brain/modelo-de-score.md §10).
+ * protocolo do projeto proíbe peso por intuição (ver brain/produto/modelo-de-score.md §10).
  * O ponto aqui é outro: empresa em recuperação judicial pode até ser um bom deal, mas
  * é uma conversa completamente diferente de sucessão familiar, e o originador precisa
  * saber disso ANTES de ligar, não no meio da ligação.

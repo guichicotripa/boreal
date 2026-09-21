@@ -6,6 +6,55 @@
 
 ---
 
+<!-- indice -->
+## Índice
+
+Uma entrada por sessão de trabalho, em ordem cronológica.
+
+| Data | Entrada |
+|---|---|
+| 2026-05-27 | [Guilherme | Setup inicial — scaffold + brain](#2026-05-27-guilherme--setup-inicial--scaffold--brain) |
+| 2026-05-27 | [Guilherme | BigQuery + Base dos Dados conectado](#2026-05-27-guilherme--bigquery--base-dos-dados-conectado) |
+| 2026-05-27 | [Guilherme | Ingest pipeline BQ → Supabase](#2026-05-27-guilherme--ingest-pipeline-bq--supabase) |
+| 2026-05-27 | [Guilherme | Pipeline v0 — input NL → filtro → lista (primeira UI)](#2026-05-27-guilherme--pipeline-v0--input-nl--filtro--lista-primeira-ui) |
+| 2026-06-12 | [Maguto | Acabamento P1–P3 + liveness no loading da empresa](#2026-06-12-maguto--acabamento-p1p3--liveness-no-loading-da-empresa) |
+| 2026-05-30 | [Maguto | Restyle brandkit — Etapas 7–10 + polimento navbar](#2026-05-30-maguto--restyle-brandkit--etapas-710--polimento-navbar) |
+| 2026-05-28 | [Guilherme | Semana 2 — Score + Reasoner LLM batched](#2026-05-28-guilherme--semana-2--score--reasoner-llm-batched) |
+| 2026-05-29 | [Guilherme | Research-agent (score v1) via assinatura + estratégia Relay](#2026-05-29-guilherme--research-agent-score-v1-via-assinatura--estratégia-relay) |
+| 2026-05-29 | [Guilherme | Colab automático + API direta + enrichment + dossiê + cache](#2026-05-29-guilherme--colab-automático--api-direta--enrichment--dossiê--cache) |
+| 2026-05-30 | [Guilherme | Research → API + assinatura destravada + demo-dois-lados + cache de memos](#2026-05-30-guilherme--research--api--assinatura-destravada--demo-dois-lados--cache-de-memos) |
+| 2026-05-30 | [Guilherme | Juiz de M&A validado (eval sintético com sinal real)](#2026-05-30-guilherme--juiz-de-ma-validado-eval-sintético-com-sinal-real) |
+| 2026-05-30 | [Guilherme | Loop de qualidade fechado: corrigir dossiê → juiz mede o ganho](#2026-05-30-guilherme--loop-de-qualidade-fechado-corrigir-dossiê--juiz-mede-o-ganho) |
+| 2026-05-30 | [Guilherme | Convergência Relay: recall por vertical + data moat consolidado](#2026-05-30-guilherme--convergência-relay-recall-por-vertical--data-moat-consolidado) |
+| 2026-05-27 | [Maguto | Onboarding no repo + validação do pipeline v0](#2026-05-27-maguto--onboarding-no-repo--validação-do-pipeline-v0) |
+| 2026-05-28 | [Maguto | Preparação do brand sprint — workflow de identidade visual com IA](#2026-05-28-maguto--preparação-do-brand-sprint--workflow-de-identidade-visual-com-ia) |
+| 2026-05-29 | [Maguto | Identidade visual Boreal — paleta + logo + brandkit v1](#2026-05-29-maguto--identidade-visual-boreal--paleta--logo--brandkit-v1) |
+| 2026-05-30 | [Maguto | Restyle brandkit — Shell + Etapas 1–6](#2026-05-30-maguto--restyle-brandkit--shell--etapas-16) |
+| 2026-05-31 | [Maguto | PR #18 do restyle — rebase + resolução de conflito + abertura](#2026-05-31-maguto--pr-18-do-restyle--rebase--resolução-de-conflito--abertura) |
+| 2026-05-31 | [Maguto | Merge da main no restyle + integração dos blocos red_flags/proximo_passo](#2026-05-31-maguto--merge-da-main-no-restyle--integração-dos-blocos-red_flagsproximo_passo) |
+| 2026-06-02 | [/03] Guilherme | Push deep-tech pros jurados + refino da tese + memo quant + pipeline v2](#2026-06-0203-guilherme--push-deep-tech-pros-jurados--refino-da-tese--memo-quant--pipeline-v2) |
+| 2026-06-04 | [Guilherme | Cobertura multi-setor + score por lentes + robustez nacional](#2026-06-04-guilherme--cobertura-multi-setor--score-por-lentes--robustez-nacional) |
+| 2026-06-04 | [Maguto | Restyle sistema de tipografia/cor — etapas 3–5 + nav ativo](#2026-06-04-maguto--restyle-sistema-de-tipografiacor--etapas-35--nav-ativo) |
+| 2026-06-01 | [Maguto | Bugs de encoding/select + ajustes UI/UX (etapas A–D)](#2026-06-01-maguto--bugs-de-encodingselect--ajustes-uiux-etapas-ad) |
+| 2026-06-03 | [Maguto | Restyle sistema tipografia/cor — criação do doc + etapas 0–2](#2026-06-03-maguto--restyle-sistema-tipografiacor--criação-do-doc--etapas-02) |
+| 2026-06-05 | [Maguto | /validacao restyle profundo — impeccable + card hero (craft) + merge #34](#2026-06-05-maguto--validacao-restyle-profundo--impeccable--card-hero-craft--merge-34) |
+| 2026-06-06 | [Maguto | /consolidadores restyle profundo (Etapa 5)](#2026-06-06-maguto--consolidadores-restyle-profundo-etapa-5) |
+| 2026-06-06 | [/07] Maguto | Restyle etapas 6-9 (/mercado, /setores, /worklist, home) + PR #35 + fix hindcast município (#36)](#2026-06-0607-maguto--restyle-etapas-6-9-mercado-setores-worklist-home--pr-35--fix-hindcast-município-36) |
+| 2026-06-07 | [Maguto | Restyle home Fase 1 — card stats + mega-menu Metodologia + switcher de setor (PR #37)](#2026-06-07-maguto--restyle-home-fase-1--card-stats--mega-menu-metodologia--switcher-de-setor-pr-37) |
+| 2026-06-08 | [Maguto | Fase 2: página /empresa/[id] scaffoldada + wiring (PR #38)](#2026-06-08-maguto--fase-2-página-empresaid-scaffoldada--wiring-pr-38) |
+| 2026-06-08 | [Maguto | Polish /empresa/[id] + GET /api/empresa/[id] + /review (sessão da noite)](#2026-06-08-maguto--polish-empresaid--get-apiempresaid--review-sessão-da-noite) |
+| 2026-06-08 | [/09] Maguto | Pipeline remodel — kanban → tabs por estágio + drag-to-reorder + undo (PR #39)](#2026-06-0809-maguto--pipeline-remodel--kanban--tabs-por-estágio--drag-to-reorder--undo-pr-39) |
+| 2026-06-10 | [Maguto | Alinhamento das colunas do pipeline + polish (PR #40)](#2026-06-10-maguto--alinhamento-das-colunas-do-pipeline--polish-pr-40) |
+| 2026-06-10 | [Deploy polish — favicon, OG image, metadata e space fix](#2026-06-10-deploy-polish--favicon-og-image-metadata-e-space-fix) |
+| 2026-06-12 | [Maguto | Bug fixes (busca/setor/consolidadores) + hero spacing + OG repaginada + one-liner destravado](#2026-06-12-maguto--bug-fixes-buscasetorconsolidadores--hero-spacing--og-repaginada--one-liner-destravado) |
+| 2026-07-31 | [Guilherme | Mapa do fluxo de dados (Excalidraw gerado, não desenhado)](#2026-07-31-guilherme--mapa-do-fluxo-de-dados-excalidraw-gerado-não-desenhado) |
+| 2026-08-02 | [Guilherme | README reescrito do zero, com os diagramas](#2026-08-02-guilherme--readme-reescrito-do-zero-com-os-diagramas) |
+| 2026-08-02 | [Guilherme | Calibração do score v0: o label estava contaminado](#2026-08-02-guilherme--calibração-do-score-v0-o-label-estava-contaminado) |
+| 2026-08-11 | [Guilherme | Henrique volta com os 2 setores do piloto: PET e death care](#2026-08-11-guilherme--henrique-volta-com-os-2-setores-do-piloto-pet-e-death-care) |
+| 2026-09-21 | [Guilherme + Claude | A versão de acesso ganha as duas primeiras peças](#2026-09-21-guilherme--claude--a-versão-de-acesso-ganha-as-duas-primeiras-peças) |
+
+---
+
 ## [2026-05-27] Guilherme | Setup inicial — scaffold + brain
 
 Primeira sessão pós-reunião 1 do Clube. Montado o esqueleto do repo:
@@ -1386,7 +1435,7 @@ entre `modelo-de-score.md` (o score), os cabeçalhos dos scripts (a ingestão e 
 código das rotas (o runtime). Ninguém, incluindo o Guilherme, conseguia responder "o que acontece
 entre o CNPJ no BigQuery e a lista ordenada na tela" sem abrir cinco arquivos.
 
-**Entregue:** `brain/fluxo-de-dados.excalidraw` (134 elementos), em dois laços separados de
+**Entregue:** `brain/produto/fluxo-de-dados.excalidraw` (134 elementos), em dois laços separados de
 propósito:
 - **Laço de runtime**, 6 colunas: ingestão (`ingest-setor.mjs` + `enrich-empresas.mjs`) → Supabase
   (empresa/socio, score_run, tabelas de app e RLS) → busca (`/api/search`, parse da query, escopo,
@@ -1964,7 +2013,7 @@ O que garante a tela é o typecheck e o compile; o que garante a LISTA é o chec
 ## [2026-09-21] Guilherme + Claude | A versão de acesso ganha as duas primeiras peças
 
 Fecha a semana que começou na call de fim de piloto. Notas completas em
-`brain/semana-2026-09-14-a-21.md`.
+`brain/setter/semana-2026-09-14-a-21.md`.
 
 **O que ficou pronto:**
 
@@ -1997,4 +2046,4 @@ isso **nunca** vira botão que o cliente aperta. É lote, e a fila é o que torn
 **Também nesta semana:** escopo B e C revisado pelo Codex (gpt-6-astra) e reescrito em v2, correção
 do número de contato confiável contra o CNPJ nacional (de "22 de 31 exclusivos" para 8 exclusivos,
 7 dividindo com 2 a 4 e 16 dividindo com 5 ou mais), e os dois documentos de cliente prontos:
-`brain/proposta-setter-b-c.md` e `brain/lista-ja-compradas-setter.md`.
+`brain/setter/proposta-setter-b-c.md` e `brain/setter/lista-ja-compradas-setter.md`.

@@ -1,5 +1,10 @@
 # Plano: produto, dados, moat e modelo de negócio
 
+> **Documento de 21/07/2026, não revisado desde então.** Anterior ao redesign de workbench
+> (21/07), ao piloto da Setter (26/08 a 14/09) e à frente de contato e acesso (21/09). O que
+> continua valendo é o enquadramento de produto; o roteiro de execução já foi superado pelos
+> fatos. Estado corrente em `brain/pending.md` e `brain/progress.md`.
+
 > Criado: 2026-07-06. Autor: Guilherme + Claude (sessão de planejamento estratégico).
 > Escopo: o mapa pra virar a melhor máquina de originação de deal fechado no mid-market
 > familiar BR/LatAm. Não é backlog de sprint: dev segue pausado até a Setter fechar.

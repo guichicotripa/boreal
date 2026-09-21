@@ -6,7 +6,7 @@
  * CONTEXTO. `sonda-troca-de-dono.mjs` mostrou que empresa de 1 socio PF, hoje inclassificavel pelo
  * label de aquisicao, tem 14.726 trocas de identidade do dono em 292.506 empresas (5,03%), e que a
  * taxa sobe com a idade do dono (1,67x na faixa 71+). Isso seria a solucao do ponto cego estrutural
- * documentado em brain/modelo-de-score.md §13.
+ * documentado em brain/produto/modelo-de-score.md §13.
  *
  * SO QUE TEM UMA EXPLICACAO ALTERNATIVA QUE PRECISA MORRER PRIMEIRO: mortalidade. A taxa de obito
  * de brasileiro entre 71 e 80 anos em 2,4 anos e da mesma ordem dos 8,42% medidos. Se o label for

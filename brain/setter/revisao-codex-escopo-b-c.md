@@ -1,7 +1,7 @@
 # Revisão do Codex: escopo B e C (14/09/2026)
 
 > Revisão independente pedida pelo Guilherme, rodada com o CLI do app Codex em modo somente leitura,
-> sobre `brain/escopo-setter-b-c.md` (versão do commit e021e61). Texto do Codex preservado abaixo.
+> sobre `brain/setter/escopo-setter-b-c.md` (versão do commit e021e61). Texto do Codex preservado abaixo.
 > Números de linha referem-se àquela versão.
 
 ---
@@ -12,7 +12,7 @@ Na forma atual, a proposta diminui a chance de continuidade: aumenta preço e co
 O B vende expansão de pesquisa quando a dor declarada é acesso; o C promete caminhos confiáveis sem validar identidade nem força dos relacionamentos.
 Eu não enviaria este rascunho: ele combina risco experimental para a Setter com obrigações de entrega incompatíveis com a disponibilidade da Boreal.
 
-As referências abaixo são às linhas de [escopo-setter-b-c.md](C:/boreal/brain/escopo-setter-b-c.md), salvo indicação diferente. Li as fontes solicitadas e consultei documentação oficial. Não alterei arquivos nem testei exportações ou correspondências reais.
+As referências abaixo são às linhas de [escopo-setter-b-c.md](C:/boreal/brain/setter/escopo-setter-b-c.md), salvo indicação diferente. Li as fontes solicitadas e consultei documentação oficial. Não alterei arquivos nem testei exportações ou correspondências reais.
 
 **2. Preço**
 

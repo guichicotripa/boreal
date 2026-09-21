@@ -1,392 +1,304 @@
-# Pending — Próximos Passos / Em Aberto
+# Pending — o que está aberto
 
-> O que falta fazer agora. Marcar `[x]` ao concluir. Mover concluídos pro `progress.md` no fim da sessão.
+> **O que é:** tudo que falta fazer, agrupado **por tema**, não por data de quando entrou.
+> Marcar `[x]` ao concluir e mover para a tabela do fim.
 >
-> **Auditado e reescrito em 30/07/2026.** O arquivo tinha 462 linhas e carregava uma era inteira já
-> morta: Semanas 1 a 4, Demo Day, submissão do Loom (deadline 10/06) e as frentes do Maguto, que
-> parou de trabalhar no Boreal depois do fim do Clube da Programação. Histórico completo em
-> `progress.md` e no git; o que sobreviveu aqui é só o que continua aberto de verdade.
+> **Reorganizado em 21/09/2026.** Até aqui o arquivo crescia por empilhamento: cada sessão colava
+> um bloco novo no fim ("vindo do uso real do piloto", "da call de 14/09", "do trabalho de
+> contato"), e o mesmo assunto acabava em três lugares. Sócio PJ aparecia na seção de calibração
+> e na de piloto; situação cadastral numa ponta e a dívida técnica correlata na outra. Ler as 392
+> linhas era o único jeito de saber o que fazer no dia seguinte.
+>
+> Agora são seis temas fixos. Item novo entra no tema, não no fim.
+>
+> Auditorias anteriores: 30/07/2026 (de 462 para 392 linhas). Histórico completo em `progress.md`
+> e no git.
 
 ---
 
-## 🔴 Decisões abertas da calibração (02/08, atualizado 11/08)
+## Índice
 
-> Contexto completo em `brain/modelo-de-score.md` §13 e **§14**. O método já mudou e está
-> documentado; o que falta é decisão de produto, não de medição.
->
-> **Atualização de 11/08:** a proposta ficou bem melhor com a entrada de `porte` e todos os números
-> abaixo foram refeitos. Os defeitos de instrumento achados na rodada (vazamento do Simples e ruído
-> de desempate) já estão corrigidos no código.
-
-- [ ] **Aplicar ou não os pesos propostos em `scoring.ts`.** Com `porte`, ganham **+6,92** no
-  holdout (31,62% → 38,54% estratificado), McNemar **z=4,30**. Quase o dobro dos +3,58 de 02/08.
-  Dois custos: `sucessor_aparente` cai de 14 pra 4 pontos, o que esvazia a "inversão da tese" que
-  hoje é a história central do pitch e do README; e **o proposto preenche 13,0% das vagas do top
-  10% por desempate contra 4,1% do baseline**, ou seja, uma em cada oito empresas da lista entra
-  por sorteio. Ganha recall e perde granularidade.
-- [ ] **Se aplicar, tornar o score mais fino junto.** O problema dos 13% não é dos pesos, é de o
-  score ter ~60 valores distintos pra 200 mil empresas. Sem resolver isso, `NTILE` continua
-  decidindo a lista no par ou ímpar na fronteira. É o item que mais melhora a experiência real de
-  quem usa a lista, e não aparece em nenhuma métrica de recall.
-- [ ] **Citar recall sempre com o intervalo de desempate.** Medido em 25 sorteios: **±0,25** no
-  estratificado e **±0,91 no perfil**, que é justamente a métrica citada publicamente. Uma decimal
-  no "36,9%" é precisão falsa.
-- [ ] **O que fazer com `idade_controle`.** Lift 1,00x dentro do estrato, ou seja, o label não
-  consegue testá-lo. Não é evidência de que não sirva: a venda integral de empresa de dono único,
-  que é o caso central da tese, é invisível pro registro. Manter por julgamento, reduzir, ou
-  buscar outro ground truth que enxergue esse caso.
-- [ ] **`quadro_plural` compra número, não ordenação.** Variar de 0 a 26 pontos não move a métrica
-  estratificada e move a contaminada. Remover ou manter declaradamente como julgamento.
-- [ ] **Refazer todo número público.** README, onepager da Setter, pitch-mestre e `/validacao`
-  citam recall medido no universo inflado. O 41,5% em holdout vira 36,9% no universo elegível.
-- [ ] **Decidir sobre `tem filial`** (lift 1,82x-2,48x estratificado, z 7-8). Exige adicionar
-  contagem de estabelecimentos ao ingest e à tabela `empresa`. Hoje não é calculável em runtime.
-- [ ] **Decidir sobre `tem sócio PJ`** (lift 2,12x-5,07x estratificado). É derivável em runtime,
-  mas mede empresa que já tem sócio institucional, o que encosta no desfecho. Ver a ressalva de
-  tese dos 29% do topo com sócio PJ. **Nota de 11/08:** o eixo `porte` já carrega parte disso sem
-  querer, porque `DEMAIS` inclui empresa inelegível ao Simples por ter sócio PJ. Se `tem sócio PJ`
-  virar filtro, revisar o `porte` junto.
-- [x] ~~**Trazer a tabela `simples` pro ingest.**~~ **Medido e descartado em 11/08.**
-  `saiu_simples` tem lift 2,15x isolado, mas incluí-lo **piora** o dev CV (42,32% contra 42,57%):
-  é redundante com capital e porte. Resultado negativo que economiza a obra. A flag `opcao_simples`
-  está **proibida** e há guarda no `calibra-score.py`, porque ela lê o desfecho.
-- [x] ~~**Proxy de tamanho melhor que capital social.**~~ **Resolvido em 11/08 com `porte`**, que já
-  estava no ingest e não exigiu obra nenhuma. Cuidado com a justificativa: `porte` **não** é mais
-  atualizado que capital (99,0% congelado contra 96,8%). O que sustenta o eixo é o lift medido e o
-  ganho no holdout, não frescor. Empregados via RAIS/CAGED continua sendo o proxy limpo de verdade
-  e continua aberto.
+| Tema | O que vive aqui |
+|---|---|
+| [1. Setter: comercial e contrato](#1-setter-comercial-e-contrato) | O que depende de decisão deles ou da minuta |
+| [2. Contato e acesso](#2-contato-e-acesso) | A frente atual: transformar empresa achada em conversa |
+| [3. Score e dados](#3-score-e-dados) | Modelo, eixos, ground truth, qualidade da base |
+| [4. Dívida técnica](#4-dívida-técnica) | Bug e encanamento, sem valor de produto direto |
+| [5. Decisões em aberto](#5-decisões-em-aberto) | Escolhas de produto que voltam toda sessão |
+| [6. Prospecção](#6-prospecção) | Clientes fora da Setter |
+| [Resolvido](#resolvido) | Registro de uma linha, para ninguém procurar de novo |
 
 ---
 
-## 🔴 Antes ou durante o piloto da Setter
+# 1. Setter: comercial e contrato
 
-> **Desenho do piloto, revisado em 12/08 com número medido.** Ver `modelo-de-score.md` §16. O que
-> foi medido: Foco A não tem nenhum score zero e tem 50,3% com 2+ sócios (melhor que a base geral),
-> mas só 1,9% de perfil sucessório. Death care tem 11,0% de perfil e 20,4% de score zero. Ou seja,
-> o mandato onde a tese se aplica é o que está visualmente pior, e vice-versa.
+> Estado em 21/09: **contrato assinado e nota emitida.** A decisão de continuidade vai a uma
+> agenda com todos os sócios, com três opções na mesa, encerrar incluída. Henrique é patrocinador
+> interno, não decisor. Ver `wiki/sources/setter-call-henrique-2026-09-21` no segundo cérebro.
 
-- [x] ~~**Aplicar a migration 0014 e gravar o contrato da Setter.**~~ **Feito em 12/08.** CLI do
-  Supabase ligada ao projeto (`hoomnogktlvjekkpdouz`), 0001 a 0013 reconciliadas com
-  `migration repair`, 0014 aplicada por `db push`, espelho sincronizado e contrato gravado.
-  `npm run test:db` passa 88/88 com **zero skip** — as duas guardas de espelho agora rodam de
-  verdade. Regex do contrato conferida: nega 24/25/28/86/85/01, libera 65111/6550/7500/9603.
-  **Fica em aberto uma verificação:** a policy nunca foi exercida por uma sessão de originador da
-  Setter. Service role passa por cima de RLS, e o único login disponível (Guilherme) é
-  `papel='boreal'`, que ignora contrato por desenho. Fechar isso exige entrar com um usuário
-  originador da org Setter.
+### Bloqueia a assinatura de B ou C
 
-- [ ] **Separar o entregável por mandato, e dizer isso ao Henrique antes do dia 1.**
-  Foco A e B = censo completo e enriquecido (a afirmação é cobertura exaustiva, não previsão).
-  Death care = ranking por sucessão (é onde o motor tem o que fazer). Prometer score de sucessão
-  num universo com 1,9% de perfil é vender a régua errada e perder credibilidade na primeira tela.
-- [ ] **Fechar o critério de sucesso em NOVIDADE e CONVERSA, não em recall.** Recall não é
-  verificável dentro de um mês e o nosso não foi medido nestes setores. O que o Henrique consegue
-  julgar em 30 dias: quantas do top N a Setter não conhecia, e quantas viraram abordagem. Isso
-  precisa entrar na minuta.
-- [ ] **Instrumentar as notas do originador como dado, não como feedback solto.** Escolha forçada
-  em 3 opções (ligaria / não ligaria / já conheço), 20 empresas em 10 minutos. O campo
-  **"já conheço"** é o que mede cobertura incremental, que é o argumento de renovação. E é o
-  primeiro ground truth de intenção real de comprador que teríamos (o CNPJ nunca vai dar isso).
-- [ ] **Resolver os 2.391 score zero de death care antes do dia 1.** É a primeira coisa em que um
-  cético clica. Ver o item de "não avaliável" nas decisões de UI.
-- [ ] **Decidir a postura sobre venda da plataforma.** Vender pra Setter converte ativo que
-  compõe (as notas de vários mandatos treinam o modelo de todos) em consultoria de cliente único,
-  e ancora preço em "ferramenta de boutique". A alternativa é exclusividade por setor/praça com
-  prêmio, que preserva o compounding. Decisão de negócio, ainda não tomada.
+- [ ] **Definir a base de cálculo do 0,5%.** Sobre o valor pago pelas ações ou sobre o fee da
+  Setter na operação? São ordens de grandeza diferentes. A proposta de 21/09 já leva a pergunta
+  explícita, e a referência de julho era cerca de 10% do fee deles. **É a única parte da proposta
+  em que um mal-entendido sai caro para um dos dois lados.**
+- [ ] **Cláusula de PI na minuta**, antes de qualquer fase do C.
+- [ ] **Exclusividade do C:** campo de uso (boutique de M&A sell-side concorrente) × setor × praça
+  × janela, com uso fora de M&A livre.
+- [ ] **Nomear a pessoa alocada.** A exigência deixou de ser nossa: em 21/09 o Henrique chegou
+  nela sozinho (*"vai ter que botar alguém meio que dedicado a esse projeto"*). Falta o nome.
+- [ ] **Quem cobre death care, e tem login?** Fernanda é a especialista de pet e fez 21 das 25
+  buscas dela ali. Death care teve 1 busca dela e 2 do Henrique, 2 minutos no total. Bruno nunca
+  entrou. Sem dono, 100 das 300 empresas pré-cacheadas foram gastas num mandato que ninguém abre.
 
-- [x] ~~**Os números do onepager e do pitch estavam defasados.**~~ **Resolvido 30/07.** Afirmavam
-  "97% a 100%, N=240", medido com o v0 e **inflado por construção**: a métrica filtra as adquiridas
-  por sócio 61+ e empresa 25+, e o v0 dava 60 dos 100 pontos exatamente a esses dois campos. Os dois
-  documentos agora citam **63% a 95% por setor (N=317)** mais **41,5% no perfil sucessório em
-  holdout (n=978, z=2,59, 4,1x vs sorteio)**. O pitch também abria com a tese invertida ("dono
-  envelhecendo e sem sucessor") e exibia o caso `PRENSA 100→75` como prova de sofisticação, que era
-  justamente o peso derrubado pela medição. `submissao-clube.md` ganhou aviso de documento histórico.
+### Antes de o próximo mandato começar
 
-- [ ] **Os outros pesos do research nunca passaram por validação nenhuma.**
-  `banco_investimento` +15, `mencao_sucessao_venda` +12, `csuite_externo` +6, `big4_auditoria` +5,
-  `sem_presenca_digital` +3. Escolhidos por intuição, que é exatamente o que o score deixou de
-  fazer. Alguns não têm proxy de registro para medir; nesses, o melhor possível é ancorar a direção
-  e declarar que a magnitude é arbitrada. O `sucessor_familiar_ativo` e o `herdeiro_fora_carreira`
-  já foram corrigidos (29/07), e o `herdeiro_fora_carreira` **nunca disparou em 20 investigações**,
-  então a correção dele é teórica por enquanto.
+- [ ] **Medir a novidade das 31 salvas.** `novo_para_setter` está null em todas. É o argumento de
+  renovação e o único jeito de saber se a lista entrega cobertura incremental ou repete o que eles
+  já conheciam.
+- [ ] **Separar o entregável por mandato, e dizer isso antes do dia 1.** Foco A e B = censo
+  completo e enriquecido (a afirmação é cobertura exaustiva, não previsão). Death care = ranking
+  por sucessão. Prometer score de sucessão num universo com 1,9% de perfil é vender a régua errada.
+- [ ] **Fechar o critério de sucesso em novidade e conversa, não em recall.** Recall não é
+  verificável em um mês. O que dá para julgar: quantas do top N eles não conheciam, e quantas
+  viraram abordagem.
+- [ ] **Dizer o tamanho do universo antes de abrir cada mandato.** Dois dos três renderam poucas
+  empresas e um rendeu 676. Já está escrito na proposta; falta virar rotina.
 
-- [ ] **29% do topo da lista (score >= 90) já tem sócio PJ no quadro.** Pode ser holding da família
-  (segue alvo), já parcialmente vendida (não é mais sucessão) ou sócio institucional (outro jogo), e
-  hoje as três aparecem iguais. **Decisão de tese, não bug:** definir se PJ controlador desqualifica
-  e então testar como **filtro**, nunca como eixo (o lift de 3,15x está confundido com a definição
-  do ground truth).
+### Operacional
 
 - [ ] **Recarregar crédito da `ANTHROPIC_API_KEY`.** Acabou em 25/07. Não bloqueia os lotes (rodam
-  por assinatura), mas bloqueia o que o servidor faz ao vivo: research e dossiê sob demanda, e o
-  parser LLM da busca. A busca **não** quebra sem ele, cai no parser heurístico, que resolve setor,
-  praça e idade corretamente.
+  por assinatura), mas **research e dossiê sob demanda estão travados para o cliente**, e isso foi
+  dito ao Henrique em 21/09. Agora que a nota foi emitida, destravar assim que o pagamento entrar.
+- [ ] **Decidir a postura sobre venda da plataforma.** Vender para a Setter converte ativo que
+  compõe (as notas de vários mandatos treinam o modelo de todos) em consultoria de cliente único.
+  A alternativa é exclusividade por setor e praça com prêmio. Decisão de negócio, não tomada.
 
 ---
 
-## 🟡 Bloqueado no Henrique / Setter
+# 2. Contato e acesso
 
-- [x] ~~**Os 2 setores.**~~ **Chegaram em 11/08**, por WhatsApp, e foram **refinados no mesmo dia**:
-  **foco A = laboratório de diagnóstico veterinário**, **foco B = operadora de plano de saúde pet**.
-  Death care caiu do foco declarado. **A praça continua não definida.** Nenhum dos dois está entre
-  os 4 verticais atuais.
-- [ ] **Isto não é setor, é mandato.** "Foco A" e "foco B" é linguagem de mandato comprador, não de
-  escolha de vertical. **Números corrigidos pelo proxy de porte** (o corte por capital ≥ R$1 mi
-  subestimava tudo em ~2,5x): foco A tem **93 empresas de porte relevante no Brasil, 6 delas no
-  perfil sucessório**; foco B tem **49** somando os dois recortes, nenhuma no perfil. Death care tem
-  **962, com 163 no perfil**. Em São Paulo: foco A+B **66**, death care **265**.
-  **Nesse tamanho o ranking do Boreal importa pouco:** o que vale é achar todo mundo e resolver
-  contato, ou seja, a camada de descoberta e enriquecimento, não o score. **Perguntar direto na call
-  de quinta se existe mandato comprador nos dois.** Se existir, o piloto muda de forma:
-  exaustividade e dado de contato viram a métrica, não recall@top10%.
-- [ ] **Call marcada: quinta 13/08, 9:30.** Pauta em `progress.md` nas entradas de 11 e 12/08.
-- [ ] **A minuta escorregou pra semana que vem (avisado em 12/08).** Não é só atraso: o piloto do
-  onepager (2 originadores, 1h/semana, um mês, **R$2.000**, fechado em 12/08) **não cabe** num foco A de 93 empresas.
-  Assinar aquela minuta seria travar um piloto incompatível com o escopo. **Levar pra call as duas
-  formas alternativas:** (a) escopo fixo, mapa completo de A e B com contato resolvido, critério de
-  sucesso = exaustividade e taxa de contato; (b) o mês de uso em death care, que tem 265 empresas de
-  porte relevante em SP e 47 no perfil. As duas somam bem.
-- [ ] **Não entregar a lista nominal do foco A antes do contrato.** Com 93 empresas, a lista É o
-  produto. Mostrar a **forma** do universo (contagem, UF, concentração, quantas no perfil) prova a
-  capacidade sem entregar o entregável.
-- [x] ~~**Sondar os dois setores no BigQuery.**~~ **Feito em 11/08**, e refeito no mesmo dia depois
-  que o proxy de tamanho foi corrigido. Tabelas completas em `progress.md`. Pelo corte antigo de
-  capital (**subestima, não usar**): foco A 11 empresas, foco B 4. Death care mais plano
-  funerário, que ele tirou do foco, tem 11.712 empresas e **392 acima de R$1 mi**, com prevalência
-  de aquisição 11,6x maior. **A hipótese de que os focos eram pequenos demais se confirmou, e por
-  margem maior do que eu esperava.**
-- [ ] **Levar pra quinta a recomendação de inverter o foco pra death care.** Não como "seu setor é
-  ruim", e sim: se existe mandato comprador em lab veterinário, o Boreal entrega a lista completa
-  em dias e não precisa de piloto de um mês pra isso; o piloto de um mês só se justifica onde tem
-  universo. E o setor com universo é o que ele já tinha citado primeiro.
-- [ ] **`death care` é um CNAE limpo, `pet` não é.** Death care é a classe **9603-3** inteira
-  (gestão de cemitérios, cremação, sepultamento, funerárias, somatoconservação), mais **6511-1/02**
-  (planos de auxílio funeral), que existe como CNAE próprio. Prefixos ingeríveis hoje: `9603` e
-  `65111`. Já **"diagnóstico para PET" e "plano de saúde PET" não têm CNAE**: os dois caem dentro
-  de **7500-1/00 (atividades veterinárias)**, junto com toda clínica de bairro, hospital veterinário
-  e serviço de vacinação. Segmentar isso é problema de classificação por nome e site, não de filtro
-  de CNAE, e cai na mesma pendência de "descoberta residual" mais abaixo. **Levar essa restrição
-  pra call em vez de aceitar o setor e descobrir depois.**
-- [ ] **Definir a praça.** Sem ela o universo de death care e de veterinária provavelmente é
-  nacional inteiro, o que muda o custo de ingest.
-- [ ] **Importar a lista de CRM incumbente** em `crm_incumbente` (hoje vazia, então tudo marca
-  "novo" e a métrica-manchete do piloto não pode ser computada).
-- [ ] **A minuta travou do lado deles, duas vezes.** Pedro (Comercial) saiu da Setter e o jurídico
-  não devolveu a minuta. O piloto não tem contrato e não tem data. Na call, pedir nome de quem
-  assumiu a minuta agora que o Pedro saiu, com data, em vez de aceitar "o jurídico está vendo".
+> A frente aberta em 21/09. Diagnóstico completo em `brain/pesquisa/brainstorm-contato.md`.
+> **O gargalo não é a qualidade do contato ainda:** as 31 continuam paradas e houve 5 eventos na
+> plataforma entre 14 e 20/09, todos no dia 14. Contato perfeito vezes zero ligação é zero.
+
+- [ ] **Contagem nacional de compartilhamento de telefone e e-mail.**
+  `scripts/backfill-contato-nacional.mjs` está pronto e testado até a consulta. **Bloqueado pela
+  cota gratuita do BigQuery** (projeto em sandbox, 1 TiB por mês, renova dia 1). Ou esperar 01/10,
+  ou habilitar billing. É o número que mais muda a decisão de ligar e o único dos quatro itens da
+  versão de acesso que não está na tela.
+- [ ] **Qualificação do sócio por extenso na tela.** O dado está preenchido em 100% dos 126 sócios
+  das 31 empresas (33 sócio-administrador, 23 administrador). Só não aparece.
+- [ ] **Levar o detector de aquisição para dentro da plataforma.** Hoje
+  `scripts/detecta-aquisicao.mjs` e `scripts/verifica-aquisicao.ts` são script e o resultado mora
+  no banco. Falta virar marca na linha da busca e painel na página da empresa.
+- [ ] **Lista de trabalho das 31.** É o que a proposta promete para o primeiro dia.
+- [ ] **A hierarquia de contato é hipótese, não medida.** Supomos domínio próprio > webmail >
+  compartilhado. Em empresa familiar pode ser o contrário, porque o gmail do cadastro costuma ser
+  do dono. Só o `desfecho` da `interacao` responde, e ele precisa de volume de uso.
+- [ ] **Recarregar a situação cadastral.** A base congelou no snapshot de 09/11/2025 e nunca
+  reconfere. Dois casos concretos na lista do cliente: **VETGUARD** consta suspensa na Receita e
+  **LABORATÓRIO SÃO FRANCISCO (Blumenau)** consta suspenso nos credenciados do MAPA, e as duas
+  aparecem como ativas. Precisa de rotina, não de correção pontual.
+- [ ] **Filtrar organização sem fins lucrativos do universo.** HOSPITAL VETERINÁRIO SÃO FRANCISCO
+  DE ASSIS (RS) é ligado à faculdade IDEAU e cadastrado como OSC no MapaOSC do IPEA. Entrou nas 31
+  como alvo de M&A e não é. Checar se a natureza jurídica da Receita já separa isso.
+- [ ] **Ingerir os estabelecimentos, não só as matrizes.** A base tem 65.466 matrizes e 54 filiais,
+  e **zero raízes com mais de um estabelecimento**. A SAFRA tem 9 filiais e enxergamos 1. Cada
+  estabelecimento tem contato próprio na Receita: multiplica as portas por empresa.
+- [ ] **O `site` derivado perde sigla legítima.** A regra exige que o domínio case com o nome, então
+  `eds.org.br` para ASSOCIAÇÃO EXPEDICIONÁRIOS DA SAÚDE fica de fora. São 2.686 sites a menos, e a
+  troca foi deliberada: vazio é recuperável, errado e convincente não é.
+- [ ] **Descoberta residual:** empresa sem e-mail próprio e com nome genérico (ex: clínica IMUNE)
+  não é resolvida pelo SERP.
+- [ ] **Deploy do Scrapling.** É Python com browser e **não roda no Vercel**; a coleta tem que ficar
+  em worker offline.
+- [ ] **A TOMOVET segue como limite conhecido do detector.** Vínculo por pessoa física, sem holding
+  no quadro, não é pego. Documentado, não resolvido.
+
+### LGPD, aberta desde 21/09
+
+> Análise completa em `brain/pesquisa/lgpd-contato.md`. Nenhum item é urgente com 31 empresas e
+> zero ligações. Todos ficam urgentes no dia em que o volume subir, e aí custam mais.
+
+- [ ] **Não existe caminho para oposição.** Legítimo interesse (art. 7º, IX) é a base legal da
+  prospecção B2B e vem com o direito de oposição do titular (art. 18, §2º). Hoje não há campo
+  `nao_contatar` nem processo: quem pedir para sair da base volta na próxima recarga. **É a mais
+  exposta e a mais barata das cinco.**
+- [ ] **`recusou` não tem consequência.** O desfecho existe desde 21/09 e a empresa continua
+  aparecendo na busca amanhã. Registrar recusa e ignorar é pior que não registrar.
+- [ ] **`contato_usado` sem prazo de expurgo.** A migration 0020 guarda o telefone ou e-mail usado
+  em cada tentativa, e em 41,8% da base o e-mail é webmail, ou seja, dado pessoal.
+- [ ] **Conferir a região do Supabase.** Se o banco estiver fora do Brasil, é transferência
+  internacional de dado pessoal e pede cláusula no contrato.
+- [ ] **Finalidade documentada por escrito**, que a proposta já promete entregar antes da coleta do C.
+- [ ] **Nenhuma exportação de LinkedIn entra antes do contrato assinado.** Dizer isso em voz alta:
+  é o tipo de coisa que alguém faz por conta própria achando que ajuda.
 
 ---
 
-## 🟡 Aberto, não bloqueia o piloto
+# 3. Score e dados
 
-### Score e dados
+> Contexto completo em `brain/produto/modelo-de-score.md`, §13, §14 e §16.
 
-- [ ] **Nº de estabelecimentos como eixo.** Já medido: vale ~1,3pp de recall. Preso porque o ingest
-  não traz contagem de filiais. É o ganho mais barato que existe hoje.
-- [ ] **Proxy limpo de tamanho (o que ainda falta).** Empregados via RAIS/CAGED ou faturamento
-  estimado. `porte` resolveu parte do problema em 11/08, mas é tão congelado quanto capital.
+### Calibração: falta decisão de produto, não de medição
 
-  **Medido em 11/08:** o capital é **idêntico entre 2023 e 2025 em 91% a 95%
-  das empresas**. O substituto imediato é `empresas.porte` (ME/EPP/DEMAIS), mantido porque tem
-  consequência tributária, e que sobe com a idade da empresa como proxy real (4,4% DEMAIS nas
-  fundadas nos anos 2020 contra 21,8% nas anteriores a 1979). Trocar o corte mudou os números da
-  sondagem da Setter em 2,5x. **Ressalva:** DEMAIS é "nem ME nem EPP", então inclui inelegível por
-  natureza jurídica (S/A, empresa com sócio PJ) e superestima tamanho onde já há sócio
-  institucional. A data de exclusão do Simples **foi medida** em 11/08 e não agrega (ver acima).
-  Ver `modelo-de-score.md` §14 e `scripts/sonda-proxy-tamanho.mjs`.
+- [ ] **Aplicar ou não os pesos propostos em `scoring.ts`.** Com `porte`, ganham **+6,92** no
+  holdout (31,62% → 38,54% estratificado), McNemar **z=4,30**. Dois custos: `sucessor_aparente` cai
+  de 14 para 4 pontos, o que esvazia a "inversão da tese" que é a história central do pitch; e o
+  proposto preenche **13,0% das vagas do top 10% por desempate** contra 4,1% do baseline, ou seja,
+  uma em cada oito empresas da lista entra por sorteio. Ganha recall e perde granularidade.
+- [ ] **Se aplicar, tornar o score mais fino junto.** O problema dos 13% não é dos pesos, é de o
+  score ter ~60 valores distintos para 200 mil empresas. Sem resolver, `NTILE` decide a fronteira
+  da lista no par ou ímpar. **É o item que mais melhora a experiência real de quem usa a lista, e
+  não aparece em nenhuma métrica de recall.**
+- [ ] **Citar recall sempre com o intervalo de desempate.** Medido em 25 sorteios: ±0,25 no
+  estratificado e **±0,91 no perfil**, que é justamente a métrica citada publicamente. Uma decimal
+  no "36,9%" é precisão falsa.
+- [ ] **Refazer todo número público.** README, onepager da Setter, pitch-mestre e `/validacao`
+  citam recall medido no universo inflado. O 41,5% em holdout vira 36,9% no universo elegível.
+- [ ] **O que fazer com `idade_controle`.** Lift 1,00x dentro do estrato: o label não consegue
+  testá-lo. Não é evidência de que não sirva, porque a venda integral de empresa de dono único, que
+  é o caso central da tese, é invisível para o registro. Manter por julgamento, reduzir, ou buscar
+  outro ground truth.
+- [ ] **`quadro_plural` compra número, não ordenação.** Variar de 0 a 26 pontos não move a métrica
+  estratificada e move a contaminada. Remover ou manter declaradamente como julgamento.
+- [ ] **Os outros pesos do research nunca passaram por validação.** `banco_investimento` +15,
+  `mencao_sucessao_venda` +12, `csuite_externo` +6, `big4_auditoria` +5, `sem_presenca_digital` +3.
+  Escolhidos por intuição, que é exatamente o que o score deixou de fazer. Alguns não têm proxy de
+  registro para medir; nesses, o melhor possível é ancorar a direção e declarar a magnitude como
+  arbitrada. `herdeiro_fora_carreira` **nunca disparou em 20 investigações**, então a correção de
+  29/07 é teórica por enquanto.
+
+### Eixos novos, presos em dado que falta
+
+- [ ] **Nº de estabelecimentos.** Lift 1,82x a 2,48x estratificado, z entre 7 e 8, e vale ~1,3pp de
+  recall. Preso porque o ingest não traz contagem de filiais. **É o ganho mais barato que existe**,
+  e casa com o item de ingerir estabelecimentos na seção 2.
+- [ ] **Sócio PJ: decidir se é filtro ou nada, nunca eixo.** Lift 2,12x a 5,07x estratificado, mas
+  mede empresa que já tem sócio institucional, o que encosta no desfecho, e o lift de 3,15x está
+  confundido com a definição do ground truth. Some a isso que **29% do topo (score ≥ 90) já tem
+  sócio PJ**, que pode ser holding da família (segue alvo), já parcialmente vendida (não é mais
+  sucessão) ou sócio institucional (outro jogo), e hoje as três aparecem iguais. O detector de
+  aquisição de 20/09 já sabe separar holding familiar de comprador de fora: usar isso aqui.
+  **Nota:** o eixo `porte` já carrega parte disso sem querer, porque `DEMAIS` inclui inelegível ao
+  Simples por ter sócio PJ. Se virar filtro, revisar o `porte` junto.
+- [ ] **Proxy limpo de tamanho.** Empregados via RAIS/CAGED ou faturamento estimado. `porte`
+  resolveu parte em 11/08, mas é tão congelado quanto capital (99,0% contra 96,8%), e **DEMAIS
+  superestima tamanho onde já há sócio institucional**. O capital é idêntico entre 2023 e 2025 em
+  91% a 95% das empresas. Ver `modelo-de-score.md` §14 e `scripts/sonda-proxy-tamanho.mjs`.
+
+### Ground truth e loop
+
 - [ ] **Validar o proxy de ground truth contra desfecho real da Setter.** Quando houver ~20
   conversas com desfecho no pipeline, checar se as empresas que ela realmente destravou estavam no
-  nosso topo. **Maior valor da lista inteira** e sai de graça de operar o piloto.
-- [ ] **Teto de mandato.** O topo da lista tem empresa grande demais: capital mediano de R$ 4,4 mi
-  em metalmec e máximo de R$ 274 mi, com CSN e ROMI (ambas de capital aberto) aparecendo. A Fairplay
-  declara publicamente trabalhar R$ 20M a R$ 500M de deal; se a Setter for parecida, isso é corte
-  por cima. É filtro de mandato, não eixo. **Guilherme pediu para não tratar agora (30/07).**
-- [ ] **Separar v0 e v1 em duas dimensões.** Hoje `v1 = clamp(v0 + ajuste, 0, 100)` e o teto apaga a
-  magnitude do research (medido: ajustes de +12 a +30 viraram todos +3). O desempate por ajuste
-  bruto (30/07) é paliativo. A correção real é v0 responder "tem o perfil" e o research responder
-  "está acontecendo agora", cada um com seu indicador. Mudança de produto, com UI e tipos: pós-piloto.
-
-### Produto e originação
-
+  nosso topo. **Maior valor da lista inteira**, e sai de graça de operar o piloto.
 - [ ] **Fechar o loop de outcome.** Realimentar `resultado` (deal_fechado / perdido) no score.
   Precisa de dado do piloto.
 - [ ] **Sensor forward vivo.** Transição societária das empresas salvas vira sinal no pipeline; o
   `scripts/monitor-transicoes.mjs` já minera.
-- [ ] **Descoberta de tech** (CNAEs 62xx/63xx) como mapeamento e descoberta, não predição de
-  sucessão. O enquadramento honesto já está definido.
-- [ ] **Moat de descoberta:** ligar CNPJ ao site da empresa de forma sistemática. Guilherme pediu
-  para desenvolver.
-- [ ] **Descoberta residual:** empresa sem email próprio e com nome genérico (ex: clínica IMUNE) não
-  é resolvida pelo SERP.
-- [ ] **Deploy do Scrapling.** É Python com browser e **não roda no Vercel**; a coleta tem que ficar
-  em worker offline.
-- [ ] **Trajetória societária** (removida da home em 07/06, handoff para Guilherme).
 
-### Prospecção
+### Qualidade da base e dos mandatos
 
-- [ ] **Fairplay Capital como prospect, não como ameaça.** Boutique de 2024, Sorocaba/SP,
-  middle-market R$ 20M a R$ 500M, três pessoas, sem originação proprietária. É a Setter com outro
-  nome. Análise completa em `brain/referencia-site-fairplay.md`.
-
-  **Estado (30/07):** convite de conversa de aprendizado enviado ao José Venancio (Mom Test, sem
-  demo). Ele respondeu em ~3h, caloroso, mas **não aceitou o 1:1**: ofereceu no lugar uma
-  "masterclass com jovens talentosos interessados em M&A". Ou seja, reclassificou o Guilherme de
-  quem-constrói-em-originação para plateia. Provavelmente é o mesmo motor do Fairmind, construção
-  de audiência e funil de recrutamento.
-
-  Resposta enviada aceita a masterclass **e** repropõe os 20 minutos, ancorando no fato do piloto
-  em agosto para desfazer o enquadramento sem se gabar. Se ele empurrar de novo, reconsiderar
-  mandar um recorte de dado (ex: heat-map de M&A da praça de Sorocaba) como presente, não como
-  demo: ficar em silêncio dentro do enquadramento de aluno é pior que o risco de mostrar output.
-
-  Ir na masterclass mesmo assim, com expectativa correta: é jogada de relacionamento, não de
-  aprendizado. O valor está em virar rosto conhecido antes da conversa comercial e em quem mais
-  estará na sala (público adjacente ao da BRHSIC Academy).
+- [ ] **Separar 6511101 de 6511102 no mandato de death care.** Seguros de vida (Zurich, Icatu,
+  Sabemi, BMG) ocupam 4 das 10 primeiras linhas. Prazo real: **antes** de o dono de death care
+  entrar na plataforma. Fernanda é a especialista de pet e nunca julgou esse mandato, então o
+  defeito ainda não foi visto por ninguém da Setter. Primeira impressão de mandato não repete.
+- [ ] **Percentil de capital por mandato.** Os três mandatos do piloto caem no percentil geral
+  (p95 = R$ 600 mil) porque `capital-percentis.json` só tem agro, saúde, educação e metalmecânica.
+  O eixo satura abaixo da faixa em que a decisão acontece.
+- [ ] **Resolver os 2.391 score zero de death care.** É a primeira coisa em que um cético clica.
+- [ ] **Separar v0 e v1 em duas dimensões.** Hoje `v1 = clamp(v0 + ajuste, 0, 100)` e o teto apaga a
+  magnitude do research (medido: ajustes de +12 a +30 viraram todos +3). O desempate por ajuste
+  bruto (30/07) é paliativo. A correção real é v0 responder "tem o perfil" e o research responder
+  "está acontecendo agora", cada um com seu indicador. Mudança de produto, com UI e tipos.
+- [ ] **Teto de mandato.** O topo da lista tem empresa grande demais: capital mediano de R$ 4,4 mi
+  em metalmecânica e máximo de R$ 274 mi, com CSN e ROMI (ambas de capital aberto) aparecendo. É
+  filtro de mandato, não eixo. **Guilherme pediu para não tratar agora (30/07).**
 
 ---
 
-## 🔵 Dívida técnica
+# 4. Dívida técnica
 
-> Herdados da auditoria de 30/07 sem reverificação. Confirmar se ainda valem antes de agir.
+> Os de 30/07 foram herdados sem reverificação. Confirmar se ainda valem antes de agir.
 
-- [ ] **`PRODUCT.md` está na condição em que o README estava** (achado de 02/08, não corrigido).
-  Descreve o Maguto como co-dono com fronteira de domínio por arquivo (`page.tsx` dele, `lib/` do
-  Guilherme) e o produto como submissão de competição de clube de programação com Loom de 1 minuto.
-  Nada disso vale desde junho. Decidir entre reescrever (vira doc de produto de verdade) ou marcar
-  como documento histórico, igual foi feito com `submissao-clube.md`.
+- [ ] **Corrigir `score_no_save`** (`POST /api/oportunidade`): faltam `capital_social` e
+  `cnae_principal` no select, o eixo de escala vale sempre 0 e o teto vira 66 em vez de 100.
+  Verificado nas 5 oportunidades. **Bug de uma linha que corrompe o rótulo positivo do loop**, e
+  está aberto desde 24/08.
+- [ ] **Instrumentar o peek panel.** Sem isso não dá para saber se o score foi lido antes do
+  descarte.
+- [ ] **`/api/research` não tem guarda de teto.** O lote (`precompute-research.ts`) ganhou
+  `--min/--max` justamente porque investigar quem já está em score_v0 = 100 não move nada (o clamp
+  come o ajuste), mas a rota sob demanda, que é a que **custa dinheiro** (US$ 0,04 a 0,22 por
+  chamada), não herdou nada disso. O originador clica "investigar" no 1º da lista, que é exatamente
+  quem está no teto. Opções: avisar na UI antes de gastar, ou exibir o `ajuste_bruto` quando o
+  score satura (o campo já existe e já é usado no desempate).
+- [ ] **`PRODUCT.md` está na condição em que o README estava.** Descreve o Maguto como co-dono com
+  fronteira por arquivo e o produto como submissão de competição de clube. Nada disso vale desde
+  junho. Reescrever ou marcar como histórico, igual foi feito com `submissao-clube.md`.
 - [ ] Fix de dados em `/validacao` · `hindcast.json`.
 - [ ] Navegação `<a>` → `<Link>`, repo-wide.
 - [ ] Aposentar o `dossier-cache.json`.
 - [ ] Busca em 3,3s em produção (mediana, warm). O gargalo medido é a query mais o scoring, não a
   chamada de LLM.
-- [ ] **`/api/research` não tem guarda de teto.** Exposto pelo mapa de fluxo (31/07): o lote
-  (`precompute-research.ts`) ganhou `--min/--max` justamente porque investigar quem já está em
-  score_v0 = 100 não move nada (o clamp come o ajuste), mas a rota sob demanda, que é a que
-  **custa dinheiro** (US$ 0,04 a 0,22 por chamada), não herdou nada disso. O originador clica
-  "investigar" no 1º da lista, que é exatamente quem está no teto. Opções: avisar na UI antes de
-  gastar, ou passar a exibir o `ajuste_bruto` como o resultado visível quando o score satura (o
-  campo já existe e já é usado no desempate).
+- [ ] **Trajetória societária** (removida da home em 07/06, handoff para Guilherme).
 
 ---
 
-## ⚪ Decisões em aberto
+# 5. Decisões em aberto
 
 - **Estimativa financeira no memo.** Já decidido **não fazer**: proxy de EBITDA cheira a dado
   inventado para quem entende de PE, e é melhor ser honesto com capital social e porte do que
   fabricar número. Fica registrado porque o juiz de M&A penaliza a ausência (0-1/10) e a tensão
   volta toda vez. Se mudar, tem que vir com metodologia declarada.
-- **Qualificação do sócio** (código "49" = Sócio-Administrador, "Inventariante" = sinal sucessório
-  direto): resolver via dicionário do BigQuery. Barato e alto valor pro dossiê.
-- **Enrichment nível 1** (site/web da empresa): job assíncrono, não bloqueante. Metade das
-  empresas-alvo não tem presença digital, e a ausência é ela mesma um sinal.
+- **Enrichment nível 1** (site e web da empresa): job assíncrono, não bloqueante. Metade das
+  empresas-alvo não tem presença digital, e a ausência é ela mesma um sinal. **Parcialmente
+  resolvido em 21/09:** 5.320 sites derivados do domínio do e-mail. O que falta é ler o site.
+- **Descoberta de tech** (CNAEs 62xx e 63xx) como mapeamento e descoberta, não predição de
+  sucessão. O enquadramento honesto já está definido.
+- **Por que ninguém abre dossiê.** Zero em 299 eventos. Em 21/09 o Henrique atribuiu a falta de uso
+  a tempo (*"a questão é mais tempo, de fato, de parar e sentar"*), o que explica o volume mas não
+  explica a escolha: quem buscou, buscou e não abriu. Ou o caminho até `/empresa/[id]` não é
+  achado, ou o card basta para recusar. Perguntar à Fernanda antes de gastar mais cota em pré-cache.
 
 ---
 
-## Removido nesta auditoria (30/07)
+# 6. Prospecção
 
-Registrado para ninguém procurar depois:
+- [ ] **Fairplay Capital como prospect, não como ameaça.** Boutique de 2024, Sorocaba/SP,
+  middle-market R$ 20M a R$ 500M, três pessoas, sem originação proprietária. É a Setter com outro
+  nome. Análise completa em `brain/pitch/referencia-site-fairplay.md`.
 
-| o que | por quê |
-|---|---|
-| Semanas 1, 2, 2.5, 3, 4 e Demo Day | cronograma do Clube da Programação, encerrado em junho |
-| Submissão do Loom (deadline 10/06) | submetido a tempo; `brain/submissao-clube.md` fica como material reaproveitável de pitch |
-| Deploy no Vercel | **feito**, verificado em produção nesta sessão |
-| Selo de proveniência | **feito**, testado ponta a ponta e verificado nesta sessão |
-| Pré-cachear saúde e educação | **feito** no cache de 25/07 (4 setores + 15 chaves de tese) |
-| Pipeline remodel, home restyle, restyle sistema v1, handoff Maguto | frentes do Maguto, que parou depois do fim do Clube |
-| Enquadramentos de "atinge os jurados" | não há mais jurados |
+  **Estado (30/07, não revisitado desde então):** convite de conversa de aprendizado enviado ao
+  José Venancio (Mom Test, sem demo). Ele respondeu em ~3h, caloroso, mas **não aceitou o 1:1**:
+  ofereceu no lugar uma "masterclass com jovens talentosos interessados em M&A", ou seja,
+  reclassificou o Guilherme de quem-constrói-em-originação para plateia.
 
----
-
-## 🔴 Vindo do uso real do piloto (24/08) — ver `decisions.md` da mesma data
-
-Ordenado por evidência, não por gosto. Tudo aqui saiu de 299 eventos da Setter.
-
-1. **Filtro de porte/capital nos `Filtros`.** 59% do que mostramos tem capital ≤ R$ 100 mil e
-   ela descartou 275 empresas à mão, 18 delas escrevendo "Pequena". É o item de maior razão
-   valor/esforço do backlog inteiro.
-2. **Percentil de capital por mandato.** Os três mandatos do piloto caem no percentil geral
-   (p95 = R$ 600 mil) porque `capital-percentis.json` só tem agro/saude/educacao/metalmec. O eixo
-   satura abaixo da faixa em que a decisão acontece.
-3. **Separar 6511101 de 6511102 no mandato de death care.** Seguros de vida (Zurich, Icatu,
-   Sabemi, BMG) ocupam 4 das 10 primeiras linhas. Prazo real: **antes** de o dono de death care
-   entrar na plataforma. Fernanda é a especialista de pet e nunca julgou esse mandato, então o
-   defeito ainda não foi visto por ninguém da Setter. Primeira impressão de mandato não repete.
-4. **Corrigir `score_no_save`** (`POST /api/oportunidade`): faltam `capital_social` e
-   `cnae_principal` no select, o eixo de escala vale sempre 0, teto 66. Bug de uma linha que
-   corrompe o rótulo positivo do loop.
-5. **Instrumentar o peek panel.** Sem isso não dá pra saber se o score foi lido antes do descarte.
-6. **Marcar empresa já consolidada.** NEW PROVET, PROVET e TECSA apareceram nas posições 2, 3 e 4
-   com dono conhecido dela. `novo_para_setter` está null nas 5 oportunidades.
-7. **Descobrir por que ninguém abre dossiê.** Zero em 299 eventos. Ou o caminho até
-   `/empresa/[id]` não é achado, ou o card basta para recusar. Perguntar à Fernanda antes de
-   investir mais cota em pré-cache.
-8. **Dois dos três mandatos não têm dono.** Fernanda cobre pet (21 das 25 buscas dela). Death
-   care teve 1 busca dela e 2 do Henrique, que ficou 2 minutos no total. Bruno nunca entrou.
-   Pergunta para o Henrique, junto com a do dossiê: **quem na Setter cobre death care, e essa
-   pessoa tem login?** Sem isso, 100 das 300 empresas pré-cacheadas foram gastas num mandato que
-   ninguém abre.
+  A resposta enviada aceita a masterclass **e** repropõe os 20 minutos, ancorando no fato do piloto
+  para desfazer o enquadramento sem se gabar. Se ele empurrar de novo, considerar mandar um recorte
+  de dado (ex: heat-map de M&A da praça de Sorocaba) como presente, não como demo.
 
 ---
 
-## 🔴 Da call de fim de piloto (14/09) — ver `decisions.md` da mesma data
+# Resolvido
 
-1. **Convites do Teams** para as calls de 21/09 e 28/09.
-2. **Proposta escrita de B e C com preço**, para 21/09.
-3. **Exclusividade de C:** propor campo de uso (boutique de M&A sell-side concorrente) × setor × praça
-   × janela, com uso fora de M&A livre. Corrigir antes a frase "não pretendo me relacionar com o
-   mercado".
-4. **Cláusula de PI na minuta** antes de C.
-5. **Escopo do grafo sem scraping:** exportação de contatos do LinkedIn + mailing + QSA. Prazo só
-   depois do escopo.
-6. **Dono interno na Setter** como condição de B ou C.
-7. **Medir a novidade das 31 salvas.**
+> Registro de uma linha, para ninguém procurar de novo. O detalhe está em `progress.md`,
+> `decisions.md` e no git.
 
-
----
-
-## 🔴 Da verificação das 31 (21/09)
-
-1. **Recarregar situação cadastral.** A base congelou no snapshot de 09/11/2025 e nunca reconfere.
-   A semana produziu dois casos concretos na lista da Setter: **VETGUARD** consta suspensa na
-   Receita e **LABORATÓRIO SÃO FRANCISCO (Blumenau)** consta suspenso nos credenciados do MAPA.
-   As duas aparecem como ativas para o cliente. Precisa de rotina de recarga, não de correção
-   pontual.
-2. **Filtrar organização sem fins lucrativos do universo.** HOSPITAL VETERINÁRIO SÃO FRANCISCO DE
-   ASSIS (RS) é ligado à faculdade IDEAU e está cadastrado como OSC no MapaOSC do IPEA. Entrou na
-   lista de 31 como alvo de M&A e não é. Checar se a natureza jurídica da Receita já separa isso.
-3. **Levar o detector para dentro da plataforma.** Hoje `scripts/detecta-aquisicao.mjs` e
-   `scripts/verifica-aquisicao.ts` são script e o resultado mora no banco. Falta virar marca na
-   linha da busca e painel na página da empresa. É o item 3 da versão de acesso.
-4. **A TOMOVET segue como limite conhecido do detector.** Vínculo por pessoa física, sem holding
-   no quadro, não é pego. Documentado, não resolvido.
-
----
-
-## 🔴 De LGPD, abertas depois do trabalho de contato (21/09) — ver `brain/lgpd-contato.md`
-
-1. **Não existe caminho para oposição.** Legítimo interesse (art. 7º, IX) é a base legal da
-   prospecção B2B e vem com o direito de oposição do titular (art. 18, §2º). Hoje não há campo
-   `nao_contatar` nem processo: quem pedir para sair da base volta na próxima recarga. É a mais
-   exposta e a mais barata das cinco.
-2. **`recusou` não tem consequência.** O desfecho existe desde hoje e a empresa continua
-   aparecendo na busca amanhã. Registrar recusa e ignorar é pior que não registrar.
-3. **`contato_usado` sem prazo de expurgo.** A migration 0020 guarda o telefone ou e-mail usado em
-   cada tentativa. Em 41,8% da base o e-mail é webmail, ou seja, dado pessoal.
-4. **Região do Supabase a conferir.** Se o banco estiver fora do Brasil, é transferência
-   internacional de dado pessoal e pede cláusula no contrato com a Setter.
-5. **Finalidade documentada por escrito**, que a proposta já promete entregar antes da coleta do C.
-6. **Nenhuma exportação de LinkedIn pode entrar antes do contrato assinado.** Dizer isso em voz
-   alta na call: é o tipo de coisa que alguém faz por conta própria achando que ajuda.
-
-## 🔴 Do trabalho de contato (21/09)
-
-1. **Contagem nacional de compartilhamento não rodou.** `scripts/backfill-contato-nacional.mjs`
-   está pronto e testado até a consulta; a cota gratuita do BigQuery acabou (sandbox, 1 TiB/mês,
-   renova dia 1). Ou esperar 01/10, ou habilitar billing. **É o número que mais muda a decisão de
-   ligar** e o único dos quatro itens que não está na tela.
-2. **`site` derivado perde sigla legítima.** A regra exige que o domínio case com o nome, então
-   `eds.org.br` para ASSOCIAÇÃO EXPEDICIONÁRIOS DA SAÚDE não entra. São 2.686 sites a menos, e a
-   troca foi deliberada: vazio é recuperável, errado e convincente não é.
-3. **A hierarquia de contato é hipótese, não medida.** Supomos domínio próprio > webmail >
-   compartilhado. Em empresa familiar pode ser o contrário. Só o `desfecho` responde, e ele
-   precisa de volume de uso para isso.
+| Quando | O que | Como ficou |
+|---|---|---|
+| 21/09 | Ligar CNPJ ao site da empresa de forma sistemática | Derivado do domínio do e-mail, com exigência de o domínio casar com o nome. **5.320 sites**, de zero |
+| 21/09 | Proposta escrita de B e C, para a call | Entregue em PDF, com valores estimados e a base do 0,5% em aberto |
+| 21/09 | Escopo do grafo (opção C) | Escrito: QSA + mailing + exportação de LinkedIn, em três fases com decisão entre elas |
+| 21/09 | Dono interno na Setter como condição | O Henrique chegou nela sozinho na call. Falta só o nome da pessoa |
+| 21/09 | Convites do Teams para 21/09 e 28/09 | A call de 21/09 aconteceu |
+| 20/09 | Detector de "esta empresa já foi comprada" | `detecta-aquisicao.mjs` pelo quadro societário, mais verificação na web. 31 de 31 verificadas |
+| 25-26/08 | Filtro de porte e capital nos `Filtros` | Virou o corte padrão por mandato, ligado por padrão e desligável. Save subiu de 1% para 32% |
+| 12/08 | Migration 0014 e contrato da Setter gravado | Aplicada, espelho sincronizado, 88/88 nos testes com zero skip. **Fica aberto:** a policy nunca foi exercida por sessão de originador da Setter |
+| 11/08 | Os 2 setores do piloto | Foco A = laboratório de diagnóstico veterinário, foco B = operadora de plano de saúde pet. Death care caiu do foco declarado |
+| 11/08 | Trazer a tabela `simples` para o ingest | **Medido e descartado.** `saiu_simples` tem lift 2,15x isolado mas **piora** o dev CV (42,32% contra 42,57%): redundante com capital e porte. `opcao_simples` está **proibida** como feature, com guarda em `calibra-score.py`, porque lê o desfecho |
+| 11/08 | Proxy de tamanho melhor que capital social | Resolvido com `porte`, que já estava no ingest. **Cuidado com a justificativa:** não é mais atualizado que capital; o que sustenta o eixo é o lift medido, não frescor |
+| 30/07 | Números defasados no onepager e no pitch | Afirmavam "97% a 100%, N=240", inflado por construção. Agora citam 63% a 95% por setor (N=317) e 41,5% no perfil sucessório em holdout |
+| 30/07 | Semanas 1 a 4, Demo Day, submissão do Loom, frentes do Maguto | Era do Clube da Programação, encerrada em junho. `submissao-clube.md` ficou como material de pitch |
+| 30/07 | Deploy no Vercel, selo de proveniência, pré-cache de saúde e educação | Feitos e verificados em produção |

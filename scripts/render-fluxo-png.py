@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Rasteriza brain/fluxo-de-dados.excalidraw em docs/fluxo-de-dados.png (o que o README embute).
+Rasteriza brain/produto/fluxo-de-dados.excalidraw em docs/fluxo-de-dados.png (o que o README embute).
 
     python scripts/render-fluxo-png.py            (da raiz do repo)
     python scripts/render-fluxo-png.py --scale=3

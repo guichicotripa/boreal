@@ -1,5 +1,9 @@
 # Referência visual para o site do Boreal: fairplaycapital.com.br
 
+> **Documento de 30/07/2026, não revisado desde então.** A análise do site e do posicionamento
+> continua válida. O que envelheceu é o estado da conversa com o José Venancio, parado desde
+> 30/07 e sem revisita. Ver `brain/pending.md` §6.
+
 > Criado: 2026-07-30. Capturado do site ao vivo em 30/07/2026 (medido no DOM, não estimado no olho).
 > Uso: referência principal de design e de copy para o site institucional do Boreal.
 >

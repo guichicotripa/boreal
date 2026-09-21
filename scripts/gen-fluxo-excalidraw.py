@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Gera brain/fluxo-de-dados.excalidraw a partir da spec de nos e setas abaixo.
+Gera brain/produto/fluxo-de-dados.excalidraw a partir da spec de nos e setas abaixo.
 
     python scripts/gen-fluxo-excalidraw.py     (da raiz do repo)
 
@@ -232,7 +232,7 @@ sql = box(C5, YB, W5,
 snc = box(C5, YB + 120, W5,
  "validacao-nacional.mjs  +  build-setores.mjs\nrecall por setor  →  setores.json\ncuidado: build-setores carrega o bloco nacional\ndo run anterior sem recalcular", *SCRIPT)
 doc = box(C5, YB + 280, W5,
- "brain/modelo-de-score.md\nprotocolo §10: nenhum peso por intuição\ndocumento vivo, revisado quando entra dado novo", *NEUTRO)
+ "brain/produto/modelo-de-score.md\nprotocolo §10: nenhum peso por intuição\ndocumento vivo, revisado quando entra dado novo", *NEUTRO)
 
 arrow([R(bq2), L(gt)])
 arrow([R(gt), (C3 - 60, R(gt)[1]), (C3 - 60, L(lif)[1]), L(lif)])

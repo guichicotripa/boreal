@@ -1,5 +1,9 @@
 # Roadmap de building + validação — ago/2026 → ago/2027 (e além)
 
+> **Documento de 21/07/2026, não revisado desde então.** Escrito antes de a Setter assinar e
+> antes de o pedido do cliente mudar de "achar empresa" para "chegar no dono". A sequência aqui
+> não corresponde mais ao que está sendo construído. Prioridade corrente em `brain/pending.md`.
+
 > Criado: 2026-07-20, pós-reestruturação (solo) e pós-análise SoM&A. Substitui o sequenciamento
 > do plano 06/07 incorporando: **lado comprador como demanda estruturada** (o nugget da SoM&A),
 > caminho de indicação, snapshots mensais, selo multi-parceiro — tudo dimensionado pra UMA

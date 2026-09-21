@@ -1,7 +1,7 @@
 # Escopo das opções B e C para a Setter (v2)
 
 > **v2 de 20/09/2026**, para a call de 21/09. A v1 foi revisada pelo Codex
-> (`brain/revisao-codex-escopo-b-c.md`) e a maior parte das críticas entrou aqui.
+> (`brain/setter/revisao-codex-escopo-b-c.md`) e a maior parte das críticas entrou aqui.
 >
 > **Parte 1** é texto de proposta, vai para a Setter. **Parte 2** são notas internas. **Parte 3** é
 > o roteiro da call de amanhã.
