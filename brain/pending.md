@@ -359,3 +359,34 @@ Ordenado por evidência, não por gosto. Tudo aqui saiu de 299 eventos da Setter
    linha da busca e painel na página da empresa. É o item 3 da versão de acesso.
 4. **A TOMOVET segue como limite conhecido do detector.** Vínculo por pessoa física, sem holding
    no quadro, não é pego. Documentado, não resolvido.
+
+---
+
+## 🔴 De LGPD, abertas depois do trabalho de contato (21/09) — ver `brain/lgpd-contato.md`
+
+1. **Não existe caminho para oposição.** Legítimo interesse (art. 7º, IX) é a base legal da
+   prospecção B2B e vem com o direito de oposição do titular (art. 18, §2º). Hoje não há campo
+   `nao_contatar` nem processo: quem pedir para sair da base volta na próxima recarga. É a mais
+   exposta e a mais barata das cinco.
+2. **`recusou` não tem consequência.** O desfecho existe desde hoje e a empresa continua
+   aparecendo na busca amanhã. Registrar recusa e ignorar é pior que não registrar.
+3. **`contato_usado` sem prazo de expurgo.** A migration 0020 guarda o telefone ou e-mail usado em
+   cada tentativa. Em 41,8% da base o e-mail é webmail, ou seja, dado pessoal.
+4. **Região do Supabase a conferir.** Se o banco estiver fora do Brasil, é transferência
+   internacional de dado pessoal e pede cláusula no contrato com a Setter.
+5. **Finalidade documentada por escrito**, que a proposta já promete entregar antes da coleta do C.
+6. **Nenhuma exportação de LinkedIn pode entrar antes do contrato assinado.** Dizer isso em voz
+   alta na call: é o tipo de coisa que alguém faz por conta própria achando que ajuda.
+
+## 🔴 Do trabalho de contato (21/09)
+
+1. **Contagem nacional de compartilhamento não rodou.** `scripts/backfill-contato-nacional.mjs`
+   está pronto e testado até a consulta; a cota gratuita do BigQuery acabou (sandbox, 1 TiB/mês,
+   renova dia 1). Ou esperar 01/10, ou habilitar billing. **É o número que mais muda a decisão de
+   ligar** e o único dos quatro itens que não está na tela.
+2. **`site` derivado perde sigla legítima.** A regra exige que o domínio case com o nome, então
+   `eds.org.br` para ASSOCIAÇÃO EXPEDICIONÁRIOS DA SAÚDE não entra. São 2.686 sites a menos, e a
+   troca foi deliberada: vazio é recuperável, errado e convincente não é.
+3. **A hierarquia de contato é hipótese, não medida.** Supomos domínio próprio > webmail >
+   compartilhado. Em empresa familiar pode ser o contrário. Só o `desfecho` responde, e ele
+   precisa de volume de uso para isso.
