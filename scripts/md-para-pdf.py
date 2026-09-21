@@ -181,8 +181,12 @@ def converte(md: str, largura: float) -> list:
             while i < len(linhas) and linhas[i].strip().startswith("|"):
                 bloco.append(linhas[i])
                 i += 1
+            t = monta_tabela(bloco, largura)
             flow.append(Spacer(1, 2))
-            flow.append(monta_tabela(bloco, largura))
+            # Tabela curta não se parte: uma linha sozinha no alto da página seguinte, com o
+            # cabeçalho repetido em cima dela, lê como se fosse outra tabela. Acima de 8 linhas
+            # a quebra é inevitável e KeepTogether só empurraria a tabela inteira para a frente.
+            flow.append(KeepTogether(t) if len(bloco) - 2 <= 8 else t)
             flow.append(Spacer(1, 7))
             continue
 

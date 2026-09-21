@@ -8,6 +8,8 @@ Henrique, como combinamos na call de hoje, segue por escrito o que existe nas du
 
 Você colocou três caminhos: encerrar, seguir com a plataforma como está, ou seguir com a plataforma mais o acesso aos contatos e o caminho até cada pessoa. **A opção B abaixo é o segundo caminho e a opção C é o terceiro.** Estão separadas de propósito, em contratos independentes, porque uma pode dar certo sem a outra.
 
+**Os valores são estimativas, para dar ordem de grandeza na discussão de vocês, e estão abertos.** O que importa fechar antes da minuta é o desenho, não o número.
+
 ---
 
 ## Antes de tudo: o que o piloto mostrou
@@ -48,7 +50,7 @@ Os dois fatos juntos dizem a mesma coisa por lados opostos: **acabou o que havia
 
 # Opção B · Da lista para a conversa
 
-**Valor mensal a negociar, por um período inicial de 90 dias.** Sem prazo longo e sem multa. No fim dos 90 dias, decidimos a continuidade com os números na mesa.
+**R$ 5.000 por mês, estimado, por um período inicial de 90 dias.** Sem prazo longo e sem multa. No fim dos 90 dias, decidimos a continuidade com os números na mesa.
 
 ## Bloco 1 · Acesso (é o centro desta fase)
 
@@ -110,7 +112,9 @@ Sem esse registro não há como medir nada no fim dos 90 dias, e a conversa de c
 
 ## Taxa de êxito
 
-**Percentual a negociar sobre o valor pago pelas ações**, nas operações de empresas que estavam registradas na plataforma antes do primeiro contato de vocês com elas, dentro de **24 meses** desse registro. A referência é a faixa que conversamos em julho, de cerca de 10% do fee de vocês.
+**0,5%**, nas operações de empresas que estavam registradas na plataforma antes do primeiro contato de vocês com elas, dentro de **24 meses** desse registro.
+
+**Falta alinharmos sobre o que esse 0,5% incide, e a diferença é grande.** Sobre o valor pago pelas ações é uma coisa; sobre o fee de vocês na operação é outra, de ordem de grandeza bem diferente. A referência que conversamos em julho foi cerca de 10% do fee de vocês, e o 0,5% acima nasceu pensado sobre o valor da transação. Vale fechar isso antes da minuta, porque é a única parte da proposta em que um mal-entendido sai caro para um dos dois lados.
 
 - Ficam de fora as empresas da lista de CNPJs que vocês entregarem na assinatura, e qualquer empresa em que vocês demonstrem relacionamento anterior.
 - O pagamento acompanha o recebimento de vocês: se os honorários forem parcelados, a taxa também é.
@@ -174,17 +178,19 @@ O trabalho central é **casar identidades**: descobrir que o "João Silva" do ma
 
 | Fase | Valor | Pagamento |
 |---|---:|---|
-| 0 · Diagnóstico | a negociar | na entrega |
-| 1 · Primeira versão | a negociar | metade no início, metade na entrega |
-| 2 · Medição | a negociar | na entrega |
+| 0 · Diagnóstico | R$ 6.000 | na entrega |
+| 1 · Primeira versão | R$ 24.000 | metade no início, metade na entrega |
+| 2 · Medição | R$ 8.000 | na entrega |
 
-**A fase 0 pode ser contratada sozinha, sem o B.** As fases 1 e 2 exigem o B ativo, porque o caminho aparece dentro da plataforma. Vocês só se comprometem com a fase seguinte depois de ver o resultado da anterior: se a fase 0 mostrar que não há caminho acionável, o experimento se encerra ali, e o custo foi só o da fase 0.
+Valores estimados. A fase 0 é a que define as outras duas: se o inventário mostrar um volume de identidades muito diferente do esperado, o número da fase 1 muda junto, e a gente conversa antes de começar.
+
+**A fase 0 pode ser contratada sozinha, sem o B.** As fases 1 e 2 exigem o B ativo, porque o caminho aparece dentro da plataforma. Vocês só se comprometem com a fase seguinte depois de ver o resultado da anterior: se a fase 0 mostrar que não há caminho acionável, o experimento se encerra ali, e o custo foi de R$ 6.000.
 
 ## Dados, propriedade e continuidade
 
 - **Os dados de relacionamento são de vocês.** Mailing, exportações e o mapa construído com eles não são usados para nenhum outro cliente. No encerramento, exportamos tudo para vocês e apagamos, com exceção do registro mínimo de proveniência, se houver taxa de êxito em aberto.
 - **A tecnologia e o método são da Boreal**, licenciados a vocês enquanto o contrato estiver vigente. **Se a Boreal descontinuar o produto, a licença da versão entregue passa a ser perpétua e vocês recebem a exportação completa mais a documentação para transferir a outro fornecedor.**
-- **Depois de agosto de 2027**, quando eu estiver na faculdade, o serviço continua em **modo manutenção**: base atualizando, correções e uma call por mês, por um valor mensal menor a combinar, sem desenvolvimento novo. Volto ao ritmo integral nas férias.
+- **Depois de agosto de 2027**, quando eu estiver na faculdade, o serviço continua em **modo manutenção**: base atualizando, correções e uma call por mês, por cerca de R$ 2.500 mensais, sem desenvolvimento novo. Volto ao ritmo integral nas férias.
 - A Boreal trata os dados como **operadora** e vocês como controladores, em cláusula própria. Antes da coleta entregamos a finalidade documentada e o procedimento para pedidos dos titulares.
 
 ## Exclusividade do C
@@ -201,8 +207,8 @@ Contrato assinado pela empresa própria da Boreal, cláusula de proteção de da
 
 | | Opção B | Opção C |
 |---|---|---|
-| **Valor** | a negociar, mensal | a negociar, por fase |
+| **Valor** | R$ 5.000 por mês, estimado | R$ 6.000 + R$ 24.000 + R$ 8.000, estimados, por fase |
 | **Prazo** | 90 dias, sem multa | 2 + 10 + 8 semanas, com decisão entre as fases |
 | **Depende do outro?** | Não | Fase 0 é avulsa. Fases 1 e 2 exigem o B ativo |
-| **Taxa de êxito** | percentual a negociar sobre o valor pago pelas ações, em 24 meses | mesma do B |
+| **Taxa de êxito** | 0,5% em 24 meses, com a base de cálculo a alinhar | mesma do B |
 | **O que vocês precisam colocar** | Dono interno e registro do que aconteceu com cada empresa | 3 pessoas exportando contatos do LinkedIn |

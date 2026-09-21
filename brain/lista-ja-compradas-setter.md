@@ -2,19 +2,7 @@
 
 > Gerado em 20/09/2026 por `scripts/detecta-aquisicao.mjs` sobre as 31 empresas salvas pela Setter. Fonte única: quadro societário do CNPJ (Receita Federal), snapshot de 09/11/2025. **Sinal de cadastro, não confirmação de negócio.**
 
-## Resumo
-
-> Henrique, rodei uma verificação no quadro societário das 31 empresas que vocês salvaram, para responder aquela pergunta da Fernanda de "essa aqui já foi comprada?".
->
-> **8 têm sócio pessoa jurídica de fora da família, ou seja, provavelmente já têm dono.** Outras 4 têm holding, mas é da própria família, então continuam disponíveis. E 5 trocaram o quadro inteiro depois da fundação, o que não prova venda mas merece um olhar antes de vocês investirem tempo.
->
-> Testei o método contra o que a Fernanda já sabia de cabeça, e ele achou sozinho a PROVET comprada pela Petlove, a NEW PROVET comprada pela PROVET e a TECSA pela Pet Care. Não pegou a TOMOVET, porque lá o vínculo está nas pessoas e não numa holding.
->
-> Também rodei busca na web nas **31**, uma por uma, com fonte registrada. Ela **não confirmou nenhuma aquisição**, e isso diz mais sobre o mercado do que sobre as empresas: compra de PME brasileira quase não sai na imprensa. Em compensação **confirmou 4 empresas como independentes**, com o nome de quem controla, e achou 8 casos com evento societário que o cadastro não mostrava. Está tudo na seção 5, no fim do documento.
->
-> Segue a lista. É sinal de cadastro, não confirmação de negócio, então trata como ponto de partida.
-
----
+As 31 empresas que vocês salvaram, verificadas em duas camadas: o **quadro societário do CNPJ** (Receita Federal, snapshot de 09/11/2025) e **busca na web**, com fonte registrada para cada resposta. É sinal de cadastro, não confirmação de negócio, então trata como ponto de partida.
 
 ## 1. Provavelmente já compradas (8)
 
