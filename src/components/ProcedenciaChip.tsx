@@ -77,6 +77,20 @@ export function TelefoneSuspeitoChip({ suspeito }: { suspeito: boolean | null | 
   );
 }
 
+/* O titular pediu para não ser contatado. Cor mais forte da tela, porque é o único aviso aqui que
+   não é informação para decidir: é decisão já tomada, por outra pessoa, com base na LGPD. */
+export function NaoContatarChip({ ativo }: { ativo: boolean | null | undefined }) {
+  if (!ativo) return null;
+  return (
+    <span
+      title="O titular pediu para não ser contatado (LGPD, art. 18). O contato foi apagado da base e não volta nas recargas da Receita. Não procure o número em outra fonte."
+      className="inline-flex cursor-help items-center rounded bg-risk-high/15 px-1.5 py-0.5 text-[10px] font-medium text-risk-high"
+    >
+      não contatar
+    </span>
+  );
+}
+
 /* Os três juntos, na ordem em que importam para quem vai abordar.
 
    Aceita a FORMA dos campos, e não `Empresa` inteira, porque a linha do pipeline trabalha com um
@@ -84,12 +98,15 @@ export function TelefoneSuspeitoChip({ suspeito }: { suspeito: boolean | null | 
    campos que ela não usa só para satisfazer o tipo. */
 type ContatoDaEmpresa = {
   email: string | null;
+  nao_contatar?: boolean | null;
   email_procedencia?: ProcedenciaEmail | null;
   telefone_empresas_br?: number | null;
   telefone_suspeito?: boolean | null;
 };
 
 export function ContatoChips({ empresa }: { empresa: ContatoDaEmpresa }) {
+  // Com oposição, os outros avisos não fazem sentido: não há contato para qualificar.
+  if (empresa.nao_contatar) return <NaoContatarChip ativo />;
   return (
     <>
       <TelefoneSuspeitoChip suspeito={empresa.telefone_suspeito} />

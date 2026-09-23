@@ -23,7 +23,7 @@ export async function GET() {
        firma:escopo_id (nome),
        empresa:empresa_id (
          id, cnpj, razao_social, nome_fantasia, cnae_principal_desc,
-         municipio, uf, capital_social, porte, telefone, email, site, email_procedencia, email_empresas_br, telefone_empresas_br, telefone_suspeito,
+         municipio, uf, capital_social, porte, telefone, email, site, email_procedencia, email_empresas_br, telefone_empresas_br, telefone_suspeito, nao_contatar,
          socio(nome, faixa_etaria)
        ),
        interacoes:interacao(criado_em)`

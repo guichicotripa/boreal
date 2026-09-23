@@ -7,7 +7,7 @@ import { scoreTier, EIXOS } from "@/lib/scoring";
 import { TIER_STYLES, FAIXA_LABEL, formatCnpj, formatTelefone, formatCapitalCompact } from "@/lib/format";
 import { storeEmpresa, storeOrigin, type ScoreConhecido } from "@/lib/empresa-store";
 import { regimeTributario } from "@/lib/filtro-padrao";
-import { ContatoChips } from "@/components/ProcedenciaChip";
+import { ContatoChips, NaoContatarChip } from "@/components/ProcedenciaChip";
 import { SalvarButton } from "./SalvarButton";
 import { X, ArrowUpRight, Phone, Mail, EyeOff } from "lucide-react";
 
@@ -212,12 +212,19 @@ export function PeekPanel({
           </section>
         )}
 
-        {/* Contato */}
-        {(e.telefone || e.email) && (
+        {/* Contato. Aparece também com oposição: o vazio precisa ser explicado, senão parece falta
+            de dado e o originador vai procurar o número em outro lugar. */}
+        {(e.telefone || e.email || e.nao_contatar) && (
           <section>
             <h3 className="mb-2 text-[11px] font-medium text-ink-muted">
               Contato
             </h3>
+            {e.nao_contatar && (
+              <p className="flex items-center gap-2 text-[11px] leading-snug text-ink-soft">
+                <NaoContatarChip ativo />
+                O titular pediu para não ser contatado.
+              </p>
+            )}
             <div className="flex flex-wrap gap-2">
               {e.telefone && (
                 <a

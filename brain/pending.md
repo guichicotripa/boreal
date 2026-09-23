@@ -118,12 +118,6 @@
 > Análise completa em `brain/pesquisa/lgpd-contato.md`. Nenhum item é urgente com 31 empresas e
 > zero ligações. Todos ficam urgentes no dia em que o volume subir, e aí custam mais.
 
-- [ ] **Não existe caminho para oposição.** Legítimo interesse (art. 7º, IX) é a base legal da
-  prospecção B2B e vem com o direito de oposição do titular (art. 18, §2º). Hoje não há campo
-  `nao_contatar` nem processo: quem pedir para sair da base volta na próxima recarga. **É a mais
-  exposta e a mais barata das cinco.**
-- [ ] **`recusou` não tem consequência.** O desfecho existe desde 21/09 e a empresa continua
-  aparecendo na busca amanhã. Registrar recusa e ignorar é pior que não registrar.
 - [ ] **`contato_usado` sem prazo de expurgo.** A migration 0020 guarda o telefone ou e-mail usado
   em cada tentativa, e em 41,8% da base o e-mail é webmail, ou seja, dado pessoal.
 - [ ] **Conferir a região do Supabase.** Se o banco estiver fora do Brasil, é transferência
@@ -277,6 +271,8 @@
 
 | Quando | O que | Como ficou |
 |---|---|---|
+| 23/09 | Caminho para oposição do titular (LGPD art. 18 §2º) | **O banco recusa guardar o contato**: trigger na `empresa` apaga telefone, e-mail e site de quem se opôs e **impede o backfill da Receita de devolver**, que era o furo. Chave por CNPJ, o pedido fica registrado e o contato não é retido em outro lugar. Só a Boreal reverte. Testado no banco com empresa sintética |
+| 23/09 | `recusou` sem consequência | Registrar "disseram não" marca a oportunidade como não receptiva, **só se estava pendente**: decisão humana explícita vence a automática. Não arquiva, porque recusa pode ser "agora não" |
 | 23/09 | Filtrar organização sem fins lucrativos | **O corte padrão SELECIONAVA associação**, porque ela é sempre DEMAIS e nunca optante: passava em 79% a 100% dos casos contra 2% a 5% de empresa comum. Virou parte do corte, rotulado "com dono". Saem 74 do death care (585 para 511) e o hospital da faculdade das 31. Cooperativa fica, porque funde |
 | 23/09 | Separar 6511101 de 6511102 no death care | **92 seguradoras de vida saíram das 676 empresas da tela** (13,6%). O 6511101 só entra com nome funerário, o que preserva a única funerária real ali, a PAX CAROLINA. Contrato de RLS com cobertura idêntica |
 | 23/09 | Corrigir `score_no_save` | Select completo no endpoint. **24 das 31 estavam gravadas em média 28,5 pontos abaixo** do que a tela mostrou, e foram recalculadas. Os 38 eventos `salvou` não foram reescritos, ver `decisions.md` de 23/09 |

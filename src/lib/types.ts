@@ -70,6 +70,10 @@ export type Empresa = {
   telefone_empresas_br?: number | null;   // idem para o telefone. 1 = exclusivo da empresa
   telefone_suspeito?: boolean | null;     // número que nem vale discar (sintaxe), ≠ compartilhado
   contato_aferido_em?: string | null;
+  /* O titular pediu para não ser contatado (migration 0021). Quando true, o banco já apagou
+     telefone, e-mail e site, e a tela precisa DIZER isso, senão o vazio parece falta de dado e
+     o originador vai procurar o telefone em outro lugar. */
+  nao_contatar?: boolean | null;
   socio?: Socio[];
   // Adicionados em runtime pelo /api/search (não vêm do banco):
   score?: import("./scoring").ScoreResult;
@@ -213,7 +217,7 @@ export type Oportunidade = {
     | "municipio" | "uf" | "capital_social" | "porte" | "telefone" | "email"
     /* Qualidade do contato: a linha do pipeline é uma das superfícies de onde alguém disca, então
        ela precisa avisar antes, e não depois. */
-    | "email_procedencia" | "telefone_empresas_br" | "telefone_suspeito"
+    | "email_procedencia" | "telefone_empresas_br" | "telefone_suspeito" | "nao_contatar"
   > & {
     /** Sócios com nome e faixa etária — para identificar o fundador na row. */
     socio?: Pick<Socio, "nome" | "faixa_etaria">[];

@@ -83,7 +83,28 @@ export async function POST(req: NextRequest) {
     .single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json({ interacao: data });
+  /* "Disseram não" tem que ter consequência. Registrar a recusa e deixar a oportunidade como
+     pendente é pior que não registrar: o próximo originador vê "pendente", liga de novo, e a mesma
+     pessoa que já disse não recebe a segunda ligação. Ver `brain/pesquisa/lgpd-contato.md`.
+
+     SÓ MEXE EM QUEM ESTÁ PENDENTE. Se alguém já marcou `receptivo` ou `deal_fechado` à mão, uma
+     recusa registrada depois não pode apagar isso: pode ser recusa de outra pessoa da empresa, ou de
+     outro assunto. A decisão humana explícita vence a automática.
+
+     NÃO ARQUIVA. Recusa pode ser "agora não", e sumir com a empresa do pipeline esconderia a
+     informação de quem já tentou. Ela continua visível, marcada como não receptiva. */
+  let resultadoAtualizado = false;
+  if (desfecho === "recusou") {
+    const { data: upd } = await supabase
+      .from("oportunidade")
+      .update({ resultado: "nao_receptivo", updated_at: new Date().toISOString() })
+      .eq("id", opId)
+      .eq("resultado", "pendente")
+      .select("id");
+    resultadoAtualizado = (upd?.length ?? 0) > 0;
+  }
+
+  return NextResponse.json({ interacao: data, resultadoAtualizado });
 }
 
 // DELETE ?id=... — remove um toque.

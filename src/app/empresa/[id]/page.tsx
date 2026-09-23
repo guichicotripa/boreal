@@ -14,7 +14,8 @@ import {
   formatCnpj, formatTelefone, formatCapitalCompact,
   FAIXA_LABEL, FAIXA_COLOR, TIER_STYLES, anosOperacao,
 } from "@/lib/format";
-import { ProcedenciaChip, CompartilhamentoChip, TelefoneSuspeitoChip } from "@/components/ProcedenciaChip";
+import { ProcedenciaChip, CompartilhamentoChip, TelefoneSuspeitoChip, NaoContatarChip } from "@/components/ProcedenciaChip";
+import { RegistrarOposicao } from "@/components/empresa/RegistrarOposicao";
 import { ResearchDisplay } from "@/components/empresa/ResearchDisplay";
 import { MemoDisplay } from "@/components/empresa/MemoDisplay";
 import { Timeline } from "@/components/empresa/Timeline";
@@ -349,10 +350,19 @@ export default function EmpresaPage() {
             <p className="mt-3 text-[10.5px] text-ink-muted">Dados públicos da Receita Federal.</p>
           </section>
 
-          {/* Contato */}
-          {(e.telefone || e.email || e.site) && (
+          {/* Contato. A seção aparece também com oposição: o vazio precisa ser explicado. */}
+          {(e.telefone || e.email || e.site || e.nao_contatar) && (
             <section className="rounded-lg border border-hairline bg-surface p-4">
               <h2 className="mb-3 text-[11px] font-medium text-ink-muted">Contato</h2>
+              {e.nao_contatar && (
+                <div className="space-y-1.5">
+                  <NaoContatarChip ativo />
+                  <p className="text-[11px] leading-snug text-ink-soft">
+                    O titular pediu para não ser contatado. O contato foi apagado da base e não volta
+                    nas recargas da Receita. Não procure o número em outra fonte.
+                  </p>
+                </div>
+              )}
               <div className="flex flex-col gap-2">
                 {e.telefone && (
                   <div className="flex flex-col items-start gap-1">
@@ -409,6 +419,28 @@ export default function EmpresaPage() {
               <p className="mt-3 text-[10.5px] leading-snug text-ink-muted">
                 Contato do cadastro na Receita, nem sempre é o do sócio.
               </p>
+              {!e.nao_contatar && (
+                <RegistrarOposicao
+                  empresaId={e.id}
+                  onRegistrado={() =>
+                    setEmpresa((atual) =>
+                      atual
+                        ? {
+                            ...atual,
+                            nao_contatar: true,
+                            telefone: null,
+                            email: null,
+                            site: null,
+                            email_procedencia: null,
+                            telefone_empresas_br: null,
+                            email_empresas_br: null,
+                            telefone_suspeito: null,
+                          }
+                        : atual,
+                    )
+                  }
+                />
+              )}
             </section>
           )}
 

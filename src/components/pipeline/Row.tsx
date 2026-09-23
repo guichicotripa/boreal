@@ -276,7 +276,9 @@ export function Row({
             </a>
           ) : null}
           <ContatoChips empresa={o.empresa} />
-          {!o.empresa.telefone && !o.empresa.email && (
+          {/* "sem contato" só quando o vazio é falta de dado. Com oposição o vazio é pedido do
+              titular, e o chip acima já diz isso: os dois juntos se contradiriam. */}
+          {!o.empresa.telefone && !o.empresa.email && !o.empresa.nao_contatar && (
             <span className="text-[11px] text-ink-muted">sem contato</span>
           )}
           {/* Indicador de último contato */}

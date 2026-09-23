@@ -32,6 +32,10 @@ export function LogAtividade({
      aconteceu de verdade na ligação. Começa vazio de propósito, porque "não registrei" é uma
      resposta diferente de "não atenderam". */
   const [desfecho, setDesfecho] = useState<DesfechoInteracao | "">("");
+  /* Aviso de que a recusa mudou o estado da oportunidade. Consequência automática que ninguém vê
+     é consequência que ninguém entende: a pessoa registra "disseram não" e depois estranha a
+     oportunidade aparecendo como não receptiva. */
+  const [aviso, setAviso] = useState<string | null>(null);
 
   async function carregar() {
     const r = await fetch(`/api/interacao?oportunidade_id=${oportunidadeId}`);
@@ -66,6 +70,7 @@ export function LogAtividade({
       setItens((p) => [d.interacao, ...(p ?? [])]);
       setTexto("");
       setDesfecho("");
+      setAviso(d.resultadoAtualizado ? "Oportunidade marcada como não receptiva." : null);
     }
   }
 
@@ -149,6 +154,8 @@ export function LogAtividade({
               ))}
             </div>
           )}
+
+          {aviso && <p className="text-[10.5px] text-ink-muted">{aviso}</p>}
 
           {itens && itens.length > 0 ? (
             <ul className="space-y-1.5">
