@@ -3,6 +3,7 @@ import { createUserClient } from "@/lib/supabase-server";
 import { escopoAtual } from "@/lib/escopo";
 import { registrarSalvou, registrarEstagio } from "@/lib/evento";
 import { calcScore } from "@/lib/scoring";
+import { anexaControle } from "@/lib/aquisicao";
 import type { Empresa } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -24,7 +25,8 @@ export async function GET() {
        empresa:empresa_id (
          id, cnpj, razao_social, nome_fantasia, cnae_principal_desc,
          municipio, uf, capital_social, porte, telefone, email, site, email_procedencia, email_empresas_br, telefone_empresas_br, telefone_suspeito, nao_contatar,
-         socio(nome, faixa_etaria)
+         data_inicio_atividade,
+         socio(nome, faixa_etaria, data_entrada_sociedade, cpf_cnpj_mascarado)
        ),
        interacoes:interacao(criado_em)`
     )
@@ -46,6 +48,9 @@ export async function GET() {
      abre a empresa, não vê o contato, não acha na busca. Devolvê-la só produz uma linha vazia.
      Staff continua vendo tudo, porque para staff a policy não nega o embed. */
     const visiveis = (data ?? []).filter((o) => (o as { empresa?: unknown }).empresa);
+    /* O pipeline é a lista de trabalho: é aqui que "essa já tem dono?" mais importa, antes de ligar.
+       `anexaControle` calcula e apaga o CPF mascarado dos sócios, que nunca sai para o navegador. */
+    for (const o of visiveis) anexaControle((o as unknown as { empresa: Parameters<typeof anexaControle>[0] }).empresa);
     const ocultas = (data ?? []).length - visiveis.length;
     if (ocultas > 0) {
       console.warn(`pipeline: ${ocultas} oportunidade(s) ocultada(s) — empresa fora do contrato da firma`);

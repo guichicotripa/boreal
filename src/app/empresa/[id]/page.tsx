@@ -16,6 +16,7 @@ import {
 } from "@/lib/format";
 import { ProcedenciaChip, CompartilhamentoChip, TelefoneSuspeitoChip, NaoContatarChip } from "@/components/ProcedenciaChip";
 import { RegistrarOposicao } from "@/components/empresa/RegistrarOposicao";
+import { ControlePainel } from "@/components/empresa/ControlePainel";
 import { descreveQualificacao, temGestao, qualificacaoSucessoria } from "@/lib/qualificacao";
 import { ResearchDisplay } from "@/components/empresa/ResearchDisplay";
 import { MemoDisplay } from "@/components/empresa/MemoDisplay";
@@ -444,6 +445,10 @@ export default function EmpresaPage() {
               )}
             </section>
           )}
+
+          {/* Quem controla: cadastro sempre, web quando o lote já rodou. Vem antes dos sócios
+              porque responde a pergunta que decide se vale a pena ler a lista: ainda tem dono? */}
+          <ControlePainel controle={e.controle} verificacao={e.verificacao} />
 
           {/* Sócios — evidência do driver de maior peso do score */}
           <section className="rounded-lg border border-hairline bg-surface p-4">

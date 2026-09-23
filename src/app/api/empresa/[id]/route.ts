@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createUserClient } from "@/lib/supabase-server";
 import { calcScore } from "@/lib/scoring";
+import { anexaControle } from "@/lib/aquisicao";
 import { lerScoresV1 } from "@/lib/research-store";
 import type { Empresa } from "@/lib/types";
 
@@ -23,7 +24,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
       `id, cnpj, razao_social, nome_fantasia, cnae_principal, cnae_principal_desc,
        cnaes_secundarios, natureza_juridica, municipio, uf, data_inicio_atividade,
        capital_social, porte, telefone, email, site, email_procedencia, email_empresas_br, telefone_empresas_br, telefone_suspeito, nao_contatar,
-       socio(id, nome, qualificacao, faixa_etaria, data_entrada_sociedade)`
+       socio(id, nome, qualificacao, faixa_etaria, data_entrada_sociedade, cpf_cnpj_mascarado)`
     )
     .eq("id", id)
     .single();
@@ -43,6 +44,17 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
 
   const empresa = data as Empresa;
   empresa.score = calcScore(empresa); // score v0 determinístico (a investigação eleva para v1 sob demanda)
+  // Quem controla, pelo quadro. Apaga o CPF mascarado dos sócios na mesma chamada.
+  anexaControle(empresa);
+
+  /* A verificação na web só existe para quem já passou pelo lote (`scripts/verifica-aquisicao.ts`).
+     Ausente é o caso comum e não é erro: a tela mostra só o sinal do cadastro. */
+  const { data: verif } = await supabase
+    .from("verificacao_aquisicao")
+    .select("veredito, comprador, quando, confianca, resumo, fontes, eventos, criado_em")
+    .eq("empresa_id", id)
+    .maybeSingle();
+  empresa.verificacao = (verif as Empresa["verificacao"]) ?? null;
 
   // v1 já investigado (score_run) — a página abre direto com o número apurado, sem
   // esperar o research responder. Ausente = empresa nunca investigada.

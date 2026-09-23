@@ -9,6 +9,7 @@ import { storeEmpresa, storeOrigin, type ScoreConhecido } from "@/lib/empresa-st
 import { regimeTributario } from "@/lib/filtro-padrao";
 import { ContatoChips, NaoContatarChip } from "@/components/ProcedenciaChip";
 import { descreveQualificacao, temGestao } from "@/lib/qualificacao";
+import { ControleChip } from "@/components/ControleChip";
 import { SalvarButton } from "./SalvarButton";
 import { X, ArrowUpRight, Phone, Mail, EyeOff } from "lucide-react";
 
@@ -194,8 +195,9 @@ export function PeekPanel({
         {/* Sócios */}
         {socios.length > 0 && (
           <section>
-            <h3 className="mb-2 text-[11px] font-medium text-ink-muted">
+            <h3 className="mb-2 flex items-center gap-2 text-[11px] font-medium text-ink-muted">
               Sócios ({socios.length})
+              <ControleChip controle={e.controle} />
             </h3>
             <ul className="space-y-1.5">
               {socios.slice(0, 6).map((s) => (

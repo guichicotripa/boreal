@@ -19,25 +19,13 @@
  */
 import { createClient } from "@supabase/supabase-js";
 import { pathToFileURL } from "url";
+import { classificaControle } from "../src/lib/aquisicao.ts";
 
 const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
   auth: { persistSession: false },
 });
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split("=")[1];
 const MANDATO = arg("mandato");
-
-/* Partículas e termos de razão social que NÃO servem para casar família: aparecem em qualquer nome
-   e criariam parentesco falso entre coisas sem relação nenhuma. */
-const VAZIAS = new Set(["DE", "DA", "DO", "DAS", "DOS", "LTDA", "EIRELI", "PARTICIPACOES", "PARTICIPACAO",
-  "HOLDING", "ADMINISTRACAO", "ADMINISTRADORA", "EMPREENDIMENTOS", "EMPREENDIMENTO", "INVESTIMENTOS",
-  "INVESTIMENTO", "COMERCIO", "SERVICOS", "SERVICO", "GESTAO", "GESTORA", "CONSULTORIA", "IMOBILIARIA",
-  "AGROPECUARIA", "BRASIL", "GRUPO", "IRMAOS", "FILHOS", "COMPANHIA", "JUNIOR", "NETO", "FILHO",
-  "SOBRINHO", "SANTOS", "SILVA", "SOUZA", "OLIVEIRA"]);
-
-const semAcento = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase();
-const tokens = (nome) => semAcento(nome).split(/[^A-Z0-9]+/).filter((t) => t.length >= 4 && !VAZIAS.has(t));
-const ehPJ = (s) => s.faixa_etaria === "0" || String(s.cpf_cnpj_mascarado || "").replace(/\D/g, "").length === 14;
-const ano = (d) => (d ? Number(String(d).slice(0, 4)) : null);
 
 const SELECT = "id, cnpj, razao_social, nome_fantasia, municipio, uf, capital_social, data_inicio_atividade, socio(nome, cpf_cnpj_mascarado, faixa_etaria, qualificacao, data_entrada_sociedade)";
 
@@ -76,53 +64,16 @@ async function alcanceDasHoldings(cnpjs) {
   return mapa;
 }
 
+/* A REGRA MORA EM src/lib/aquisicao.ts desde 23/09/2026, para a tela e este script usarem a
+   mesma. Duas cópias divergiriam na primeira correção. A troca foi conferida em 1.031 empresas
+   reais, com zero veredito diferente. `classifica` continua exportada com a assinatura antiga,
+   porque `verifica-aquisicao.ts` a importa. */
 export function classifica(empresa) {
-  const socios = empresa.socio ?? [];
-  const pjs = socios.filter(ehPJ);
-  const pfs = socios.filter((s) => !ehPJ(s));
-  const sobrenomesPF = new Set(pfs.flatMap((s) => tokens(s.nome)));
-
-  const deTerceiro = pjs.filter((pj) => !tokens(pj.nome).some((t) => sobrenomesPF.has(t)));
-  const daFamilia = pjs.filter((pj) => tokens(pj.nome).some((t) => sobrenomesPF.has(t)));
-
-  const anoFund = ano(empresa.data_inicio_atividade);
-  const entradas = socios.map((s) => ano(s.data_entrada_sociedade)).filter(Boolean);
-  /* Quadro inteiro entrou anos depois da fundação: ninguém que abriu a empresa continua nela. É
-     troca de controle mesmo sem PJ no quadro, porque pode ter sido comprada por pessoas físicas. */
-  const quadroTrocado = entradas.length > 0 && anoFund && Math.min(...entradas) >= anoFund + 3;
-
-  if (deTerceiro.length) {
-    const recente = deTerceiro.slice().sort((a, b) => String(b.data_entrada_sociedade).localeCompare(String(a.data_entrada_sociedade)))[0];
-    return {
-      veredito: "provavelmente comprada",
-      confianca: ano(recente.data_entrada_sociedade) >= 2018 ? "alta" : "média",
-      porque: `sócia ${recente.nome}, sem sobrenome em comum com o quadro, entrou em ${ano(recente.data_entrada_sociedade)}`,
-      holding: recente,
-    };
-  }
-  if (daFamilia.length) {
-    const h = daFamilia[0];
-    return {
-      veredito: "reorganização familiar",
-      confianca: "média",
-      porque: `sócia ${h.nome} divide sobrenome com os sócios pessoa física, então parece holding da própria família`,
-      holding: h,
-    };
-  }
-  if (quadroTrocado) {
-    return {
-      veredito: "não sei, mas o quadro mudou",
-      confianca: "baixa",
-      porque: `nenhum sócio atual estava na empresa na fundação (${anoFund}); o primeiro entrou em ${Math.min(...entradas)}`,
-      holding: null,
-    };
-  }
-  return {
-    veredito: "sem sinal de venda",
-    confianca: "alta",
-    porque: "só sócios pessoa física, e pelo menos um desde a fundação",
-    holding: null,
-  };
+  const r = classificaControle(empresa.socio ?? [], empresa.data_inicio_atividade);
+  // O relatório abaixo usa `holding` como objeto de sócio (com cpf_cnpj_mascarado), para contar em
+  // quantas outras empresas a mesma PJ aparece. A lib devolve só o nome, então reencontra aqui.
+  const holding = r.holding ? (empresa.socio ?? []).find((s) => s.nome === r.holding) ?? null : null;
+  return { ...r, holding };
 }
 
 /* Guarda de execucao: este arquivo tambem e IMPORTADO (por scripts/verifica-aquisicao.ts, que
@@ -152,7 +103,7 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
     const n = a.holding ? (alcance.get(a.holding.cpf_cnpj_mascarado)?.size ?? 1) - 1 : 0;
     const extra = n > 0 ? ` · essa sócia também aparece em ${n} outra(s) empresa(s) da base` : "";
     console.log(`${e.razao_social}${e.nome_fantasia ? ` (${e.nome_fantasia})` : ""}`);
-    console.log(`   ${fmtCnpj(e.cnpj)} · ${e.municipio}/${e.uf} · fundada ${ano(e.data_inicio_atividade)} · confiança ${a.confianca}`);
+    console.log(`   ${fmtCnpj(e.cnpj)} · ${e.municipio}/${e.uf} · fundada ${String(e.data_inicio_atividade ?? "").slice(0, 4)} · confiança ${a.confianca}`);
     console.log(`   ${a.porque}${extra}`);
   }
   console.log(`\nFonte: quadro societário do CNPJ (Receita Federal), snapshot de 09/11/2025.`);

@@ -87,10 +87,6 @@
   cota gratuita do BigQuery** (projeto em sandbox, 1 TiB por mês, renova dia 1). Ou esperar 01/10,
   ou habilitar billing. É o número que mais muda a decisão de ligar e o único dos quatro itens da
   versão de acesso que não está na tela.
-- [ ] **Levar o detector de aquisição para dentro da plataforma.** Hoje
-  `scripts/detecta-aquisicao.mjs` e `scripts/verifica-aquisicao.ts` são script e o resultado mora
-  no banco. Falta virar marca na linha da busca e painel na página da empresa.
-- [ ] **Lista de trabalho das 31.** É o que a proposta promete para o primeiro dia.
 - [ ] **A hierarquia de contato é hipótese, não medida.** Supomos domínio próprio > webmail >
   compartilhado. Em empresa familiar pode ser o contrário, porque o gmail do cadastro costuma ser
   do dono. Só o `desfecho` da `interacao` responde, e ele precisa de volume de uso.
@@ -269,6 +265,8 @@
 
 | Quando | O que | Como ficou |
 |---|---|---|
+| 23/09 | Detector de aquisição dentro da plataforma | Regra movida para `src/lib/aquisicao.ts`, usada pela tela e pelo script (conferido em 1.031 empresas, zero divergência). Chip na busca, no painel e no pipeline; bloco "Quem controla" na página, juntando cadastro e web. **O CPF mascarado é lido no servidor e apagado antes da resposta**: a tela recebe o veredito, nunca o CPF |
+| 23/09 | Lista de trabalho das 31 | O pipeline passou a ser a lista: cada linha mostra de quem é o contato, se o número vale discar, se há oposição e quem controla a empresa. **Falta só a contagem nacional**, que tem item próprio e depende da cota do BigQuery |
 | 23/09 | Qualificação do sócio por extenso | A base guardava o código (`22`, `49`) e ele chegava cru até o memo. Dicionário da Receita em `src/lib/qualificacao.ts`, com quem tem gestão em destaque e marca de "sucessão em curso" para herdeiro menor ou incapaz. **222 empresas da base têm esse sinal, 102 no death care.** Só exibido: peso no score depende do protocolo de calibração |
 | 23/09 | Caminho para oposição do titular (LGPD art. 18 §2º) | **O banco recusa guardar o contato**: trigger na `empresa` apaga telefone, e-mail e site de quem se opôs e **impede o backfill da Receita de devolver**, que era o furo. Chave por CNPJ, o pedido fica registrado e o contato não é retido em outro lugar. Só a Boreal reverte. Testado no banco com empresa sintética |
 | 23/09 | `recusou` sem consequência | Registrar "disseram não" marca a oportunidade como não receptiva, **só se estava pendente**: decisão humana explícita vence a automática. Não arquiva, porque recusa pode ser "agora não" |

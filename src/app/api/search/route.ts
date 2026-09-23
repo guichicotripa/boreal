@@ -12,6 +12,7 @@ import { SETORES } from "@/lib/setores";
 import { permissoesAtuais, setorPermitido, mandatoPermitido, ufPermitida } from "@/lib/permissoes";
 import { registrarBusca } from "@/lib/evento";
 import { comFiltroPadrao, NATUREZAS_NAO_VENDAVEIS } from "@/lib/filtro-padrao";
+import { anexaControle } from "@/lib/aquisicao";
 import type { Empresa, Socio, SearchResponse } from "@/lib/types";
 import demoCache from "@/lib/demo-cache.json";
 import setoresData from "@/lib/setores.json";
@@ -284,7 +285,7 @@ export async function POST(req: NextRequest) {
       `id, cnpj, razao_social, nome_fantasia, cnae_principal, cnae_principal_desc,
        cnaes_secundarios, natureza_juridica, municipio, uf,
        data_inicio_atividade, capital_social, porte, opcao_simples, data_exclusao_simples, telefone, email, site, email_procedencia, email_empresas_br, telefone_empresas_br, telefone_suspeito, nao_contatar,
-       ${socioEmbed}(id, nome, qualificacao, faixa_etaria, data_entrada_sociedade),
+       ${socioEmbed}(id, nome, qualificacao, faixa_etaria, data_entrada_sociedade, cpf_cnpj_mascarado),
        empresa_descartada!left(empresa_id)`
     )
     .eq("empresa_descartada.escopo_id", await escopoAtual())
@@ -379,18 +380,24 @@ export async function POST(req: NextRequest) {
     const ids = empresas.map((e) => e.id);
     const { data: todos } = await supabase
       .from("socio")
-      .select("id, empresa_id, nome, qualificacao, faixa_etaria, data_entrada_sociedade")
+      .select("id, empresa_id, nome, qualificacao, faixa_etaria, data_entrada_sociedade, cpf_cnpj_mascarado")
       .in("empresa_id", ids);
     if (todos) {
       const porEmpresa = new Map<string, Socio[]>();
       for (const s of todos as (Socio & { empresa_id: string })[]) {
         const arr = porEmpresa.get(s.empresa_id) ?? [];
-        arr.push({ id: s.id, nome: s.nome, qualificacao: s.qualificacao, faixa_etaria: s.faixa_etaria, data_entrada_sociedade: s.data_entrada_sociedade });
+        arr.push({ id: s.id, nome: s.nome, qualificacao: s.qualificacao, faixa_etaria: s.faixa_etaria, data_entrada_sociedade: s.data_entrada_sociedade, cpf_cnpj_mascarado: s.cpf_cnpj_mascarado });
         porEmpresa.set(s.empresa_id, arr);
       }
       for (const e of empresas) e.socio = porEmpresa.get(e.id) ?? e.socio;
     }
   }
+
+  // ── 2c. Quem controla, e o CPF sai daqui ─────────────────────────────────────
+  // Com o quadro COMPLETO já montado (2b), calcula o sinal de controle e apaga o CPF mascarado.
+  // Tem que vir depois do 2b: com o inner join do filtro de idade o quadro chega parcial, e uma
+  // holding compradora pode não estar entre os sócios projetados.
+  for (const e of empresas) anexaControle(e);
 
   // ── 3. Score determinístico por empresa, ordenar desc ────────────────────────
   let scored = empresas

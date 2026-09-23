@@ -9,6 +9,7 @@ import {
   COL, atrasou, diasDesde, formatTelefone, mudancaDe, socioMain, ultimoToqueEm,
 } from "./helpers";
 import { ContatoChips } from "@/components/ProcedenciaChip";
+import { ControleChip } from "@/components/ControleChip";
 import { EstagioChip, ResultadoChip } from "./EstagioChips";
 import { ProvenienciaBlock } from "./ProvenienciaBlock";
 import { LogAtividade } from "./LogAtividade";
@@ -186,6 +187,7 @@ export function Row({
             >
               {o.empresa.razao_social}
             </Link>
+            <ControleChip controle={o.empresa.controle} />
             {o.selado_em && (
               <span
                 className={`shrink-0 rounded border px-1 text-[10px] font-medium ${

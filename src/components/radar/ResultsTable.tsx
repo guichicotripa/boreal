@@ -8,6 +8,7 @@ import { regimeTributario } from "@/lib/filtro-padrao";
 import { storeEmpresa, storeOrigin, type ScoreConhecido } from "@/lib/empresa-store";
 import { SalvarButton } from "./SalvarButton";
 import { ArrowUpRight, EyeOff } from "lucide-react";
+import { ControleChip } from "@/components/ControleChip";
 
 /* Tabela densa de resultados — a superfície padrão de triagem do Radar.
    Padrão Attio: linha ~40px, header sticky, hover com quick actions, clique
@@ -100,9 +101,13 @@ export function ResultsTable({
                   >
                     {e.razao_social}
                   </button>
-                  <p className="truncate text-[11px] text-ink-muted">
-                    {e.municipio}/{e.uf}
-                    {e.cnae_principal_desc ? ` · ${e.cnae_principal_desc}` : ""}
+                  <p className="flex min-w-0 items-center gap-1.5 text-[11px] text-ink-muted">
+                    <span className="truncate">
+                      {e.municipio}/{e.uf}
+                      {e.cnae_principal_desc ? ` · ${e.cnae_principal_desc}` : ""}
+                    </span>
+                    {/* Na busca é onde o aviso economiza mais: antes de salvar, não depois. */}
+                    <ControleChip controle={e.controle} />
                   </p>
                 </td>
                 {/* Score — número mono + mini-barra + delta de investigação */}

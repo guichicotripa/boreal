@@ -35,6 +35,9 @@ export type Socio = {
   qualificacao: string | null;
   faixa_etaria: string | null;
   data_entrada_sociedade: string | null;
+  /* SÓ NO SERVIDOR. Existe no tipo porque as rotas o leem para reconhecer sócio pessoa jurídica,
+     mas `anexaControle()` o apaga antes da resposta. Se ele aparecer num componente, é vazamento. */
+  cpf_cnpj_mascarado?: string | null;
 };
 
 export type CnaeSecundario = { codigo: string; descricao: string | null };
@@ -74,6 +77,10 @@ export type Empresa = {
      telefone, e-mail e site, e a tela precisa DIZER isso, senão o vazio parece falta de dado e
      o originador vai procurar o telefone em outro lugar. */
   nao_contatar?: boolean | null;
+  /* Quem controla a empresa, lido do quadro societário (src/lib/aquisicao.ts), e a verificação na
+     web quando ela já rodou. Calculados no servidor: a tela recebe o veredito, nunca o CPF. */
+  controle?: import("./aquisicao").SinalControle | null;
+  verificacao?: import("./aquisicao").VerificacaoWeb | null;
   socio?: Socio[];
   // Adicionados em runtime pelo /api/search (não vêm do banco):
   score?: import("./scoring").ScoreResult;
@@ -218,6 +225,7 @@ export type Oportunidade = {
     /* Qualidade do contato: a linha do pipeline é uma das superfícies de onde alguém disca, então
        ela precisa avisar antes, e não depois. */
     | "email_procedencia" | "telefone_empresas_br" | "telefone_suspeito" | "nao_contatar"
+    | "data_inicio_atividade" | "controle"
   > & {
     /** Sócios com nome e faixa etária — para identificar o fundador na row. */
     socio?: Pick<Socio, "nome" | "faixa_etaria">[];
