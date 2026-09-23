@@ -16,6 +16,7 @@ import {
 } from "@/lib/format";
 import { ProcedenciaChip, CompartilhamentoChip, TelefoneSuspeitoChip, NaoContatarChip } from "@/components/ProcedenciaChip";
 import { RegistrarOposicao } from "@/components/empresa/RegistrarOposicao";
+import { descreveQualificacao, temGestao, qualificacaoSucessoria } from "@/lib/qualificacao";
 import { ResearchDisplay } from "@/components/empresa/ResearchDisplay";
 import { MemoDisplay } from "@/components/empresa/MemoDisplay";
 import { Timeline } from "@/components/empresa/Timeline";
@@ -453,11 +454,30 @@ export default function EmpresaPage() {
               <ul className="space-y-2.5">
                 {socios.map((s, i) => {
                   const ent = s.data_entrada_sociedade?.slice(0, 4);
+                  const qual = descreveQualificacao(s.qualificacao);
                   return (
                     <li key={s.id ?? `${s.nome}-${i}`} className="flex items-center justify-between gap-2">
                       <div className="min-w-0">
                         <p className="truncate text-[12.5px] text-ink">{s.nome}</p>
-                        {ent && <p className="text-[10.5px] text-ink-muted">sócio desde {ent}</p>}
+                        {/* A qualificação vem antes da data porque responde a pergunta de quem vai
+                            ligar: esta pessoa decide? Quem administra aparece em tom mais forte. */}
+                        {(qual || ent) && (
+                          <p className="text-[10.5px] text-ink-muted">
+                            {qual && (
+                              <span className={temGestao(s.qualificacao) ? "text-ink-soft" : undefined}>{qual}</span>
+                            )}
+                            {qual && ent && " · "}
+                            {ent && `desde ${ent}`}
+                          </p>
+                        )}
+                        {qualificacaoSucessoria(s.qualificacao) && (
+                          <span
+                            title="Qualificação que só existe quando a sucessão já está em curso: espólio no quadro, ou herdeiro menor ou incapaz representado por alguém."
+                            className="mt-0.5 inline-flex cursor-help rounded bg-risk-mid/15 px-1.5 py-0.5 text-[10px] text-risk-mid"
+                          >
+                            sucessão em curso
+                          </span>
+                        )}
                       </div>
                       {s.faixa_etaria && FAIXA_LABEL[s.faixa_etaria] && (
                         <span className={`shrink-0 rounded px-1.5 py-0.5 text-[10.5px] tabular-nums ${FAIXA_COLOR[s.faixa_etaria] ?? "bg-fill text-ink-soft"}`}>

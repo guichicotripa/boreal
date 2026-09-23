@@ -87,8 +87,6 @@
   cota gratuita do BigQuery** (projeto em sandbox, 1 TiB por mês, renova dia 1). Ou esperar 01/10,
   ou habilitar billing. É o número que mais muda a decisão de ligar e o único dos quatro itens da
   versão de acesso que não está na tela.
-- [ ] **Qualificação do sócio por extenso na tela.** O dado está preenchido em 100% dos 126 sócios
-  das 31 empresas (33 sócio-administrador, 23 administrador). Só não aparece.
 - [ ] **Levar o detector de aquisição para dentro da plataforma.** Hoje
   `scripts/detecta-aquisicao.mjs` e `scripts/verifica-aquisicao.ts` são script e o resultado mora
   no banco. Falta virar marca na linha da busca e painel na página da empresa.
@@ -271,6 +269,7 @@
 
 | Quando | O que | Como ficou |
 |---|---|---|
+| 23/09 | Qualificação do sócio por extenso | A base guardava o código (`22`, `49`) e ele chegava cru até o memo. Dicionário da Receita em `src/lib/qualificacao.ts`, com quem tem gestão em destaque e marca de "sucessão em curso" para herdeiro menor ou incapaz. **222 empresas da base têm esse sinal, 102 no death care.** Só exibido: peso no score depende do protocolo de calibração |
 | 23/09 | Caminho para oposição do titular (LGPD art. 18 §2º) | **O banco recusa guardar o contato**: trigger na `empresa` apaga telefone, e-mail e site de quem se opôs e **impede o backfill da Receita de devolver**, que era o furo. Chave por CNPJ, o pedido fica registrado e o contato não é retido em outro lugar. Só a Boreal reverte. Testado no banco com empresa sintética |
 | 23/09 | `recusou` sem consequência | Registrar "disseram não" marca a oportunidade como não receptiva, **só se estava pendente**: decisão humana explícita vence a automática. Não arquiva, porque recusa pode ser "agora não" |
 | 23/09 | Filtrar organização sem fins lucrativos | **O corte padrão SELECIONAVA associação**, porque ela é sempre DEMAIS e nunca optante: passava em 79% a 100% dos casos contra 2% a 5% de empresa comum. Virou parte do corte, rotulado "com dono". Saem 74 do death care (585 para 511) e o hospital da faculdade das 31. Cooperativa fica, porque funde |

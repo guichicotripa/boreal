@@ -7,6 +7,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import type { Empresa, DossierAnalise, RedFlag, ResearchResult } from "./types";
 import { MODELO_ANALISE } from "./modelos.ts";
+import { descreveQualificacao } from "./qualificacao";
 
 let _client: Anthropic | null = null;
 function getClient() {
@@ -54,7 +55,9 @@ function dadosParaPrompt(e: Empresa) {
   const socios = (e.socio ?? []).map((s) => ({
     nome: s.nome,
     faixa_etaria: s.faixa_etaria ? FAIXA_LABEL[s.faixa_etaria] ?? s.faixa_etaria : null,
-    qualificacao: s.qualificacao,
+    // O texto da Receita, não o código: o modelo recebia "22" e não tinha como saber que é
+    // sócio sem gestão. Código sem tradução cai para o valor cru, para não sumir com o dado.
+    qualificacao: descreveQualificacao(s.qualificacao) ?? s.qualificacao,
     entrou_em: s.data_entrada_sociedade?.slice(0, 4) ?? null,
   }));
   return {

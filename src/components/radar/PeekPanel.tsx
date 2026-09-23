@@ -8,6 +8,7 @@ import { TIER_STYLES, FAIXA_LABEL, formatCnpj, formatTelefone, formatCapitalComp
 import { storeEmpresa, storeOrigin, type ScoreConhecido } from "@/lib/empresa-store";
 import { regimeTributario } from "@/lib/filtro-padrao";
 import { ContatoChips, NaoContatarChip } from "@/components/ProcedenciaChip";
+import { descreveQualificacao, temGestao } from "@/lib/qualificacao";
 import { SalvarButton } from "./SalvarButton";
 import { X, ArrowUpRight, Phone, Mail, EyeOff } from "lucide-react";
 
@@ -199,7 +200,14 @@ export function PeekPanel({
             <ul className="space-y-1.5">
               {socios.slice(0, 6).map((s) => (
                 <li key={s.id} className="flex items-baseline justify-between gap-2">
-                  <span className="min-w-0 truncate text-[12.5px] text-ink-soft">{s.nome}</span>
+                  <span className="min-w-0 truncate text-[12.5px] text-ink-soft">
+                    {s.nome}
+                    {descreveQualificacao(s.qualificacao) && (
+                      <span className={`ml-1.5 text-[10.5px] ${temGestao(s.qualificacao) ? "text-ink-soft" : "text-ink-muted"}`}>
+                        {descreveQualificacao(s.qualificacao)}
+                      </span>
+                    )}
+                  </span>
                   <span className="shrink-0 text-[11px] text-ink-muted">
                     {s.faixa_etaria && FAIXA_LABEL[s.faixa_etaria] ? FAIXA_LABEL[s.faixa_etaria] : "—"}
                   </span>
