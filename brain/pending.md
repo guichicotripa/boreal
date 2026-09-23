@@ -200,10 +200,6 @@
 
 ### Qualidade da base e dos mandatos
 
-- [ ] **Separar 6511101 de 6511102 no mandato de death care.** Seguros de vida (Zurich, Icatu,
-  Sabemi, BMG) ocupam 4 das 10 primeiras linhas. Prazo real: **antes** de o dono de death care
-  entrar na plataforma. Fernanda é a especialista de pet e nunca julgou esse mandato, então o
-  defeito ainda não foi visto por ninguém da Setter. Primeira impressão de mandato não repete.
 - [ ] **Percentil de capital por mandato.** Os três mandatos do piloto caem no percentil geral
   (p95 = R$ 600 mil) porque `capital-percentis.json` só tem agro, saúde, educação e metalmecânica.
   O eixo satura abaixo da faixa em que a decisão acontece.
@@ -222,10 +218,6 @@
 
 > Os de 30/07 foram herdados sem reverificação. Confirmar se ainda valem antes de agir.
 
-- [ ] **Corrigir `score_no_save`** (`POST /api/oportunidade`): faltam `capital_social` e
-  `cnae_principal` no select, o eixo de escala vale sempre 0 e o teto vira 66 em vez de 100.
-  Verificado nas 5 oportunidades. **Bug de uma linha que corrompe o rótulo positivo do loop**, e
-  está aberto desde 24/08.
 - [ ] **Instrumentar o peek panel.** Sem isso não dá para saber se o score foi lido antes do
   descarte.
 - [ ] **`/api/research` não tem guarda de teto.** O lote (`precompute-research.ts`) ganhou
@@ -288,6 +280,8 @@
 
 | Quando | O que | Como ficou |
 |---|---|---|
+| 23/09 | Separar 6511101 de 6511102 no death care | **92 seguradoras de vida saíram das 676 empresas da tela** (13,6%). O 6511101 só entra com nome funerário, o que preserva a única funerária real ali, a PAX CAROLINA. Contrato de RLS com cobertura idêntica |
+| 23/09 | Corrigir `score_no_save` | Select completo no endpoint. **24 das 31 estavam gravadas em média 28,5 pontos abaixo** do que a tela mostrou, e foram recalculadas. Os 38 eventos `salvou` não foram reescritos, ver `decisions.md` de 23/09 |
 | 21/09 | Ligar CNPJ ao site da empresa de forma sistemática | Derivado do domínio do e-mail, com exigência de o domínio casar com o nome. **5.320 sites**, de zero |
 | 21/09 | Proposta escrita de B e C, para a call | Entregue em PDF, com valores estimados e a base do 0,5% em aberto |
 | 21/09 | Escopo do grafo (opção C) | Escrito: QSA + mailing + exportação de LinkedIn, em três fases com decisão entre elas |

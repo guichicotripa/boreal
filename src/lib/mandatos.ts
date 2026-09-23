@@ -84,13 +84,26 @@ export const MANDATOS: Mandato[] = [
   {
     id: "death-care",
     nome: "Death care",
-    descricao: "Funerárias, cemitérios, cremação e planos de auxílio funeral. CNAE limpo.",
-    empresas: 11712,
-    /* 676 das 11.712 (eram 777 antes do corte do Simples). Mandato ainda sem dono na Setter; o
-       padrão vale igual, e é aqui que ele mais poupa tela: o universo é 7x o dos dois de pet. */
+    descricao: "Funerárias, cemitérios, cremação e planos de auxílio funeral.",
+    empresas: 11590,
+    /* 585 das 11.590. Mandato ainda sem dono na Setter; o padrão vale igual, e é aqui que ele mais
+       poupa tela: o universo é 7x o dos dois de pet. */
     filtroPadrao: { portes: ["DEMAIS"], maxAnoFundacao: 2019, excluirSimples: true },
-    empresasFiltradas: 676,
-    recortes: [{ cnaes: ["9603", "65111"], nomes: [] }],
+    empresasFiltradas: 585,
+    recortes: [
+      { cnaes: ["9603", "6511102"], nomes: [] },
+      /* 6511101 É SEGURO DE VIDA, NÃO FUNERÁRIA. Até 23/09/2026 o recorte era o prefixo `65111`,
+         que pega 6511101 e 6511102 juntos, e isso punha 92 seguradoras dentro das 676 empresas
+         que a Setter via no mandato: 13,6% da tela, concentradas no topo porque são grandes
+         (EDEL, SUL AMERICA VIDA, SICOOB SEGURADORA, UNIMED SEGURADORA, NATIONALE NEDERLANDEN).
+         Medido: das 123 empresas com 6511101, só UMA é funerária, a PAX CAROLINA, registrada no
+         CNAE errado. Por isso o 6511101 não sai inteiro: entra só com nome funerário. "PAX" é a
+         marca clássica de plano funerário e é o que salva a PAX CAROLINA. */
+      {
+        cnaes: ["6511101"],
+        nomes: ["PAX", "FUNER", "FUNERÁ", "LUTO", "CEMIT", "SAUDADE", "MEMORIAL", "CREMA", "VELORIO", "VELÓRIO", "EXEQU"],
+      },
+    ],
   },
 ];
 

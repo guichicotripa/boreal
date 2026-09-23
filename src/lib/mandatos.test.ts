@@ -17,9 +17,27 @@ test("todo mandato tem id único e ao menos um recorte", () => {
 
 test("recorte sem nomes filtra só por CNAE", () => {
   const dc = mandatoPorId("death-care")!;
-  const f = filtroOr(dc);
-  assert.match(f, /cnae_principal\.like\.9603\*/);
-  assert.ok(!f.includes("razao_social"), "death care não deve filtrar por nome");
+  const semNome = dc.recortes.find((r) => r.cnaes.includes("9603"))!;
+  assert.equal(semNome.nomes.length, 0, "funerária (9603) entra pelo CNAE, sem filtro de nome");
+  assert.match(filtroOr(dc), /cnae_principal\.like\.9603\*/);
+});
+
+/* Seguradora de vida (6511101) dentro do death care foi o defeito de 24/08 a 23/09/2026: 92
+   seguradoras em 676 empresas na tela. O prefixo `65111` pegava os dois CNAEs. Estas duas
+   asserções impedem a volta, que seria fácil: bastaria alguém "simplificar" o recorte. */
+test("death care nunca usa o prefixo 65111, que junta seguro de vida com auxílio funeral", () => {
+  const dc = mandatoPorId("death-care")!;
+  const todos = dc.recortes.flatMap((r) => r.cnaes);
+  assert.ok(!todos.includes("65111"), "65111 como prefixo traz seguradora de vida");
+  assert.ok(todos.includes("6511102"), "auxílio funeral entra");
+});
+
+test("seguro de vida (6511101) só entra no death care com nome funerário", () => {
+  const dc = mandatoPorId("death-care")!;
+  const vida = dc.recortes.find((r) => r.cnaes.includes("6511101"));
+  assert.ok(vida, "o recorte existe, para não perder a PAX CAROLINA");
+  assert.ok(vida!.nomes.length > 0, "6511101 sem filtro de nome traz as 91 seguradoras de volta");
+  assert.ok(vida!.nomes.includes("PAX"));
 });
 
 test("recorte com nomes gera and(cnae, or(nomes)) e casa razão social e fantasia", () => {
