@@ -80,9 +80,16 @@ export async function POST(req: NextRequest) {
   // Snapshot do score no momento do save = o "previsto" do loop de outcome. Computado no servidor
   // a partir dos sócios (não confia no client). Idempotente: só grava na primeira vez (não sobrescreve
   // o previsto histórico se a empresa for re-salva).
+  /* O select precisa trazer TODO campo que `calcScore` lê. Faltavam `capital_social`,
+     `cnae_principal` e `razao_social`: sem eles o eixo de escala valia sempre 0, o teto caía de 100
+     para 66, e o score gravado divergia do que o originador tinha visto na busca (71 na tela, 37
+     no banco). Como este número é o rótulo positivo do loop, o erro envenenava o treino, e desde
+     24/08. Quem mexer em `scoring.ts` e passar a ler campo novo precisa acrescentá-lo aqui. */
   const { data: emp } = await supabase
     .from("empresa")
-    .select("id, data_inicio_atividade, porte, socio(faixa_etaria, data_entrada_sociedade)")
+    .select(
+      "id, razao_social, cnae_principal, capital_social, data_inicio_atividade, porte, socio(faixa_etaria, data_entrada_sociedade)"
+    )
     .eq("id", empresaId)
     .single();
   const scoreNoSave = emp ? calcScore(emp as unknown as Empresa).score : null;

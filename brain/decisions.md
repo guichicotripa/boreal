@@ -2268,3 +2268,41 @@ justificar o custo". O piloto rodou sem esse dono, no tempo ocioso de uma pessoa
 - O prazo de "4 meses" foi dado sem escopo.
 - A minuta não tem cláusula de propriedade intelectual, e C é exatamente o caso em que ela importa:
   separar código e método (Boreal) da rede de relacionamento (Setter).
+
+---
+
+## [2026-09-23] `score_no_save` estava errado em 24 de 31 oportunidades, e o log de eventos não é reescrito
+
+**Contexto:** o `POST /api/oportunidade` calculava o score com um select que não trazia
+`capital_social`, `cnae_principal` e `razao_social`, três campos que o `calcScore` lê. O eixo de
+escala valia sempre 0 e o teto caía de 100 para 66. O bug estava registrado desde 24/08 como "uma
+linha" e ficou um mês aberto.
+
+**Medido ao corrigir:** das 31 oportunidades, **24 tinham o valor divergente, em média 28,5 pontos
+abaixo** do que o originador viu na tela. Exemplos: GENEAL e AMIGOO PET gravadas com 57 quando a
+busca mostrou 91; INTERNATIONAL PET com 19 quando era 53. Nenhuma das 7 restantes tinha capital ou
+setor que movesse o eixo.
+
+**Decisão, em três partes:**
+
+1. **O endpoint passa a trazer todo campo que o `calcScore` lê**, com comentário dizendo que quem
+   fizer o scoring ler campo novo precisa acrescentá-lo ali. É a mesma armadilha de sempre: o select
+   e a função que consome o select moram em arquivos diferentes e ninguém percebe quando divergem.
+
+2. **As 24 linhas de `oportunidade.score_no_save` foram recalculadas**
+   (`scripts/repara-score-no-save.mjs`). Reescrever rótulo histórico é correto aqui porque o valor
+   gravado nunca foi exibido para ninguém, e os pesos do scoring não mudaram desde os saves, então o
+   `calcScore` de hoje devolve o que a busca mostrou naquele dia. **Se os pesos mudarem, o script
+   deixa de ser válido.**
+
+3. **O log de eventos NÃO foi reescrito.** Os 38 eventos `salvou` entre 04/08 e 08/09 carregam o
+   mesmo erro em `payload.score_no_momento`. O `evento` é append-only por desenho, e é isso que o
+   torna confiável como rótulo de treino: se ele puder ser corrigido a posteriori, ninguém mais sabe
+   o que era dado e o que era correção.
+
+**Consequência para quem treina:** para eventos `salvou` anteriores a **23/09/2026**,
+`payload.score_no_momento` está errado. Usar `oportunidade.score_no_save`, já corrigido, ou o score
+da mesma empresa no `payload.top` do evento de busca imediatamente anterior, que é o que estava na
+tela.
+
+**Status:** corrigido no código e no dado. Aviso gravado aqui para o calibrador.
