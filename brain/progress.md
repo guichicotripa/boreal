@@ -2087,3 +2087,8 @@ que a oposição apaga, então nunca apareceria.
 
 **Não verificado:** o fluxo logado na tela, porque o acesso é por magic link. O que garante a tela
 é typecheck, build e 172 testes contra o banco, zero pulado.
+
+**Deploy (23/09, fim da sessão):** 28 commits publicados na `main` (`90019e6..23cc11a`), autorizado
+pelo Guilherme. Vercel de produção `dpl_5oUZaoax4RDopSTWxGdXCxpkrW86` em `READY`. Conferido de fora:
+`/` redireciona para o login (307), `/acesso` abre (200) e `/api/search` sem sessão devolve 401, não
+500. A partir daqui, save em produção grava o score certo.
