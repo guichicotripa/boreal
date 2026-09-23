@@ -15,6 +15,7 @@ import { test, skip } from "node:test";
 import assert from "node:assert/strict";
 import { createClient } from "@supabase/supabase-js";
 import { MANDATOS, filtroOr } from "./mandatos.ts";
+import { NATUREZAS_NAO_VENDAVEIS } from "./filtro-padrao.ts";
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -48,6 +49,11 @@ if (!url || !key) {
       q = q.lte("data_inicio_atividade", `${m.filtroPadrao.maxAnoFundacao}-12-31`);
       // Espelha a rota: `not.is.true` e não `eq.false`, pra NULL (não verificado) continuar passando.
       if (m.filtroPadrao.excluirSimples) q = q.not("opcao_simples", "is", true);
+      // Espelha a rota também aqui, inclusive o NULL passando e o segundo `.or()` somando em AND.
+      if (m.filtroPadrao.excluirSemFinsLucrativos) {
+        const lista = NATUREZAS_NAO_VENDAVEIS.map((n) => `"${n}"`).join(",");
+        q = q.or(`natureza_juridica.is.null,natureza_juridica.not.in.(${lista})`);
+      }
       const filtrado = await q;
       assert.equal(filtrado.error, null, `leitura falhou: ${filtrado.error?.message}`);
 

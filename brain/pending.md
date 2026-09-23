@@ -100,9 +100,6 @@
   reconfere. Dois casos concretos na lista do cliente: **VETGUARD** consta suspensa na Receita e
   **LABORATÓRIO SÃO FRANCISCO (Blumenau)** consta suspenso nos credenciados do MAPA, e as duas
   aparecem como ativas. Precisa de rotina, não de correção pontual.
-- [ ] **Filtrar organização sem fins lucrativos do universo.** HOSPITAL VETERINÁRIO SÃO FRANCISCO
-  DE ASSIS (RS) é ligado à faculdade IDEAU e cadastrado como OSC no MapaOSC do IPEA. Entrou nas 31
-  como alvo de M&A e não é. Checar se a natureza jurídica da Receita já separa isso.
 - [ ] **Ingerir os estabelecimentos, não só as matrizes.** A base tem 65.466 matrizes e 54 filiais,
   e **zero raízes com mais de um estabelecimento**. A SAFRA tem 9 filiais e enxergamos 1. Cada
   estabelecimento tem contato próprio na Receita: multiplica as portas por empresa.
@@ -280,6 +277,7 @@
 
 | Quando | O que | Como ficou |
 |---|---|---|
+| 23/09 | Filtrar organização sem fins lucrativos | **O corte padrão SELECIONAVA associação**, porque ela é sempre DEMAIS e nunca optante: passava em 79% a 100% dos casos contra 2% a 5% de empresa comum. Virou parte do corte, rotulado "com dono". Saem 74 do death care (585 para 511) e o hospital da faculdade das 31. Cooperativa fica, porque funde |
 | 23/09 | Separar 6511101 de 6511102 no death care | **92 seguradoras de vida saíram das 676 empresas da tela** (13,6%). O 6511101 só entra com nome funerário, o que preserva a única funerária real ali, a PAX CAROLINA. Contrato de RLS com cobertura idêntica |
 | 23/09 | Corrigir `score_no_save` | Select completo no endpoint. **24 das 31 estavam gravadas em média 28,5 pontos abaixo** do que a tela mostrou, e foram recalculadas. Os 38 eventos `salvou` não foram reescritos, ver `decisions.md` de 23/09 |
 | 21/09 | Ligar CNPJ ao site da empresa de forma sistemática | Derivado do domínio do e-mail, com exigência de o domínio casar com o nome. **5.320 sites**, de zero |

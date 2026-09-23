@@ -41,7 +41,35 @@ export type FiltroPadrao = {
    * pelo Simples diz que ela declara estar abaixo. Quando os dois discordam, o Simples vence,
    * porque é opção ativa e anual, e o porte é herdado de cadastro que ninguém atualiza. */
   excluirSimples?: boolean;
+  /* Tira associação, fundação, organização social e ente público: quem não tem quota nem ação
+   * para vender.
+   *
+   * O CASO QUE REVELOU: o HOSPITAL VETERINÁRIO SÃO FRANCISCO DE ASSIS (RS), ligado à faculdade
+   * IDEAU, entrou nas 31 salvas da Setter como alvo de M&A. Natureza jurídica: Associação Privada.
+   *
+   * O QUE O CASO ESCONDIA, medido em 23/09/2026: não é um escape, é o corte selecionando. Associação
+   * não pode ser ME nem EPP (porte é categoria de sociedade e empresário) e não pode optar pelo
+   * Simples, então TODA associação cai em `porte = DEMAIS` e fora do Simples, que é exatamente o
+   * que o corte pede. Resultado: associação passa no corte em 79% a 100% dos casos, empresa comum
+   * em 2% a 5%. O filtro desenhado para achar empresa grande achava entidade sem dono 20x mais.
+   * No death care eram 74 das 585 empresas da tela (12,6%): cemitério de associação e entidade
+   * religiosa.
+   *
+   * COOPERATIVA FICA DE FORA DESTA LISTA DE PROPÓSITO. Também é sem fins lucrativos pela Lei
+   * 5.764, mas funde e é incorporada (Unimed é o exemplo que importa em saúde). Não é o mesmo caso. */
+  excluirSemFinsLucrativos?: boolean;
 };
+
+/* Naturezas jurídicas sem quota nem ação a transferir. Os valores são a DESCRIÇÃO que a base
+   guarda, não o código, porque é o que `empresa.natureza_juridica` tem. */
+export const NATUREZAS_NAO_VENDAVEIS = [
+  "Associação Privada",
+  "Fundação Privada",
+  "Organização Social (OS)",
+  "Autarquia Municipal",
+  "Fundo Público da Administração Direta Municipal",
+  "Consórcio Público de Direito Público (Associação Pública)",
+] as const;
 
 /**
  * Devolve os filtros com o padrão do mandato aplicado.
@@ -64,6 +92,7 @@ export function comFiltroPadrao(
     portes: padrao.portes,
     maxAnoFundacao: filtros.maxAnoFundacao ?? padrao.maxAnoFundacao,
     excluirSimples: padrao.excluirSimples ?? false,
+    excluirSemFinsLucrativos: padrao.excluirSemFinsLucrativos ?? false,
   };
 }
 
@@ -87,6 +116,8 @@ export function descreveFiltroPadrao(padrao: FiltroPadrao): string {
   const partes = [`porte ${porte ?? padrao.portes.join("/")}`, `fundada até ${padrao.maxAnoFundacao}`];
   // "fora do Simples" e não "opcao_simples = false": o rótulo tem que dizer o efeito pra quem opera.
   if (padrao.excluirSimples) partes.push("fora do Simples");
+  // "com dono" e não "sem associações": diz o critério pelo que ele garante, não pelo que tira.
+  if (padrao.excluirSemFinsLucrativos) partes.push("com dono");
   return partes.join(" · ");
 }
 

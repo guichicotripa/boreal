@@ -2,7 +2,7 @@
    Errar aqui não deixa a tela feia: entrega uma lista que parece completa e não é. */
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { comFiltroPadrao, filtroPadraoAtivo, descreveFiltroPadrao, regimeTributario } from "./filtro-padrao.ts";
+import { comFiltroPadrao, filtroPadraoAtivo, descreveFiltroPadrao, regimeTributario, NATUREZAS_NAO_VENDAVEIS } from "./filtro-padrao.ts";
 import { MANDATOS } from "./mandatos.ts";
 import type { SearchFilters } from "./types.ts";
 
@@ -167,4 +167,47 @@ test("nunca optou é neutro, não positivo", () => {
 test("não verificado não vira rótulo nenhum", () => {
   assert.equal(regimeTributario({ opcao_simples: null, data_exclusao_simples: null }), null);
   assert.equal(regimeTributario({}), null);
+});
+
+/* ── Entidade sem dono ─────────────────────────────────────────────────────────
+   Associação é sempre porte DEMAIS e nunca optante pelo Simples, então o corte de porte e Simples
+   a SELECIONA em vez de tirá-la: passa em 79% a 100% dos casos contra 2% a 5% de uma empresa comum.
+   Sem este filtro, o corte que acha empresa grande acha entidade sem quota para vender. */
+
+test("o padrão com a exclusão liga o filtro de entidade sem dono", () => {
+  const r = comFiltroPadrao(VAZIO, { ...PADRAO, excluirSemFinsLucrativos: true });
+  assert.equal(r.excluirSemFinsLucrativos, true);
+});
+
+test("padrão antigo, sem o campo, não liga a exclusão por conta própria", () => {
+  // Mandato novo nasce com o comportamento antigo até alguém declarar o padrão, como no Simples.
+  const r = comFiltroPadrao(VAZIO, PADRAO);
+  assert.equal(r.excluirSemFinsLucrativos, false);
+});
+
+test("desligar o padrão desliga a exclusão junto", () => {
+  const r = comFiltroPadrao(VAZIO, { ...PADRAO, excluirSemFinsLucrativos: true }, true);
+  assert.equal(r.excluirSemFinsLucrativos ?? false, false);
+});
+
+test("o rótulo diz o que garante, não o que tira", () => {
+  const d = descreveFiltroPadrao({ ...PADRAO, excluirSimples: true, excluirSemFinsLucrativos: true });
+  assert.match(d, /com dono/);
+  assert.ok(!/associa/i.test(d), "rótulo não fala em associação");
+});
+
+test("todos os mandatos do piloto tiram entidade sem dono", () => {
+  for (const m of MANDATOS) {
+    assert.equal(m.filtroPadrao?.excluirSemFinsLucrativos, true, `${m.id} sem a exclusão`);
+  }
+});
+
+test("associação e fundação estão na lista, cooperativa não", () => {
+  // Cooperativa é sem fins lucrativos pela Lei 5.764 mas funde e é incorporada. Não é o mesmo caso.
+  const l: readonly string[] = NATUREZAS_NAO_VENDAVEIS;
+  assert.ok(l.includes("Associação Privada"));
+  assert.ok(l.includes("Fundação Privada"));
+  assert.ok(!l.some((n) => /cooperativa/i.test(n)));
+  // A lista é interpolada numa expressão do PostgREST entre aspas: aspas dentro quebrariam tudo.
+  assert.ok(!l.some((n) => n.includes('"')));
 });

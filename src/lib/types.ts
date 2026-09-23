@@ -15,6 +15,10 @@ export type SearchFilters = {
      `porte = DEMAIS` sozinho MENTE: 28% do universo qualificado do Foco A estava em DEMAIS e no
      Simples ao mesmo tempo. Ver src/lib/filtro-padrao.ts. */
   excluirSimples?: boolean;
+  /* Tira associação, fundação e ente público, que não têm quota para vender. Necessário porque o
+     corte de porte e Simples SELECIONA essas entidades: elas são sempre DEMAIS e nunca optantes.
+     Ver NATUREZAS_NAO_VENDAVEIS em src/lib/filtro-padrao.ts. */
+  excluirSemFinsLucrativos?: boolean;
   // Praça: siglas de UF, ou null se a tese não restringir. Opcional porque os
   // caches estáticos foram gerados antes deste campo existir.
   ufs?: string[] | null;

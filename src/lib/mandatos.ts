@@ -55,8 +55,8 @@ export const MANDATOS: Mandato[] = [
     empresas: 1671,
     /* Porte acima de EPP, fundada até 2019 e fora do Simples: 52 das 1.671. Sem o corte do
        Simples seriam 72, e 20 delas faturam menos de R$ 4,8 MM. Ver filtro-padrao.ts. */
-    filtroPadrao: { portes: ["DEMAIS"], maxAnoFundacao: 2019, excluirSimples: true },
-    empresasFiltradas: 52,
+    filtroPadrao: { portes: ["DEMAIS"], maxAnoFundacao: 2019, excluirSimples: true, excluirSemFinsLucrativos: true },
+    empresasFiltradas: 51,
     recortes: [
       {
         cnaes: ["7500"],
@@ -70,8 +70,8 @@ export const MANDATOS: Mandato[] = [
     descricao: "Foco B da Setter. Operadoras e planos, dentro de veterinária e de planos de saúde.",
     empresas: 1119,
     /* 20 das 1.119 sobrevivem ao corte (eram 31 antes de tirar os optantes do Simples). */
-    filtroPadrao: { portes: ["DEMAIS"], maxAnoFundacao: 2019, excluirSimples: true },
-    empresasFiltradas: 20,
+    filtroPadrao: { portes: ["DEMAIS"], maxAnoFundacao: 2019, excluirSimples: true, excluirSemFinsLucrativos: true },
+    empresasFiltradas: 19,
     recortes: [
       {
         cnaes: ["7500"],
@@ -86,10 +86,10 @@ export const MANDATOS: Mandato[] = [
     nome: "Death care",
     descricao: "Funerárias, cemitérios, cremação e planos de auxílio funeral.",
     empresas: 11590,
-    /* 585 das 11.590. Mandato ainda sem dono na Setter; o padrão vale igual, e é aqui que ele mais
+    /* 511 das 11.590 (585 antes de tirar as 74 associações, 676 antes de tirar as seguradoras). Mandato ainda sem dono na Setter; o padrão vale igual, e é aqui que ele mais
        poupa tela: o universo é 7x o dos dois de pet. */
-    filtroPadrao: { portes: ["DEMAIS"], maxAnoFundacao: 2019, excluirSimples: true },
-    empresasFiltradas: 585,
+    filtroPadrao: { portes: ["DEMAIS"], maxAnoFundacao: 2019, excluirSimples: true, excluirSemFinsLucrativos: true },
+    empresasFiltradas: 511,
     recortes: [
       { cnaes: ["9603", "6511102"], nomes: [] },
       /* 6511101 É SEGURO DE VIDA, NÃO FUNERÁRIA. Até 23/09/2026 o recorte era o prefixo `65111`,

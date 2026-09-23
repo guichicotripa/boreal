@@ -11,7 +11,7 @@ import { normalizeQuery } from "@/lib/teses";
 import { SETORES } from "@/lib/setores";
 import { permissoesAtuais, setorPermitido, mandatoPermitido, ufPermitida } from "@/lib/permissoes";
 import { registrarBusca } from "@/lib/evento";
-import { comFiltroPadrao } from "@/lib/filtro-padrao";
+import { comFiltroPadrao, NATUREZAS_NAO_VENDAVEIS } from "@/lib/filtro-padrao";
 import type { Empresa, Socio, SearchResponse } from "@/lib/types";
 import demoCache from "@/lib/demo-cache.json";
 import setoresData from "@/lib/setores.json";
@@ -322,6 +322,14 @@ export async function POST(req: NextRequest) {
      mostrar a empresa, não escondê-la. */
   if (filters.excluirSimples) {
     q = q.not("opcao_simples", "is", true);
+  }
+
+  /* Mesmo cuidado do Simples com NULL: `not.in` sozinho descarta linha sem natureza jurídica,
+     porque `NULL NOT IN (...)` é NULL e não verdadeiro. Hoje a base não tem nenhuma nula, mas
+     empresa ingerida por outro caminho pode ter, e sumir sem explicação é o erro errado. */
+  if (filters.excluirSemFinsLucrativos) {
+    const lista = NATUREZAS_NAO_VENDAVEIS.map((n) => `"${n}"`).join(",");
+    q = q.or(`natureza_juridica.is.null,natureza_juridica.not.in.(${lista})`);
   }
 
   // Praça. Sem isto a UF da tese era ignorada e a busca devolvia outra região
