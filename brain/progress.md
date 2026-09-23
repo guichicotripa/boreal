@@ -2047,3 +2047,42 @@ isso **nunca** vira botão que o cliente aperta. É lote, e a fila é o que torn
 do número de contato confiável contra o CNPJ nacional (de "22 de 31 exclusivos" para 8 exclusivos,
 7 dividindo com 2 a 4 e 16 dividindo com 5 ou mais), e os dois documentos de cliente prontos:
 `brain/setter/proposta-setter-b-c.md` e `brain/setter/lista-ja-compradas-setter.md`.
+
+---
+
+## [2026-09-23] Guilherme + Claude | Seis correções enquanto a Setter delibera
+
+Os sócios da Setter estão decidindo a continuidade e podem abrir a plataforma a qualquer hora. A
+sessão foi escolhida por isso: o que um sócio veria hoje, e o que estava errado no que ele veria.
+
+**O que foi feito, e o que cada item revelou quando medido:**
+
+1. **`score_no_save`**, aberto desde 24/08 como "bug de uma linha". Medido ao corrigir: **24 das
+   31 oportunidades gravadas em média 28,5 pontos abaixo** do que a tela mostrou. Rótulos
+   recalculados; os 38 eventos `salvou` não, porque o log é append-only por desenho.
+2. **Seguradoras no death care.** O prefixo `65111` juntava seguro de vida com auxílio funeral:
+   **92 seguradoras nas 676 empresas da tela**. Das 123 do CNAE de seguro de vida, só uma é
+   funerária, a PAX CAROLINA, e ela ficou.
+3. **Entidade sem dono no universo.** O caso do hospital da faculdade revelou que **o corte padrão
+   selecionava associação**: ela é sempre DEMAIS e nunca optante, e passava em 79% a 100% dos casos
+   contra 2% a 5% de empresa comum. 74 saíram do death care.
+4. **Oposição do titular (LGPD).** Resolvida no banco, por trigger, que impede o contato de existir
+   na linha de quem se opôs e **impede a recarga da Receita de devolvê-lo**. E `recusou` passou a
+   ter consequência.
+5. **Qualificação do sócio por extenso.** A base guardava o código e ele chegava cru até o memo.
+   De quebra, **222 empresas têm herdeiro menor ou incapaz no quadro, 102 no death care**.
+6. **Detector de aquisição na plataforma**, com a regra num lugar só e o CPF mascarado lido no
+   servidor e apagado antes da resposta.
+
+**O padrão que se repetiu, e que vale anotar:** três dos seis itens pareciam pequenos e eram
+maiores. O "bug de uma linha" corrompia 77% dos rótulos. A "funerária no CNAE errado" era 13,6%
+da tela. O "hospital que escapou" era o corte selecionando o contrário do que devia. **Nenhum
+teria aparecido sem medir antes de corrigir.**
+
+**Dois erros meus, pegos antes de subir:** ao remover a lógica duplicada do detector, levei junto
+duas funções do script (`empresasAlvo`, `alcanceDasHoldings`), e rodar o script mostrou na hora;
+restaurei do git e refiz cirúrgico. E na tela de oposição, o aviso morava dentro do bloco de e-mail,
+que a oposição apaga, então nunca apareceria.
+
+**Não verificado:** o fluxo logado na tela, porque o acesso é por magic link. O que garante a tela
+é typecheck, build e 172 testes contra o banco, zero pulado.

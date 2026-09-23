@@ -80,6 +80,7 @@ no topo, fora de ordem.
 | 2026-08-26 | [(noite) O custo do corte de ano, medido: 10 empresas](#2026-08-26-noite--o-custo-do-corte-de-ano-medido-10-empresas) |
 | 2026-09-14 | [Uso do piloto antes da call de fim de mês com Henrique e Fernanda](#2026-09-14--uso-do-piloto-antes-da-call-de-fim-de-mês-com-henrique-e-fernanda) |
 | 2026-09-14 | [Call de fim de piloto: vai assinar, e o grafo vira pedido de cliente](#2026-09-14--call-de-fim-de-piloto-vai-assinar-e-o-grafo-vira-pedido-de-cliente) |
+| 2026-09-23 | [`score_no_save` estava errado em 24 de 31 oportunidades, e o log de eventos não é reescrito](#2026-09-23-score_no_save-estava-errado-em-24-de-31-oportunidades-e-o-log-de-eventos-não-é-reescrito) |
 
 ---
 
