@@ -52,6 +52,7 @@ Uma entrada por sessão de trabalho, em ordem cronológica.
 | 2026-08-02 | [Guilherme | Calibração do score v0: o label estava contaminado](#2026-08-02-guilherme--calibração-do-score-v0-o-label-estava-contaminado) |
 | 2026-08-11 | [Guilherme | Henrique volta com os 2 setores do piloto: PET e death care](#2026-08-11-guilherme--henrique-volta-com-os-2-setores-do-piloto-pet-e-death-care) |
 | 2026-09-21 | [Guilherme + Claude | A versão de acesso ganha as duas primeiras peças](#2026-09-21-guilherme--claude--a-versão-de-acesso-ganha-as-duas-primeiras-peças) |
+| 2026-09-23 | [Guilherme + Claude | Seis correções enquanto a Setter delibera](#2026-09-23-guilherme--claude--seis-correções-enquanto-a-setter-delibera) |
 
 ---
 
